@@ -1,5 +1,3 @@
-
-
 create table exercise(
 id int not null auto_increment,
 name varchar not null,
@@ -16,6 +14,3 @@ location varchar not null,
 PRIMARY KEY(id),
 FOREIGN KEY(exerciseid) references exercise(id)
 );
-
-drop table exercise;
-drop table gif;
