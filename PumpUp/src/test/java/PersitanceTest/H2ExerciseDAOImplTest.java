@@ -1,4 +1,4 @@
-package java.PersitanceTest;
+package test.java.PersitanceTest;
 
 import main.java.sepm.ss15.grp16.persistence.DBHandler;
 import main.java.sepm.ss15.grp16.persistence.ExerciseDAO;
@@ -36,7 +36,7 @@ public class H2ExerciseDAOImplTest extends  AbstractExerciseDaoTest {
     public void setUp() {
         try {
             dbHandler = H2DBConnectorImpl.getInstance();
-            dbHandler.getConnection().setAutoCommit(false);
+            dbHandler.getConnection().setAutoCommit(true);
         }catch ( DBException e){
             e.printStackTrace();
         }catch (SQLException e){

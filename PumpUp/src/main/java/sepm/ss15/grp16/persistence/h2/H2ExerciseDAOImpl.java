@@ -35,7 +35,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             readStatement = CONNECTION.prepareStatement("SELECT * from exercise;");
             updateStatement = CONNECTION.prepareStatement("UPDATE exercise set name=?, descripion=?, calories=?, videolink=? where id=?;");
             deleteStatement = CONNECTION.prepareStatement("");
-            insertGifStatement = CONNECTION.prepareStatement("insert into gif values(?, ?);");
+            insertGifStatement = CONNECTION.prepareStatement("insert into gif(EXERCISEID, LOCATION ) values( ?, ?);");
 
 
         }catch (SQLException e){

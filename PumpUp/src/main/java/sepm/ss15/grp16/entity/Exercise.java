@@ -32,6 +32,21 @@ public class Exercise {
         this.videolink = videolink;
     }
 
+    public Exercise(String name, String description, Double calories, String videolink, List<String> gifLinks) {
+        this.name = name;
+        this.description = description;
+        this.calories = calories;
+        this.videolink = videolink;
+        this.gifLinks = gifLinks;
+    }
+
+    public Exercise(String name, String description, Double calories, String videolink) {
+        this.name = name;
+        this.description = description;
+        this.calories = calories;
+        this.videolink = videolink;
+    }
+
     public Integer getId() {
         return id;
     }

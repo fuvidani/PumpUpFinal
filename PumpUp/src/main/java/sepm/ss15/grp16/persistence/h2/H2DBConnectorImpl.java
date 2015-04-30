@@ -41,7 +41,7 @@ public class H2DBConnectorImpl implements DBHandler {
 
             if (CONNECTION == null) {
                 Class.forName("org.h2.Driver");
-                CONNECTION = DriverManager.getConnection("jdbc:h2:~/sepmdb", "sa", "");
+                CONNECTION = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
 
             }
              return CONNECTION;
