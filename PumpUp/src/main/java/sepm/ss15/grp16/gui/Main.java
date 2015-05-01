@@ -5,11 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import main.java.sepm.ss15.grp16.gui.controller.ExerciseController;
-import main.java.sepm.ss15.grp16.persistence.ExerciseDAO;
-import main.java.sepm.ss15.grp16.persistence.h2.H2ExerciseDAOImpl;
-import main.java.sepm.ss15.grp16.service.ExerciseService;
-import main.java.sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
+import sepm.ss15.grp16.gui.controller.ExerciseController;
+import sepm.ss15.grp16.persistence.ExerciseDAO;
+import sepm.ss15.grp16.persistence.h2.H2ExerciseDAOImpl;
+import sepm.ss15.grp16.service.ExerciseService;
+import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 
 /**
  * Created by lukas on 01.05.2015.

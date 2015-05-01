@@ -1,7 +1,7 @@
-package main.java.sepm.ss15.grp16.persistence;
+package sepm.ss15.grp16.persistence;
 
-import main.java.sepm.ss15.grp16.entity.Exercise;
-import main.java.sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.entity.Exercise;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;
 

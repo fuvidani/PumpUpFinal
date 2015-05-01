@@ -1,10 +1,10 @@
-package test.java.PersitanceTest;
+package PersitanceTest;
 
-import main.java.sepm.ss15.grp16.entity.Exercise;
-import main.java.sepm.ss15.grp16.persistence.ExerciseDAO;
+import sepm.ss15.grp16.entity.Exercise;
+import  sepm.ss15.grp16.persistence.ExerciseDAO;
 
-import main.java.sepm.ss15.grp16.persistence.ExerciseDAO;
-import main.java.sepm.ss15.grp16.persistence.exception.PersistenceException;
+import  sepm.ss15.grp16.persistence.ExerciseDAO;
+import  sepm.ss15.grp16.persistence.exception.PersistenceException;
 import org.junit.Test;
 
 import java.util.ArrayList;

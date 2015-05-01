@@ -1,11 +1,11 @@
-package main.java.sepm.ss15.grp16.service.impl;
+package sepm.ss15.grp16.service.impl;
 
-import main.java.sepm.ss15.grp16.entity.Exercise;
-import main.java.sepm.ss15.grp16.persistence.ExerciseDAO;
-import main.java.sepm.ss15.grp16.persistence.exception.PersistenceException;
-import main.java.sepm.ss15.grp16.persistence.h2.H2ExerciseDAOImpl;
-import main.java.sepm.ss15.grp16.service.ExerciseService;
-import main.java.sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.entity.Exercise;
+import sepm.ss15.grp16.persistence.ExerciseDAO;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.persistence.h2.H2ExerciseDAOImpl;
+import sepm.ss15.grp16.service.ExerciseService;
+import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package main.java.sepm.ss15.grp16.persistence.exception;
+package sepm.ss15.grp16.persistence.exception;
 
 /**
  * Created by lukas on 30.04.2015.

@@ -1,4 +1,4 @@
-package main.java.sepm.ss15.grp16.entity;
+package sepm.ss15.grp16.entity;
 
 import java.util.ArrayList;
 import java.util.List;

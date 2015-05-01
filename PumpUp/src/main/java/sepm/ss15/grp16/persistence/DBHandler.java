@@ -1,6 +1,6 @@
-package main.java.sepm.ss15.grp16.persistence;
+package sepm.ss15.grp16.persistence;
 
-import main.java.sepm.ss15.grp16.persistence.exception.DBException;
+import sepm.ss15.grp16.persistence.exception.DBException;
 
 import java.sql.Connection;
 

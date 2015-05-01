@@ -1,7 +1,7 @@
-package main.java.sepm.ss15.grp16.persistence.h2;
+package sepm.ss15.grp16.persistence.h2;
 
-import main.java.sepm.ss15.grp16.persistence.DBHandler;
-import main.java.sepm.ss15.grp16.persistence.exception.DBException;
+import sepm.ss15.grp16.persistence.DBHandler;
+import sepm.ss15.grp16.persistence.exception.DBException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

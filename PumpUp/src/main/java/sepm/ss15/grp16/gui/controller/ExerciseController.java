@@ -1,4 +1,4 @@
-package main.java.sepm.ss15.grp16.gui.controller;
+package sepm.ss15.grp16.gui.controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,10 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.stage.FileChooser;
-import main.java.sepm.ss15.grp16.entity.Exercise;
-import main.java.sepm.ss15.grp16.service.ExerciseService;
-import main.java.sepm.ss15.grp16.service.exception.ServiceException;
-import main.java.sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
+import sepm.ss15.grp16.entity.Exercise;
+import sepm.ss15.grp16.service.ExerciseService;
+import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 
 
 import java.io.File;

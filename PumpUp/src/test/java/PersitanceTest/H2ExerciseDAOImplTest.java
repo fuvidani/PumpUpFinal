@@ -1,11 +1,11 @@
-package test.java.PersitanceTest;
+package PersitanceTest;
 
-import main.java.sepm.ss15.grp16.persistence.DBHandler;
-import main.java.sepm.ss15.grp16.persistence.ExerciseDAO;
-import main.java.sepm.ss15.grp16.persistence.exception.DBException;
-import main.java.sepm.ss15.grp16.persistence.exception.PersistenceException;
-import main.java.sepm.ss15.grp16.persistence.h2.H2DBConnectorImpl;
-import main.java.sepm.ss15.grp16.persistence.h2.H2ExerciseDAOImpl;
+import sepm.ss15.grp16.persistence.DBHandler;
+import sepm.ss15.grp16.persistence.ExerciseDAO;
+import sepm.ss15.grp16.persistence.exception.DBException;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.persistence.h2.H2DBConnectorImpl;
+import sepm.ss15.grp16.persistence.h2.H2ExerciseDAOImpl;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
