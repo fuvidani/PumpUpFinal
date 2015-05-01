@@ -26,7 +26,7 @@ public  abstract  class AbstractExerciseDaoTest {
         List<String> gifList = new ArrayList<>();
         gifList.add("youtube");
         gifList.add("menshealth");
-        Exercise liegestuetz = new Exercise(1,"liegestuetz", "eine der besten uebungen ueberhaupt", 5.0, "", gifList);
+        Exercise liegestuetz = new Exercise(2,"situp", "eine der besten uebungen ueberhaupt", 9.0, "", gifList);
 
         try {
             exerciseDAO.create(liegestuetz);

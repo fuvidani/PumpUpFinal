@@ -1,0 +1,24 @@
+package main.java.sepm.ss15.grp16.service;
+
+import main.java.sepm.ss15.grp16.entity.Exercise;
+import main.java.sepm.ss15.grp16.persistence.ExerciseDAO;
+import main.java.sepm.ss15.grp16.service.exception.ServiceException;
+
+import java.util.List;
+
+/**
+ * Created by lukas on 01.05.2015.
+ */
+public interface ExerciseService {
+
+    Exercise create(Exercise exercise )throws ServiceException;
+
+    List<Exercise> findAll() throws ServiceException;
+
+    Exercise update(Exercise exercise)throws ServiceException;
+
+    void delete(Exercise exercise) throws ServiceException;
+
+
+    void setExerciseDAO(ExerciseDAO exerciseDAO)throws ServiceException;
+}

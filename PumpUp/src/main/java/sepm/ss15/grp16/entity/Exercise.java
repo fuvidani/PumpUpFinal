@@ -30,6 +30,7 @@ public class Exercise {
         this.description = description;
         this.calories = calories;
         this.videolink = videolink;
+        gifLinks.add("empty");
     }
 
     public Exercise(String name, String description, Double calories, String videolink, List<String> gifLinks) {
