@@ -14,38 +14,33 @@ public class Exercise {
     private Double calories;
     private String videolink;
     private List<String> gifLinks = new ArrayList<>();
+    private Boolean isDeleted;
 
-    public Exercise(Integer id, String name, String description, Double calories, String videolink, List<String> gifLinks) {
+    public Exercise(String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted) {
+        this.name = name;
+        this.description = description;
+        this.calories = calories;
+        this.videolink = videolink;
+        this.gifLinks = gifLinks;
+        this.isDeleted=isDeleted;
+    }
+
+    public Exercise(String name, String description, Double calories, String videolink, Boolean isDeleted) {
+        this.name = name;
+        this.description = description;
+        this.calories = calories;
+        this.videolink = videolink;
+        this.isDeleted=isDeleted;
+    }
+
+    public Exercise(Integer id, String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.calories = calories;
         this.videolink = videolink;
         this.gifLinks = gifLinks;
-    }
-
-    public Exercise(Integer id, String name, String description, Double calories, String videolink) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.calories = calories;
-        this.videolink = videolink;
-        gifLinks.add("empty");
-    }
-
-    public Exercise(String name, String description, Double calories, String videolink, List<String> gifLinks) {
-        this.name = name;
-        this.description = description;
-        this.calories = calories;
-        this.videolink = videolink;
-        this.gifLinks = gifLinks;
-    }
-
-    public Exercise(String name, String description, Double calories, String videolink) {
-        this.name = name;
-        this.description = description;
-        this.calories = calories;
-        this.videolink = videolink;
+        this.isDeleted = isDeleted;
     }
 
     public Integer getId() {
@@ -94,5 +89,37 @@ public class Exercise {
 
     public void setGifLinks(List<String> gifLinks) {
         this.gifLinks = gifLinks;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Exercise)) return false;
+
+        Exercise exercise = (Exercise) o;
+
+        if(this.getId()==null){
+            return  false;
+        }
+
+        if(this.getId()==((Exercise) o).getId())
+            return true;
+
+        return !(getId() != null ? !getId().equals(exercise.getId()) : exercise.getId() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
     }
 }

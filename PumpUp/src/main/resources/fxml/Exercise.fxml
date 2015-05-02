@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.sepm.ss15.grp16.gui.controller.ExerciseController">
+<AnchorPane maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.ExerciseController">
     <children>
         <AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="437.0" prefWidth="1366.0" style="-fx-background-color: #8B5A2B;">
             <children>

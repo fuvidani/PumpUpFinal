@@ -114,7 +114,7 @@ public class ExerciseController implements Initializable{
                     masterData.add(e);
                 }
 
-                tableView.setItems(masterData); //initial view of data
+                tableView.setItems(masterData); //initial fxml of data
             }
         } catch (ServiceException e) {
 
@@ -233,7 +233,7 @@ public class ExerciseController implements Initializable{
                 //preview in textfield
                 tf_picture.setText(ownName.concat(".jpg"));
 
-                //for the preview in the image view
+                //for the preview in the image fxml
                 InputStream inputStream = new FileInputStream(file);
                 javafx.scene.image.Image img = new javafx.scene.image.Image(inputStream);
                 image_view.setImage(img);
@@ -247,8 +247,8 @@ public class ExerciseController implements Initializable{
 
     private Exercise extractExercise() {
 
-        return new Exercise(Integer.parseInt(tf_exerciseID.getText()), tf_name.getText(),tf_description.getText() ,Double.parseDouble(tf_calories.getText()),
-               tf_videoLink.getText());
+        return new Exercise(tf_name.getText(),tf_description.getText() ,Double.parseDouble(tf_calories.getText()),
+               tf_videoLink.getText(), false);
     }
 
     private void clear() {

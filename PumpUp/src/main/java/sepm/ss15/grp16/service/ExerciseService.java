@@ -1,7 +1,7 @@
 package sepm.ss15.grp16.service;
 
 import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.persistence.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.util.List;

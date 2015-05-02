@@ -1,9 +1,9 @@
 package sepm.ss15.grp16.service.impl;
 
 import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.persistence.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
-import sepm.ss15.grp16.persistence.h2.H2ExerciseDAOImpl;
+import sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 

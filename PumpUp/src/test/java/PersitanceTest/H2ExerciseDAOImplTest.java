@@ -1,11 +1,11 @@
 package PersitanceTest;
 
-import sepm.ss15.grp16.persistence.DBHandler;
-import sepm.ss15.grp16.persistence.ExerciseDAO;
+import sepm.ss15.grp16.persistence.database.DBHandler;
+import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
-import sepm.ss15.grp16.persistence.h2.H2DBConnectorImpl;
-import sepm.ss15.grp16.persistence.h2.H2ExerciseDAOImpl;
+import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
+import sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,13 +36,12 @@ public class H2ExerciseDAOImplTest extends  AbstractExerciseDaoTest {
     public void setUp() {
         try {
             dbHandler = H2DBConnectorImpl.getInstance();
-            dbHandler.getConnection().setAutoCommit(true);
+            dbHandler.getConnection().setAutoCommit(false);
         }catch ( DBException e){
             e.printStackTrace();
         }catch (SQLException e){
             e.printStackTrace();
         }
-
     }
 
     @After
