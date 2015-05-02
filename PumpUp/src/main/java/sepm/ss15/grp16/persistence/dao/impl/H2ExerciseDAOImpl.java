@@ -23,7 +23,6 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     private PreparedStatement createStatement;
     private PreparedStatement readStatement;
     private PreparedStatement updateStatement;
-    private PreparedStatement deleteStatement;
     private PreparedStatement insertGifStatement;
     private PreparedStatement nextvalExercise;
     private PreparedStatement nextvalGif;
@@ -39,7 +38,6 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             readStatement = CONNECTION.prepareStatement("SELECT * from exercise where isdeleted=false;");
             readGifStatement = CONNECTION.prepareStatement("select * from gif where exerciseid =?");
             updateStatement = CONNECTION.prepareStatement("UPDATE exercise set name=?, descripion=?, calories=?, videolink=?, isdeleted=? where id=?;");
-            deleteStatement = CONNECTION.prepareStatement("");
             insertGifStatement = CONNECTION.prepareStatement("insert into gif values(?, ?, ?);");
             nextvalExercise  = CONNECTION.prepareStatement("SELECT NEXTVAL('EXERCISESEQUENCE')");
             nextvalGif  = CONNECTION.prepareStatement("SELECT NEXTVAL('GIFSEQUENCE')");
@@ -154,6 +152,11 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     @Override
     public void delete(Exercise exercise) throws PersistenceException {
+       if(exercise==null)
+           throw new PersistenceException("exercise must not be null!");
+
+
+
         exercise.setIsDeleted(true);
         update(exercise); //DTO boolean  isdeleted = true
     }
@@ -171,7 +174,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             ResultSet gifResults = readGifStatement.executeQuery();
             List<String> gifLinks = new ArrayList<>();
             while(gifResults.next()){
-                gifLinks.add(gifResults.getString(1));
+                gifLinks.add(gifResults.getString(3));
             }
 
             return new Exercise(id, name, description, calories,videoLink, gifLinks, isDeleted);

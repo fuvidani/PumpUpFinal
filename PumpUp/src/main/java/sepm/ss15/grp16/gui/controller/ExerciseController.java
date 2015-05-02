@@ -12,15 +12,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.stage.FileChooser;
 import sepm.ss15.grp16.entity.Exercise;
+import sepm.ss15.grp16.gui.exception.ValidationException;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -31,14 +29,12 @@ import java.util.List;
 public class ExerciseController implements Initializable{
 
 
-    @FXML
-    private TextField tf_exerciseID;
 
     @FXML
     private TextField tf_name;
 
     @FXML
-    private TextField tf_description;
+    private TextArea ta_description;
 
     @FXML
     private TextField tf_calories;
@@ -53,7 +49,8 @@ public class ExerciseController implements Initializable{
     private TableView<Exercise> tableView = new TableView<Exercise>();
 
     @FXML
-    public TableColumn<Exercise, Integer> exerciseIDColumn;
+    private ListView<String> picList = new ListView<>();
+
 
     @FXML
     private TableColumn<Exercise, String> exerciseNameColumn;
@@ -64,6 +61,8 @@ public class ExerciseController implements Initializable{
     @FXML
     private TableColumn<Exercise, String> videoLinkColumn;
 
+
+
     @FXML
     private Button btn_durchsuchen;
 
@@ -72,10 +71,12 @@ public class ExerciseController implements Initializable{
 
     private String filename;
     private String oldFileName;
+    private Integer exerciseID;
 
 
     private ObservableList<Exercise> masterData = FXCollections.observableArrayList();
-
+    private ObservableList<String> picData = FXCollections.observableArrayList();
+    private List<String> pictureData = new ArrayList<>();
 
     private ExerciseService exerciseService;
 
@@ -88,7 +89,6 @@ public class ExerciseController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        exerciseIDColumn.setCellValueFactory(new PropertyValueFactory<Exercise, Integer>("id"));
         exerciseNameColumn.setCellValueFactory(new PropertyValueFactory<Exercise, String >("name"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Exercise, String >("description"));
         caloriesColumn.setCellValueFactory(new PropertyValueFactory<Exercise, Double>("calories"));
@@ -101,6 +101,13 @@ public class ExerciseController implements Initializable{
             public void changed(ObservableValue<? extends Exercise> observable,
                                 Exercise oldValue, Exercise newValue) {
                 showExercise(newValue, oldValue);
+            }
+        });
+
+        picList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                showPic(newValue, oldValue);
             }
         });
 
@@ -122,17 +129,35 @@ public class ExerciseController implements Initializable{
 
     }
 
+    private void showPic(String pic, String old){
+        try {
+
+            String path = "" + (this.getClass().getResource("img/").toString().substring(6)).concat(pic);
+            FileInputStream reading = new FileInputStream(path);
+            Image img = new Image(reading);
+            image_view.setImage(img);
+        } catch (FileNotFoundException e) {
+
+
+        }
+    }
+
     private void showExercise(Exercise exercise, Exercise old){
 
         if (exercise == null && old != null) {
             exercise = old;
         }
 
-        tf_exerciseID.setText(""+exercise.getId());
         tf_name.setText(exercise.getName());
-        tf_description.setText((exercise.getDescription()));
+        ta_description.setText((exercise.getDescription()));
         tf_calories.setText(""+exercise.getCalories());
         tf_videoLink.setText(""+exercise.getVideolink());
+        this.exerciseID = exercise.getId();
+        ObservableList<String> temp = FXCollections.observableArrayList();
+        for(String s : exercise.getGifLinks()){
+           temp.add(s);
+        }
+        picList.setItems(temp);
 
     }
 
@@ -140,25 +165,36 @@ public class ExerciseController implements Initializable{
     private void btnSaveclicked() {
         try {
             Exercise exercise = this.extractExercise();
-            exerciseService.create(exercise);
+            exercise.setGifLinks(this.pictureData);
+            masterData.add( exerciseService.create(exercise));
             this.clear();
-            masterData.add(exercise);
         }catch (ServiceException e){
             e.printStackTrace();
+        }catch(ValidationException e){
+            e.printStackTrace();
         }
-
     }
 
     @FXML
     private void btnNeuClicked() {
         this.clear();
-        tableView.getColumns().get(0).setVisible(false);
-        tableView.getColumns().get(0).setVisible(true);
-
     }
 
     @FXML
     private void btnDeleteClicked() {
+       try {
+           Exercise ex = this.extractExercise();
+           ex.setId(this.exerciseID);
+
+           exerciseService.delete(ex);
+           masterData.remove(ex);
+           this.clear();
+
+       }catch (ServiceException e){
+        e.printStackTrace();
+       }catch(ValidationException e){
+           e.printStackTrace();
+       }
 
     }
 
@@ -166,8 +202,23 @@ public class ExerciseController implements Initializable{
     private void btnUpdateClicked() {
         try {
             Exercise exercise = this.extractExercise();
-            exerciseService.update(exercise);
-        }catch (ServiceException e){
+            exercise.setId(this.exerciseID);
+            Exercise updated = exerciseService.update(exercise);
+            int i = 0;
+            for(Exercise e : masterData){
+                if(e.equals(exercise))
+                    break;
+
+                i++;
+            }
+
+            masterData.remove(i);
+            masterData.add(i, updated);
+            tableView.getColumns().get(0).setVisible(false);
+            tableView.getColumns().get(0).setVisible(true);
+        }catch (ServiceException ex){
+            ex.printStackTrace();
+        }catch(ValidationException e){
             e.printStackTrace();
         }
     }
@@ -213,7 +264,11 @@ public class ExerciseController implements Initializable{
                 javafx.scene.image.Image img = new javafx.scene.image.Image(inputStream);
                 image_view.setImage(img);
                 inputStream.close();
-
+                pictureData.add(ownName);
+                picData.add(ownName);
+                picList.setItems(picData);
+                picList.setVisible(false);
+                picList.setVisible(true);
 
             } else {//picture in preview
 
@@ -238,6 +293,11 @@ public class ExerciseController implements Initializable{
                 javafx.scene.image.Image img = new javafx.scene.image.Image(inputStream);
                 image_view.setImage(img);
                 inputStream.close();
+                pictureData.add(ownName);
+                picData.add(ownName);
+                picList.setItems(picData);
+                picList.setVisible(false);
+                picList.setVisible(true);
             }
 
         } catch (IOException e) {
@@ -245,20 +305,62 @@ public class ExerciseController implements Initializable{
         }
     }
 
-    private Exercise extractExercise() {
+    private Exercise extractExercise() throws ValidationException{
+           validate();
+           return new Exercise(tf_name.getText(), ta_description.getText(), Double.parseDouble(tf_calories.getText()),
+                   tf_videoLink.getText(), false);
 
-        return new Exercise(tf_name.getText(),tf_description.getText() ,Double.parseDouble(tf_calories.getText()),
-               tf_videoLink.getText(), false);
     }
 
     private void clear() {
-        tf_exerciseID.setText("");
         tf_name.setText("");
-        tf_description.setText("");
+        ta_description.setText("");
         tf_videoLink.setText("");
+        picList.setItems(null);
         tf_calories.setText("");
         tf_picture.setText(" ");
         image_view.setImage(null);
+        tableView.getColumns().get(0).setVisible(false);
+        tableView.getColumns().get(0).setVisible(true);
+    }
+
+    private void validate() throws ValidationException{
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warnung");
+        alert.setContentText("Da ist wohl etwas schief gegangen. UPS!");
+
+        String name = tf_name.getText();
+        String description = ta_description.getText();
+        String errors = "";
+        Double calories = -1.0;
+        boolean display = false;
+
+        String videoLink =  tf_videoLink.getText();
+
+
+        if(name.isEmpty() || name==null){
+            display=true;
+            errors+="name not set!\n";
+        }
+
+        try {
+            calories=  Double.parseDouble(tf_calories.getText());
+        }catch (NumberFormatException e){
+            display = true;
+            errors+="no valid data for calories!\n";
+        }
+
+        if(calories<=0){
+            display = true;
+            errors+="calories are below 0\n";
+        }
+
+        if(display){
+            alert.setHeaderText(errors);
+            alert.showAndWait();
+           throw new ValidationException("");
+        }
+
     }
 
 }

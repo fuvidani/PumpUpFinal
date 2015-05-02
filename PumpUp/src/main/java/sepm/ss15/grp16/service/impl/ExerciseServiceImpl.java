@@ -65,21 +65,20 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public void delete(Exercise exercise) throws ServiceException {
-        throw new ServiceException("not implemented yet!");
+       try{
+           exerciseDAO.delete(exercise);
+       }catch (PersistenceException e){
+           throw new ServiceException(e);
+       }
     }
 
     private void validate(Exercise exercise)throws ServiceException{
         if(exercise ==null)
             throw new ServiceException("validation not passed. exercise is null");
 
-        if(exercise.getId() == null)
-            throw new ServiceException("validation not passed. exercise id is null");
-
         if(exercise.getCalories()<= 0)
             throw new ServiceException("validation not passed. calories can not be lower or equal to 0");
 
-        if(!(exercise.getVideolink().contains("http://") || exercise.getVideolink().contains("https://")))
-            throw new ServiceException("validation not passed. video link does not match protocol");
 
     }
 }
