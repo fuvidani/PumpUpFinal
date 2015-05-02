@@ -43,6 +43,15 @@ public class Exercise {
         this.isDeleted = isDeleted;
     }
 
+    public Exercise(Integer id, String name, String description, Double calories, String videolink, Boolean isDeleted) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.calories = calories;
+        this.videolink = videolink;
+        this.isDeleted = isDeleted;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -121,5 +130,18 @@ public class Exercise {
     @Override
     public int hashCode() {
         return getId() != null ? getId().hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Exercise{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                ", videolink='" + videolink + '\'' +
+                ", gifLinks=" + gifLinks +
+                ", isDeleted=" + isDeleted +
+                '}';
     }
 }

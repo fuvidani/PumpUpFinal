@@ -27,6 +27,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     private PreparedStatement insertGifStatement;
     private PreparedStatement nextvalExercise;
     private PreparedStatement nextvalGif;
+    private PreparedStatement readGifStatement;
 
     private static Connection CONNECTION;
 
@@ -35,7 +36,8 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             DBHandler handler = H2DBConnectorImpl.getInstance();
             CONNECTION = handler.getConnection();
             createStatement = CONNECTION.prepareStatement("insert into exercise VALUES (?, ?, ?, ?, ?, ?);");
-            readStatement = CONNECTION.prepareStatement("SELECT * from exercise;");
+            readStatement = CONNECTION.prepareStatement("SELECT * from exercise where isdeleted=false;");
+            readGifStatement = CONNECTION.prepareStatement("select * from gif where exerciseid =?");
             updateStatement = CONNECTION.prepareStatement("UPDATE exercise set name=?, descripion=?, calories=?, videolink=?, isdeleted=? where id=?;");
             deleteStatement = CONNECTION.prepareStatement("");
             insertGifStatement = CONNECTION.prepareStatement("insert into gif values(?, ?, ?);");
@@ -152,6 +154,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     @Override
     public void delete(Exercise exercise) throws PersistenceException {
+        exercise.setIsDeleted(true);
         update(exercise); //DTO boolean  isdeleted = true
     }
 
@@ -164,9 +167,17 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             Double calories = rs.getDouble(4);
             String videoLink = rs.getString(5);
             Boolean isDeleted = rs.getBoolean(6);
-            return new Exercise(name, description, calories,videoLink, isDeleted);
+            readGifStatement.setInt(1, id);
+            ResultSet gifResults = readGifStatement.executeQuery();
+            List<String> gifLinks = new ArrayList<>();
+            while(gifResults.next()){
+                gifLinks.add(gifResults.getString(1));
+            }
+
+            return new Exercise(id, name, description, calories,videoLink, gifLinks, isDeleted);
         }catch (SQLException e){
             throw new PersistenceException("failed to extract exercise from given restultset" , e);
         }
+
     }
 }
