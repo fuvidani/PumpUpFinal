@@ -1,10 +1,11 @@
-package sepm.ss15.grp16.persistence.h2;
+package sepm.ss15.grp16.persistence.dao.impl;
 
 import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.persistence.DBHandler;
-import sepm.ss15.grp16.persistence.ExerciseDAO;
+import sepm.ss15.grp16.persistence.database.DBHandler;
+import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +23,10 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     private PreparedStatement createStatement;
     private PreparedStatement readStatement;
     private PreparedStatement updateStatement;
-    private PreparedStatement deleteStatement;
     private PreparedStatement insertGifStatement;
+    private PreparedStatement nextvalExercise;
+    private PreparedStatement nextvalGif;
+    private PreparedStatement readGifStatement;
 
     private static Connection CONNECTION;
 
@@ -31,12 +34,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
         try{
             DBHandler handler = H2DBConnectorImpl.getInstance();
             CONNECTION = handler.getConnection();
-            createStatement = CONNECTION.prepareStatement("insert into exercise VALUES (?, ?, ?, ?, ?);");
-            readStatement = CONNECTION.prepareStatement("SELECT * from exercise;");
-            updateStatement = CONNECTION.prepareStatement("UPDATE exercise set name=?, descripion=?, calories=?, videolink=? where id=?;");
-            deleteStatement = CONNECTION.prepareStatement("");
-            insertGifStatement = CONNECTION.prepareStatement("insert into gif(EXERCISEID, LOCATION ) values( ?, ?);");
-
+            createStatement = CONNECTION.prepareStatement("insert into exercise VALUES (?, ?, ?, ?, ?, ?);");
+            readStatement = CONNECTION.prepareStatement("SELECT * from exercise where isdeleted=false;");
+            readGifStatement = CONNECTION.prepareStatement("select * from gif where exerciseid =?");
+            updateStatement = CONNECTION.prepareStatement("UPDATE exercise set name=?, descripion=?, calories=?, videolink=?, isdeleted=? where id=?;");
+            insertGifStatement = CONNECTION.prepareStatement("insert into gif values(?, ?, ?);");
+            nextvalExercise  = CONNECTION.prepareStatement("SELECT NEXTVAL('EXERCISESEQUENCE')");
+            nextvalGif  = CONNECTION.prepareStatement("SELECT NEXTVAL('GIFSEQUENCE')");
 
         }catch (SQLException e){
             throw new PersistenceException("failed to prepare statements", e);
@@ -57,34 +61,43 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     @Override
     public Exercise create(Exercise exercise) throws PersistenceException {
-        if(exercise==null)
-            throw new PersistenceException("exercise must not be null");
-
-        if(exercise.getId()==null)
-            throw new PersistenceException("exercise ID must not be null");
-
-
-        Integer id = exercise.getId();
-        String name = exercise.getName();
-        String description = exercise.getDescription();
-        Double calories = exercise.getCalories();
-        String videolink = exercise.getVideolink();
-        List<String> gifLinks = exercise.getGifLinks();
         try {
+            if(exercise==null)
+                throw new PersistenceException("exercise must not be null");
+
+            ResultSet rs = nextvalExercise.executeQuery();
+            rs.next();
+
+            Integer id = rs.getInt(1);
+            String name = exercise.getName();
+            String description = exercise.getDescription();
+            Double calories = exercise.getCalories();
+            String videolink = exercise.getVideolink();
+            List<String> gifLinks = exercise.getGifLinks();
+            Boolean isDeleted = exercise.getIsDeleted();
+
             createStatement.setInt(1, id);
             createStatement.setString(2, name);
             createStatement.setString(3, description);
             createStatement.setDouble(4, calories);
             createStatement.setString(5, videolink);
+            //DTO isDeleted = false always when create gets called
+            createStatement.setBoolean(6, isDeleted);
             createStatement.execute();
 
+
             for(String s : gifLinks){
-                insertGifStatement.setInt(1, id);
-                insertGifStatement.setString(2, s);
+                rs = nextvalGif.executeQuery();
+                rs.next();
+                Integer gifId = rs.getInt(1);
+                insertGifStatement.setInt(1, gifId);
+                insertGifStatement.setInt(2, id);
+                insertGifStatement.setString(3, s);
                 insertGifStatement.execute();
             }
 
-            return  exercise;
+//            return exercise;
+            return  new Exercise(id, name, description, calories, videolink, gifLinks, isDeleted);
         }catch (SQLException e){
             throw new PersistenceException("failed to insert excerisce into database", e);
         }
@@ -123,12 +136,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             String description = exercise.getDescription();
             Double calories = exercise.getCalories();
             String videolink = exercise.getVideolink();
-
-            updateStatement.setInt(5, id);
+            Boolean isDeleted = exercise.getIsDeleted();
+            updateStatement.setInt(6, id);
             updateStatement.setString(1, name);
             updateStatement.setString(2, description);
             updateStatement.setDouble(3, calories);
             updateStatement.setString(4, videolink);
+            updateStatement.setBoolean(5, isDeleted);
             updateStatement.execute();
             return exercise;
         }catch (SQLException e){
@@ -138,7 +152,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     @Override
     public void delete(Exercise exercise) throws PersistenceException {
-        throw new PersistenceException("not implemented yet");
+       if(exercise==null)
+           throw new PersistenceException("exercise must not be null!");
+
+
+
+        exercise.setIsDeleted(true);
+        update(exercise); //DTO boolean  isdeleted = true
     }
 
 
@@ -149,9 +169,18 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             String description = rs.getString(3);
             Double calories = rs.getDouble(4);
             String videoLink = rs.getString(5);
-            return new Exercise(id, name, description, calories,videoLink);
+            Boolean isDeleted = rs.getBoolean(6);
+            readGifStatement.setInt(1, id);
+            ResultSet gifResults = readGifStatement.executeQuery();
+            List<String> gifLinks = new ArrayList<>();
+            while(gifResults.next()){
+                gifLinks.add(gifResults.getString(3));
+            }
+
+            return new Exercise(id, name, description, calories,videoLink, gifLinks, isDeleted);
         }catch (SQLException e){
             throw new PersistenceException("failed to extract exercise from given restultset" , e);
         }
+
     }
 }
