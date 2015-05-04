@@ -2,19 +2,13 @@ package PersitanceTest;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.mockito.internal.matchers.NotNull;
+import org.junit.Test;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
-
-import  sepm.ss15.grp16.persistence.exception.PersistenceException;
-import org.junit.Test;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.TestCase.assertNotNull;
 
 /**
  * Created by lukas on 30.04.2015.
