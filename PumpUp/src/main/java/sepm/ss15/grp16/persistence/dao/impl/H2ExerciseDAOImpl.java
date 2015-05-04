@@ -1,17 +1,26 @@
 package sepm.ss15.grp16.persistence.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.h2.util.IOUtils;
 import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
+import sepm.ss15.grp16.persistence.database.DBHandler;
+import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
-import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -27,6 +36,8 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     private PreparedStatement nextvalExercise;
     private PreparedStatement nextvalGif;
     private PreparedStatement readGifStatement;
+    private static final Logger LOGGER = LogManager.getLogger();
+
 
     private static Connection CONNECTION;
 
@@ -84,9 +95,32 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             //DTO isDeleted = false always when create gets called
             createStatement.setBoolean(6, isDeleted);
             createStatement.execute();
-
+            List<String> gifNames = new ArrayList<>();
 
             for(String s : gifLinks){
+                try {
+                    String directoryPath = getClass().getClassLoader().getResource("img").toString().substring(6);
+                    File directory = new File(directoryPath);
+                    if (!directory.exists()) {
+                        directory.mkdir();
+                    }
+                    GregorianCalendar calendar = new GregorianCalendar();
+                    String ownName = "/img_" + (calendar.getTimeInMillis()) + Math.abs(s.hashCode());
+                    FileInputStream inputStream = new FileInputStream(s);
+                    String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
+                    File file1 = new File(storingPath + ownName+".jpg"); //file storing
+                    FileOutputStream out = new FileOutputStream(file1);
+                    IOUtils.copy(inputStream, out); //copy content from input to output
+                    out.close();
+                    inputStream.close();
+                    gifNames.add(ownName+".jpg");
+                }catch (Exception e){
+                    throw new PersistenceException(e);
+                }
+            }
+
+
+            for(String s : gifNames){
                 rs = nextvalGif.executeQuery();
                 rs.next();
                 Integer gifId = rs.getInt(1);
@@ -94,10 +128,10 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                 insertGifStatement.setInt(2, id);
                 insertGifStatement.setString(3, s);
                 insertGifStatement.execute();
+                LOGGER.debug(s);
             }
 
-//            return exercise;
-            return  new Exercise(id, name, description, calories, videolink, gifLinks, isDeleted);
+            return  new Exercise(id, name, description, calories, videolink, gifNames, isDeleted);
         }catch (SQLException e){
             throw new PersistenceException("failed to insert excerisce into database", e);
         }
