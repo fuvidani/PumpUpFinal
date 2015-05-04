@@ -7,21 +7,25 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import jdk.internal.util.xml.impl.Input;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.gui.exception.ValidationException;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 
-
 import java.io.*;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by lukas on 01.05.2015.
@@ -73,6 +77,7 @@ public class ExerciseController implements Initializable{
     private String oldFileName;
     private Integer exerciseID;
 
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private ObservableList<Exercise> masterData = FXCollections.observableArrayList();
     private ObservableList<String> picData = FXCollections.observableArrayList();
@@ -81,7 +86,6 @@ public class ExerciseController implements Initializable{
     private ExerciseService exerciseService;
 
     public ExerciseController(){
-
 
     }
 
@@ -112,8 +116,8 @@ public class ExerciseController implements Initializable{
         });
 
         try {
-          exerciseService  = new ExerciseServiceImpl();
-          List<Exercise> data = exerciseService.findAll();
+            exerciseService  = new ExerciseServiceImpl();
+            List<Exercise> data = exerciseService.findAll();
             if (data == null) {
                 tableView.setPlaceholder(new javafx.scene.control.Label("Keine Uebungen gespeichert"));
             } else {
@@ -124,7 +128,7 @@ public class ExerciseController implements Initializable{
                 tableView.setItems(masterData); //initial fxml of data
             }
         } catch (ServiceException e) {
-
+            e.printStackTrace();
         }
 
     }
@@ -132,42 +136,87 @@ public class ExerciseController implements Initializable{
     private void showPic(String pic, String old){
         try {
 
-            String path = "" + (this.getClass().getResource("img/").toString().substring(6)).concat(pic);
-            FileInputStream reading = new FileInputStream(path);
-            Image img = new Image(reading);
+            File file;
+            InputStream inputStream;
+            if(pic.contains("img_")){
+                String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
+                file = new File(storingPath+pic);
+                inputStream = new FileInputStream(file);
+            }else{
+                file = new File(pic);
+                inputStream = new FileInputStream(file);
+            }
+            javafx.scene.image.Image img = new javafx.scene.image.Image(inputStream);
             image_view.setImage(img);
-        } catch (FileNotFoundException e) {
-
-
+            inputStream.close();
+            filename = pic;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     private void showExercise(Exercise exercise, Exercise old){
-
+        this.clear();
         if (exercise == null && old != null) {
             exercise = old;
         }
 
         tf_name.setText(exercise.getName());
         ta_description.setText((exercise.getDescription()));
-        tf_calories.setText(""+exercise.getCalories());
+        tf_calories.setText("" + exercise.getCalories());
         tf_videoLink.setText(""+exercise.getVideolink());
         this.exerciseID = exercise.getId();
         ObservableList<String> temp = FXCollections.observableArrayList();
+        LOGGER.debug(exercise.getGifLinks().size());
         for(String s : exercise.getGifLinks()){
-           temp.add(s);
+            LOGGER.debug(s);
+            temp.add(s);
         }
         picList.setItems(temp);
+        picList.setVisible(false);
+        picList.setVisible(true);
 
+    }
+
+    @FXML
+    private void btn_removePictureClicked(){
+        LOGGER.debug(filename);
+        int i = 0;
+        for(String s : picData){
+            if(s.equals(filename))
+                break;
+
+            i++;
+        }
+        picData.remove(i);
+        //no more pictures to show
+        if(picData.isEmpty()){
+            image_view.setImage(null);
+        }
+        picList.setItems(picData);
+        picList.setVisible(false);
+        picList.setVisible(true);
     }
 
     @FXML
     private void btnSaveclicked() {
         try {
             Exercise exercise = this.extractExercise();
+            for(int i = 0; i < pictureData.size(); i++){
+                pictureData.remove(i);
+            }
+            for(String s : picData){
+                pictureData.add(s);
+            }
             exercise.setGifLinks(this.pictureData);
-            masterData.add( exerciseService.create(exercise));
+            Exercise updated = exerciseService.create(exercise);
+            LOGGER.debug(updated.getGifLinks());
+            masterData.add(updated);
+            pictureData = updated.getGifLinks();
+            tableView.setVisible(false);
+            tableView.setVisible(true);
             this.clear();
+
         }catch (ServiceException e){
             e.printStackTrace();
         }catch(ValidationException e){
@@ -182,19 +231,19 @@ public class ExerciseController implements Initializable{
 
     @FXML
     private void btnDeleteClicked() {
-       try {
-           Exercise ex = this.extractExercise();
-           ex.setId(this.exerciseID);
+        try {
+            Exercise ex = this.extractExercise();
+            ex.setId(this.exerciseID);
 
-           exerciseService.delete(ex);
-           masterData.remove(ex);
-           this.clear();
+            exerciseService.delete(ex);
+            masterData.remove(ex);
+            this.clear();
 
-       }catch (ServiceException e){
-        e.printStackTrace();
-       }catch(ValidationException e){
-           e.printStackTrace();
-       }
+        }catch (ServiceException e){
+            e.printStackTrace();
+        }catch(ValidationException e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -238,77 +287,38 @@ public class ExerciseController implements Initializable{
             fileChooser.getExtensionFilters().add(extFilterPng);
 
             //Show open file dialog and save picture into file reference
-            File file = fileChooser.showOpenDialog(null);
+            List<File> files = null;
+            files =fileChooser.showOpenMultipleDialog(null);
             btn_durchsuchen.setVisible(true);
 
-            //no preview available so need to store picture
-            if (image_view.getImage() == null) {
 
-                if (file == null) {
-
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Warnung");
-                    alert.setContentText("Da ist wohl etwas schief gegangen. UPS!");
-                    alert.setHeaderText("Bild nicht gewaehlt");
-                    alert.showAndWait();
-                    return;
-                }
-
-                filename = file.toString();
-
-                GregorianCalendar calendar = new GregorianCalendar();
-
-                String ownName = "img_" + (calendar.getTimeInMillis()) + Math.abs(filename.hashCode());
-                tf_picture.setText(ownName.concat(".jpg"));
-                InputStream inputStream = new FileInputStream(file);
-                javafx.scene.image.Image img = new javafx.scene.image.Image(inputStream);
-                image_view.setImage(img);
-                inputStream.close();
-                pictureData.add(ownName);
-                picData.add(ownName);
-                picList.setItems(picData);
-                picList.setVisible(false);
-                picList.setVisible(true);
-
-            } else {//picture in preview
-
-                if (file == null) {//keep old picture
-                    oldFileName = null;
-                    return;
-                }
-
-
-                filename = file.toString();
-                //new picture to update
-
-                GregorianCalendar calendar = new GregorianCalendar();
-
-                String ownName = "img_" + (calendar.getTimeInMillis()) + Math.abs(filename.hashCode());
-
-                //preview in textfield
-                tf_picture.setText(ownName.concat(".jpg"));
-
-                //for the preview in the image fxml
-                InputStream inputStream = new FileInputStream(file);
-                javafx.scene.image.Image img = new javafx.scene.image.Image(inputStream);
-                image_view.setImage(img);
-                inputStream.close();
-                pictureData.add(ownName);
-                picData.add(ownName);
-                picList.setItems(picData);
-                picList.setVisible(false);
-                picList.setVisible(true);
+            for(File f : files){
+                picData.add(f.toString());
             }
+            picList.setItems(picData);
 
-        } catch (IOException e) {
+            //no preview available so need to store picture
 
+            filename = picData.get(0).toString();
+            File file = new File(filename);
+            InputStream inputStream = new FileInputStream(file);
+            javafx.scene.image.Image img = new javafx.scene.image.Image(inputStream);
+            image_view.setImage(img);
+            inputStream.close();
+
+            picList.setVisible(false);
+            picList.setVisible(true);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     private Exercise extractExercise() throws ValidationException{
-           validate();
-           return new Exercise(tf_name.getText(), ta_description.getText(), Double.parseDouble(tf_calories.getText()),
-                   tf_videoLink.getText(), false);
+        validate();
+        return new Exercise(tf_name.getText(), ta_description.getText(), Double.parseDouble(tf_calories.getText()),
+                tf_videoLink.getText(), false);
 
     }
 
@@ -316,9 +326,17 @@ public class ExerciseController implements Initializable{
         tf_name.setText("");
         ta_description.setText("");
         tf_videoLink.setText("");
-        picList.setItems(null);
         tf_calories.setText("");
-        tf_picture.setText(" ");
+        tf_picture.setText("");
+        picData.remove(0, picData.size());
+
+//        for(int i = 0; i < pictureData.size(); i++){
+//            pictureData.remove(i);
+//        }
+
+//        picList.setItems(null);
+//        picList.setVisible(false);
+//        picList.setVisible(true);
         image_view.setImage(null);
         tableView.getColumns().get(0).setVisible(false);
         tableView.getColumns().get(0).setVisible(true);
@@ -358,7 +376,7 @@ public class ExerciseController implements Initializable{
         if(display){
             alert.setHeaderText(errors);
             alert.showAndWait();
-           throw new ValidationException("");
+            throw new ValidationException("");
         }
 
     }

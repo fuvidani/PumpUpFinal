@@ -2,8 +2,8 @@ package sepm.ss15.grp16.service.impl;
 
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
@@ -56,8 +56,8 @@ public class ExerciseServiceImpl implements ExerciseService {
     public Exercise update(Exercise exercise) throws ServiceException {
         validate(exercise);
         try{
-            exerciseDAO.update(exercise);
-            return exercise;
+            Exercise updated = exerciseDAO.update(exercise);
+            return updated;
         }catch (PersistenceException e){
             throw new ServiceException(e);
         }

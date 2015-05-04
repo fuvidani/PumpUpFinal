@@ -1,12 +1,9 @@
 package sepm.ss15.grp16.persistence.database.impl;
 
-import org.h2.tools.RunScript;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
