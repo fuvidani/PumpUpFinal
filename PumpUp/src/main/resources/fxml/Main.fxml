@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="1000.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.MainController">
+   <children>
+      <Separator layoutX="56.0" layoutY="340.0" prefHeight="140.0" prefWidth="1300.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="340.0" />
+      <ImageView fx:id="userImgView" fitHeight="400.0" fitWidth="285.0" layoutX="86.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="673.0" AnchorPane.leftAnchor="86.0" AnchorPane.topAnchor="42.0">
+         <image>
+            <Image url="@../img/default_avatar.jpg" />
+         </image>
+      </ImageView>
+      <HBox fx:id="usernameHBox" layoutX="413.0" layoutY="40.0" AnchorPane.leftAnchor="413.0" AnchorPane.topAnchor="40.0" />
+      <Button layoutX="1486.0" layoutY="327.0" mnemonicParsing="false" onAction="#statisicsButtonClicked" prefHeight="35.0" prefWidth="152.0" text="Statistiken">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="28.0" fitWidth="39.0" layoutX="1767.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/user-avatar-placeholder.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="1691.0" layoutY="19.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="63.0" text="logout">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
+      <Separator layoutX="65.0" layoutY="484.0" prefHeight="140.0" prefWidth="1693.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="484.0" />
+      <Separator layoutX="33.0" layoutY="845.0" prefHeight="140.0" prefWidth="1693.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="74.0" AnchorPane.topAnchor="845.0" />
+      <Label layoutX="139.0" layoutY="472.0" prefHeight="16.0" prefWidth="152.0" text="Aktuelles Training:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="currentTrainingTypeLabel" layoutX="501.0" layoutY="469.0" prefHeight="16.0" prefWidth="200.0" text="Ausdauer">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <HBox layoutX="1118.0" layoutY="468.0" spacing="80.0">
+         <children>
+            <HBox layoutX="1118.0" layoutY="468.0" spacing="30.0">
+               <children>
+                  <Button layoutX="1037.0" layoutY="468.0" mnemonicParsing="false" onAction="#viewWorkoutPlanClicked" prefHeight="35.0" prefWidth="274.0" text="Trainingsplan anschauen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="1351.0" layoutY="469.0" mnemonicParsing="false" onAction="#editWorkoutPlanClicked" prefHeight="35.0" prefWidth="125.0" text="Ändern...">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Button layoutX="1658.0" layoutY="468.0" mnemonicParsing="false" onAction="#manageWorkoutClicked" prefHeight="35.0" prefWidth="154.0" text="Verwalten...">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <Label fx:id="usernameLabel" layoutX="440.0" layoutY="38.0" prefHeight="42.0" prefWidth="278.0" text="Max Mustermann">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Separator layoutX="1610.0" layoutY="420.0" orientation="VERTICAL" prefHeight="126.0" prefWidth="27.0" />
+      <Button layoutX="1620.0" layoutY="871.0" mnemonicParsing="false" onAction="#calendarClicked" prefHeight="35.0" prefWidth="162.0" text="Kalender...">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="742.0" layoutY="920.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="68.0" prefWidth="317.0" text="Training">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Button>
+      <AnchorPane layoutX="457.0" layoutY="86.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <fx:include source="Main_UserDataTable.fxml" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="829.0" layoutY="35.0" prefHeight="330.0" prefWidth="610.0">
+         <children>
+            <fx:include source="Main_UserLineChart.fxml" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="104.0" layoutY="594.0" prefHeight="260.0" prefWidth="1600.0">
+         <children>
+            <fx:include source="Main_Calendar.fxml" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
