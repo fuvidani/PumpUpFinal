@@ -15,10 +15,14 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 05.05.15.
+ * Controller of the main stage.
  *
  */
 public class MainController implements Initializable {
 
+    private Main_UserDataController userDataController;
+    private Main_UserChartController userChartController;
+    private Main_CalendarController calendarController;
 
     @FXML
     private Label currentTrainingTypeLabel;
@@ -36,6 +40,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.userChartController.initialize(location,resources);
+        this.userDataController.initialize(location,resources);
+        this.calendarController.initialize(location,resources);
 
     }
 

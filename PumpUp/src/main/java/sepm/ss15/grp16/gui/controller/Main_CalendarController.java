@@ -2,6 +2,7 @@ package sepm.ss15.grp16.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
