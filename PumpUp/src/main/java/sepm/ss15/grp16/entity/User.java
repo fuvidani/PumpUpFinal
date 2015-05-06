@@ -17,30 +17,24 @@ public class User implements DTO{
     private Integer age;
     private Integer height;
     private Boolean isDeleted;
-    private HashMap<Date, Integer> weightHistory;
-    private HashMap<Date, Integer> bodyfatHistory;
-    private HashMap<Date, String> pictureHistory;
 
-    public User(Integer user_id, String username, Boolean gender, Integer age, Integer height, Boolean isDeleted, HashMap<Date, Integer> weightHistory, HashMap<Date, Integer> bodyfatHistory, HashMap<Date, String> pictureHistory) {
+    public User(Integer user_id, String username, Boolean gender, Integer age, Integer height, Boolean isDeleted) {
         this.user_id = user_id;
         this.username = username;
         this.gender = gender;
         this.age = age;
         this.height = height;
         this.isDeleted = isDeleted;
-        this.weightHistory = weightHistory;
-        this.bodyfatHistory = bodyfatHistory;
-        this.pictureHistory = pictureHistory;
     }
 
     @Override
     public Integer getId() {
-        return null;//TODO: Aendern auf geUser_id
+        return getUser_id();
     }
 
     @Override
     public void setId(Integer id) {
-        //TODO: Aendern auf geUser_id
+        setUser_id(id);
     }
 
     public Integer getUser_id() {
@@ -89,30 +83,6 @@ public class User implements DTO{
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
-    }
-
-    public HashMap<Date, Integer> getWeightHistory() {
-        return weightHistory;
-    }
-
-    public void setWeightHistory(HashMap<Date, Integer> weightHistory) {
-        this.weightHistory = weightHistory;
-    }
-
-    public HashMap<Date, Integer> getBodyfatHistory() {
-        return bodyfatHistory;
-    }
-
-    public void setBodyfatHistory(HashMap<Date, Integer> bodyfatHistory) {
-        this.bodyfatHistory = bodyfatHistory;
-    }
-
-    public HashMap<Date, String> getPictureHistory() {
-        return pictureHistory;
-    }
-
-    public void setPictureHistory(HashMap<Date, String> pictureHistory) {
-        this.pictureHistory = pictureHistory;
     }
 
     @Override

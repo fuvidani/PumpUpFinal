@@ -32,7 +32,7 @@ public abstract class AbstractUserDaoTest {
 
     @Test
     public void createWithValidUserShouldPersist() throws Exception {
-        User testUser = new User(null, "msober", true, 20, 194, false, null, null, null);
+        User testUser = new User(null, "msober", true, 20, 194, false);
         List<User> allUsers = userDAO.findAll();
         assertFalse(allUsers.contains(testUser));
         userDAO.create(testUser);
@@ -47,7 +47,7 @@ public abstract class AbstractUserDaoTest {
 
     @Test
     public void deleteWithValidUserShouldPersist() throws Exception{
-        User testUser = new User(null, "msober", true, 20, 194, false, null, null, null);
+        User testUser = new User(null, "msober", true, 20, 194, false);
         userDAO.create(testUser);
         List<User> allUsers = userDAO.findAll();
         assertTrue(allUsers.contains(testUser));
@@ -64,8 +64,8 @@ public abstract class AbstractUserDaoTest {
 
     @Test
     public void updateWithValidParametersShouldPersist() throws Exception{
-        User userBeforeUpdate = new User(null, "msober", true, 20, 194, false, null, null, null);
-        User userAfterUpdate = new User(null, "ksober", false, 18, 174, false, null, null, null);
+        User userBeforeUpdate = new User(null, "msober", true, 20, 194, false);
+        User userAfterUpdate = new User(null, "ksober", false, 18, 174, false);
         userDAO.create(userBeforeUpdate);
         userAfterUpdate.setUser_id(userBeforeUpdate.getUser_id());
         List<User> allJockeys = userDAO.findAll();
@@ -77,9 +77,9 @@ public abstract class AbstractUserDaoTest {
 
     @Test
     public void searchByIDShouldFindUser() throws Exception{
-        User testUser1 = new User(null, "msober", true, 20, 194, false, null, null, null);
-        User testUser2 = new User(null, "ksober", false, 18, 174, false, null, null, null);
-        User testUser3 = new User(null, "psober", true, 48, 188, false, null, null, null);
+        User testUser1 = new User(null, "msober", true, 20, 194, false);
+        User testUser2 = new User(null, "ksober", false, 18, 174, false);
+        User testUser3 = new User(null, "psober", true, 48, 188, false);
         userDAO.create(testUser1);
         userDAO.create(testUser2);
         userDAO.create(testUser3);

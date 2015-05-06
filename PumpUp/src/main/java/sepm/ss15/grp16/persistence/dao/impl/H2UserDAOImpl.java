@@ -92,7 +92,7 @@ public class H2UserDAOImpl implements UserDAO {
 
             while (rs_allUsers.next()) {
                 User foundUser = new User(rs_allUsers.getInt(1), rs_allUsers.getString(2), rs_allUsers.getBoolean(3),
-                        rs_allUsers.getInt(4), rs_allUsers.getInt(5), rs_allUsers.getBoolean(6), null, null, null);
+                        rs_allUsers.getInt(4), rs_allUsers.getInt(5), rs_allUsers.getBoolean(6));
                 userList.add(foundUser);
             }
 
@@ -160,7 +160,7 @@ public class H2UserDAOImpl implements UserDAO {
 
         LOGGER.info("Searching user with id: " + id + "...");
 
-        User foundUser = null;
+        User foundUser;
         try {
             searchByIDStatement.setInt(1, id);
 
@@ -168,7 +168,7 @@ public class H2UserDAOImpl implements UserDAO {
             rs_user.next();
 
             foundUser = new User(rs_user.getInt(1), rs_user.getString(2), rs_user.getBoolean(3),
-                    rs_user.getInt(4), rs_user.getInt(5), rs_user.getBoolean(6), null, null, null);
+                    rs_user.getInt(4), rs_user.getInt(5), rs_user.getBoolean(6));
 
         } catch (SQLException e) {
             LOGGER.error("Searching the user with id: " + id + " failed");
