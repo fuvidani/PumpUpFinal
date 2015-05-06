@@ -9,7 +9,7 @@ import java.util.HashMap;
  * @author Michael Sober
  * @version 1.0
  */
-public class User {
+public class User implements DTO{
 
     private Integer user_id;
     private String username;
@@ -31,6 +31,16 @@ public class User {
         this.weightHistory = weightHistory;
         this.bodyfatHistory = bodyfatHistory;
         this.pictureHistory = pictureHistory;
+    }
+
+    @Override
+    public Integer getId() {
+        return null;//TODO: Aendern auf geUser_id
+    }
+
+    @Override
+    public void setId(Integer id) {
+        //TODO: Aendern auf geUser_id
     }
 
     public Integer getUser_id() {

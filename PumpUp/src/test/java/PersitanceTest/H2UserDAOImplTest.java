@@ -15,12 +15,12 @@ public class H2UserDAOImplTest extends AbstractUserDaoTest{
 
     @BeforeClass
     public static void setUpClass() throws Exception{
-        con = H2DBConnectorImpl.getInstance().getConnection();
+        con = new H2DBConnectorImpl("jdbc:h2:tcp://localhost/~/pumpup", "sa", "").getConnection();
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception{
-        H2DBConnectorImpl.getInstance().closeConnection();
+        new H2DBConnectorImpl("jdbc:h2:tcp://localhost/~/pumpup", "sa", "").closeConnection();
     }
 
     @Before
