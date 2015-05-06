@@ -8,14 +8,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import jdk.internal.util.xml.impl.Input;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.gui.exception.ValidationException;
+import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
@@ -23,7 +21,6 @@ import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -85,10 +82,16 @@ public class ExerciseController implements Initializable{
 
     private ExerciseService exerciseService;
 
-    public ExerciseController(){
 
+    public void setExerciseService(ExerciseService exerciseService)
+    {
+        this.exerciseService = exerciseService;
     }
 
+    public ExerciseService getExerciseService()
+    {
+        return exerciseService;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -115,8 +118,7 @@ public class ExerciseController implements Initializable{
             }
         });
 
-        try {
-            exerciseService  = new ExerciseServiceImpl();
+      try {
             List<Exercise> data = exerciseService.findAll();
             if (data == null) {
                 tableView.setPlaceholder(new javafx.scene.control.Label("Keine Uebungen gespeichert"));
@@ -130,8 +132,7 @@ public class ExerciseController implements Initializable{
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-
-    }
+}
 
     private void showPic(String pic, String old){
         try {
@@ -217,9 +218,7 @@ public class ExerciseController implements Initializable{
             tableView.setVisible(true);
             this.clear();
 
-        }catch (ServiceException e){
-            e.printStackTrace();
-        }catch(ValidationException e){
+        }catch (ServiceException e) {
             e.printStackTrace();
         }
     }
@@ -240,8 +239,6 @@ public class ExerciseController implements Initializable{
             this.clear();
 
         }catch (ServiceException e){
-            e.printStackTrace();
-        }catch(ValidationException e){
             e.printStackTrace();
         }
 
@@ -267,8 +264,6 @@ public class ExerciseController implements Initializable{
             tableView.getColumns().get(0).setVisible(true);
         }catch (ServiceException ex){
             ex.printStackTrace();
-        }catch(ValidationException e){
-            e.printStackTrace();
         }
     }
 

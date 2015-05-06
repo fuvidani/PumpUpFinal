@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Management_ExerciseController">
+   <children>
+      <Label layoutX="369.0" layoutY="23.0" text="Übungen">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <TableView fx:id="exerciseTable" layoutX="35.0" layoutY="141.0" prefHeight="691.0" prefWidth="224.0">
+        <columns>
+          <TableColumn fx:id="exerciseColumn" prefWidth="158.00001525878906" text="Übung" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <ImageView fx:id="exerciseImage" fitHeight="215.0" fitWidth="259.0" layoutX="328.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/pushup.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="exerciseNameLabel" layoutX="626.0" layoutY="167.0" prefHeight="28.0" prefWidth="255.0" text="Liegestütz">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="exerciseTextArea" layoutX="335.0" layoutY="464.0" prefHeight="227.0" prefWidth="507.0" />
+      <Button layoutX="61.0" layoutY="900.0" mnemonicParsing="false" onAction="#newExerciseButtonClicked" prefHeight="35.0" prefWidth="225.0" text="Neue Übung anlegen...">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="343.0" layoutY="718.0" mnemonicParsing="false" onAction="#showExerciseButtonClicked" prefHeight="35.0" prefWidth="227.0" text="Übung anzeigen...">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="344.0" layoutY="768.0" mnemonicParsing="false" onAction="#editExerciseButtonClicked" prefHeight="35.0" prefWidth="227.0" text="Übung bearbeiten...">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="344.0" layoutY="820.0" mnemonicParsing="false" onAction="#deleteExerciseButtonClicked" prefHeight="35.0" prefWidth="227.0" text="Übung löschen...">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.TrainingstartController">
+   <children>
+      <Label layoutX="65.0" layoutY="59.0" prefHeight="16.0" prefWidth="99.0" text="Training:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="trainingTypeLabel" alignment="CENTER" layoutX="473.0" layoutY="54.0" prefHeight="16.0" prefWidth="264.0" text="Ausdauer">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="212.0" prefHeight="16.0" prefWidth="99.0" text="To Do:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="538.0" prefHeight="16.0" prefWidth="99.0" text="Musik:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="firstExerciseCheckbox" layoutX="395.0" layoutY="214.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="292.0" text="Liegestütz 2x15">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="secondExerciseCheckbox" layoutX="395.0" layoutY="275.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="292.0" text="Kniebeuge 5x10">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="thirdExerciseCheckbox" layoutX="395.0" layoutY="335.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="292.0" text="Sit-Ups 5x20">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </CheckBox>
+      <Button layoutX="388.0" layoutY="535.0" mnemonicParsing="false" onAction="#browseMusicClicked" prefHeight="35.0" prefWidth="122.0" text="Wählen...">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Label fx:id="musicPathLabel" layoutX="571.0" layoutY="539.0" prefHeight="28.0" prefWidth="609.0" text="C:\Users\Lukas\Music\Musik">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="startButton" layoutX="514.0" layoutY="668.0" mnemonicParsing="false" onAction="#startButtonClicked" text="Start!">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
