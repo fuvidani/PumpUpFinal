@@ -8,8 +8,7 @@ import java.util.List;
 /**
  * Created by lukas on 30.04.2015.
  */
-public interface ExerciseDAO {
-
+public interface ExerciseDAO extends DAO<Exercise>{
 
     /**
      * creating a new exercise
@@ -26,6 +25,14 @@ public interface ExerciseDAO {
      * @throws PersistenceException  if there are complications with the persitance layer
      */
     List<Exercise> findAll() throws PersistenceException;
+
+
+    /**
+     * @param id exercixe to search for
+     * @return if the exercixe exists it is returned, otherwise null is the result.
+     * @throws PersistenceException  if there are complications with the persitance layer
+     */
+    Exercise searchByID(int id) throws PersistenceException;
 
     /**
      * updating one given exercise with new values and returning it for further usage

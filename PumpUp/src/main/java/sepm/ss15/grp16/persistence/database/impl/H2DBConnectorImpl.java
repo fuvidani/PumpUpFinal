@@ -16,16 +16,14 @@ public class H2DBConnectorImpl implements DBHandler {
     private static Connection con = null;
     private static H2DBConnectorImpl h2DBConnector;
 
-    private H2DBConnectorImpl(){
-    }
+    private String path;
+    private String user;
+    private String password;
 
-    public static H2DBConnectorImpl getInstance() throws DBException{
-        if(h2DBConnector == null){
-            h2DBConnector=new H2DBConnectorImpl();
-        }
-
-        return h2DBConnector;
-
+    public H2DBConnectorImpl(String path, String user, String password){
+        this.path = path;
+        this.user = user;
+        this.password = password;
     }
 
     @Override
@@ -35,7 +33,7 @@ public class H2DBConnectorImpl implements DBHandler {
             try {
                 Class.forName("org.h2.Driver");
 
-                con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
+                con = DriverManager.getConnection(path, user, password);
 
 
             } catch (ClassNotFoundException  | SQLException e) {

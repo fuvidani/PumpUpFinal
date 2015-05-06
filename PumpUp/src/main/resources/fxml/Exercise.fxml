@@ -92,7 +92,7 @@
                <graphic>
                   <ImageView fitHeight="48.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/minus_alt-512.png" />
+                        <Image url="@/img/minus_alt-512.png" />
                      </image>
                   </ImageView>
                </graphic>
