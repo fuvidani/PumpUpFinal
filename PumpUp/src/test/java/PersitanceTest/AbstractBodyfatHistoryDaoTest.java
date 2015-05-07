@@ -12,7 +12,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by michaelsober on 06.05.15.
+ * This class provides methods for testing BodyfatHistoryDAOs
+ *
+ * @author Michael Sober
+ * @version 1.0
  */
 public abstract class AbstractBodyfatHistoryDaoTest {
 

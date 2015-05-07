@@ -26,7 +26,7 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
     private PreparedStatement createStatement;
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public H2BodyfatHistoryDAOImpl() throws PersistenceException{
+    public H2BodyfatHistoryDAOImpl() throws PersistenceException {
 
         try {
             DBHandler handler = new H2DBConnectorImpl("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");

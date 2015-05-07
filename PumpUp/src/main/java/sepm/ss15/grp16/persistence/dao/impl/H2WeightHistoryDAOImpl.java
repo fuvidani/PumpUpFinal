@@ -89,9 +89,9 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
             ResultSet rs_allWeightHistories = findAllStatement.executeQuery("SELECT * FROM weighthistory;");
 
             while (rs_allWeightHistories.next()) {
-                WeightHistory foundBodyfatHistory = new WeightHistory(rs_allWeightHistories.getInt(1), rs_allWeightHistories.getInt(2),
+                WeightHistory foundWeightHistory = new WeightHistory(rs_allWeightHistories.getInt(1), rs_allWeightHistories.getInt(2),
                         rs_allWeightHistories.getInt(3), rs_allWeightHistories.getDate(4));
-                weightHistoryList.add(foundBodyfatHistory);
+                weightHistoryList.add(foundWeightHistory);
             }
 
         } catch (SQLException e) {
