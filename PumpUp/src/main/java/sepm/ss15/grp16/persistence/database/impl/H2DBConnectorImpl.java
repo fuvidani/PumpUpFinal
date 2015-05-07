@@ -7,6 +7,7 @@ import sepm.ss15.grp16.persistence.exception.DBException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,18 +21,15 @@ import java.sql.SQLException;
 public class H2DBConnectorImpl implements DBHandler {
 
 	private static Connection con = null;
-	private static H2DBConnectorImpl h2DBConnector;
 
-	private H2DBConnectorImpl() {
-	}
+	private String path;
+	private String user;
+	private String password;
 
-	public static H2DBConnectorImpl getInstance() throws DBException {
-		if (h2DBConnector == null) {
-			h2DBConnector = new H2DBConnectorImpl();
-		}
-
-		return h2DBConnector;
-
+	public H2DBConnectorImpl(String path, String user, String password){
+		this.path = path;
+		this.user = user;
+		this.password = password;
 	}
 
 	@Override
@@ -40,11 +38,12 @@ public class H2DBConnectorImpl implements DBHandler {
 
 			try {
 				Class.forName("org.h2.Driver");
-				con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
+
+				con = DriverManager.getConnection(path, user, password);
 
 				execScripts();
 
-			} catch (ClassNotFoundException | SQLException | FileNotFoundException e) {
+			} catch (ClassNotFoundException | SQLException | FileNotFoundException | URISyntaxException e) {
 				throw new DBException("Failed to open connection", e);
 			}
 		}
@@ -80,7 +79,7 @@ public class H2DBConnectorImpl implements DBHandler {
 			populateTest();
 
 
-		} catch (ClassNotFoundException | FileNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException | FileNotFoundException | URISyntaxException | SQLException e) {
 			throw new DBException("Failed to activate testmode", e);
 		}
 	}
@@ -106,8 +105,8 @@ public class H2DBConnectorImpl implements DBHandler {
 	 * @throws FileNotFoundException
 	 * @throws SQLException
 	 */
-	private void execScripts() throws FileNotFoundException, SQLException {
-		String sql_url = getClass().getClassLoader().getResource("sql").getFile();
+	private void execScripts() throws FileNotFoundException, SQLException, URISyntaxException {
+		String sql_url = getClass().getClassLoader().getResource("sql").toURI().getPath();
 
 		if (sql_url != null) {
 

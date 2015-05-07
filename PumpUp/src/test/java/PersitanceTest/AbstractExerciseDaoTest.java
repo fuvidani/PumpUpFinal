@@ -14,12 +14,9 @@ import java.util.List;
  * Created by lukas on 30.04.2015.
  */
 public  abstract  class AbstractExerciseDaoTest {
-    protected static ExerciseDAO exerciseDAO;
 
 
-    protected static void setExerciseDAO(ExerciseDAO exerciseDAO){
-        AbstractExerciseDaoTest.exerciseDAO = exerciseDAO;
-    }
+    public abstract ExerciseDAO getExerciseDAO();
 
     @Test
     public void createValid(){
@@ -29,11 +26,11 @@ public  abstract  class AbstractExerciseDaoTest {
             gifList.add("menshealth");
             Exercise liegestuetz = new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false);
 
-            List<Exercise> exerciseList = exerciseDAO.findAll();
+            List<Exercise> exerciseList = getExerciseDAO().findAll();
             TestCase.assertFalse(exerciseList.contains(liegestuetz));
-            Exercise e =  exerciseDAO.create(liegestuetz);
+            Exercise e =  getExerciseDAO().create(liegestuetz);
             Assert.assertNotNull(e);
-            exerciseList = exerciseDAO.findAll();
+            exerciseList = getExerciseDAO().findAll();
 
             TestCase.assertTrue(exerciseList.contains(e));
 
@@ -51,11 +48,11 @@ public  abstract  class AbstractExerciseDaoTest {
             gifList.add("menshealth");
             Exercise liegestuetz = new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false);
 
-            List<Exercise> exerciseList = exerciseDAO.findAll();
+            List<Exercise> exerciseList = getExerciseDAO().findAll();
             TestCase.assertFalse(exerciseList.contains(liegestuetz));
-            Exercise e =  exerciseDAO.create(liegestuetz);
+            Exercise e =  getExerciseDAO().create(liegestuetz);
             Assert.assertNotNull(e);
-            exerciseList = exerciseDAO.findAll();
+            exerciseList = getExerciseDAO().findAll();
             TestCase.assertTrue(exerciseList.contains(e));
 
             e.setName("diamond Pull up");
@@ -63,8 +60,8 @@ public  abstract  class AbstractExerciseDaoTest {
             e.setCalories(23.0);
             e.setGifLinks(gifList);
 
-            exerciseDAO.update(e);
-            exerciseList = exerciseDAO.findAll();
+            getExerciseDAO().update(e);
+            exerciseList = getExerciseDAO().findAll();
             TestCase.assertTrue(exerciseList.contains(e));
 
         } catch (PersistenceException e) {
@@ -83,14 +80,14 @@ public  abstract  class AbstractExerciseDaoTest {
             gifList.add("menshealth");
             Exercise liegestuetz = new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false);
 
-            List<Exercise> exerciseList = exerciseDAO.findAll();
+            List<Exercise> exerciseList = getExerciseDAO().findAll();
             TestCase.assertFalse(exerciseList.contains(liegestuetz));
-            Exercise e =  exerciseDAO.create(liegestuetz);
+            Exercise e =  getExerciseDAO().create(liegestuetz);
             Assert.assertNotNull(e);
-            exerciseList = exerciseDAO.findAll();
+            exerciseList = getExerciseDAO().findAll();
             TestCase.assertTrue(exerciseList.contains(e));
-            exerciseDAO.delete(e);
-            exerciseList = exerciseDAO.findAll();
+            getExerciseDAO().delete(e);
+            exerciseList = getExerciseDAO().findAll();
             TestCase.assertFalse(exerciseList.contains(e));
 
         } catch (PersistenceException e) {

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by lukas on 30.04.2015.
  */
-public class Exercise {
+public class Exercise implements DTO{
 
     private Integer id;
     private String name;
