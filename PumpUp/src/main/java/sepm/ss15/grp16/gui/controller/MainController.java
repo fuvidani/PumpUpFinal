@@ -40,6 +40,9 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.userChartController = new Main_UserChartController();
+        this.userDataController = new Main_UserDataController();
+        this.calendarController = new Main_CalendarController();
         this.userChartController.initialize(location,resources);
         this.userDataController.initialize(location,resources);
         this.calendarController.initialize(location,resources);

@@ -9,13 +9,17 @@ import javafx.stage.Stage;
 
 /**
  * Created by lukas on 01.05.2015.
+ * Edited by Daniel Fuevesi
  */
 public class Main extends Application{
 
 
     public void start(final Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Exercise.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/Main.fxml"));
         primaryStage.setScene(new Scene(root, 1300, 600));
+        primaryStage.setMinHeight(800);
+        primaryStage.setMinWidth(1000);
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
 

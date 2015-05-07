@@ -45,6 +45,7 @@ public class Management_ExerciseController implements Initializable{
     @FXML
     void newExerciseButtonClicked(ActionEvent event) {
 
+
     }
 
     @FXML
