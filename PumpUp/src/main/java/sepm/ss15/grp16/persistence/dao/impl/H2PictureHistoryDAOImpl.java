@@ -27,10 +27,9 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
     private PreparedStatement createStatement;
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public H2PictureHistoryDAOImpl() throws PersistenceException {
+    public H2PictureHistoryDAOImpl(DBHandler handler) throws PersistenceException {
 
         try {
-            DBHandler handler = new H2DBConnectorImpl("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO picturehistory VALUES(?, ?, ?, ?);");
         } catch (SQLException e) {

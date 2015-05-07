@@ -21,10 +21,6 @@ public abstract class AbstractWeightHistoryDaoTest {
 
     protected WeightHistoryDAO weightHistoryDAO;
 
-    public void setWeightHistoryDAO(WeightHistoryDAO weightHistoryDAO) {
-        this.weightHistoryDAO = weightHistoryDAO;
-    }
-
     @Test(expected = PersistenceException.class)
     public void createWithNullShouldThrowException() throws Exception{
         weightHistoryDAO.create(null);

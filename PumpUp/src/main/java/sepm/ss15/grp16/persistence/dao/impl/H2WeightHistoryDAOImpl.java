@@ -25,10 +25,9 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
     private PreparedStatement createStatement;
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public H2WeightHistoryDAOImpl() throws PersistenceException {
+    public H2WeightHistoryDAOImpl(DBHandler handler) throws PersistenceException {
 
         try {
-            DBHandler handler = new H2DBConnectorImpl("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO weighthistory VALUES(?, ?, ?, ?);");
         } catch (SQLException e) {

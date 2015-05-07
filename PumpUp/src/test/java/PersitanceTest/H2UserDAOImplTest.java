@@ -1,7 +1,13 @@
 package PersitanceTest;
 
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl;
+import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 
 import java.sql.Connection;
@@ -9,29 +15,27 @@ import java.sql.Connection;
 /**
  * Created by michaelsober on 05.05.15.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:spring-config.xml")
 public class H2UserDAOImplTest extends AbstractUserDaoTest{
 
-    private static Connection con;
+    @Autowired
+    private DBHandler dbConnector;
 
-    @BeforeClass
-    public static void setUpClass() throws Exception{
-        con = new H2DBConnectorImpl("jdbc:h2:tcp://localhost/~/pumpup", "sa", "").getConnection();
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception{
-        new H2DBConnectorImpl("jdbc:h2:tcp://localhost/~/pumpup", "sa", "").closeConnection();
+    @Autowired
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     @Before
     public void setUp() throws Exception {
-        this.setUserDAO(new H2UserDAOImpl());
-        con.setAutoCommit(false);
+        dbConnector.getConnection().setAutoCommit(false);
     }
 
     @After
     public void tearDown() throws Exception {
-        con.rollback();
-        con.setAutoCommit(true);
+        dbConnector.getConnection().rollback();
+        dbConnector.getConnection().setAutoCommit(true);
     }
+
 }

@@ -21,10 +21,6 @@ public abstract class AbstractUserDaoTest {
 
     protected UserDAO userDAO;
 
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
     @Test(expected = PersistenceException.class)
     public void createWithNullShouldThrowException() throws Exception{
         userDAO.create(null);

@@ -22,10 +22,6 @@ public abstract class AbstractPictureHistoryDaoTest {
 
     protected PictureHistoryDAO pictureHistoryDAO;
 
-    public void setPictureHistoryDAO(PictureHistoryDAO pictureHistoryDAO) {
-        this.pictureHistoryDAO = pictureHistoryDAO;
-    }
-
     @Test(expected = PersistenceException.class)
     public void createWithNullShouldThrowException() throws Exception{
         pictureHistoryDAO.create(null);

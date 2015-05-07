@@ -21,10 +21,6 @@ public abstract class AbstractBodyfatHistoryDaoTest {
 
     protected BodyfatHistoryDAO bodyfatHistoryDAO;
 
-    public void setBodyfatHistoryDAO(BodyfatHistoryDAO bodyfatHistoryDAO) {
-        this.bodyfatHistoryDAO = bodyfatHistoryDAO;
-    }
-
     @Test(expected = PersistenceException.class)
     public void createWithNullShouldThrowException() throws Exception{
         bodyfatHistoryDAO.create(null);

@@ -4,7 +4,13 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sepm.ss15.grp16.persistence.dao.BodyfatHistoryDAO;
 import sepm.ss15.grp16.persistence.dao.impl.H2BodyfatHistoryDAOImpl;
+import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 
 import java.sql.Connection;
@@ -12,29 +18,26 @@ import java.sql.Connection;
 /**
  * Created by michaelsober on 06.05.15.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:spring-config.xml")
 public class H2BodyfatHistoryDAOImplTest extends AbstractBodyfatHistoryDaoTest {
 
-    private static Connection con;
+    @Autowired
+    private DBHandler dbConnector;
 
-    @BeforeClass
-    public static void setUpClass() throws Exception{
-        con = new H2DBConnectorImpl("jdbc:h2:tcp://localhost/~/pumpup", "sa", "").getConnection();
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception{
-        new H2DBConnectorImpl("jdbc:h2:tcp://localhost/~/pumpup", "sa", "").closeConnection();
+    @Autowired
+    public void setBodyfatHistoryDAO(BodyfatHistoryDAO bodyfatHistoryDAO) {
+        this.bodyfatHistoryDAO = bodyfatHistoryDAO;
     }
 
     @Before
     public void setUp() throws Exception {
-        this.setBodyfatHistoryDAO(new H2BodyfatHistoryDAOImpl());
-        con.setAutoCommit(false);
+        dbConnector.getConnection().setAutoCommit(false);
     }
 
     @After
     public void tearDown() throws Exception {
-        con.rollback();
-        con.setAutoCommit(true);
+        dbConnector.getConnection().rollback();
+        dbConnector.getConnection().setAutoCommit(true);
     }
 }
