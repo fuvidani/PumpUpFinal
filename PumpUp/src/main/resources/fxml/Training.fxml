@@ -8,68 +8,18 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.TrainingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.TrainingController">
    <children>
-      <SplitPane dividerPositions="0.8096192384769539" layoutX="243.0" layoutY="554.0" orientation="VERTICAL" prefHeight="1000.0" prefWidth="1800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.7639198218262806" layoutX="243.0" layoutY="554.0" orientation="VERTICAL" prefHeight="1000.0" prefWidth="1800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="676.0" prefWidth="1398.0">
                <children>
-                  <MediaView fx:id="mediaView" fitHeight="600.0" fitWidth="1000.0" layoutX="69.0" layoutY="94.0">
-                     <viewport>
-                        <Rectangle2D />
-                     </viewport>
-                  </MediaView>
-                  <Label fx:id="currentExerciseLabel" alignment="CENTER" layoutX="1215.0" layoutY="98.0" prefHeight="59.0" prefWidth="568.0" text="Liegestütz">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
-                  <Circle fx:id="clock" fill="#1fff8d" layoutX="1506.0" layoutY="409.0" radius="147.0" stroke="BLACK" strokeType="INSIDE" />
+                  <fx:include source="Training_Gif_And_Timer.fxml" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="1798.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="163.0" prefWidth="1398.0">
                <children>
-                  <Label layoutX="67.0" layoutY="85.0" text="Playing:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="artistAndSongLabel" layoutX="173.0" layoutY="85.0" prefHeight="28.0" prefWidth="453.0" text="An Artist - A Song">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Button layoutX="911.0" layoutY="80.0" mnemonicParsing="false" onAction="#playButtonClicked" text="Play">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="997.0" layoutY="79.0" mnemonicParsing="false" onAction="#forwardButtonClicked" text="Fast Forward">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="790.0" layoutY="80.0" mnemonicParsing="false" onAction="#rewindButtonClicked" prefHeight="26.0" prefWidth="97.0" text="Rewind">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-                  <Label fx:id="songTotalLengthLabel" layoutX="721.0" layoutY="85.0" prefHeight="23.0" prefWidth="53.0" text="/ 5:30">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="songSecondsCounterLabel" layoutX="680.0" layoutY="85.0" prefHeight="23.0" prefWidth="53.0" text="1:39">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Button layoutX="1567.0" layoutY="80.0" mnemonicParsing="false" onAction="#playlistButtonClicked" text="Playlist">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
+                  <fx:include source="Training_MusicPlayer.fxml" />
                </children>
             </AnchorPane>
         </items>

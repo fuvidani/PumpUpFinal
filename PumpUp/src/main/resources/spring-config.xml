@@ -20,7 +20,7 @@
               <constructor-arg name="exerciseDAO" ref="exerciseDAO" />
        </bean>
 
-       <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.ExerciseController" scope="prototype">
+       <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.ExercisesController" scope="prototype">
               <property name="exerciseService" ref="exerciseService" />
        </bean>
 

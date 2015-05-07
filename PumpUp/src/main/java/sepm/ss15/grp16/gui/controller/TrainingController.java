@@ -12,52 +12,22 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 06.05.15.
+ * This is the central controller of the training's stage.
+ * It consists of a graphicsController and a musicPlayerController.
  *
  */
 public class TrainingController implements Initializable{
 
 
-    @FXML
-    private Label songTotalLengthLabel;
-
-    @FXML
-    private Circle clock;
-
-    @FXML
-    private MediaView mediaView;
-
-    @FXML
-    private Label artistAndSongLabel;
-
-    @FXML
-    private Label songSecondsCounterLabel;
-
-    @FXML
-    private Label currentExerciseLabel;
-
+    private TrainingGraphicsController graphicsController;
+    private TrainingMusicPlayerController musicPlayerController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-    @FXML
-    void playButtonClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void forwardButtonClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void rewindButtonClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void playlistButtonClicked(ActionEvent event) {
+        this.graphicsController = new TrainingGraphicsController();
+        this.musicPlayerController = new TrainingMusicPlayerController();
+        this.graphicsController.initialize(location,resources);
+        this.musicPlayerController.initialize(location,resources);
 
     }
 

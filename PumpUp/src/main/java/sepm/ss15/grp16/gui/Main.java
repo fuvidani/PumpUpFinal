@@ -2,14 +2,13 @@ package sepm.ss15.grp16.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import sepm.ss15.grp16.gui.controller.ExerciseController;
+import sepm.ss15.grp16.gui.controller.ExercisesController;
 
 
 /**
@@ -32,8 +31,8 @@ public class Main extends Application{
             }
         });
 
-        Pane pane = (Pane) fxmlLoader.load(ExerciseController.class.getClassLoader().getResourceAsStream("fxml/Exercise.fxml"));
-        ExerciseController exerciseController = fxmlLoader.getController();
+        Pane pane = (Pane) fxmlLoader.load(ExercisesController.class.getClassLoader().getResourceAsStream("fxml/Exercises.fxml"));
+        ExercisesController exercisesController = fxmlLoader.getController();
         primaryStage.setScene(new Scene(pane, 1300, 600));
         primaryStage.show();
     }

@@ -6,19 +6,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 06.05.15.
+ * This controller controls the little pop-up window before the actual training starts.
  *
  */
 public class TrainingstartController implements Initializable{
 
-
     @FXML
-    private CheckBox firstExerciseCheckbox;
+    private ListView<?> toDoListView;
 
     @FXML
     private Label musicPathLabel;
@@ -29,11 +30,7 @@ public class TrainingstartController implements Initializable{
     @FXML
     private Button startButton;
 
-    @FXML
-    private CheckBox thirdExerciseCheckbox;
 
-    @FXML
-    private CheckBox secondExerciseCheckbox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

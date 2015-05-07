@@ -3,13 +3,8 @@ package sepm.ss15.grp16.gui.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,14 +23,10 @@ public class MainController implements Initializable {
     private Label currentTrainingTypeLabel;
 
     @FXML
-    private HBox usernameHBox;
-
-    @FXML
     private ImageView userImgView;
 
     @FXML
     private Label usernameLabel;
-
 
 
     @Override
@@ -50,23 +41,34 @@ public class MainController implements Initializable {
     }
 
 
+
+    @FXML
+    void bodyPhotosButtonClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void editUserDataButtonClicked(ActionEvent event) {
+
+    }
+
     @FXML
     void statisicsButtonClicked(ActionEvent event) {
 
     }
 
     @FXML
-    void viewWorkoutPlanClicked(ActionEvent event) {
+    void viewCurrentWorkoutPlanClicked(ActionEvent event) {
 
     }
 
     @FXML
-    void editWorkoutPlanClicked(ActionEvent event) {
+    void viewAllWorkoutPlansClicked(ActionEvent event) {
 
     }
 
     @FXML
-    void manageWorkoutClicked(ActionEvent event) {
+    void exercisesButtonClicked(ActionEvent event) {
 
     }
 
@@ -79,6 +81,7 @@ public class MainController implements Initializable {
     void trainingClicked(ActionEvent event) {
 
     }
+
 
 
 
