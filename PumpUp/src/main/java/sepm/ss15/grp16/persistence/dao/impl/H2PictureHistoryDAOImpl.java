@@ -43,6 +43,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
 
     @Override
     public List<PictureHistory> searchByUserID(int user_id) {
+        //TODO: Implement me
         return null;
     }
 
@@ -135,16 +136,18 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
 
     @Override
     public PictureHistory searchByID(int id) throws PersistenceException {
+        //TODO: Implement me
         return null;
     }
 
     @Override
     public PictureHistory update(PictureHistory dto) throws PersistenceException {
+        //TODO: Implement me
         return null;
     }
 
     @Override
     public void delete(PictureHistory dto) throws PersistenceException {
-
+        //TODO: Implement me
     }
 }
