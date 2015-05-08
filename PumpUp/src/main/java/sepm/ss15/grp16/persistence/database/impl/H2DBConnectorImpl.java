@@ -144,8 +144,24 @@ public class H2DBConnectorImpl implements DBHandler {
 	 *
 	 * @throws DBException
 	 */
-	private void populateTest() throws DBException {
-		LOGGER.info("populate database with test datas");
-		//TODO
+	private void populateTest() throws DBException, FileNotFoundException, SQLException, URISyntaxException {
+		LOGGER.info("try populate database with test datas");
+		String sql_url = getClass().getClassLoader().getResource("sql/insert").toURI().getPath();
+
+		if (sql_url != null) {
+
+			File folder = new File(sql_url);
+			File[] listOfFiles = folder.listFiles();
+
+			for (File file : listOfFiles) {
+				String fileName = file.getName();
+				String filetype = fileName.substring(fileName.length() - 4);
+
+				if (file.getName().toLowerCase().contains("insert") && filetype.equals(".sql")) {
+					RunScript.execute(con, new FileReader(file));
+				}
+			}
+			LOGGER.info("successfully populate database with test datas");
+		}
 	}
 }
