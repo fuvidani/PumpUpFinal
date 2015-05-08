@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.media.MediaView;
+import javafx.stage.Stage;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
@@ -22,6 +23,7 @@ import java.util.ResourceBundle;
 public class ExercisesController implements Initializable{
 
 
+    private Stage stage;
     private ExerciseService exerciseService;
 
     @FXML
@@ -63,6 +65,14 @@ public class ExercisesController implements Initializable{
 
     }
 
+    /**
+     * Sets the stage of this controller.
+     * @param stage the responsible stage
+     */
+    public void setStage(Stage stage){
+        this.stage = stage;
+    }
+
     @FXML
     void newExerciseButtonClicked(ActionEvent event) {
 
@@ -80,7 +90,8 @@ public class ExercisesController implements Initializable{
 
     @FXML
     void getBackButtonClicked(ActionEvent event) {
-
+        //TODO: ask user if he/she wants to abort when changes are made (when data is not saved, changes will be lost!)
+        stage.close();
     }
 
 

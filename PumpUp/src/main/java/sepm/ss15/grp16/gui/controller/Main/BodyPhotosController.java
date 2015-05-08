@@ -3,6 +3,7 @@ package sepm.ss15.grp16.gui.controller.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,10 +15,19 @@ import java.util.ResourceBundle;
  */
 public class BodyPhotosController  implements Initializable{
 
+    private Stage stage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    /**
+     * Sets the stage of this controller.
+     * @param stage the responsible stage
+     */
+    public void setStage(Stage stage){
+        this.stage = stage;
     }
 
     @FXML
@@ -32,7 +42,7 @@ public class BodyPhotosController  implements Initializable{
 
     @FXML
     void getBackButtonClicked(ActionEvent event) {
-
+        stage.close();
     }
 
 

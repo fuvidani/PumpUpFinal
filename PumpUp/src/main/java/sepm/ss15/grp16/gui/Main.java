@@ -41,9 +41,10 @@ public class Main extends Application{
                 return context.getBean(clazz);
             }
         });
-        
-        // Pane pane = (Pane) fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("/fxml/Main.fxml"));
-        Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
+
+        fxmlLoader.setLocation(MainController.class.getClassLoader().getResource("fxml/Main.fxml"));
+         Pane pane = (Pane) fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("fxml/Main.fxml"));
+       // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
         MainController mainController = fxmlLoader.getController();
         primaryStage.setScene(new Scene(pane, 1300, 750));
         primaryStage.setMaximized(true);

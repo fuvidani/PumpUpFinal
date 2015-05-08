@@ -28,4 +28,16 @@
 
     </bean>
 
+    <bean id="userDataController" class="sepm.ss15.grp16.gui.controller.Main.Main_UserDataController" scope="prototype">
+
+    </bean>
+
+    <bean id="userChartController" class="sepm.ss15.grp16.gui.controller.Main.Main_UserChartController" scope="prototype">
+
+    </bean>
+
+    <bean id="main_calendarController" class="sepm.ss15.grp16.gui.controller.Main.Main_CalendarController" scope="prototype">
+
+    </bean>
+
 </beans>

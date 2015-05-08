@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +17,8 @@ import java.util.ResourceBundle;
  * This controller is the central point of all workout plans assigned to the user.
  */
 public class WorkoutPlansController implements Initializable{
+
+    private Stage stage;
 
     @FXML
     private CheckBox customWorkoutPlansCheck;
@@ -35,6 +38,14 @@ public class WorkoutPlansController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    /**
+     * Sets the stage of this controller.
+     * @param stage the responsible stage
+     */
+    public void setStage(Stage stage){
+        this.stage = stage;
     }
 
     @FXML
@@ -69,7 +80,7 @@ public class WorkoutPlansController implements Initializable{
 
     @FXML
     void getBackClicked(ActionEvent event) {
-
+        this.stage.close();
     }
 
 
