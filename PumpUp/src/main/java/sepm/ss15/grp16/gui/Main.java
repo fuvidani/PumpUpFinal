@@ -11,6 +11,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.gui.controller.Main.MainController;
@@ -23,9 +25,11 @@ import java.util.Optional;
  * Edited by Daniel Fuevesi
  */
 public class Main extends Application{
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
 
     public void start(final Stage primaryStage) throws Exception {
+        LOGGER.info("starting application");
 
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -37,7 +41,7 @@ public class Main extends Application{
                 return context.getBean(clazz);
             }
         });
-
+        
         // Pane pane = (Pane) fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("/fxml/Main.fxml"));
         Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
         MainController mainController = fxmlLoader.getController();
@@ -45,6 +49,9 @@ public class Main extends Application{
         primaryStage.setMaximized(true);
         primaryStage.setMinWidth(1200);
         primaryStage.setMinHeight(720);
+
+        LOGGER.info("configuration successful");
+
         primaryStage.show();
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
