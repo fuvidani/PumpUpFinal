@@ -68,4 +68,11 @@
             <constructor-arg name="pictureHistoryDAO" ref="pictureHistoryDAO" />
         </bean>
 
+         <bean id="registrationController" class="sepm.ss15.grp16.gui.controller.RegistrationController" scope="prototype">
+             <property name="userService" ref="userService" />
+             <property name="weightHistoryService" ref="weightHistoryService" />
+             <property name="bodyfatHistoryService" ref="bodyfatHistoryService" />
+             <property name="pictureHistoryService" ref="pictureHistoryService" />
+        </bean>
+
 </beans>
