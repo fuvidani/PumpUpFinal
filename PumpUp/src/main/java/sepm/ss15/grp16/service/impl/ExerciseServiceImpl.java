@@ -2,6 +2,9 @@ package sepm.ss15.grp16.service.impl;
 
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl;
+import sepm.ss15.grp16.persistence.database.DBHandler;
+import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -11,10 +14,13 @@ import java.util.List;
 
 /**
  * Created by lukas on 01.05.2015.
+ *
  */
 public class ExerciseServiceImpl implements ExerciseService {
 
     private ExerciseDAO exerciseDAO;
+
+    // DA BITTE EINEN LEEREN KONSTRUKTOR DEFINIEREN!
 
     ExerciseServiceImpl(ExerciseDAO exerciseDAO)throws ServiceException{
         if(exerciseDAO==null) {

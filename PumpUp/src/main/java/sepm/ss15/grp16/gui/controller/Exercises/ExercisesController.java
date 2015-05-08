@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.gui.controller;
+package sepm.ss15.grp16.gui.controller.Exercises;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +9,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.media.MediaView;
 import sepm.ss15.grp16.service.ExerciseService;
+import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 
 import java.net.URL;
 import java.util.ResourceBundle;

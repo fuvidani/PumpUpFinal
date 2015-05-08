@@ -3,25 +3,29 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"
-             scope="singleton" init-method="openConnection" destroy-method="closeConnection">
-           <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"></constructor-arg>
-           <constructor-arg name="user" value="sa"></constructor-arg>
-           <constructor-arg name="password" value=""></constructor-arg>
-       </bean>
+    <bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"
+          scope="singleton" init-method="openConnection" destroy-method="closeConnection">
+        <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"></constructor-arg>
+        <constructor-arg name="user" value="sa"></constructor-arg>
+        <constructor-arg name="password" value=""></constructor-arg>
+    </bean>
 
-       <bean id="exerciseDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl"
-             scope="singleton">
-              <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
-       </bean>
+    <bean id="exerciseDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl"
+          scope="singleton">
+        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+    </bean>
 
-       <bean id="exerciseService" class="sepm.ss15.grp16.service.impl.ExerciseServiceImpl"
-             scope="singleton">
-              <constructor-arg name="exerciseDAO" ref="exerciseDAO" />
-       </bean>
+    <bean id="exerciseService" class="sepm.ss15.grp16.service.impl.ExerciseServiceImpl"
+          scope="singleton">
+        <constructor-arg name="exerciseDAO" ref="exerciseDAO" />
+    </bean>
 
-       <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.ExercisesController" scope="prototype">
-              <property name="exerciseService" ref="exerciseService" />
-       </bean>
+    <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController" scope="prototype">
+
+    </bean>
+
+    <bean id="mainController" class="sepm.ss15.grp16.gui.controller.Main.MainController" scope="prototype">
+
+    </bean>
 
 </beans>

@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="900.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.MainController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Main.MainController">
    <children>
       <VBox alignment="CENTER" layoutY="12.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="977.0" prefWidth="1400.0" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="12.0">
          <children>
@@ -18,7 +18,7 @@
                      <children>
                         <ImageView fx:id="userImgView" fitHeight="400.0" fitWidth="285.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="673.0" AnchorPane.leftAnchor="86.0" AnchorPane.topAnchor="42.0">
                            <image>
-                              <Image url="@../img/default_avatar.jpg" />
+                              <Image url="/img/default_avatar.jpg" />
                            </image>
                         </ImageView>
                         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#bodyPhotosButtonClicked" prefHeight="26.0" prefWidth="180.0" text="Alle Fotos" textAlignment="CENTER">
@@ -37,7 +37,7 @@
                         </Label>
                         <AnchorPane layoutX="457.0" layoutY="86.0" prefHeight="230.0" prefWidth="220.0">
                            <children>
-                              <fx:include source="Main_UserDataTable.fxml" />
+                              <fx:include source="/fxml/Main_UserDataTable.fxml" />
                            </children>
                         </AnchorPane>
                         <HBox alignment="BASELINE_LEFT">
@@ -68,22 +68,29 @@
                         </AnchorPane>
                      </children>
                   </VBox>
-                  <HBox layoutX="1691.0" layoutY="18.0" prefHeight="393.0" prefWidth="219.0" spacing="10.0">
+                  <HBox layoutX="1691.0" layoutY="18.0" prefHeight="393.0" prefWidth="219.0">
                      <children>
-                        <Button layoutX="1691.0" layoutY="19.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="63.0" text="logout">
-                           <font>
-                              <Font size="11.0" />
-                           </font>
-                        </Button>
-                        <ImageView fitHeight="28.0" fitWidth="39.0" layoutX="1767.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/user-avatar-placeholder.png" />
-                           </image>
-                        </ImageView>
+                        <VBox prefHeight="347.0" prefWidth="113.0" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="28.0" fitWidth="39.0" layoutX="1767.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/user-avatar-placeholder.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="50.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <Button layoutX="1691.0" layoutY="19.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="73.0" text="logout">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
-                     <padding>
-                        <Insets left="30.0" />
-                     </padding>
                   </HBox>
                </children>
                <padding>
@@ -98,7 +105,7 @@
                   <Insets left="20.0" right="20.0" />
                </padding>
             </HBox>
-            <HBox layoutX="138.89024353027344" layoutY="468.0" spacing="125.0">
+            <HBox layoutX="138.89024353027344" layoutY="468.0" spacing="80.0">
                <children>
                   <Label layoutX="139.0" layoutY="472.0" prefHeight="23.0" prefWidth="200.0" text="Aktuelles Trainingsziel:">
                      <font>
@@ -149,9 +156,9 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER" layoutX="103.5" layoutY="593.5" minWidth="-Infinity" prefHeight="260.0" prefWidth="400.0">
+            <HBox alignment="CENTER" layoutX="103.5" layoutY="593.5" minWidth="-Infinity" prefHeight="160.0" prefWidth="1300.0">
                <children>
-                  <AnchorPane layoutX="104.0" layoutY="594.0" prefHeight="260.0" prefWidth="1200.0">
+                  <AnchorPane layoutX="104.0" layoutY="594.0" prefHeight="150.0" prefWidth="1200.0">
                      <children>
                         <fx:include source="Main_Calendar.fxml" />
                      </children>

@@ -8,12 +8,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="685.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.TrainingGraphicsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Workout.WorkoutGraphicsController">
    <children>
       <HBox layoutX="79.0" layoutY="104.0" prefHeight="685.0" prefWidth="1400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <MediaView fx:id="mediaView" fitHeight="600.0" fitWidth="1000.0" layoutX="79.0" layoutY="104.0">
+            <MediaView fx:id="mediaView" fitHeight="450.0" fitWidth="850.0" layoutX="79.0" layoutY="104.0">
                <viewport>
                   <Rectangle2D />
                </viewport>

@@ -7,12 +7,12 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.TrainingMusicPlayerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Workout.WorkoutMusicPlayerController">
    <children>
       <VBox layoutX="77.0" layoutY="89.0" prefHeight="400.0" prefWidth="1400.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <MediaView fx:id="musicPlayerSlide" fitHeight="100.0" fitWidth="1400.0" />
-            <HBox layoutX="77.0" layoutY="89.0" spacing="100.0">
+            <HBox layoutX="77.0" layoutY="89.0" spacing="65.0">
                <children>
                   <HBox layoutX="77.0" layoutY="95.0" spacing="30.0">
                      <children>

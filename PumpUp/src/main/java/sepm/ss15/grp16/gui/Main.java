@@ -1,14 +1,21 @@
 package sepm.ss15.grp16.gui;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import sepm.ss15.grp16.gui.controller.ExercisesController;
+import sepm.ss15.grp16.gui.controller.Main.MainController;
+
+import java.util.Optional;
 
 
 /**
@@ -31,10 +38,35 @@ public class Main extends Application{
             }
         });
 
-        Pane pane = (Pane) fxmlLoader.load(ExercisesController.class.getClassLoader().getResourceAsStream("fxml/Exercises.fxml"));
-        ExercisesController exercisesController = fxmlLoader.getController();
-        primaryStage.setScene(new Scene(pane, 1300, 600));
+        // Pane pane = (Pane) fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("/fxml/Main.fxml"));
+        Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
+        MainController mainController = fxmlLoader.getController();
+        primaryStage.setScene(new Scene(pane, 1300, 750));
+        primaryStage.setMaximized(true);
+        primaryStage.setMinWidth(1200);
+        primaryStage.setMinHeight(720);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                e.consume();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Programm schließen");
+                alert.setHeaderText("Das Programm wird beendet.");
+                alert.setContentText("Möchten Sie das Programm wirklich beenden?");
+                ButtonType yes = new ButtonType("Ja");
+                ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
+                alert.getButtonTypes().setAll(yes, cancel);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == yes) {
+                    primaryStage.close();
+                } else {
+                    primaryStage.show();
+                }
+            }
+        });
+
     }
 
     public static void main(String[] args){

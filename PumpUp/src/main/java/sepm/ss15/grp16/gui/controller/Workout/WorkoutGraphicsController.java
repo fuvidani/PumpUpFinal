@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.gui.controller;
+package sepm.ss15.grp16.gui.controller.Workout;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  * This controller controls the upper section of the training's stage.
  * It controls which GIF and/or video is shown and animates the ticking clock.
  */
-public class TrainingGraphicsController implements Initializable{
+public class WorkoutGraphicsController implements Initializable{
 
 
     @FXML

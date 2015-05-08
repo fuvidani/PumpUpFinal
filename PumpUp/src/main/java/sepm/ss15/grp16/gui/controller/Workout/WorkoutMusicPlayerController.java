@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.gui.controller;
+package sepm.ss15.grp16.gui.controller.Workout;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * Created by Daniel Fuevesi on 08.05.15.
  * This controller controls the lower section of the training's stage.
  */
-public class TrainingMusicPlayerController implements Initializable {
+public class WorkoutMusicPlayerController implements Initializable {
 
 
     @FXML

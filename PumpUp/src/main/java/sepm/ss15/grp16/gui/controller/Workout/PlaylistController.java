@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.gui.controller;
+package sepm.ss15.grp16.gui.controller.Workout;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

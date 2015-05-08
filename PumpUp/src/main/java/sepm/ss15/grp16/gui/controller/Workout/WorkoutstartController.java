@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.gui.controller;
+package sepm.ss15.grp16.gui.controller.Workout;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * This controller controls the little pop-up window before the actual training starts.
  *
  */
-public class TrainingstartController implements Initializable{
+public class WorkoutstartController implements Initializable{
 
     @FXML
     private ListView<?> toDoListView;
