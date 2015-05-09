@@ -5,8 +5,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.io.IOException;
 
 /**
@@ -36,6 +40,15 @@ public class StageTransitionLoader {
 
         try {
             FXMLLoader loader = new FXMLLoader();
+
+            ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> clazz) {
+                    return context.getBean(clazz);
+                }
+            });
+
             loader.setLocation(this.from.getClass().getClassLoader().getResource(fxmlResource));
             AnchorPane page = loader.load();
 
