@@ -14,7 +14,7 @@ public class TrainingsSession implements DTO {
 	Integer id_plan;
 	Integer uid;
 	String name;
-	Boolean isDeleted;
+	Boolean isDeleted = false;
 
 	List<ExerciseSet> exerciseSets;
 

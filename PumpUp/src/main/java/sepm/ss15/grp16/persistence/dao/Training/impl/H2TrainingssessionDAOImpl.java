@@ -2,7 +2,11 @@ package sepm.ss15.grp16.persistence.dao.Training.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import sepm.ss15.grp16.entity.Training.ExerciseSet;
 import sepm.ss15.grp16.entity.Training.TrainingsSession;
+import sepm.ss15.grp16.persistence.dao.Training.ExerciseSetDAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
@@ -14,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Author: Lukas
@@ -28,25 +33,29 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 	private PreparedStatement ps_create;
 	private PreparedStatement ps_findAll;
 	private PreparedStatement ps_findID;
-	private PreparedStatement ps_find_user;
-	private PreparedStatement ps_find_nouser;
+	private PreparedStatement ps_find_user_plan;
+	private PreparedStatement ps_find_user_noplan;
+	private PreparedStatement ps_find_nouser_plan;
+	private PreparedStatement ps_find_nouser_noplan;
 	private PreparedStatement ps_update;
 	private PreparedStatement ps_delete;
 
 	private PreparedStatement ps_seq_TS;
 
+	private ExerciseSetDAO exerciseSetDAO;
+
 	private H2TrainingssessionDAOImpl(DBHandler handler) throws PersistenceException {
 		try {
 			con = handler.getConnection();
+
+			ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+			exerciseSetDAO = (ExerciseSetDAO) context.getBean("exerciseSetDAO");
 
 			/** Trainingplan **/
 			ps_create = con.prepareStatement("INSERT INTO TrainingsSession (ID_Plan, name, UID, isDeleted) " +
 					"VALUES (?, ?, ?, ?)");
 			ps_findAll = con.prepareStatement("SELECT * FROM TrainingsSession WHERE isDeleted = FALSE ");
-			ps_find_user = con.prepareStatement("SELECT * FROM TrainingsSession " +
-					"WHERE ID_Plan=? AND name LIKE ? AND UID = ? AND isDeleted=?");
-			ps_find_nouser = con.prepareStatement("SELECT * FROM TrainingsSession " +
-					"WHERE ID_Plan=? AND name LIKE ? AND isDeleted=?");
+
 			ps_findID = con.prepareStatement("SELECT * FROM TrainingsSession WHERE ID_Session = ?");
 			ps_update = con.prepareStatement("UPDATE TrainingsSession " +
 					"SET ID_Plan = ?, name = ?, UID = ?, isDeleted = ? WHERE ID_Session = ?");
@@ -55,6 +64,19 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 
 			/** Sequences **/
 			ps_seq_TS = con.prepareStatement("SELECT currval('seq_TS')");
+
+
+			/** build find string **/
+
+			String start = "SELECT * FROM TrainingsSession WHERE";
+			String plan = " ID_Plan=? ";
+			String user = " UID = ? ";
+			String end = " name LIKE ? ";
+
+			ps_find_user_plan = con.prepareStatement(start + end + "AND" + plan + "AND" + user);
+			ps_find_user_noplan = con.prepareStatement(start + end + "AND" + user);
+			ps_find_nouser_plan = con.prepareStatement(start + end + "AND" + plan);
+			ps_find_nouser_noplan = con.prepareStatement(start + end);
 
 		} catch (DBException | SQLException e) {
 			LOGGER.error("" + e.getMessage());
@@ -77,6 +99,12 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 			rs.next();
 			dto.setId(rs.getInt(1));
 
+			if (dto.getExerciseSets() != null) {
+				for (ExerciseSet set : dto.getExerciseSets()) {
+					exerciseSetDAO.create(set);
+				}
+			}
+
 			return dto;
 
 		} catch (SQLException e) {
@@ -92,13 +120,16 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 			ResultSet rs = executeQuery(ps_findAll);
 			List<TrainingsSession> sessions = new ArrayList<>();
 
-			while (rs.next()){
+			while (rs.next()) {
 				TrainingsSession session = new TrainingsSession();
 				session.setId(rs.getInt("ID_Session"));
 				session.setId_plan(rs.getInt("ID_Plan"));
 				session.setName(rs.getString("name"));
 				session.setUid((Integer) rs.getObject("UID"));
 				session.setIsDeleted(rs.getBoolean("isDeleted"));
+
+				List<ExerciseSet> sets = exerciseSetDAO.find(new ExerciseSet(null, null, null, null, null, rs.getInt("ID_Session"), null));
+				session.setExerciseSets(sets);
 
 				sessions.add(session);
 			}
@@ -112,22 +143,158 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 
 	@Override
 	public TrainingsSession searchByID(int id) throws PersistenceException {
-		return null;
+		try {
+			ps_findID.setInt(1, id);
+			ResultSet rs = executeQuery(ps_findID);
+			TrainingsSession session = null;
+
+			if (rs.next()) {
+				session = new TrainingsSession();
+				session.setId(rs.getInt("ID_Session"));
+				session.setId_plan(rs.getInt("ID_Plan"));
+				session.setName(rs.getString("name"));
+				session.setUid((Integer) rs.getObject("UID"));
+				session.setIsDeleted(rs.getBoolean("isDeleted"));
+
+				List<ExerciseSet> sets = exerciseSetDAO.find(new ExerciseSet(null, null, null, null, null, rs.getInt("ID_Session"), null));
+				session.setExerciseSets(sets);
+			}
+			return session;
+
+		} catch (SQLException e) {
+			LOGGER.error("" + e.getMessage());
+			throw new PersistenceException("failed to prepare statements", e);
+		}
 	}
 
 	@Override
 	public TrainingsSession update(TrainingsSession dto) throws PersistenceException {
-		return null;
+
+		try {
+			ps_update.setInt(1, dto.getId_plan());
+			ps_update.setString(2, dto.getName());
+			ps_update.setObject(3, dto.getUid());
+			ps_update.setBoolean(4, dto.getIsDeleted());
+			ps_update.setInt(5, dto.getId());
+
+			executeUpdate(ps_update);
+
+			List<ExerciseSet> sets = exerciseSetDAO.find(new ExerciseSet(null, null, null, null, null, dto.getId_session(), null));
+
+			if (sets != null &&
+					dto.getExerciseSets() != null &&
+					sets.size() != dto.getExerciseSets().size()) {
+
+				List<ExerciseSet> sets_toDelete = new ArrayList<>();
+				List<ExerciseSet> sets_toCreate = new ArrayList<>();
+
+				sets_toDelete.addAll(sets.stream().filter(set ->
+						!dto.getExerciseSets().contains(set)).collect(Collectors.toList()));
+
+				sets_toCreate.addAll(dto.getExerciseSets().stream().filter(set ->
+						!sets.contains(set)).collect(Collectors.toList()));
+
+				for (ExerciseSet set : sets_toCreate) {
+					exerciseSetDAO.create(set);
+				}
+
+				for (ExerciseSet set : sets_toDelete) {
+					exerciseSetDAO.delete(set);
+				}
+			} else if (sets == null && dto.getExerciseSets() != null) {
+				for (ExerciseSet set : dto.getExerciseSets()) {
+					exerciseSetDAO.create(set);
+				}
+			} else if (dto.getExerciseSets() == null && sets != null) {
+				for (ExerciseSet set : sets) {
+					exerciseSetDAO.delete(set);
+				}
+			}
+
+			return dto;
+
+		} catch (SQLException e) {
+			LOGGER.error("" + e.getMessage());
+			throw new PersistenceException("failed to prepare statements", e);
+		}
 	}
 
 	@Override
 	public void delete(TrainingsSession dto) throws PersistenceException {
+		try {
+			ps_delete.setInt(1, dto.getId());
+			executeUpdate(ps_delete);
 
+			if (dto.getExerciseSets() != null) {
+				for (ExerciseSet set : dto.getExerciseSets()) {
+					exerciseSetDAO.delete(set);
+				}
+			}
+
+		} catch (SQLException e) {
+			LOGGER.error("" + e.getMessage());
+			throw new PersistenceException("failed to prepare statements", e);
+		}
 	}
 
 	@Override
-	public List<TrainingsSession> find(TrainingsSession trainingsSession) {
-		return null;
+	public List<TrainingsSession> find(TrainingsSession filter) throws PersistenceException {
+		try {
+			List<TrainingsSession> sessions = null;
+
+			if (filter.getId() != null) {
+				sessions = new ArrayList<>();
+				sessions.add(searchByID(filter.getId()));
+				return sessions;
+			}
+
+			PreparedStatement ps_find;
+
+			if (filter.getUid() != null) {
+				if (filter.getId_plan() != null) {
+					ps_find = ps_find_user_plan;
+					ps_find_user_plan.setInt(2, filter.getId_plan());
+					ps_find_user_plan.setInt(3, filter.getUid());
+				} else {
+					ps_find = ps_find_user_noplan;
+					ps_find_user_noplan.setInt(2, filter.getUid());
+				}
+			} else {
+				if (filter.getId_plan() != null) {
+					ps_find = ps_find_nouser_plan;
+					ps_find_nouser_plan.setInt(2, filter.getId_plan());
+				} else {
+					ps_find = ps_find_nouser_noplan;
+				}
+			}
+			if (filter.getName() != null) ps_find.setString(1, filter.getName());
+			else ps_find.setString(1, "%");
+
+			ResultSet rs = executeQuery(ps_find);
+
+			if (rs.next()) {
+				sessions = new ArrayList<>();
+				do {
+					TrainingsSession session = new TrainingsSession();
+					int id = rs.getInt("ID_Session");
+					session.setId(id);
+					session.setId_plan(rs.getInt("ID_Plan"));
+					session.setName(rs.getString("name"));
+					session.setUid((Integer) rs.getObject("UID"));
+					session.setIsDeleted(rs.getBoolean("isDeleted"));
+
+					List<ExerciseSet> sets = exerciseSetDAO.find(new ExerciseSet(null, null, null, null, null, id, null));
+					session.setExerciseSets(sets);
+
+					sessions.add(session);
+				} while (rs.next());
+			}
+			return sessions;
+
+		} catch (SQLException e) {
+			LOGGER.error("" + e.getMessage());
+			throw new PersistenceException("failed to find with filter" + filter, e);
+		}
 	}
 
 	private void executeUpdate(PreparedStatement ps) throws SQLException {

@@ -14,7 +14,7 @@ public class Trainingsplan implements DTO {
 	Integer uid;
 	String name;
 	String descr;
-	Boolean isDeleted;
+	Boolean isDeleted = false;
 
 	List<TrainingsSession> trainingsSessions;
 	List<TrainingsplanType> trainingsplanTypes;

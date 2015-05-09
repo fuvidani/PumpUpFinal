@@ -6,7 +6,10 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
@@ -21,6 +24,8 @@ import java.sql.SQLException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+		{DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTest {
 
 	@Autowired

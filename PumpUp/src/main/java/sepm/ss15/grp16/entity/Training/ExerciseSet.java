@@ -14,7 +14,7 @@ public class ExerciseSet implements DTO {
 	Integer uid;
 	Integer repeat;
 	Integer order_nr;
-	Boolean isDeleted;
+	Boolean isDeleted = false;
 
 	public ExerciseSet() {
 	}

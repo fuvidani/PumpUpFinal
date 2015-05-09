@@ -17,6 +17,7 @@ import java.util.List;
 public abstract class AbstractTrainingssessionDAOTest {
 
 	public abstract TrainingsSessionDAO getTrainingsSessionDAO();
+
 	public abstract TrainingsplanDAO getTrainingsplanDAO();
 
 	@Test
@@ -60,7 +61,7 @@ public abstract class AbstractTrainingssessionDAOTest {
 	}
 
 	@Test
-	public void searchByIDValid() throws PersistenceException{
+	public void searchByIDValid() throws PersistenceException {
 		TrainingsSession TrainingsSession = dummyTrainingsSession();
 
 		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(TrainingsSession));
