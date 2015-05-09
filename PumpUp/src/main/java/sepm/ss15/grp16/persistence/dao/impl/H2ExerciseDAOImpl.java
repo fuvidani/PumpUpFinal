@@ -13,8 +13,6 @@ import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.net.URL;
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +23,7 @@ import java.util.List;
 
 /**
  * Created by lukas on 30.04.2015.
+ *
  */
 public class H2ExerciseDAOImpl implements ExerciseDAO {
 
@@ -39,34 +38,22 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     private static final Logger LOGGER = LogManager.getLogger();
 
 
-    private static Connection CONNECTION;
+    private static Connection connection;
 
-    private H2ExerciseDAOImpl()throws PersistenceException{
+    private H2ExerciseDAOImpl(DBHandler handler)throws PersistenceException, DBException{
         try{
-            DBHandler handler = H2DBConnectorImpl.getInstance();
-            CONNECTION = handler.getConnection();
-            createStatement = CONNECTION.prepareStatement("insert into exercise VALUES (?, ?, ?, ?, ?, ?);");
-            readStatement = CONNECTION.prepareStatement("SELECT * from exercise where isdeleted=false;");
-            readGifStatement = CONNECTION.prepareStatement("select * from gif where exerciseid =?");
-            updateStatement = CONNECTION.prepareStatement("UPDATE exercise set name=?, descripion=?, calories=?, videolink=?, isdeleted=? where id=?;");
-            insertGifStatement = CONNECTION.prepareStatement("insert into gif values(?, ?, ?);");
-            nextvalExercise  = CONNECTION.prepareStatement("SELECT NEXTVAL('EXERCISESEQUENCE')");
-            nextvalGif  = CONNECTION.prepareStatement("SELECT NEXTVAL('GIFSEQUENCE')");
+            this.connection = handler.getConnection();
+            createStatement = connection.prepareStatement("insert into exercise VALUES (?, ?, ?, ?, ?, ?);");
+            readStatement = connection.prepareStatement("SELECT * from exercise where isdeleted=false;");
+            readGifStatement = connection.prepareStatement("select * from gif where exerciseid =?");
+            updateStatement = connection.prepareStatement("UPDATE exercise set name=?, descripion=?, calories=?, videolink=?, isdeleted=? where id=?;");
+            insertGifStatement = connection.prepareStatement("insert into gif values(?, ?, ?);");
+            nextvalExercise  = connection.prepareStatement("SELECT NEXTVAL('EXERCISESEQUENCE')");
+            nextvalGif  = connection.prepareStatement("SELECT NEXTVAL('GIFSEQUENCE')");
 
-        }catch (SQLException e){
+        }catch (SQLException e) {
             throw new PersistenceException("failed to prepare statements", e);
-        }catch (DBException e){
-            throw new PersistenceException("failed to get connection to database", e);
         }
-    }
-
-
-    public static H2ExerciseDAOImpl getInstance() throws PersistenceException{
-        if(h2ExerciseDAOImpl ==null){
-            h2ExerciseDAOImpl = new H2ExerciseDAOImpl();
-        }
-
-        return h2ExerciseDAOImpl;
     }
 
 
@@ -152,6 +139,10 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
         }
     }
 
+    @Override
+    public Exercise searchByID(int id) throws PersistenceException {
+        return null;
+    }
 
 
     @Override

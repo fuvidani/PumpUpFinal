@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.media.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController">
+   <children>
+      <VBox layoutX="142.0" layoutY="47.0" prefHeight="900.0" prefWidth="1400.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox layoutX="142.0" layoutY="47.0">
+               <children>
+                  <Label layoutX="173.0" layoutY="121.0" text="Übungen">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="60.0" top="50.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Separator layoutX="275.0" layoutY="238.0" prefWidth="1400.0">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Separator>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="603.0" prefWidth="1400.0">
+               <children>
+                  <VBox prefHeight="584.0" prefWidth="276.0" spacing="20.0">
+                     <children>
+                        <ListView fx:id="exercisesList" prefHeight="395.0" prefWidth="124.0">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </ListView>
+                        <CheckBox fx:id="customExercisesCheckbox" mnemonicParsing="false" text="Eigene Übungen">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox fx:id="defaultExercisesCheckbox" mnemonicParsing="false" text="Vorgegebene Übungen">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+                  <Separator orientation="VERTICAL" prefHeight="200.0">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Separator>
+                  <VBox prefHeight="603.0" prefWidth="1153.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="exerciseNameLabel" prefHeight="44.0" prefWidth="506.0" text="Liegestütz">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="300.0" prefWidth="1082.0" spacing="400.0">
+                           <children>
+                              <MediaView fx:id="smallMediaView" fitHeight="300.0" fitWidth="300.0">
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </MediaView>
+                              <MediaView fx:id="bigMediaView" fitHeight="300.0" fitWidth="400.0" />
+                           </children>
+                        </HBox>
+                        <HBox spacing="100.0">
+                           <children>
+                              <TextArea fx:id="descriptionTextArea" editable="false" prefHeight="200.0" prefWidth="787.0" text="Textuelle Beschreibung.">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextArea>
+                              <VBox prefHeight="200.0" prefWidth="244.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Kategorien">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Typ:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="categoryTypeLabel" text="Kraft">
+                                       <VBox.margin>
+                                          <Insets left="50.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Geräte:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="trainingDeviceLabel1" text="Gerät 1">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="50.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="trainingDeviceLabel2" text="Gerät 2">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="50.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="trainingDeviceLabel3" text="Gerät 3">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="50.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="46.0" prefWidth="1400.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#newExerciseButtonClicked" text="Neue Übung anlegen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#editExerciseButtonClicked" text="Übung bearbeiten...">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#deleteExerciseButtonClicked" text="Übung löschen...">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#getBackButtonClicked" text="Zurück">
+                     <HBox.margin>
+                        <Insets left="580.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController">
+   <children>
+      <VBox prefHeight="750.0" prefWidth="1300.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox>
+               <children>
+                  <Label text="Trainingspläne">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="80.0" top="30.0" />
+               </padding>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <padding>
+                  <Insets left="30.0" right="30.0" />
+               </padding>
+            </Separator>
+            <HBox spacing="30.0">
+               <children>
+                  <VBox prefHeight="571.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <ListView fx:id="workoutPlansListView" prefHeight="479.0" prefWidth="200.0" />
+                        <CheckBox fx:id="customWorkoutPlansCheck" mnemonicParsing="false" text="Eigene Pläne" />
+                        <CheckBox fx:id="defaultWorkoutPlansCheck" mnemonicParsing="false" text="Vorgefertigte Pläne" />
+                     </children>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </VBox>
+                  <Separator orientation="VERTICAL" prefHeight="561.0" prefWidth="14.0">
+                     <HBox.margin>
+                        <Insets bottom="20.0" />
+                     </HBox.margin>
+                  </Separator>
+                  <VBox spacing="20.0">
+                     <children>
+                        <Label fx:id="trainingTypeLabel" prefHeight="16.0" prefWidth="451.0" text="Ausdauer">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="workoutPlanTable" prefHeight="457.0" prefWidth="966.0">
+                          <columns>
+                            <TableColumn prefWidth="163.0" text="1. Tag" />
+                            <TableColumn prefWidth="193.0" text="2. Tag" />
+                              <TableColumn prefWidth="202.0" text="3. Tag" />
+                              <TableColumn prefWidth="196.0" text="4. Tag" />
+                              <TableColumn prefWidth="211.0" text="i. Tag" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox spacing="200.0">
+               <children>
+                  <HBox spacing="50.0">
+                     <children>
+                        <Button layoutX="10.0" layoutY="330.0" mnemonicParsing="false" onAction="#newWorkoutPlanClicked" text="Neuen Plan anlegen" />
+                        <Button layoutX="10.0" layoutY="226.0" mnemonicParsing="false" onAction="#copyWorkoutPlanClicked" text="Plan kopieren" />
+                        <Button layoutX="10.0" layoutY="304.0" mnemonicParsing="false" onAction="#generateWorkoutPlanClicked" text="Plan generieren" />
+                        <Button layoutX="10.0" layoutY="356.0" mnemonicParsing="false" onAction="#deleteWorkoutPlanClicked" text="Plan löschen" />
+                        <Button mnemonicParsing="false" onAction="#editWorkoutPlanClicked" text="Plan bearbeiten" />
+                        <Button mnemonicParsing="false" onAction="#embedInCalenderClicked" text="In Kalender einfügen" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#getBackClicked" text="Zurück" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

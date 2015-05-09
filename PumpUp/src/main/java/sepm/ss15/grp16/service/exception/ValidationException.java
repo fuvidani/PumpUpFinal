@@ -1,9 +1,9 @@
-package sepm.ss15.grp16.gui.exception;
+package sepm.ss15.grp16.service.exception;
 
 /**
  * Created by lukas on 02.05.2015.
  */
-public class ValidationException extends  Exception{
+public class ValidationException extends ServiceException{
     public ValidationException() {
     }
 

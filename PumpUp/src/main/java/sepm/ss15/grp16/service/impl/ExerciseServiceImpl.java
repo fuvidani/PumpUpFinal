@@ -3,36 +3,34 @@ package sepm.ss15.grp16.service.impl;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl;
+import sepm.ss15.grp16.persistence.database.DBHandler;
+import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.exception.ValidationException;
 
 import java.util.List;
 
 /**
  * Created by lukas on 01.05.2015.
+ *
  */
 public class ExerciseServiceImpl implements ExerciseService {
 
-    ExerciseDAO exerciseDAO;
+    private ExerciseDAO exerciseDAO;
 
-    public  ExerciseServiceImpl()throws ServiceException{
-        try {
-            this.exerciseDAO = H2ExerciseDAOImpl.getInstance();
-        }catch (PersistenceException e){
-            throw new ServiceException(e);
-        }
+    // DA BITTE EINEN LEEREN KONSTRUKTOR DEFINIEREN!
 
-    }
-
-    public void setExerciseDAO(ExerciseDAO exerciseDAO)throws ServiceException{
-        if(exerciseDAO==null)
+    ExerciseServiceImpl(ExerciseDAO exerciseDAO)throws ServiceException{
+        if(exerciseDAO==null) {
             throw new ServiceException("exerciseDAO is null. can not be set in Service Layer");
+        }
         this.exerciseDAO = exerciseDAO;
     }
 
     @Override
-    public Exercise create(Exercise exercise) throws ServiceException {
+    public Exercise create(Exercise exercise) throws ServiceException, ValidationException {
         validate(exercise);
         try {
             exerciseDAO.create(exercise);
@@ -72,12 +70,13 @@ public class ExerciseServiceImpl implements ExerciseService {
        }
     }
 
-    private void validate(Exercise exercise)throws ServiceException{
+    @Override
+    public void validate(Exercise exercise)throws sepm.ss15.grp16.service.exception.ValidationException{
         if(exercise ==null)
-            throw new ServiceException("validation not passed. exercise is null");
+            throw new ValidationException("validation not passed. exercise is null");
 
         if(exercise.getCalories()<= 0)
-            throw new ServiceException("validation not passed. calories can not be lower or equal to 0");
+            throw new ValidationException("validation not passed. calories can not be lower or equal to 0");
 
 
     }
