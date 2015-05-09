@@ -20,9 +20,21 @@
         <constructor-arg name="exerciseDAO" ref="exerciseDAO"/>
     </bean>
 
-    <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController"
-          scope="prototype">
+
+
+    <!-- Exercises Beans -->
+
+    <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController" scope="prototype">
+
     </bean>
+
+    <bean id="manageExerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ManageExerciseController" scope="prototype">
+
+    </bean>
+
+
+
+    <!-- Main Beans -->
 
     <bean id="mainController" class="sepm.ss15.grp16.gui.controller.Main.MainController" scope="prototype">
     </bean>
@@ -38,7 +50,25 @@
           scope="prototype">
     </bean>
 
-    <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl"
+    <bean id="bodyPhotosController" class="sepm.ss15.grp16.gui.controller.Main.BodyPhotosController" scope="prototype">
+
+    </bean>
+
+
+
+    <!-- Calendar Beans -->
+
+    <bean id="calendarController" class="sepm.ss15.grp16.gui.controller.Calendar.CalendarController" scope="prototype">
+
+    </bean>
+
+
+
+
+    <!-- User Beans-->
+
+
+        <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
     </bean>
@@ -105,5 +135,54 @@
     <bean id="trainingsSessionDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingssessionDAOImpl" scope="singleton" lazy-init="true">
         <constructor-arg name="handler" ref="dbConnector"/>
     </bean>
+
+
+
+    <!-- Workout Beans-->
+
+    <bean id="workoutstartController" class="sepm.ss15.grp16.gui.controller.Workout.WorkoutstartController" scope="prototype">
+
+    </bean>
+
+    <bean id="playlistController" class="sepm.ss15.grp16.gui.controller.Workout.PlaylistController" scope="prototype">
+
+    </bean>
+
+    <bean id="workoutController" class="sepm.ss15.grp16.gui.controller.Workout.WorkoutController" scope="prototype">
+
+    </bean>
+
+    <bean id="workoutGraphicsController" class="sepm.ss15.grp16.gui.controller.Workout.WorkoutGraphicsController" scope="prototype">
+
+    </bean>
+
+    <bean id="workoutMusicPlayerController" class="sepm.ss15.grp16.gui.controller.Workout.WorkoutMusicPlayerController" scope="prototype">
+
+    </bean>
+
+    <bean id="workoutResultController" class="sepm.ss15.grp16.gui.controller.Workout.WorkoutResultController" scope="prototype">
+
+    </bean>
+
+
+
+    <!-- WorkoutPlans Beans-->
+
+    <bean id="create_edit_WorkoutController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.Create_Edit_WorkoutPlanController" scope="prototype">
+
+    </bean>
+
+    <bean id="generateWorkoutPlanController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GenerateWorkoutPlanController" scope="prototype">
+
+    </bean>
+
+    <bean id="WorkoutPlansController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController" scope="prototype">
+
+    </bean>
+
+    <bean id="WorkoutPlanToCalendarController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlanToCalendarController" scope="prototype">
+
+    </bean>
+
 
 </beans>
