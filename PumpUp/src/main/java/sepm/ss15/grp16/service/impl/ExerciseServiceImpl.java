@@ -20,9 +20,11 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     private ExerciseDAO exerciseDAO;
 
-    // DA BITTE EINEN LEEREN KONSTRUKTOR DEFINIEREN!
+    public ExerciseServiceImpl(){
 
-    ExerciseServiceImpl(ExerciseDAO exerciseDAO)throws ServiceException{
+    }
+
+    public ExerciseServiceImpl(ExerciseDAO exerciseDAO)throws ServiceException{
         if(exerciseDAO==null) {
             throw new ServiceException("exerciseDAO is null. can not be set in Service Layer");
         }
@@ -33,8 +35,8 @@ public class ExerciseServiceImpl implements ExerciseService {
     public Exercise create(Exercise exercise) throws ServiceException, ValidationException {
         validate(exercise);
         try {
-            exerciseDAO.create(exercise);
-            return exercise;
+
+            return  exerciseDAO.create(exercise);
         }catch (PersistenceException e){
             throw new ServiceException(e);
         }
@@ -42,12 +44,12 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public List<Exercise> findAll() throws ServiceException {
-       try{
-           List<Exercise> exerciseList = exerciseDAO.findAll();
-           return exerciseList;
-       }catch (PersistenceException e){
-           throw new ServiceException(e);
-       }
+        try{
+
+            return exerciseDAO.findAll();
+        }catch (PersistenceException e){
+            throw new ServiceException(e);
+        }
     }
 
     @Override
@@ -55,6 +57,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         validate(exercise);
         try{
             Exercise updated = exerciseDAO.update(exercise);
+            validate(updated);
             return updated;
         }catch (PersistenceException e){
             throw new ServiceException(e);
@@ -63,11 +66,11 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public void delete(Exercise exercise) throws ServiceException {
-       try{
-           exerciseDAO.delete(exercise);
-       }catch (PersistenceException e){
-           throw new ServiceException(e);
-       }
+        try{
+            exerciseDAO.delete(exercise);
+        }catch (PersistenceException e){
+            throw new ServiceException(e);
+        }
     }
 
     @Override
@@ -75,9 +78,10 @@ public class ExerciseServiceImpl implements ExerciseService {
         if(exercise ==null)
             throw new ValidationException("validation not passed. exercise is null");
 
+        if(exercise.getName().equals("") || exercise.getName()==null || exercise.getName().isEmpty())
+            throw new ValidationException("name can not be null");
+
         if(exercise.getCalories()<= 0)
             throw new ValidationException("validation not passed. calories can not be lower or equal to 0");
-
-
     }
 }
