@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.persistence.dao;
 
 import sepm.ss15.grp16.entity.PictureHistory;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;
 
@@ -12,6 +13,12 @@ import java.util.List;
  */
 public interface PictureHistoryDAO extends DAO<PictureHistory> {
 
-    List<PictureHistory> searchByUserID(int user_id);
+    /**
+     * Searches all picturehistory records for one user
+     * @param user_id from the user
+     * @return all records from the given user
+     * @throws PersistenceException, if an error while searching occurs
+     */
+    List<PictureHistory> searchByUserID(int user_id) throws PersistenceException;
 
 }

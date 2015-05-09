@@ -89,6 +89,8 @@ public class RegistrationController implements Initializable {
     @FXML
     public void registerClicked() {
 
+        //TODO: Validierung verbessern/aendern
+
         LOGGER.debug("Register clicked");
         String username;
         Integer age = null;

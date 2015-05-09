@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.persistence.dao;
 
 import sepm.ss15.grp16.entity.WeightHistory;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;
 
@@ -12,6 +13,12 @@ import java.util.List;
  */
 public interface WeightHistoryDAO extends DAO<WeightHistory>{
 
-    List<WeightHistory> searchByUserID(int user_id);
+    /**
+     * Searches all weighthistory records for one user
+     * @param user_id from the user
+     * @return all records from the given user
+     * @throws PersistenceException, if an error while searching occurs
+     */
+    List<WeightHistory> searchByUserID(int user_id) throws PersistenceException;
 
 }

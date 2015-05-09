@@ -82,7 +82,7 @@ public class LoginController implements Initializable {
                 }
             });
             Stage stage = new Stage();
-            Pane pane = (Pane) fxmlLoader.load(RegistrationController.class.getClassLoader().getResourceAsStream("fxml/Registration.fxml"));
+            Pane pane = fxmlLoader.load(RegistrationController.class.getClassLoader().getResourceAsStream("fxml/Registration.fxml"));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(loginPane.getScene().getWindow());
             RegistrationController registrationController = fxmlLoader.getController();

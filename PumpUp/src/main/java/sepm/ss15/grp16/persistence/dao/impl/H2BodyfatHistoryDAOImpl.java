@@ -73,7 +73,7 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
             throw new PersistenceException("Failed to create a new bodyfathistory", e);
         }
 
-        LOGGER.info("Created bodyfathistory user successfully");
+        LOGGER.info("Created bodyfathistory successfully");
         return bodyfatHistory;
 
     }

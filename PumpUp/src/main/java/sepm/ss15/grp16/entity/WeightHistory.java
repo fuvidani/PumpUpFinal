@@ -66,12 +66,13 @@ public class WeightHistory implements DTO{
 
     @Override
     public Boolean getIsDeleted() {
+        //TODO
         return null;
     }
 
     @Override
     public void setIsDeleted(Boolean deleted) {
-
+        //TODO
     }
 
     @Override

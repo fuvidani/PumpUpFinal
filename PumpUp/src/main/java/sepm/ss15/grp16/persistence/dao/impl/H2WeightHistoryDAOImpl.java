@@ -72,7 +72,7 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
             throw new PersistenceException("Failed to create a new weightHistory", e);
         }
 
-        LOGGER.info("Created weightHistory user successfully");
+        LOGGER.info("Created weightHistory successfully");
         return weightHistory;
     }
 

@@ -56,22 +56,23 @@ public class BodyfatHistory implements DTO {
 
     @Override
     public Integer getId() {
-        return null;
+        return getBodyfathistory_id();
     }
 
     @Override
     public void setId(Integer id) {
-
+        setBodyfathistory_id(id);
     }
 
     @Override
     public Boolean getIsDeleted() {
+        //TODO
         return null;
     }
 
     @Override
     public void setIsDeleted(Boolean deleted) {
-
+        //TODO
     }
 
     @Override

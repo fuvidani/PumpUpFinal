@@ -10,7 +10,10 @@ import sepm.ss15.grp16.service.exception.ValidationException;
 import java.util.List;
 
 /**
- * Created by michaelsober on 07.05.15.
+ * This class represents an implementation of a weighthistory service
+ *
+ * @author Michael Sober
+ * @version 1.0
  */
 public class WeightHistoryServiceImpl implements WeightHistoryService{
 
