@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.gui.controller;
+package sepm.ss15.grp16.gui.controller.User;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
