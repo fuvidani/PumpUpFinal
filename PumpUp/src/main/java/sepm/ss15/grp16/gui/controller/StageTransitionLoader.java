@@ -47,6 +47,8 @@ public class StageTransitionLoader {
                     return context.getBean(clazz);
                 }
             });
+            });
+
             loader.setLocation(this.from.getClass().getClassLoader().getResource(fxmlResource));
             AnchorPane page = loader.load();
 
