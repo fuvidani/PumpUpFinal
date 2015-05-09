@@ -12,11 +12,11 @@ import java.util.List;
  */
 public interface Service<T extends DTO> {
 
-    T create(T exercise )throws ServiceException;
+    T create(T dto)throws ServiceException;
 
     List<T> findAll() throws ServiceException;
 
-    Exercise update(T dto)throws ServiceException;
+    T update(T dto)throws ServiceException;
 
     void delete(T dto) throws ServiceException;
 

@@ -34,4 +34,67 @@
         <constructor-arg name="exerciseDAO" ref="exerciseDAO"/>
     </bean>
 
+    <bean id="userDataController" class="sepm.ss15.grp16.gui.controller.Main.Main_UserDataController" scope="prototype">
+
+    </bean>
+
+    <bean id="userChartController" class="sepm.ss15.grp16.gui.controller.Main.Main_UserChartController" scope="prototype">
+
+    </bean>
+
+    <bean id="main_calendarController" class="sepm.ss15.grp16.gui.controller.Main.Main_CalendarController" scope="prototype">
+
+    </bean>
+
+        <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl"
+          scope="singleton">
+            <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        </bean>
+
+        <bean id="userService" class="sepm.ss15.grp16.service.impl.UserServiceImpl"
+          scope="singleton">
+            <constructor-arg name="userDAO" ref="userDAO" />
+        </bean>
+
+        <bean id="loginController" class="sepm.ss15.grp16.gui.controller.User.LoginController" scope="prototype">
+            <property name="userService" ref="userService" />
+        </bean>
+
+         <bean id="weightHistoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2WeightHistoryDAOImpl"
+          scope="singleton">
+             <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+         </bean>
+
+        <bean id="weightHistoryService" class="sepm.ss15.grp16.service.impl.WeightHistoryServiceImpl"
+          scope="singleton">
+            <constructor-arg name="weightHistoryDAO" ref="weightHistoryDAO" />
+        </bean>
+
+        <bean id="bodyfatHistoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2BodyfatHistoryDAOImpl"
+          scope="singleton">
+            <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        </bean>
+
+        <bean id="bodyfatHistoryService" class="sepm.ss15.grp16.service.impl.BodyfatHistoryServiceImpl"
+          scope="singleton">
+            <constructor-arg name="bodyfatHistoryDAO" ref="bodyfatHistoryDAO" />
+        </bean>
+
+        <bean id="pictureHistoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2PictureHistoryDAOImpl"
+          scope="singleton">
+            <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        </bean>
+
+        <bean id="pictureHistoryService" class="sepm.ss15.grp16.service.impl.PictureHistoryServiceImpl"
+          scope="singleton">
+            <constructor-arg name="pictureHistoryDAO" ref="pictureHistoryDAO" />
+        </bean>
+
+         <bean id="registrationController" class="sepm.ss15.grp16.gui.controller.User.RegistrationController" scope="prototype">
+             <property name="userService" ref="userService" />
+             <property name="weightHistoryService" ref="weightHistoryService" />
+             <property name="bodyfatHistoryService" ref="bodyfatHistoryService" />
+             <property name="pictureHistoryService" ref="pictureHistoryService" />
+        </bean>
+
 </beans>

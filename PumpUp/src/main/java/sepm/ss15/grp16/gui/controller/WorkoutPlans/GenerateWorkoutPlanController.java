@@ -3,6 +3,8 @@ package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,7 +14,7 @@ import java.util.ResourceBundle;
  * This controller is responsible for the auto-generated workout plans depending on the user's criteria.
  * This is just a skeleton, further planning and implementation required.
  */
-public class GenerateWorkoutPlanController implements Initializable{
+public class GenerateWorkoutPlanController extends Controller implements Initializable{
 
 
     @Override
@@ -22,7 +24,7 @@ public class GenerateWorkoutPlanController implements Initializable{
 
     @FXML
     void generateButtonClicked(ActionEvent event) {
-
+        stage.close();
     }
 
 
