@@ -18,6 +18,9 @@ public class TrainingsplanType implements DTO {
 
 	List<Trainingsplan> trainingsplans;
 
+	public TrainingsplanType(){
+	}
+
 	public TrainingsplanType(Integer id, Integer uid, String name, String descr, Boolean isDeleted, List<Trainingsplan> trainingsplans) {
 		this.id = id;
 		this.uid = uid;

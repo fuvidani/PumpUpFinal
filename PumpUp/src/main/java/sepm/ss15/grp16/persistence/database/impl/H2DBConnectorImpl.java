@@ -146,7 +146,7 @@ public class H2DBConnectorImpl implements DBHandler {
 	 */
 	private void populateTest() throws DBException, FileNotFoundException, SQLException, URISyntaxException {
 		LOGGER.info("try populate database with test datas");
-		String sql_url = getClass().getClassLoader().getResource("sql/insert").toURI().getPath();
+		String sql_url = getClass().getClassLoader().getResource("sql/inserts").toURI().getPath();
 
 		if (sql_url != null) {
 

@@ -5,42 +5,33 @@
 
     <bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"
           scope="singleton" init-method="openConnection" destroy-method="closeConnection">
-        <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"/>
-        <constructor-arg name="user" value="sa"/>
-        <constructor-arg name="password" value=""/>
+        <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"></constructor-arg>
+        <constructor-arg name="user" value="sa"></constructor-arg>
+        <constructor-arg name="password" value=""></constructor-arg>
     </bean>
 
-    <!--DAOs-->
-    <bean id="trainingsplanDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2TrainingsplanDAOImpl"
-          scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"/>
-    </bean>
-    <bean id="trainingsSessionDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2TrainingssessionDAOImpl"
-          scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"/>
-    </bean>
-    <bean id="exerciseSetDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2ExerciseSetDAOImpl"
-          scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"/>
-    </bean>
     <bean id="exerciseDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl"
           scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"/>
+        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
     </bean>
 
-    <!--Services-->
+
+    <bean id="trainingsplanDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2TrainingsplanDAOImpl" scope="singleton"
+          lazy-init="true">
+        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+    </bean>
+    <bean id="trainingsplanTypeDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2TrainingsplanTypeDAOImpl" scope="singleton"
+          lazy-init="true">
+        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+    </bean>
+    <bean id="trainingsSessionDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2TrainingssessionDAOImpl" scope="singleton"
+          lazy-init="true">
+        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+    </bean>
+
     <bean id="exerciseService" class="sepm.ss15.grp16.service.impl.ExerciseServiceImpl"
           scope="singleton">
-        <constructor-arg name="exerciseDAO" ref="exerciseDAO" />
-    </bean>
-
-    <!--Controller-->
-    <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController" scope="prototype">
-
-    </bean>
-
-    <bean id="mainController" class="sepm.ss15.grp16.gui.controller.Main.MainController" scope="prototype">
-
+        <constructor-arg name="exerciseDAO" ref="exerciseDAO"/>
     </bean>
 
 </beans>

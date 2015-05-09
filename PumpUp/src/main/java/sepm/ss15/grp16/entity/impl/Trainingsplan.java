@@ -19,6 +19,9 @@ public class Trainingsplan implements DTO {
 	List<TrainingsSession> trainingsSessions;
 	List<TrainingsplanType> trainingsplanTypes;
 
+	public Trainingsplan() {
+	}
+
 	public Trainingsplan(Integer id, Integer uid, String name, String descr, Boolean isDeleted, List<TrainingsSession> trainingsSessions, List<TrainingsplanType> trainingsplanTypes) {
 		this.id = id;
 		this.uid = uid;
@@ -71,7 +74,9 @@ public class Trainingsplan implements DTO {
 	@Override
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
-		for (TrainingsSession session : trainingsSessions) session.setIsDeleted(isDeleted);
+		if (trainingsSessions != null) {
+			for (TrainingsSession session : trainingsSessions) session.setIsDeleted(isDeleted);
+		}
 	}
 
 	public List<TrainingsSession> getTrainingsSessions() {
@@ -98,7 +103,9 @@ public class Trainingsplan implements DTO {
 	@Override
 	public void setId(Integer id) {
 		this.id = id;
-		for (TrainingsSession session : trainingsSessions) session.setId_plan(id);
+		if (trainingsSessions != null) {
+			for (TrainingsSession session : trainingsSessions) session.setId_plan(id);
+		}
 	}
 
 	@Override

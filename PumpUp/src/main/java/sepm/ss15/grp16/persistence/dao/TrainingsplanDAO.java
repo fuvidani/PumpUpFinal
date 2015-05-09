@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.persistence.dao;
 
 import sepm.ss15.grp16.entity.impl.Trainingsplan;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ import java.util.List;
  */
 public interface TrainingsplanDAO extends DAO<Trainingsplan> {
 
-	List<Trainingsplan> find(Trainingsplan trainingsplan);
+	List<Trainingsplan> find(Trainingsplan trainingsplan) throws PersistenceException;
 }

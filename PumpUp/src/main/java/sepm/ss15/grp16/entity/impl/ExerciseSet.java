@@ -16,6 +16,9 @@ public class ExerciseSet implements DTO {
 	Integer order_nr;
 	Boolean isDeleted;
 
+	public ExerciseSet() {
+	}
+
 	public ExerciseSet(Integer id, Integer id_exercise, Integer id_session, Integer uid, Integer repeat, Integer order_nr, Boolean isDeleted) {
 		this.id = id;
 		this.id_exercise = id_exercise;

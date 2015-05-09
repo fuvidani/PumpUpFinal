@@ -17,6 +17,9 @@ public class TrainingsSession implements DTO {
 
 	List<ExerciseSet> exerciseSets;
 
+	public TrainingsSession() {
+	}
+
 	public TrainingsSession(Integer id_session, Integer id_plan, Integer uid, Boolean isDeleted, List<ExerciseSet> exerciseSets) {
 		this.id_session = id_session;
 		this.id_plan = id_plan;
@@ -39,7 +42,9 @@ public class TrainingsSession implements DTO {
 
 	public void setId_session(Integer id_session) {
 		this.id_session = id_session;
-		for (ExerciseSet exerciseSet : exerciseSets) exerciseSet.setId_session(id_session);
+		if (exerciseSets != null) {
+			for (ExerciseSet exerciseSet : exerciseSets) exerciseSet.setId_session(id_session);
+		}
 	}
 
 	public Integer getId_plan() {
@@ -66,7 +71,9 @@ public class TrainingsSession implements DTO {
 	@Override
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
-		for (ExerciseSet exerciseSet : exerciseSets) exerciseSet.setIsDeleted(isDeleted);
+		if (exerciseSets != null) {
+			for (ExerciseSet exerciseSet : exerciseSets) exerciseSet.setIsDeleted(isDeleted);
+		}
 	}
 
 	public List<ExerciseSet> getExerciseSets() {
