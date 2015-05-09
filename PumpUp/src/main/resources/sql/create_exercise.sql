@@ -1,4 +1,4 @@
-create table exercise(
+create table if not exists exercise(
 id int not null,
 name varchar not null,
 descripion varchar not null,
@@ -8,7 +8,7 @@ isdeleted BOOLEAN not null,
 PRIMARY KEY(id)
 );
 
-create table gif(
+create table if not exists gif(
 id int not null,
 exerciseid int not null,
 location varchar not null,
@@ -16,5 +16,5 @@ PRIMARY KEY(id),
 FOREIGN KEY(exerciseid) references exercise(id)
 );
 
-create SEQUENCE exercisesequence START WITH 0 INCREMENT BY 1;;
-CREATE SEQUENCE gifsequence START WITH 0 INCREMENT BY 1;;
+create SEQUENCE if not exists exercisesequence START WITH 0 INCREMENT BY 1;;
+CREATE SEQUENCE if not exists gifsequence START WITH 0 INCREMENT BY 1;;
