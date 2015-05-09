@@ -15,6 +15,8 @@ import sepm.ss15.grp16.entity.BodyfatHistory;
 import sepm.ss15.grp16.entity.PictureHistory;
 import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.entity.WeightHistory;
+import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.BodyfatHistoryService;
 import sepm.ss15.grp16.service.PictureHistoryService;
 import sepm.ss15.grp16.service.UserService;
@@ -31,7 +33,9 @@ import java.util.ResourceBundle;
  * @author Michael Sober
  * @version 1.0
  */
-public class RegistrationController implements Initializable {
+public class RegistrationController extends Controller implements Initializable {
+
+    private StageTransitionLoader transitionLoader;
 
     @FXML
     Pane registrationPane;
@@ -84,6 +88,7 @@ public class RegistrationController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.transitionLoader = new StageTransitionLoader(this);
     }
 
     @FXML
@@ -176,7 +181,6 @@ public class RegistrationController implements Initializable {
             alert.showAndWait();
             Stage stage = (Stage) registrationPane.getScene().getWindow();
             stage.close();
-
         } catch (ServiceException e) {
             LOGGER.error("Couldn't create User");
         }

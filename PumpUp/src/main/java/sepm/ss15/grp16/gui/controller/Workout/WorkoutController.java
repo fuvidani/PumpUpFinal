@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.gui.controller.Workout;
 
 import javafx.fxml.Initializable;
+import sepm.ss15.grp16.gui.controller.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,7 +12,7 @@ import java.util.ResourceBundle;
  * It consists of a graphicsController and a musicPlayerController.
  *
  */
-public class WorkoutController implements Initializable{
+public class WorkoutController extends Controller implements Initializable{
 
 
     private WorkoutGraphicsController graphicsController;

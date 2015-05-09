@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.media.MediaView;
+import javafx.stage.Stage;
+import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,9 +16,10 @@ import java.util.ResourceBundle;
  * Created by Daniel Fuevesi on 08.05.15.
  * This controller controls the lower section of the training's stage.
  */
-public class WorkoutMusicPlayerController implements Initializable {
+public class WorkoutMusicPlayerController extends Controller implements Initializable {
 
 
+    private StageTransitionLoader transitionLoader;
     @FXML
     private Label songTotalLengthLabel;
 
@@ -31,7 +35,7 @@ public class WorkoutMusicPlayerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        this.transitionLoader = new StageTransitionLoader(this);
     }
 
     @FXML
@@ -51,7 +55,7 @@ public class WorkoutMusicPlayerController implements Initializable {
 
     @FXML
     void playlistButtonClicked(ActionEvent event) {
-
+        transitionLoader.openStage("fxml/Playlist.fxml",(Stage)songSecondsCounterLabel.getScene().getWindow(),"Musik - Playlist",700,300, false);
     }
 
 }

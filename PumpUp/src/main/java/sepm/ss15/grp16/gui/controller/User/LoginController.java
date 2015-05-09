@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,6 +20,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.Main.MainController;
+import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
@@ -32,7 +36,9 @@ import java.util.ResourceBundle;
  * @author Michael Sober
  * @version 1.0
  */
-public class LoginController implements Initializable {
+public class LoginController  extends Controller implements Initializable {
+
+    private StageTransitionLoader transitionLoader;
 
     @FXML
     Pane loginPane;
@@ -58,6 +64,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.transitionLoader = new StageTransitionLoader(this);
         LOGGER.debug("Initialize LoginController");
         userIDCol.setCellValueFactory(new PropertyValueFactory<>("user_id"));
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -71,7 +78,7 @@ public class LoginController implements Initializable {
 
     @FXML
     public void registerClicked() {
-        LOGGER.debug("Register button clicked");
+        /*LOGGER.debug("Register button clicked");
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
@@ -91,6 +98,12 @@ public class LoginController implements Initializable {
         } catch (IOException e) {
             LOGGER.error("Couldn't open registration-window");
             e.printStackTrace();
-        }
+        }*/
+        transitionLoader.openStage("fxml/Registration.fxml", (Stage) loginPane.getScene().getWindow(), "Registrierung", 360, 430, false);
+    }
+
+    @FXML
+    public void loginButtonClicked() {
+        stage.close();
     }
 }

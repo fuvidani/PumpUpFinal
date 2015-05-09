@@ -3,6 +3,7 @@ package sepm.ss15.grp16.gui;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -16,6 +17,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.gui.controller.Main.MainController;
+import sepm.ss15.grp16.gui.controller.User.LoginController;
+import sun.rmi.runtime.Log;
 
 import java.util.Optional;
 
@@ -43,17 +46,13 @@ public class Main extends Application{
         });
 
         fxmlLoader.setLocation(MainController.class.getClassLoader().getResource("fxml/Main.fxml"));
-         Pane pane = (Pane) fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("fxml/Main.fxml"));
-       // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
+        Pane pane = (Pane) fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("fxml/Main.fxml"));
+        // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
         MainController mainController = fxmlLoader.getController();
         primaryStage.setScene(new Scene(pane, 1300, 750));
-        primaryStage.setMaximized(true);
         primaryStage.setMinWidth(1200);
         primaryStage.setMinHeight(720);
-
-        LOGGER.info("configuration successful");
-
-        primaryStage.show();
+        primaryStage.setMaximized(true);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
@@ -68,12 +67,21 @@ public class Main extends Application{
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == yes) {
+                    // TODO: For cleaning purposes: close DB-connection
                     primaryStage.close();
                 } else {
                     primaryStage.show();
                 }
             }
         });
+        LOGGER.info("configuration successful");
+
+        primaryStage.show();
+
+
+
+
+
 
     }
 
