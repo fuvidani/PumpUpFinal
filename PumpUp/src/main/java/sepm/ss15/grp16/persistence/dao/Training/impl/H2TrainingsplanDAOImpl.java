@@ -1,15 +1,15 @@
-package sepm.ss15.grp16.persistence.dao.impl;
+package sepm.ss15.grp16.persistence.dao.Training.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import sepm.ss15.grp16.entity.impl.TrainingsSession;
-import sepm.ss15.grp16.entity.impl.Trainingsplan;
-import sepm.ss15.grp16.entity.impl.TrainingsplanType;
-import sepm.ss15.grp16.persistence.dao.TrainingsSessionDAO;
-import sepm.ss15.grp16.persistence.dao.TrainingsplanDAO;
-import sepm.ss15.grp16.persistence.dao.TrainingsplanTypeDAO;
+import sepm.ss15.grp16.entity.Training.TrainingsSession;
+import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.Training.TrainingsplanType;
+import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
+import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
+import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanTypeDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
@@ -70,13 +70,14 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 					"SET UID = ?, name = ?, description = ?, isDeleted = ? WHERE ID_Plan = ?");
 			ps_delete = con.prepareStatement("UPDATE TrainingsPlan SET isDeleted = TRUE WHERE ID_Plan = ?");
 
-			/** Sequences **/
-			ps_seq_TP = con.prepareStatement("SELECT currval('seq_TP')");
-
+			/** Trainingplan refer type **/
 			ps_find_association = con.prepareStatement("SELECT * FROM PlanHasType WHERE ID_Plan = ?");
 			ps_create_association = con.prepareStatement("INSERT INTO PlanHasType VALUES (?, ?, FALSE)");
 			ps_delete_association = con.prepareStatement("UPDATE PlanHasType SET isDeleted = TRUE " +
 					"WHERE ID_Plan = ? AND ID_Type = ?");
+
+			/** Sequences **/
+			ps_seq_TP = con.prepareStatement("SELECT currval('seq_TP')");
 
 		} catch (DBException | SQLException e) {
 			LOGGER.error("" + e.getMessage());
@@ -91,7 +92,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 			ps_create.setObject(1, dto.getUid() != null ? dto.getId() : null);
 			ps_create.setString(2, dto.getName());
 			ps_create.setString(3, dto.getDescr());
-			ps_create.setBoolean(4, dto.getIsDeleted());
+			ps_create.setBoolean(4, false);
 
 			executeUpdate(ps_create);
 			ResultSet rs = executeQuery(ps_seq_TP);
@@ -137,7 +138,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 				plan.setName(rs.getString("name"));
 				plan.setDescr(rs.getString("description"));
 
-				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, id, null, null, null));
+				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, id, null, null, null, null));
 				plan.setTrainingsSessions(sessions);
 
 				plan.setTrainingsplanTypes(findAssociatedTypes(id));
@@ -167,7 +168,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 				plan.setName(rs.getString("name"));
 				plan.setDescr(rs.getString("description"));
 
-				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, id, null, false, null));
+				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, id, null, null, null, null));
 				plan.setTrainingsSessions(sessions);
 
 				plan.setTrainingsplanTypes(findAssociatedTypes(id));
@@ -191,7 +192,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 
 			executeUpdate(ps_update);
 
-			List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, dto.getId(), null, false, null));
+			List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, dto.getId(), null, null, false, null));
 
 			if (sessions != null && sessions.size() != dto.getTrainingsSessions().size()) {
 				List<TrainingsSession> sessions_toDelete = new ArrayList<>();
@@ -280,12 +281,12 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 
 			PreparedStatement ps_find;
 
-			if(filter.getUid() != null){
+			if (filter.getUid() != null) {
 				ps_find_user.setInt(1, filter.getUid());
 
 				if (filter.getName() != null) ps_find_user.setString(2, filter.getName());
 				else ps_find_user.setString(2, "%");
-				if (filter.getIsDeleted() != null) ps_find_user.setBoolean(4, filter.getIsDeleted());
+				if (filter.getIsDeleted() != null) ps_find_user.setBoolean(2, filter.getIsDeleted());
 				else ps_find_user.setString(3, "%");
 
 				ps_find = ps_find_user;
@@ -310,7 +311,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 				plan.setName(rs.getString("name"));
 				plan.setDescr(rs.getString("description"));
 
-				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, id, null, null, null));
+				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, id, null, null, null, null));
 				plan.setTrainingsSessions(sessions);
 
 				plan.setTrainingsplanTypes(findAssociatedTypes(id));

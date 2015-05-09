@@ -3,7 +3,7 @@ package PersitanceTest.TrainingTest;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
-import sepm.ss15.grp16.persistence.dao.ExerciseSetDAO;
+import sepm.ss15.grp16.persistence.dao.Training.ExerciseSetDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.ArrayList;

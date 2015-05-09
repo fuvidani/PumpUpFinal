@@ -1,9 +1,9 @@
-package sepm.ss15.grp16.persistence.dao.impl;
+package sepm.ss15.grp16.persistence.dao.Training.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.impl.TrainingsplanType;
-import sepm.ss15.grp16.persistence.dao.TrainingsplanTypeDAO;
+import sepm.ss15.grp16.entity.Training.TrainingsplanType;
+import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanTypeDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;

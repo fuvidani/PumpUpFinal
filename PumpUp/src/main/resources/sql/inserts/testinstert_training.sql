@@ -7,9 +7,9 @@ MERGE INTO gif VALUES (2, 1, 'youtube');
 -- Training
 MERGE INTO TrainingsPlan VALUES (1, NULL, 'Testtraining', 'Testtrainingbeschreibung', FALSE);
 
-MERGE INTO TrainingsSession VALUES (1, 1, NULL, FALSE);
-MERGE INTO TrainingsSession VALUES (2, 1, NULL, FALSE);
-MERGE INTO TrainingsSession VALUES (3, 1, NULL, FALSE);
+MERGE INTO TrainingsSession VALUES (1, 1, 'Session 1', NULL, FALSE);
+MERGE INTO TrainingsSession VALUES (2, 1, 'Session 2', NULL, FALSE);
+MERGE INTO TrainingsSession VALUES (3, 1, 'Session 3', NULL, FALSE);
 
 MERGE INTO ExerciseSet VALUES (1, 1, NULL, 10, 1, 1, FALSE);
 MERGE INTO ExerciseSet VALUES (2, 1, NULL, 15, 2, 1, FALSE);

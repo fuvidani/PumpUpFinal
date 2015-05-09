@@ -1,13 +1,13 @@
 package PersitanceTest.TrainingTest.Impl;
 
-
-import PersitanceTest.TrainingTest.AbstractTrainingsPlanDAOTest;
+import PersitanceTest.TrainingTest.AbstractTrainingssessionDAOTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
@@ -21,13 +21,21 @@ import java.sql.SQLException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
-public class H2TrainingsplanDAOTestImpl extends AbstractTrainingsPlanDAOTest {
+public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTest {
+
+	@Autowired
+	private TrainingsSessionDAO trainingsSessionDAO;
 
 	@Autowired
 	private TrainingsplanDAO trainingsplanDAO;
 
 	@Autowired
 	private DBHandler dbConnector;
+
+	@Override
+	public TrainingsSessionDAO getTrainingsSessionDAO() {
+		return trainingsSessionDAO;
+	}
 
 	@Override
 	public TrainingsplanDAO getTrainingsplanDAO() {
@@ -44,3 +52,4 @@ public class H2TrainingsplanDAOTestImpl extends AbstractTrainingsPlanDAOTest {
 		dbConnector.deactivateTestMode();
 	}
 }
+

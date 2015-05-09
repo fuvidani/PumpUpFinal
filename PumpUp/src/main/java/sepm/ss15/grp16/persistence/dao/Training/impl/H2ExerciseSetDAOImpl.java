@@ -1,9 +1,9 @@
-package sepm.ss15.grp16.persistence.dao.impl;
+package sepm.ss15.grp16.persistence.dao.Training.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.impl.TrainingsSession;
-import sepm.ss15.grp16.persistence.dao.TrainingsSessionDAO;
+import sepm.ss15.grp16.entity.Training.ExerciseSet;
+import sepm.ss15.grp16.persistence.dao.Training.ExerciseSetDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
@@ -18,9 +18,9 @@ import java.util.List;
  * Author: Lukas
  * Date: 08.05.2015
  */
-public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
+public class H2ExerciseSetDAOImpl implements ExerciseSetDAO {
 
-	private static final Logger LOGGER = LogManager.getLogger(H2TrainingssessionDAOImpl.class);
+	private static final Logger LOGGER = LogManager.getLogger(H2ExerciseSetDAOImpl.class);
 
 	private Connection con;
 
@@ -30,7 +30,7 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 	private PreparedStatement ps_update;
 	private PreparedStatement ps_delete;
 
-	private H2TrainingssessionDAOImpl(DBHandler handler) throws PersistenceException {
+	private H2ExerciseSetDAOImpl(DBHandler handler) throws PersistenceException {
 		try {
 			con = handler.getConnection();
 
@@ -47,32 +47,32 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 	}
 
 	@Override
-	public List<TrainingsSession> find(TrainingsSession trainingsSession) {
+	public List<ExerciseSet> find(ExerciseSet exerciseSet) {
 		return null;
 	}
 
 	@Override
-	public TrainingsSession create(TrainingsSession dto) throws PersistenceException {
+	public ExerciseSet create(ExerciseSet dto) throws PersistenceException {
 		return null;
 	}
 
 	@Override
-	public List<TrainingsSession> findAll() throws PersistenceException {
+	public List<ExerciseSet> findAll() throws PersistenceException {
 		return null;
 	}
 
 	@Override
-	public TrainingsSession searchByID(int id) throws PersistenceException {
+	public ExerciseSet searchByID(int id) throws PersistenceException {
 		return null;
 	}
 
 	@Override
-	public TrainingsSession update(TrainingsSession dto) throws PersistenceException {
+	public ExerciseSet update(ExerciseSet dto) throws PersistenceException {
 		return null;
 	}
 
 	@Override
-	public void delete(TrainingsSession dto) throws PersistenceException {
+	public void delete(ExerciseSet dto) throws PersistenceException {
 
 	}
 

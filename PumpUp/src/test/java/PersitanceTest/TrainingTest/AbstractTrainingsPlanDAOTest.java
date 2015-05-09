@@ -2,8 +2,8 @@ package PersitanceTest.TrainingTest;
 
 import org.junit.Assert;
 import org.junit.Test;
-import sepm.ss15.grp16.entity.impl.Trainingsplan;
-import sepm.ss15.grp16.persistence.dao.TrainingsplanDAO;
+import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.entity.impl;
+package sepm.ss15.grp16.entity.Training;
 
 import sepm.ss15.grp16.entity.DTO;
 
@@ -13,6 +13,7 @@ public class TrainingsSession implements DTO {
 	Integer id_session;
 	Integer id_plan;
 	Integer uid;
+	String name;
 	Boolean isDeleted;
 
 	List<ExerciseSet> exerciseSets;
@@ -20,10 +21,11 @@ public class TrainingsSession implements DTO {
 	public TrainingsSession() {
 	}
 
-	public TrainingsSession(Integer id_session, Integer id_plan, Integer uid, Boolean isDeleted, List<ExerciseSet> exerciseSets) {
+	public TrainingsSession(Integer id_session, Integer id_plan, Integer uid, String name, Boolean isDeleted, List<ExerciseSet> exerciseSets) {
 		this.id_session = id_session;
 		this.id_plan = id_plan;
 		this.uid = uid;
+		this.name = name;
 		this.isDeleted = isDeleted;
 		this.exerciseSets = exerciseSets;
 	}
@@ -32,6 +34,7 @@ public class TrainingsSession implements DTO {
 		this.id_session = trainingsSession.id_session;
 		this.id_plan = trainingsSession.id_plan;
 		this.uid = trainingsSession.uid;
+		this.name = trainingsSession.name;
 		this.isDeleted = trainingsSession.isDeleted;
 		this.exerciseSets = trainingsSession.exerciseSets;
 	}
@@ -61,6 +64,14 @@ public class TrainingsSession implements DTO {
 
 	public void setUid(Integer uid) {
 		this.uid = uid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -104,6 +115,7 @@ public class TrainingsSession implements DTO {
 		return !(id_session != null ? !id_session.equals(that.id_session) : that.id_session != null) &&
 				!(id_plan != null ? !id_plan.equals(that.id_plan) : that.id_plan != null) &&
 				!(uid != null ? !uid.equals(that.uid) : that.uid != null) &&
+				!(name != null ? !name.equals(that.name) : that.name != null) &&
 				!(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
 				!(exerciseSets != null ? !exerciseSets.equals(that.exerciseSets) : that.exerciseSets != null);
 
@@ -114,6 +126,7 @@ public class TrainingsSession implements DTO {
 		int result = id_session != null ? id_session.hashCode() : 0;
 		result = 31 * result + (id_plan != null ? id_plan.hashCode() : 0);
 		result = 31 * result + (uid != null ? uid.hashCode() : 0);
+		result = 31 * result + (name != null ? name.hashCode() : 0);
 		result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
 		result = 31 * result + (exerciseSets != null ? exerciseSets.hashCode() : 0);
 		return result;
@@ -125,6 +138,7 @@ public class TrainingsSession implements DTO {
 				"id_session=" + id_session +
 				", id_plan=" + id_plan +
 				", uid=" + uid +
+				", name='" + name + '\'' +
 				", isDeleted=" + isDeleted +
 				", exerciseSets=" + exerciseSets +
 				'}';

@@ -1,6 +1,7 @@
-package sepm.ss15.grp16.persistence.dao;
+package sepm.ss15.grp16.persistence.dao.Training;
 
-import sepm.ss15.grp16.entity.impl.Trainingsplan;
+import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;

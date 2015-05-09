@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS TrainingsPlan (
 CREATE TABLE IF NOT EXISTS TrainingsSession (
   ID_Session INTEGER DEFAULT nextval('seq_TS'),
   ID_Plan    INTEGER,
+  name VARCHAR(30),
   UID        INTEGER NULL, --included sessions have no user
   isDeleted  BOOLEAN DEFAULT FALSE,
 
