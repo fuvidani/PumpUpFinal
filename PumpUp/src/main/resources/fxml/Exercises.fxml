@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.media.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
@@ -35,18 +36,18 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="603.0" prefWidth="1400.0">
+            <HBox prefHeight="557.0" prefWidth="1300.0">
                <children>
                   <VBox prefHeight="584.0" prefWidth="276.0" spacing="20.0">
                      <children>
-                        <ListView fx:id="exercisesList" prefHeight="395.0" prefWidth="124.0">
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </ListView>
+                        <TableView fx:id="uebungsTableView" maxWidth="-Infinity" minHeight="132.0" prefHeight="441.0" prefWidth="132.0">
+                          <columns>
+                            <TableColumn fx:id="uebungColumn" editable="false" maxWidth="132.0" minWidth="-1.0" prefWidth="132.0" resizable="false" text="Übung" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
                         <CheckBox fx:id="customExercisesCheckbox" mnemonicParsing="false" text="Eigene Übungen">
                            <font>
                               <Font size="14.0" />
@@ -72,7 +73,7 @@
                   </Separator>
                   <VBox prefHeight="603.0" prefWidth="1153.0" spacing="10.0">
                      <children>
-                        <Label fx:id="exerciseNameLabel" prefHeight="44.0" prefWidth="506.0" text="Liegestütz">
+                        <Label fx:id="exerciseNameLabel" prefHeight="44.0" prefWidth="506.0" text="Übung">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -82,11 +83,28 @@
                         </Label>
                         <HBox prefHeight="300.0" prefWidth="1082.0" spacing="400.0">
                            <children>
-                              <MediaView fx:id="smallMediaView" fitHeight="300.0" fitWidth="300.0">
-                                 <VBox.margin>
-                                    <Insets left="10.0" />
-                                 </VBox.margin>
-                              </MediaView>
+                              <VBox>
+                                 <children>
+                                    <ImageView fx:id="imageView" fitHeight="217.0" fitWidth="287.0" pickOnBounds="true" preserveRatio="true" />
+                                    <HBox spacing="30.0">
+                                       <children>
+                                          <Button fx:id="prevPic" mnemonicParsing="false" onAction="#prevPicButtonClicked" text="vorhergehendes Bild">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="nexPic" mnemonicParsing="false" onAction="#nexPicButtonClicked" text="nächstes Bild">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                       <padding>
+                                          <Insets top="20.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                               <MediaView fx:id="bigMediaView" fitHeight="300.0" fitWidth="400.0" />
                            </children>
                         </HBox>
@@ -153,6 +171,9 @@
                      </children>
                   </VBox>
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </HBox>
             <HBox prefHeight="46.0" prefWidth="1400.0" spacing="20.0">
                <children>

@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.service.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl;
@@ -19,10 +21,8 @@ import java.util.List;
 public class ExerciseServiceImpl implements ExerciseService {
 
     private ExerciseDAO exerciseDAO;
+    private static final Logger LOGGER = LogManager.getLogger();
 
-    public ExerciseServiceImpl(){
-
-    }
 
     public ExerciseServiceImpl(ExerciseDAO exerciseDAO)throws ServiceException{
         if(exerciseDAO==null) {
@@ -33,6 +33,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public Exercise create(Exercise exercise) throws ServiceException, ValidationException {
+        LOGGER.debug("creating new Exercise in service");
         validate(exercise);
         try {
 
@@ -45,7 +46,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public List<Exercise> findAll() throws ServiceException {
         try{
-
+            LOGGER.debug("trying to find all exercises in servic");
             return exerciseDAO.findAll();
         }catch (PersistenceException e){
             throw new ServiceException(e);
@@ -54,6 +55,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public Exercise update(Exercise exercise) throws ServiceException {
+        LOGGER.debug("updating exercise in service");
         validate(exercise);
         try{
             Exercise updated = exerciseDAO.update(exercise);
@@ -66,6 +68,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public void delete(Exercise exercise) throws ServiceException {
+        LOGGER.debug("deleting exercise in service");
         try{
             exerciseDAO.delete(exercise);
         }catch (PersistenceException e){
@@ -75,6 +78,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public void validate(Exercise exercise)throws sepm.ss15.grp16.service.exception.ValidationException{
+        LOGGER.debug("validating exericse in service layer");
         if(exercise ==null)
             throw new ValidationException("validation not passed. exercise is null");
 
