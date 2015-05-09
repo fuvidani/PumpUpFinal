@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.persistence.database.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.h2.tools.RunScript;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
@@ -19,6 +21,7 @@ import java.sql.SQLException;
  * Adapted: Lukas Kathrein (lk)
  */
 public class H2DBConnectorImpl implements DBHandler {
+	private static final Logger LOGGER = LogManager.getLogger(H2DBConnectorImpl.class);
 
 	private static Connection con = null;
 
@@ -37,13 +40,16 @@ public class H2DBConnectorImpl implements DBHandler {
 		if (con == null) {
 
 			try {
+				LOGGER.info("try to get connection to database");
 				Class.forName("org.h2.Driver");
 
 				con = DriverManager.getConnection(path, user, password);
+				LOGGER.info("connection successful established");
 
 				execScripts();
 
 			} catch (ClassNotFoundException | SQLException | FileNotFoundException | URISyntaxException e) {
+				LOGGER.error(e.getMessage());
 				throw new DBException("Failed to open connection", e);
 			}
 		}
@@ -59,9 +65,12 @@ public class H2DBConnectorImpl implements DBHandler {
 	public void closeConnection() throws DBException {
 		if (con != null) {
 			try {
+				LOGGER.info("try to close connection to database");
 				con.close();
 				con = null;     //for recognising the closed connection
+				LOGGER.info("connection successful closed");
 			} catch (SQLException e) {
+				LOGGER.error(e.getMessage());
 				throw new DBException("Failed to close connection", e);
 			}
 		}
@@ -70,6 +79,7 @@ public class H2DBConnectorImpl implements DBHandler {
 	@Override
 	public void activateTestMode() throws DBException {
 		try {
+			LOGGER.info("try to get connection to database and activate testmode");
 			Class.forName("org.h2.Driver");
 
 			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
@@ -77,9 +87,10 @@ public class H2DBConnectorImpl implements DBHandler {
 
 			con.setAutoCommit(false);
 			populateTest();
-
+			LOGGER.info("connection successful established. testmode activated");
 
 		} catch (ClassNotFoundException | FileNotFoundException | URISyntaxException | SQLException e) {
+			LOGGER.error(e.getMessage());
 			throw new DBException("Failed to activate testmode", e);
 		}
 	}
@@ -87,6 +98,7 @@ public class H2DBConnectorImpl implements DBHandler {
 	@Override
 	public void deactivateTestMode() throws DBException {
 		try {
+			LOGGER.info("try to close connection to database and deactivate testmode");
 			con.rollback();
 
 			Class.forName("org.h2.Driver");
@@ -94,7 +106,9 @@ public class H2DBConnectorImpl implements DBHandler {
 			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
 			con.setAutoCommit(true);
 
+			LOGGER.info("connection successful closed. testmode deactivated");
 		} catch (ClassNotFoundException | SQLException e) {
+			LOGGER.error(e.getMessage());
 			throw new DBException("Failed to deactivate testmode", e);
 		}
 	}
@@ -106,6 +120,7 @@ public class H2DBConnectorImpl implements DBHandler {
 	 * @throws SQLException
 	 */
 	private void execScripts() throws FileNotFoundException, SQLException, URISyntaxException {
+		LOGGER.info("execute SQL-Scripts from ressources/sql");
 		String sql_url = getClass().getClassLoader().getResource("sql").toURI().getPath();
 
 		if (sql_url != null) {
@@ -130,6 +145,7 @@ public class H2DBConnectorImpl implements DBHandler {
 	 * @throws DBException
 	 */
 	private void populateTest() throws DBException {
+		LOGGER.info("populate database with test datas");
 		//TODO
 	}
 }

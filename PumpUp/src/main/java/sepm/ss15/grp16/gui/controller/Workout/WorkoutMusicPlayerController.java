@@ -1,30 +1,26 @@
-package sepm.ss15.grp16.gui.controller;
+package sepm.ss15.grp16.gui.controller.Workout;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.media.MediaView;
-import javafx.scene.shape.Circle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Daniel Fuevesi on 06.05.15.
- *
+ * Created by Daniel Fuevesi on 08.05.15.
+ * This controller controls the lower section of the training's stage.
  */
-public class TrainingController implements Initializable{
+public class WorkoutMusicPlayerController implements Initializable {
 
 
     @FXML
     private Label songTotalLengthLabel;
 
     @FXML
-    private Circle clock;
-
-    @FXML
-    private MediaView mediaView;
+    private MediaView musicPlayerSlide;
 
     @FXML
     private Label artistAndSongLabel;
@@ -32,12 +28,14 @@ public class TrainingController implements Initializable{
     @FXML
     private Label songSecondsCounterLabel;
 
-    @FXML
-    private Label currentExerciseLabel;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @FXML
+    void rewindButtonClicked(ActionEvent event) {
 
     }
 
@@ -52,14 +50,8 @@ public class TrainingController implements Initializable{
     }
 
     @FXML
-    void rewindButtonClicked(ActionEvent event) {
-
-    }
-
-    @FXML
     void playlistButtonClicked(ActionEvent event) {
 
     }
-
 
 }

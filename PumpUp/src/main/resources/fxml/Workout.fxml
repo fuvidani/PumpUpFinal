@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.media.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Workout.WorkoutController">
+   <children>
+      <SplitPane dividerPositions="0.7820855614973262" layoutX="243.0" layoutY="554.0" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+            <HBox>
+               <children>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="570.0" prefWidth="1298.0">
+                     <children>
+                        <fx:include source="Workout_Gif_And_Timer.fxml" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="1298.0">
+                     <children>
+                        <fx:include source="Workout_MusicPlayer.fxml" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

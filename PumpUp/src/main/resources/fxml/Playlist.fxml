@@ -1,37 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.PlaylistController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Workout.PlaylistController">
    <children>
-      <TableView fx:id="playlist" layoutX="248.0" layoutY="78.0" prefHeight="574.0" prefWidth="773.0">
-        <columns>
-          <TableColumn fx:id="titleColumn" prefWidth="305.0" text="Titel" />
-          <TableColumn fx:id="artistColumn" prefWidth="340.0" text="Interpret" />
-            <TableColumn fx:id="lengthColumn" minWidth="0.0" prefWidth="127.0" text="Zeit" />
-        </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
-      <Label layoutX="20.0" layoutY="14.0" text="Music Playlist">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
-      <Button layoutX="722.0" layoutY="688.0" mnemonicParsing="false" onAction="#editButtonClicked" text="Ändern...">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="934.0" layoutY="688.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Speichern">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
+      <VBox layoutX="20.0" layoutY="14.0" prefHeight="800.0" prefWidth="1200.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="20.0" layoutY="14.0" text="Music Playlist">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <HBox>
+               <children>
+                  <TableView fx:id="playlist" layoutX="248.0" layoutY="78.0" prefHeight="574.0" prefWidth="663.0">
+                    <columns>
+                      <TableColumn fx:id="titleColumn" prefWidth="305.0" text="Titel" />
+                      <TableColumn fx:id="artistColumn" prefWidth="340.0" text="Interpret" />
+                        <TableColumn fx:id="lengthColumn" minWidth="0.0" prefWidth="127.0" text="Zeit" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="722.0" layoutY="688.0" spacing="50.0">
+               <children>
+                  <Button layoutX="722.0" layoutY="688.0" mnemonicParsing="false" onAction="#editButtonClicked" text="Ändern...">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="934.0" layoutY="688.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Speichern">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="450.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="20.0" top="10.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

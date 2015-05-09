@@ -1,5 +1,6 @@
 package PersitanceTest;
 
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 
 /**
  * Created by lukas on 30.04.2015.
+ *
  */
 
 
