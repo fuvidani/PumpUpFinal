@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
@@ -27,10 +28,10 @@ import java.sql.SQLException;
 public class H2ExerciseDAOImplTest extends  AbstractExerciseDaoTest {
 
     @Autowired
-    private ExerciseDAO exerciseDAO;
+    private DBHandler dbConnector;
 
     @Autowired
-    private DBHandler dbConnector;
+    public void setExerciseDAO(ExerciseDAO exerciseDAO){this.exerciseDAO = exerciseDAO;}
 
     @Override
     public ExerciseDAO getExerciseDAO() {
