@@ -32,12 +32,6 @@
     <bean id="manageExerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ManageExerciseController" scope="prototype">
     </bean>
 
-    <bean id="manageExerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ManageExerciseController" scope="prototype">
-
-    </bean>
-
-
-
     <!-- Main Beans -->
 
     <bean id="mainController" class="sepm.ss15.grp16.gui.controller.Main.MainController" scope="prototype">
