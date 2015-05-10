@@ -54,7 +54,6 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             this.connection = handler.getConnection();
             createStatement = connection.prepareStatement("INSERT into EXERCISE VALUES (?, ?, ?, ?, ?, ?);");
             readStatement = connection.prepareStatement("SELECT * FROM EXERCISE where isdeleted=false;");
-            getAllStatement = connection.prepareStatement("SELECT * FROM EXERCISE;");
             searchByIDStatement = connection.prepareStatement("SELECT * FROM EXERCISE where id=?;");
             readGifStatement = connection.prepareStatement("SELECT * FROM GIF where exerciseid =?");
             updateStatement = connection.prepareStatement("UPDATE EXERCISE SET name=?, descripion=?, calories=?, videolink=?, isdeleted=? where id=?;");
@@ -113,7 +112,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                         directory.mkdir();
                     }
                     GregorianCalendar calendar = new GregorianCalendar();
-                    String ownName = "img_ex_" + (calendar.getTimeInMillis()) + Math.abs(s.hashCode());
+                    String ownName = "/img_ex_" + (calendar.getTimeInMillis()) + Math.abs(s.hashCode());
                     FileInputStream inputStream = new FileInputStream(s);
                     String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
                     File file1 = new File(storingPath + ownName+".jpg"); //file storing
@@ -167,24 +166,6 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
         }
     }
 
-    /**
-     * returning all stored exercises wether they are deleted or not
-     * @return a list of all the exercises from the database
-     * @throws PersistenceException
-     */
-    public List<Exercise> getAll() throws PersistenceException {
-        List<Exercise> exerciseList = new ArrayList<>();
-
-        try{
-            ResultSet rs = getAllStatement.executeQuery();
-            while(rs.next()){
-                exerciseList.add(extractExcercise(rs)); //getting an entity from the resultset
-            }
-            return exerciseList;
-        }catch (SQLException e){
-            throw new PersistenceException("failed to get exercises from database", e);
-        }
-    }
 
     /**
      * method to search after exactely one exercise
