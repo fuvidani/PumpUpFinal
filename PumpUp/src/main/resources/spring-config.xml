@@ -126,10 +126,13 @@
 
     <bean id="trainingsplanDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingsplanDAOImpl" scope="singleton" lazy-init="true">
         <constructor-arg name="handler" ref="dbConnector"/>
+        <property name="trainingsplanTypeDAO" ref="trainingsplanTypeDAO"/>
+        <property name="trainingsSessionDAO" ref="trainingsSessionDAO"/>
     </bean>
 
     <bean id="trainingsplanTypeDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingsplanTypeDAOImpl" scope="singleton" lazy-init="true">
         <constructor-arg name="handler" ref="dbConnector"/>
+        <property name="trainingsplanDAO" ref="trainingsplanDAO"/>
     </bean>
 
     <bean id="trainingsSessionDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingssessionDAOImpl" scope="singleton" lazy-init="true">
