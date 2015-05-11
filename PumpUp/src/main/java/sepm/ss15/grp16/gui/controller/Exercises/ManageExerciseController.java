@@ -10,8 +10,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
@@ -36,6 +43,8 @@ import java.util.*;
  */
 public class ManageExerciseController extends Controller implements Initializable{
 
+    @FXML
+    private AnchorPane pane;
 
     @FXML
     private CheckBox punchBagCheck;
@@ -124,6 +133,9 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     private Button btn_durchsuchen;
 
+    @FXML
+    private VBox vBox;
+
     private Service<Exercise> exerciseService;
     private static final Logger LOGGER = LogManager.getLogger();
     private List<String> exerciseGifList = new ArrayList<>();
@@ -132,6 +144,8 @@ public class ManageExerciseController extends Controller implements Initializabl
     private ExercisesController exerciseController;
     private Exercise exercise = null;
     private String picture;
+
+    private ObservableList<CheckBox> checkboxes = FXCollections.observableArrayList();
 
     public void setExerciseService(Service<Exercise> exerciseService){
         this.exerciseService=exerciseService;
@@ -144,6 +158,15 @@ public class ManageExerciseController extends Controller implements Initializabl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        //dynamisches laden von checkboxen
+      /*  for (int i = 0; i < 5; i++) {
+            CheckBox box = new CheckBox("hi");
+            checkboxes.add(box);
+        }
+
+        vBox.getChildren().addAll(checkboxes);*/
+
         imagesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

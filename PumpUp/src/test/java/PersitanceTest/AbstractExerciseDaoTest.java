@@ -3,7 +3,10 @@ package PersitanceTest;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.junit.Test;
+import sepm.ss15.grp16.entity.AbsractCategory;
 import sepm.ss15.grp16.entity.Exercise;
+import sepm.ss15.grp16.entity.MusclegroupCategory;
+import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
@@ -20,13 +23,16 @@ public  abstract  class AbstractExerciseDaoTest {
 
     public abstract ExerciseDAO getExerciseDAO();
 
-    //    @Test
+//        @Test
     public void createValid(){
         try {
             List<String> gifList = new ArrayList<>();
             URL url = this.getClass().getResource("/img/pushup.jpg");
             gifList.add(url.toString().substring(6));
-            Exercise liegestuetz = new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false);
+            List<AbsractCategory> categoryList = new ArrayList<>();
+            categoryList.add(new MusclegroupCategory(1, "Bizeps"));
+
+            Exercise liegestuetz = new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false ,new User(null, "hallo", true, 1, 1, false), false, categoryList);
             List<Exercise> exerciseList = getExerciseDAO().findAll();
             TestCase.assertFalse(exerciseList.contains(liegestuetz));
             Exercise e =  exerciseDAO.create(liegestuetz);
@@ -48,7 +54,7 @@ public  abstract  class AbstractExerciseDaoTest {
     }
 
 
-    //    @Test
+        @Test
     public void updateValid(){
         try {
             List<String> gifList = new ArrayList<>();
@@ -131,7 +137,7 @@ public  abstract  class AbstractExerciseDaoTest {
         exerciseDAO.delete(e);
     }
 
-    @Test
+//    @Test
     public void getById(){
         try {
             List<String> gifList = new ArrayList<>();

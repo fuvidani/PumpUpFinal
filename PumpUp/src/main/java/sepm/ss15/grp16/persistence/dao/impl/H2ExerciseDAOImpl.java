@@ -3,6 +3,7 @@ package sepm.ss15.grp16.persistence.dao.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.h2.util.IOUtils;
+import sepm.ss15.grp16.entity.AbsractCategory;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
@@ -28,6 +29,7 @@ import java.util.List;
 public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     private PreparedStatement createStatement;
+    private PreparedStatement createCategoryStatement;
     private PreparedStatement readStatement;
     private PreparedStatement updateStatement;
     private PreparedStatement insertGifStatement;
@@ -35,7 +37,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     private PreparedStatement nextvalGif;
     private PreparedStatement readGifStatement;
     private PreparedStatement searchByIDStatement;
-    private PreparedStatement getAllStatement;
+    private PreparedStatement deleteCategoryStatement;
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static Connection connection;
@@ -52,14 +54,17 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             LOGGER.info("creating new instance of H2ExerciseDAOImpl");
 
             this.connection = handler.getConnection();
-            createStatement = connection.prepareStatement("INSERT into EXERCISE VALUES (?, ?, ?, ?, ?, ?);");
+            createStatement = connection.prepareStatement("INSERT into EXERCISE VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+            createCategoryStatement =connection.prepareStatement("INSERT INTO exercise_category values(?, ?);");
             readStatement = connection.prepareStatement("SELECT * FROM EXERCISE where isdeleted=false;");
             searchByIDStatement = connection.prepareStatement("SELECT * FROM EXERCISE where id=?;");
             readGifStatement = connection.prepareStatement("SELECT * FROM GIF where exerciseid =?");
-            updateStatement = connection.prepareStatement("UPDATE EXERCISE SET name=?, descripion=?, calories=?, videolink=?, isdeleted=? where id=?;");
+            updateStatement = connection.prepareStatement("UPDATE EXERCISE SET name=?, descripion=?, calories=?, videolink=?, timebased=?, isdeleted=? where id=?;");
             insertGifStatement = connection.prepareStatement("insert into gif values(?, ?, ?);");
-            nextvalExercise  = connection.prepareStatement("SELECT NEXTVAL('EXERCISESEQUENCE')");
-            nextvalGif  = connection.prepareStatement("SELECT NEXTVAL('GIFSEQUENCE')");
+            deleteCategoryStatement = connection.prepareStatement("delete from exercise_category where exerciseid=?");
+            nextvalExercise  = connection.prepareStatement("SELECT NEXTVAL('EXERCISE_SEQ')");
+            nextvalGif  = connection.prepareStatement("SELECT NEXTVAL('GIF_SEQ')");
+
 
         }catch (SQLException e) {
             throw new PersistenceException("failed to prepare statements", e);
@@ -70,7 +75,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     /**
      * creating a new exercise and storing it with all the given pictures into the database
      * @param exercise which shall be inserted into the underlying persistance layer
-     *                 must not be null, id must not be null
+     *                 must not be null, id must be null
      * @return the exercise for further usag
      * @throws PersistenceException if there are any problems with the pictures or the database
      */
@@ -86,6 +91,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             rs.next();
 
             Integer id = rs.getInt(1);
+            LOGGER.debug("id set for new exercise " + id);
             String name = exercise.getName();
             String description = exercise.getDescription();
             Double calories = exercise.getCalories();
@@ -99,7 +105,9 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             createStatement.setDouble(4, calories);
             createStatement.setString(5, videolink);
             //DTO isDeleted = false always when create gets called
-            createStatement.setBoolean(6, isDeleted);
+            createStatement.setObject(6, null);
+            createStatement.setBoolean(7, exercise.getTimeBased());
+            createStatement.setBoolean(8, isDeleted);
             createStatement.execute();
             List<String> gifNames = new ArrayList<>();
 
@@ -137,6 +145,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                 insertGifStatement.execute();
                 LOGGER.debug(s);
             }
+
+            for(AbsractCategory a : exercise.getCategories()){
+                createCategoryStatement.setInt(1, id);
+                createCategoryStatement.setInt(2, a.getId());
+                createCategoryStatement.execute();
+            }
+
             Exercise created = new Exercise(id, name, description, calories, videolink, gifNames, isDeleted);
             LOGGER.debug("new Exercise after insertion into h2 database" + created);
             return  created;
@@ -213,13 +228,23 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             Double calories = exercise.getCalories();
             String videolink = exercise.getVideolink();
             Boolean isDeleted = exercise.getIsDeleted();
-            updateStatement.setInt(6, id);
+            Boolean timebased = exercise.getTimeBased();
+            updateStatement.setInt(7, id);
             updateStatement.setString(1, name);
             updateStatement.setString(2, description);
             updateStatement.setDouble(3, calories);
             updateStatement.setString(4, videolink);
             updateStatement.setBoolean(5, isDeleted);
+            updateStatement.setBoolean(6, timebased);
             updateStatement.execute();
+
+            deleteCategoryStatement.setInt(1, exercise.getId());
+            deleteCategoryStatement.execute();
+            for(AbsractCategory a : exercise.getCategories()){
+                createCategoryStatement.setInt(1, id);
+                createCategoryStatement.setInt(2, a.getId());
+                createCategoryStatement.execute();
+            }
             return exercise;
         }catch (SQLException e){
             throw new PersistenceException("failed to update given exercise", e);
@@ -233,6 +258,10 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
      */
     @Override
     public void delete(Exercise exercise) throws PersistenceException {
+        if(exercise.getUser()!=null)
+            throw new PersistenceException("cannot delete SYSTEM exercises!");
+
+
         LOGGER.debug("deleting an exercise in dao layer" + exercise);
        if(exercise==null)
            throw new PersistenceException("exercise must not be null!");
@@ -242,6 +271,11 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
         exercise.setIsDeleted(true);
         update(exercise); //DTO boolean  isdeleted = true
+    }
+
+
+    public List<Exercise> getByCategory(Integer id){
+        return null;
     }
 
 
@@ -274,4 +308,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
         }
 
     }
+
+
+
 }

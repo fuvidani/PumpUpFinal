@@ -15,6 +15,32 @@ public class Exercise implements DTO{
     private String videolink;
     private List<String> gifLinks = new ArrayList<>();
     private Boolean isDeleted;
+    private Boolean timeBased;
+    private User user;
+    private List<AbsractCategory> categories = new ArrayList<>();
+
+    public Exercise(String name){
+        this.name=name;
+    }
+
+
+    public Exercise(Integer id, String name, String description, Double calories, String videolink, List<String> gifLinks,Boolean timeBased, Boolean isDeleted, User user, List<AbsractCategory> categories) {
+        this(name, description, calories, videolink, gifLinks, isDeleted, user, timeBased, categories);
+        this.id = id;
+    }
+
+    public Exercise(String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted, User user, Boolean timeBased, List<AbsractCategory> categories) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.calories = calories;
+        this.videolink = videolink;
+        this.gifLinks = gifLinks;
+        this.isDeleted = isDeleted;
+        this.timeBased = timeBased;
+        this.user = user;
+        this.categories = categories;
+    }
 
     public Exercise(String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted) {
         this.name = name;
@@ -108,6 +134,29 @@ public class Exercise implements DTO{
         this.isDeleted = isDeleted;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<AbsractCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<AbsractCategory> categories) {
+        this.categories = categories;
+    }
+
+    public Boolean getTimeBased() {
+        return timeBased;
+    }
+
+    public void setTimeBased(Boolean timeBased) {
+        this.timeBased = timeBased;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -142,6 +191,9 @@ public class Exercise implements DTO{
                 ", videolink='" + videolink + '\'' +
                 ", gifLinks=" + gifLinks +
                 ", isDeleted=" + isDeleted +
+                ", timeBased=" + timeBased +
+                ", user=" + user +
+                ", categories=" + categories +
                 '}';
     }
 }
