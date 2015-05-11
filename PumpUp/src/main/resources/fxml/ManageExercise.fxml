@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.media.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -57,10 +58,11 @@
                               </TextArea>
                            </children>
                         </VBox>
-                        <VBox prefHeight="69.0" prefWidth="383.0" spacing="5.0">
+                        <VBox prefHeight="285.0" prefWidth="383.0" spacing="5.0">
                            <children>
                               <Label text="Video Link:" />
                               <TextField fx:id="videoLinkField" promptText="https://www.youtube.com/watch?v=Eh00_rniF8E&amp;ab_channel=ScottMalin" />
+                              <MediaView fx:id="videoView" fitHeight="200.0" fitWidth="200.0" />
                            </children>
                         </VBox>
                      </children>
@@ -80,13 +82,14 @@
                               <VBox spacing="5.0">
                                  <children>
                                     <Label text="Geräte" />
-                                    <CheckBox fx:id="exerciseBallCheck" mnemonicParsing="false" text="Medizinball" />
-                                    <CheckBox fx:id="barCheck" mnemonicParsing="false" text="Klimmzugstange" />
-                                    <CheckBox fx:id="dumbbellCheck" mnemonicParsing="false" text="Hantel" />
-                                    <CheckBox fx:id="jumpRopeCheck" mnemonicParsing="false" text="Springschnur" />
-                                    <CheckBox fx:id="punchBagCheck" mnemonicParsing="false" text="Standsandsack" />
-                                    <CheckBox fx:id="expanderCheck" mnemonicParsing="false" text="Expander" />
-                                    <CheckBox fx:id="abWheelCheck" mnemonicParsing="false" text="Bauchtrainer Rad" />
+                                    <RadioButton fx:id="medizinBall" mnemonicParsing="false" text="Medizinball" />
+                                    <RadioButton fx:id="klimmzugStange" mnemonicParsing="false" text="Klimmzugstange" />
+                                    <RadioButton fx:id="kurzHantel" mnemonicParsing="false" text="Kurzhantel" />
+                                    <RadioButton fx:id="langHantel" mnemonicParsing="false" text="Langhantel" />
+                                    <RadioButton fx:id="springschnur" mnemonicParsing="false" text="Springschnur" />
+                                    <RadioButton fx:id="sandsack" mnemonicParsing="false" text="Sandsack" />
+                                    <RadioButton fx:id="expander" mnemonicParsing="false" text="Expander" />
+                                    <RadioButton fx:id="bauchtrainingsrad" mnemonicParsing="false" text="Bauchtrainings Rad" />
                                  </children>
                               </VBox>
                               <VBox spacing="5.0">
@@ -128,27 +131,8 @@
                         </Label>
                         <VBox spacing="10.0">
                            <children>
-                              <Label text="Durchführung nach:" />
-                              <HBox spacing="30.0">
-                                 <children>
-                                    <RadioButton fx:id="secondsTypeRadio" mnemonicParsing="false" text="Sekunden" />
-                                    <RadioButton fx:id="quantityTypeRadio" mnemonicParsing="false" text="Anzahl" />
-                                 </children>
-                              </HBox>
                               <Label text="Kalorien pro Einheit" />
                               <TextField fx:id="caloriesField" prefHeight="26.0" prefWidth="348.0" promptText="kcal">
-                                 <VBox.margin>
-                                    <Insets right="250.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label text="Standard Dauer/ Anzahl" />
-                              <TextField fx:id="durationField" promptText="Sek. / Anzahl">
-                                 <VBox.margin>
-                                    <Insets right="250.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label text="Dauer dieser Anzahl pro Übung" />
-                              <TextField fx:id="durationOfQuantityField" promptText="Sek.">
                                  <VBox.margin>
                                     <Insets right="250.0" />
                                  </VBox.margin>
