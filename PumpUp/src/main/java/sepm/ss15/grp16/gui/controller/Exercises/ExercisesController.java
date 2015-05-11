@@ -1,5 +1,6 @@
 package sepm.ss15.grp16.gui.controller.Exercises;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -73,10 +74,10 @@ public class ExercisesController extends Controller implements Initializable{
     private Label categoryTypeLabel;
 
     @FXML
-    private TableColumn<Exercise, String> uebungColumn;
+    private   TableColumn<Exercise, String> uebungColumn;
 
     @FXML
-    private TableView<Exercise> uebungsTableView;
+    private  TableView<Exercise> uebungsTableView;
 
     @FXML
     private ImageView imageView;
@@ -87,15 +88,19 @@ public class ExercisesController extends Controller implements Initializable{
     @FXML
     private Button prevPic;
 
-    private Exercise exercise;
+    private static Exercise exercise;
     private Integer picIndex = 0;
-    private ObservableList<Exercise>  masterdata = FXCollections.observableArrayList();
-    private static final Logger LOGGER = LogManager.getLogger();
+    private  ObservableList<Exercise>  masterdata = FXCollections.observableArrayList();
+    private  final Logger LOGGER = LogManager.getLogger();
+
 
     public void setExerciseService(Service<Exercise> exerciseService){
         this.exerciseService=exerciseService;
     }
 
+    public Exercise getExercise(){
+        return exercise;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -111,10 +116,14 @@ public class ExercisesController extends Controller implements Initializable{
     }
 
 
-    private void setContent(){
+    public void setContent(){
         try{
+            masterdata.removeAll();
             masterdata.addAll(exerciseService.findAll());
+            uebungsTableView.setItems(null);
             uebungsTableView.setItems(masterdata);
+            uebungsTableView.getColumns().get(0).setVisible(false);
+            uebungsTableView.getColumns().get(0).setVisible(true);
         }catch (Exception e){
             e.printStackTrace();
             LOGGER.error(e);
@@ -124,7 +133,7 @@ public class ExercisesController extends Controller implements Initializable{
     private void showExercise(Exercise old, Exercise newExercise){
         if (newExercise == null && old != null) {
             newExercise = old;
-            LOGGER.debug("horse null, olt not!");
+            LOGGER.debug("exercise null, ole not!");
         }
 
         if (newExercise != null && old == null) {
@@ -132,7 +141,7 @@ public class ExercisesController extends Controller implements Initializable{
         }
 
         if (newExercise == null) {
-            LOGGER.debug("horse null");
+            LOGGER.debug("exercise null");
             newExercise = old;
         }
 
@@ -158,33 +167,61 @@ public class ExercisesController extends Controller implements Initializable{
 
     @FXML
     private void nexPicButtonClicked(){
-            showPicture((++picIndex)%exercise.getGifLinks().size());
+        showPicture(Math.abs(++picIndex)%exercise.getGifLinks().size());
     }
 
     @FXML
     private void prevPicButtonClicked(){
-        showPicture((--picIndex)%exercise.getGifLinks().size());
+        showPicture(Math.abs(--picIndex)%exercise.getGifLinks().size());
     }
 
     @FXML
     void newExerciseButtonClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/ManageExercise.fxml",(Stage)uebungsTableView.getScene().getWindow(),"Übung erstellen/ bearbeiten",1000,620, true);
+        Exercise backup = null;
+        if(exercise != null){
+             backup = new Exercise(exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted());
+            exercise = null;
+        }
+
+        transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
+
+        if(backup!=null){
+        exercise = new Exercise(backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted());
+        }
 
     }
 
     @FXML
     void editExerciseButtonClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/ManageExercise.fxml",(Stage)uebungsTableView.getScene().getWindow(),"Übung erstellen/ bearbeiten",1000,620, true);
+        transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
+
     }
 
     @FXML
     void deleteExerciseButtonClicked(ActionEvent event) {
-        // TODO
+        try {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Uebungen loeschen");
+            alert.setHeaderText("Die Uebung" + exercise.getName() + " wirklich loeschen");
+            alert.setContentText("Moechten Sie die Uebung wirklich loeschen?");
+            ButtonType yes = new ButtonType("Ja");
+            ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(yes, cancel);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == yes) {
+                exerciseService.delete(exercise);
+                masterdata.remove(exercise);
+            }
+            return;
+
+        }catch (ServiceException e){
+            LOGGER.error(e);
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void getBackButtonClicked(ActionEvent event) {
-        //TODO: ask user if he/she wants to abort when changes are made (when data is not saved, changes will be lost!)
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uebungen verlassen");
         alert.setHeaderText("Das Uebungsfenster schliessen.");

@@ -22,6 +22,7 @@ public class StageTransitionLoader {
     private static final Logger LOGGER = LogManager.getLogger();
     private Controller from;
 
+
     public StageTransitionLoader(Controller from){
         this.from = from;
     }
@@ -60,7 +61,7 @@ public class StageTransitionLoader {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            Controller to = loader.getController();
+           Controller to = loader.getController();
             to.setStage(dialogStage);
 
             // Show the dialog and wait until the user closes it
@@ -77,4 +78,5 @@ public class StageTransitionLoader {
             e.printStackTrace();
         }
     }
+
 }
