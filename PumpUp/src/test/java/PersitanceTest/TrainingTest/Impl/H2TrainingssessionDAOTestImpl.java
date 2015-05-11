@@ -10,6 +10,8 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import sepm.ss15.grp16.entity.Training.TrainingsSession;
+import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
@@ -38,11 +40,6 @@ public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTe
 	private DBHandler dbConnector;
 
 	@Override
-	public TrainingsSessionDAO getTrainingsSessionDAO() {
-		return trainingsSessionDAO;
-	}
-
-	@Override
 	public TrainingsplanDAO getTrainingsplanDAO() {
 		return trainingsplanDAO;
 	}
@@ -55,6 +52,11 @@ public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTe
 	@After
 	public void tearDown() throws DBException, SQLException {
 		dbConnector.deactivateTestMode();
+	}
+
+	@Override
+	public DAO<TrainingsSession> getDAO() {
+		return trainingsSessionDAO;
 	}
 }
 

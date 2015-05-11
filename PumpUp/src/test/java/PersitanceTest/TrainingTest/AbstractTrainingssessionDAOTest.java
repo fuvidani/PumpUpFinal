@@ -1,7 +1,9 @@
 package PersitanceTest.TrainingTest;
 
+import PersitanceTest.AbstractDAOTest;
 import org.junit.Assert;
 import org.junit.Test;
+import sepm.ss15.grp16.entity.Training.ExerciseSet;
 import sepm.ss15.grp16.entity.Training.TrainingsSession;
 import sepm.ss15.grp16.entity.Training.Trainingsplan;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
@@ -14,62 +16,32 @@ import java.util.List;
  * Author: Lukas
  * Date: 09.05.2015
  */
-public abstract class AbstractTrainingssessionDAOTest {
-
-	public abstract TrainingsSessionDAO getTrainingsSessionDAO();
+public abstract class AbstractTrainingssessionDAOTest extends AbstractDAOTest<TrainingsSession> {
 
 	public abstract TrainingsplanDAO getTrainingsplanDAO();
 
 	@Test
 	public void createValid() throws PersistenceException {
-		TrainingsSession trainingsSession = dummyTrainingsSession();
-
-		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(trainingsSession));
-		getTrainingsSessionDAO().create(trainingsSession);
-		List<TrainingsSession> list = getTrainingsSessionDAO().findAll();
-		Assert.assertTrue(getTrainingsSessionDAO().findAll().contains(trainingsSession));
+		createValid(dummyTrainingsSession());
 	}
 
 	@Test
 	public void updateValid() throws PersistenceException {
 		TrainingsSession trainingsSession_old = dummyTrainingsSession();
-
-		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(trainingsSession_old));
-
-		trainingsSession_old = getTrainingsSessionDAO().create(trainingsSession_old);
 		TrainingsSession TrainingsSession_new = new TrainingsSession(trainingsSession_old);
 		TrainingsSession_new.setName("changed name");
 
-		Assert.assertTrue(getTrainingsSessionDAO().findAll().contains(trainingsSession_old));
-		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(TrainingsSession_new));
-
-		TrainingsSession_new = getTrainingsSessionDAO().update(TrainingsSession_new);
-		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(trainingsSession_old));
-		Assert.assertTrue(getTrainingsSessionDAO().findAll().contains(TrainingsSession_new));
+		updateValid(trainingsSession_old, TrainingsSession_new);
 	}
 
 	@Test
 	public void deleteValid() throws PersistenceException {
-		TrainingsSession TrainingsSession = dummyTrainingsSession();
-
-		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(TrainingsSession));
-		getTrainingsSessionDAO().create(TrainingsSession);
-		Assert.assertTrue(getTrainingsSessionDAO().findAll().contains(TrainingsSession));
-
-		getTrainingsSessionDAO().delete(TrainingsSession);
-		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(TrainingsSession));
+		deleteValid(dummyTrainingsSession());
 	}
 
 	@Test
 	public void searchByIDValid() throws PersistenceException {
-		TrainingsSession TrainingsSession = dummyTrainingsSession();
-
-		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(TrainingsSession));
-		getTrainingsSessionDAO().create(TrainingsSession);
-		Assert.assertTrue(getTrainingsSessionDAO().findAll().contains(TrainingsSession));
-
-		TrainingsSession searched = getTrainingsSessionDAO().searchByID(TrainingsSession.getId());
-		Assert.assertEquals(TrainingsSession, searched);
+		searchByIDValid(dummyTrainingsSession());
 	}
 
 	@Test
@@ -79,14 +51,14 @@ public abstract class AbstractTrainingssessionDAOTest {
 		TrainingsSession TrainingsSession2 = dummyTrainingsSession();
 		TrainingsSession2.setName("xyz");
 
-		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(TrainingsSession1));
-		Assert.assertFalse(getTrainingsSessionDAO().findAll().contains(TrainingsSession2));
-		getTrainingsSessionDAO().create(TrainingsSession1);
-		getTrainingsSessionDAO().create(TrainingsSession2);
-		Assert.assertTrue(getTrainingsSessionDAO().findAll().contains(TrainingsSession1));
-		Assert.assertTrue(getTrainingsSessionDAO().findAll().contains(TrainingsSession2));
+		Assert.assertFalse(getDAO().findAll().contains(TrainingsSession1));
+		Assert.assertFalse(getDAO().findAll().contains(TrainingsSession2));
+		getDAO().create(TrainingsSession1);
+		getDAO().create(TrainingsSession2);
+		Assert.assertTrue(getDAO().findAll().contains(TrainingsSession1));
+		Assert.assertTrue(getDAO().findAll().contains(TrainingsSession2));
 
-		List<TrainingsSession> list = getTrainingsSessionDAO().find(new TrainingsSession(null, null, null, "asdf", null, null));
+		List<TrainingsSession> list = ((TrainingsSessionDAO) getDAO()).find(new TrainingsSession(null, null, null, "asdf", null, null));
 		Assert.assertTrue(list.contains(TrainingsSession1));
 		Assert.assertFalse(list.contains(TrainingsSession2));
 	}

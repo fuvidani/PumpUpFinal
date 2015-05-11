@@ -1,8 +1,11 @@
 package PersitanceTest.TrainingTest;
 
+import PersitanceTest.AbstractDAOTest;
 import org.junit.Assert;
 import org.junit.Test;
+import sepm.ss15.grp16.entity.Training.ExerciseSet;
 import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
@@ -12,59 +15,30 @@ import java.util.List;
  * Author: Lukas
  * Date: 09.05.2015
  */
-public abstract class AbstractTrainingsPlanDAOTest {
-
-	public abstract TrainingsplanDAO getTrainingsplanDAO();
+public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Trainingsplan> {
 
 	@Test
 	public void createValid() throws PersistenceException {
-		Trainingsplan trainingsplan = dummyTrainingsPlan();
-
-		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(trainingsplan));
-		getTrainingsplanDAO().create(trainingsplan);
-		Assert.assertTrue(getTrainingsplanDAO().findAll().contains(trainingsplan));
+		createValid(dummyTrainingsPlan());
 	}
 
 	@Test
 	public void updateValid() throws PersistenceException {
 		Trainingsplan trainingsplan_old = dummyTrainingsPlan();
-
-		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(trainingsplan_old));
-
-		trainingsplan_old = getTrainingsplanDAO().create(trainingsplan_old);
 		Trainingsplan trainingsplan_new = new Trainingsplan(trainingsplan_old);
 		trainingsplan_new.setName("changed name");
 
-		Assert.assertTrue(getTrainingsplanDAO().findAll().contains(trainingsplan_old));
-		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(trainingsplan_new));
-
-		trainingsplan_new = getTrainingsplanDAO().update(trainingsplan_new);
-		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(trainingsplan_old));
-		Assert.assertTrue(getTrainingsplanDAO().findAll().contains(trainingsplan_new));
+		updateValid(trainingsplan_old, trainingsplan_new);
 	}
 
 	@Test
 	public void deleteValid() throws PersistenceException {
-		Trainingsplan trainingsplan = dummyTrainingsPlan();
-
-		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(trainingsplan));
-		getTrainingsplanDAO().create(trainingsplan);
-		Assert.assertTrue(getTrainingsplanDAO().findAll().contains(trainingsplan));
-
-		getTrainingsplanDAO().delete(trainingsplan);
-		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(trainingsplan));
+		deleteValid(dummyTrainingsPlan());
 	}
 
 	@Test
 	public void searchByIDValid() throws PersistenceException{
-		Trainingsplan trainingsplan = dummyTrainingsPlan();
-
-		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(trainingsplan));
-		getTrainingsplanDAO().create(trainingsplan);
-		Assert.assertTrue(getTrainingsplanDAO().findAll().contains(trainingsplan));
-
-		Trainingsplan searched = getTrainingsplanDAO().searchByID(trainingsplan.getId());
-		Assert.assertEquals(trainingsplan, searched);
+		searchByIDValid(dummyTrainingsPlan());
 	}
 
 	@Test
@@ -74,14 +48,14 @@ public abstract class AbstractTrainingsPlanDAOTest {
 		Trainingsplan trainingsplan2 = dummyTrainingsPlan();
 		trainingsplan2.setName("xyz");
 
-		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(trainingsplan1));
-		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(trainingsplan2));
-		getTrainingsplanDAO().create(trainingsplan1);
-		getTrainingsplanDAO().create(trainingsplan2);
-		Assert.assertTrue(getTrainingsplanDAO().findAll().contains(trainingsplan1));
-		Assert.assertTrue(getTrainingsplanDAO().findAll().contains(trainingsplan2));
+		Assert.assertFalse(getDAO().findAll().contains(trainingsplan1));
+		Assert.assertFalse(getDAO().findAll().contains(trainingsplan2));
+		getDAO().create(trainingsplan1);
+		getDAO().create(trainingsplan2);
+		Assert.assertTrue(getDAO().findAll().contains(trainingsplan1));
+		Assert.assertTrue(getDAO().findAll().contains(trainingsplan2));
 
-		List<Trainingsplan> list = getTrainingsplanDAO().find(new Trainingsplan(null, null, "asdf", null, null, null, null));
+		List<Trainingsplan> list = ((TrainingsplanDAO)getDAO()).find(new Trainingsplan(null, null, "asdf", null, null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan1));
 		Assert.assertFalse(list.contains(trainingsplan2));
 	}
