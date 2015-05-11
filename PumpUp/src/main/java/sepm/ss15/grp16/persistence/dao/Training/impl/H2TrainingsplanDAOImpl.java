@@ -131,7 +131,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 				plan.setName(rs.getString("name"));
 				plan.setDescr(rs.getString("description"));
 
-				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, id, null, null, null, null));
+				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, plan, null, null, null, null));
 				plan.setTrainingsSessions(sessions);
 
 				plan.setTrainingsplanTypes(findAssociatedTypes(id));
@@ -161,8 +161,8 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 				plan.setName(rs.getString("name"));
 				plan.setDescr(rs.getString("description"));
 
-				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, id, null, null, null, null));
-				plan.setTrainingsSessions(sessions);
+//TODO				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, plan, null, null, null, null));
+//TODO				plan.setTrainingsSessions(sessions);
 
 				plan.setTrainingsplanTypes(findAssociatedTypes(id));
 			}
@@ -185,7 +185,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 
 			executeUpdate(ps_update);
 
-			List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, dto.getId(), null, null, false, null));
+			List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, dto, null, null, false, null));
 
 			if (sessions != null &&
 					dto.getTrainingsSessions() != null &&
@@ -325,7 +325,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 					plan.setName(rs.getString("name"));
 					plan.setDescr(rs.getString("description"));
 
-					List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, id, null, null, null, null));
+					List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, plan, null, null, null, null));
 					plan.setTrainingsSessions(sessions);
 
 					plan.setTrainingsplanTypes(findAssociatedTypes(id));

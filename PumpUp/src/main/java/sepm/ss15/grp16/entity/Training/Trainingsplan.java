@@ -104,7 +104,7 @@ public class Trainingsplan implements DTO {
 	public void setId(Integer id) {
 		this.id = id;
 		if (trainingsSessions != null) {
-			for (TrainingsSession session : trainingsSessions) session.setId_plan(id);
+			for (TrainingsSession session : trainingsSessions) session.setTrainingsplan(this);
 		}
 	}
 

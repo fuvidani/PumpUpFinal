@@ -42,14 +42,12 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 
 	private PreparedStatement ps_seq_TS;
 
-	private ExerciseSetDAO exerciseSetDAO;
+	private H2TrainingsplanDAOImpl trainingsplanDAO;
+	private H2ExerciseSetDAOImpl exerciseSetDAO;
 
 	private H2TrainingssessionDAOImpl(DBHandler handler) throws PersistenceException {
 		try {
 			con = handler.getConnection();
-
-			ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-			exerciseSetDAO = (ExerciseSetDAO) context.getBean("exerciseSetDAO");
 
 			/** Trainingplan **/
 			ps_create = con.prepareStatement("INSERT INTO TrainingsSession (ID_Plan, name, UID, isDeleted) " +
@@ -88,7 +86,7 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 	public TrainingsSession create(TrainingsSession dto) throws PersistenceException {
 
 		try {
-			ps_create.setInt(1, dto.getId_plan());
+			ps_create.setInt(1, dto.getTrainingsplan().getId());
 			ps_create.setString(2, dto.getName());
 			ps_create.setObject(3, dto.getUid());
 			ps_create.setBoolean(4, false);
@@ -123,7 +121,7 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 			while (rs.next()) {
 				TrainingsSession session = new TrainingsSession();
 				session.setId(rs.getInt("ID_Session"));
-				session.setId_plan(rs.getInt("ID_Plan"));
+				session.setTrainingsplan(trainingsplanDAO.searchByID(rs.getInt("ID_Plan")));
 				session.setName(rs.getString("name"));
 				session.setUid((Integer) rs.getObject("UID"));
 				session.setIsDeleted(rs.getBoolean("isDeleted"));
@@ -151,12 +149,12 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 			if (rs.next()) {
 				session = new TrainingsSession();
 				session.setId(rs.getInt("ID_Session"));
-				session.setId_plan(rs.getInt("ID_Plan"));
+				session.setTrainingsplan(trainingsplanDAO.searchByID(rs.getInt("ID_Plan")));
 				session.setName(rs.getString("name"));
 				session.setUid((Integer) rs.getObject("UID"));
 				session.setIsDeleted(rs.getBoolean("isDeleted"));
 
-				List<ExerciseSet> sets = exerciseSetDAO.find(new ExerciseSet(null, null, null, null, null, rs.getInt("ID_Session"), null));
+				List<ExerciseSet> sets = exerciseSetDAO.find(new ExerciseSet(null, null, session, null, null, null, null));
 				session.setExerciseSets(sets);
 			}
 			return session;
@@ -171,7 +169,7 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 	public TrainingsSession update(TrainingsSession dto) throws PersistenceException {
 
 		try {
-			ps_update.setInt(1, dto.getId_plan());
+			ps_update.setInt(1, dto.getTrainingsplan().getId());
 			ps_update.setString(2, dto.getName());
 			ps_update.setObject(3, dto.getUid());
 			ps_update.setBoolean(4, dto.getIsDeleted());
@@ -179,7 +177,7 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 
 			executeUpdate(ps_update);
 
-			List<ExerciseSet> sets = exerciseSetDAO.find(new ExerciseSet(null, null, null, null, null, dto.getId_session(), null));
+			List<ExerciseSet> sets = exerciseSetDAO.find(new ExerciseSet(null, null, dto, null, null, null, null));
 
 			if (sets != null &&
 					dto.getExerciseSets() != null &&
@@ -251,18 +249,18 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 			PreparedStatement ps_find;
 
 			if (filter.getUid() != null) {
-				if (filter.getId_plan() != null) {
+				if (filter.getTrainingsplan() != null && filter.getTrainingsplan().getId() != null) {
 					ps_find = ps_find_user_plan;
-					ps_find_user_plan.setInt(2, filter.getId_plan());
+					ps_find_user_plan.setInt(2, filter.getTrainingsplan().getId());
 					ps_find_user_plan.setInt(3, filter.getUid());
 				} else {
 					ps_find = ps_find_user_noplan;
 					ps_find_user_noplan.setInt(2, filter.getUid());
 				}
 			} else {
-				if (filter.getId_plan() != null) {
+				if (filter.getTrainingsplan() != null && filter.getTrainingsplan().getId() != null) {
 					ps_find = ps_find_nouser_plan;
-					ps_find_nouser_plan.setInt(2, filter.getId_plan());
+					ps_find_nouser_plan.setInt(2, filter.getTrainingsplan().getId());
 				} else {
 					ps_find = ps_find_nouser_noplan;
 				}
@@ -278,7 +276,7 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 					TrainingsSession session = new TrainingsSession();
 					int id = rs.getInt("ID_Session");
 					session.setId(id);
-					session.setId_plan(rs.getInt("ID_Plan"));
+//TODO					session.setTrainingsplan(trainingsplanDAO.searchByID(rs.getInt("ID_Plan")));
 					session.setName(rs.getString("name"));
 					session.setUid((Integer) rs.getObject("UID"));
 					session.setIsDeleted(rs.getBoolean("isDeleted"));
@@ -305,5 +303,21 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 	private ResultSet executeQuery(PreparedStatement ps) throws SQLException {
 		LOGGER.info("execute: " + ps);
 		return ps.executeQuery();
+	}
+
+	public void setTrainingsplanDAO(H2TrainingsplanDAOImpl trainingsplanDAO) {
+		this.trainingsplanDAO = trainingsplanDAO;
+	}
+
+	public H2TrainingsplanDAOImpl getTrainingsplanDAO() {
+		return trainingsplanDAO;
+	}
+
+	public void setExerciseSetDAO(H2ExerciseSetDAOImpl exerciseSetDAO) {
+		this.exerciseSetDAO = exerciseSetDAO;
+	}
+
+	public H2ExerciseSetDAOImpl getExerciseSetDAO() {
+		return exerciseSetDAO;
 	}
 }

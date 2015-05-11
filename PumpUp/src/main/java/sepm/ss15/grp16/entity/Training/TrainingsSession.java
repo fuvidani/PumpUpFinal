@@ -11,19 +11,20 @@ import java.util.List;
 public class TrainingsSession implements DTO {
 
 	Integer id_session;
-	Integer id_plan;
 	Integer uid;
 	String name;
 	Boolean isDeleted = false;
+
+	Trainingsplan trainingsplan;
 
 	List<ExerciseSet> exerciseSets;
 
 	public TrainingsSession() {
 	}
 
-	public TrainingsSession(Integer id_session, Integer id_plan, Integer uid, String name, Boolean isDeleted, List<ExerciseSet> exerciseSets) {
+	public TrainingsSession(Integer id_session, Trainingsplan trainingsplan, Integer uid, String name, Boolean isDeleted, List<ExerciseSet> exerciseSets) {
 		this.id_session = id_session;
-		this.id_plan = id_plan;
+		this.trainingsplan = trainingsplan;
 		this.uid = uid;
 		this.name = name;
 		this.isDeleted = isDeleted;
@@ -32,7 +33,7 @@ public class TrainingsSession implements DTO {
 
 	public TrainingsSession(TrainingsSession trainingsSession) {
 		this.id_session = trainingsSession.id_session;
-		this.id_plan = trainingsSession.id_plan;
+		this.trainingsplan = trainingsSession.trainingsplan;
 		this.uid = trainingsSession.uid;
 		this.name = trainingsSession.name;
 		this.isDeleted = trainingsSession.isDeleted;
@@ -46,19 +47,19 @@ public class TrainingsSession implements DTO {
 	public void setId_session(Integer id_session) {
 		this.id_session = id_session;
 		if (exerciseSets != null) {
-			for (ExerciseSet exerciseSet : exerciseSets) exerciseSet.setId_session(id_session);
+			for (ExerciseSet exerciseSet : exerciseSets) exerciseSet.setSession(this);
 		}
 	}
 
-	public Integer getId_plan() {
-		return id_plan;
-	}
+    public Trainingsplan getTrainingsplan() {
+        return trainingsplan;
+    }
 
-	public void setId_plan(Integer id_plan) {
-		this.id_plan = id_plan;
-	}
+    public void setTrainingsplan(Trainingsplan trainingsplan) {
+        this.trainingsplan = trainingsplan;
+    }
 
-	public Integer getUid() {
+    public Integer getUid() {
 		return uid;
 	}
 
@@ -105,42 +106,43 @@ public class TrainingsSession implements DTO {
 		setId_session(id);
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof TrainingsSession)) return false;
 
-		TrainingsSession that = (TrainingsSession) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		return !(id_session != null ? !id_session.equals(that.id_session) : that.id_session != null) &&
-				!(id_plan != null ? !id_plan.equals(that.id_plan) : that.id_plan != null) &&
-				!(uid != null ? !uid.equals(that.uid) : that.uid != null) &&
-				!(name != null ? !name.equals(that.name) : that.name != null) &&
-				!(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
-				!(exerciseSets != null ? !exerciseSets.equals(that.exerciseSets) : that.exerciseSets != null);
+        TrainingsSession that = (TrainingsSession) o;
 
-	}
+        return !(id_session != null ? !id_session.equals(that.id_session) : that.id_session != null) &&
+                !(uid != null ? !uid.equals(that.uid) : that.uid != null) &&
+                !(name != null ? !name.equals(that.name) : that.name != null) &&
+                !(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
+                !(trainingsplan != null ? !trainingsplan.equals(that.trainingsplan) : that.trainingsplan != null) &&
+                !(exerciseSets != null ? !exerciseSets.equals(that.exerciseSets) : that.exerciseSets != null);
 
-	@Override
-	public int hashCode() {
-		int result = id_session != null ? id_session.hashCode() : 0;
-		result = 31 * result + (id_plan != null ? id_plan.hashCode() : 0);
-		result = 31 * result + (uid != null ? uid.hashCode() : 0);
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
-		result = 31 * result + (exerciseSets != null ? exerciseSets.hashCode() : 0);
-		return result;
-	}
+    }
 
-	@Override
-	public String toString() {
-		return "TrainingsSession{" +
-				"id_session=" + id_session +
-				", id_plan=" + id_plan +
-				", uid=" + uid +
-				", name='" + name + '\'' +
-				", isDeleted=" + isDeleted +
-				", exerciseSets=" + exerciseSets +
-				'}';
-	}
+    @Override
+    public int hashCode() {
+        int result = id_session != null ? id_session.hashCode() : 0;
+        result = 31 * result + (uid != null ? uid.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
+        result = 31 * result + (trainingsplan != null ? trainingsplan.hashCode() : 0);
+        result = 31 * result + (exerciseSets != null ? exerciseSets.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TrainingsSession{" +
+                "id_session=" + id_session +
+                ", uid=" + uid +
+                ", name='" + name + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", trainingsplan=" + trainingsplan +
+                ", exerciseSets=" + exerciseSets +
+                '}';
+    }
 }

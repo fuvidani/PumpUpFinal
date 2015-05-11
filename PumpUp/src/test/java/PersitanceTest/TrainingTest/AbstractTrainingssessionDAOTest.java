@@ -106,7 +106,7 @@ public abstract class AbstractTrainingssessionDAOTest {
 
 		TrainingsSession TrainingsSession = new TrainingsSession();
 
-		TrainingsSession.setId_plan(plan.getId());
+		TrainingsSession.setTrainingsplan(plan);
 		TrainingsSession.setName("testsession");
 		TrainingsSession.setIsDeleted(false);
 

@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.entity.Training;
 
 import sepm.ss15.grp16.entity.DTO;
+import sepm.ss15.grp16.entity.Exercise;
 
 /**
  * Author: Lukas
@@ -9,20 +10,21 @@ import sepm.ss15.grp16.entity.DTO;
 public class ExerciseSet implements DTO {
 
 	Integer id;
-	Integer id_exercise;
-	Integer id_session;
 	Integer uid;
 	Integer repeat;
 	Integer order_nr;
 	Boolean isDeleted = false;
 
+	Exercise exercise;
+    TrainingsSession session;
+
 	public ExerciseSet() {
 	}
 
-	public ExerciseSet(Integer id, Integer id_exercise, Integer id_session, Integer uid, Integer repeat, Integer order_nr, Boolean isDeleted) {
+	public ExerciseSet(Integer id, Exercise exercise, TrainingsSession session, Integer uid, Integer repeat, Integer order_nr, Boolean isDeleted) {
 		this.id = id;
-		this.id_exercise = id_exercise;
-		this.id_session = id_session;
+		this.exercise = exercise;
+		this.session = session;
 		this.uid = uid;
 		this.repeat = repeat;
 		this.order_nr = order_nr;
@@ -31,27 +33,31 @@ public class ExerciseSet implements DTO {
 
 	public ExerciseSet(ExerciseSet exerciseSet) {
 		this.id = exerciseSet.id;
-		this.id_exercise = exerciseSet.id_exercise;
-		this.id_session = exerciseSet.id_session;
+		this.exercise = exerciseSet.exercise;
+		this.session = exerciseSet.session;
 		this.uid = exerciseSet.uid;
 		this.repeat = exerciseSet.repeat;
 		this.order_nr = exerciseSet.order_nr;
 		this.isDeleted = exerciseSet.isDeleted;
 	}
 
-	public Integer getId_exercise() {
-		return id_exercise;
-	}
+    public Exercise getExercise() {
+        return exercise;
+    }
 
-	public void setId_exercise(Integer id_exercise) {
-		this.id_exercise = id_exercise;
-	}
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
 
-	public Integer getId_session() {
-		return id_session;
-	}
+    public TrainingsSession getSession() {
+        return session;
+    }
 
-	public Integer getUid() {
+    public void setSession(TrainingsSession session) {
+        this.session = session;
+    }
+
+    public Integer getUid() {
 		return uid;
 	}
 
@@ -95,49 +101,45 @@ public class ExerciseSet implements DTO {
 		this.isDeleted = isDeleted;
 	}
 
-	public void setId_session(Integer id_session) {
-		this.id_session = id_session;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof ExerciseSet)) return false;
+        ExerciseSet that = (ExerciseSet) o;
 
-		ExerciseSet that = (ExerciseSet) o;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (uid != null ? !uid.equals(that.uid) : that.uid != null) return false;
+        if (repeat != null ? !repeat.equals(that.repeat) : that.repeat != null) return false;
+        if (order_nr != null ? !order_nr.equals(that.order_nr) : that.order_nr != null) return false;
+        if (isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) return false;
+        if (exercise != null ? !exercise.equals(that.exercise) : that.exercise != null) return false;
+        return !(session != null ? !session.equals(that.session) : that.session != null);
 
-		return !(id != null ? !id.equals(that.id) : that.id != null) &&
-				!(id_exercise != null ? !id_exercise.equals(that.id_exercise) : that.id_exercise != null) &&
-				!(id_session != null ? !id_session.equals(that.id_session) : that.id_session != null) &&
-				!(uid != null ? !uid.equals(that.uid) : that.uid != null) &&
-				!(repeat != null ? !repeat.equals(that.repeat) : that.repeat != null) &&
-				!(order_nr != null ? !order_nr.equals(that.order_nr) : that.order_nr != null) &&
-				!(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null);
+    }
 
-	}
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (uid != null ? uid.hashCode() : 0);
+        result = 31 * result + (repeat != null ? repeat.hashCode() : 0);
+        result = 31 * result + (order_nr != null ? order_nr.hashCode() : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
+        result = 31 * result + (exercise != null ? exercise.hashCode() : 0);
+        result = 31 * result + (session != null ? session.hashCode() : 0);
+        return result;
+    }
 
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (id_exercise != null ? id_exercise.hashCode() : 0);
-		result = 31 * result + (id_session != null ? id_session.hashCode() : 0);
-		result = 31 * result + (uid != null ? uid.hashCode() : 0);
-		result = 31 * result + (repeat != null ? repeat.hashCode() : 0);
-		result = 31 * result + (order_nr != null ? order_nr.hashCode() : 0);
-		result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
-		return result;
-	}
-
-	@Override
-	public String toString() {
-		return "ExerciseSet{" +
-				"id=" + id +
-				", id_exercise=" + id_exercise +
-				", id_session=" + id_session +
-				", uid=" + uid +
-				", repeat=" + repeat +
-				", order_nr=" + order_nr +
-				", isDeleted=" + isDeleted +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "ExerciseSet{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", repeat=" + repeat +
+                ", order_nr=" + order_nr +
+                ", isDeleted=" + isDeleted +
+                ", exercise=" + exercise +
+                ", session=" + session +
+                '}';
+    }
 }
