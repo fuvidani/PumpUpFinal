@@ -12,7 +12,9 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.entity.Training.Trainingsplan;
 import sepm.ss15.grp16.persistence.dao.DAO;
+import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 
@@ -35,6 +37,12 @@ public class H2TrainingsplanDAOTestImpl extends AbstractTrainingsPlanDAOTest {
 	@Autowired
 	private DBHandler dbConnector;
 
+	@Autowired
+	private UserDAO userDAO;
+
+	@Autowired
+	private ExerciseDAO exerciseDAO;
+
 	@Before
 	public void setUp() throws DBException, SQLException {
 		dbConnector.activateTestMode();
@@ -48,5 +56,15 @@ public class H2TrainingsplanDAOTestImpl extends AbstractTrainingsPlanDAOTest {
 	@Override
 	public DAO<Trainingsplan> getDAO() {
 		return trainingsplanDAO;
+	}
+
+	@Override
+	protected UserDAO getUserDAO() {
+		return userDAO;
+	}
+
+	@Override
+	protected ExerciseDAO getExerciseDAO() {
+		return exerciseDAO;
 	}
 }

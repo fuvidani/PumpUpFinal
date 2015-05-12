@@ -2,12 +2,16 @@ package sepm.ss15.grp16.persistence.dao.Training.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
 import sepm.ss15.grp16.entity.Training.TrainingsSession;
 import sepm.ss15.grp16.entity.Training.Trainingsplan;
-import sepm.ss15.grp16.entity.Training.TrainingsplanType;
-import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
+import sepm.ss15.grp16.persistence.dao.Training.Helper.ExerciseSetHelperDAO;
+import sepm.ss15.grp16.persistence.dao.Training.Helper.TrainingsSessionHelperDAO;
+import sepm.ss15.grp16.persistence.dao.Training.Helper.impl.H2ExerciseSetHelperDAOImpl;
+import sepm.ss15.grp16.persistence.dao.Training.Helper.impl.H2TrainingssessionHelperDAOImpl;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
-import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanTypeDAO;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
+import sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
@@ -40,12 +44,9 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 
 	private PreparedStatement ps_seq_TP;
 
-	private PreparedStatement ps_find_association;
-	private PreparedStatement ps_create_association;
-	private PreparedStatement ps_delete_association;
-
-	private TrainingsplanTypeDAO trainingsplanTypeDAO;
-	private TrainingsSessionDAO trainingsSessionDAO;
+	private TrainingsSessionHelperDAO trainingsSessionHelperDAO;
+	private ExerciseSetHelperDAO exerciseSetHelperDAO;
+	private UserDAO userDAO;
 
 	private H2TrainingsplanDAOImpl(DBHandler handler) throws PersistenceException {
 		try {
@@ -64,11 +65,6 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 					"SET UID = ?, name = ?, description = ?, isDeleted = ? WHERE ID_Plan = ?");
 			ps_delete = con.prepareStatement("UPDATE TrainingsPlan SET isDeleted = TRUE WHERE ID_Plan = ?");
 
-			/** Trainingplan refer type **/
-			ps_find_association = con.prepareStatement("SELECT * FROM PlanHasType WHERE ID_Plan = ?");
-			ps_create_association = con.prepareStatement("INSERT INTO PlanHasType VALUES (?, ?, FALSE)");
-			ps_delete_association = con.prepareStatement("DELETE FROM PlanHasType WHERE ID_Plan = ? AND ID_Type = ?");
-
 			/** Sequences **/
 			ps_seq_TP = con.prepareStatement("SELECT currval('seq_TP')");
 
@@ -82,7 +78,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 	public Trainingsplan create(Trainingsplan dto) throws PersistenceException {
 
 		try {
-			ps_create.setObject(1, dto.getUid() != null ? dto.getId() : null);
+			ps_create.setObject(1, dto.getUser() != null ? dto.getUser().getId() : null);
 			ps_create.setString(2, dto.getName());
 			ps_create.setString(3, dto.getDescr());
 			ps_create.setBoolean(4, false);
@@ -92,19 +88,16 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 			rs.next();
 			dto.setId(rs.getInt(1));
 
-			if (dto.getTrainingsplanTypes() != null) {
-				for (TrainingsplanType type : dto.getTrainingsplanTypes()) {
-					TrainingsplanType type_found = trainingsplanTypeDAO.searchByID(type.getId());
-					if (type_found == null) {
-						trainingsplanTypeDAO.create(type);
-					}
-				}
-			}
 			if (dto.getTrainingsSessions() != null) {
 
+				List<TrainingsSession> sessions = dto.getTrainingsSessions();
+				List<TrainingsSession> sessions_new = new ArrayList<>();
+
 				for (TrainingsSession session : dto.getTrainingsSessions()) {
-					trainingsSessionDAO.create(session);
+					TrainingsSession session_new = trainingsSessionHelperDAO.create(session, dto.getId());
+					sessions_new.add(session_new);
 				}
+				dto.setTrainingsSessions(sessions_new);
 			}
 
 		} catch (SQLException e) {
@@ -126,15 +119,16 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 				Trainingsplan plan = new Trainingsplan();
 				int id = rs.getInt("ID_Plan");
 				plan.setId(id);
-				plan.setUid((Integer) rs.getObject("UID"));
+
+				Integer uid = (Integer) rs.getObject("UID");
+				plan.setUser(uid != null ? userDAO.searchByID(uid) : null);
+
 				plan.setIsDeleted(rs.getBoolean("isDeleted"));
 				plan.setName(rs.getString("name"));
 				plan.setDescr(rs.getString("description"));
 
-				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, plan, null, null, null, null));
+				List<TrainingsSession> sessions = trainingsSessionHelperDAO.searchByPlanID(id);
 				plan.setTrainingsSessions(sessions);
-
-				plan.setTrainingsplanTypes(findAssociatedTypes(id));
 
 				plans.add(plan);
 			}
@@ -156,15 +150,16 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 
 				plan = new Trainingsplan();
 				plan.setId(id);
-				plan.setUid((Integer) rs.getObject("UID"));
+
+				Integer uid = (Integer) rs.getObject("UID");
+				plan.setUser(uid != null ? userDAO.searchByID(uid) : null);
+
 				plan.setIsDeleted(rs.getBoolean("isDeleted"));
 				plan.setName(rs.getString("name"));
 				plan.setDescr(rs.getString("description"));
 
-//TODO				List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, plan, null, null, null, null));
-//TODO				plan.setTrainingsSessions(sessions);
-
-				plan.setTrainingsplanTypes(findAssociatedTypes(id));
+				List<TrainingsSession> sessions = trainingsSessionHelperDAO.searchByPlanID(id);
+				plan.setTrainingsSessions(sessions);
 			}
 			return plan;
 		} catch (SQLException e) {
@@ -177,7 +172,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 	public Trainingsplan update(Trainingsplan dto) throws PersistenceException {
 
 		try {
-			ps_update.setObject(1, dto.getUid());
+			ps_update.setObject(1, dto.getUser());
 			ps_update.setString(2, dto.getName());
 			ps_update.setString(3, dto.getDescr());
 			ps_update.setBoolean(4, dto.getIsDeleted());
@@ -185,7 +180,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 
 			executeUpdate(ps_update);
 
-			List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, dto, null, null, false, null));
+			List<TrainingsSession> sessions = trainingsSessionHelperDAO.searchByPlanID(dto.getId());
 
 			if (sessions != null &&
 					dto.getTrainingsSessions() != null &&
@@ -201,55 +196,19 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 						!sessions.contains(session)).collect(Collectors.toList()));
 
 				for (TrainingsSession session : sessions_toCreate) {
-					trainingsSessionDAO.create(session);
+					trainingsSessionHelperDAO.create(session, dto.getId());
 				}
 
 				for (TrainingsSession session : sessions_toDelete) {
-					trainingsSessionDAO.delete(session);
+					trainingsSessionHelperDAO.delete(session);
 				}
 			} else if (sessions == null && dto.getTrainingsSessions() != null) {
 				for (TrainingsSession session : dto.getTrainingsSessions()) {
-					trainingsSessionDAO.create(session);
+					trainingsSessionHelperDAO.create(session, dto.getId());
 				}
 			} else if (dto.getTrainingsSessions() == null && sessions != null) {
 				for (TrainingsSession session : sessions) {
-					trainingsSessionDAO.delete(session);
-				}
-			}
-
-			List<TrainingsplanType> types = findAssociatedTypes(dto.getId());
-
-			if (types != null &&
-					dto.getTrainingsplanTypes() != null &&
-					types.size() != dto.getTrainingsplanTypes().size()) {
-
-				List<TrainingsplanType> types_toDelete = new ArrayList<>();
-				List<TrainingsplanType> types_toCreate = new ArrayList<>();
-
-				types_toDelete.addAll(types.stream().filter(type ->
-						!dto.getTrainingsplanTypes().contains(type)).collect(Collectors.toList()));
-
-				types_toCreate.addAll(dto.getTrainingsplanTypes().stream().filter(type ->
-						!types.contains(type)).collect(Collectors.toList()));
-
-				for (TrainingsplanType type : types_toCreate) {
-					trainingsplanTypeDAO.create(type);
-					createAssociationToType(dto.getId(), type.getId());
-				}
-
-				for (TrainingsplanType type : types_toDelete) {
-					trainingsplanTypeDAO.delete(type);
-					deleteAssociationToType(dto.getId(), type.getId());
-				}
-			} else if (types == null && dto.getTrainingsplanTypes() != null) {
-				for (TrainingsplanType type : dto.getTrainingsplanTypes()) {
-					trainingsplanTypeDAO.create(type);
-					createAssociationToType(dto.getId(), type.getId());
-				}
-			} else if (dto.getTrainingsplanTypes() == null && types != null) {
-				for (TrainingsplanType type : types) {
-					trainingsplanTypeDAO.delete(type);
-					deleteAssociationToType(dto.getId(), type.getId());
+					trainingsSessionHelperDAO.delete(session);
 				}
 			}
 
@@ -269,15 +228,11 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 
 			if (dto.getTrainingsSessions() != null) {
 				for (TrainingsSession session : dto.getTrainingsSessions()) {
-					trainingsSessionDAO.delete(session);
+					trainingsSessionHelperDAO.delete(session);
 				}
 			}
-			if (findAssociatedTypes(dto.getId()) != null) {
-				for (TrainingsplanType type : findAssociatedTypes(dto.getId())) {
-					trainingsplanTypeDAO.delete(type);
-					deleteAssociationToType(dto.getId(), type.getId());
-				}
-			}
+
+			dto.setIsDeleted(true);
 
 		} catch (SQLException e) {
 			LOGGER.error("" + e.getMessage());
@@ -298,8 +253,8 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 
 			PreparedStatement ps_find;
 
-			if (filter.getUid() != null) {
-				ps_find_user.setInt(1, filter.getUid());
+			if (filter.getUser() != null) {
+				ps_find_user.setInt(1, filter.getUser().getId());
 
 				if (filter.getName() != null) ps_find_user.setString(2, filter.getName());
 				else ps_find_user.setString(2, "%");
@@ -320,15 +275,14 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 					Trainingsplan plan = new Trainingsplan();
 					int id = rs.getInt("ID_Plan");
 					plan.setId(id);
-					plan.setUid((Integer) rs.getObject("UID"));
+					Integer uid = (Integer) rs.getObject("UID");
+					plan.setUser(uid != null ? userDAO.searchByID(uid) : null);
 					plan.setIsDeleted(rs.getBoolean("isDeleted"));
 					plan.setName(rs.getString("name"));
 					plan.setDescr(rs.getString("description"));
 
-					List<TrainingsSession> sessions = trainingsSessionDAO.find(new TrainingsSession(null, plan, null, null, null, null));
+					List<TrainingsSession> sessions = trainingsSessionHelperDAO.searchByPlanID(id);
 					plan.setTrainingsSessions(sessions);
-
-					plan.setTrainingsplanTypes(findAssociatedTypes(id));
 
 					plans.add(plan);
 				} while (rs.next());
@@ -341,46 +295,15 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 		}
 	}
 
-	public List<TrainingsplanType> findAssociatedTypes(int id) throws PersistenceException {
-		try {
-			ps_find_association.setInt(1, id);
-			ResultSet rs = executeQuery(ps_find_association);
-			List<TrainingsplanType> types = null;
-
-			if (rs.next()) {
-				types = new ArrayList<>();
-				do {
-					types.add(trainingsplanTypeDAO.searchByID(rs.getInt("ID_Type")));
-				} while (rs.next());
-			}
-			return types;
-
-		} catch (SQLException e) {
-			LOGGER.error("" + e.getMessage());
-			throw new PersistenceException("failed to find associated Types", e);
-		}
+	@Override
+	public Trainingsplan getPlanBySession(TrainingsSession session) throws PersistenceException {
+		return trainingsSessionHelperDAO.getPlanBySession(session);
 	}
 
-	public void createAssociationToType(int id_plan, int id_type) throws PersistenceException {
-		try {
-			ps_create_association.setInt(1, id_plan);
-			ps_create_association.setInt(2, id_type);
-			executeUpdate(ps_create_association);
-		} catch (SQLException e) {
-			LOGGER.error("" + e.getMessage());
-			throw new PersistenceException("failed to create associated Types", e);
-		}
-	}
-
-	public void deleteAssociationToType(int id_plan, int id_type) throws PersistenceException {
-		try {
-			ps_delete_association.setInt(1, id_plan);
-			ps_delete_association.setInt(2, id_type);
-			executeUpdate(ps_delete_association);
-		} catch (SQLException e) {
-			LOGGER.error("" + e.getMessage());
-			throw new PersistenceException("failed to delete associated Types", e);
-		}
+	@Override
+	public Trainingsplan getPlanBySet(ExerciseSet set) throws PersistenceException {
+		TrainingsSession session = exerciseSetHelperDAO.getSessionBySet(set);
+		return getPlanBySession(session);
 	}
 
 	private void executeUpdate(PreparedStatement ps) throws SQLException {
@@ -393,11 +316,15 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 		return ps.executeQuery();
 	}
 
-	public void setTrainingsplanTypeDAO(TrainingsplanTypeDAO trainingsplanTypeDAO) {
-		this.trainingsplanTypeDAO = trainingsplanTypeDAO;
+	public void setTrainingsSessionHelperDAO(H2TrainingssessionHelperDAOImpl trainingsSessionHelperDAO) {
+		this.trainingsSessionHelperDAO = trainingsSessionHelperDAO;
 	}
 
-	public void setTrainingsSessionDAO(TrainingsSessionDAO trainingsSessionDAO) {
-		this.trainingsSessionDAO = trainingsSessionDAO;
+	public void setUserDAO(H2UserDAOImpl userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	public void setExerciseSetHelperDAO(H2ExerciseSetHelperDAOImpl exerciseSetHelperDAO) {
+		this.exerciseSetHelperDAO = exerciseSetHelperDAO;
 	}
 }

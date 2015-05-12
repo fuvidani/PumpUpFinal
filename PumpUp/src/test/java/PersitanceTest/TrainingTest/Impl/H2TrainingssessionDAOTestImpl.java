@@ -10,10 +10,9 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 
@@ -39,9 +38,22 @@ public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTe
 	@Autowired
 	private DBHandler dbConnector;
 
+	@Autowired
+	private UserDAO userDAO;
+
 	@Override
 	public TrainingsplanDAO getTrainingsplanDAO() {
 		return trainingsplanDAO;
+	}
+
+	@Override
+	public TrainingsSessionDAO getTrainingsSessionDAO() {
+		return trainingsSessionDAO;
+	}
+
+	@Override
+	public UserDAO getUserDAO() {
+		return userDAO;
 	}
 
 	@Before
@@ -52,11 +64,6 @@ public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTe
 	@After
 	public void tearDown() throws DBException, SQLException {
 		dbConnector.deactivateTestMode();
-	}
-
-	@Override
-	public DAO<TrainingsSession> getDAO() {
-		return trainingsSessionDAO;
 	}
 }
 

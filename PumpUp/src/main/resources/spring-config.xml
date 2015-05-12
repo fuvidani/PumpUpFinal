@@ -120,29 +120,36 @@
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
-    <bean id="exerciseSetDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2ExerciseSetDAOImpl" scope="singleton" lazy-init="true">
-        <constructor-arg name="handler" ref="dbConnector"/>
-        <property name="exerciseDAO" ref="exerciseDAO"/>
-        <property name="trainingsSessionDAO" ref="trainingsSessionDAO"/>
-    </bean>
 
     <bean id="trainingsplanDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingsplanDAOImpl" scope="singleton" lazy-init="true">
         <constructor-arg name="handler" ref="dbConnector"/>
-        <property name="trainingsplanTypeDAO" ref="trainingsplanTypeDAO"/>
-        <property name="trainingsSessionDAO" ref="trainingsSessionDAO"/>
-    </bean>
-
-    <bean id="trainingsplanTypeDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingsplanTypeDAOImpl" scope="singleton" lazy-init="true">
-        <constructor-arg name="handler" ref="dbConnector"/>
-        <property name="trainingsplanDAO" ref="trainingsplanDAO"/>
+        <property name="trainingsSessionHelperDAO" ref="trainingsSessionHelperDAO"/>
+        <property name="exerciseSetHelperDAO" ref="exerciseSetHelperDAO"/>
+        <property name="userDAO" ref="userDAO"/>
     </bean>
 
     <bean id="trainingsSessionDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingssessionDAOImpl" scope="singleton" lazy-init="true">
-        <constructor-arg name="handler" ref="dbConnector"/>
-        <property name="trainingsplanDAO" ref="trainingsplanDAO"/>
-        <property name="exerciseSetDAO" ref="exerciseSetDAO"/>
+        <property name="trainingsSessionHelperDAO" ref="trainingsSessionHelperDAO"/>
     </bean>
 
+    <bean id="trainingsSessionHelperDAO" class="sepm.ss15.grp16.persistence.dao.Training.Helper.impl.H2TrainingssessionHelperDAOImpl" scope="singleton" lazy-init="true">
+        <constructor-arg name="handler" ref="dbConnector"/>
+        <property name="exerciseSetHelperDAO" ref="exerciseSetHelperDAO"/>
+        <property name="trainingsplanDAO" ref="trainingsplanDAO"/>
+        <property name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <bean id="exerciseSetHelperDAO" class="sepm.ss15.grp16.persistence.dao.Training.Helper.impl.H2ExerciseSetHelperDAOImpl" scope="singleton" lazy-init="true">
+        <constructor-arg name="handler" ref="dbConnector"/>
+        <property name="exerciseDAO" ref="exerciseDAO"/>
+        <property name="trainingsSessionHelperDAO" ref="trainingsSessionHelperDAO"/>
+        <property name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <bean id="trainingsplanService" class="sepm.ss15.grp16.service.Training.impl.TrainingsPlanServiceImpl">
+        <constructor-arg name="trainingsplanDAO" ref="trainingsplanDAO"/>
+        <constructor-arg name="trainingsSessionDAO" ref="trainingsSessionDAO"/>
+    </bean>
 
 
     <!-- Workout Beans-->

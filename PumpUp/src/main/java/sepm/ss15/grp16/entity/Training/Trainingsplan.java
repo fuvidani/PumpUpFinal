@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.entity.Training;
 
 import sepm.ss15.grp16.entity.DTO;
+import sepm.ss15.grp16.entity.User;
 
 import java.util.List;
 
@@ -11,43 +12,41 @@ import java.util.List;
 public class Trainingsplan implements DTO {
 
 	Integer id;
-	Integer uid;
 	String name;
 	String descr;
 	Boolean isDeleted = false;
 
+	User user;
+
 	List<TrainingsSession> trainingsSessions;
-	List<TrainingsplanType> trainingsplanTypes;
 
 	public Trainingsplan() {
 	}
 
-	public Trainingsplan(Integer id, Integer uid, String name, String descr, Boolean isDeleted, List<TrainingsSession> trainingsSessions, List<TrainingsplanType> trainingsplanTypes) {
+	public Trainingsplan(Integer id, User user, String name, String descr, Boolean isDeleted, List<TrainingsSession> trainingsSessions) {
 		this.id = id;
-		this.uid = uid;
+		this.user = user;
 		this.name = name;
 		this.descr = descr;
 		this.isDeleted = isDeleted;
 		this.trainingsSessions = trainingsSessions;
-		this.trainingsplanTypes = trainingsplanTypes;
 	}
 
 	public Trainingsplan(Trainingsplan trainingsplan) {
 		this.id = trainingsplan.id;
-		this.uid = trainingsplan.uid;
+		this.user = trainingsplan.user;
 		this.name = trainingsplan.name;
 		this.descr = trainingsplan.descr;
 		this.isDeleted = trainingsplan.isDeleted;
 		this.trainingsSessions = trainingsplan.trainingsSessions;
-		this.trainingsplanTypes = trainingsplan.trainingsplanTypes;
 	}
 
-	public Integer getUid() {
-		return uid;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUid(Integer uid) {
-		this.uid = uid;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getName() {
@@ -87,14 +86,6 @@ public class Trainingsplan implements DTO {
 		this.trainingsSessions = trainingsSessions;
 	}
 
-	public List<TrainingsplanType> getTrainingsplanTypes() {
-		return trainingsplanTypes;
-	}
-
-	public void setTrainingsplanTypes(List<TrainingsplanType> trainingsplanTypes) {
-		this.trainingsplanTypes = trainingsplanTypes;
-	}
-
 	@Override
 	public Integer getId() {
 		return id;
@@ -103,9 +94,6 @@ public class Trainingsplan implements DTO {
 	@Override
 	public void setId(Integer id) {
 		this.id = id;
-		if (trainingsSessions != null) {
-			for (TrainingsSession session : trainingsSessions) session.setTrainingsplan(this);
-		}
 	}
 
 	@Override
@@ -116,24 +104,22 @@ public class Trainingsplan implements DTO {
 		Trainingsplan that = (Trainingsplan) o;
 
 		return !(id != null ? !id.equals(that.id) : that.id != null) &&
-				!(uid != null ? !uid.equals(that.uid) : that.uid != null) &&
+				!(user != null ? !user.equals(that.user) : that.user != null) &&
 				!(name != null ? !name.equals(that.name) : that.name != null) &&
 				!(descr != null ? !descr.equals(that.descr) : that.descr != null) &&
 				!(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
-				!(trainingsSessions != null ? !trainingsSessions.equals(that.trainingsSessions) : that.trainingsSessions != null) &&
-				!(trainingsplanTypes != null ? !trainingsplanTypes.equals(that.trainingsplanTypes) : that.trainingsplanTypes != null);
+				!(trainingsSessions != null ? !trainingsSessions.equals(that.trainingsSessions) : that.trainingsSessions != null);
 
 	}
 
 	@Override
 	public int hashCode() {
 		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (uid != null ? uid.hashCode() : 0);
+		result = 31 * result + (user != null ? user.hashCode() : 0);
 		result = 31 * result + (name != null ? name.hashCode() : 0);
 		result = 31 * result + (descr != null ? descr.hashCode() : 0);
 		result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
 		result = 31 * result + (trainingsSessions != null ? trainingsSessions.hashCode() : 0);
-		result = 31 * result + (trainingsplanTypes != null ? trainingsplanTypes.hashCode() : 0);
 		return result;
 	}
 
@@ -141,12 +127,11 @@ public class Trainingsplan implements DTO {
 	public String toString() {
 		return "Trainingsplan{" +
 				"id=" + id +
-				", uid=" + uid +
+				", user=" + user +
 				", name='" + name + '\'' +
 				", descr='" + descr + '\'' +
 				", isDeleted=" + isDeleted +
 				", trainingsSessions=" + trainingsSessions +
-				", trainingsplanTypes=" + trainingsplanTypes +
 				'}';
 	}
 }

@@ -1,7 +1,8 @@
 package sepm.ss15.grp16.persistence.dao.Training;
 
+import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
+import sepm.ss15.grp16.entity.Training.TrainingsSession;
 import sepm.ss15.grp16.entity.Training.Trainingsplan;
-import sepm.ss15.grp16.entity.Training.TrainingsplanType;
 import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
@@ -15,11 +16,7 @@ public interface TrainingsplanDAO extends DAO<Trainingsplan> {
 
 	List<Trainingsplan> find(Trainingsplan trainingsplan) throws PersistenceException;
 
-	List<TrainingsplanType> findAssociatedTypes(int id) throws PersistenceException;
+	Trainingsplan getPlanBySession(TrainingsSession session) throws PersistenceException;
 
-	void createAssociationToType(int id_plan, int id_type) throws PersistenceException;
-
-	void deleteAssociationToType(int id_plan, int id_type) throws PersistenceException;
-
-
+	Trainingsplan getPlanBySet(ExerciseSet set) throws PersistenceException;
 }

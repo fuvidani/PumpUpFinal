@@ -80,16 +80,16 @@ public class H2DBConnectorImpl implements DBHandler {
 	public void activateTestMode() throws DBException {
 		try {
 			LOGGER.info("try to get connection to database and activate testmode");
-			Class.forName("org.h2.Driver");
+			//Class.forName("org.h2.Driver");
 
-			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
+			//con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/testpumpup", "sa", "");
 			execScripts();
 
 			con.setAutoCommit(false);
 			populateTest();
 			LOGGER.info("connection successful established. testmode activated");
 
-		} catch (ClassNotFoundException | FileNotFoundException | URISyntaxException | SQLException e) {
+		} catch (FileNotFoundException | URISyntaxException | SQLException e) {
 			LOGGER.error(e.getMessage());
 			throw new DBException("Failed to activate testmode", e);
 		}
@@ -101,13 +101,13 @@ public class H2DBConnectorImpl implements DBHandler {
 			LOGGER.info("try to close connection to database and deactivate testmode");
 			con.rollback();
 
-			Class.forName("org.h2.Driver");
+			//Class.forName("org.h2.Driver");
 
-			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
+			//con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/testpumpup", "sa", "");
 			con.setAutoCommit(true);
 
 			LOGGER.info("connection successful closed. testmode deactivated");
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 			throw new DBException("Failed to deactivate testmode", e);
 		}

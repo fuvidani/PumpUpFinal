@@ -1,87 +1,87 @@
 package PersitanceTest.TrainingTest;
 
-import PersitanceTest.AbstractDAOTest;
 import org.junit.Assert;
 import org.junit.Test;
-import sepm.ss15.grp16.entity.Training.ExerciseSet;
 import sepm.ss15.grp16.entity.Training.TrainingsSession;
 import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Author: Lukas
  * Date: 09.05.2015
  */
-public abstract class AbstractTrainingssessionDAOTest extends AbstractDAOTest<TrainingsSession> {
+public abstract class AbstractTrainingssessionDAOTest {
 
 	public abstract TrainingsplanDAO getTrainingsplanDAO();
-
-	@Test
-	public void createValid() throws PersistenceException {
-		createValid(dummyTrainingsSession());
-	}
-
-	@Test
-	public void updateValid() throws PersistenceException {
-		TrainingsSession trainingsSession_old = dummyTrainingsSession();
-		TrainingsSession TrainingsSession_new = new TrainingsSession(trainingsSession_old);
-		TrainingsSession_new.setName("changed name");
-
-		updateValid(trainingsSession_old, TrainingsSession_new);
-	}
-
-	@Test
-	public void deleteValid() throws PersistenceException {
-		deleteValid(dummyTrainingsSession());
-	}
+	public abstract TrainingsSessionDAO getTrainingsSessionDAO();
+	public abstract UserDAO getUserDAO();
 
 	@Test
 	public void searchByIDValid() throws PersistenceException {
-		searchByIDValid(dummyTrainingsSession());
+		Trainingsplan plan = dummyTrainingsplan();
+		List<TrainingsSession> list = new ArrayList<>();
+		TrainingsSession session = dummySession();
+		list.add(session);
+		plan.setTrainingsSessions(list);
+
+		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(plan));
+		plan = getTrainingsplanDAO().create(plan);
+		Assert.assertTrue(getTrainingsplanDAO().findAll().contains(plan));
+
+		session = plan.getTrainingsSessions().get(0);
+
+		TrainingsSession dto_found = getTrainingsSessionDAO().searchByID(session.getId());
+		Assert.assertEquals(dto_found, session);
 	}
 
 	@Test
-	public void findValid() throws PersistenceException {
-		TrainingsSession TrainingsSession1 = dummyTrainingsSession();
-		TrainingsSession1.setName("asdf");
-		TrainingsSession TrainingsSession2 = dummyTrainingsSession();
-		TrainingsSession2.setName("xyz");
+	public void searchByUserValid() throws PersistenceException {
+		User testUser = new User(null, "msober", true, 20, 194, false);
+		testUser = getUserDAO().create(testUser);
 
-		Assert.assertFalse(getDAO().findAll().contains(TrainingsSession1));
-		Assert.assertFalse(getDAO().findAll().contains(TrainingsSession2));
-		getDAO().create(TrainingsSession1);
-		getDAO().create(TrainingsSession2);
-		Assert.assertTrue(getDAO().findAll().contains(TrainingsSession1));
-		Assert.assertTrue(getDAO().findAll().contains(TrainingsSession2));
+		Trainingsplan plan = dummyTrainingsplan();
+		List<TrainingsSession> list = new ArrayList<>();
+		TrainingsSession session = dummySession();
+		session.setUser(testUser);
+		list.add(session);
+		plan.setTrainingsSessions(list);
 
-		List<TrainingsSession> list = ((TrainingsSessionDAO) getDAO()).find(new TrainingsSession(null, null, null, "asdf", null, null));
-		Assert.assertTrue(list.contains(TrainingsSession1));
-		Assert.assertFalse(list.contains(TrainingsSession2));
+		Assert.assertFalse(getTrainingsplanDAO().findAll().contains(plan));
+		getTrainingsplanDAO().create(plan);
+		Assert.assertTrue(getTrainingsplanDAO().findAll().contains(plan));
+
+		session = plan.getTrainingsSessions().get(0);
+
+		List<TrainingsSession> dto_found = getTrainingsSessionDAO().searchByUser(testUser);
+		Assert.assertTrue(dto_found.contains(session));
 	}
 
-	private Trainingsplan createRefTraining() throws PersistenceException {
+	private Trainingsplan dummyTrainingsplan() throws PersistenceException {
 		Trainingsplan plan = new Trainingsplan();
 
 		plan.setName("testtraining");
 		plan.setDescr("testdescription");
 		plan.setIsDeleted(false);
 
-		return getTrainingsplanDAO().create(plan);
+		return plan;
 	}
 
-	private TrainingsSession dummyTrainingsSession() throws PersistenceException {
-		Trainingsplan plan = createRefTraining();
+	private TrainingsSession dummySession() throws PersistenceException {
+		TrainingsSession trainingsSession = new TrainingsSession();
 
-		TrainingsSession TrainingsSession = new TrainingsSession();
+		trainingsSession.setName("testsession");
+		trainingsSession.setIsDeleted(false);
 
-		TrainingsSession.setTrainingsplan(plan);
-		TrainingsSession.setName("testsession");
-		TrainingsSession.setIsDeleted(false);
-
-		return TrainingsSession;
+		return trainingsSession;
 	}
 }
