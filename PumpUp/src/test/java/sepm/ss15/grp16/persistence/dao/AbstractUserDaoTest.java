@@ -28,7 +28,7 @@ public abstract class AbstractUserDaoTest {
 
     @Test
     public void createWithValidUserShouldPersist() throws Exception {
-        User testUser = new User(null, "msober", true, 20, 194, false);
+        User testUser = new User(null, "msober", true, 20, 194, "michael.sober@ymail.com", "/path/playlist/", false);
         List<User> allUsers = userDAO.findAll();
         assertFalse(allUsers.contains(testUser));
         userDAO.create(testUser);
@@ -43,7 +43,7 @@ public abstract class AbstractUserDaoTest {
 
     @Test
     public void deleteWithValidUserShouldPersist() throws Exception{
-        User testUser = new User(null, "msober", true, 20, 194, false);
+        User testUser = new User(null, "msober", true, 20, 194, "michael.p.sober@gmail.com", "/path/playlist/", false);
         userDAO.create(testUser);
         List<User> allUsers = userDAO.findAll();
         assertTrue(allUsers.contains(testUser));
@@ -60,8 +60,8 @@ public abstract class AbstractUserDaoTest {
 
     @Test
     public void updateWithValidParametersShouldPersist() throws Exception{
-        User userBeforeUpdate = new User(null, "msober", true, 20, 194, false);
-        User userAfterUpdate = new User(null, "ksober", false, 18, 174, false);
+        User userBeforeUpdate = new User(null, "msober", true, 20, 194, "michael.p.sober@gmail.com", "/path/playlist/", false);
+        User userAfterUpdate = new User(null, "ksober", false, 18, 174, "michael.sober@ymail.com", "/newpath/playlist", false);
         userDAO.create(userBeforeUpdate);
         userAfterUpdate.setUser_id(userBeforeUpdate.getUser_id());
         List<User> allJockeys = userDAO.findAll();
@@ -73,9 +73,9 @@ public abstract class AbstractUserDaoTest {
 
     @Test
     public void searchByIDShouldFindUser() throws Exception{
-        User testUser1 = new User(null, "msober", true, 20, 194, false);
-        User testUser2 = new User(null, "ksober", false, 18, 174, false);
-        User testUser3 = new User(null, "psober", true, 48, 188, false);
+        User testUser1 = new User(null, "msober", true, 20, 194, "michael.p.sober@gmail.com", "/path/playlist/", false);
+        User testUser2 = new User(null, "ksober", false, 18, 174, "k.p.sober@gmail.com", "/otherpath/playlist/", false);
+        User testUser3 = new User(null, "psober", true, 48, 188, "p.a.sober@gmail.com", "/anotherpath/playlist/", false);
         userDAO.create(testUser1);
         userDAO.create(testUser2);
         userDAO.create(testUser3);

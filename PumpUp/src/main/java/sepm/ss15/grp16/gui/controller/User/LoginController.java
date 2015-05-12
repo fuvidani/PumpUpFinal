@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.gui.controller.Main.MainController;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
@@ -92,5 +93,10 @@ public class LoginController implements Initializable {
             LOGGER.error("Couldn't open registration-window");
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void loginClicked(){
+
     }
 }

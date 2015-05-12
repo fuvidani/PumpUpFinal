@@ -159,7 +159,7 @@ public class RegistrationController implements Initializable {
         String genderString = ((RadioButton) group.getSelectedToggle()).getText();
         gender = genderString.equals("Male") ? true : false;
 
-        User user = new User(null, username, gender, age, height, false);
+        User user = new User(null, username, gender, age, height, null, null, false);
         try {
             userService.create(user);
             WeightHistory weightHistory = new WeightHistory(null, user.getUser_id(), weight, null);

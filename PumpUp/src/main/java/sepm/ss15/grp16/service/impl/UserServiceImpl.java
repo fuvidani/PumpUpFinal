@@ -19,6 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserDAO userDAO;
+    private User loggedInUser;
 
     public UserServiceImpl(UserDAO userDAO) throws ServiceException{
         if(userDAO == null){
@@ -78,5 +79,13 @@ public class UserServiceImpl implements UserService {
             throw new ValidationException("Validation not passed. Height must be between 0 and 300");
         }
 
+    }
+
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
     }
 }
