@@ -1,4 +1,4 @@
-package PersitanceTest;
+package sepm.ss15.grp16.persistence.dao;
 
 import org.junit.Test;
 import sepm.ss15.grp16.entity.WeightHistory;
