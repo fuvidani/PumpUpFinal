@@ -38,7 +38,7 @@ public class H2CategoryDAOImpl implements CategoryDAO {
             getAllTrainingstype =connection.prepareStatement("SELECT * from CATEGORY  where type=0;");
             getAllMuscle =connection.prepareStatement("SELECT * from CATEGORY  where type=1;");
             getAllEquipment =connection.prepareStatement("SELECT * from CATEGORY  where type=2;");
-            findByIDStatement = connection.prepareStatement("SELECT * FROM category where id = ?;");
+            findByIDStatement = connection.prepareStatement("SELECT * FROM CATEGORY where id = ?;");
         }catch (SQLException e) {
             throw new PersistenceException("failed to prepare statements", e);
         }
@@ -62,6 +62,7 @@ public class H2CategoryDAOImpl implements CategoryDAO {
         try{
             findByIDStatement.setInt(1, identificaitonNumber);
             ResultSet rs = findByIDStatement.executeQuery();
+            rs.next();
             Integer id = rs.getInt(1);
             String name =  rs.getString(2);
             Integer type = rs.getInt(3);

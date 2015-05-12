@@ -3,15 +3,19 @@ package sepm.ss15.grp16.service.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.Exercise;
+import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.ExerciseService;
+import sepm.ss15.grp16.service.Service;
+import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,14 +25,16 @@ import java.util.List;
 public class ExerciseServiceImpl implements ExerciseService {
 
     private ExerciseDAO exerciseDAO;
+    private UserService userService;
     private static final Logger LOGGER = LogManager.getLogger();
 
 
-    public ExerciseServiceImpl(ExerciseDAO exerciseDAO)throws ServiceException{
+    public ExerciseServiceImpl(ExerciseDAO exerciseDAO, UserService userService)throws ServiceException{
         if(exerciseDAO==null) {
             throw new ServiceException("exerciseDAO is null. can not be set in Service Layer");
         }
         this.exerciseDAO = exerciseDAO;
+        this.userService = userService;
     }
 
     @Override
@@ -70,6 +76,10 @@ public class ExerciseServiceImpl implements ExerciseService {
     public void delete(Exercise exercise) throws ServiceException {
         LOGGER.debug("deleting exercise in service");
         try{
+
+            if(userService.getLoggedInUser()!=exercise.getUser())
+                throw new ValidationException("can not delete an exercise from another user or the system");
+
             exerciseDAO.delete(exercise);
         }catch (PersistenceException e){
             throw new ServiceException(e);
@@ -87,5 +97,40 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         if(exercise.getCalories()<= 0)
             throw new ValidationException("validation not passed. calories can not be lower or equal to 0");
+    }
+
+    /**
+     * returning a list of all exercises for the given user
+     * inclusive the system exercises
+     * @param user the user to search for in the exercises
+     * @return list of all exercises according to the given user and system
+     * @throws ServiceException if there are any complications with the finding method
+     */
+    public List<Exercise> getExercisesByUserInclSystem(User user) throws ServiceException{
+        List<Exercise> allExercises = this.findAll();
+        List<Exercise> userExercises = new ArrayList<>();
+        for(Exercise e : allExercises){
+                if(e.getUser()==null || e.getUser() == user)
+                    userExercises.add(e);
+        }
+
+        return userExercises;
+    }
+
+    /**
+     * returning a list of all exercises only for the given user
+     * system exercises will not be included in this list
+     * @param user the user to search for in the exercises
+     * @return list of all exercises according to the given user
+     * @throws ServiceException if there are any complications with the finding method
+     */
+    public List<Exercise> getExerciseByUserONLY(User user) throws ServiceException{
+        List<Exercise> allExercises = this.findAll();
+        List<Exercise> userExercises = new ArrayList<>();
+        for(Exercise e : allExercises){
+            if(e.getUser() == user)
+                userExercises.add(e);
+        }
+        return userExercises;
     }
 }

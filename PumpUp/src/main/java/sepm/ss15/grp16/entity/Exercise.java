@@ -19,17 +19,8 @@ public class Exercise implements DTO{
     private User user;
     private List<AbsractCategory> categories = new ArrayList<>();
 
-    public Exercise(String name){
-        this.name=name;
-    }
 
-
-    public Exercise(Integer id, String name, String description, Double calories, String videolink, List<String> gifLinks,Boolean timeBased, Boolean isDeleted, User user, List<AbsractCategory> categories) {
-        this(name, description, calories, videolink, gifLinks, isDeleted, user, timeBased, categories);
-        this.id = id;
-    }
-
-    public Exercise(String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted, User user, Boolean timeBased, List<AbsractCategory> categories) {
+    public Exercise(Integer id, String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted, Boolean timeBased, User user, List<AbsractCategory> categories) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -40,42 +31,6 @@ public class Exercise implements DTO{
         this.timeBased = timeBased;
         this.user = user;
         this.categories = categories;
-    }
-
-    public Exercise(String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted) {
-        this.name = name;
-        this.description = description;
-        this.calories = calories;
-        this.videolink = videolink;
-        this.gifLinks = gifLinks;
-        this.isDeleted=isDeleted;
-    }
-
-    public Exercise(String name, String description, Double calories, String videolink, Boolean isDeleted) {
-        this.name = name;
-        this.description = description;
-        this.calories = calories;
-        this.videolink = videolink;
-        this.isDeleted=isDeleted;
-    }
-
-    public Exercise(Integer id, String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.calories = calories;
-        this.videolink = videolink;
-        this.gifLinks = gifLinks;
-        this.isDeleted = isDeleted;
-    }
-
-    public Exercise(Integer id, String name, String description, Double calories, String videolink, Boolean isDeleted) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.calories = calories;
-        this.videolink = videolink;
-        this.isDeleted = isDeleted;
     }
 
     public Integer getId() {

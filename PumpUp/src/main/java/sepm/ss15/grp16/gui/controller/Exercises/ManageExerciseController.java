@@ -1,10 +1,8 @@
 package sepm.ss15.grp16.gui.controller.Exercises;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,12 +19,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import sepm.ss15.grp16.entity.DTO;
-import sepm.ss15.grp16.entity.Exercise;
+import sepm.ss15.grp16.entity.*;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.service.ExerciseService;
+import sepm.ss15.grp16.service.CategoryService;
 import sepm.ss15.grp16.service.Service;
+import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,7 +36,7 @@ import java.util.List;
 /**
  * Created by Daniel Fuevesi on 08.05.15.
  * This controller is responsible for the stage where the user can create
- * a new exercise or edit an existing one.
+ * m new exercise or edit an existing one.
  */
 public class ManageExerciseController extends Controller implements Initializable{
 
@@ -136,7 +133,28 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     private VBox vBox;
 
+    @FXML
+    private ToggleGroup timeToggle;
+
+
+    @FXML
+    private RadioButton radioTime;
+
+    @FXML
+    private RadioButton radioRep;
+
+    @FXML
+    private VBox vboxType;
+
+    @FXML
+    private VBox vboxMuscle;
+
+    @FXML
+    private VBox vboxEquipment;
+
+
     private Service<Exercise> exerciseService;
+    private CategoryService categoryService;
     private static final Logger LOGGER = LogManager.getLogger();
     private List<String> exerciseGifList = new ArrayList<>();
     private ObservableList<String> observablePicListData = FXCollections.observableArrayList();
@@ -146,9 +164,14 @@ public class ManageExerciseController extends Controller implements Initializabl
     private String picture;
 
     private ObservableList<CheckBox> checkboxes = FXCollections.observableArrayList();
+    private List<CheckBox> allCheckboxes = new ArrayList<>();
 
     public void setExerciseService(Service<Exercise> exerciseService){
         this.exerciseService=exerciseService;
+    }
+
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     public void setExerciseController(ExercisesController exerciseController){
@@ -166,7 +189,38 @@ public class ManageExerciseController extends Controller implements Initializabl
         }
 
         vBox.getChildren().addAll(checkboxes);*/
+        try {
+            for (MusclegroupCategory m : categoryService.getAllMusclegroup()){
+                CheckBox box = new CheckBox(m.getName());
+                box.setId(""+m.getId());
+                checkboxes.add(box);
+                allCheckboxes.add(box);
+            }
+            vboxMuscle.getChildren().addAll(checkboxes);
+            checkboxes.clear();
+            for(TrainingsCategory t : categoryService.getAllTrainingstype()){
+                CheckBox box = new CheckBox(t.getName());
+                box.setId(""+t.getId());
+                checkboxes.add(box);
+                allCheckboxes.add(box);
 
+            }
+            vboxType.getChildren().addAll(checkboxes);
+            checkboxes.clear();
+
+            for(EquipmentCategory e : categoryService.getAllEquipment()){
+                CheckBox box = new CheckBox(e.getName());
+                box.setId(""+e.getId());
+                checkboxes.add(box);
+                allCheckboxes.add(box);
+
+            }
+            vboxEquipment.getChildren().addAll(checkboxes);
+            checkboxes.clear();
+        }catch (ServiceException e){
+            LOGGER.error(e);
+            e.printStackTrace();
+        }
         imagesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -194,14 +248,27 @@ public class ManageExerciseController extends Controller implements Initializabl
         try {
             File file;
             InputStream inputStream;
+
+            if(newValue == null && oldValue !=null){
+                newValue = oldValue;
+            }
+
+            if(newValue == null && oldValue == null)
+                return;
+
+            if(observablePicListData.isEmpty())
+                return;
+
             //exercise got set from other controller
-            if(this.exercise!=null){
+            if(this.exercise!=null && !observablePicListData.isEmpty()){
                 String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
                 file =new File(storingPath + "\\"+newValue);
+                picture = file.getName();
             }else{
                 file =  new File(newValue);
+                picture = file.toString();
             }
-            picture = file.getName();
+
             inputStream = new FileInputStream(file);
             Image img = new Image(inputStream);
             imageView.setImage(img);
@@ -335,7 +402,20 @@ public class ManageExerciseController extends Controller implements Initializabl
         }catch (NumberFormatException e){
             calories = 1.0;
         }
-        return new Exercise(exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(),exerciseGifList, false);
+        //TODO set logged in user
+        boolean isTimeBased = false;
+        RadioButton selected = (RadioButton) timeToggle.getSelectedToggle();
+
+        if(selected == null || selected.equals(radioTime)){
+            isTimeBased = true;
+        }
+        List<AbsractCategory> temp = new ArrayList<>();
+        for(CheckBox c : allCheckboxes){
+            if(c.isSelected())
+                temp.add(new TrainingsCategory(Integer.parseInt(c.getId()), c.getText()));
+        }
+
+        return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(),exerciseGifList, false, isTimeBased, null, temp);
     }
 
 }

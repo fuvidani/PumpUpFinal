@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 import sepm.ss15.grp16.persistence.exception.DBException;
@@ -30,8 +31,12 @@ public class H2ExerciseDAOImplTest extends  AbstractExerciseDaoTest {
     @Autowired
     private DBHandler dbConnector;
 
+
     @Autowired
     public void setExerciseDAO(ExerciseDAO exerciseDAO){this.exerciseDAO = exerciseDAO;}
+
+    @Autowired
+    public void setUserDAO(UserDAO userDAO){this.userDAO = userDAO;}
 
     @Override
     public ExerciseDAO getExerciseDAO() {
@@ -41,7 +46,7 @@ public class H2ExerciseDAOImplTest extends  AbstractExerciseDaoTest {
     @Before
     public void setUp() {
         try {
-            dbConnector.getConnection().setAutoCommit(false);
+            dbConnector.getConnection().setAutoCommit(true);
         }catch ( DBException e){
             e.printStackTrace();
         }catch (SQLException e){

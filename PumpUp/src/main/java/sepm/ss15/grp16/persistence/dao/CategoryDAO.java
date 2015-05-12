@@ -13,6 +13,7 @@ import java.util.List;
  */
 public interface CategoryDAO extends DAO<AbsractCategory> {
 
+    AbsractCategory searchByID(int identificaitonNumber) throws PersistenceException;
 
     List<EquipmentCategory> getAllEquipment() throws PersistenceException;
 

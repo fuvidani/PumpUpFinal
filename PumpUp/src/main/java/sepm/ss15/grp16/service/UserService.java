@@ -10,4 +10,6 @@ import sepm.ss15.grp16.entity.User;
  */
 public interface UserService extends Service<User> {
 
+    User getLoggedInUser();
+
 }

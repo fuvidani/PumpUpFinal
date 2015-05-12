@@ -22,6 +22,9 @@ public abstract class AbsractCategory implements DTO{
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
 
     public void setId(Integer id) {
         this.id = id;

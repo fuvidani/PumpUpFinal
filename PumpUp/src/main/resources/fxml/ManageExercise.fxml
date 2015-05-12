@@ -70,7 +70,7 @@
                         <Insets left="20.0" top="10.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox fx:id="vBox" prefHeight="577.0" prefWidth="400.0">
+                  <VBox prefHeight="672.0" prefWidth="520.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="28.0" prefWidth="401.0" text="Kategorien">
                            <font>
@@ -79,41 +79,19 @@
                         </Label>
                         <HBox spacing="70.0">
                            <children>
-                              <VBox spacing="5.0">
+                              <VBox fx:id="vboxType" spacing="5.0">
                                  <children>
-                                    <Label text="Geräte" />
-                                    <RadioButton fx:id="medizinBall" mnemonicParsing="false" text="Medizinball" />
-                                    <RadioButton fx:id="klimmzugStange" mnemonicParsing="false" text="Klimmzugstange" />
-                                    <RadioButton fx:id="kurzHantel" mnemonicParsing="false" text="Kurzhantel" />
-                                    <RadioButton fx:id="langHantel" mnemonicParsing="false" text="Langhantel" />
-                                    <RadioButton fx:id="springschnur" mnemonicParsing="false" text="Springschnur" />
-                                    <RadioButton fx:id="sandsack" mnemonicParsing="false" text="Sandsack" />
-                                    <RadioButton fx:id="expander" mnemonicParsing="false" text="Expander" />
-                                    <RadioButton fx:id="bauchtrainingsrad" mnemonicParsing="false" text="Bauchtrainings Rad" />
+                                    <Label text="Art" />
                                  </children>
                               </VBox>
-                              <VBox spacing="5.0">
+                              <VBox fx:id="vboxEquipment" spacing="5.0">
+                                 <children>
+                                    <Label text="Geräte" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="vboxMuscle">
                                  <children>
                                     <Label text="Muskelgruppe" />
-                                    <CheckBox fx:id="abdominalCheck" mnemonicParsing="false" text="Bauch" />
-                                    <CheckBox fx:id="bicepCheck" mnemonicParsing="false" text="Bizeps" />
-                                    <CheckBox fx:id="tricepCheck" mnemonicParsing="false" text="Trizeps" />
-                                    <CheckBox fx:id="shoulderCheck" mnemonicParsing="false" text="Schultern" />
-                                    <CheckBox fx:id="backCheck" mnemonicParsing="false" text="Rücken" />
-                                    <CheckBox fx:id="chestCheck" mnemonicParsing="false" text="Brust" />
-                                    <CheckBox fx:id="legsCheck" mnemonicParsing="false" text="Beine" />
-                                    <VBox spacing="5.0">
-                                       <children>
-                                          <Label text="Art" />
-                                          <CheckBox fx:id="enduranceCheck" mnemonicParsing="false" text="Ausdauer" />
-                                          <CheckBox fx:id="strengthCheck" mnemonicParsing="false" text="Kraft" />
-                                          <CheckBox fx:id="balanceCheck" mnemonicParsing="false" text="Balance" />
-                                          <CheckBox fx:id="flexibilityCheck" mnemonicParsing="false" text="Flexibilität" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
-                                    </VBox>
                                  </children>
                               </VBox>
                            </children>
@@ -137,6 +115,13 @@
                                     <Insets right="250.0" />
                                  </VBox.margin>
                               </TextField>
+                              <Label text="Eine Einheit ist:" />
+                              <RadioButton fx:id="radioTime" mnemonicParsing="false" text="Zeit">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="timeToggle" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="radioRep" mnemonicParsing="false" text="Wiederholung" toggleGroup="$timeToggle" />
                            </children>
                         </VBox>
                      </children>
@@ -164,7 +149,7 @@
                               <ListView fx:id="imagesListView" prefHeight="200.0" prefWidth="152.0" />
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <Button fx:id="btn_durchsuchen1" mnemonicParsing="false" onAction="#browseClicked" text="Bild hinzufügen" />
+                                    <Button fx:id="btn_durchsuchen" mnemonicParsing="false" onAction="#browseClicked" text="Bild hinzufügen" />
                                     <Button fx:id="btn_entfernen" mnemonicParsing="false" onAction="#removeClicked" text="Bild entfernen">
                                        <VBox.margin>
                                           <Insets top="20.0" />

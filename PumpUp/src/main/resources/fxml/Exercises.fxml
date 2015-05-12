@@ -40,7 +40,8 @@
                <children>
                   <VBox prefHeight="584.0" prefWidth="276.0" spacing="20.0">
                      <children>
-                        <TableView fx:id="uebungsTableView" maxWidth="-Infinity" minHeight="132.0" prefHeight="441.0" prefWidth="132.0">
+                        <TextField fx:id="tf_search" prefHeight="25.0" prefWidth="133.0" promptText="Name für Filter" />
+                        <TableView fx:id="uebungsTableView" maxWidth="-Infinity" minHeight="132.0" prefHeight="434.0" prefWidth="132.0">
                           <columns>
                             <TableColumn fx:id="uebungColumn" editable="false" maxWidth="132.0" minWidth="-1.0" prefWidth="132.0" resizable="false" text="Übung" />
                           </columns>
@@ -48,12 +49,12 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <CheckBox fx:id="customExercisesCheckbox" mnemonicParsing="false" text="Eigene Übungen">
+                        <CheckBox fx:id="customExercisesCheckbox" mnemonicParsing="false" onAction="#filterOwnExercises" text="Eigene Übungen">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="defaultExercisesCheckbox" mnemonicParsing="false" text="Vorgegebene Übungen">
+                        <CheckBox fx:id="defaultExercisesCheckbox" mnemonicParsing="false" onAction="#filterSystemExercises" text="Vorgegebene Übungen">
                            <font>
                               <Font size="14.0" />
                            </font>

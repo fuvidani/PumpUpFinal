@@ -44,9 +44,6 @@ public class ExercisesController extends Controller implements Initializable{
     private StageTransitionLoader transitionLoader;
 
     @FXML
-    private CheckBox defaultExercisesCheckbox;
-
-    @FXML
     private Label exerciseNameLabel;
 
     @FXML
@@ -58,8 +55,6 @@ public class ExercisesController extends Controller implements Initializable{
     @FXML
     private Label trainingDeviceLabel3;
 
-    @FXML
-    private CheckBox customExercisesCheckbox;
 
     @FXML
     private TextArea descriptionTextArea;
@@ -88,9 +83,20 @@ public class ExercisesController extends Controller implements Initializable{
     @FXML
     private Button prevPic;
 
+    @FXML
+    private TextField tf_search;
+
+    @FXML
+    private CheckBox customExercisesCheckbox;
+
+    @FXML
+    private CheckBox defaultExercisesCheckbox;
+
     private static Exercise exercise;
     private Integer picIndex = 0;
     private  ObservableList<Exercise>  masterdata = FXCollections.observableArrayList();
+    private ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
+
     private  final Logger LOGGER = LogManager.getLogger();
 
 
@@ -112,7 +118,39 @@ public class ExercisesController extends Controller implements Initializable{
                 showExercise(oldValue, newValue);
             }
         });
+
+        tf_search.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                updateFilteredData();
+            }
+        });
+
         this.setContent();
+    }
+
+
+    private void updateFilteredData() {
+        ObservableList<Exercise> temp = FXCollections.observableArrayList();
+
+        for (Exercise e : filteredData) {
+            if (matchesFilter(e))
+                temp.add(e);
+        }
+
+        uebungsTableView.setItems(temp);
+    }
+
+    private boolean matchesFilter(Exercise e) {
+        String filter = tf_search.getText();
+        if (filter == null || filter.isEmpty())
+            return true;
+
+        if (e.getName().toLowerCase().indexOf(filter.toLowerCase()) != -1) {
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -179,14 +217,16 @@ public class ExercisesController extends Controller implements Initializable{
     void newExerciseButtonClicked(ActionEvent event) {
         Exercise backup = null;
         if(exercise != null){
-             backup = new Exercise(exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted());
+            //TODO
+             backup = new Exercise(null, exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), null, null, null);
             exercise = null;
         }
 
         transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
 
         if(backup!=null){
-        exercise = new Exercise(backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted());
+            //TODO
+        exercise = new Exercise(null, backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), null, null, null);
         }
 
     }
@@ -202,7 +242,7 @@ public class ExercisesController extends Controller implements Initializable{
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Uebungen loeschen");
-            alert.setHeaderText("Die Uebung" + exercise.getName() + " wirklich loeschen");
+            alert.setHeaderText("Die Uebung " + exercise.getName() + " wirklich loeschen");
             alert.setContentText("Moechten Sie die Uebung wirklich loeschen?");
             ButtonType yes = new ButtonType("Ja");
             ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -236,6 +276,67 @@ public class ExercisesController extends Controller implements Initializable{
         } else {
             stage.show();
         }
+    }
+
+
+    @FXML
+    private void filterOwnExercises(){
+
+
+
+        if(customExercisesCheckbox.isSelected()) {
+
+            if (defaultExercisesCheckbox.isSelected()) {
+                uebungsTableView.setItems(masterdata);
+                return;
+            }
+            filteredData.clear();
+            for (Exercise e : masterdata) {
+                if (e.getUser() != null)//TODO != loggedInUser --> aus Userservice dann
+                    filteredData.add(e);
+            }
+
+            uebungsTableView.setItems(filteredData);
+            return;
+        }else{
+            if(defaultExercisesCheckbox.isSelected()){
+                this.filterSystemExercises();
+                return;
+            }
+        }
+        uebungsTableView.setItems(masterdata);
+        return;
+
+    }
+
+    @FXML
+    private void filterSystemExercises() {
+
+        if (defaultExercisesCheckbox.isSelected()) {
+            if (defaultExercisesCheckbox.isSelected() && customExercisesCheckbox.isSelected()) {
+                uebungsTableView.setItems(masterdata);
+                return;
+            }
+
+
+            filteredData.clear();
+            for (Exercise e : masterdata) {
+                if (e.getUser() == null)
+                    filteredData.add(e);
+            }
+
+            uebungsTableView.setItems(filteredData);
+            return;
+        }else{
+            if (customExercisesCheckbox.isSelected()){
+                this.filterOwnExercises();
+                return;
+            }
+        }
+
+        uebungsTableView.setItems(masterdata);
+        return;
+
     }
 
 
