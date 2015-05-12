@@ -135,4 +135,18 @@ public class User implements DTO{
         result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", username='" + username + '\'' +
+                ", gender=" + gender +
+                ", age=" + age +
+                ", height=" + height +
+                ", email='" + email + '\'' +
+                ", playlist='" + playlist + '\'' +
+                ", isDeleted=" + isDeleted +
+                '}';
+    }
 }

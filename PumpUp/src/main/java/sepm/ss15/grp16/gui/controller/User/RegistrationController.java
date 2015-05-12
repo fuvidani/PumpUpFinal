@@ -61,6 +61,7 @@ public class RegistrationController implements Initializable {
     private ToggleGroup group;
 
     private UserService userService;
+    private LoginController loginController;
     private WeightHistoryService weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
@@ -70,6 +71,10 @@ public class RegistrationController implements Initializable {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
     }
 
     public void setWeightHistoryService(WeightHistoryService weightHistoryService) {
@@ -129,13 +134,13 @@ public class RegistrationController implements Initializable {
             try {
                  bodyfat = Integer.parseInt(bodyfat_textField.getText());
             } catch (NumberFormatException e) {
-                error += "Bodyfat \n";
+                error += "Bodyfat has to be a number greater than 0.\n";
             }
         }
 
         if (!error.isEmpty()) {
-            LOGGER.warn("Tried to create user with invalid data");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            LOGGER.error("Tried to create user with invalid data");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehlerhafte Angaben");
             alert.setContentText(error);
@@ -144,12 +149,13 @@ public class RegistrationController implements Initializable {
         }
 
         String genderString = ((RadioButton) group.getSelectedToggle()).getText();
-        gender = genderString.equals("Male") ? true : false;
+        gender = genderString.equals("Male");
 
         User user = new User(null, username, gender, age, height, email, null, false);
+
         try {
 
-            userService.create(user);
+            loginController.insertUserInTable(userService.create(user));
 
             WeightHistory weightHistory = new WeightHistory(null, user.getUser_id(), weight, null);
             weightHistoryService.create(weightHistory);
@@ -174,14 +180,12 @@ public class RegistrationController implements Initializable {
 
         } catch (ServiceException e) {
             LOGGER.error("Couldn't create User");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehlerhafte Angaben");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-            return;
         }
-
     }
 
     @FXML
@@ -201,8 +205,6 @@ public class RegistrationController implements Initializable {
             picture_imageView.setImage(image);
             picture_Rectangle.setVisible(false);
         }
-
         picture_Button.setDisable(false);
     }
-
 }
