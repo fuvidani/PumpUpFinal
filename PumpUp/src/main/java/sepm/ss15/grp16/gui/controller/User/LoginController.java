@@ -99,4 +99,8 @@ public class LoginController implements Initializable {
     public void loginClicked(){
 
     }
+
+    public void insertUserInTable(User u){
+        masterData.add(u);
+    }
 }

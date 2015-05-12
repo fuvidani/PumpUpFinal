@@ -28,7 +28,7 @@
       <ImageView fx:id="picture_imageView" fitHeight="280.0" fitWidth="221.0" layoutX="234.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
       <Rectangle fx:id="picture_Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#d3dae1" height="280.0" layoutX="234.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="221.0" />
       <Button fx:id="picture_Button" layoutX="335.0" layoutY="313.0" mnemonicParsing="false" onAction="#choosePictureClicked" text="Bild auswählen..." />
-      <TextField layoutX="15.0" layoutY="335.0" prefHeight="26.0" prefWidth="200.0" promptText="max.mustermann@gmail.com" />
+      <TextField fx:id="email_textField" layoutX="15.0" layoutY="335.0" prefHeight="26.0" prefWidth="200.0" promptText="max.mustermann@gmail.com" />
       <Label layoutX="15.0" layoutY="318.0" text="E-Mail-Adresse:" />
    </children>
 </AnchorPane>
