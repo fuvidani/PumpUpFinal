@@ -18,7 +18,6 @@ descripion VARCHAR,
 calories DOUBLE,
 videolink VARCHAR,
 userid INTEGER,
-timeBased BOOLEAN,
 isdeleted BOOLEAN not null,
 FOREIGN KEY (userid) REFERENCES user(user_id),
 PRIMARY KEY(id)

@@ -8,18 +8,18 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController">
    <children>
       <VBox layoutX="142.0" layoutY="47.0" prefHeight="900.0" prefWidth="1400.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox layoutX="142.0" layoutY="47.0">
+            <HBox layoutX="142.0" layoutY="47.0" prefHeight="47.0" prefWidth="1300.0">
                <children>
                   <Label layoutX="173.0" layoutY="121.0" text="Übungen">
                      <font>
                         <Font size="24.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="60.0" top="50.0" />
+                        <Insets left="60.0" top="10.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -86,7 +86,7 @@
                            <children>
                               <VBox>
                                  <children>
-                                    <ImageView fx:id="imageView" fitHeight="217.0" fitWidth="287.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="imageView" fitHeight="177.0" fitWidth="287.0" pickOnBounds="true" preserveRatio="true" />
                                     <HBox spacing="30.0">
                                        <children>
                                           <Button fx:id="prevPic" mnemonicParsing="false" onAction="#prevPicButtonClicked" text="vorhergehendes Bild">
@@ -106,12 +106,12 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <MediaView fx:id="bigMediaView" fitHeight="300.0" fitWidth="400.0" />
+                              <MediaView fx:id="bigMediaView" fitHeight="250.0" fitWidth="400.0" />
                            </children>
                         </HBox>
                         <HBox spacing="100.0">
                            <children>
-                              <TextArea fx:id="descriptionTextArea" editable="false" prefHeight="200.0" prefWidth="787.0" text="Textuelle Beschreibung.">
+                              <TextArea fx:id="descriptionTextArea" editable="false" prefHeight="200.0" prefWidth="787.0" text="Textuelle Beschreibung." wrapText="true">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

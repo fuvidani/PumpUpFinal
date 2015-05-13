@@ -40,7 +40,7 @@ public  abstract  class AbstractExerciseDaoTest {
             categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
             categoryList.add(new TrainingsCategory(2, "kraft"));
 
-            Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , false, lukas, categoryList);
+            Exercise liegestuetz = new Exercise(null, "beinheben", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , lukas, categoryList);
 
             List<Exercise> exerciseList = getExerciseDAO().findAll();
             TestCase.assertFalse(exerciseList.contains(liegestuetz));
@@ -78,7 +78,7 @@ public  abstract  class AbstractExerciseDaoTest {
             List<AbsractCategory> categoryList = new ArrayList<>();
             categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
             categoryList.add(new TrainingsCategory(2, "kraft"));
-            Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , false, lukas, categoryList);
+            Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , lukas, categoryList);
 
             List<Exercise> exerciseList = getExerciseDAO().findAll();
             TestCase.assertFalse(exerciseList.contains(liegestuetz));
@@ -116,7 +116,7 @@ public  abstract  class AbstractExerciseDaoTest {
         List<String> gifList = new ArrayList<>();
         URL url = this.getClass().getResource("/img/pushup.jpg");
         gifList.add(url.toString().substring(6));
-        Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, false, null, null);
+        Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
         Exercise e = exerciseDAO.create(liegestuetz);
         e.setId(null);
         getExerciseDAO().update(e);
@@ -130,7 +130,7 @@ public  abstract  class AbstractExerciseDaoTest {
             List<String> gifList = new ArrayList<>();
             URL url = this.getClass().getResource("/img/pushup.jpg");
             gifList.add(url.toString().substring(6));
-            Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, false, null, null);
+            Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
             List<Exercise> exerciseList = getExerciseDAO().findAll();
             TestCase.assertFalse(exerciseList.contains(liegestuetz));
             Exercise e =  getExerciseDAO().create(liegestuetz);
@@ -153,7 +153,7 @@ public  abstract  class AbstractExerciseDaoTest {
 
 //    @Test(expected = PersistenceException.class)
     public void deleteWithNullID()throws PersistenceException{
-        Exercise e = new Exercise(null, "test", "beschreibung", 0.5,"video", null, false, false, null, null);
+        Exercise e = new Exercise(null, "test", "beschreibung", 0.5,"video", null, false, null, null);
         exerciseDAO.delete(e);
     }
 
@@ -163,7 +163,7 @@ public  abstract  class AbstractExerciseDaoTest {
             List<String> gifList = new ArrayList<>();
             URL url = this.getClass().getResource("/img/pushup.jpg");
             gifList.add(url.toString().substring(6));
-            Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, false, null, null);
+            Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
             List<Exercise> exerciseList = exerciseDAO.findAll();
             TestCase.assertFalse(exerciseList.contains(liegestuetz));
             Exercise e = exerciseDAO.create(liegestuetz);

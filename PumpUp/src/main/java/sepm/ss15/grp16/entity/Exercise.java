@@ -15,12 +15,11 @@ public class Exercise implements DTO{
     private String videolink;
     private List<String> gifLinks = new ArrayList<>();
     private Boolean isDeleted;
-    private Boolean timeBased;
     private User user;
     private List<AbsractCategory> categories = new ArrayList<>();
 
 
-    public Exercise(Integer id, String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted, Boolean timeBased, User user, List<AbsractCategory> categories) {
+    public Exercise(Integer id, String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted, User user, List<AbsractCategory> categories) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -28,7 +27,6 @@ public class Exercise implements DTO{
         this.videolink = videolink;
         this.gifLinks = gifLinks;
         this.isDeleted = isDeleted;
-        this.timeBased = timeBased;
         this.user = user;
         this.categories = categories;
     }
@@ -105,14 +103,6 @@ public class Exercise implements DTO{
         this.categories = categories;
     }
 
-    public Boolean getTimeBased() {
-        return timeBased;
-    }
-
-    public void setTimeBased(Boolean timeBased) {
-        this.timeBased = timeBased;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -146,7 +136,6 @@ public class Exercise implements DTO{
                 ", videolink='" + videolink + '\'' +
                 ", gifLinks=" + gifLinks +
                 ", isDeleted=" + isDeleted +
-                ", timeBased=" + timeBased +
                 ", user=" + user +
                 ", categories=" + categories +
                 '}';

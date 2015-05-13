@@ -62,12 +62,12 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             this.userDAO = userDAO;
 
             //create statements
-            createStatement = connection.prepareStatement("INSERT into EXERCISE VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+            createStatement = connection.prepareStatement("INSERT into EXERCISE VALUES (?, ?, ?, ?, ?, ?, ?);");
             createCategoryStatement =connection.prepareStatement("INSERT INTO exercise_category values(?, ?);");
             insertGifStatement = connection.prepareStatement("insert into gif values(?, ?, ?);");
 
             //update statements
-            updateStatement = connection.prepareStatement("UPDATE EXERCISE SET name=?, descripion=?, calories=?, videolink=?, timebased=?, isdeleted=? where id=?;");
+            updateStatement = connection.prepareStatement("UPDATE EXERCISE SET name=?, descripion=?, calories=?, videolink=?, isdeleted=? where id=?;");
 
             //search/find/read statements
             readStatement = connection.prepareStatement("SELECT * FROM EXERCISE where isdeleted=false;");
@@ -113,7 +113,6 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             String videolink = exercise.getVideolink();
             List<String> gifLinks = exercise.getGifLinks();
             Boolean isDeleted = exercise.getIsDeleted();
-            Boolean timeBased = exercise.getTimeBased();
             createStatement.setInt(1, id);
             createStatement.setString(2, name);
             createStatement.setString(3, description);
@@ -126,8 +125,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
            }
 
-            createStatement.setBoolean(7, timeBased);
-            createStatement.setBoolean(8, isDeleted);
+            createStatement.setBoolean(7, isDeleted);
             createStatement.execute();
             List<String> gifNames = new ArrayList<>();
 
@@ -175,7 +173,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                 createCategoryStatement.execute();
             }
 
-            Exercise created = new Exercise(id, name, description, calories, videolink, gifNames, timeBased, isDeleted, exercise.getUser(), exercise.getCategories());
+            Exercise created = new Exercise(id, name, description, calories, videolink, gifNames, isDeleted, exercise.getUser(), exercise.getCategories());
             LOGGER.debug("new Exercise after insertion into h2 database" + created);
             return  created;
         }catch (SQLException e){
@@ -252,14 +250,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             Double calories = exercise.getCalories();
             String videolink = exercise.getVideolink();
             Boolean isDeleted = exercise.getIsDeleted();
-            Boolean timebased = exercise.getTimeBased();
+
             updateStatement.setInt(7, id);
             updateStatement.setString(1, name);
             updateStatement.setString(2, description);
             updateStatement.setDouble(3, calories);
             updateStatement.setString(4, videolink);
             updateStatement.setBoolean(5, isDeleted);
-            updateStatement.setBoolean(6, timebased);
             updateStatement.execute();
 
             deleteCategoryStatement.setInt(1, exercise.getId());
@@ -322,8 +319,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             Double calories = rs.getDouble(4);
             String videoLink = rs.getString(5);
             Integer userid = (Integer) rs.getObject(6);
-            Boolean isTimebased = rs.getBoolean(7);
-            Boolean isDeleted = rs.getBoolean(8);
+            Boolean isDeleted = rs.getBoolean(7);
             readGifStatement.setInt(1, id);
             ResultSet gifResults = readGifStatement.executeQuery();
             List<String> gifLinks = new ArrayList<>();
@@ -344,7 +340,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                 user = userDAO.searchByID(userid);
 
 
-            return new Exercise(id, name, description, calories,videoLink, gifLinks, isTimebased, isDeleted, user, categoryList);
+            return new Exercise(id, name, description, calories,videoLink, gifLinks, isDeleted, user, categoryList);
         }catch (SQLException e){
             throw new PersistenceException("failed to extract exercise from given restultset" , e);
         }

@@ -134,16 +134,6 @@ public class ManageExerciseController extends Controller implements Initializabl
     private VBox vBox;
 
     @FXML
-    private ToggleGroup timeToggle;
-
-
-    @FXML
-    private RadioButton radioTime;
-
-    @FXML
-    private RadioButton radioRep;
-
-    @FXML
     private VBox vboxType;
 
     @FXML
@@ -177,18 +167,13 @@ public class ManageExerciseController extends Controller implements Initializabl
     public void setExerciseController(ExercisesController exerciseController){
         this.exerciseController=exerciseController;
         exercise=exerciseController.getExercise();
+        //TODO ueber spring mit bean loesen
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         //dynamisches laden von checkboxen
-      /*  for (int i = 0; i < 5; i++) {
-            CheckBox box = new CheckBox("hi");
-            checkboxes.add(box);
-        }
-
-        vBox.getChildren().addAll(checkboxes);*/
         try {
             for (MusclegroupCategory m : categoryService.getAllMusclegroup()){
                 CheckBox box = new CheckBox(m.getName());
@@ -240,6 +225,9 @@ public class ManageExerciseController extends Controller implements Initializabl
             exerciseGifList = exercise.getGifLinks();
             observablePicListData.addAll(exerciseGifList);
             imagesListView.setItems(observablePicListData);
+            for(AbsractCategory c : exercise.getCategories()){
+                allCheckboxes.get(c.getId()).setSelected(true);
+            }
         }
     }
 
@@ -403,19 +391,14 @@ public class ManageExerciseController extends Controller implements Initializabl
             calories = 1.0;
         }
         //TODO set logged in user
-        boolean isTimeBased = false;
-        RadioButton selected = (RadioButton) timeToggle.getSelectedToggle();
 
-        if(selected == null || selected.equals(radioTime)){
-            isTimeBased = true;
-        }
         List<AbsractCategory> temp = new ArrayList<>();
         for(CheckBox c : allCheckboxes){
             if(c.isSelected())
                 temp.add(new TrainingsCategory(Integer.parseInt(c.getId()), c.getText()));
         }
 
-        return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(),exerciseGifList, false, isTimeBased, null, temp);
+        return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(),exerciseGifList, false, null, temp);
     }
 
 }

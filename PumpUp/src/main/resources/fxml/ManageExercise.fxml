@@ -116,12 +116,6 @@
                                  </VBox.margin>
                               </TextField>
                               <Label text="Eine Einheit ist:" />
-                              <RadioButton fx:id="radioTime" mnemonicParsing="false" text="Zeit">
-                                 <toggleGroup>
-                                    <ToggleGroup fx:id="timeToggle" />
-                                 </toggleGroup>
-                              </RadioButton>
-                              <RadioButton fx:id="radioRep" mnemonicParsing="false" text="Wiederholung" toggleGroup="$timeToggle" />
                            </children>
                         </VBox>
                      </children>

@@ -218,7 +218,7 @@ public class ExercisesController extends Controller implements Initializable{
         Exercise backup = null;
         if(exercise != null){
             //TODO
-             backup = new Exercise(null, exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), null, null, null);
+             backup = new Exercise(null, exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), null, null);
             exercise = null;
         }
 
@@ -226,7 +226,7 @@ public class ExercisesController extends Controller implements Initializable{
 
         if(backup!=null){
             //TODO
-        exercise = new Exercise(null, backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), null, null, null);
+        exercise = new Exercise(null, backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), null, null);
         }
 
     }
