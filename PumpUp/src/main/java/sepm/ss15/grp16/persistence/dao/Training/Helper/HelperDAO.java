@@ -58,5 +58,12 @@ public interface HelperDAO<T extends DTOHelper> {
 	 */
 	void delete(T dtohelper) throws PersistenceException;
 
+	/**
+	 * find all trainingssession of an user
+	 *
+	 * @param user to search, can be null, UID must not be null
+	 * @return found sessions, null if nothing was found
+	 * @throws PersistenceException if there are complications with the persitance layer
+	 */
 	List<T> searchByUser(User user) throws PersistenceException;
 }

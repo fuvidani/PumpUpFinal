@@ -292,14 +292,15 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 
 	private List<ExerciseSet> dummySet() throws PersistenceException {
 		List<ExerciseSet> sets = new ArrayList<>();
-		ExerciseSet set = new ExerciseSet();
 
-		set.setRepeat(15);
-		set.setExercise(dummyExercise());
-		set.setIsDeleted(false);
-		set.setUser(dummyUser());
+		for (int i = 0; i < 3; i++) {
+			ExerciseSet set = new ExerciseSet();
 
-		for (int i = 0; i < 2; i++) {
+			set.setRepeat(15);
+			set.setExercise(dummyExercise());
+			set.setIsDeleted(false);
+			set.setUser(dummyUser());
+
 			set.setOrder_nr(i);
 			sets.add(set);
 		}
@@ -309,7 +310,7 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 	private List<TrainingsSession> dummySession() {
 		List<TrainingsSession> sessions = new ArrayList<>();
 
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 3; i++) {
 			TrainingsSession trainingsSession = new TrainingsSession();
 			trainingsSession.setName("testsession");
 			trainingsSession.setIsDeleted(false);

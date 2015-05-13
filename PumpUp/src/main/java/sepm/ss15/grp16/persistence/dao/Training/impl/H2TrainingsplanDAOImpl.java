@@ -90,14 +90,9 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 
 			if (dto.getTrainingsSessions() != null) {
 
-				List<TrainingsSession> sessions = dto.getTrainingsSessions();
-				List<TrainingsSession> sessions_new = new ArrayList<>();
-
 				for (TrainingsSession session : dto.getTrainingsSessions()) {
-					TrainingsSession session_new = trainingsSessionHelperDAO.create(session, dto.getId());
-					sessions_new.add(session_new);
+					trainingsSessionHelperDAO.create(session, dto.getId());
 				}
-				dto.setTrainingsSessions(sessions_new);
 			}
 
 		} catch (SQLException e) {

@@ -90,13 +90,10 @@ public class H2TrainingssessionHelperDAOImpl implements TrainingsSessionHelperDA
 			rs.next();
 			session.setId(rs.getInt(1));
 
-			List<ExerciseSet> sets = new ArrayList<>();
-
 			if (session.getExerciseSets() != null) {
 				for (ExerciseSet set : session.getExerciseSets()) {
-					sets.add(exerciseSetHelperDAO.create(set, session.getId()));
+					exerciseSetHelperDAO.create(set, session.getId());
 				}
-				session.setExerciseSets(sets);
 			}
 
 			return session;

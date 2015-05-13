@@ -1,5 +1,6 @@
 package PersitanceTest.TrainingTest;
 
+import PersitanceTest.AbstractDAOTest;
 import org.junit.Assert;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.Training.TrainingsSession;
@@ -20,11 +21,30 @@ import static org.junit.Assert.assertTrue;
  * Author: Lukas
  * Date: 09.05.2015
  */
-public abstract class AbstractTrainingssessionDAOTest {
+public abstract class AbstractTrainingssessionDAOTest extends AbstractDAOTest<TrainingsSession> {
 
 	public abstract TrainingsplanDAO getTrainingsplanDAO();
 	public abstract TrainingsSessionDAO getTrainingsSessionDAO();
 	public abstract UserDAO getUserDAO();
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void createValid() throws PersistenceException {
+		createValid(dummySession());
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void updateValid() throws PersistenceException {
+		TrainingsSession session_old = dummySession();
+		TrainingsSession session_new = new TrainingsSession(session_old);
+		session_new.setName("changed name");
+
+		updateValid(session_old, session_new);
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void deleteValid() throws PersistenceException {
+		deleteValid(dummySession());
+	}
 
 	@Test
 	public void searchByIDValid() throws PersistenceException {
@@ -40,8 +60,8 @@ public abstract class AbstractTrainingssessionDAOTest {
 
 		session = plan.getTrainingsSessions().get(0);
 
-		TrainingsSession dto_found = getTrainingsSessionDAO().searchByID(session.getId());
-		Assert.assertEquals(dto_found, session);
+		TrainingsSession session_found = getTrainingsSessionDAO().searchByID(session.getId());
+		Assert.assertEquals(session_found, session);
 	}
 
 	@Test
@@ -62,8 +82,8 @@ public abstract class AbstractTrainingssessionDAOTest {
 
 		session = plan.getTrainingsSessions().get(0);
 
-		List<TrainingsSession> dto_found = getTrainingsSessionDAO().searchByUser(testUser);
-		Assert.assertTrue(dto_found.contains(session));
+		List<TrainingsSession> session_found = getTrainingsSessionDAO().searchByUser(testUser);
+		Assert.assertTrue(session_found.contains(session));
 	}
 
 	private Trainingsplan dummyTrainingsplan() throws PersistenceException {

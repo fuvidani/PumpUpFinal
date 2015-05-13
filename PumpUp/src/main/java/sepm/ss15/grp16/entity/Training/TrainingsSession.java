@@ -105,8 +105,21 @@ public class TrainingsSession implements DTOHelper {
 				!(user != null ? !user.equals(that.user) : that.user != null) &&
 				!(name != null ? !name.equals(that.name) : that.name != null) &&
 				!(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
-				!(exerciseSets != null ? !exerciseSets.containsAll(that.exerciseSets) : that.exerciseSets != null);
+				equalLists(exerciseSets, that.exerciseSets);
 
+	}
+
+	public boolean equalLists(List<ExerciseSet> one, List<ExerciseSet> two) {
+		if (one == null && two == null) {
+			return true;
+		}
+
+		if ((one == null && two != null)
+				|| one != null && two == null
+				|| one.size() != two.size()) {
+			return false;
+		}
+		return one.containsAll(two);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-DROP TABLE ExerciseSet, PlanHasType, TrainingsPlan, TrainingsPlanType, TrainingsSession;
+DROP TABLE ExerciseSet, TrainingsPlan, TrainingsSession;
 DROP SEQUENCE seq_TP;
 DROP SEQUENCE seq_TPType;
 DROP SEQUENCE seq_TS;

@@ -1,5 +1,7 @@
 package PersitanceTest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import sepm.ss15.grp16.entity.DTO;
 import sepm.ss15.grp16.persistence.dao.DAO;
@@ -13,11 +15,14 @@ import java.util.List;
  */
 public abstract class AbstractDAOTest<T extends DTO> {
 
+	private static final Logger LOGGER = LogManager.getLogger(AbstractDAOTest.class);
+
 	public abstract DAO<T> getDAO();
 
 	private List<T> debugglist;
 
 	public void createValid(T dto) throws PersistenceException {
+		LOGGER.info("createValid: " + dto);
 		debugglist = getDAO().findAll();
 		Assert.assertFalse(getDAO().findAll().contains(dto));
 		dto = getDAO().create(dto);
@@ -26,6 +31,7 @@ public abstract class AbstractDAOTest<T extends DTO> {
 	}
 
 	public void updateValid(T dto_old, T dto_new) throws PersistenceException {
+		LOGGER.info("updateValid: " + dto_old + "to " + dto_new);
 		debugglist = getDAO().findAll();
 		Assert.assertFalse(getDAO().findAll().contains(dto_old));
 
@@ -43,6 +49,7 @@ public abstract class AbstractDAOTest<T extends DTO> {
 	}
 
 	public void deleteValid(T dto) throws PersistenceException {
+		LOGGER.info("deleteValid: " + dto);
 		debugglist = getDAO().findAll();
 		Assert.assertFalse(getDAO().findAll().contains(dto));
 		dto = getDAO().create(dto);
@@ -55,6 +62,7 @@ public abstract class AbstractDAOTest<T extends DTO> {
 	}
 
 	public void searchByIDValid(T dto) throws PersistenceException {
+		LOGGER.info("deleteValid: " + dto);
 		debugglist = getDAO().findAll();
 		Assert.assertFalse(getDAO().findAll().contains(dto));
 		dto = getDAO().create(dto);

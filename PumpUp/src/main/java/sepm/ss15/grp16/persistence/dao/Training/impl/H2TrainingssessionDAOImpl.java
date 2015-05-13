@@ -17,9 +17,6 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 
 	private TrainingsSessionHelperDAO trainingsSessionHelperDAO;
 
-	private H2TrainingssessionDAOImpl() {
-	}
-
 	@Override
 	public TrainingsSession create(TrainingsSession dto) {
 		throw new UnsupportedOperationException();
@@ -36,16 +33,6 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 	}
 
 	@Override
-	public List<TrainingsSession> searchByPlanID(int ID_plan) throws PersistenceException {
-		return trainingsSessionHelperDAO.searchByPlanID(ID_plan);
-	}
-
-	@Override
-	public List<TrainingsSession> searchByUser(User user) throws PersistenceException {
-		return trainingsSessionHelperDAO.searchByUser(user);
-	}
-
-	@Override
 	public TrainingsSession update(TrainingsSession dto) {
 		throw new UnsupportedOperationException();
 	}
@@ -53,6 +40,16 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
 	@Override
 	public void delete(TrainingsSession dto) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public List<TrainingsSession> searchByPlanID(int ID_plan) throws PersistenceException {
+		return trainingsSessionHelperDAO.searchByPlanID(ID_plan);
+	}
+
+	@Override
+	public List<TrainingsSession> searchByUser(User user) throws PersistenceException {
+		return trainingsSessionHelperDAO.searchByUser(user);
 	}
 
 	public void setTrainingsSessionHelperDAO(H2TrainingssessionHelperDAOImpl trainingsSessionHelperDAO) {

@@ -3,8 +3,6 @@ package sepm.ss15.grp16.entity.Training;
 import sepm.ss15.grp16.entity.DTO;
 import sepm.ss15.grp16.entity.User;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -110,8 +108,21 @@ public class Trainingsplan implements DTO {
 				!(name != null ? !name.equals(that.name) : that.name != null) &&
 				!(descr != null ? !descr.equals(that.descr) : that.descr != null) &&
 				!(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
-				!(trainingsSessions != null ? !trainingsSessions.containsAll(that.trainingsSessions) : that.trainingsSessions != null);
+				equalLists(trainingsSessions, that.trainingsSessions);
 
+	}
+
+	public boolean equalLists(List<TrainingsSession> one, List<TrainingsSession> two) {
+		if (one == null && two == null) {
+			return true;
+		}
+
+		if ((one == null && two != null)
+				|| one != null && two == null
+				|| one.size() != two.size()) {
+			return false;
+		}
+		return one.containsAll(two);
 	}
 
 	@Override
