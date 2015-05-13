@@ -49,9 +49,9 @@ public class Main extends Application{
         Pane pane = (Pane) fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("fxml/Main.fxml"));
         // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
         MainController mainController = fxmlLoader.getController();
-        primaryStage.setScene(new Scene(pane, 1300, 750));
+        primaryStage.setScene(new Scene(pane, 1300, 700));
         primaryStage.setMinWidth(1200);
-        primaryStage.setMinHeight(720);
+        primaryStage.setMinHeight(600);
         primaryStage.setMaximized(true);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
