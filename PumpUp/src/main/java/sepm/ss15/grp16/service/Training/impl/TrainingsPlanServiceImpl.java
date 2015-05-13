@@ -162,14 +162,14 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 	public void validate(Trainingsplan plan) throws ValidationException {
 		if (plan == null) {
 			LOGGER.error("error validating " + plan);
-			throw new ValidationException();
+			throw new ValidationException("Trainingsplan darf nicht null sein!");
 		}
 
 		validate_withoutID(plan);
 
 		if (plan.getId() == null) {
 			LOGGER.error("error validating " + plan);
-			throw new ValidationException();
+			throw new ValidationException("Trainingsplan-ID darf nicht null sein!");
 		}
 		if (plan.getTrainingsSessions() != null) {
 
@@ -186,14 +186,19 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 	private void validate_withoutID(Trainingsplan plan) throws ValidationException {
 		if (plan == null) {
 			LOGGER.error("error validating " + plan);
-			throw new ValidationException();
+			throw new ValidationException("Trainingsplan darf nicht null sein!");
 		}
 
-		if (plan.getName() == null || plan.getIsDeleted() == null) {
+		if (plan.getName() == null) {
 			LOGGER.error("error validating " + plan);
-			throw new ValidationException();
+			throw new ValidationException("Trainingsplan Name darf nicht leer sein!");
+		}
+		if (plan.getIsDeleted() == null) {
+			LOGGER.error("error validating " + plan);
+			throw new ValidationException("Trainingsplan isDeleted darf nicht leer sein!");
 
-		} else if (plan.getTrainingsSessions() != null) {
+		}
+		if (plan.getTrainingsSessions() != null) {
 
 			List<TrainingsSession> trainingsSessions = plan.getTrainingsSessions();
 			for (TrainingsSession session : trainingsSessions) {
@@ -205,16 +210,17 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 	private void validate(TrainingsSession session) throws ValidationException {
 		if (session == null) {
 			LOGGER.error("error validating " + session);
-			throw new ValidationException();
+			throw new ValidationException("TrainingsSession darf nicht null sein!");
 		}
 
 		validate_withoutID(session);
 
 		if (session.getId() == null) {
 			LOGGER.error("error validating " + session);
-			throw new ValidationException();
+			throw new ValidationException("TrainingsSession-ID darf nicht leer sein!");
 
-		} else if (session.getExerciseSets() != null) {
+		}
+		if (session.getExerciseSets() != null) {
 
 			List<ExerciseSet> sets = session.getExerciseSets();
 			for (ExerciseSet set : sets) {
@@ -230,13 +236,18 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 	private void validate_withoutID(TrainingsSession session) throws ValidationException {
 		if (session == null) {
 			LOGGER.error("error validating " + session);
-			throw new ValidationException();
+			throw new ValidationException("TrainingsSession darf nicht leer sein!");
 		}
-		if (session.getName() == null || session.getIsDeleted() == null) {
+		if (session.getName() == null) {
 			LOGGER.error("error validating " + session);
-			throw new ValidationException();
+			throw new ValidationException("TrainingsSession Name darf nicht leer sein!");
+		}
+		if (session.getIsDeleted() == null) {
+			LOGGER.error("error validating " + session);
+			throw new ValidationException("TrainingsSession isDeleted darf nicht leer sein!");
 
-		} else if (session.getExerciseSets() != null) {
+		}
+		if (session.getExerciseSets() != null) {
 
 			List<ExerciseSet> sets = session.getExerciseSets();
 			for (ExerciseSet set : sets) {
@@ -248,16 +259,17 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 	private void validate(ExerciseSet set) throws ValidationException {
 		if (set == null) {
 			LOGGER.error("error validating " + set);
-			throw new ValidationException();
+			throw new ValidationException("ExerciseSet darf nicht leer sein!");
 		}
 
 		validate_withoutID(set);
 
 		if (set.getId() == null) {
 			LOGGER.error("error validating " + set);
-			throw new ValidationException();
+			throw new ValidationException("ExerciseSet-ID darf nicht leer sein!");
 
-		} else if (set.getExercise() != null) {
+		}
+		if (set.getExercise() != null) {
 			exerciseService.validate(set.getExercise());
 		}
 
@@ -269,12 +281,16 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 	private void validate_withoutID(ExerciseSet set) throws ValidationException {
 		if (set == null) {
 			LOGGER.error("error validating " + set);
-			throw new ValidationException();
+			throw new ValidationException("ExerciseSet darf nicht leer sein!");
 		}
 
-		if (set.getRepeat() == null || set.getOrder_nr() == null || set.getIsDeleted() == null) {
+		if (set.getRepeat() == null) {
 			LOGGER.error("error validating " + set);
-			throw new ValidationException();
+			throw new ValidationException("ExerciseSet Wiederholung darf nicht leer sein!");
+		}
+		if (set.getOrder_nr() == null || set.getIsDeleted() == null) {
+			LOGGER.error("error validating " + set);
+			throw new ValidationException("ExerciseSet Reihenfolge darf nicht leer sein!");
 		}
 
 	}
