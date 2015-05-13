@@ -105,7 +105,7 @@ public class TrainingsSession implements DTOHelper {
 				!(user != null ? !user.equals(that.user) : that.user != null) &&
 				!(name != null ? !name.equals(that.name) : that.name != null) &&
 				!(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
-				!(exerciseSets != null ? !exerciseSets.equals(that.exerciseSets) : that.exerciseSets != null);
+				!(exerciseSets != null ? !exerciseSets.containsAll(that.exerciseSets) : that.exerciseSets != null);
 
 	}
 

@@ -109,7 +109,18 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 	@Test
 	public void searchByIDValidPlanWithSet() throws PersistenceException {
 		LOGGER.info("searchByIDValidPlanWithSet");
-		searchByIDValid(dummyTrainingsPlanWithSet());
+		//searchByIDValid(dummyTrainingsPlanWithSet());
+
+		Trainingsplan dto = dummyTrainingsPlanWithSet();
+		List <Trainingsplan> debugglist = getDAO().findAll();
+		Assert.assertFalse(getDAO().findAll().contains(dto));
+		dto = getDAO().create(dto);
+		debugglist = getDAO().findAll();
+		Assert.assertTrue(getDAO().findAll().contains(dto));
+
+		Trainingsplan dto_found = getDAO().searchByID(dto.getId());
+		debugglist = getDAO().findAll();
+		Assert.assertEquals(dto_found, dto);
 	}
 
 	@Test
@@ -298,7 +309,7 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 	private List<TrainingsSession> dummySession() {
 		List<TrainingsSession> sessions = new ArrayList<>();
 
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 2; i++) {
 			TrainingsSession trainingsSession = new TrainingsSession();
 			trainingsSession.setName("testsession");
 			trainingsSession.setIsDeleted(false);
