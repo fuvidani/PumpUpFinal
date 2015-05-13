@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
     public void validate(User user) throws ValidationException {
 
         if(user == null){
+            ValidationException exception = new ValidationException();
             throw new ValidationException("Validation not passed. User is null");
         }else if(user.getUsername().length() > 25){
             throw new ValidationException("Validation not passed. Username is more than 25 characters long");
