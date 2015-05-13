@@ -19,7 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserDAO userDAO;
-    private User loggedInUser;
+    private static User loggedInUser;
 
     public UserServiceImpl(UserDAO userDAO) throws ServiceException{
         if(userDAO == null){

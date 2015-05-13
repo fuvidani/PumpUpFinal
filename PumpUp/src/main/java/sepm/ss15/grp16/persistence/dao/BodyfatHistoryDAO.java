@@ -21,4 +21,12 @@ public interface BodyfatHistoryDAO extends DAO<BodyfatHistory>{
      */
     List<BodyfatHistory> searchByUserID(int user_id) throws PersistenceException;
 
+    /**
+     * Searches for the actual bodyfat of the user
+     * @param user_id from the user
+     * @return the actual bodyfat of the user
+     * @throws PersistenceException, if an error while searching occurs
+     */
+    BodyfatHistory getActualBodyfat(int user_id) throws PersistenceException;
+
 }

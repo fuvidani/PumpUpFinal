@@ -25,7 +25,7 @@
     </bean>
 
     <bean id="mainController" class="sepm.ss15.grp16.gui.controller.Main.MainController" scope="prototype">
-
+        <property name="userService" ref="userService" />
     </bean>
 
     <bean id="userDataController" class="sepm.ss15.grp16.gui.controller.Main.Main_UserDataController" scope="prototype">

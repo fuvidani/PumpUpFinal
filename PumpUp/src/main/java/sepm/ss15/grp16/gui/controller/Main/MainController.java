@@ -17,6 +17,7 @@ import sepm.ss15.grp16.gui.controller.Main.Main_CalendarController;
 import sepm.ss15.grp16.gui.controller.Main.Main_UserChartController;
 import sepm.ss15.grp16.gui.controller.Main.Main_UserDataController;
 import sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController;
+import sepm.ss15.grp16.service.UserService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +34,7 @@ public class MainController implements Initializable {
     private Main_UserDataController userDataController;
     private Main_UserChartController userChartController;
     private Main_CalendarController calendarController;
+    private UserService userService;
 
     @FXML
     private Label currentTrainingTypeLabel;
@@ -43,6 +45,9 @@ public class MainController implements Initializable {
     @FXML
     private Label usernameLabel;
 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,7 +57,7 @@ public class MainController implements Initializable {
         this.userChartController.initialize(location,resources);
         this.userDataController.initialize(location,resources);
         this.calendarController.initialize(location,resources);
-
+        this.usernameLabel.setText(userService.getLoggedInUser().getUsername());
     }
 
 
