@@ -192,11 +192,11 @@
 
     </bean>
 
-    <bean id="WorkoutPlansController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController" scope="prototype">
-
+    <bean id="workoutPlansController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController" scope="prototype">
+        <property name="trainingsplanService" ref="trainingsplanService"/>
     </bean>
 
-    <bean id="WorkoutPlanToCalendarController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlanToCalendarController" scope="prototype">
+    <bean id="workoutPlanToCalendarController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlanToCalendarController" scope="prototype">
 
     </bean>
 

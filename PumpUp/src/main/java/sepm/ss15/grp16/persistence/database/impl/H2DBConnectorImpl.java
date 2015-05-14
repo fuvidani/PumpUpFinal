@@ -47,6 +47,7 @@ public class H2DBConnectorImpl implements DBHandler {
 				LOGGER.info("connection successful established");
 
 				execScripts();
+				populateTest();
 
 			} catch (ClassNotFoundException | SQLException | FileNotFoundException | URISyntaxException e) {
 				LOGGER.error(e.getMessage());
@@ -125,6 +126,7 @@ public class H2DBConnectorImpl implements DBHandler {
 
 		if (sql_url != null) {
 
+			con.setAutoCommit(false);
 			File folder = new File(sql_url);
 			File[] listOfFiles = folder.listFiles();
 
@@ -136,6 +138,7 @@ public class H2DBConnectorImpl implements DBHandler {
 					RunScript.execute(con, new FileReader(file));
 				}
 			}
+			con.setAutoCommit(true);
 		}
 	}
 

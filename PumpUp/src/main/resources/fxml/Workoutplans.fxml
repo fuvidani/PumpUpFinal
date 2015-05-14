@@ -14,7 +14,7 @@
                <children>
                   <Label text="Trainingspläne">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="24.0" />
                      </font>
                   </Label>
                </children>
@@ -35,8 +35,8 @@
                   <VBox prefHeight="571.0" prefWidth="200.0" spacing="10.0">
                      <children>
                         <ListView fx:id="workoutPlansListView" prefHeight="479.0" prefWidth="200.0" />
-                        <CheckBox fx:id="customWorkoutPlansCheck" mnemonicParsing="false" text="Eigene Pläne" />
-                        <CheckBox fx:id="defaultWorkoutPlansCheck" mnemonicParsing="false" text="Vorgefertigte Pläne" />
+                        <CheckBox fx:id="customWorkoutPlansCheck" mnemonicParsing="false" onAction="#filterUserPlans" text="Eigene Pläne" />
+                        <CheckBox fx:id="defaultWorkoutPlansCheck" mnemonicParsing="false" onAction="#filterDefPlans" text="Vorgefertigte Pläne" />
                      </children>
                      <HBox.margin>
                         <Insets top="10.0" />
@@ -52,20 +52,13 @@
                   </Separator>
                   <VBox spacing="20.0">
                      <children>
-                        <Label fx:id="trainingTypeLabel" prefHeight="16.0" prefWidth="451.0" text="Ausdauer">
+                        <Label fx:id="trainingNameLabel" prefHeight="16.0" prefWidth="451.0">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="workoutPlanTable" prefHeight="457.0" prefWidth="966.0">
-                          <columns>
-                            <TableColumn prefWidth="163.0" text="1. Tag" />
-                            <TableColumn prefWidth="193.0" text="2. Tag" />
-                              <TableColumn prefWidth="202.0" text="3. Tag" />
-                              <TableColumn prefWidth="196.0" text="4. Tag" />
-                              <TableColumn prefWidth="211.0" text="i. Tag" />
-                          </columns>
-                        </TableView>
+                        <TextArea fx:id="trainingDescr" prefHeight="98.0" prefWidth="966.0" />
+                        <TableView fx:id="workoutPlanTable" prefHeight="366.0" prefWidth="966.0" />
                      </children>
                   </VBox>
                </children>
@@ -75,11 +68,11 @@
                   <HBox spacing="50.0">
                      <children>
                         <Button layoutX="10.0" layoutY="330.0" mnemonicParsing="false" onAction="#newWorkoutPlanClicked" text="Neuen Plan anlegen" />
-                        <Button layoutX="10.0" layoutY="226.0" mnemonicParsing="false" onAction="#copyWorkoutPlanClicked" text="Plan kopieren" />
+                        <Button fx:id="copyBtn" layoutX="10.0" layoutY="226.0" mnemonicParsing="false" onAction="#copyWorkoutPlanClicked" text="Plan kopieren" />
                         <Button layoutX="10.0" layoutY="304.0" mnemonicParsing="false" onAction="#generateWorkoutPlanClicked" text="Plan generieren" />
-                        <Button layoutX="10.0" layoutY="356.0" mnemonicParsing="false" onAction="#deleteWorkoutPlanClicked" text="Plan löschen" />
-                        <Button mnemonicParsing="false" onAction="#editWorkoutPlanClicked" text="Plan bearbeiten" />
-                        <Button mnemonicParsing="false" onAction="#embedInCalenderClicked" text="In Kalender einfügen" />
+                        <Button fx:id="deleteBtn" disable="true" layoutX="10.0" layoutY="356.0" mnemonicParsing="false" onAction="#deleteWorkoutPlanClicked" text="Plan löschen" />
+                        <Button fx:id="editBtn" disable="true" mnemonicParsing="false" onAction="#editWorkoutPlanClicked" text="Plan bearbeiten" />
+                        <Button fx:id="calenderBtn" disable="true" mnemonicParsing="false" onAction="#embedInCalenderClicked" text="In Kalender einfügen" />
                      </children>
                   </HBox>
                   <HBox>

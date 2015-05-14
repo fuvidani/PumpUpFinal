@@ -18,6 +18,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.gui.controller.Main.MainController;
 import sepm.ss15.grp16.gui.controller.User.LoginController;
+import sepm.ss15.grp16.gui.controller.Workout.WorkoutController;
+import sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController;
 import sun.rmi.runtime.Log;
 
 import java.util.Optional;
@@ -45,10 +47,11 @@ public class Main extends Application{
             }
         });
 
-        fxmlLoader.setLocation(MainController.class.getClassLoader().getResource("fxml/Main.fxml"));
-        Pane pane = (Pane) fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("fxml/Main.fxml"));
+        fxmlLoader.setLocation(WorkoutPlansController.class.getClassLoader().getResource("fxml/Workoutplans.fxml"));
+        Pane pane = (Pane) fxmlLoader.load(WorkoutPlansController.class.getClassLoader().getResourceAsStream("fxml/Workoutplans.fxml"));
         // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
-        MainController mainController = fxmlLoader.getController();
+        //MainController mainController = fxmlLoader.getController();
+	    WorkoutPlansController workoutController = fxmlLoader.getController();
         primaryStage.setScene(new Scene(pane, 1300, 700));
         primaryStage.setMinWidth(1200);
         primaryStage.setMinHeight(600);

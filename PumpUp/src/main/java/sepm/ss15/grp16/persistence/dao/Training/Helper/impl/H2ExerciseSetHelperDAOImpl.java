@@ -32,21 +32,20 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 
 	private static final Logger LOGGER = LogManager.getLogger(H2ExerciseSetHelperDAOImpl.class);
 
-	private Connection con;
+	private final Connection con;
 
-	private PreparedStatement ps_create;
-	private PreparedStatement ps_findAll;
-	private PreparedStatement ps_findID;
+	private final PreparedStatement ps_create;
+	private final PreparedStatement ps_findAll;
+	private final PreparedStatement ps_findID;
 	private final PreparedStatement ps_find_ByUID;
 	private final PreparedStatement ps_find_ByIDSession;
 	private final PreparedStatement ps_find_IDSession;
-	private PreparedStatement ps_update;
-	private PreparedStatement ps_delete;
+	private final PreparedStatement ps_update;
+	private final PreparedStatement ps_delete;
 
-	private PreparedStatement ps_seq_ES;
+	private final PreparedStatement ps_seq_ES;
 
 	private ExerciseDAO exerciseDAO;
-
 	private UserDAO userDAO;
 	private TrainingsSessionHelperDAO trainingsSessionHelperDAO;
 
