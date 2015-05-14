@@ -4,7 +4,10 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.persistence.dao.AbstractUserDaoTest;
 import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
@@ -14,6 +17,8 @@ import sepm.ss15.grp16.persistence.database.DBHandler;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2UserDAOImplTest extends AbstractUserDaoTest {
 
     @Autowired
