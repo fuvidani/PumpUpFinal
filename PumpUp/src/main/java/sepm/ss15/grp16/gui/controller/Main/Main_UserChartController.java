@@ -15,6 +15,15 @@ import java.util.ResourceBundle;
 public class Main_UserChartController extends Controller implements Initializable{
 
 
+    /**
+     * ******************************
+     *                              *
+     *  DO NOT IMPLEMENT THIS!      *
+     *                              *
+     * ******************************
+     */
+
+
     @FXML
     private LineChart<?, ?> userChart;
 

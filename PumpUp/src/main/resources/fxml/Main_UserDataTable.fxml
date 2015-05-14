@@ -5,12 +5,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Main.Main_UserDataController">
    <center>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <children>
-            <TableView fx:id="userDataTableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="360.0" prefWidth="250.0" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
+            <TableView fx:id="userDataTableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="dataTypeColumn" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="-1.0" />
                   <TableColumn fx:id="dataValuesColumn" maxWidth="1.7976931348623157E308" minWidth="98.0" prefWidth="-1.0" />

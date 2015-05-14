@@ -45,14 +45,13 @@ public class Main extends Application{
             }
         });
 
-        fxmlLoader.setLocation(MainController.class.getClassLoader().getResource("fxml/Main.fxml"));
-        Pane pane = (Pane) fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("fxml/Main.fxml"));
+        fxmlLoader.setLocation(LoginController.class.getClassLoader().getResource("fxml/Login.fxml"));
+        Pane pane = (Pane) fxmlLoader.load(LoginController.class.getClassLoader().getResourceAsStream("fxml/Login.fxml"));
         // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
-        MainController mainController = fxmlLoader.getController();
-        primaryStage.setScene(new Scene(pane, 1300, 700));
-        primaryStage.setMinWidth(1200);
-        primaryStage.setMinHeight(600);
-        primaryStage.setMaximized(true);
+        LoginController loginController = fxmlLoader.getController();
+        primaryStage.setScene(new Scene(pane, 353, 216));
+        primaryStage.setMinWidth(350);
+        primaryStage.setMinHeight(210);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
@@ -77,12 +76,7 @@ public class Main extends Application{
         LOGGER.info("configuration successful");
 
         primaryStage.show();
-
-
-
-
-
-
+        
     }
 
     public static void main(String[] args){

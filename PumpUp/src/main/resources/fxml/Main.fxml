@@ -14,11 +14,6 @@
          <children>
             <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="601.0" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
               <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
                   <Menu mnemonicParsing="false" text="Username">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#editBodyDataClicked" text="Körperdaten ändern" />
@@ -26,17 +21,18 @@
                       <MenuItem mnemonicParsing="false" onAction="#logoutClicked" text="Abmelden" />
                     </items>
                   </Menu>
+                <Menu mnemonicParsing="false" text="View">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#viewCurrentWorkoutPlanClicked" text="Aktueller Trainingsplan..." />
+                        <MenuItem mnemonicParsing="false" onAction="#calendarClicked" text="Trainingskalender..." />
+                  </items>
+                </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#viewAllWorkoutPlansClicked" text="Trainingspläne..." />
                         <MenuItem mnemonicParsing="false" onAction="#exercisesMenuClicked" text="Übungen..." />
                   </items>
                 </Menu>
-                  <Menu mnemonicParsing="false" text="Kalender">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#openCalendarMenuClicked" text="Kalender öffnen..." />
-                    </items>
-                  </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#aboutMenuClicked" text="About" />
@@ -54,12 +50,12 @@
                <children>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
                      <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Willkommen, Username!" VBox.vgrow="ALWAYS">
+                        <Label fx:id="usernameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Willkommen, Username!" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <ImageView fitHeight="281.0" fitWidth="268.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                        <ImageView fx:id="userImgView" fitHeight="281.0" fitWidth="268.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                            <image>
                               <Image url="@../img/fett-zu-muskeln.jpg" />
                            </image>
@@ -72,16 +68,16 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </VBox>
-                  <TableView fx:id="userDataTable" minHeight="20.0" minWidth="100.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <TableView fx:id="userDataTableView" maxHeight="1.7976931348623157E308" maxWidth="300.0" HBox.hgrow="ALWAYS">
                     <columns>
-                      <TableColumn prefWidth="146.0" />
-                      <TableColumn prefWidth="134.0" />
+                      <TableColumn fx:id="dataTypeColumn" maxWidth="1.7976931348623157E308" minWidth="20.0" prefWidth="-1.0" />
+                      <TableColumn fx:id="dataValuesColumn" maxWidth="1.7976931348623157E308" minWidth="20.0" prefWidth="-1.0" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <LineChart fx:id="userDataChart" prefHeight="380.0" prefWidth="578.0" HBox.hgrow="ALWAYS">
+                  <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -106,7 +102,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label alignment="TOP_RIGHT" contentDisplay="CENTER" prefHeight="28.0" prefWidth="149.0" text="Ausdauer" HBox.hgrow="ALWAYS">
+                              <Label fx:id="currentTrainingTypeLabel" alignment="TOP_RIGHT" contentDisplay="CENTER" prefHeight="28.0" prefWidth="149.0" text="Ausdauer" HBox.hgrow="ALWAYS">
                                  <font>
                                     <Font size="24.0" />
                                  </font>

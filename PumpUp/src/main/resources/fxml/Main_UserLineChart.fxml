@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Main.Main_UserChartController">
-   <center>
-      <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+<HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -15,5 +15,5 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-   </center>
-</BorderPane>
+   </children>
+</HBox>
