@@ -1,34 +1,18 @@
 package sepm.ss15.grp16.gui.controller.Main;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.gui.controller.Exercises.ExercisesController;
-import sepm.ss15.grp16.gui.controller.Main.Main_CalendarController;
-import sepm.ss15.grp16.gui.controller.Main.Main_UserChartController;
-import sepm.ss15.grp16.gui.controller.Main.Main_UserDataController;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
-import sepm.ss15.grp16.gui.controller.User.LoginController;
-import sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController;
+import sepm.ss15.grp16.service.UserService;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -41,6 +25,7 @@ import java.util.ResourceBundle;
 public class MainController extends Controller implements Initializable {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    private UserService userService;
     private StageTransitionLoader transitionLoader;
 
     @FXML
@@ -58,14 +43,15 @@ public class MainController extends Controller implements Initializable {
     @FXML
     private LineChart<?, ?> userChart;
 
-
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.transitionLoader = new StageTransitionLoader(this);
+        this.usernameLabel.setText("Willkommen, " + userService.getLoggedInUser().getUsername() + "!");
     }
-
-
 
     @FXML
     void editUserDataButtonClicked(ActionEvent event) {
