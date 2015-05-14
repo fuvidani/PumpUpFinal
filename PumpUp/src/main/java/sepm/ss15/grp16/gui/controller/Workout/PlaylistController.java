@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,8 +15,10 @@ import java.util.ResourceBundle;
  * Created by Daniel Fuevesi on 06.05.15.
  *
  */
-public class PlaylistController implements Initializable{
+public class PlaylistController extends Controller implements Initializable{
 
+
+    private StageTransitionLoader transitionLoader;
 
     @FXML
     private TableColumn<?, ?> artistColumn;
@@ -30,7 +34,7 @@ public class PlaylistController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        this.transitionLoader = new StageTransitionLoader(this);
     }
 
     @FXML
@@ -40,7 +44,7 @@ public class PlaylistController implements Initializable{
 
     @FXML
     void saveButtonClicked(ActionEvent event) {
-
+        stage.close();
     }
 
 

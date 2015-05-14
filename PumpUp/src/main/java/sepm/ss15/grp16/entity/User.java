@@ -20,6 +20,15 @@ public class User implements DTO{
     private String playlist;
     private Boolean isDeleted;
 
+    public User(Integer user_id, String username, Boolean gender, Integer age, Integer height, Boolean isDeleted) {
+        this.user_id = user_id;
+        this.username = username;
+        this.gender = gender;
+        this.age = age;
+        this.height = height;
+        this.isDeleted = isDeleted;
+    }
+
     public User(Integer user_id, String username, Boolean gender, Integer age, Integer height, String email, String playlist, Boolean isDeleted) {
         this.user_id = user_id;
         this.username = username;

@@ -2,6 +2,7 @@ package sepm.ss15.grp16.gui.controller.User;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,13 +15,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.Main.MainController;
+import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
@@ -34,7 +38,9 @@ import java.util.ResourceBundle;
  * @author Michael Sober
  * @version 1.0
  */
-public class LoginController implements Initializable {
+public class LoginController  extends Controller implements Initializable {
+
+    private StageTransitionLoader transitionLoader;
 
     @FXML
     Pane loginPane;
@@ -42,7 +48,6 @@ public class LoginController implements Initializable {
     Button login_button;
     @FXML
     Button registrieren_button;
-
     @FXML
     private TableView<User> user_tableView = new TableView<>();
     @FXML
@@ -58,6 +63,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.transitionLoader = new StageTransitionLoader(this);
         LOGGER.debug("Initialize LoginController");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         try {
@@ -84,16 +90,17 @@ public class LoginController implements Initializable {
             stage.setScene(new Scene(pane));
             stage.show();
         } catch (IOException e) {
-            LOGGER.error("Couldn't open registration-window");
+            LOGGER.error("Couldn't open main-window");
             e.printStackTrace();
         }
     }
 
     @FXML
-    public void loginClicked(){
+    public void loginButtonClicked() {
+        LOGGER.debug("Login button clicked");
 
-        LOGGER.info("Logging in...");
         User loggedInUser = user_tableView.getSelectionModel().getSelectedItem();
+        userService.setLoggedInUser(loggedInUser);
 
         if(loggedInUser == null){
             LOGGER.error("Tried to login without selecting a user.");
@@ -105,25 +112,56 @@ public class LoginController implements Initializable {
             return;
         }
 
-        userService.setLoggedInUser(loggedInUser);
-        LOGGER.info("Successfully logged in as " + loggedInUser.getUsername() + " with ID: " + loggedInUser.getId());
-
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
+            FXMLLoader loader = new FXMLLoader();
+
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-            fxmlLoader.setControllerFactory(context::getBean);
-            Stage stage = new Stage();
-            fxmlLoader.setLocation(MainController.class.getClassLoader().getResource("fxml/Main.fxml"));
-            Pane pane = fxmlLoader.load(MainController.class.getClassLoader().getResourceAsStream("fxml/Main.fxml"));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(loginPane.getScene().getWindow());
-            stage.setScene(new Scene(pane));
+
+            loader.setControllerFactory(new Callback<Class<?>, Object>() {
+                @Override
+                public Object call(Class<?> clazz) {
+                    return context.getBean(clazz);
+                }
+            });
+
+            loader.setLocation(LoginController.class.getClassLoader().getResource("fxml/Main.fxml"));
+            Pane page = loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("PumpUp!");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(loginPane.getScene().getWindow());
+            //RegistrationController registrationController = loader.getController();
+            //registrationController.setLoginController(this);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            Controller to = loader.getController();
+            to.setStage(dialogStage);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.setMinWidth(500);
+            dialogStage.setMinHeight(500);
+            dialogStage.setMaximized(true);
+            dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent e) {
+                    e.consume();
+                }
+            });
+
+            LOGGER.info("New stage successfully launched!");
+            Stage stage = (Stage)this.loginPane.getScene().getWindow();
+            stage.hide();
+            dialogStage.showAndWait();
+
             stage.show();
-        } catch (IOException e) {
-            LOGGER.error("Couldn't open main-window");
+            // user closed dialog
+        }catch (IOException e){
+            LOGGER.info("Error on opening new stage, reason: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     public void insertUserInTable(User newUser){

@@ -80,16 +80,16 @@ public class H2DBConnectorImpl implements DBHandler {
 	public void activateTestMode() throws DBException {
 		try {
 			LOGGER.info("try to get connection to database and activate testmode");
-			Class.forName("org.h2.Driver");
+			//Class.forName("org.h2.Driver");
 
-			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
+			//con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/testpumpup", "sa", "");
 			execScripts();
 
 			con.setAutoCommit(false);
 			populateTest();
 			LOGGER.info("connection successful established. testmode activated");
 
-		} catch (ClassNotFoundException | FileNotFoundException | URISyntaxException | SQLException e) {
+		} catch (FileNotFoundException | URISyntaxException | SQLException e) {
 			LOGGER.error(e.getMessage());
 			throw new DBException("Failed to activate testmode", e);
 		}
@@ -101,13 +101,13 @@ public class H2DBConnectorImpl implements DBHandler {
 			LOGGER.info("try to close connection to database and deactivate testmode");
 			con.rollback();
 
-			Class.forName("org.h2.Driver");
+			//Class.forName("org.h2.Driver");
 
-			con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/pumpup", "sa", "");
+			//con = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/testpumpup", "sa", "");
 			con.setAutoCommit(true);
 
 			LOGGER.info("connection successful closed. testmode deactivated");
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 			throw new DBException("Failed to deactivate testmode", e);
 		}
@@ -144,8 +144,24 @@ public class H2DBConnectorImpl implements DBHandler {
 	 *
 	 * @throws DBException
 	 */
-	private void populateTest() throws DBException {
-		LOGGER.info("populate database with test datas");
-		//TODO
+	private void populateTest() throws DBException, FileNotFoundException, SQLException, URISyntaxException {
+		LOGGER.info("try populate database with test datas");
+		String sql_url = getClass().getClassLoader().getResource("sql/inserts").toURI().getPath();
+
+		if (sql_url != null) {
+
+			File folder = new File(sql_url);
+			File[] listOfFiles = folder.listFiles();
+
+			for (File file : listOfFiles) {
+				String fileName = file.getName();
+				String filetype = fileName.substring(fileName.length() - 4);
+
+				if (file.getName().toLowerCase().contains("insert") && filetype.equals(".sql")) {
+					RunScript.execute(con, new FileReader(file));
+				}
+			}
+			LOGGER.info("successfully populate database with test datas");
+		}
 	}
 }

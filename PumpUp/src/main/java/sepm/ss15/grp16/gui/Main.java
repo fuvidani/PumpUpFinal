@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import sepm.ss15.grp16.gui.controller.Main.MainController;
 import sepm.ss15.grp16.gui.controller.User.LoginController;
 
 import java.util.Optional;
@@ -44,14 +43,14 @@ public class Main extends Application{
         });
 
         fxmlLoader.setLocation(LoginController.class.getClassLoader().getResource("fxml/Login.fxml"));
-         Pane pane = (Pane) fxmlLoader.load(LoginController.class.getClassLoader().getResourceAsStream("fxml/Login.fxml"));
-       // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
+
+        Pane pane = (Pane) fxmlLoader.load(LoginController.class.getClassLoader().getResourceAsStream("fxml/Login.fxml"));
+        // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
         LoginController loginController = fxmlLoader.getController();
-        primaryStage.setScene(new Scene(pane));
+        primaryStage.setScene(new Scene(pane, 353, 216));
+        primaryStage.setMinWidth(350);
+        primaryStage.setMinHeight(210);
 
-        LOGGER.info("configuration successful");
-
-        primaryStage.show();
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
@@ -66,13 +65,17 @@ public class Main extends Application{
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == yes) {
+                    // TODO: For cleaning purposes: close DB-connection
                     primaryStage.close();
                 } else {
                     primaryStage.show();
                 }
             }
         });
+        LOGGER.info("configuration successful");
 
+        primaryStage.show();
+        
     }
 
     public static void main(String[] args){

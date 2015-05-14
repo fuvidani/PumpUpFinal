@@ -12,40 +12,41 @@ import java.util.List;
 public interface DAO<T extends DTO> {
 
     /**
-     * creating a new DTO from the generic type T
+     * Creates the given DTO of the generic type in the persictence and sets the new ID to the DTO.
      * @param dto which shall be inserted into the underlying persistance layer.
-     *                 must not be null, id must not be null
+     *                 must not be null, id must be null
      * @return the given dto for further usage
      * @throws PersistenceException if there are complications with the persitance layer
      */
     T create(T dto) throws PersistenceException;
 
     /**
-     * finding all dto stored in the underlying layer
-     * @return List of all dtos stored so far
-     * @throws PersistenceException  if there are complications with the persitance layer
+     * Finds all DTOs of the generic type in the persistence, deleted DTOs are ignored.
+     * @return List of all DTOs stored in the persistence
+     * @throws PersistenceException if there are complications with the persitance layer
      */
     List<T> findAll() throws PersistenceException;
 
     /**
-     * @param id dto to search for
+     * @param id DTO of the generic Type to search for
      * @return if the dto exists it is returned, otherwise null is the result.
-     * @throws PersistenceException  if there are complications with the persitance layer
+     * @throws PersistenceException if there are complications with the persitance layer
      */
     T searchByID(int id) throws PersistenceException;
 
     /**
-     * updating one given dto with new values and returning it for further usage
+     * Updating a given DTO of the generic type with new values in the persistence.
      * @param dto which shall be updated
-     *                 must not be null, id must not be null
+     *                 must not be null, id must not be null and must not be changed
      * @return given dto with updated values
      * @throws PersistenceException if there are complications with the persitance layer
      */
     T update(T dto) throws PersistenceException;
 
     /**
-     * deleting a given exercise
-     * @param dto which shall be deleted from the underlying persitance implementation layer
+     * Deleting a given DTO ot the generic type in the persistence.
+     * @param dto which shall be deleted,
+     *            must not be null, id must not be null and must not be changed
      * @throws PersistenceException if there are complications with the persitance layer
      */
     void delete(T dto) throws PersistenceException;

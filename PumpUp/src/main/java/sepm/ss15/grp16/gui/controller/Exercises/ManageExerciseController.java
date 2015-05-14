@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import sepm.ss15.grp16.gui.controller.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +15,7 @@ import java.util.ResourceBundle;
  * This controller is responsible for the stage where the user can create
  * a new exercise or edit an existing one.
  */
-public class ManageExerciseController implements Initializable{
+public class ManageExerciseController extends Controller implements Initializable{
 
 
     @FXML
@@ -113,12 +114,12 @@ public class ManageExerciseController implements Initializable{
 
     @FXML
     void cancelClicked(ActionEvent event) {
-
+        stage.close();
     }
 
     @FXML
     void saveClicked(ActionEvent event) {
-
+        stage.close();
     }
 
 

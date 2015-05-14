@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import sepm.ss15.grp16.gui.controller.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +15,7 @@ import java.util.ResourceBundle;
  * Created by Daniel Fuevesi on 08.05.15.
  *
  */
-public class WorkoutResultController implements Initializable{
+public class WorkoutResultController extends Controller implements Initializable{
 
 
     @FXML
@@ -38,7 +39,7 @@ public class WorkoutResultController implements Initializable{
 
     @FXML
     void endWorkoutClicked(ActionEvent event) {
-
+        stage.close();
     }
 
 

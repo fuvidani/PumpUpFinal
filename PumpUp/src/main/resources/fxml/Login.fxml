@@ -22,7 +22,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <Button fx:id="login_button" layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#loginClicked" text="Login" />
+                  <Button fx:id="login_button" layoutX="7.0" layoutY="6.0" mnemonicParsing="false" onAction="#loginButtonClicked" text="Login" />
                   <Button fx:id="registrieren_button" layoutX="254.0" layoutY="6.0" mnemonicParsing="false" onAction="#registerClicked" text="Registrieren" />
                </children>
             </AnchorPane>
