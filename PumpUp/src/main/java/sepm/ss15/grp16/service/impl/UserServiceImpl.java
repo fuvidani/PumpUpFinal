@@ -19,6 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private UserDAO userDAO;
+    private static User loggedInUser;
 
     public UserServiceImpl(UserDAO userDAO) throws ServiceException{
         if(userDAO == null){
@@ -69,14 +70,43 @@ public class UserServiceImpl implements UserService {
     public void validate(User user) throws ValidationException {
 
         if(user == null){
-            throw new ValidationException("Validation not passed. User is null");
-        }else if(user.getUsername().length() > 25){
-            throw new ValidationException("Validation not passed. Username is more than 25 characters long");
-        }else if(user.getAge() < 0 || user.getAge() > 120){
-            throw new ValidationException("Validation not passed. Age must be between 0 and 120");
-        }else if(user.getHeight() < 0 || user.getHeight() > 300){
-            throw new ValidationException("Validation not passed. Height must be between 0 and 300");
+            throw new ValidationException("User is null.");
         }
 
+        String errorMsg = "";
+        String username = user.getUsername();
+        Integer age = user.getAge();
+        Integer height = user.getHeight();
+        String email = user.getEmail();
+
+        if(username == null || username.length() > 25 || username.length() < 2){
+            errorMsg += "Username is required and has to be between 2 and 25 characters long.";
+        }
+
+        if(age == null || age < 0){
+            errorMsg += "Age is required and has to be a number greater than 0.";
+        }
+
+        if(height == null || height < 0){
+            errorMsg += "Height is required and has to be a number greater than 0.";
+        }
+
+        if(email != null){
+            if(email.length() > 320){
+                errorMsg += "Email address can only be 320 characters long.";
+            }
+        }
+
+        if(!errorMsg.isEmpty()){
+            throw new ValidationException(errorMsg);
+        }
+    }
+
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
     }
 }

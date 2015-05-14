@@ -32,9 +32,9 @@ public class H2UserDAOImpl implements UserDAO {
 
         try {
             this.con = handler.getConnection();
-            this.createStatement = con.prepareStatement("INSERT INTO user VALUES(?, ?, ?, ?, ?, ?);");
+            this.createStatement = con.prepareStatement("INSERT INTO user VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
             this.updateStatement = con.prepareStatement("UPDATE user SET username = ?, gender = ? , age = ?, height = ?," +
-                    " isDeleted = ? WHERE user_id = ?");
+                    " email = ?, playlist = ?, isDeleted = ? WHERE user_id = ?");
             this.searchByIDStatement = con.prepareStatement("SELECT * FROM user WHERE user_id = ?");
             this.deleteStatement = con.prepareStatement("UPDATE user SET isDeleted = ? WHERE user_id = ?");
         } catch (SQLException e) {
@@ -65,7 +65,9 @@ public class H2UserDAOImpl implements UserDAO {
             createStatement.setBoolean(3, user.isGender());
             createStatement.setInt(4, user.getAge());
             createStatement.setInt(5, user.getHeight());
-            createStatement.setBoolean(6, user.getIsDeleted());
+            createStatement.setString(6, user.getEmail());
+            createStatement.setString(7, user.getPlaylist());
+            createStatement.setBoolean(8, user.getIsDeleted());
 
             createStatement.execute();
         } catch (SQLException e) {
@@ -91,7 +93,8 @@ public class H2UserDAOImpl implements UserDAO {
 
             while (rs_allUsers.next()) {
                 User foundUser = new User(rs_allUsers.getInt(1), rs_allUsers.getString(2), rs_allUsers.getBoolean(3),
-                        rs_allUsers.getInt(4), rs_allUsers.getInt(5), rs_allUsers.getBoolean(6));
+                        rs_allUsers.getInt(4), rs_allUsers.getInt(5), rs_allUsers.getString(6), rs_allUsers.getString(7),
+                        rs_allUsers.getBoolean(8));
                 userList.add(foundUser);
             }
 
@@ -119,12 +122,14 @@ public class H2UserDAOImpl implements UserDAO {
             updateStatement.setBoolean(2, user.isGender());
             updateStatement.setInt(3, user.getAge());
             updateStatement.setInt(4, user.getHeight());
-            updateStatement.setBoolean(5, user.getIsDeleted());
-            updateStatement.setInt(6, user.getUser_id());
+            updateStatement.setString(5, user.getEmail());
+            updateStatement.setString(6, user.getPlaylist());
+            updateStatement.setBoolean(7, user.getIsDeleted());
+            updateStatement.setInt(8, user.getUser_id());
             updateStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Updating the jockey in the database failed");
-            throw new PersistenceException("Couldn't update the Jockey", e);
+            LOGGER.error("Updating the user in the database failed");
+            throw new PersistenceException("Couldn't update the user", e);
         }
 
         LOGGER.info("Updated a user successfully");
@@ -167,7 +172,8 @@ public class H2UserDAOImpl implements UserDAO {
             rs_user.next();
 
             foundUser = new User(rs_user.getInt(1), rs_user.getString(2), rs_user.getBoolean(3),
-                    rs_user.getInt(4), rs_user.getInt(5), rs_user.getBoolean(6));
+                    rs_user.getInt(4), rs_user.getInt(5), rs_user.getString(6), rs_user.getString(7),
+                    rs_user.getBoolean(8));
 
         } catch (SQLException e) {
             LOGGER.error("Searching the user with id: " + id + " failed");

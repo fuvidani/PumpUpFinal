@@ -37,6 +37,7 @@
     <!-- Main Beans -->
 
     <bean id="mainController" class="sepm.ss15.grp16.gui.controller.Main.MainController" scope="prototype">
+        <property name="userService" ref="userService" />
     </bean>
 
     <bean id="userDataController" class="sepm.ss15.grp16.gui.controller.Main.Main_UserDataController" scope="prototype">
@@ -64,11 +65,10 @@
 
 
 
-
     <!-- User Beans-->
 
 
-        <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl"
+    <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
     </bean>
@@ -119,7 +119,6 @@
         <property name="bodyfatHistoryService" ref="bodyfatHistoryService"/>
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
-
 
     <bean id="trainingsplanDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingsplanDAOImpl" scope="singleton" lazy-init="true">
         <constructor-arg name="handler" ref="dbConnector"/>
@@ -199,6 +198,5 @@
     <bean id="WorkoutPlanToCalendarController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlanToCalendarController" scope="prototype">
 
     </bean>
-
 
 </beans>
