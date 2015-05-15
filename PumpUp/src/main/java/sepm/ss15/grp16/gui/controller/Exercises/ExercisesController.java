@@ -28,6 +28,7 @@ import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.CategoryService;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.Service;
+import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 
@@ -103,6 +104,7 @@ public class ExercisesController extends Controller implements Initializable{
 
 
     private CategoryService categoryService;
+    private UserService userService;
     private static Exercise exercise;
     private Integer picIndex = 0;
     private  ObservableList<Exercise>  masterdata = FXCollections.observableArrayList();
@@ -116,6 +118,10 @@ public class ExercisesController extends Controller implements Initializable{
 
     public void setExerciseService(Service<Exercise> exerciseService){
         this.exerciseService=exerciseService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     public Exercise getExercise(){
@@ -257,7 +263,7 @@ public class ExercisesController extends Controller implements Initializable{
         Exercise backup = null;
         if(exercise != null){
             //TODO
-             backup = new Exercise(null, exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), null, null);
+             backup = new Exercise(exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), userService.getLoggedInUser(), null);
             exercise = null;
         }
 
@@ -265,7 +271,7 @@ public class ExercisesController extends Controller implements Initializable{
 
         if(backup!=null){
             //TODO
-        exercise = new Exercise(null, backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), null, null);
+        exercise = new Exercise(backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), userService.getLoggedInUser(), null);
         }
 
     }
@@ -329,8 +335,10 @@ public class ExercisesController extends Controller implements Initializable{
 
             filteredData.clear();
             for (Exercise e : masterdata) {
-                if (e.getUser() == null)
+                if (e.getUser() == null){
                     filteredData.add(e);
+                    LOGGER.debug("user for default checkbox: " + e.getUser());
+                }
             }
 
             uebungsTableView.setItems(filteredData);
@@ -338,8 +346,11 @@ public class ExercisesController extends Controller implements Initializable{
         }else if(customExercisesCheckbox.isSelected()) {
             filteredData.clear();
             for (Exercise e : masterdata) {
-                if (e.getUser() != null)
+                if (e.getUser()!=null && e.getUser().equals(userService.getLoggedInUser())){
                     filteredData.add(e);
+                    LOGGER.debug("user for exercise: " + e.getUser() + " logged in user: " + userService.getLoggedInUser());
+                }
+
             }
             uebungsTableView.setItems(filteredData);
             return;

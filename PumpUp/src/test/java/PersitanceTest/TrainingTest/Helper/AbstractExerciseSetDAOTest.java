@@ -140,7 +140,7 @@ public abstract class AbstractExerciseSetDAOTest {
 
 	private Exercise createExercise() throws PersistenceException {
 
-		Exercise liegestuetz = new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", false);
+		Exercise liegestuetz = new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", null, false, null, null);
 		return getExerciseDAO().create(liegestuetz);
 
 	}

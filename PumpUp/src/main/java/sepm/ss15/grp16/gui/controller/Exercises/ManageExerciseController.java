@@ -24,6 +24,7 @@ import sepm.ss15.grp16.entity.*;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.CategoryService;
 import sepm.ss15.grp16.service.Service;
+import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.io.File;
@@ -149,6 +150,7 @@ public class ManageExerciseController extends Controller implements Initializabl
 
     private Service<Exercise> exerciseService;
     private CategoryService categoryService;
+    private UserService userService;
     private static final Logger LOGGER = LogManager.getLogger();
     private List<String> exerciseGifList = new ArrayList<>();
     private ObservableList<String> observablePicListData = FXCollections.observableArrayList();
@@ -162,6 +164,10 @@ public class ManageExerciseController extends Controller implements Initializabl
 
     public void setExerciseService(Service<Exercise> exerciseService){
         this.exerciseService=exerciseService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     public void setCategoryService(CategoryService categoryService) {
@@ -413,7 +419,7 @@ public class ManageExerciseController extends Controller implements Initializabl
                 temp.add(new TrainingsCategory(Integer.parseInt(c.getId()), c.getText()));
         }
 
-        return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(),exerciseGifList, false, null, temp);
+        return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(),exerciseGifList, false, userService.getLoggedInUser(), temp);
     }
 
 }

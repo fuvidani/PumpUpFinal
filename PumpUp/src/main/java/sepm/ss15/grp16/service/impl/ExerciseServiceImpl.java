@@ -53,7 +53,16 @@ public class ExerciseServiceImpl implements ExerciseService {
     public List<Exercise> findAll() throws ServiceException {
         try{
             LOGGER.debug("trying to find all exercises in servic");
-            return exerciseDAO.findAll();
+            List<Exercise> allExercises = exerciseDAO.findAll();
+            List<Exercise> userExercises = new ArrayList<>();
+            for(Exercise e : allExercises){
+
+                if(e.getUser()==null || e.getUser().equals(userService.getLoggedInUser())){
+                    LOGGER.debug(e);
+                    userExercises.add(e);
+                }
+            }
+            return userExercises;
         }catch (PersistenceException e){
             throw new ServiceException(e);
         }

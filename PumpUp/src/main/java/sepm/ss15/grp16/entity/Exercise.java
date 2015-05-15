@@ -31,6 +31,17 @@ public class Exercise implements DTO{
         this.categories = categories;
     }
 
+    public Exercise(String name, String description, Double calories, String videolink, List<String> gifLinks, Boolean isDeleted, User user, List<AbsractCategory> categories) {
+        this.name = name;
+        this.description = description;
+        this.calories = calories;
+        this.videolink = videolink;
+        this.gifLinks = gifLinks;
+        this.isDeleted = isDeleted;
+        this.user = user;
+        this.categories = categories;
+    }
+
     public Integer getId() {
         return id;
     }
