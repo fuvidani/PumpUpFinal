@@ -42,7 +42,7 @@ public interface TrainingsSessionDAO extends DAO<TrainingsSession> {
 	void delete(TrainingsSession dto);
 
 	/**
-	 * find all trainingssession of a corresponding plan
+	 * find all trainingssession of a corresponding plan_interClassCommunication
 	 *
 	 * @param ID_plan to search, must not be null
 	 * @return found sessions, null if nothing was found

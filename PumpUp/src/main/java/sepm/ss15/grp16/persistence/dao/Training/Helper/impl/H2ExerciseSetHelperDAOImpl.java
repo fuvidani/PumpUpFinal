@@ -56,10 +56,10 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 			ps_create = con.prepareStatement("INSERT INTO ExerciseSet (ID_Exercise, UID, repeat, order_nr, ID_session, isDeleted) " +
 					"VALUES (?, ?, ?, ?, ?, ?)");
 			ps_findAll = con.prepareStatement("SELECT * FROM ExerciseSet WHERE isDeleted = FALSE ");
-			ps_findID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Set = ?");
-			ps_find_ByUID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE UID = ?");
-			ps_find_ByIDSession = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Session = ?");
-			ps_find_IDSession = con.prepareStatement("SELECT ID_Session FROM ExerciseSet WHERE ID_Set = ?");
+			ps_findID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Set = ? AND isDeleted = FALSE");
+			ps_find_ByUID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE UID = ? AND isDeleted = FALSE");
+			ps_find_ByIDSession = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Session = ? AND isDeleted = FALSE");
+			ps_find_IDSession = con.prepareStatement("SELECT ID_Session FROM ExerciseSet WHERE ID_Set = ? AND isDeleted = FALSE");
 			ps_update = con.prepareStatement("UPDATE ExerciseSet " +
 					"SET ID_Exercise = ?, UID = ?, repeat = ?, order_nr = ?, ID_session = ?, isDeleted = ? " +
 					"WHERE ID_Set = ?");

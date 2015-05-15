@@ -25,7 +25,7 @@ public interface ExerciseSetHelperDAO extends HelperDAO<ExerciseSet> {
 	 * generates the corresponding Session for an ExerciseSet
 	 *
 	 * @param set must has a valid ID
-	 * @return the corresponding plan, null if nothing was found
+	 * @return the corresponding plan_interClassCommunication, null if nothing was found
 	 * @throws PersistenceException if there are complications with the persitance layer
 	 */
 	TrainingsSession getSessionBySet(ExerciseSet set) throws PersistenceException;

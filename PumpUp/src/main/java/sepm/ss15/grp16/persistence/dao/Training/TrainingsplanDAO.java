@@ -44,7 +44,7 @@ public interface TrainingsplanDAO extends DAO<Trainingsplan> {
 	 * generates the corresponding trainingsplan for a trainingssession
 	 *
 	 * @param session must has a valid ID
-	 * @return the corresponding plan, null if nothing was found
+	 * @return the corresponding plan_interClassCommunication, null if nothing was found
 	 * @throws PersistenceException if there are complications with the persitance layer
 	 */
 	Trainingsplan getPlanBySession(TrainingsSession session) throws PersistenceException;
@@ -53,7 +53,7 @@ public interface TrainingsplanDAO extends DAO<Trainingsplan> {
 	 * generates the corresponding trainingsplan for an ExerciseSet
 	 *
 	 * @param set must has a valid ID
-	 * @return the corresponding plan, null if nothing was found
+	 * @return the corresponding plan_interClassCommunication, null if nothing was found
 	 * @throws PersistenceException if there are complications with the persitance layer
 	 */
 	Trainingsplan getPlanBySet(ExerciseSet set) throws PersistenceException;

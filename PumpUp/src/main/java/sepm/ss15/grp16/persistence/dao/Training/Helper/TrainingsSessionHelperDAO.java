@@ -13,7 +13,7 @@ import java.util.List;
 public interface TrainingsSessionHelperDAO extends HelperDAO<TrainingsSession> {
 
 	/**
-	 * find all trainingssession of a corresponding plan
+	 * find all trainingssession of a corresponding plan_interClassCommunication
 	 *
 	 * @param ID_plan to search, must not be null
 	 * @return found sessions, null if nothing was found
@@ -25,7 +25,7 @@ public interface TrainingsSessionHelperDAO extends HelperDAO<TrainingsSession> {
 	 * generates the corresponding trainingsplan for a trainingssession
 	 *
 	 * @param session must has a valid ID
-	 * @return the corresponding plan, null if nothing was found
+	 * @return the corresponding plan_interClassCommunication, null if nothing was found
 	 * @throws PersistenceException if there are complications with the persitance layer
 	 */
 	Trainingsplan getPlanBySession(TrainingsSession session) throws PersistenceException;

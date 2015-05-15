@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class TrainingsSession implements DTOHelper {
 
-	Integer id_session;
-	String name;
-	Boolean isDeleted;
+	private Integer id_session;
+	private String name;
+	private Boolean isDeleted;
 
-	User user;
+	private User user;
 
-	List<ExerciseSet> exerciseSets;
+	private List<ExerciseSet> exerciseSets;
 
 	public TrainingsSession() {
 	}

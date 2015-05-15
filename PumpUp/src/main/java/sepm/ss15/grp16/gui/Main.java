@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.gui.controller.User.LoginController;
+import sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController;
 
 import java.util.Optional;
 
@@ -35,41 +36,33 @@ public class Main extends Application{
         FXMLLoader fxmlLoader = new FXMLLoader();
 
         //add spring context to JavaFX (http://koenserneels.blogspot.co.at/2012/11/javafx-2-with-spring.html)
-        fxmlLoader.setControllerFactory(new Callback<Class<?>, Object>() {
-            @Override
-            public Object call(Class<?> clazz) {
-                return context.getBean(clazz);
-            }
-        });
+        fxmlLoader.setControllerFactory(context::getBean);
 
-        fxmlLoader.setLocation(LoginController.class.getClassLoader().getResource("fxml/Login.fxml"));
+        fxmlLoader.setLocation(WorkoutPlansController.class.getClassLoader().getResource("fxml/Workoutplans.fxml"));
 
-        Pane pane = (Pane) fxmlLoader.load(LoginController.class.getClassLoader().getResourceAsStream("fxml/Login.fxml"));
+        Pane pane = (Pane) fxmlLoader.load(WorkoutPlansController.class.getClassLoader().getResourceAsStream("fxml/Workoutplans.fxml"));
         // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
-        LoginController loginController = fxmlLoader.getController();
-        primaryStage.setScene(new Scene(pane, 353, 216));
-        primaryStage.setMinWidth(350);
-        primaryStage.setMinHeight(210);
+        //LoginController loginController = fxmlLoader.getController();
+        primaryStage.setScene(new Scene(pane, 1300, 700));
+        primaryStage.setMinWidth(1200);
+        primaryStage.setMinHeight(600);
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent e) {
-                e.consume();
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Programm schließen");
-                alert.setHeaderText("Das Programm wird beendet.");
-                alert.setContentText("Möchten Sie das Programm wirklich beenden?");
-                ButtonType yes = new ButtonType("Ja");
-                ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-                alert.getButtonTypes().setAll(yes, cancel);
+        primaryStage.setOnCloseRequest(e -> {
+            e.consume();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Programm schließen");
+            alert.setHeaderText("Das Programm wird beendet.");
+            alert.setContentText("Möchten Sie das Programm wirklich beenden?");
+            ButtonType yes = new ButtonType("Ja");
+            ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(yes, cancel);
 
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == yes) {
-                    // TODO: For cleaning purposes: close DB-connection
-                    primaryStage.close();
-                } else {
-                    primaryStage.show();
-                }
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == yes) {
+                // TODO: For cleaning purposes: close DB-connection
+                primaryStage.close();
+            } else {
+                primaryStage.show();
             }
         });
         LOGGER.info("configuration successful");

@@ -27,7 +27,7 @@ public interface TrainingsplanService extends Service<Trainingsplan> {
 	 * generates the corresponding trainingsplan for a trainingssession
 	 *
 	 * @param session must has a valid ID
-	 * @return the corresponding plan, null if nothing was found
+	 * @return the corresponding plan_interClassCommunication, null if nothing was found
 	 * @throws ServiceException fthere are complications with the service layer
 	 */
 	Trainingsplan getPlanBySession(TrainingsSession session) throws ServiceException;
@@ -36,7 +36,7 @@ public interface TrainingsplanService extends Service<Trainingsplan> {
 	 * generates the corresponding trainingsplan for an ExerciseSet
 	 *
 	 * @param set must has a valid ID
-	 * @return the corresponding plan, null if nothing was found
+	 * @return the corresponding plan_interClassCommunication, null if nothing was found
 	 * @throws ServiceException fthere are complications with the service layer
 	 */
 	Trainingsplan getPlanBySet(ExerciseSet set) throws ServiceException;
@@ -52,7 +52,7 @@ public interface TrainingsplanService extends Service<Trainingsplan> {
 	List<TrainingsSession> searchByUser(User user) throws ServiceException;
 
 	/**
-	 * find all trainingssession of a corresponding plan
+	 * find all trainingssession of a corresponding plan_interClassCommunication
 	 *
 	 * @param ID_plan to search, must not be null
 	 * @return found sessions, null if nothing was found

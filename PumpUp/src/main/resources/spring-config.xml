@@ -183,20 +183,31 @@
 
     <!-- WorkoutPlans Beans-->
 
-    <bean id="create_edit_WorkoutController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.Create_Edit_WorkoutPlanController" scope="prototype">
+    <bean id="generateWorkoutPlanController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GenerateWorkoutPlanController" scope="prototype">
 
     </bean>
 
-    <bean id="generateWorkoutPlanController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GenerateWorkoutPlanController" scope="prototype">
+    <bean id="workoutPlanToCalendarController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlanToCalendarController" scope="prototype">
 
     </bean>
 
     <bean id="workoutPlansController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController" scope="prototype">
         <property name="trainingsplanService" ref="trainingsplanService"/>
+        <property name="userService" ref="userService"/>
     </bean>
 
-    <bean id="workoutPlanToCalendarController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlanToCalendarController" scope="prototype">
+    <bean id="create_edit_WorkoutController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.Create_Edit_WorkoutPlanController" scope="prototype">
+        <property name="trainingsplanService" ref="trainingsplanService"/>
+        <property name="userService" ref="userService"/>
+    </bean>
 
+    <bean id="sessionController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.SessionController" scope="prototype">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="setController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.SetController" scope="prototype">
+        <property name="userService" ref="userService"/>
+        <property name="exerciseService" ref="exerciseService"/>
     </bean>
 
 </beans>

@@ -9,14 +9,14 @@ import sepm.ss15.grp16.entity.User;
  */
 public class ExerciseSet implements DTOHelper {
 
-	Integer id;
-	Integer repeat;
-	Integer order_nr;
-	Boolean isDeleted = false;
+	private Integer id;
+	private Integer repeat;
+	private Integer order_nr;
+	private Boolean isDeleted = false;
 
-	User user;
+	private User user;
 
-	Exercise exercise;
+	private Exercise exercise;
 
 	public ExerciseSet() {
 	}

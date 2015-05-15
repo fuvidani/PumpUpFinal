@@ -11,14 +11,14 @@ import java.util.List;
  */
 public class Trainingsplan implements DTO {
 
-	Integer id;
-	String name;
-	String descr;
-	Boolean isDeleted = false;
+	private Integer id;
+	private String name;
+	private String descr;
+	private Boolean isDeleted = false;
 
-	User user;
+	private User user;
 
-	List<TrainingsSession> trainingsSessions;
+	private List<TrainingsSession> trainingsSessions;
 
 	public Trainingsplan() {
 	}
