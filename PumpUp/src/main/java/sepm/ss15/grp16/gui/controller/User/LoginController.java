@@ -88,6 +88,7 @@ public class LoginController  extends Controller implements Initializable {
             stage.initOwner(loginPane.getScene().getWindow());
             RegistrationController registrationController = fxmlLoader.getController();
             registrationController.setLoginController(this);
+            stage.setResizable(false);
             stage.setScene(new Scene(pane));
             stage.show();
         } catch (IOException e) {
