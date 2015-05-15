@@ -60,11 +60,23 @@ public class WeightHistoryServiceImpl implements WeightHistoryService{
     public void validate(WeightHistory weightHistory) throws ValidationException {
 
         if(weightHistory == null){
-            throw new ValidationException("Validation not passed. WeightHistory is null");
-        }else if(weightHistory.getWeight() < 0 || weightHistory.getWeight() > 500){
-            throw new ValidationException("Validation not passed. Weight must be between 0 and 500");
-        }else if(weightHistory.getUser_id() == null){
-            throw new ValidationException("Validation not passed. No User_id");
+            throw new ValidationException("WeightHistory is null.");
+        }
+
+        String errorMsg = "";
+        Integer user_id = weightHistory.getUser_id();
+        Integer weight = weightHistory.getWeight();
+
+        if(user_id == null){
+            errorMsg += "UserID is required and has to be number.";
+        }
+
+        if(weight == null || weight < 0){
+            errorMsg += "Weight is required and has to be a number greater than 0.";
+        }
+
+        if(!errorMsg.isEmpty()){
+            throw new ValidationException(errorMsg);
         }
 
     }

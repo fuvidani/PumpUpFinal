@@ -1,23 +1,25 @@
-package PersitanceTest;
+package sepm.ss15.grp16.persistence.dao.impl;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import sepm.ss15.grp16.persistence.dao.AbstractUserDaoTest;
 import sepm.ss15.grp16.persistence.dao.UserDAO;
-import sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl;
 import sepm.ss15.grp16.persistence.database.DBHandler;
-import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
-
-import java.sql.Connection;
 
 /**
  * Created by michaelsober on 05.05.15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
-public class H2UserDAOImplTest extends AbstractUserDaoTest{
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+public class H2UserDAOImplTest extends AbstractUserDaoTest {
 
     @Autowired
     private DBHandler dbConnector;

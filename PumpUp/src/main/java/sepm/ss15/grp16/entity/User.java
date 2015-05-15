@@ -16,6 +16,8 @@ public class User implements DTO{
     private Boolean gender;
     private Integer age;
     private Integer height;
+    private String email;
+    private String playlist;
     private Boolean isDeleted;
 
     public User(Integer user_id, String username, Boolean gender, Integer age, Integer height, Boolean isDeleted) {
@@ -24,6 +26,17 @@ public class User implements DTO{
         this.gender = gender;
         this.age = age;
         this.height = height;
+        this.isDeleted = isDeleted;
+    }
+
+    public User(Integer user_id, String username, Boolean gender, Integer age, Integer height, String email, String playlist, Boolean isDeleted) {
+        this.user_id = user_id;
+        this.username = username;
+        this.gender = gender;
+        this.age = age;
+        this.height = height;
+        this.email = email;
+        this.playlist = playlist;
         this.isDeleted = isDeleted;
     }
 
@@ -85,6 +98,22 @@ public class User implements DTO{
         this.isDeleted = isDeleted;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(String playlist) {
+        this.playlist = playlist;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,14 +121,15 @@ public class User implements DTO{
 
         User user = (User) o;
 
-        if (age != null ? !age.equals(user.age) : user.age != null) return false;
-        if (gender != null ? !gender.equals(user.gender) : user.gender != null) return false;
-        if (height != null ? !height.equals(user.height) : user.height != null) return false;
-        if (isDeleted != null ? !isDeleted.equals(user.isDeleted) : user.isDeleted != null) return false;
         if (user_id != null ? !user_id.equals(user.user_id) : user.user_id != null) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (gender != null ? !gender.equals(user.gender) : user.gender != null) return false;
+        if (age != null ? !age.equals(user.age) : user.age != null) return false;
+        if (height != null ? !height.equals(user.height) : user.height != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (playlist != null ? !playlist.equals(user.playlist) : user.playlist != null) return false;
+        return !(isDeleted != null ? !isDeleted.equals(user.isDeleted) : user.isDeleted != null);
 
-        return true;
     }
 
     @Override
@@ -109,7 +139,23 @@ public class User implements DTO{
         result = 31 * result + (gender != null ? gender.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
         result = 31 * result + (height != null ? height.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (playlist != null ? playlist.hashCode() : 0);
         result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", username='" + username + '\'' +
+                ", gender=" + gender +
+                ", age=" + age +
+                ", height=" + height +
+                ", email='" + email + '\'' +
+                ", playlist='" + playlist + '\'' +
+                ", isDeleted=" + isDeleted +
+                '}';
     }
 }

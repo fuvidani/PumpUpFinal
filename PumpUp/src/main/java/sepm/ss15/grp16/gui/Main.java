@@ -3,7 +3,6 @@ package sepm.ss15.grp16.gui;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -16,9 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import sepm.ss15.grp16.gui.controller.Main.MainController;
 import sepm.ss15.grp16.gui.controller.User.LoginController;
-import sun.rmi.runtime.Log;
 
 import java.util.Optional;
 
@@ -46,12 +43,14 @@ public class Main extends Application{
         });
 
         fxmlLoader.setLocation(LoginController.class.getClassLoader().getResource("fxml/Login.fxml"));
+
         Pane pane = (Pane) fxmlLoader.load(LoginController.class.getClassLoader().getResourceAsStream("fxml/Login.fxml"));
         // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
         LoginController loginController = fxmlLoader.getController();
         primaryStage.setScene(new Scene(pane, 353, 216));
         primaryStage.setMinWidth(350);
         primaryStage.setMinHeight(210);
+
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {

@@ -23,6 +23,7 @@ public class StageTransitionLoader {
     private static final Logger LOGGER = LogManager.getLogger();
     private Controller from;
 
+
     public StageTransitionLoader(Controller from){
         this.from = from;
     }
@@ -41,7 +42,6 @@ public class StageTransitionLoader {
 
         try {
             FXMLLoader loader = new FXMLLoader();
-
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
             loader.setControllerFactory(new Callback<Class<?>, Object>() {
                 @Override
@@ -49,6 +49,7 @@ public class StageTransitionLoader {
                     return context.getBean(clazz);
                 }
             });
+
 
             loader.setLocation(this.from.getClass().getClassLoader().getResource(fxmlResource));
             Pane page = loader.load();
@@ -61,7 +62,7 @@ public class StageTransitionLoader {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            Controller to = loader.getController();
+           Controller to = loader.getController();
             to.setStage(dialogStage);
 
             // Show the dialog and wait until the user closes it
@@ -78,4 +79,5 @@ public class StageTransitionLoader {
             e.printStackTrace();
         }
     }
+
 }
