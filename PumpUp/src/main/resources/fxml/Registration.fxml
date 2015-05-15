@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
@@ -7,28 +8,89 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="registrationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="468.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.User.RegistrationController">
+<AnchorPane fx:id="registrationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="468.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.User.RegistrationController">
    <children>
-      <TextField fx:id="username_textField" layoutX="15.0" layoutY="30.0" prefHeight="26.0" prefWidth="200.0" promptText="MaxMustermann" />
-      <TextField fx:id="age_textField" layoutX="15.0" layoutY="120.0" prefHeight="26.0" prefWidth="200.0" promptText="42" />
-      <RadioButton fx:id="male_radioButton" layoutX="14.0" layoutY="74.0" mnemonicParsing="false" selected="true" text="Male">
-         <toggleGroup>
-            <ToggleGroup fx:id="group" />
-         </toggleGroup></RadioButton>
-      <RadioButton fx:id="female_radioButton" layoutX="81.0" layoutY="74.0" mnemonicParsing="false" text="Female" toggleGroup="$group" />
-      <Label layoutX="15.0" layoutY="14.0" text="Username*:" />
-      <Label layoutX="15.0" layoutY="104.0" text="Alter*:" />
-      <Label layoutX="15.0" layoutY="158.0" text="Größe* (in cm):" />
-      <TextField fx:id="height_textField" layoutX="15.0" layoutY="174.0" prefHeight="26.0" prefWidth="200.0" promptText="186" />
-      <TextField fx:id="weight_textField" layoutX="15.0" layoutY="229.0" prefHeight="26.0" prefWidth="200.0" promptText="82" />
-      <TextField fx:id="bodyfat_textField" layoutX="15.0" layoutY="284.0" prefHeight="26.0" prefWidth="200.0" promptText="18" />
-      <Label layoutX="15.0" layoutY="213.0" text="Gewicht* (in kg):" />
-      <Label layoutX="15.0" layoutY="268.0" text="Körperfettanteil (in %):" />
-      <Button fx:id="registrieren_Button" layoutX="15.0" layoutY="377.0" mnemonicParsing="false" onAction="#registerClicked" prefHeight="26.0" prefWidth="200.0" text="Registrieren" />
-      <ImageView fx:id="picture_imageView" fitHeight="280.0" fitWidth="221.0" layoutX="234.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
-      <Rectangle fx:id="picture_Rectangle" arcHeight="5.0" arcWidth="5.0" fill="#d3dae1" height="280.0" layoutX="234.0" layoutY="30.0" stroke="BLACK" strokeType="INSIDE" width="221.0" />
-      <Button fx:id="picture_Button" layoutX="335.0" layoutY="313.0" mnemonicParsing="false" onAction="#choosePictureClicked" text="Bild auswählen..." />
-      <TextField fx:id="email_textField" layoutX="15.0" layoutY="335.0" prefHeight="26.0" prefWidth="200.0" promptText="max.mustermann@gmail.com" />
-      <Label layoutX="15.0" layoutY="318.0" text="E-Mail-Adresse:" />
+      <HBox>
+         <children>
+            <VBox layoutX="1.0" layoutY="4.0" prefHeight="415.0" prefWidth="228.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Username*:" />
+                        <TextField fx:id="username_textField" prefHeight="26.0" prefWidth="200.0" promptText="MaxMustermann" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Alter*:" />
+                        <TextField fx:id="age_textField" prefHeight="26.0" prefWidth="200.0" promptText="42" />
+                     </children>
+                  </VBox>
+                  <HBox prefHeight="0.0" prefWidth="218.0" spacing="20.0">
+                     <children>
+                        <RadioButton fx:id="male_radioButton" mnemonicParsing="false" selected="true" text="Männlich">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="group" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="female_radioButton" mnemonicParsing="false" text="Weiblich" toggleGroup="$group" />
+                     </children>
+                  </HBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Größe* (in cm):" />
+                        <TextField fx:id="height_textField" prefHeight="26.0" prefWidth="200.0" promptText="186" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Gewicht* (in kg):" />
+                        <TextField fx:id="weight_textField" prefHeight="26.0" prefWidth="200.0" promptText="82" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Körperfettanteil (in %):" />
+                        <TextField fx:id="bodyfat_textField" prefHeight="26.0" prefWidth="200.0" promptText="18" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="E-Mail-Adresse:" />
+                        <TextField fx:id="email_textField" prefHeight="26.0" prefWidth="200.0" promptText="max.mustermann@gmail.com" />
+                     </children>
+                  </VBox>
+                  <Button fx:id="registrieren_Button" mnemonicParsing="false" onAction="#registerClicked" prefHeight="26.0" prefWidth="224.0" text="Registrieren">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="TOP_RIGHT" layoutX="234.0" layoutY="30.0" spacing="15.0">
+               <children>
+                  <ImageView fx:id="picture_imageView" fitHeight="267.0" fitWidth="221.0" layoutX="234.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/fett-zu-muskeln.jpg" />
+                     </image>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Button fx:id="picture_Button" layoutX="335.0" layoutY="313.0" mnemonicParsing="false" onAction="#choosePictureClicked" text="Bild auswählen...">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
