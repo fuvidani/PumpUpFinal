@@ -10,28 +10,43 @@
         <constructor-arg name="password" value=""></constructor-arg>
     </bean>
 
+
+    <!-- Exercises Beans -->
+
+    <bean id="categoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2CategoryDAOImpl">
+        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+    </bean>
+
+    <bean id="categoryService" class="sepm.ss15.grp16.service.impl.CategoryServiceImpl">
+        <constructor-arg name="categoryDAO" ref="categoryDAO"/>
+    </bean>
+
+
     <bean id="exerciseDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        <constructor-arg name="categoryDAO" ref="categoryDAO"></constructor-arg>
+        <constructor-arg name="userDAO" ref="userDAO"></constructor-arg>
     </bean>
 
     <bean id="exerciseService" class="sepm.ss15.grp16.service.impl.ExerciseServiceImpl"
           scope="singleton">
         <constructor-arg name="exerciseDAO" ref="exerciseDAO"/>
+        <constructor-arg name="userService" ref="userService"/>
     </bean>
 
-
-
-    <!-- Exercises Beans -->
-
-    <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController" scope="prototype">
-
+    <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController" scope="singleton">
+        <property name="exerciseService" ref="exerciseService"></property>
+        <property name="categoryService" ref="categoryService"/>
+        <property name="userService" ref="userService"/>
     </bean>
 
     <bean id="manageExerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ManageExerciseController" scope="prototype">
-
+        <property name="exerciseController" ref="exerciseController"></property>
+        <property name="exerciseService" ref="exerciseService"></property>
+        <property name="categoryService" ref="categoryService"/>
+        <property name="userService" ref="userService"/>
     </bean>
-
 
 
     <!-- Main Beans -->
@@ -41,6 +56,7 @@
     </bean>
 
     <bean id="userDataController" class="sepm.ss15.grp16.gui.controller.Main.Main_UserDataController" scope="prototype">
+
     </bean>
 
     <bean id="userChartController" class="sepm.ss15.grp16.gui.controller.Main.Main_UserChartController"
@@ -56,7 +72,6 @@
     </bean>
 
 
-
     <!-- Calendar Beans -->
 
     <bean id="calendarController" class="sepm.ss15.grp16.gui.controller.Calendar.CalendarController" scope="prototype">
@@ -64,9 +79,7 @@
     </bean>
 
 
-
     <!-- User Beans-->
-
 
     <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl"
           scope="singleton">
@@ -75,11 +88,11 @@
 
     <bean id="userService" class="sepm.ss15.grp16.service.impl.UserServiceImpl"
           scope="singleton">
-        <constructor-arg name="userDAO" ref="userDAO"/>
+        <constructor-arg name="userDAO" ref="userDAO" />
     </bean>
 
     <bean id="loginController" class="sepm.ss15.grp16.gui.controller.User.LoginController" scope="prototype">
-        <property name="userService" ref="userService"/>
+        <property name="userService" ref="userService" />
     </bean>
 
     <bean id="weightHistoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2WeightHistoryDAOImpl"
@@ -89,7 +102,7 @@
 
     <bean id="weightHistoryService" class="sepm.ss15.grp16.service.impl.WeightHistoryServiceImpl"
           scope="singleton">
-        <constructor-arg name="weightHistoryDAO" ref="weightHistoryDAO"/>
+        <constructor-arg name="weightHistoryDAO" ref="weightHistoryDAO" />
     </bean>
 
     <bean id="bodyfatHistoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2BodyfatHistoryDAOImpl"
@@ -99,7 +112,7 @@
 
     <bean id="bodyfatHistoryService" class="sepm.ss15.grp16.service.impl.BodyfatHistoryServiceImpl"
           scope="singleton">
-        <constructor-arg name="bodyfatHistoryDAO" ref="bodyfatHistoryDAO"/>
+        <constructor-arg name="bodyfatHistoryDAO" ref="bodyfatHistoryDAO" />
     </bean>
 
     <bean id="pictureHistoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2PictureHistoryDAOImpl"
@@ -109,15 +122,15 @@
 
     <bean id="pictureHistoryService" class="sepm.ss15.grp16.service.impl.PictureHistoryServiceImpl"
           scope="singleton">
-        <constructor-arg name="pictureHistoryDAO" ref="pictureHistoryDAO"/>
+        <constructor-arg name="pictureHistoryDAO" ref="pictureHistoryDAO" />
     </bean>
 
     <bean id="registrationController" class="sepm.ss15.grp16.gui.controller.User.RegistrationController"
           scope="prototype">
-        <property name="userService" ref="userService"/>
-        <property name="weightHistoryService" ref="weightHistoryService"/>
-        <property name="bodyfatHistoryService" ref="bodyfatHistoryService"/>
-        <property name="pictureHistoryService" ref="pictureHistoryService"/>
+        <property name="userService" ref="userService" />
+        <property name="weightHistoryService" ref="weightHistoryService" />
+        <property name="bodyfatHistoryService" ref="bodyfatHistoryService" />
+        <property name="pictureHistoryService" ref="pictureHistoryService" />
     </bean>
 
     <bean id="trainingsplanDAO" class="sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingsplanDAOImpl" scope="singleton" lazy-init="true">
@@ -209,5 +222,6 @@
         <property name="userService" ref="userService"/>
         <property name="exerciseService" ref="exerciseService"/>
     </bean>
+
 
 </beans>

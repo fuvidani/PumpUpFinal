@@ -42,8 +42,6 @@ public class RegistrationController extends Controller implements Initializable 
     @FXML
     Button picture_Button;
     @FXML
-    Rectangle picture_Rectangle;
-    @FXML
     TextField username_textField;
     @FXML
     TextField age_textField;
@@ -207,7 +205,6 @@ public class RegistrationController extends Controller implements Initializable 
             filePath = selectedFile.getPath();
             Image image = new Image(selectedFile.toURI().toString(), picture_imageView.getFitWidth(), picture_imageView.getFitHeight(), false, false);
             picture_imageView.setImage(image);
-            picture_Rectangle.setVisible(false);
         }
         picture_Button.setDisable(false);
     }

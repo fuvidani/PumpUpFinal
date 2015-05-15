@@ -99,7 +99,7 @@ public abstract class AbstractTrainingsServiceTest extends AbstractServiceTest<T
 	}
 
 	private Exercise dummyExercise() throws ServiceException {
-		return getExerciseService().create(new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", new ArrayList<>(), false));
+		return getExerciseService().create(new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", null, false, null, null));
 	}
 
 	private List<ExerciseSet> dummySet() throws ServiceException {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
+<?import javafx.scene.media.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -7,8 +9,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Exercises.ManageExerciseController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Exercises.ManageExerciseController">
    <children>
       <VBox prefHeight="750.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -48,20 +49,18 @@
                               </VBox>
                            </children>
                         </VBox>
-                        <VBox spacing="5.0">
+                        <VBox prefWidth="337.0" spacing="5.0">
                            <children>
                               <Label text="Beschreibung:" />
-                              <TextArea fx:id="descriptionArea" prefHeight="304.0" prefWidth="383.0" promptText="Eine ausführliche Anleitung, wie die Übung auszuführen ist.">
+                              <TextArea fx:id="descriptionArea" prefHeight="124.0" prefWidth="337.0" promptText="Eine ausführliche Anleitung, wie die Übung auszuführen ist." wrapText="true">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                               </TextArea>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="69.0" prefWidth="383.0" spacing="5.0">
-                           <children>
                               <Label text="Video Link:" />
-                              <TextField fx:id="videoLinkField" promptText="https://www.youtube.com/watch?v=Eh00_rniF8E&amp;ab_channel=ScottMalin" />
+                              <TextField fx:id="videoLinkField" onAction="#playVideo" promptText="https://www.youtube.com/watch?v=Eh00_rniF8E&amp;ab_channel=ScottMalin" />
+                              <Button mnemonicParsing="false" onAction="#playVideo" text="play video" />
+                              <WebView fx:id="webViewVideo" prefHeight="266.0" prefWidth="337.0" />
                            </children>
                         </VBox>
                      </children>
@@ -69,7 +68,7 @@
                         <Insets left="20.0" top="10.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="577.0" prefWidth="400.0">
+                  <VBox prefHeight="672.0" prefWidth="520.0">
                      <children>
                         <Label alignment="CENTER" prefHeight="28.0" prefWidth="401.0" text="Kategorien">
                            <font>
@@ -78,40 +77,19 @@
                         </Label>
                         <HBox spacing="70.0">
                            <children>
-                              <VBox spacing="5.0">
+                              <VBox fx:id="vboxType" spacing="5.0">
                                  <children>
-                                    <Label text="Geräte" />
-                                    <CheckBox fx:id="exerciseBallCheck" mnemonicParsing="false" text="Medizinball" />
-                                    <CheckBox fx:id="barCheck" mnemonicParsing="false" text="Klimmzugstange" />
-                                    <CheckBox fx:id="dumbbellCheck" mnemonicParsing="false" text="Hantel" />
-                                    <CheckBox fx:id="jumpRopeCheck" mnemonicParsing="false" text="Springschnur" />
-                                    <CheckBox fx:id="punchBagCheck" mnemonicParsing="false" text="Standsandsack" />
-                                    <CheckBox fx:id="expanderCheck" mnemonicParsing="false" text="Expander" />
-                                    <CheckBox fx:id="abWheelCheck" mnemonicParsing="false" text="Bauchtrainer Rad" />
+                                    <Label text="Art" />
                                  </children>
                               </VBox>
-                              <VBox spacing="5.0">
+                              <VBox fx:id="vboxEquipment" spacing="5.0">
+                                 <children>
+                                    <Label text="Geräte" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="vboxMuscle">
                                  <children>
                                     <Label text="Muskelgruppe" />
-                                    <CheckBox fx:id="abdominalCheck" mnemonicParsing="false" text="Bauch" />
-                                    <CheckBox fx:id="bicepCheck" mnemonicParsing="false" text="Bizeps" />
-                                    <CheckBox fx:id="tricepCheck" mnemonicParsing="false" text="Trizeps" />
-                                    <CheckBox fx:id="shoulderCheck" mnemonicParsing="false" text="Schultern" />
-                                    <CheckBox fx:id="backCheck" mnemonicParsing="false" text="Rücken" />
-                                    <CheckBox fx:id="chestCheck" mnemonicParsing="false" text="Brust" />
-                                    <CheckBox fx:id="legsCheck" mnemonicParsing="false" text="Beine" />
-                                    <VBox spacing="5.0">
-                                       <children>
-                                          <Label text="Art" />
-                                          <CheckBox fx:id="enduranceCheck" mnemonicParsing="false" text="Ausdauer" />
-                                          <CheckBox fx:id="strengthCheck" mnemonicParsing="false" text="Kraft" />
-                                          <CheckBox fx:id="balanceCheck" mnemonicParsing="false" text="Balance" />
-                                          <CheckBox fx:id="flexibilityCheck" mnemonicParsing="false" text="Flexibilität" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets top="20.0" />
-                                       </VBox.margin>
-                                    </VBox>
                                  </children>
                               </VBox>
                            </children>
@@ -129,33 +107,15 @@
                         </Label>
                         <VBox spacing="10.0">
                            <children>
-                              <Label text="Durchführung nach:" />
-                              <HBox spacing="30.0">
-                                 <children>
-                                    <RadioButton fx:id="secondsTypeRadio" mnemonicParsing="false" text="Sekunden" />
-                                    <RadioButton fx:id="quantityTypeRadio" mnemonicParsing="false" text="Anzahl" />
-                                 </children>
-                              </HBox>
                               <Label text="Kalorien pro Einheit" />
                               <TextField fx:id="caloriesField" prefHeight="26.0" prefWidth="348.0" promptText="kcal">
                                  <VBox.margin>
                                     <Insets right="250.0" />
                                  </VBox.margin>
                               </TextField>
-                              <Label text="Standard Dauer/ Anzahl" />
-                              <TextField fx:id="durationField" promptText="Sek. / Anzahl">
-                                 <VBox.margin>
-                                    <Insets right="250.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label text="Dauer dieser Anzahl pro Übung" />
-                              <TextField fx:id="durationOfQuantityField" promptText="Sek.">
-                                 <VBox.margin>
-                                    <Insets right="250.0" />
-                                 </VBox.margin>
-                              </TextField>
                            </children>
                         </VBox>
+                        <VBox prefHeight="285.0" prefWidth="383.0" spacing="5.0" />
                      </children>
                      <HBox.margin>
                         <Insets top="10.0" />
@@ -178,8 +138,17 @@
                         </ImageView>
                         <HBox spacing="20.0">
                            <children>
-                              <ListView fx:id="imagesListView" prefHeight="200.0" prefWidth="152.0" />
-                              <Button mnemonicParsing="false" onAction="#browseClicked" text="Bild hinzufügen" />
+                              <ListView fx:id="imagesListView" prefHeight="200.0" prefWidth="196.0" />
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Button fx:id="btn_durchsuchen" mnemonicParsing="false" onAction="#browseClicked" text="Bild hinzufügen" />
+                                    <Button fx:id="btn_entfernen" mnemonicParsing="false" onAction="#removeClicked" text="Bild entfernen">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                         <HBox spacing="30.0">
