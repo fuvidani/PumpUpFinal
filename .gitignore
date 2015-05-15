@@ -19,3 +19,6 @@ out/
 
 # backup-files
 *~
+
+#other files
+*.orig

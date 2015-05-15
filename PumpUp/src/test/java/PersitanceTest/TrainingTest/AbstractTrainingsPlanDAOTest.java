@@ -285,7 +285,7 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 	}
 
 	private Exercise dummyExercise() throws PersistenceException {
-		return getExerciseDAO().create(new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", new ArrayList<>(), false));
+		return getExerciseDAO().create(new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", null, false, null, null));
 	}
 
 	protected abstract ExerciseDAO getExerciseDAO();
