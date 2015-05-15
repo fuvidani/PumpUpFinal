@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS user(
     gender BOOLEAN DEFAULT TRUE,
     age INTEGER NOT NULL,
     height INTEGER NOT NULL,
+    email VARCHAR(320),
+    playlist VARCHAR,
     isDeleted BOOLEAN DEFAULT FALSE
 );
 

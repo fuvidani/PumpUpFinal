@@ -1,4 +1,4 @@
-package PersitanceTest;
+package sepm.ss15.grp16.persistence.dao;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

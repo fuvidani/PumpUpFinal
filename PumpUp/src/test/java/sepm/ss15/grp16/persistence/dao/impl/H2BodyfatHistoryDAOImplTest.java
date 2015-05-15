@@ -1,25 +1,25 @@
-package PersitanceTest;
+package sepm.ss15.grp16.persistence.dao.impl;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import sepm.ss15.grp16.persistence.dao.AbstractBodyfatHistoryDaoTest;
 import sepm.ss15.grp16.persistence.dao.BodyfatHistoryDAO;
-import sepm.ss15.grp16.persistence.dao.impl.H2BodyfatHistoryDAOImpl;
 import sepm.ss15.grp16.persistence.database.DBHandler;
-import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
-
-import java.sql.Connection;
 
 /**
  * Created by michaelsober on 06.05.15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
+@TestExecutionListeners(inheritListeners = false, listeners =
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2BodyfatHistoryDAOImplTest extends AbstractBodyfatHistoryDaoTest {
 
     @Autowired

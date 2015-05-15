@@ -21,4 +21,12 @@ public interface WeightHistoryDAO extends DAO<WeightHistory>{
      */
     List<WeightHistory> searchByUserID(int user_id) throws PersistenceException;
 
+    /**
+     * Searches for the actual weight of the user
+     * @param user_id from the user
+     * @return the actual weight of the user
+     * @throws PersistenceException, if an error while searching occurs
+     */
+    WeightHistory getActualWeight(int user_id) throws PersistenceException;
+
 }

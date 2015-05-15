@@ -59,12 +59,26 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
 
     @Override
     public void validate(BodyfatHistory bodyfatHistory) throws ValidationException {
+
         if(bodyfatHistory == null){
-            throw new ValidationException("Validation not passed. BodyfatHistory is null");
-        }else if(bodyfatHistory.getBodyfat() < 0 || bodyfatHistory.getBodyfat() > 100){
-            throw new ValidationException("Validation not passed. Bodyfat must be between 0 and 100");
-        }else if(bodyfatHistory.getUser_id() == null){
-            throw new ValidationException("Validation not passed. No User_id");
+            throw new ValidationException("WeightHistory is null.");
         }
+
+        String errorMsg = "";
+        Integer user_id = bodyfatHistory.getUser_id();
+        Integer bodyfat = bodyfatHistory.getBodyfat();
+
+        if(user_id == null){
+            errorMsg += "UserID is required and has to be number.";
+        }
+
+        if(bodyfat == null || bodyfat < 0){
+            errorMsg += "Bodyfat is required and has to be a number greater than 0.";
+        }
+
+        if(!errorMsg.isEmpty()){
+            throw new ValidationException(errorMsg);
+        }
+
     }
 }

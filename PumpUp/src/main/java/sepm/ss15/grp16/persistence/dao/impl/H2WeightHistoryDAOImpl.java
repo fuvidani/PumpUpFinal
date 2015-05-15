@@ -23,6 +23,7 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
 
     private Connection con;
     private PreparedStatement createStatement;
+    private PreparedStatement getActualWeightStatement;
     private static final Logger LOGGER = LogManager.getLogger();
 
     public H2WeightHistoryDAOImpl(DBHandler handler) throws PersistenceException {
@@ -30,6 +31,8 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
         try {
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO weighthistory VALUES(?, ?, ?, ?);");
+            this.getActualWeightStatement = con.prepareStatement("SELECT * FROM weighthistory WHERE user_id = ? AND " +
+                    "weighthistory_id = (SELECT max(weighthistory_id) from weighthistory);");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
@@ -117,5 +120,25 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
     @Override
     public void delete(WeightHistory dto) throws PersistenceException {
         //TODO: Implement me
+    }
+
+    @Override
+    public WeightHistory getActualWeight(int user_id) throws PersistenceException {
+
+        LOGGER.info("Finding actual weighthistory...");
+        WeightHistory foundWeightHistory;
+
+        try {
+            getActualWeightStatement.setInt(1, user_id);
+            ResultSet rs = getActualWeightStatement.executeQuery();
+            rs.next();
+            foundWeightHistory = new WeightHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));
+
+        }catch(SQLException e){
+            throw new PersistenceException("Failed to get actual weight", e);
+        }
+
+        LOGGER.info("Successfully found actual weighthistory...");
+        return foundWeightHistory;
     }
 }
