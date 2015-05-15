@@ -12,4 +12,6 @@ public interface UserService extends Service<User> {
 
     User getLoggedInUser();
 
+    void setLoggedInUser(User loggedInUser);
+
 }

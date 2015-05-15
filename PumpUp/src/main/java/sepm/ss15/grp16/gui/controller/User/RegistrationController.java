@@ -54,6 +54,8 @@ public class RegistrationController extends Controller implements Initializable 
     @FXML
     TextField bodyfat_textField;
     @FXML
+    TextField email_textField;
+    @FXML
     RadioButton male_radioButton;
     @FXML
     RadioButton female_radioButton;
@@ -63,6 +65,7 @@ public class RegistrationController extends Controller implements Initializable 
     private ToggleGroup group;
 
     private UserService userService;
+    private LoginController loginController;
     private WeightHistoryService weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
@@ -72,6 +75,10 @@ public class RegistrationController extends Controller implements Initializable 
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
     }
 
     public void setWeightHistoryService(WeightHistoryService weightHistoryService) {
@@ -94,66 +101,51 @@ public class RegistrationController extends Controller implements Initializable 
     @FXML
     public void registerClicked() {
 
-        //TODO: Validierung verbessern/aendern
-
         LOGGER.debug("Register clicked");
         String username;
         Integer age = null;
         Integer weight = null;
         Integer height = null;
         Integer bodyfat = null;
+        String email = null;
         Boolean gender;
         String error = "";
 
         username = username_textField.getText();
 
-        if (username.length() > 25 || username.length() < 2) {
-            error = "Der Username muss zwischen 2 und 25 Zeichen lang sein.\n";
+        if(!email_textField.getText().isEmpty()) {
+            email = email_textField.getText();
         }
 
         try {
             age = Integer.parseInt(age_textField.getText());
-            if (age < 0 || age > 120) {
-                throw new NumberFormatException();
-            }
         } catch (NumberFormatException e) {
-            error += "Das Alter muss eine gültige Zahl zwischen 0 und 120 sein.\n";
+            error += "Age is required and has to be a number greater than 0.\n";
         }
 
         try {
             weight = Integer.parseInt(weight_textField.getText());
-            if (weight < 0 || weight > 500) {
-                throw new NumberFormatException();
-            }
         } catch (NumberFormatException e) {
-            error += "Das Gewicht muss eine gültige Zahl zwischen 0 und 500 sein.\n";
+            error += "Weight is required and has to be a number greater than 0.\n";
         }
 
         try {
             height = Integer.parseInt(height_textField.getText());
-            if (height < 0 || height > 300) {
-                throw new NumberFormatException();
-            }
         } catch (NumberFormatException e) {
-            error += "Die Größe muss eine gültige Zahl zwischen 0 und 300 sein.\n";
+            error += "Height is required and has to be a number greater than 0.\n";
         }
 
-        try {
-            bodyfat = Integer.parseInt(bodyfat_textField.getText());
-            if (bodyfat < 0 || bodyfat > 100) {
-                throw new NumberFormatException();
+        if(!bodyfat_textField.getText().isEmpty()){
+            try {
+                 bodyfat = Integer.parseInt(bodyfat_textField.getText());
+            } catch (NumberFormatException e) {
+                error += "Bodyfat has to be a number greater than 0.\n";
             }
-        } catch (NumberFormatException e) {
-            error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
-        }
-
-        if (filePath == null) {
-            error += "Es wurde kein Bild ausgewaehlt.\n";
         }
 
         if (!error.isEmpty()) {
-            LOGGER.warn("Tried to create user with invalid data");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            LOGGER.error("Tried to create user with invalid data");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehlerhafte Angaben");
             alert.setContentText(error);
@@ -162,17 +154,26 @@ public class RegistrationController extends Controller implements Initializable 
         }
 
         String genderString = ((RadioButton) group.getSelectedToggle()).getText();
-        gender = genderString.equals("Male") ? true : false;
+        gender = genderString.equals("Male");
 
-        User user = new User(null, username, gender, age, height, false);
+        User user = new User(null, username, gender, age, height, email, null, false);
+
         try {
-            userService.create(user);
+
+            loginController.insertUserInTable(userService.create(user));
+
             WeightHistory weightHistory = new WeightHistory(null, user.getUser_id(), weight, null);
-            BodyfatHistory bodyfatHistory = new BodyfatHistory(null, user.getUser_id(), bodyfat, null);
-            PictureHistory pictureHistory = new PictureHistory(null, user.getUser_id(), filePath, null);
             weightHistoryService.create(weightHistory);
-            bodyfatHistoryService.create(bodyfatHistory);
-            pictureHistoryService.create(pictureHistory);
+
+            if(bodyfat != null) {
+                BodyfatHistory bodyfatHistory = new BodyfatHistory(null, user.getUser_id(), bodyfat, null);
+                bodyfatHistoryService.create(bodyfatHistory);
+            }
+
+            if(filePath != null){
+                PictureHistory pictureHistory = new PictureHistory(null, user.getUser_id(), filePath, null);
+                pictureHistoryService.create(pictureHistory);
+            }
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information");
@@ -183,8 +184,12 @@ public class RegistrationController extends Controller implements Initializable 
             stage.close();
         } catch (ServiceException e) {
             LOGGER.error("Couldn't create User");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehlerhafte Angaben");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
-
     }
 
     @FXML
@@ -204,8 +209,6 @@ public class RegistrationController extends Controller implements Initializable 
             picture_imageView.setImage(image);
             picture_Rectangle.setVisible(false);
         }
-
         picture_Button.setDisable(false);
     }
-
 }

@@ -1,5 +1,6 @@
 package sepm.ss15.grp16.entity;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.Date;
 
 /**
@@ -66,13 +67,12 @@ public class BodyfatHistory implements DTO {
 
     @Override
     public Boolean getIsDeleted() {
-        //TODO
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void setIsDeleted(Boolean deleted) {
-        //TODO
+        throw new UnsupportedOperationException();
     }
 
     @Override

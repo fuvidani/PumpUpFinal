@@ -3,6 +3,7 @@ package sepm.ss15.grp16.gui.controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -51,7 +52,7 @@ public class StageTransitionLoader {
 
 
             loader.setLocation(this.from.getClass().getClassLoader().getResource(fxmlResource));
-            AnchorPane page = loader.load();
+            Pane page = loader.load();
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();

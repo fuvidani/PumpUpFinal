@@ -3,6 +3,7 @@ package sepm.ss15.grp16.persistence.dao.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.BodyfatHistory;
+import sepm.ss15.grp16.entity.WeightHistory;
 import sepm.ss15.grp16.persistence.dao.BodyfatHistoryDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
@@ -24,6 +25,7 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
 
     private Connection con;
     private PreparedStatement createStatement;
+    private PreparedStatement getActualBodyfatStatement;
     private static final Logger LOGGER = LogManager.getLogger();
 
     public H2BodyfatHistoryDAOImpl(DBHandler handler) throws PersistenceException {
@@ -31,6 +33,8 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
         try {
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO bodyfathistory VALUES(?, ?, ?, ?);");
+            this.getActualBodyfatStatement = con.prepareStatement("SELECT * FROM bodyfathistory WHERE user_id = ? AND " +
+                    "bodyfathistory_id = (SELECT max(bodyfathistory_id) from bodyfathistory);");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
@@ -119,5 +123,25 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
     @Override
     public void delete(BodyfatHistory dto) throws PersistenceException {
         //TODO: Implement me
+    }
+
+    @Override
+    public BodyfatHistory getActualBodyfat(int user_id) throws PersistenceException {
+
+        LOGGER.info("Finding actual bodyfathistory...");
+        BodyfatHistory foundBodyfatHistory;
+
+        try {
+            getActualBodyfatStatement.setInt(1, user_id);
+            ResultSet rs = getActualBodyfatStatement.executeQuery();
+            rs.next();
+            foundBodyfatHistory = new BodyfatHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));
+
+        }catch(SQLException e){
+            throw new PersistenceException("Failed to get actual bodyfat", e);
+        }
+
+        LOGGER.info("Successfully found actual bodyfathistory...");
+        return foundBodyfatHistory;
     }
 }

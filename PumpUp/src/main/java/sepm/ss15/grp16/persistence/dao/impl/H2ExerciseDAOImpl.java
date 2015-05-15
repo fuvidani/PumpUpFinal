@@ -142,7 +142,6 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                 createCategoryStatement.setInt(2, a.getId());
                 createCategoryStatement.execute();
             }
-
             Exercise created = new Exercise(id, name, description, calories, videolink, gifNames, isDeleted, exercise.getUser(), exercise.getCategories());
             LOGGER.debug("new Exercise after insertion into h2 database" + created);
             return  created;

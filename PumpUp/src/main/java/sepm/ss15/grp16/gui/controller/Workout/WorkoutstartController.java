@@ -35,7 +35,9 @@ public class WorkoutstartController extends Controller implements Initializable{
     @FXML
     private Button startButton;
 
+    public WorkoutstartController(){
 
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

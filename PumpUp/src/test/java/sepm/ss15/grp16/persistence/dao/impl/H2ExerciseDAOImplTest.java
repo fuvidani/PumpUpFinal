@@ -1,4 +1,4 @@
-package PersitanceTest;
+package sepm.ss15.grp16.persistence.dao.impl;
 
 
 import org.junit.After;
@@ -26,7 +26,7 @@ import java.sql.SQLException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
-public class H2ExerciseDAOImplTest extends  AbstractExerciseDaoTest {
+public class H2ExerciseDAOImplTest extends AbstractExerciseDaoTest {
 
     @Autowired
     private DBHandler dbConnector;
