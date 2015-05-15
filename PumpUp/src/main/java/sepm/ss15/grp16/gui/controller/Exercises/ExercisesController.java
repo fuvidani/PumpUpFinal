@@ -8,21 +8,24 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaView;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import sepm.ss15.grp16.entity.DTO;
-import sepm.ss15.grp16.entity.Exercise;
+import sepm.ss15.grp16.entity.*;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
+import sepm.ss15.grp16.service.CategoryService;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -92,6 +95,14 @@ public class ExercisesController extends Controller implements Initializable{
     @FXML
     private CheckBox defaultExercisesCheckbox;
 
+    @FXML
+    private VBox vboxCategory;
+
+    @FXML
+    private WebView webViewVideo;
+
+
+    private CategoryService categoryService;
     private static Exercise exercise;
     private Integer picIndex = 0;
     private  ObservableList<Exercise>  masterdata = FXCollections.observableArrayList();
@@ -99,6 +110,9 @@ public class ExercisesController extends Controller implements Initializable{
 
     private  final Logger LOGGER = LogManager.getLogger();
 
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     public void setExerciseService(Service<Exercise> exerciseService){
         this.exerciseService=exerciseService;
@@ -126,9 +140,33 @@ public class ExercisesController extends Controller implements Initializable{
             }
         });
 
+      /*  try {
+            for (TrainingsCategory t : categoryService.getAllTrainingstype()) {
+
+                    vboxCategory.getChildren().add(new TextField(t.getName()));
+            }
+            for (EquipmentCategory t : categoryService.getAllEquipment()) {
+
+                vboxCategory.getChildren().add(new TextField(t.getName()));
+            }
+            for (MusclegroupCategory t : categoryService.getAllMusclegroup()) {
+
+                vboxCategory.getChildren().add(new TextField(t.getName()));
+            }
+
+
+        }catch (ServiceException e){
+            LOGGER.error(e);
+            e.printStackTrace();
+        }*/
         this.setContent();
     }
 
+
+    @FXML
+    private void playVideo(){
+        webViewVideo.getEngine().load(exercise.getVideolink());
+    }
 
     private void updateFilteredData() {
         ObservableList<Exercise> temp = FXCollections.observableArrayList();
@@ -186,6 +224,7 @@ public class ExercisesController extends Controller implements Initializable{
         exerciseNameLabel.setText(newExercise.getName());
         descriptionTextArea.setText(newExercise.getDescription());
         exercise = newExercise;
+        playVideo();
         showPicture(0);
     }
 
@@ -210,7 +249,7 @@ public class ExercisesController extends Controller implements Initializable{
 
     @FXML
     private void prevPicButtonClicked(){
-        showPicture(Math.abs(--picIndex)%exercise.getGifLinks().size());
+        showPicture(Math.abs(--picIndex) % exercise.getGifLinks().size());
     }
 
     @FXML
@@ -280,44 +319,13 @@ public class ExercisesController extends Controller implements Initializable{
 
 
     @FXML
-    private void filterOwnExercises(){
-
-
-
-        if(customExercisesCheckbox.isSelected()) {
-
-            if (defaultExercisesCheckbox.isSelected()) {
-                uebungsTableView.setItems(masterdata);
-                return;
-            }
+    private void filterCheckboxes(){
+        if (defaultExercisesCheckbox.isSelected() && customExercisesCheckbox.isSelected()) {
             filteredData.clear();
-            for (Exercise e : masterdata) {
-                if (e.getUser() != null)//TODO != loggedInUser --> aus Userservice dann
-                    filteredData.add(e);
-            }
-
+            filteredData.addAll(masterdata);
             uebungsTableView.setItems(filteredData);
             return;
-        }else{
-            if(defaultExercisesCheckbox.isSelected()){
-                this.filterSystemExercises();
-                return;
-            }
-        }
-        uebungsTableView.setItems(masterdata);
-        return;
-
-    }
-
-    @FXML
-    private void filterSystemExercises() {
-
-        if (defaultExercisesCheckbox.isSelected()) {
-            if (defaultExercisesCheckbox.isSelected() && customExercisesCheckbox.isSelected()) {
-                uebungsTableView.setItems(masterdata);
-                return;
-            }
-
+        }else if (defaultExercisesCheckbox.isSelected()) {
 
             filteredData.clear();
             for (Exercise e : masterdata) {
@@ -327,17 +335,20 @@ public class ExercisesController extends Controller implements Initializable{
 
             uebungsTableView.setItems(filteredData);
             return;
-        }else{
-            if (customExercisesCheckbox.isSelected()){
-                this.filterOwnExercises();
-                return;
+        }else if(customExercisesCheckbox.isSelected()) {
+            filteredData.clear();
+            for (Exercise e : masterdata) {
+                if (e.getUser() != null)
+                    filteredData.add(e);
             }
+            uebungsTableView.setItems(filteredData);
+            return;
+        }else {
+            uebungsTableView.setItems(masterdata);
         }
 
-        uebungsTableView.setItems(masterdata);
-        return;
-
     }
+
 
 
 }

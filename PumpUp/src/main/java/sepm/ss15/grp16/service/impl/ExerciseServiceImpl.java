@@ -82,7 +82,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
             exerciseDAO.delete(exercise);
         }catch (PersistenceException e){
-            throw new ServiceException(e);
+            throw new ServiceException("failed to delete ",e);
         }
     }
 

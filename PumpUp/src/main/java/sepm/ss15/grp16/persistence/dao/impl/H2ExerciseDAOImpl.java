@@ -40,11 +40,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     private PreparedStatement readGifStatement;
     private PreparedStatement searchByIDStatement;
     private PreparedStatement deleteCategoryStatement;
+    private PreparedStatement deleteGifStatement;
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static Connection connection;
     private static CategoryDAO categoryDAO;
     private static UserDAO userDAO;
+
 
     /**
      * creating an instance of the H2 implementaiton of the exercise
@@ -77,6 +79,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
             //delete statements
             deleteCategoryStatement = connection.prepareStatement("delete from exercise_category where exerciseid=?");
+            deleteGifStatement = connection.prepareStatement("delete from gif where location=?");
 
             //sequence statements
             nextvalExercise  = connection.prepareStatement("SELECT NEXTVAL('EXERCISE_SEQ')");
@@ -122,7 +125,6 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                createStatement.setObject(6, null);
            }else{
                createStatement.setObject(6, exercise.getUser().getId());
-
            }
 
             createStatement.setBoolean(7, isDeleted);
@@ -130,41 +132,9 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             List<String> gifNames = new ArrayList<>();
 
             LOGGER.info("inserting exercise pictures into table");
+
             for(String s : gifLinks){
-                try {
-                    String directoryPath = getClass().getClassLoader().getResource("img").toString().substring(6);
-                    File directory = new File(directoryPath);
-                    if (!directory.exists()) {
-                        directory.mkdir();
-                    }
-                    GregorianCalendar calendar = new GregorianCalendar();
-                    String ownName = "/img_ex_" + (calendar.getTimeInMillis()) + Math.abs(s.hashCode());
-                    FileInputStream inputStream = new FileInputStream(s);
-                    String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
-                    File file1 = new File(storingPath + ownName+".jpg"); //file storing
-                    FileOutputStream out = new FileOutputStream(file1);
-                    IOUtils.copy(inputStream, out); //copy content from input to output
-                    out.close();
-                    inputStream.close();
-                    gifNames.add(ownName+".jpg");
-                }catch (FileNotFoundException e){
-                    throw new PersistenceException(e);
-                }catch (IOException e){
-                    throw new PersistenceException(e);
-                }
-
-            }
-
-
-            for(String s : gifNames){
-                rs = nextvalGif.executeQuery();
-                rs.next();
-                Integer gifId = rs.getInt(1);
-                insertGifStatement.setInt(1, gifId);
-                insertGifStatement.setInt(2, id);
-                insertGifStatement.setString(3, s);
-                insertGifStatement.execute();
-                LOGGER.debug(s);
+              this.createPictures(s, id);
             }
 
             for(AbsractCategory a : exercise.getCategories()){
@@ -244,6 +214,8 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             throw new PersistenceException("exercise id to update must not be null");
 
         try{
+            Exercise oldExercise = searchByID(exercise.getId());
+
             Integer id = exercise.getId();
             String name = exercise.getName();
             String description = exercise.getDescription();
@@ -251,13 +223,35 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             String videolink = exercise.getVideolink();
             Boolean isDeleted = exercise.getIsDeleted();
 
-            updateStatement.setInt(7, id);
             updateStatement.setString(1, name);
             updateStatement.setString(2, description);
             updateStatement.setDouble(3, calories);
             updateStatement.setString(4, videolink);
             updateStatement.setBoolean(5, isDeleted);
+            updateStatement.setInt(6, id);
             updateStatement.execute();
+
+//            File toDelete = null;
+            String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
+            for(String s : oldExercise.getGifLinks()){
+                if(!exercise.getGifLinks().contains(s)){ //picture removed
+                    LOGGER.debug("deleting file: " + s);
+                    deleteGifStatement.setString(1, s);
+                    deleteGifStatement.execute();
+                    //evtl file loeschen
+                  /*  toDelete = new File(storingPath.concat(s.substring(1)));
+                    toDelete.setWritable(true);
+                    toDelete.deleteOnExit();*/
+                }
+            }
+            //creating new pictures
+            List<String> gifNames = new ArrayList<>();
+            for(String s : exercise.getGifLinks()){
+                if(!oldExercise.getGifLinks().contains(s)){
+                   this.createPictures(s, exercise.getId());
+                }//end if
+            }
+            ResultSet rs = null;
 
             deleteCategoryStatement.setInt(1, exercise.getId());
             deleteCategoryStatement.execute();
@@ -343,6 +337,40 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             return new Exercise(id, name, description, calories,videoLink, gifLinks, isDeleted, user, categoryList);
         }catch (SQLException e){
             throw new PersistenceException("failed to extract exercise from given restultset" , e);
+        }
+
+    }
+
+    private String createPictures(String originalName, Integer id) throws PersistenceException{
+        try {
+            String directoryPath = getClass().getClassLoader().getResource("img").toString().substring(6);
+            File directory = new File(directoryPath);
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
+            GregorianCalendar calendar = new GregorianCalendar();
+            String ownName = "/img_ex_" + (calendar.getTimeInMillis()) + Math.abs(originalName.hashCode());
+            FileInputStream inputStream = new FileInputStream(originalName);
+            String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
+            File file1 = new File(storingPath + ownName+".jpg"); //file storing
+            FileOutputStream out = new FileOutputStream(file1);
+            IOUtils.copy(inputStream, out); //copy content from input to output
+            out.close();
+            inputStream.close();
+            ResultSet rs = nextvalGif.executeQuery();
+            rs.next();
+            Integer gifId = rs.getInt(1);
+            insertGifStatement.setInt(1, gifId);
+            insertGifStatement.setInt(2, id);
+            insertGifStatement.setString(3, ownName.concat(".jpg"));
+            insertGifStatement.execute();
+            return ownName.concat(".jpg");
+        }catch (FileNotFoundException e){
+            throw new PersistenceException(e);
+        }catch (IOException e){
+            throw new PersistenceException(e);
+        }catch(SQLException e){
+            throw new PersistenceException(e);
         }
 
     }

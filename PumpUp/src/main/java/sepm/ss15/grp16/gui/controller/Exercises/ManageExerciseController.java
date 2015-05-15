@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -142,6 +143,9 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     private VBox vboxEquipment;
 
+    @FXML
+    private  WebView webViewVideo;
+
 
     private Service<Exercise> exerciseService;
     private CategoryService categoryService;
@@ -225,12 +229,21 @@ public class ManageExerciseController extends Controller implements Initializabl
             exerciseGifList = exercise.getGifLinks();
             observablePicListData.addAll(exerciseGifList);
             imagesListView.setItems(observablePicListData);
+
+           if(!observablePicListData.isEmpty()){
+             showPic(observablePicListData.get(0), observablePicListData.get(0));
+           }
+
             for(AbsractCategory c : exercise.getCategories()){
                 allCheckboxes.get(c.getId()).setSelected(true);
             }
         }
     }
 
+    @FXML
+    private void playVideo(){
+        webViewVideo.getEngine().load(videoLinkField.getText());
+    }
 
     private void showPic(String oldValue, String newValue){
         try {
@@ -251,11 +264,12 @@ public class ManageExerciseController extends Controller implements Initializabl
             if(this.exercise!=null && !observablePicListData.isEmpty()){
                 String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
                 file =new File(storingPath + "\\"+newValue);
-                picture = file.getName();
+                picture = "/"+file.getName();
             }else{
                 file =  new File(newValue);
                 picture = file.toString();
             }
+            LOGGER.debug(picture);
 
             inputStream = new FileInputStream(file);
             Image img = new Image(inputStream);
@@ -269,8 +283,48 @@ public class ManageExerciseController extends Controller implements Initializabl
     }
 
 
+
+
+    @FXML
+    void cancelClicked(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Uebung verlassen");
+        alert.setHeaderText("Das Uebungsfenster schliessen und alle Aenderungen verwerfen?");
+        alert.setContentText("Moechten Sie die Uebungsuebersicht wirklich beenden?");
+        ButtonType yes = new ButtonType("Ja");
+        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yes, cancel);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == yes) {
+            stage.close();
+        } else {
+            stage.show();
+        }
+    }
+
+
+
+    @FXML
+    void saveClicked(ActionEvent event) {
+        try{
+            if(exercise==null){
+                exerciseService.create(this.extractExercise());
+            }else{
+                Exercise update = this.extractExercise();
+                update.setId(exercise.getId());
+                exerciseService.update(update);
+            }
+            stage.close();
+        }catch (Exception e){
+            LOGGER.error(e);
+            e.printStackTrace();
+        }
+
+    }
+
     @FXML
     void browseClicked(ActionEvent event) {
+        LOGGER.debug("browse clicked");
         btn_durchsuchen.setVisible(false);
         try {
 
@@ -291,7 +345,6 @@ public class ManageExerciseController extends Controller implements Initializabl
             //no preview available so need to store picture
             if (imageView.getImage() == null) {
 
-
                 String filename = files.get(0).toString();
                 InputStream inputStream = new FileInputStream(files.get(0));
                 Image img = new Image(inputStream);
@@ -303,33 +356,24 @@ public class ManageExerciseController extends Controller implements Initializabl
                 }
                 observablePicListData.addAll(exerciseGifList);
 
-
-                imagesListView.setItems(observablePicListData);
-                imagesListView.setVisible(false);
-                imagesListView.setVisible(true);
-
             } else {//picture in preview
-
-               /* filename = file.toString();
-                //new picture to update
-
-                GregorianCalendar calendar = new GregorianCalendar();
-
-                String ownName = "img_" + (calendar.getTimeInMillis()) + Math.abs(filename.hashCode());
-
-
-                //for the preview in the image fxml
-
-                InputStream inputStream = new FileInputStream(file);
-                javafx.scene.image.Image img = new javafx.scene.image.Image(inputStream);
+                LOGGER.debug("no picture in preview updating picturelist");
+                String filename = files.get(0).toString();
+                InputStream inputStream = new FileInputStream(files.get(0));
+                Image img = new Image(inputStream);
                 imageView.setImage(img);
                 inputStream.close();
-                pictureData.add(ownName);
-                picData.add(ownName);
-                picList.setItems(picData);
-                picList.setVisible(false);
-                picList.setVisible(true);*/
+                for(File f : files){
+                    LOGGER.debug(f.getName());
+                    exerciseGifList.add(f.getAbsolutePath());
+                    observablePicListData.add(f.getAbsolutePath());
+                }
+
             }
+
+            imagesListView.setItems(observablePicListData);
+            imagesListView.setVisible(false);
+            imagesListView.setVisible(true);
 
         } catch (IOException e) {
             LOGGER.error(e);
@@ -339,54 +383,25 @@ public class ManageExerciseController extends Controller implements Initializabl
     }
 
     @FXML
-    void cancelClicked(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Uebung verlassen");
-        alert.setHeaderText("Das Uebungsfenster schliessen und alle Aenderungen verwerfen?");
-        alert.setContentText("Moechten Sie die Uebungsuebersicht wirklich beenden?");
-        ButtonType yes = new ButtonType("Ja");
-        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(yes, cancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == yes) {
-            stage.close();
-        } else {
-            stage.show();
-        }
-    }
-
-    @FXML
-    void saveClicked(ActionEvent event) {
-        try{
-            if(exercise==null){
-            exerciseService.create(this.extractExercise());
-            }else{
-                Exercise update = this.extractExercise();
-                update.setId(exercise.getId());
-                exerciseService.update(update);
-            }
-            stage.close();
-        }catch (Exception e){
-            LOGGER.error(e);
-            e.printStackTrace();
-        }
-
-    }
-
-    @FXML
     private void removeClicked(){
-        if(picture!=null && !picture.isEmpty()) {
-            observablePicListData.remove(picture);
-            if (observablePicListData.isEmpty()) {
-                imageView.setImage(null);
-            }
+
+        LOGGER.debug("removing pictuer " + picture);
+        observablePicListData.remove(picture);
+        exerciseGifList.remove(picture);
+        LOGGER.debug("list contins picture to remove:  " + observablePicListData.contains(picture));
+        imagesListView.setItems(observablePicListData);
+        imagesListView.setVisible(false);
+        imagesListView.setVisible(true);
+        if (observablePicListData.isEmpty()) {
+            imageView.setImage(null);
         }
+
     }
 
     private Exercise extractExercise(){
         Double calories =0.0;
         try{
-             calories = Double.parseDouble(caloriesField.getText());
+            calories = Double.parseDouble(caloriesField.getText());
         }catch (NumberFormatException e){
             calories = 1.0;
         }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.media.*?>
 <?import javafx.geometry.*?>
@@ -49,12 +50,12 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <CheckBox fx:id="customExercisesCheckbox" mnemonicParsing="false" onAction="#filterOwnExercises" text="Eigene Übungen">
+                        <CheckBox fx:id="customExercisesCheckbox" mnemonicParsing="false" onAction="#filterCheckboxes" text="Eigene Übungen">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox fx:id="defaultExercisesCheckbox" mnemonicParsing="false" onAction="#filterSystemExercises" text="Vorgegebene Übungen">
+                        <CheckBox fx:id="defaultExercisesCheckbox" mnemonicParsing="false" onAction="#filterCheckboxes" text="Vorgegebene Übungen">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -82,12 +83,12 @@
                               <Insets left="10.0" />
                            </VBox.margin>
                         </Label>
-                        <HBox prefHeight="300.0" prefWidth="1082.0" spacing="400.0">
+                        <HBox prefHeight="300.0" prefWidth="1082.0">
                            <children>
                               <VBox>
                                  <children>
-                                    <ImageView fx:id="imageView" fitHeight="177.0" fitWidth="287.0" pickOnBounds="true" preserveRatio="true" />
-                                    <HBox spacing="30.0">
+                                    <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" />
+                                    <HBox alignment="BOTTOM_LEFT" spacing="30.0">
                                        <children>
                                           <Button fx:id="prevPic" mnemonicParsing="false" onAction="#prevPicButtonClicked" text="vorhergehendes Bild">
                                              <font>
@@ -106,67 +107,33 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <MediaView fx:id="bigMediaView" fitHeight="250.0" fitWidth="400.0" />
-                           </children>
-                        </HBox>
-                        <HBox spacing="100.0">
-                           <children>
-                              <TextArea fx:id="descriptionTextArea" editable="false" prefHeight="200.0" prefWidth="787.0" text="Textuelle Beschreibung." wrapText="true">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextArea>
-                              <VBox prefHeight="200.0" prefWidth="244.0" spacing="10.0">
+                              <VBox prefHeight="300.0" prefWidth="540.0">
+                                 <children>
+                                    <WebView fx:id="webViewVideo" prefHeight="274.0" prefWidth="540.0" />
+                                    <Button mnemonicParsing="false" onAction="#playVideo" text="play video" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="vboxCategory" prefHeight="346.0" prefWidth="200.0" spacing="10.0">
                                  <children>
                                     <Label text="Kategorien">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Typ:">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="categoryTypeLabel" text="Kraft">
-                                       <VBox.margin>
-                                          <Insets left="50.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Geräte:">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="trainingDeviceLabel1" text="Gerät 1">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets left="50.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label fx:id="trainingDeviceLabel2" text="Gerät 2">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets left="50.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label fx:id="trainingDeviceLabel3" text="Gerät 3">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                       <padding>
-                                          <Insets left="50.0" />
-                                       </padding>
-                                    </Label>
                                  </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
                               </VBox>
+                           </children>
+                        </HBox>
+                        <HBox spacing="100.0">
+                           <children>
+                              <TextArea fx:id="descriptionTextArea" editable="false" prefHeight="185.0" prefWidth="500.0" text="Textuelle Beschreibung." wrapText="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextArea>
                            </children>
                         </HBox>
                      </children>
