@@ -1,6 +1,6 @@
-package PersitanceTest.TrainingTest.Helper.impl;
+package sepm.ss15.grp16.persistence.dao.training.helper.impl;
 
-import PersitanceTest.TrainingTest.Helper.AbstractExerciseSetDAOTest;
+import sepm.ss15.grp16.persistence.dao.training.helper.AbstractExerciseSetDAOTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -11,9 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
-import sepm.ss15.grp16.persistence.dao.Training.Helper.ExerciseSetHelperDAO;
-import sepm.ss15.grp16.persistence.dao.Training.Helper.TrainingsSessionHelperDAO;
-import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
+import sepm.ss15.grp16.persistence.dao.training.helper.ExerciseSetHelperDAO;
+import sepm.ss15.grp16.persistence.dao.training.helper.TrainingsSessionHelperDAO;
+import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 
