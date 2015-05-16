@@ -1,20 +1,19 @@
-package PersitanceTest.TrainingTest;
+package sepm.ss15.grp16.persistence.dao.training;
 
-import PersitanceTest.AbstractDAOTest;
+import sepm.ss15.grp16.entity.*;
+import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
-import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
-import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 	private static final Logger LOGGER = LogManager.getLogger(AbstractTrainingsPlanDAOTest.class);
 
 	protected abstract UserDAO getUserDAO();
+	protected abstract ExerciseDAO getExerciseDAO();
 
 	@Test
 	public void createValidSimplePlan() throws PersistenceException {
@@ -280,15 +280,22 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 	}
 
 	private User dummyUser() throws PersistenceException {
-		User testUser = new User(null, "msober", true, 20, 194, false);
+		User testUser = new User(null, "lukas", true, 22, 178, false);
 		return getUserDAO().create(testUser);
 	}
 
 	private Exercise dummyExercise() throws PersistenceException {
-		return getExerciseDAO().create(new Exercise("liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", null, false, null, null));
-	}
+		List<String> gifList = new ArrayList<>();
+		URL url = this.getClass().getResource("/img/pushup.jpg");
+		gifList.add(url.toString().substring(6));
+		List<AbsractCategory> categoryList = new ArrayList<>();
+		categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
+		categoryList.add(new TrainingsCategory(2, "kraft"));
 
-	protected abstract ExerciseDAO getExerciseDAO();
+		Exercise liegestuetz = new Exercise(null, "beinheben", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , dummyUser(), categoryList);
+
+		return getExerciseDAO().create(liegestuetz);
+	}
 
 	private List<ExerciseSet> dummySet() throws PersistenceException {
 		List<ExerciseSet> sets = new ArrayList<>();
@@ -297,6 +304,7 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 			ExerciseSet set = new ExerciseSet();
 
 			set.setRepeat(15);
+			set.setType(ExerciseSet.SetType.getSetType(ExerciseSet.SetType.REPEAT));
 			set.setExercise(dummyExercise());
 			set.setIsDeleted(false);
 			set.setUser(dummyUser());

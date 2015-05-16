@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.entity.Training.Helper;
+package sepm.ss15.grp16.entity.training.helper;
 
 import sepm.ss15.grp16.entity.DTO;
 

@@ -2,12 +2,12 @@ package sepm.ss15.grp16.service.Training.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.User;
-import sepm.ss15.grp16.persistence.dao.Training.TrainingsSessionDAO;
-import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
+import sepm.ss15.grp16.persistence.dao.training.TrainingsSessionDAO;
+import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.Training.TrainingsplanService;

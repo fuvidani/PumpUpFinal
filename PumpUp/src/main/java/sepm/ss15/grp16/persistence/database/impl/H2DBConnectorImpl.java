@@ -46,7 +46,10 @@ public class H2DBConnectorImpl implements DBHandler {
 				con = DriverManager.getConnection(path, user, password);
 				LOGGER.info("connection successful established");
 
+				con.setAutoCommit(false);
 				execScripts();
+				//populateTest();
+				con.setAutoCommit(true);
 
 			} catch (ClassNotFoundException | SQLException | FileNotFoundException | URISyntaxException e) {
 				LOGGER.error(e.getMessage());

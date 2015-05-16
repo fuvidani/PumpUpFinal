@@ -1,10 +1,9 @@
-package PersitanceTest;
+package sepm.ss15.grp16.persistence.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import sepm.ss15.grp16.entity.DTO;
-import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;
