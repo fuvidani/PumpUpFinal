@@ -1,11 +1,11 @@
-package ServiceTest.Training;
+package sepm.ss15.grp16.service.training;
 
-import ServiceTest.AbstractServiceTest;
+import sepm.ss15.grp16.service.AbstractServiceTest;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.ExerciseService;

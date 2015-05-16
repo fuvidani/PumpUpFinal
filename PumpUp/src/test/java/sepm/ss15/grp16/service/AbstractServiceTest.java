@@ -1,10 +1,9 @@
-package ServiceTest;
+package sepm.ss15.grp16.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import sepm.ss15.grp16.entity.DTO;
-import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.util.List;

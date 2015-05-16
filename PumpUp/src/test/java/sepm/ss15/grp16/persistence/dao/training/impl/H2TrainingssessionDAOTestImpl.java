@@ -1,6 +1,6 @@
-package ServiceTest.Training.impl;
+package sepm.ss15.grp16.persistence.dao.training.impl;
 
-import ServiceTest.Training.AbstractTrainingsServiceTest;
+import sepm.ss15.grp16.persistence.dao.training.AbstractTrainingssessionDAOTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -10,38 +10,53 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.persistence.dao.DAO;
+import sepm.ss15.grp16.persistence.dao.training.TrainingsSessionDAO;
+import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
-import sepm.ss15.grp16.service.ExerciseService;
-import sepm.ss15.grp16.service.Service;
-import sepm.ss15.grp16.service.Training.TrainingsplanService;
-import sepm.ss15.grp16.service.UserService;
 
 import java.sql.SQLException;
 
 /**
  * Author: Lukas
- * Date: 13.05.2015
+ * Date: 09.05.2015
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
 		{DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class TrainingsServiceTestImpl extends AbstractTrainingsServiceTest {
+public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTest {
+
+	@Autowired
+	private TrainingsSessionDAO trainingsSessionDAO;
+
+	@Autowired
+	private TrainingsplanDAO trainingsplanDAO;
 
 	@Autowired
 	private DBHandler dbConnector;
 
 	@Autowired
-	UserService userService;
+	private UserDAO userDAO;
 
-	@Autowired
-	ExerciseService exerciseService;
+	@Override
+	public TrainingsplanDAO getTrainingsplanDAO() {
+		return trainingsplanDAO;
+	}
 
-	@Autowired
-	TrainingsplanService trainingsplanService;
+	@Override
+	public TrainingsSessionDAO getTrainingsSessionDAO() {
+		return trainingsSessionDAO;
+	}
+
+	@Override
+	public UserDAO getUserDAO() {
+		return userDAO;
+	}
 
 	@Before
 	public void setUp() throws DBException, SQLException {
@@ -54,17 +69,8 @@ public class TrainingsServiceTestImpl extends AbstractTrainingsServiceTest {
 	}
 
 	@Override
-	public UserService getUserService() {
-		return userService;
-	}
-
-	@Override
-	public ExerciseService getExerciseService() {
-		return exerciseService;
-	}
-
-	@Override
-	public Service<Trainingsplan> getService() {
-		return trainingsplanService;
+	public DAO<TrainingsSession> getDAO() {
+		return trainingsSessionDAO;
 	}
 }
+
