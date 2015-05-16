@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +21,7 @@ import sepm.ss15.grp16.service.PictureHistoryService;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.WeightHistoryService;
 import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.exception.ValidationException;
 
 import java.io.File;
 import java.net.URL;
@@ -118,26 +118,29 @@ public class RegistrationController extends Controller implements Initializable 
         try {
             age = Integer.parseInt(age_textField.getText());
         } catch (NumberFormatException e) {
-            error += "Age is required and has to be a number greater than 0.\n";
+            error += "Das Alter muss eine gültige Zahl größer 0 sein.\n";
         }
 
         try {
             weight = Integer.parseInt(weight_textField.getText());
         } catch (NumberFormatException e) {
-            error += "Weight is required and has to be a number greater than 0.\n";
+            error += "Das Gewicht muss eine gültige Zahl größer 0 sein.\n";
         }
 
         try {
             height = Integer.parseInt(height_textField.getText());
         } catch (NumberFormatException e) {
-            error += "Height is required and has to be a number greater than 0.\n";
+            error += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
         }
 
         if(!bodyfat_textField.getText().isEmpty()){
             try {
-                 bodyfat = Integer.parseInt(bodyfat_textField.getText());
+                bodyfat = Integer.parseInt(bodyfat_textField.getText());
+                if(bodyfat < 0 || bodyfat > 100){
+                    error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
+                }
             } catch (NumberFormatException e) {
-                error += "Bodyfat has to be a number greater than 0.\n";
+                error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
             }
         }
 
@@ -180,6 +183,13 @@ public class RegistrationController extends Controller implements Initializable 
             alert.showAndWait();
             Stage stage = (Stage) registrationPane.getScene().getWindow();
             stage.close();
+        } catch (ValidationException e) {
+            LOGGER.error("Couldn't create User");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehlerhafte Angaben");
+            alert.setContentText(e.getValidationMessage());
+            alert.showAndWait();
         } catch (ServiceException e) {
             LOGGER.error("Couldn't create User");
             Alert alert = new Alert(Alert.AlertType.ERROR);
