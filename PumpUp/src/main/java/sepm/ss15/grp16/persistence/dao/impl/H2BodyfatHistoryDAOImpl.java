@@ -129,13 +129,14 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
     public BodyfatHistory getActualBodyfat(int user_id) throws PersistenceException {
 
         LOGGER.info("Finding actual bodyfathistory...");
-        BodyfatHistory foundBodyfatHistory;
+        BodyfatHistory foundBodyfatHistory = null;
 
         try {
             getActualBodyfatStatement.setInt(1, user_id);
             ResultSet rs = getActualBodyfatStatement.executeQuery();
-            rs.next();
-            foundBodyfatHistory = new BodyfatHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));
+            if(rs.next() == true) {
+                foundBodyfatHistory = new BodyfatHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));
+            }
 
         }catch(SQLException e){
             throw new PersistenceException("Failed to get actual bodyfat", e);

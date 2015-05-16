@@ -78,7 +78,7 @@
                                                 </Label>
                                                 <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <TextField prefHeight="26.0" />
+                                                      <TextField fx:id="genderTextField" editable="false" prefHeight="26.0" />
                                                    </children>
                                                 </HBox>
                                              </children>
@@ -92,7 +92,7 @@
                                                 </Label>
                                                 <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <TextField prefHeight="26.0" />
+                                                      <TextField fx:id="ageTextField" editable="false" prefHeight="26.0" />
                                                    </children>
                                                 </HBox>
                                              </children>
@@ -106,7 +106,7 @@
                                                 </Label>
                                                 <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <TextField prefHeight="26.0" />
+                                                      <TextField fx:id="heightTextField" editable="false" prefHeight="26.0" />
                                                    </children>
                                                 </HBox>
                                              </children>
@@ -120,7 +120,7 @@
                                                 </Label>
                                                 <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <TextField prefHeight="26.0" />
+                                                      <TextField fx:id="weightTextField" editable="false" prefHeight="26.0" />
                                                    </children>
                                                 </HBox>
                                              </children>
@@ -134,7 +134,7 @@
                                                 </Label>
                                                 <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <TextField prefHeight="26.0" />
+                                                      <TextField fx:id="bodyfatTextField" editable="false" prefHeight="26.0" />
                                                    </children>
                                                 </HBox>
                                              </children>
@@ -148,7 +148,7 @@
                                                 </Label>
                                                 <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <TextField prefHeight="26.0" />
+                                                      <TextField fx:id="emailTextField" editable="false" prefHeight="26.0" />
                                                    </children>
                                                 </HBox>
                                              </children>

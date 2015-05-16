@@ -9,9 +9,15 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sepm.ss15.grp16.entity.BodyfatHistory;
+import sepm.ss15.grp16.entity.WeightHistory;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
+import sepm.ss15.grp16.service.BodyfatHistoryService;
+import sepm.ss15.grp16.service.PictureHistoryService;
 import sepm.ss15.grp16.service.UserService;
+import sepm.ss15.grp16.service.WeightHistoryService;
+import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.net.URL;
 import java.util.Optional;
@@ -26,6 +32,9 @@ public class MainController extends Controller implements Initializable {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private UserService userService;
+    private WeightHistoryService weightHistoryService;
+    private BodyfatHistoryService bodyfatHistoryService;
+    private PictureHistoryService pictureHistoryService;
     private StageTransitionLoader transitionLoader;
 
     @FXML
@@ -47,10 +56,76 @@ public class MainController extends Controller implements Initializable {
         this.userService = userService;
     }
 
+    public void setWeightHistoryService(WeightHistoryService weightHistoryService) {
+        this.weightHistoryService = weightHistoryService;
+    }
+
+    public void setBodyfatHistoryService(BodyfatHistoryService bodyfatHistoryService) {
+        this.bodyfatHistoryService = bodyfatHistoryService;
+    }
+
+    public void setPictureHistoryService(PictureHistoryService pictureHistoryService) {
+        this.pictureHistoryService = pictureHistoryService;
+    }
+
+    @FXML
+    TextField genderTextField;
+    @FXML
+    TextField ageTextField;
+    @FXML
+    TextField heightTextField;
+    @FXML
+    TextField weightTextField;
+    @FXML
+    TextField bodyfatTextField;
+    @FXML
+    TextField emailTextField;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.transitionLoader = new StageTransitionLoader(this);
-        this.usernameLabel.setText("Willkommen, " + userService.getLoggedInUser().getUsername() + "!");
+
+        Integer user_id = userService.getLoggedInUser().getUser_id();
+        String username = userService.getLoggedInUser().getUsername();
+        Boolean gender = userService.getLoggedInUser().isGender();
+        Integer age = userService.getLoggedInUser().getAge();
+        Integer height = userService.getLoggedInUser().getHeight();
+        String email = userService.getLoggedInUser().getEmail();
+        Integer weight = null;
+        Integer bodyfat = null;
+
+        try {
+
+            WeightHistory actualWeighthistory = weightHistoryService.getActualWeight(user_id);
+            if(actualWeighthistory != null){
+                weight = actualWeighthistory.getWeight();
+            }else{
+                weight = 0;
+            }
+
+            BodyfatHistory actualBodyfathistory = bodyfatHistoryService.getActualBodyfat(user_id);
+            if(actualBodyfathistory != null){
+                bodyfat = actualBodyfathistory.getBodyfat();
+            }else{
+                bodyfat = 0;
+            }
+
+        }catch(ServiceException e){
+            e.printStackTrace();
+        }
+
+        usernameLabel.setText("Willkommen, " + username + "!");
+        ageTextField.setText(Integer.toString(age));
+        heightTextField.setText(Integer.toString(height));
+        weightTextField.setText(Integer.toString(weight));
+        bodyfatTextField.setText(Integer.toString(bodyfat));
+        if(gender == true){
+            genderTextField.setText("Männlich");
+        }else{
+            genderTextField.setText("Weiblich");
+        }
+        emailTextField.setText(email);
+
     }
 
     @FXML

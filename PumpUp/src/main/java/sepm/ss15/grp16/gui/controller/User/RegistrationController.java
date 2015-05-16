@@ -152,7 +152,7 @@ public class RegistrationController extends Controller implements Initializable 
         }
 
         String genderString = ((RadioButton) group.getSelectedToggle()).getText();
-        gender = genderString.equals("Male");
+        gender = genderString.equals("Männlich");
 
         User user = new User(null, username, gender, age, height, email, null, false);
 
