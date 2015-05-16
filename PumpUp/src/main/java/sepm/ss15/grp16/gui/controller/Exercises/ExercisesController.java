@@ -33,6 +33,7 @@ import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -209,7 +210,7 @@ public class ExercisesController extends Controller implements Initializable{
             uebungsTableView.setItems(masterdata);
             uebungsTableView.getColumns().get(0).setVisible(false);
             uebungsTableView.getColumns().get(0).setVisible(true);
-        }catch (Exception e){
+        }catch (ServiceException e){
             e.printStackTrace();
             LOGGER.error(e);
         }
@@ -241,19 +242,20 @@ public class ExercisesController extends Controller implements Initializable{
         try {
             String seperator = "\\"; //windows default
             String OS = System.getProperty("os.name").toLowerCase();
+            String directory = getClass().getClassLoader().getResource("img").toString().substring(6);
             //mac and unix systems
             if (OS.indexOf("mac")>=0 || OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >=0) {
                 seperator = "/";
+                directory = seperator.concat(directory);
             }
-
-            String directory = getClass().getClassLoader().getResource("img").toString().substring(6);
             String file = seperator+exercise.getGifLinks().get(index);
+
             String path = directory.concat(file);
             LOGGER.debug("show details method path: " + path);
             FileInputStream reading = new FileInputStream(path);
             Image img = new Image(reading);
             imageView.setImage(img);
-        }catch (Exception e){
+        }catch (IOException e){
             e.printStackTrace();
             LOGGER.error(e);
         }
