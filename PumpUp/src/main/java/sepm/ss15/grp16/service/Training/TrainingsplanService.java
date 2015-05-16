@@ -1,8 +1,8 @@
 package sepm.ss15.grp16.service.Training;
 
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.exception.ServiceException;

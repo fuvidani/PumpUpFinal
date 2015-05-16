@@ -46,8 +46,10 @@ public class H2DBConnectorImpl implements DBHandler {
 				con = DriverManager.getConnection(path, user, password);
 				LOGGER.info("connection successful established");
 
+				con.setAutoCommit(false);
 				execScripts();
-				populateTest();
+				//populateTest();
+				con.setAutoCommit(true);
 
 			} catch (ClassNotFoundException | SQLException | FileNotFoundException | URISyntaxException e) {
 				LOGGER.error(e.getMessage());
@@ -126,7 +128,6 @@ public class H2DBConnectorImpl implements DBHandler {
 
 		if (sql_url != null) {
 
-			con.setAutoCommit(false);
 			File folder = new File(sql_url);
 			File[] listOfFiles = folder.listFiles();
 
@@ -138,7 +139,6 @@ public class H2DBConnectorImpl implements DBHandler {
 					RunScript.execute(con, new FileReader(file));
 				}
 			}
-			con.setAutoCommit(true);
 		}
 	}
 

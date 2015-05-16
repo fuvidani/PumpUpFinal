@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.entity.Training;
+package sepm.ss15.grp16.entity.training;
 
 import sepm.ss15.grp16.entity.DTO;
 import sepm.ss15.grp16.entity.User;
@@ -25,6 +25,15 @@ public class Trainingsplan implements DTO {
 
 	public Trainingsplan(Integer id, User user, String name, String descr, Boolean isDeleted, List<TrainingsSession> trainingsSessions) {
 		this.id = id;
+		this.user = user;
+		this.name = name;
+		this.descr = descr;
+		this.isDeleted = isDeleted;
+		this.trainingsSessions = trainingsSessions;
+	}
+
+	public Trainingsplan(User user, String name, String descr, Boolean isDeleted, List<TrainingsSession> trainingsSessions) {
+		this.id = null;
 		this.user = user;
 		this.name = name;
 		this.descr = descr;

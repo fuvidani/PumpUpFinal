@@ -1,7 +1,7 @@
-package sepm.ss15.grp16.entity.Training;
+package sepm.ss15.grp16.entity.training;
 
-import sepm.ss15.grp16.entity.Training.Helper.DTOHelper;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
+import sepm.ss15.grp16.entity.training.helper.DTOHelper;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.User;
 
 import java.util.List;
@@ -25,6 +25,14 @@ public class TrainingsSession implements DTOHelper {
 
 	public TrainingsSession(Integer id_session, User user, String name, Boolean isDeleted, List<ExerciseSet> exerciseSets) {
 		this.id_session = id_session;
+		this.user = user;
+		this.name = name;
+		this.isDeleted = isDeleted;
+		this.exerciseSets = exerciseSets;
+	}
+
+	public TrainingsSession(User user, String name, Boolean isDeleted, List<ExerciseSet> exerciseSets) {
+		this.id_session = null;
 		this.user = user;
 		this.name = name;
 		this.isDeleted = isDeleted;
