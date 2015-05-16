@@ -343,16 +343,23 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     private String createPictures(String originalName, Integer id) throws PersistenceException{
         try {
+            String seperator = "\\"; //windows default
+             String OS = System.getProperty("os.name").toLowerCase();
+            //mac and unix systems
+           if (OS.indexOf("mac")>=0 || OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >=0) {
+                seperator = "/";
+            }
+
             String directoryPath = getClass().getClassLoader().getResource("img").toString().substring(6);
             File directory = new File(directoryPath);
             if (!directory.exists()) {
                 directory.mkdir();
             }
             GregorianCalendar calendar = new GregorianCalendar();
-            String ownName = "/img_ex_" + (calendar.getTimeInMillis()) + Math.abs(originalName.hashCode());
+            String ownName = "img_ex_" + (calendar.getTimeInMillis()) + Math.abs(originalName.hashCode());
             FileInputStream inputStream = new FileInputStream(originalName);
             String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
-            File file1 = new File(storingPath + ownName+".jpg"); //file storing
+            File file1 = new File(storingPath+ seperator + ownName+".jpg"); //file storing
             FileOutputStream out = new FileOutputStream(file1);
             IOUtils.copy(inputStream, out); //copy content from input to output
             out.close();
@@ -374,6 +381,8 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
         }
 
     }
+
+
 
 
 

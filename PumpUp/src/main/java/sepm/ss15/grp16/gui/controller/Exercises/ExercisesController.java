@@ -171,7 +171,10 @@ public class ExercisesController extends Controller implements Initializable{
 
     @FXML
     private void playVideo(){
+
         webViewVideo.getEngine().load(exercise.getVideolink());
+
+//        webViewVideo.getEngine().load(exercise.getVideolink());
     }
 
     private void updateFilteredData() {
@@ -236,8 +239,16 @@ public class ExercisesController extends Controller implements Initializable{
 
     private void showPicture(Integer index){
         try {
-            String path = "" + (getClass().getClassLoader().getResource("img/").toString().substring(6)).concat(exercise.getGifLinks().get(index)
-            );
+            String seperator = "\\"; //windows default
+            String OS = System.getProperty("os.name").toLowerCase();
+            //mac and unix systems
+            if (OS.indexOf("mac")>=0 || OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >=0) {
+                seperator = "/";
+            }
+
+            String directory = getClass().getClassLoader().getResource("img").toString().substring(6);
+            String file = seperator+exercise.getGifLinks().get(index);
+            String path = directory.concat(file);
             LOGGER.debug("show details method path: " + path);
             FileInputStream reading = new FileInputStream(path);
             Image img = new Image(reading);
