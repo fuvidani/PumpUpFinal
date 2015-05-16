@@ -1,6 +1,6 @@
-package sepm.ss15.grp16.persistence.dao.Training;
+package sepm.ss15.grp16.persistence.dao.training;
 
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
