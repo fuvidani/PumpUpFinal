@@ -22,6 +22,7 @@ public class StageTransitionLoader {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private Controller from;
+    private Controller to;
 
 
     public StageTransitionLoader(Controller from){
@@ -62,7 +63,7 @@ public class StageTransitionLoader {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-           Controller to = loader.getController();
+            to = loader.getController();
             to.setStage(dialogStage);
 
             // Show the dialog and wait until the user closes it
@@ -78,6 +79,14 @@ public class StageTransitionLoader {
             LOGGER.info("Error on opening new stage, reason: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public Controller getFrom(){
+        return this.from;
+    }
+
+    public Controller getTo(){
+        return this.to;
     }
 
 }

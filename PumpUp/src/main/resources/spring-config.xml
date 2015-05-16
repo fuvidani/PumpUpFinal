@@ -200,7 +200,8 @@
 
     </bean>
 
-    <bean id="generateWorkoutPlanController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GenerateWorkoutPlanController" scope="prototype">
+    <bean id="generateWorkoutPlanController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GenerateWorkoutPlanController" scope="singleton">
+        <property name="generatedWorkoutplanService" ref="generatedWorkoutplanService"></property>
 
     </bean>
 
@@ -210,6 +211,7 @@
 
     <bean id="WorkoutPlanToCalendarController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlanToCalendarController" scope="prototype">
 
+
     </bean>
 
     <bean id="generatedWorkoutplanService" class="sepm.ss15.grp16.service.Training.impl.GeneratedWorkoutplanServiceImpl">
@@ -218,4 +220,7 @@
         <constructor-arg name="userService" ref="userService"/>
     </bean>
 
+    <bean id="generatedWorkoutPlanResultController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GeneratedWorkoutPlanResultController" scope="prototype">
+
+    </bean>
 </beans>

@@ -2,7 +2,9 @@ package sepm.ss15.grp16.service.Training.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.Gen_WorkoutplanPreferences;
+import sepm.ss15.grp16.entity.*;
+import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
+import sepm.ss15.grp16.entity.Training.TrainingsSession;
 import sepm.ss15.grp16.entity.Training.Trainingsplan;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.Training.GeneratedWorkoutplanService;
@@ -31,7 +33,45 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
     }
 
     @Override
-    public Trainingsplan generate(Gen_WorkoutplanPreferences preferences) {
+    public Trainingsplan generate(Gen_WorkoutplanPreferences preferences) throws ServiceException{
+        validate(preferences);
+        LOGGER.info("Validation successful");
+        TrainingsCategory goal = preferences.getGoal();
+        User user = userService.getLoggedInUser();
+        List<EquipmentCategory> equipments = preferences.getEquipments();
+        if(goal.getId() == 0){  // Endurance
+            return generateForEndurance(equipments, user);
+        }else if(goal.getId() == 1){    // Strength
+            return generateForStrength(equipments, user);
+        }else if(goal.getId() == 2){    // Balance
+            return generateForBalance(equipments, user);
+        }else {     // Flexibility
+            return generateForFlexibility(equipments, user);
+        }
+    }
+
+
+    private Trainingsplan generateForEndurance(List<EquipmentCategory> equipments, User user){
+
+        LOGGER.info("Workoutplan successfully generated!");
+        return null;
+    }
+
+    private Trainingsplan generateForStrength(List<EquipmentCategory> equipments, User user){
+
+        LOGGER.info("Workoutplan successfully generated!");
+        return null;
+    }
+
+    private Trainingsplan generateForBalance(List<EquipmentCategory> equipments, User user){
+
+        LOGGER.info("Workoutplan successfully generated!");
+        return null;
+    }
+
+    private Trainingsplan generateForFlexibility(List<EquipmentCategory> equipments, User user){
+
+        LOGGER.info("Workoutplan successfully generated!");
         return null;
     }
 
@@ -39,7 +79,15 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
 
     @Override
     public void validate(Gen_WorkoutplanPreferences dto) throws ValidationException {
-
+        LOGGER.info("Entering validation in service.");
+        TrainingsCategory goal = dto.getGoal();
+        if(goal == null){
+            throw new ValidationException("Bitte wählen Sie eines von den 4 Trainingszielen aus!");
+        }
+        List<EquipmentCategory> equipments = dto.getEquipments();
+        if(equipments == null){
+            throw new ValidationException("Ein Problem tritt auf während der Ausführung...");
+        }
     }
 
     /*
