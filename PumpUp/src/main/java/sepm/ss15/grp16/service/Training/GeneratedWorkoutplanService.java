@@ -13,11 +13,11 @@ public interface GeneratedWorkoutplanService extends Service<Gen_WorkoutplanPref
 
     /**
      * Generates a workout plan based on the preferences of the user and the user itself.
-     * Following parameters will make an effect on the outcoming result:
+     * Following parameters will make an effect on the final result:
      * - user's age, weight and gender
-     * - user's goal to reach with the help of the workoutplan
+     * - user's goal to reach with the help of the workout plan
      * - user's available training devices ready to use
-     * Workoutplans will be generated from 3-5 days in a week.
+     * Workout plans will be generated from 3-5 days in a week.
      * The number of sets and repetitions are influenced by the user's condition.
      * @param preferences the preferences the user made in the GUI
      * @return a generated workoutplan suitable for the user's needs and goals

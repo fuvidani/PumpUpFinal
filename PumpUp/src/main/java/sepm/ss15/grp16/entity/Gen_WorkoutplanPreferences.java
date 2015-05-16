@@ -12,20 +12,20 @@ public class Gen_WorkoutplanPreferences implements DTO {
 
     private int id;
     private TrainingsCategory goal;
-    private List<EquipmentCategory> equipments;
+    private List<EquipmentCategory> equipment;
 
-    public Gen_WorkoutplanPreferences(int id, TrainingsCategory goal, List<EquipmentCategory> equipments){
+    public Gen_WorkoutplanPreferences(int id, TrainingsCategory goal, List<EquipmentCategory> equipment){
         this.id = id;
         this.goal = goal;
-        this.equipments = equipments;
+        this.equipment = equipment;
     }
 
     public TrainingsCategory getGoal() {
         return goal;
     }
 
-    public List<EquipmentCategory> getEquipments() {
-        return equipments;
+    public List<EquipmentCategory> getEquipment() {
+        return equipment;
     }
 
 

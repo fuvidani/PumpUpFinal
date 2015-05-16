@@ -1,6 +1,5 @@
 package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +10,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.tools.Generate;
 import sepm.ss15.grp16.entity.EquipmentCategory;
 import sepm.ss15.grp16.entity.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.Training.Trainingsplan;
@@ -40,7 +38,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
     private StageTransitionLoader transitionLoader;
     private GeneratedWorkoutplanService generatedWorkoutplanService;
     private ToggleGroup toggleGroup;
-    private List<EquipmentCategory> equipments;
+    private List<EquipmentCategory> equipment;
     private List<CheckBox> boxes;
 
     @FXML
@@ -54,7 +52,6 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
     @FXML
     private RadioButton flexibilityRadio;
-
 
 
     @FXML
@@ -97,7 +94,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         this.transitionLoader = new StageTransitionLoader(this);
         toggleGroup = new ToggleGroup();
         boxes = new LinkedList<CheckBox>();
-        equipments = new ArrayList<EquipmentCategory>();
+        equipment = new ArrayList<EquipmentCategory>();
         strengthRadio.setToggleGroup(toggleGroup);
         strengthRadio.setId("1");
         balanceRadio.setToggleGroup(toggleGroup);
@@ -128,13 +125,13 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
     }
 
     @FXML
-    void generateButtonClicked(ActionEvent event) {
+    void generateButtonClicked() {
         for(CheckBox box: boxes){
-            equipments.add(new EquipmentCategory(Integer.parseInt(box.getId()),box.getText()));
+            equipment.add(new EquipmentCategory(Integer.parseInt(box.getId()),box.getText()));
         }
         RadioButton button = (RadioButton)toggleGroup.getSelectedToggle();
         TrainingsCategory goal = button != null ? new TrainingsCategory(Integer.parseInt(button.getId()), button.getText()): null;
-        Gen_WorkoutplanPreferences preferences = new Gen_WorkoutplanPreferences(1, goal, equipments);
+        Gen_WorkoutplanPreferences preferences = new Gen_WorkoutplanPreferences(1, goal, equipment);
         Trainingsplan result;
         try {
             result = generatedWorkoutplanService.generate(preferences);

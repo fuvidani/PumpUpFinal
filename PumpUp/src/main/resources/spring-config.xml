@@ -218,6 +218,7 @@
         <constructor-arg name="trainingsplanService" ref="trainingsplanService"/>
         <constructor-arg name="exerciseService" ref="exerciseService"/>
         <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="weightHistoryService" ref="weightHistoryService"/>
     </bean>
 
     <bean id="generatedWorkoutPlanResultController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GeneratedWorkoutPlanResultController" scope="prototype">
