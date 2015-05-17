@@ -68,7 +68,7 @@ public class Main extends Application{
         LOGGER.info("configuration successful");
 
         primaryStage.show();
-        
+
     }
 
     public static void main(String[] args){

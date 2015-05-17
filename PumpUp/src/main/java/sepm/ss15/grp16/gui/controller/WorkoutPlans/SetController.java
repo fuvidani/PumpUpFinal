@@ -8,8 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
@@ -107,22 +107,54 @@ public class SetController extends Controller implements Initializable {
 		String errormessage = "";
 
 		String repeat = txtRepeat.getText();
+		Integer repeat_int = null;
+
+		String repeat_type = ((RadioButton) tglGrType.getSelectedToggle()).getText();
+
+		ExerciseSet.SetType setType;
+
+		if (repeat_type.equals("Wiederholung")) {
+			setType = new ExerciseSet.SetType(ExerciseSet.SetType.REPEAT);
+		} else {
+			setType = new ExerciseSet.SetType(ExerciseSet.SetType.TIME);
+		}
 
 		if (repeat == null || repeat.equals("")) {
 			error = true;
 			errormessage = "Keine Wiederholungen oder Zeit angegeben!";
+		} else {
+			try {
+				repeat_int = Integer.parseInt(repeat);
+			} catch (NumberFormatException e) {
+				error = true;
+				errormessage = repeat_type + " muss eine ganzzahlige Zahl sein!";
+			}
 		}
+
+		tglGrType.getSelectedToggle();
 
 		if (error) {
 			alert.setContentText(errormessage);
 			alert.showAndWait();
 			return null;
 		} else {
+			Integer id = null;
+			Integer order_nr = null;
+			if (session_interClassCommunication != null && session_interClassCommunication.getId() != null) {
+				id = session_interClassCommunication.getId();
+			}
 
-			Integer repeat_int = Integer.parseInt(repeat);
+			if (session_interClassCommunication != null) {
+				List<ExerciseSet> sets = session_interClassCommunication.getExerciseSets();
+				if (sets != null) {
+					order_nr = session_interClassCommunication.getExerciseSets().size() + 1;
+				}
+			} else {
+				order_nr = 1;
+			}
 
-			return new ExerciseSet(session_interClassCommunication.getId(), selection, userService.getLoggedInUser(),
-					repeat_int, session_interClassCommunication.getExerciseSets().size()+1, false);
+			return new ExerciseSet(id, selection, userService.getLoggedInUser(),
+					repeat_int, setType, order_nr, false);
 		}
 	}
 
@@ -140,6 +172,7 @@ public class SetController extends Controller implements Initializable {
 		if (result.get() == yes) {
 			this.stage.close();
 		}
+		session_interClassCommunication = null;
 	}
 
 	public void setUserService(UserServiceImpl userService) {

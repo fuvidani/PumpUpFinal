@@ -101,7 +101,7 @@
                         </Label>
                         <HBox>
                            <children>
-                              <ListView fx:id="listViewSessions" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0">
+                              <ListView fx:id="listViewSessions" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" prefHeight="200.0">
                                  <HBox.margin>
                                     <Insets left="10.0" top="10.0" />
                                  </HBox.margin>

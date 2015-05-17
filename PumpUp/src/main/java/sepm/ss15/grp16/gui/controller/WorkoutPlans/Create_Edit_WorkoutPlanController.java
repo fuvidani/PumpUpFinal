@@ -6,12 +6,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.Training.TrainingsplanService;
@@ -128,7 +131,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 
 		if (data == null || data.isEmpty()) {
 			error = true;
-			errormessage = "Keine Sessions hinzugefügt!";
+			errormessage = "Keine Sessions hinzugefï¿½gt!";
 		}
 
 		if (error) {
@@ -153,28 +156,50 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 					@Override
 					protected void updateItem(TrainingsSession t, boolean bln) {
 						super.updateItem(t, bln);
+						Pane pane = null;
 						if (t != null) {
-							String value = t.getName() + "\n\n";
+							pane = new Pane();
+							//String value = t.getName() + "\n\n";
+							String title = t.getName();
+							String value = "";
+
 							for (ExerciseSet set : t.getExerciseSets()) {
 								value += set.getOrder_nr() + ": " + set.getRepeat() + " " + set.getExercise().getName() + "\n";
 							}
-							setText(value);
+
+
+							final Text leftText = new Text(title);
+							//leftText.setFont(_itemFont);
+							leftText.setTextOrigin(VPos.CENTER);
+							leftText.relocate(0, 0);
+
+							final Text middleText = new Text(value);
+							//middleText.setFont(_itemFont);
+							middleText.setTextOrigin(VPos.TOP);
+							final double em = leftText.getLayoutBounds().getHeight();
+							middleText.relocate(0, 2*em);
+
+							//setText(leftText);
+							pane.getChildren().addAll(leftText, middleText);
 						} else {
-							setText("");
+							//setText("");
 						}
+						setText("");
+						setGraphic(pane);
 					}
 
 				};
 			}
 		});
+		//listViewSessions.setStyle("-fx-alignment: CENTER-RIGHT;");
 	}
 
 	@FXML
 	void cancelClicked(ActionEvent event) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Änderungen verwerfen");
+		alert.setTitle("ï¿½nderungen verwerfen");
 		alert.setHeaderText("Wollen Sie wirklich abbrechen?");
-		alert.setContentText("Alle Änderungen würden verlorgen gehen!");
+		alert.setContentText("Alle ï¿½nderungen wï¿½rden verlorgen gehen!");
 		ButtonType yes = new ButtonType("Ja");
 		ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
 		alert.getButtonTypes().setAll(yes, cancel);
@@ -188,9 +213,11 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 
 	@FXML
 	void addSession(ActionEvent event) {
-		transitionLoader.openWaitStage("fxml/Session.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzufügen", 600, 400, false);
-		listViewSessions.getItems().add(session_interClassCommunication);
-		setUpListView();
+		transitionLoader.openWaitStage("fxml/Session.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzufï¿½gen", 600, 400, false);
+		if(session_interClassCommunication != null) {
+			listViewSessions.getItems().add(session_interClassCommunication);
+			setUpListView();
+		}
 	}
 
 	@FXML

@@ -1,18 +1,20 @@
 package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.VPos;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
 import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.Training.TrainingsplanService;
@@ -45,9 +47,6 @@ public class WorkoutPlansController extends Controller implements Initializable 
 	private CheckBox customWorkoutPlansCheck;
 
 	@FXML
-	private TableView<List<TrainingsSession>> workoutPlanTable;
-
-	@FXML
 	private Label trainingNameLabel;
 
 	@FXML
@@ -55,6 +54,9 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	private ListView<Trainingsplan> workoutPlansListView;
+
+	@FXML
+	private ListView<TrainingsSession> listViewSessions;
 
 	@FXML
 	private Button calenderBtn;
@@ -81,9 +83,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 			workoutPlansListView.getSelectionModel().selectedItemProperty().addListener(
 					(ov, old_val, new_val) -> {
 						if (workoutPlansListView.getSelectionModel().getSelectedItems() != null && new_val != null) {
-							List<List<TrainingsSession>> lists = new ArrayList<>();
-							lists.add(new_val.getTrainingsSessions());
-							updateSessionTable(lists);
+							updateSessionList(new_val.getTrainingsSessions());
 							selection = new Trainingsplan(new_val);
 							trainingDescr.setText(new_val.getDescr());
 							trainingNameLabel.setText(new_val.getName());
@@ -103,22 +103,21 @@ public class WorkoutPlansController extends Controller implements Initializable 
 			setUpListView();
 			workoutPlansListView.setItems(data);
 
-			workoutPlanTable.setPlaceholder(new Label(""));
 
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void updateSessionTable(List<List<TrainingsSession>> sessions) {
-		ObservableList<List<TrainingsSession>> data = FXCollections.observableArrayList(sessions);
+	private void updateSessionList(List<TrainingsSession> sessions) {
+		listViewSessions.getItems().clear();
+		if (sessions != null) {
+			ObservableList<TrainingsSession> data = FXCollections.observableArrayList(sessions);
+			listViewSessions.setItems(data);
+		}
 
-		workoutPlanTable.getItems().clear();
-		workoutPlanTable.setItems(data);
 
-		workoutPlanTable.getColumns().clear();
-
-		if (sessions.get(0) != null) {
+		/*if (sessions.get(0) != null) {
 			for (int i = 0; i < sessions.get(0).size(); i++) {
 				TableColumn<List<TrainingsSession>, String> col = new TableColumn<>(sessions.get(0).get(i).getName());
 
@@ -140,7 +139,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 				workoutPlanTable.getColumns().add(col);
 			}
 		}
-		workoutPlanTable.setPlaceholder(new Label("Trainingsplan enthhält keine Sessions"));
+		workoutPlanTable.setPlaceholder(new Label("Trainingsplan enthhält keine Sessions"));*/
 	}
 
 	@FXML
@@ -191,6 +190,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 		trainingDescr.setText("");
 		trainingNameLabel.setText("");
+		listViewSessions.getItems().clear();
 
 		deleteBtn.setDisable(true);
 		editBtn.setDisable(true);
@@ -216,30 +216,78 @@ public class WorkoutPlansController extends Controller implements Initializable 
 				};
 			}
 		});
+
+		listViewSessions.setCellFactory(new Callback<ListView<TrainingsSession>, ListCell<TrainingsSession>>() {
+			@Override
+			public ListCell<TrainingsSession> call(ListView<TrainingsSession> p) {
+				return new ListCell<TrainingsSession>() {
+					@Override
+					protected void updateItem(TrainingsSession t, boolean bln) {
+						super.updateItem(t, bln);
+						Pane pane = null;
+						if (t != null) {
+							pane = new Pane();
+							//String value = t.getName() + "\n\n";
+							String title = t.getName();
+							String value = "";
+
+							for (ExerciseSet set : t.getExerciseSets()) {
+								value += set.getOrder_nr() + ": " + set.getRepeat() + " " + set.getExercise().getName() + "\n";
+							}
+
+
+							final Text leftText = new Text(title);
+							//leftText.setFont(_itemFont);
+							leftText.setTextOrigin(VPos.CENTER);
+							leftText.relocate(0, 0);
+
+							final Text middleText = new Text(value);
+							//middleText.setFont(_itemFont);
+							middleText.setTextOrigin(VPos.TOP);
+							final double em = leftText.getLayoutBounds().getHeight();
+							middleText.relocate(0, 2 * em);
+
+							//setText(leftText);
+							pane.getChildren().addAll(leftText, middleText);
+						}
+						setText("");
+						setGraphic(pane);
+					}
+
+				};
+			}
+		});
 	}
 
 	@FXML
 	void newWorkoutPlanClicked(ActionEvent event) {
-		Stage teststage = (Stage) workoutPlanTable.getScene().getWindow();
-		teststage.hide();
-		transitionLoader.openWaitStage("fxml/Create_Edit_WorkoutPlans.fxml", (Stage) workoutPlanTable.getScene().getWindow(), "Trainingsplan erstellen", 1000, 620, true);
-		teststage.show();
+		Create_Edit_WorkoutPlanController.plan_interClassCommunication = null;
+
+		Stage thiststage = (Stage) listViewSessions.getScene().getWindow();
+		thiststage.hide();
+		transitionLoader.openWaitStage("fxml/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan erstellen", 1300, 700, false);
+		thiststage.show();
+
 		updateTable();
 		setUpListView();
+		clearSelection();
 	}
 
 	@FXML
 	void copyWorkoutPlanClicked(ActionEvent event) {
-		transitionLoader.openWaitStage("fxml/Create_Edit_WorkoutPlans.fxml", (Stage) workoutPlanTable.getScene().getWindow(), "Trainingsplan erstellen / bearbeiten", 1000, 620, true);
+/*		Create_Edit_WorkoutPlanController.plan_interClassCommunication = selection;
+		transitionLoader.openWaitStage("fxml/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan erstellen / bearbeiten", 1300, 700, false);
 		updateTable();
 		setUpListView();
+		clearSelection();*/
 	}
 
 	@FXML
 	void generateWorkoutPlanClicked(ActionEvent event) {
-		transitionLoader.openWaitStage("fxml/GenerateWorkoutPlan.fxml", (Stage) workoutPlanTable.getScene().getWindow(), "Trainingsplan generieren", 600, 400, false);
+		transitionLoader.openWaitStage("fxml/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 1300, 700, false);
 		updateTable();
 		setUpListView();
+		clearSelection();
 	}
 
 	@FXML
@@ -262,6 +310,9 @@ public class WorkoutPlansController extends Controller implements Initializable 
 				workoutPlansListView.getItems().clear();
 				workoutPlansListView.getSelectionModel().clearSelection();
 				workoutPlansListView.setItems(data);
+				updateTable();
+				setUpListView();
+				clearSelection();
 			}
 		} catch (ServiceException e) {
 			e.printStackTrace();
@@ -270,11 +321,17 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	void editWorkoutPlanClicked(ActionEvent event) {
+		Stage thiststage = (Stage) listViewSessions.getScene().getWindow();
 		Create_Edit_WorkoutPlanController.plan_interClassCommunication = selection;
-		transitionLoader.openWaitStage("fxml/Create_Edit_WorkoutPlans.fxml", (Stage) workoutPlanTable.getScene().getWindow(),
+
+		thiststage.hide();
+		transitionLoader.openWaitStage("fxml/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
 				"Trainingsplan " + selection.getName() + " bearbeiten", 1000, 620, true);
+		thiststage.show();
+
 		updateTable();
 		setUpListView();
+		clearSelection();
 	}
 
 	public void updateTable() {
@@ -291,7 +348,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	void embedInCalenderClicked(ActionEvent event) {
-		transitionLoader.openStage("fxml/WorkoutPlanIntoCalendar.fxml", (Stage) workoutPlanTable.getScene().getWindow(), "Trainingsplan in Kalender einfügen", 600, 400, false);
+		transitionLoader.openStage("fxml/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender einfügen", 600, 400, false);
 	}
 
 	@FXML

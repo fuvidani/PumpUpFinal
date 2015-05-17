@@ -14,8 +14,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.impl.UserServiceImpl;
@@ -179,6 +179,13 @@ public class SessionController extends Controller implements Initializable {
 
 		if (set_interClassCommunication != null) {
 			tblvExerciseTable.getItems().add(set_interClassCommunication);
+			List<ExerciseSet> sets = tblvExerciseTable.getItems();
+			if (sets != null) {
+				for (int i = 0; i < sets.size(); i++) {
+					ExerciseSet set = sets.get(i);
+					set.setOrder_nr(i + 1);
+				}
+			}
 		}
 		set_interClassCommunication = null;
 	}
@@ -198,6 +205,15 @@ public class SessionController extends Controller implements Initializable {
 	@FXML
 	void onClickDelete(ActionEvent event) {
 		tblvExerciseTable.getItems().remove(selection);
+
+		List<ExerciseSet> sets = tblvExerciseTable.getItems();
+		if (sets != null) {
+			for (int i = 0; i < sets.size(); i++) {
+				ExerciseSet set = sets.get(i);
+				set.setOrder_nr(i + 1);
+			}
+		}
+
 		clearSelection();
 	}
 
