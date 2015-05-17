@@ -37,4 +37,28 @@ public abstract class AbsractCategory implements DTO{
     public void setIsDeleted( Boolean deleted){
 
     }
+
+    @Override
+    public String toString() {
+        return "AbsractCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbsractCategory that = (AbsractCategory) o;
+
+        return !(id != null ? !id.equals(that.id) : that.id != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }
