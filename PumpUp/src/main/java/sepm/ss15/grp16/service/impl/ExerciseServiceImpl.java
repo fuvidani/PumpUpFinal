@@ -69,6 +69,15 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
+    public Exercise searchByID(int id) throws ServiceException {
+        try{
+          return   exerciseDAO.searchByID(id);
+        }catch (PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public Exercise update(Exercise exercise) throws ServiceException {
         LOGGER.debug("updating exercise in service");
         validate(exercise);
@@ -95,6 +104,11 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
     }
 
+    /**
+     * validating a given exercise
+     * @param exercise dto object to validate
+     * @throws sepm.ss15.grp16.service.exception.ValidationException
+     */
     @Override
     public void validate(Exercise exercise)throws sepm.ss15.grp16.service.exception.ValidationException{
         LOGGER.debug("validating exericse in service layer");
