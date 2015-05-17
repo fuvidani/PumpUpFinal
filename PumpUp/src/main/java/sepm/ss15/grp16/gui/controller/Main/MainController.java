@@ -80,7 +80,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void calendarClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) userDataTableView.getScene().getWindow(), "Trainingskalender", 1000, 500, false);
+        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) userDataTableView.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
     }
 
     @FXML
@@ -124,11 +124,6 @@ public class MainController extends Controller implements Initializable {
         transitionLoader.openStage("fxml/Exercises.fxml", (Stage) userDataTableView.getScene().getWindow(), "Übungen", 800, 600, true);
     }
 
-    @FXML
-    void openCalendarMenuClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) userDataTableView.getScene().getWindow(), "Trainingskalender", 800, 600, false);
-
-    }
 
     @FXML
     void aboutMenuClicked(ActionEvent event) {

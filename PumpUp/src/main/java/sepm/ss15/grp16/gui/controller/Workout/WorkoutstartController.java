@@ -51,7 +51,7 @@ public class WorkoutstartController extends Controller implements Initializable{
 
     @FXML
     void startButtonClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/Workout.fxml", (Stage) toDoListView.getScene().getWindow(), "Training", 1100, 750, true);
+        transitionLoader.openStage("fxml/Workout.fxml", (Stage) toDoListView.getScene().getWindow(), "training", 1100, 750, true);
     }
 
 
