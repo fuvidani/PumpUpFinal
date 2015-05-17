@@ -1,5 +1,6 @@
 package sepm.ss15.grp16.service;
 
+import sepm.ss15.grp16.entity.EquipmentCategory;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -21,4 +22,8 @@ public interface ExerciseService extends Service<Exercise>{
     void delete(Exercise exercise) throws ServiceException;
 
     void validate(Exercise exercise) throws ValidationException;
+
+
+    List<Exercise> getWithoutCategory(List<EquipmentCategory> equipmentCategories)throws ServiceException;
+
 }

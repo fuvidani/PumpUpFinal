@@ -2,6 +2,8 @@ package sepm.ss15.grp16.service.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sepm.ss15.grp16.entity.AbsractCategory;
+import sepm.ss15.grp16.entity.EquipmentCategory;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
@@ -56,9 +58,7 @@ public class ExerciseServiceImpl implements ExerciseService {
             List<Exercise> allExercises = exerciseDAO.findAll();
             List<Exercise> userExercises = new ArrayList<>();
             for(Exercise e : allExercises){
-
                 if(e.getUser()==null || e.getUser().equals(userService.getLoggedInUser())){
-                    LOGGER.debug(e);
                     userExercises.add(e);
                 }
             }
@@ -119,8 +119,8 @@ public class ExerciseServiceImpl implements ExerciseService {
         List<Exercise> allExercises = this.findAll();
         List<Exercise> userExercises = new ArrayList<>();
         for(Exercise e : allExercises){
-                if(e.getUser()==null || e.getUser() == user)
-                    userExercises.add(e);
+            if(e.getUser()==null || e.getUser() == user)
+                userExercises.add(e);
         }
 
         return userExercises;
@@ -141,5 +141,98 @@ public class ExerciseServiceImpl implements ExerciseService {
                 userExercises.add(e);
         }
         return userExercises;
+    }
+
+    /**
+     * get all exercises which train only endurance
+     * @return a list of all exercises with endurance purposes
+     * @throws ServiceException
+     */
+    public List<Exercise> getAllEnduranceExercises() throws ServiceException{
+        try{
+            return exerciseDAO.getAllEnduranceExercises();
+        }catch (PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * get all exercises which train only strength
+     * @return a list of all exercises with strength purposes
+     * @throws ServiceException
+     */
+    public List<Exercise> getAllStrengthExercises()throws ServiceException{
+        try{
+            return exerciseDAO.getAllStrengthExercises();
+        }catch (PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * get all exercises which train only balance
+     * @return a list of all exercises with balance purposes
+     * @throws ServiceException
+     */
+    public List<Exercise> getAllBalanceExercises()throws ServiceException{
+        try{
+            return exerciseDAO.getAllBalanceExercises();
+        }catch (PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * get all exercises which train only flexibility
+     * @return a list of all exercises with flexibility purposes
+     * @throws ServiceException
+     */
+    public List<Exercise> getAllFlexibilityExercises()throws ServiceException{
+        try{
+            return exerciseDAO.getAllFlexibilityExercises();
+        }catch (PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * getting all exercises which have the given category specified
+     * by the categoryID
+     * @param id the id of the category specifying for the exercies
+     * @return a list of all exercises which are qulifyed by the categoryID
+     * @throws ServiceException
+     */
+    public List<Exercise> getAllExercisesWithCategoryID(Integer id)throws ServiceException{
+        try{
+            return exerciseDAO.getAllExercisesWithCategoryID(id);
+        }catch (PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * a method to get a list of all exercises which do not need the equipments specified by the given list
+     * @param equipmentCategories a list of equipment which the user does not have
+     * @return a list of all exercises which do not need the given equipment
+     * @throws ServiceException
+     */
+    public List<Exercise> getWithoutCategory(List<EquipmentCategory> equipmentCategories)throws ServiceException{
+        List<Exercise> exercises = this.findAll();
+        List<EquipmentCategory> userHastNotEuipment = equipmentCategories;
+        List<Exercise> exercisesWithEquipment = new ArrayList<>();
+
+        for(Exercise e : exercises){
+            boolean valid = true;
+            List<AbsractCategory> categories = e.getCategories();
+            for(AbsractCategory category : categories){
+                if(userHastNotEuipment.contains(category)){
+                    valid = false;
+                    break;
+                }
+            }
+            if(valid)
+                exercisesWithEquipment.add(e);
+        }
+        return exercisesWithEquipment;
     }
 }

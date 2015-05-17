@@ -1,8 +1,7 @@
 package sepm.ss15.grp16.persistence.dao;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
-import org.junit.Test;
+import org.junit.Assert;
+import org.junit.*;
 import sepm.ss15.grp16.entity.*;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.UserDAO;
@@ -23,8 +22,8 @@ public  abstract  class AbstractExerciseDaoTest {
     public abstract ExerciseDAO getExerciseDAO();
 
     @Test
-    public void createValid(){
-        try {
+    public void createValid()throws PersistenceException{
+
 
             //creating a user
             User lukas = new User(null, "lukas", true, 22, 178, false);
@@ -43,16 +42,14 @@ public  abstract  class AbstractExerciseDaoTest {
             Exercise liegestuetz = new Exercise(null, "beinheben", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , lukas, categoryList);
 
             List<Exercise> exerciseList = getExerciseDAO().findAll();
-            TestCase.assertFalse(exerciseList.contains(liegestuetz));
+            Assert.assertFalse(exerciseList.contains(liegestuetz));
             Exercise e =  exerciseDAO.create(liegestuetz);
             Assert.assertNotNull(e);
             exerciseList = getExerciseDAO().findAll();
 
-            TestCase.assertTrue(exerciseList.contains(e));
+            Assert.assertTrue(exerciseList.contains(e));
 
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-        }
+
     }
 
     //    @Test(expected = PersistenceException.class)
@@ -64,8 +61,8 @@ public  abstract  class AbstractExerciseDaoTest {
 
 
 //        @Test
-    public void updateValid(){
-        try {
+    public void updateValid()throws PersistenceException{
+
             //creating a user
             User lukas = new User(null, "lukas", true, 22, 178, false);
             lukas = userDAO.create(lukas);
@@ -81,11 +78,11 @@ public  abstract  class AbstractExerciseDaoTest {
             Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , lukas, categoryList);
 
             List<Exercise> exerciseList = getExerciseDAO().findAll();
-            TestCase.assertFalse(exerciseList.contains(liegestuetz));
+            Assert.assertFalse(exerciseList.contains(liegestuetz));
             Exercise e =  getExerciseDAO().create(liegestuetz);
             Assert.assertNotNull(e);
             exerciseList = getExerciseDAO().findAll();
-            TestCase.assertTrue(exerciseList.contains(e));
+            Assert.assertTrue(exerciseList.contains(e));
 
             e.setName("diamond Pull up");
             e.setDescription("perfect trainings exercice");
@@ -98,11 +95,9 @@ public  abstract  class AbstractExerciseDaoTest {
             e.setCategories(categoryList);
             getExerciseDAO().update(e);
             exerciseList = getExerciseDAO().findAll();
-            TestCase.assertTrue(exerciseList.contains(e));
+            Assert.assertTrue(exerciseList.contains(e));
 
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-        }
+
 
     }
 
@@ -124,26 +119,24 @@ public  abstract  class AbstractExerciseDaoTest {
 
 
     //    @Test
-    public void deleteValid(){
+    public void deleteValid()throws PersistenceException{
 
-        try {
+
             List<String> gifList = new ArrayList<>();
             URL url = this.getClass().getResource("/img/pushup.jpg");
             gifList.add(url.toString().substring(6));
             Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
             List<Exercise> exerciseList = getExerciseDAO().findAll();
-            TestCase.assertFalse(exerciseList.contains(liegestuetz));
+            Assert.assertFalse(exerciseList.contains(liegestuetz));
             Exercise e =  getExerciseDAO().create(liegestuetz);
             Assert.assertNotNull(e);
             exerciseList = getExerciseDAO().findAll();
-            TestCase.assertTrue(exerciseList.contains(e));
+            Assert.assertTrue(exerciseList.contains(e));
             getExerciseDAO().delete(e);
             exerciseList = getExerciseDAO().findAll();
-            TestCase.assertFalse(exerciseList.contains(e));
+            Assert.assertFalse(exerciseList.contains(e));
 
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-        }
+
     }
 
 //    @Test(expected = PersistenceException.class)
@@ -158,21 +151,18 @@ public  abstract  class AbstractExerciseDaoTest {
     }
 
 //    @Test
-    public void getById(){
-        try {
+    public void getById()throws PersistenceException{
+
             List<String> gifList = new ArrayList<>();
             URL url = this.getClass().getResource("/img/pushup.jpg");
             gifList.add(url.toString().substring(6));
             Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
             List<Exercise> exerciseList = exerciseDAO.findAll();
-            TestCase.assertFalse(exerciseList.contains(liegestuetz));
+            Assert.assertFalse(exerciseList.contains(liegestuetz));
             Exercise e = exerciseDAO.create(liegestuetz);
             Exercise byId = exerciseDAO.searchByID(e.getId());
             Assert.assertNotNull(byId);
 
-        }catch (PersistenceException e){
-            e.printStackTrace();
-        }
 
     }
 

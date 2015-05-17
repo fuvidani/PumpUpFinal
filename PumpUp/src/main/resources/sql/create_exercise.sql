@@ -61,6 +61,7 @@ INSERT INTO categoryname VALUES(0, 'Kategorie'), (1, 'Muskelgruppe'), (2, 'Gerae
 INSERT INTO category VALUES(0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0), (3, 'Flexibilitaet', 0), (4, 'Bizeps', 1), (5, 'Trizeps', 1), (6, 'Bauchmuskeln', 1), (7, 'Schultern', 1), (8, 'Ruecken', 1), (9, 'Brust', 1), (10, 'Oberschenkel', 1), (11, 'Unterschenkel', 1), (12, 'Wadenbein', 1), (13, 'Medizinball', 2), (14, 'Klimmzugstange', 2), (15, 'Kurzhantel',2), (16, 'Langhantel', 2), (17, 'Springschnur', 2), (18, 'Sandsack', 2), (19, 'Expander', 2), (20, 'Bauchmuskel Roller', 2), (21, 'Yogaball', 2);
 
 
+
 INSERT INTO exercise VALUES
   (0, 'Liegestütz', 'Legen Sie sich auf den Bauch, strecken Sie die Beine, schließen Sie die Füße und stellen Sie die Zehenspit-zen auf. Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie bilden – von den Fersen bis zum Nacken. Ihr Blick ist zum Bo-den gerichtet. Achten Sie besonders darauf, dass Ihre Hüften nicht durchhängen oder Sie das Gesäß in die Luft strecken. Eine ungenaue Ausführung führt zu ei-nem schwachen Core. Spannen Sie die Muskeln der Körpermitte (Brust und Rücken) deshalb stets fest an! Senken Sie nun die Brust ab, bis Ihre Oberarme min-destens parallel zum Boden sind. Die Ellbogen zeigen dabei möglichst nach hinten. Bei einem perfekten Lie-gestütz berühren Sie den Bodenmit der Brust.', 0.03, 'https://www.youtube.com/watch?v=fdA6oWzW96g', null, false),
   (1, 'Armrotation', 'Eine tolle Übung, um die Schultern vor oder nach den intensiveren Übungen aufzuwärmen oder abzukühlen. Armrotationen sind besonders dann geeignet, wenn man nach einer Verletzung oder im Alter gerade wieder mit dem Training beginnt Stellen Sie sich aufrecht hin, strecken Sie die Arme seitlich aus und machen Sie kleine oder große Kreise. Zuerst kreisen Sie zehnmal in die eine, dann in die andere Richtung.', 0.02, null, null, false),
@@ -175,3 +176,4 @@ INSERT INTO gif VALUES
   --superman
   (27, 19, 'img_ex_superman1.jpg'),
   (28, 19, 'img_ex_superman2.jpg');
+
