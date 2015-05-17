@@ -82,11 +82,13 @@ public class LoginController  extends Controller implements Initializable {
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
             fxmlLoader.setControllerFactory(context::getBean);
             Stage stage = new Stage();
+            fxmlLoader.setLocation(RegistrationController.class.getClassLoader().getResource("fxml/Registration.fxml"));
             Pane pane = fxmlLoader.load(RegistrationController.class.getClassLoader().getResourceAsStream("fxml/Registration.fxml"));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(loginPane.getScene().getWindow());
             RegistrationController registrationController = fxmlLoader.getController();
             registrationController.setLoginController(this);
+            stage.setResizable(false);
             stage.setScene(new Scene(pane));
             stage.show();
         } catch (IOException e) {

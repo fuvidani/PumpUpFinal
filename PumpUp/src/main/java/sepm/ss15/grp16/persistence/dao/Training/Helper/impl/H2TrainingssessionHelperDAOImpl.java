@@ -1,15 +1,15 @@
-package sepm.ss15.grp16.persistence.dao.Training.Helper.impl;
+package sepm.ss15.grp16.persistence.dao.training.helper.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.User;
-import sepm.ss15.grp16.persistence.dao.Training.Helper.ExerciseSetHelperDAO;
-import sepm.ss15.grp16.persistence.dao.Training.Helper.TrainingsSessionHelperDAO;
-import sepm.ss15.grp16.persistence.dao.Training.TrainingsplanDAO;
-import sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingsplanDAOImpl;
+import sepm.ss15.grp16.persistence.dao.training.helper.ExerciseSetHelperDAO;
+import sepm.ss15.grp16.persistence.dao.training.helper.TrainingsSessionHelperDAO;
+import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
+import sepm.ss15.grp16.persistence.dao.training.impl.H2TrainingsplanDAOImpl;
 import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl;
 import sepm.ss15.grp16.persistence.database.DBHandler;

@@ -1,15 +1,13 @@
-package sepm.ss15.grp16.persistence.dao.Training.Helper.impl;
+package sepm.ss15.grp16.persistence.dao.training.helper.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
-import sepm.ss15.grp16.persistence.dao.Training.Helper.ExerciseSetHelperDAO;
-import sepm.ss15.grp16.persistence.dao.Training.Helper.TrainingsSessionHelperDAO;
-import sepm.ss15.grp16.persistence.dao.Training.impl.H2TrainingsplanDAOImpl;
+import sepm.ss15.grp16.persistence.dao.training.helper.ExerciseSetHelperDAO;
+import sepm.ss15.grp16.persistence.dao.training.helper.TrainingsSessionHelperDAO;
 import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl;
 import sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl;
@@ -54,15 +52,15 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 		try {
 			con = handler.getConnection();
 
-			ps_create = con.prepareStatement("INSERT INTO ExerciseSet (ID_Exercise, UID, repeat, order_nr, ID_session, isDeleted) " +
-					"VALUES (?, ?, ?, ?, ?, ?)");
+			ps_create = con.prepareStatement("INSERT INTO ExerciseSet (ID_Exercise, UID, repeat, type, order_nr, ID_session, isDeleted) " +
+					"VALUES (?, ?, ?, ?, ?, ?, ?)");
 			ps_findAll = con.prepareStatement("SELECT * FROM ExerciseSet WHERE isDeleted = FALSE ");
 			ps_findID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Set = ?");
 			ps_find_ByUID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE UID = ?");
 			ps_find_ByIDSession = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Session = ?");
 			ps_find_IDSession = con.prepareStatement("SELECT ID_Session FROM ExerciseSet WHERE ID_Set = ?");
 			ps_update = con.prepareStatement("UPDATE ExerciseSet " +
-					"SET ID_Exercise = ?, UID = ?, repeat = ?, order_nr = ?, ID_session = ?, isDeleted = ? " +
+					"SET ID_Exercise = ?, UID = ?, repeat = ?, type = ?, order_nr = ?, ID_session = ?, isDeleted = ? " +
 					"WHERE ID_Set = ?");
 			ps_delete = con.prepareStatement("UPDATE ExerciseSet SET isDeleted = TRUE  WHERE ID_Set = ?");
 
@@ -80,9 +78,10 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 			ps_create.setInt(1, set.getExercise().getId());
 			ps_create.setObject(2, set.getUser() != null ? set.getUser().getId() : null);
 			ps_create.setInt(3, set.getRepeat());
-			ps_create.setInt(4, set.getOrder_nr());
-			ps_create.setInt(5, ID_session);
-			ps_create.setBoolean(6, false);
+			ps_create.setString(4, set.getType().toString());
+			ps_create.setInt(5, set.getOrder_nr());
+			ps_create.setInt(6, ID_session);
+			ps_create.setBoolean(7, false);
 
 			executeUpdate(ps_create);
 			ResultSet rs = executeQuery(ps_seq_ES);
@@ -115,6 +114,7 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 
 				set.setIsDeleted(rs.getBoolean("isDeleted"));
 				set.setRepeat(rs.getInt("repeat"));
+				set.setType(ExerciseSet.SetType.getSetType(rs.getString("type")));
 				set.setOrder_nr(rs.getInt("order_nr"));
 
 				set.setExercise(exerciseDAO.searchByID(rs.getInt("ID_Exercise")));
@@ -145,6 +145,7 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 
 				set.setIsDeleted(rs.getBoolean("isDeleted"));
 				set.setRepeat(rs.getInt("repeat"));
+				set.setType(ExerciseSet.SetType.getSetType(rs.getString("type")));
 				set.setOrder_nr(rs.getInt("order_nr"));
 
 				set.setExercise(exerciseDAO.searchByID(rs.getInt("ID_Exercise")));
@@ -163,11 +164,12 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 			ps_update.setInt(1, set.getExercise().getId());
 			ps_update.setObject(2, set.getUser() != null ? set.getUser().getId() : null);
 			ps_update.setInt(3, set.getRepeat());
-			ps_update.setInt(4, set.getOrder_nr());
-			ps_update.setInt(5, ID_session);
-			ps_update.setBoolean(6, set.getIsDeleted());
+			ps_create.setString(4, set.getType().toString());
+			ps_update.setInt(5, set.getOrder_nr());
+			ps_update.setInt(6, ID_session);
+			ps_update.setBoolean(7, set.getIsDeleted());
 
-			ps_update.setInt(7, set.getId());
+			ps_update.setInt(8, set.getId());
 
 			executeUpdate(ps_update);
 
@@ -210,6 +212,7 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 					set.setUser(uid != null ? userDAO.searchByID(uid) : null);
 
 					set.setIsDeleted(rs.getBoolean("isDeleted"));
+					set.setType(ExerciseSet.SetType.getSetType(rs.getString("type")));
 					set.setRepeat(rs.getInt("repeat"));
 					set.setOrder_nr(rs.getInt("order_nr"));
 
@@ -245,6 +248,7 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 					set.setUser(uid != null ? userDAO.searchByID(uid) : null);
 
 					set.setIsDeleted(rs.getBoolean("isDeleted"));
+					set.setType(ExerciseSet.SetType.getSetType(rs.getString("type")));
 					set.setRepeat(rs.getInt("repeat"));
 					set.setOrder_nr(rs.getInt("order_nr"));
 
