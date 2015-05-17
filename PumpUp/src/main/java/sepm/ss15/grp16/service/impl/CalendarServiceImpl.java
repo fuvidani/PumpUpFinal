@@ -4,12 +4,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.Appointment;
 import sepm.ss15.grp16.entity.WorkoutplanExport;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.persistence.dao.CalendarDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 
+import java.time.DayOfWeek;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -124,11 +128,24 @@ public class CalendarServiceImpl implements CalendarService{
     /**
      * Exports the sessions from given trainingsplan into the calendar
      *
-     * @param workoutplanExport dto, that contains the workoutplan, allowed days, and start date
+     * @param workoutplanExport dto, that contains the trainingsplan, allowed days, and start date.
+     *                          NOTE: at least one day has to be allowed!!
      */
     @Override
-    public void exportToCalendar(WorkoutplanExport workoutplanExport) {
+    public void exportToCalendar(WorkoutplanExport workoutplanExport) throws ServiceException{
+        Date date = workoutplanExport.getDatum();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
 
+        for (TrainingsSession session: workoutplanExport.getTrainingsplan().getTrainingsSessions()){
+            for (DayOfWeek day: workoutplanExport.getDays()){
+                if (day.equals(cal.DAY_OF_WEEK)){
+                    this.create(new Appointment(null,cal.getTime(),session.getId_session(),workoutplanExport.getTrainingsplan().getUser().getUser_id(),false));
+                    break;
+                }
+                cal.roll(Calendar.DATE, true); //increment day
+            }
+        }
     }
 
     /**

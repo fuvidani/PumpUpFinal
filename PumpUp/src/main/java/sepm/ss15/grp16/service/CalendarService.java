@@ -68,9 +68,10 @@ public interface CalendarService extends Service<Appointment> {
     /**
      * Exports the sessions from given trainingsplan into the calendar
      *
-     * @param workoutplanExport dto, that contains the trainingsplan, allowed days, and start date
+     * @param workoutplanExport dto, that contains the trainingsplan, allowed days, and start date.
+     *                          NOTE: at least one day has to be allowed!!
      */
-    void exportToCalendar(WorkoutplanExport workoutplanExport);
+    void exportToCalendar(WorkoutplanExport workoutplanExport) throws ServiceException;
 
     /**
      * chatches an event from JS calendar

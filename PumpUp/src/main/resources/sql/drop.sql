@@ -10,3 +10,6 @@ drop table gif;
 DROP SEQUENCE exercisesequence;
 DROP SEQUENCE gifsequence;
 
+DROP TABLE appointment;
+DROP SEQUENCE appointment_seq;
+

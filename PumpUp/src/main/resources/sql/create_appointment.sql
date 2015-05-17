@@ -1,3 +1,6 @@
+DROP TABLE appointment;
+DROP SEQUENCE appointment_seq;
+
 CREATE SEQUENCE IF NOT EXISTS appointment_seq INCREMENT BY 1 START WITH 0 NOCYCLE;
 
 CREATE TABLE IF NOT EXISTS appointment (
