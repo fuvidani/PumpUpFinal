@@ -286,8 +286,8 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 
 	private Exercise dummyExercise() throws PersistenceException {
 		List<String> gifList = new ArrayList<>();
-		URL url = this.getClass().getResource("/img/pushup.jpg");
-		gifList.add(url.toString().substring(6));
+		//URL url = this.getClass().getResource("/img/pushup.jpg");
+		//gifList.add(url.toString().substring(6));
 		List<AbsractCategory> categoryList = new ArrayList<>();
 		categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
 		categoryList.add(new TrainingsCategory(2, "kraft"));
