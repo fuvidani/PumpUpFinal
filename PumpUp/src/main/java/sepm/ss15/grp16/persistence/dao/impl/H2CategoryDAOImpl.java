@@ -45,18 +45,33 @@ public class H2CategoryDAOImpl implements CategoryDAO {
     }
 
 
-
-
+    /**
+     * user can not create own categorys
+     * @param dto which shall be inserted into the underlying persistance layer.
+     *                 must not be null, id must be null
+     * @return
+     * @throws PersistenceException
+     */
     @Override
     public AbsractCategory create(AbsractCategory dto) throws PersistenceException {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * no need for all categorys
+     * @return
+     */
     @Override
     public List<AbsractCategory> findAll() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * getting exactly one category specified by the given id
+     * @param identificaitonNumber of the category to search for
+     * @return exactely one category
+     * @throws PersistenceException
+     */
     @Override
     public AbsractCategory searchByID(int identificaitonNumber) throws PersistenceException {
         try{
@@ -82,6 +97,7 @@ public class H2CategoryDAOImpl implements CategoryDAO {
         }
     }
 
+
     @Override
     public AbsractCategory update(AbsractCategory dto) throws PersistenceException {
         throw new UnsupportedOperationException();
@@ -92,6 +108,11 @@ public class H2CategoryDAOImpl implements CategoryDAO {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * getting a list of all equipment categorys
+     * @return a list of all equipment categorys like, kurzhantel, langhantel, springschnur ...
+     * @throws PersistenceException
+     */
     @Override
     public List<EquipmentCategory> getAllEquipment() throws PersistenceException{
         LOGGER.info("finding all exercises from the h2 database");
@@ -107,6 +128,11 @@ public class H2CategoryDAOImpl implements CategoryDAO {
         }
     }
 
+    /**
+     * getting a list of all muscle groups
+     * @return a list of all muslce groups like, bauchmuskeln, oberschenkel, unterschenkel ...
+     * @throws PersistenceException
+     */
     @Override
     public List<MusclegroupCategory> getAllMusclegroup()throws PersistenceException {
         LOGGER.info("finding all exercises from the h2 database");
@@ -122,8 +148,12 @@ public class H2CategoryDAOImpl implements CategoryDAO {
         }
     }
 
-    //wenn schon get all Trainingstype dann kann man
-    // sich auch eine liste von Trainingstype erwarten
+
+    /**
+     * getting a list of all trainingstypes
+     * @return a list of all trainingstypes: ausdauer, kraft, balance, flexibilitaet
+     * @throws PersistenceException
+     */
     @Override
     public List<TrainingsCategory> getAllTrainingstype()throws PersistenceException {
         LOGGER.info("finding all exercises from the h2 database");
@@ -139,6 +169,12 @@ public class H2CategoryDAOImpl implements CategoryDAO {
         }
     }
 
+    /**
+     * extracting a TrainingsCategory from a given resultstet
+     * @param rs the result set to extract from
+     * @return one instance of a TrainingsCategory
+     * @throws PersistenceException
+     */
     private TrainingsCategory extractTraining(ResultSet rs)throws PersistenceException{
         LOGGER.debug("extracting a category from a given resultset in dao layer");
         try{
@@ -152,6 +188,13 @@ public class H2CategoryDAOImpl implements CategoryDAO {
         }
     }
 
+
+    /**
+     * extracting a MusclegroupCategory from a given resultstet
+     * @param rs the result set to extract from
+     * @return one instance of a MusclegroupCategory
+     * @throws PersistenceException
+     */
     private MusclegroupCategory extractMuscle(ResultSet rs)throws PersistenceException{
         LOGGER.debug("extracting a category from a given resultset in dao layer");
         try{
@@ -168,6 +211,13 @@ public class H2CategoryDAOImpl implements CategoryDAO {
         }
     }
 
+
+    /**
+     * extracting a EquipmentCategory from a given resultstet
+     * @param rs the result set to extract from
+     * @return one instance of a EquipmentCategory
+     * @throws PersistenceException
+     */
     private EquipmentCategory extractEquipment(ResultSet rs)throws PersistenceException{
         LOGGER.debug("extracting a category from a given resultset in dao layer");
         try{
