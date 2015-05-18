@@ -1,8 +1,8 @@
 package ServiceTest.Exercise;
 
-import ServiceTest.AbstractServiceTest;
 import sepm.ss15.grp16.entity.*;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.service.AbstractServiceTest;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.UserService;
