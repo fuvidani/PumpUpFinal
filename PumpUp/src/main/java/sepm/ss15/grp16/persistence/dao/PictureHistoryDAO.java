@@ -21,4 +21,12 @@ public interface PictureHistoryDAO extends DAO<PictureHistory> {
      */
     List<PictureHistory> searchByUserID(int user_id) throws PersistenceException;
 
+    /**
+     * Searches for the actual picture of the user
+     * @param user_id from the user
+     * @return the actual picture of the user
+     * @throws PersistenceException, if an error while searching occurs
+     */
+    PictureHistory getActualPicture(int user_id) throws PersistenceException;
+
 }

@@ -58,6 +58,24 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
     }
 
     @Override
+    public List<BodyfatHistory> searchByUserID(int user_id) throws ServiceException {
+        try{
+            return bodyfatHistoryDAO.searchByUserID(user_id);
+        }catch(PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public BodyfatHistory getActualBodyfat(int user_id) throws ServiceException {
+        try{
+            return bodyfatHistoryDAO.getActualBodyfat(user_id);
+        }catch(PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public void validate(BodyfatHistory bodyfatHistory) throws ValidationException {
 
         if(bodyfatHistory == null){
@@ -69,11 +87,11 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
         Integer bodyfat = bodyfatHistory.getBodyfat();
 
         if(user_id == null){
-            errorMsg += "UserID is required and has to be number.";
+            errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
         }
 
-        if(bodyfat == null || bodyfat < 0){
-            errorMsg += "Bodyfat is required and has to be a number greater than 0.";
+        if(bodyfat == null || bodyfat < 0 || bodyfat > 100){
+            errorMsg += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.";
         }
 
         if(!errorMsg.isEmpty()){

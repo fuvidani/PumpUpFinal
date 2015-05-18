@@ -57,6 +57,21 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
     }
 
     @Override
+    public List<PictureHistory> searchByUserID(int user_id) throws ServiceException {
+        //TODO: Implement me
+        return null;
+    }
+
+    @Override
+    public PictureHistory getActualPicture(int user_id) throws ServiceException {
+        try{
+            return pictureHistoryDAO.getActualPicture(user_id);
+        }catch(PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public void validate(PictureHistory pictureHistory) throws ValidationException {
 
         if(pictureHistory == null){
