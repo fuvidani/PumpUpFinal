@@ -11,9 +11,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Exercises.ExercisesController">
    <children>
-      <VBox layoutX="142.0" layoutY="47.0" prefHeight="900.0" prefWidth="1400.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="142.0" layoutY="47.0" prefHeight="900.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox layoutX="142.0" layoutY="47.0" prefHeight="47.0" prefWidth="1300.0">
+            <HBox layoutX="142.0" layoutY="47.0" prefHeight="47.0">
                <children>
                   <Label layoutX="173.0" layoutY="121.0" text="Übungen">
                      <font>
@@ -37,9 +37,9 @@
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="557.0" prefWidth="1300.0">
+            <HBox prefHeight="557.0">
                <children>
-                  <VBox prefHeight="584.0" prefWidth="276.0" spacing="20.0">
+                  <VBox prefHeight="584.0" spacing="20.0">
                      <children>
                         <TextField fx:id="tf_search" prefHeight="25.0" prefWidth="133.0" promptText="Name für Filter" />
                         <TableView fx:id="uebungsTableView" maxWidth="-Infinity" minHeight="132.0" prefHeight="434.0" prefWidth="132.0">
@@ -73,7 +73,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Separator>
-                  <VBox prefHeight="603.0" prefWidth="1153.0" spacing="10.0">
+                  <VBox prefHeight="603.0" spacing="10.0">
                      <children>
                         <Label fx:id="exerciseNameLabel" prefHeight="44.0" prefWidth="506.0" text="Übung">
                            <font>
@@ -83,12 +83,11 @@
                               <Insets left="10.0" />
                            </VBox.margin>
                         </Label>
-                        <HBox prefHeight="300.0" prefWidth="1082.0">
+                        <HBox prefHeight="300.0">
                            <children>
                               <VBox>
                                  <children>
-                                    <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" />
-                                    <HBox alignment="BOTTOM_LEFT" spacing="30.0">
+                                    <HBox alignment="BOTTOM_LEFT" spacing="20.0">
                                        <children>
                                           <Button fx:id="prevPic" mnemonicParsing="false" onAction="#prevPicButtonClicked" text="vorhergehendes Bild">
                                              <font>
@@ -101,19 +100,25 @@
                                              </font>
                                           </Button>
                                        </children>
-                                       <padding>
-                                          <Insets top="20.0" />
-                                       </padding>
                                     </HBox>
+                                    <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </ImageView>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="300.0" prefWidth="540.0">
+                              <VBox prefHeight="300.0">
                                  <children>
-                                    <WebView fx:id="webViewVideo" prefHeight="274.0" prefWidth="540.0" />
-                                    <Button mnemonicParsing="false" onAction="#playVideo" text="play video" />
+                                    <Button mnemonicParsing="false" onAction="#playVideo" text="play video">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <WebView fx:id="webViewVideo" prefHeight="286.0" prefWidth="540.0" />
                                  </children>
                               </VBox>
-                              <VBox fx:id="vboxCategory" prefHeight="346.0" prefWidth="200.0" spacing="10.0">
+                              <VBox fx:id="vboxCategory" prefHeight="346.0" spacing="10.0">
                                  <children>
                                     <Label text="Kategorien">
                                        <font>
@@ -127,9 +132,9 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <HBox spacing="100.0">
+                        <HBox prefHeight="185.0">
                            <children>
-                              <TextArea fx:id="descriptionTextArea" editable="false" prefHeight="185.0" prefWidth="500.0" text="Textuelle Beschreibung." wrapText="true">
+                              <TextArea fx:id="descriptionTextArea" editable="false" prefHeight="185.0" prefWidth="242.0" text="Textuelle Beschreibung." wrapText="true">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

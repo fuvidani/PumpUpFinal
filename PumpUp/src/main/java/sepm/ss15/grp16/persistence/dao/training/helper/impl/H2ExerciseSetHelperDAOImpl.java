@@ -163,7 +163,7 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 			ps_update.setInt(1, set.getExercise().getId());
 			ps_update.setObject(2, set.getUser() != null ? set.getUser().getId() : null);
 			ps_update.setInt(3, set.getRepeat());
-			ps_create.setString(4, set.getType().toString());
+			ps_update.setString(4, set.getType().toString());
 			ps_update.setInt(5, set.getOrder_nr());
 			ps_update.setInt(6, ID_session);
 			ps_update.setBoolean(7, set.getIsDeleted());
