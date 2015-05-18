@@ -30,21 +30,20 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 
 	private static final Logger LOGGER = LogManager.getLogger(H2ExerciseSetHelperDAOImpl.class);
 
-	private Connection con;
+	private final Connection con;
 
-	private PreparedStatement ps_create;
-	private PreparedStatement ps_findAll;
-	private PreparedStatement ps_findID;
+	private final PreparedStatement ps_create;
+	private final PreparedStatement ps_findAll;
+	private final PreparedStatement ps_findID;
 	private final PreparedStatement ps_find_ByUID;
 	private final PreparedStatement ps_find_ByIDSession;
 	private final PreparedStatement ps_find_IDSession;
-	private PreparedStatement ps_update;
-	private PreparedStatement ps_delete;
+	private final PreparedStatement ps_update;
+	private final PreparedStatement ps_delete;
 
-	private PreparedStatement ps_seq_ES;
+	private final PreparedStatement ps_seq_ES;
 
 	private ExerciseDAO exerciseDAO;
-
 	private UserDAO userDAO;
 	private TrainingsSessionHelperDAO trainingsSessionHelperDAO;
 
@@ -55,10 +54,10 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 			ps_create = con.prepareStatement("INSERT INTO ExerciseSet (ID_Exercise, UID, repeat, type, order_nr, ID_session, isDeleted) " +
 					"VALUES (?, ?, ?, ?, ?, ?, ?)");
 			ps_findAll = con.prepareStatement("SELECT * FROM ExerciseSet WHERE isDeleted = FALSE ");
-			ps_findID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Set = ?");
-			ps_find_ByUID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE UID = ?");
-			ps_find_ByIDSession = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Session = ?");
-			ps_find_IDSession = con.prepareStatement("SELECT ID_Session FROM ExerciseSet WHERE ID_Set = ?");
+			ps_findID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Set = ? AND isDeleted = FALSE");
+			ps_find_ByUID = con.prepareStatement("SELECT * FROM ExerciseSet WHERE UID = ? AND isDeleted = FALSE");
+			ps_find_ByIDSession = con.prepareStatement("SELECT * FROM ExerciseSet WHERE ID_Session = ? AND isDeleted = FALSE");
+			ps_find_IDSession = con.prepareStatement("SELECT ID_Session FROM ExerciseSet WHERE ID_Set = ? AND isDeleted = FALSE");
 			ps_update = con.prepareStatement("UPDATE ExerciseSet " +
 					"SET ID_Exercise = ?, UID = ?, repeat = ?, type = ?, order_nr = ?, ID_session = ?, isDeleted = ? " +
 					"WHERE ID_Set = ?");
