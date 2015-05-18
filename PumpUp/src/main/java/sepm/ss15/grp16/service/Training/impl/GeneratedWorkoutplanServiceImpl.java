@@ -3,9 +3,7 @@ package sepm.ss15.grp16.service.Training.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.*;
-import sepm.ss15.grp16.entity.Training.Helper.ExerciseSet;
-import sepm.ss15.grp16.entity.Training.TrainingsSession;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.Training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.Training.TrainingsplanService;
@@ -91,7 +89,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         }
         Trainingsplan result;
         /**
-         * Young user between 0 - 25 years.
+         * Young user between 1 - 25 years.
          */
         if(age <= 25) {
             if (BMI < 18.5) {                               // Underweight

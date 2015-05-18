@@ -1,7 +1,5 @@
 package sepm.ss15.grp16.entity;
 
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
-
 import java.util.List;
 
 /**

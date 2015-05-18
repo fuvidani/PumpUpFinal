@@ -4,7 +4,7 @@ VALUES (1, 'liegestuetz', 'eine der besten uebungen ueberhaupt', 9.0, '', FALSE)
 MERGE INTO gif VALUES (1, 1, 'menshealth');
 MERGE INTO gif VALUES (2, 1, 'youtube');
 
--- Training
+-- training
 MERGE INTO TrainingsPlan VALUES (1, NULL, 'Testtraining', 'Testtrainingbeschreibung', FALSE);
 
 MERGE INTO TrainingsSession VALUES (1, 1, 'Session 1', NULL, FALSE);
@@ -20,7 +20,7 @@ MERGE INTO ExerciseSet VALUES (5, 1, NULL, 9, 2, 2, FALSE);
 MERGE INTO ExerciseSet VALUES (6, 1, NULL, 8, 3, 2, FALSE);
 
 MERGE INTO TrainingsPlanType VALUES (1, NULL, 'Ausdauer', 'Ausdauer ist gut!', FALSE);
-MERGE INTO TrainingsPlanType VALUES (2, NULL, 'Oberkörper', 'Oberkörper ist cool!', FALSE);
+MERGE INTO TrainingsPlanType VALUES (2, NULL, 'Oberkï¿½rper', 'Oberkï¿½rper ist cool!', FALSE);
 
 MERGE INTO PlanHasType VALUES (1, 1);
 MERGE INTO PlanHasType VALUES (1, 2);

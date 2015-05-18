@@ -1,6 +1,5 @@
 package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -8,7 +7,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.Training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 
