@@ -309,7 +309,7 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 			set.setIsDeleted(false);
 			set.setUser(dummyUser());
 
-			set.setOrder_nr(i);
+			set.setOrder_nr(i+1);
 			sets.add(set);
 		}
 		return sets;
