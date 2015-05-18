@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -16,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.BodyfatHistory;
+import sepm.ss15.grp16.entity.PictureHistory;
 import sepm.ss15.grp16.entity.WeightHistory;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
@@ -26,6 +28,7 @@ import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.WeightHistoryService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -212,6 +215,16 @@ public class MainController extends Controller implements Initializable {
             BodyfatHistory actualBodyfathistory = bodyfatHistoryService.getActualBodyfat(user_id);
             if(actualBodyfathistory != null){
                 bodyfat = actualBodyfathistory.getBodyfat();
+            }
+
+            PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(user_id);
+            if(actualBodyfathistory != null){
+                String pathToResource = getClass().getClassLoader().getResource("img").toString().substring(5);
+                LOGGER.debug("Loading from resources: " + pathToResource);
+                String pathOfNewImage = pathToResource + actualPictureHistory.getLocation();
+                LOGGER.debug("Loading image with path: " + pathOfNewImage);
+                File picture = new File(pathOfNewImage);
+                userImgView.setImage(new Image(picture.toURI().toString()));
             }
 
         }catch(ServiceException e){
