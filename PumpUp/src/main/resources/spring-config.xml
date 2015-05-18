@@ -202,6 +202,7 @@
 
     <bean id="generateWorkoutPlanController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GenerateWorkoutPlanController" scope="singleton">
         <property name="generatedWorkoutplanService" ref="generatedWorkoutplanService"></property>
+        <property name="categoryService" ref="categoryService"></property>
 
     </bean>
 

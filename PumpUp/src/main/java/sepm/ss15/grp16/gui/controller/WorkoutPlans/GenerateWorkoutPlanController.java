@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -15,6 +17,7 @@ import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.TrainingsCategory;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
+import sepm.ss15.grp16.service.CategoryService;
 import sepm.ss15.grp16.service.Training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
@@ -39,6 +42,10 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
     private ToggleGroup toggleGroup;
     private List<EquipmentCategory> equipment;
     private List<CheckBox> boxes;
+    private CategoryService categoryService;
+    //private ObservableList<CheckBox> equipmentCheckboxes = FXCollections.observableArrayList();
+    //private ObservableList<CheckBox> goalCheckboxes = FXCollections.observableArrayList();
+    //private List<CheckBox> allCheckboxes = new ArrayList<>();
 
     @FXML
     private RadioButton strengthRadio;
@@ -81,11 +88,21 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
     private CheckBox jumpingRopeCheck;
 
 
-
-
+    /**
+     * Sets the service. Will be injected by Spring.
+     * @param generatedWorkoutplanService service to generate workout plans
+     */
     public void setGeneratedWorkoutplanService(GeneratedWorkoutplanService generatedWorkoutplanService) {
         this.generatedWorkoutplanService = generatedWorkoutplanService;
 
+    }
+
+    /**
+     * Sets the service. Will be injected by Spring.
+     * @param categoryService service for the categories
+     */
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -120,9 +137,16 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         boxes.add(absRollerCheck);
         boxes.add(jumpingRopeCheck);
         boxes.add(punchbagCheck);
+
         LOGGER.info("Controller successfully initialized!");
     }
 
+    /**
+     * This method is called whenever the user hits the 'Generate' button.
+     * It reads all ticked checkboxes and the radio buttons. After that the corresponding
+     * service for generating the workout plan is called by delegating the necessary information.
+     * When the workout routine is received, it is shown on a new stage.
+     */
     @FXML
     void generateButtonClicked() {
         for(CheckBox box: boxes){

@@ -73,20 +73,6 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         int age = user.getAge();
         boolean male = user.isGender();
         List<Exercise> exercises = exerciseService.findAll();
-        List<Exercise> enduranceExercises = new ArrayList<Exercise>();
-        for(Exercise exercise: exercises){
-            TrainingsCategory category = new TrainingsCategory(0,"");
-            List<AbsractCategory> categories = exercise.getCategories();
-            for(AbsractCategory Abscategory: categories){
-                if(Abscategory instanceof TrainingsCategory){
-                    category = (TrainingsCategory)Abscategory;
-                    break;
-                }
-            }
-            if(category.getId() == 0){
-                enduranceExercises.add(exercise);
-            }
-        }
         Trainingsplan result;
         /**
          * Young user between 1 - 25 years.
@@ -297,9 +283,12 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         }
     }
 
-    /*
-     * These methods are not supported by this functionality
-     */
+    /***************************************************************************************************************************************
+     **                                                                                                                                   **
+     **                              The following methods are not supported by this module                                               **
+     **                                                                                                                                   **
+     ***************************************************************************************************************************************/
+
     @Override
     public Gen_WorkoutplanPreferences create(Gen_WorkoutplanPreferences dto) throws ServiceException {
         throw new UnsupportedOperationException();
