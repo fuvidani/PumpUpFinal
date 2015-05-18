@@ -268,11 +268,11 @@ public class ManageExerciseController extends Controller implements Initializabl
 
             //exercise got set from other controller
             if(this.exercise!=null && !observablePicListData.isEmpty()){
-                String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
-                file =new File(storingPath + "\\"+newValue);
-                picture = "/"+file.getName();
+                String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+                file =new File(pathToResource+"/"+newValue);
+                picture = file.getName();
             }else{
-                file =  new File(newValue);
+                file =  new File("/"+newValue);
                 picture = file.toString();
             }
             LOGGER.debug(picture);

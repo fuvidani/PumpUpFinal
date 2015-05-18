@@ -32,8 +32,10 @@ import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 
+import javax.print.URIException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -240,25 +242,20 @@ public class ExercisesController extends Controller implements Initializable{
 
     private void showPicture(Integer index){
         try {
-            String seperator = "\\"; //windows default
-            String OS = System.getProperty("os.name").toLowerCase();
-            String directory = getClass().getClassLoader().getResource("img").toString().substring(6);
-            //mac and unix systems
-            if (OS.indexOf("mac")>=0 || OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >=0) {
-                seperator = "/";
-                directory = seperator.concat(directory);
-            }
-            String file = seperator+exercise.getGifLinks().get(index);
+            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
 
-            String path = directory.concat(file);
-            LOGGER.debug("show details method path: " + path);
-            FileInputStream reading = new FileInputStream(path);
+            LOGGER.debug("show details method path: " + pathToResource);
+            FileInputStream reading = new FileInputStream(pathToResource+"/"+exercise.getGifLinks().get(index));
             Image img = new Image(reading);
             imageView.setImage(img);
         }catch (IOException e){
             e.printStackTrace();
             LOGGER.error(e);
-        }
+        }catch(URISyntaxException e){
+            e.printStackTrace();
+            LOGGER.error(e);
+
+            }
     }
 
     @FXML
