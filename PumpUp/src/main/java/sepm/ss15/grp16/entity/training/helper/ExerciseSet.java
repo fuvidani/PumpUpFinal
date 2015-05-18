@@ -195,9 +195,7 @@ public class ExerciseSet implements DTOHelper {
 
 		@Override
 		public String toString() {
-			return "SetType{" +
-					"type=" + type +
-					'}';
+			return type;
 		}
 
 		public static SetType getSetType(String type){

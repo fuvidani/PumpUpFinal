@@ -29,13 +29,13 @@ public class CategoryServiceImpl implements CategoryService {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * no need for all categorys
+     * @return
+     */
     @Override
-    public List findAll() throws ServiceException {
-       try{
-           return categoryDAO.findAll();
-       }catch (PersistenceException e){
-           throw new ServiceException(e);
-       }
+    public List<AbsractCategory> findAll() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -54,6 +54,11 @@ public class CategoryServiceImpl implements CategoryService {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * getting a list of all equipment categorys
+     * @return a list of all equipment categorys like, kurzhantel, langhantel, springschnur ...
+     * @throws ServiceException
+     */
     @Override
     public List<EquipmentCategory> getAllEquipment() throws ServiceException {
         try{
@@ -63,6 +68,11 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    /**
+     * getting a list of all muscle groups
+     * @return a list of all muslce groups like, bauchmuskeln, oberschenkel, unterschenkel ...
+     * @throws ServiceException
+     */
     @Override
     public List<MusclegroupCategory> getAllMusclegroup() throws ServiceException {
         try{
@@ -72,6 +82,11 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    /**
+     * getting a list of all trainingstypes
+     * @return a list of all trainingstypes: ausdauer, kraft, balance, flexibilitaet
+     * @throws ServiceException
+     */
     @Override
     public List<TrainingsCategory> getAllTrainingstype() throws ServiceException {
        try{
@@ -81,6 +96,12 @@ public class CategoryServiceImpl implements CategoryService {
        }
     }
 
+    /**
+     * getting exactly one category specified by the given id
+     * @param id of the category to search for
+     * @return exactely one category
+     * @throws ServiceException
+     */
     @Override
     public AbsractCategory searchByID(Integer id) throws ServiceException {
         try{
