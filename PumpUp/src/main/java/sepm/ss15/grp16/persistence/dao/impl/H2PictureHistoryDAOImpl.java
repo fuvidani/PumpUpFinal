@@ -11,6 +11,7 @@ import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,8 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             */
 
             LOGGER.debug("Saving image...");
-            String pathToResource = getClass().getClassLoader().getResource("img").toString().substring(5);
+            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+
             LOGGER.debug("Saving in resources: " + pathToResource);
             String saveName = "/u" + pictureHistory.getUser_id() + "p" + pictureHistory.getPicturehistory_id() + ".jpg";
             String pathOfNewImage = pathToResource + saveName;
@@ -116,6 +118,8 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         } catch (IOException e) {
             LOGGER.error("Failed to create new pictureHistory. IO failed");
             throw new PersistenceException("Failed to create a new pictureHistory", e);
+        } catch (URISyntaxException e){
+            e.printStackTrace();
         }
 
         LOGGER.info("Created pictureHistory successfully");

@@ -30,6 +30,7 @@ import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -219,7 +220,7 @@ public class MainController extends Controller implements Initializable {
 
             PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(user_id);
             if(actualBodyfathistory != null){
-                String pathToResource = getClass().getClassLoader().getResource("img").toString().substring(5);
+                String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
                 LOGGER.debug("Loading from resources: " + pathToResource);
                 String pathOfNewImage = pathToResource + actualPictureHistory.getLocation();
                 LOGGER.debug("Loading image with path: " + pathOfNewImage);
@@ -228,6 +229,8 @@ public class MainController extends Controller implements Initializable {
             }
 
         }catch(ServiceException e){
+            e.printStackTrace();
+        }catch(URISyntaxException e){
             e.printStackTrace();
         }
 
