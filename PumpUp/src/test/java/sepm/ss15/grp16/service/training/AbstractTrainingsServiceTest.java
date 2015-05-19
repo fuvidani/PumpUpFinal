@@ -109,7 +109,7 @@ public abstract class AbstractTrainingsServiceTest extends AbstractServiceTest<T
 			ExerciseSet set = new ExerciseSet();
 
 			set.setRepeat(15);
-			set.setType(ExerciseSet.SetType.getSetType(ExerciseSet.SetType.REPEAT));
+			set.setType(ExerciseSet.SetType.repeat);
 			set.setExercise(dummyExercise());
 			set.setIsDeleted(false);
 			set.setUser(dummyUser());
@@ -138,6 +138,7 @@ public abstract class AbstractTrainingsServiceTest extends AbstractServiceTest<T
 
 		trainingsplan.setName("testtraining");
 		trainingsplan.setDescr("testdescription");
+		trainingsplan.setDuration(10);
 		trainingsplan.setIsDeleted(false);
 
 		return trainingsplan;

@@ -12,9 +12,10 @@ CREATE SEQUENCE IF NOT EXISTS seq_ES START WITH 1 INCREMENT BY 1;
 
 CREATE TABLE IF NOT EXISTS TrainingsPlan (
   ID_Plan     INTEGER DEFAULT nextval('seq_TP'),
-  UID         INTEGER     NULL, --included plans have no user
-  name        VARCHAR(30) NOT NULL,
-  description VARCHAR(30) NULL,
+  UID         INTEGER NULL, --included plans have no user
+  name        VARCHAR NOT NULL,
+  description VARCHAR NULL,
+  duration    INTEGER NOT NULL,
   isDeleted   BOOLEAN DEFAULT FALSE,
 
   PRIMARY KEY (ID_Plan),
@@ -24,7 +25,7 @@ CREATE TABLE IF NOT EXISTS TrainingsPlan (
 CREATE TABLE IF NOT EXISTS TrainingsSession (
   ID_Session INTEGER DEFAULT nextval('seq_TS'),
   ID_Plan    INTEGER,
-  name       VARCHAR(30),
+  name       VARCHAR,
   UID        INTEGER NULL, --included sessions have no user
   isDeleted  BOOLEAN DEFAULT FALSE,
 
@@ -38,7 +39,7 @@ CREATE TABLE IF NOT EXISTS ExerciseSet (
   ID_Exercise INTEGER,
   UID         INTEGER NULL, --included sets have no user
   repeat      INTEGER NOT NULL CHECK (repeat > 0),
-  type        VARCHAR(10) CHECK (type IN ('time', 'repeat')),
+  type        VARCHAR CHECK (type IN ('time', 'repeat')),
   order_nr    INTEGER,
   ID_Session  INTEGER,
   isDeleted   BOOLEAN DEFAULT FALSE,
