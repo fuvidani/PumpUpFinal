@@ -100,11 +100,13 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 weeklyCalorieGoal = male ? 1800 : 1350;
                 days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 1050 : 800;
+                weeklyCalorieGoal = male ? 1200 : 900;
                 days = 3;
                 numberOfExercises = 4;
             } else {                                        // Obese
-                
+                weeklyCalorieGoal = male ? 1050 : 780;
+                days = 3;
+                numberOfExercises = 3;
             }
         }
 
@@ -112,14 +114,16 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          * Adult user between 26 - 35 years.
          */
         else if (age > 25 && age <= 35){
-            if (BMI < 18.5) {                               // Underweight
-
-            } else if (BMI >= 18.5 && BMI <= 24.9) {        // Normal
-
+            if (BMI <= 24.9) {                               // Underweight and Normal
+                weeklyCalorieGoal = male ? 1600: 1200;
+                days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-
+                weeklyCalorieGoal = male ? 1100 : 825;
+                days = 3;
+                numberOfExercises = 4;
             } else {                                        // Obese
-
+                weeklyCalorieGoal = male ? 1000: 750;
+                days = numberOfExercises = 3;
             }
         }
 
@@ -127,15 +131,16 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          *  User between 36 - 50 years.
          */
         else if (age > 35 && age <= 50){
-            if (BMI < 18.5) {                               // Underweight
-
-            } else if (BMI >= 18.5 && BMI <= 24.9) {        // Normal
-
-
+            if (BMI <= 24.9) {                               // Underweight and Normal
+                weeklyCalorieGoal = male ? 1200 : 900;
+                days = 3;
+                numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-
+                weeklyCalorieGoal = male ? 1000: 750;
+                days = numberOfExercises = 3;
             } else {                                        // Obese
-
+                weeklyCalorieGoal = male ?  800 : 600;
+                days = numberOfExercises = 3;
             }
         }
 
@@ -143,17 +148,23 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          * Old user with more than 50 years.
          */
         else {
-            if (BMI < 18.5) {                               // Underweight
-
-            } else if (BMI >= 18.5 && BMI <= 24.9) {        // Normal
-
-
+            if (BMI <= 24.9) {                               // Underweight and Normal
+                weeklyCalorieGoal = male ? 800 : 600;
+                days = 2;
+                numberOfExercises = 3;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-
+                weeklyCalorieGoal = male ? 500 : 375;
+                days = 2;
+                numberOfExercises = 3;
             } else {                                        // Obese
-
+                weeklyCalorieGoal = male ? 300: 225;
+                days = 2;
+                numberOfExercises = 3;
             }
         }
+        double caloriesPerDay = weeklyCalorieGoal*1.0/days;
+        double caloriesPerExercise = caloriesPerDay/numberOfExercises;
+        
         LOGGER.info("Workoutplan successfully generated!");
         return null;
     }
