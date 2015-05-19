@@ -73,6 +73,17 @@ public class CalendarController extends Controller implements Initializable{
                     "};\n" +
                     "}");
 
+            Gson gson = new Gson();
+            String json = null;
+            try {
+                json = gson.toJson(calendarService.findAll());
+            } catch (ServiceException e) {
+                e.printStackTrace(); //TODO change
+            }
+
+            LOGGER.debug(json);
+            engine.executeScript("addListEvents(" + json + ");");
+
         });
 
     }
@@ -92,16 +103,5 @@ public class CalendarController extends Controller implements Initializable{
             e.printStackTrace();
         }
         //TODO end
-
-        Gson gson = new Gson();
-        String json = null;
-        try {
-            json = gson.toJson(calendarService.findAll());
-        } catch (ServiceException e) {
-            e.printStackTrace(); //TODO change
-        }
-
-        LOGGER.debug(json);
-        engine.executeScript("addListEvents(" + json + ");");
     }
 }
