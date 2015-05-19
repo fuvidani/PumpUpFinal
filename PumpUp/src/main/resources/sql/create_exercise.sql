@@ -189,25 +189,25 @@ merge INTO category VALUES(0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0)
 MERGE INTO exercise KEY(id) VALUES
   (0, 'Liegestötz', 'Legen Sie sich auf den Bauch, strecken Sie die Beine, schließen Sie die Füße und stellen Sie die Zehenspitzen auf.
   Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie
-  bilden, von den Fersen bis zum Nacken.', 0.03, 'https://www.youtube.com/embed/fdA6oWzW96g?feature=player_detailpage', null, false),
+  bilden, von den Fersen bis zum Nacken.', 1.0, 'https://www.youtube.com/embed/fdA6oWzW96g?feature=player_detailpage', null, false),
   (1, 'Armrotation', 'Eine tolle Übung, um die Schultern vor oder nach den intensiveren Übungen aufzuwärmen oder abzukühlen.
   Armrotationen sind besonders dann geeignet, wenn man nach einer Verletzung oder im Alter gerade wieder mit dem Training beginnt
   Stellen Sie sich aufrecht hin, strecken Sie die Arme seitlich aus und machen Sie kleine oder große Kreise.
-  Zuerst kreisen Sie zehnmal in die eine, dann in die andere Richtung.', 0.02, null, null, false),
+  Zuerst kreisen Sie zehnmal in die eine, dann in die andere Richtung.', 0.5, null, null, false),
   (2, 'Daumen hoch', 'Nehmen Sie die Bauchlage ein. Ihre Füße sind hüftbreit geöffnet, die Fußspitzen aufgestellt.
   Strecken Sie die Arme seitlich aus und ballen Sie Ihre Hände zu Fäusten, die Daumen zeigen nach oben.
   Heben Sie nun die Schultern und den Kopf vom Boden an und ziehen Sie die gestreckten Arme so weit wie möglich nach oben.
-  Dabei nähern sich Ihre Schulterblätter an.', 0.01, null, null, false ),
-  (3, 'Kniebeuge','Wichtig. Die Knie beim Hochgehen nicht ganz durch-strecken sondern etwas tief bleiben.', 0.02, null, null, false),
+  Dabei nähern sich Ihre Schulterblätter an.', 0.8, null, null, false ),
+  (3, 'Kniebeuge','Wichtig. Die Knie beim Hochgehen nicht ganz durch-strecken sondern etwas tief bleiben.', 1.5, null, null, false),
   (4, 'Crunch it UP', 'Legen Sie sich auf den Rücken. Stellen Sie die Beine angewinkelt hüftbreit auf
  und haken Sie die Füße unter einem Gegenstand (Bett, Sofa, Stuhl, Regal, Couchtisch etc.) ein.
  Verschränken Sie die Arme vor der Brust und halten Sie sie fest an den Körper gepresst. Jetzt spannen Sie die Bauchmuskeln fest an,
  lösen Kopf und Schultern vom Boden und kommen schließlich langsam mit dem gesamten Oberkörper nach oben, bis die Ellbogen die Oberschenkel
  nahe der Hüften berühren. Senken Sie sich anschließend wieder langsam ab, bis die Schulterblätter den Boden berühren.
- Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauch-muskeln angespannt.', 0.5, '"https://www.youtube.com/embed/O_kqAgdD17E?feature=player_detailpage', null, false),
+ Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauch-muskeln angespannt.', 1.0, '"https://www.youtube.com/embed/O_kqAgdD17E?feature=player_detailpage', null, false),
   (5, 'Strandschere', 'Legen Sie sich mit gestreckten Beinen auf die linke Seite und stützen Sie den Kopf mit dem linken Arm ab.
   Die andere Hand stützen Sie vor Ihrer Brust auf. Heben Sie dann Ihr rechtes Bein so hoch wie möglich an und halten Sie es gestreckt für
-  drei Sekunden in der', 0.02, null, null, false),
+  drei Sekunden in der', 0.8, null, null, false),
   (6, 'Auf der Stelle Laufen', '', 0.3, null, null, false),
   (7, 'Einbeinige Kniebeuge', 'Kraft, Koordination, Balance und Ausdauer. Und mit ein bisschen Kreativität können Sie die Übung endlos
   variieren. Stellen Sie sich auf den rechten Fuß und heben Sie Ihr linkes Bein gestreckt nach vorn an.
@@ -218,20 +218,20 @@ MERGE INTO exercise KEY(id) VALUES
   Das rechte Knie bleibt über dem Mittelfuß. Achten Sie auf den geraden Rücken. Drücken Sie sich anschließend nur mit der Kraft Ihres
   rechten Beins wieder nach oben. Halten Sie sich nur fest, um das Gleichgewicht zu bewahren, und nicht,
   um sich mithilfe der abgestützten Hand hochzuschieben. Strecken Sie das rechte Knie am höchsten Punkt nicht ganz durch.
-  Absolvieren Sie so viele Wiederholungen wie möglich, wechseln Sie dann die Seite.', 0.5, '', null, false),
+  Absolvieren Sie so viele Wiederholungen wie möglich, wechseln Sie dann die Seite.', 0.8, '', null, false),
   (8, 'Ausfallschritt', 'Stellen Sie sich mit hüftbreit geöffneten Füßen aufrecht hin, die Fußspitzen zeigen nach vorn.
   Legen Sie die Hände an den Hinterkopf und richten Sie Ihren Blick in die Ferne. Jetzt machen Sie mit dem linken Fuß einen großen
   Schritt nach vorn und beugen dabei das Knie. Senken Sie Ihre Hüften so tief, bis das hintere Knie fast den Boden berührt.
   Beide Knie sollten am tiefsten Punkt im rechten Winkel gebeugt sein. Das vordere Knie befindet sich direkt über der Ferse,
   schieben Sie es nicht über die Zehen hinaus. Nun stoßen Sie sich mit dem linken Bein wieder ab und kommen zurück in die Ausgangsposition.
   Drücken Sie die Knie nicht ganz durch und achten Sie während des Bewegungsablaufs darauf, den Kopf in Verlängerung der Halswirbelsäule
-  und den Rücken gerade zu halten. Wechseln Sie nun die Seite.', 0.3, '', null, false),
+  und den Rücken gerade zu halten. Wechseln Sie nun die Seite.', 0.5, '', null, false),
   (9, 'PLANK', 'Setzen sie die Unterarme schulterbreit auf dem Boden auf und bilden Sie mit dem Rücken eine gerade Linie.
-  Halten Sie diese Position.', 0.2, '', null, false),
-  (10, 'Seilspringen', 'Versuchen Sie eine geringe Sprunghöhe um Kraft zu schonen und versuchen Sie es auch einmal rückwärts', 0.1, '', null, false),
-  (11, 'BOXEN-Schläge', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und schlagen führen Sie gezielte Schläge aus',0.2, '', null, false),
+  Halten Sie diese Position.', 1.0, '', null, false),
+  (10, 'Seilspringen', 'Versuchen Sie eine geringe Sprunghöhe um Kraft zu schonen und versuchen Sie es auch einmal rückwärts', 0.8, '', null, false),
+  (11, 'BOXEN-Schläge', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und schlagen führen Sie gezielte Schläge aus',1.5, '', null, false),
   (12, 'BOXEN-Tritte', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und treten sie mit dem Schienbein gegen den Sandsack.
-  Dehnen Sie sich vorher ausreichend', 0.5,' ', null, false),
+  Dehnen Sie sich vorher ausreichend', 1.5,' ', null, false),
   (13, 'Armstrecken mit Kurzhantel', '', 0.4, ' ', null, false),
   (14, 'Bizeps mit Langhantel', '', 0.3,  ' ',null, false),
   (15, 'Kniebeugen mit Langhantel', '', 0.5,  ' ',null, false),

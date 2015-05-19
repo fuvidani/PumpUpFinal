@@ -113,6 +113,18 @@
                         </VBox>
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <children>
+                        <CheckBox fx:id="selectAllCheck" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Alles auswählen">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </HBox>
                   <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
                   <Button mnemonicParsing="false" onAction="#generateButtonClicked" text="Generiere!" VBox.vgrow="ALWAYS">
                      <VBox.margin>

@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -87,6 +89,9 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
     @FXML
     private CheckBox jumpingRopeCheck;
 
+    @FXML
+    private CheckBox selectAllCheck;
+
 
     /**
      * Sets the service. Will be injected by Spring.
@@ -137,6 +142,88 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         boxes.add(absRollerCheck);
         boxes.add(jumpingRopeCheck);
         boxes.add(punchbagCheck);
+        selectAllCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(new_val) {
+                    for (CheckBox box : boxes) {
+                        box.setSelected(true);
+                    }
+                }
+            }
+        });
+
+        barbellCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(!new_val) {
+                   selectAllCheck.setSelected(false);
+                }
+            }
+        });
+
+        yogaBallCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(!new_val) {
+                    selectAllCheck.setSelected(false);
+                }
+            }
+        });
+
+        dumbbellCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(!new_val) {
+                    selectAllCheck.setSelected(false);
+                }
+            }
+        });
+
+        chinupBarCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(!new_val) {
+                    selectAllCheck.setSelected(false);
+                }
+            }
+        });
+
+        expanderCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(!new_val) {
+                    selectAllCheck.setSelected(false);
+                }
+            }
+        });
+
+        medicineBallCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(!new_val) {
+                    selectAllCheck.setSelected(false);
+                }
+            }
+        });
+
+        absRollerCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(!new_val) {
+                    selectAllCheck.setSelected(false);
+                }
+            }
+        });
+
+        jumpingRopeCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(!new_val) {
+                    selectAllCheck.setSelected(false);
+                }
+            }
+        });
+
+        punchbagCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
+                if(!new_val) {
+                    selectAllCheck.setSelected(false);
+                }
+            }
+        });
+
 
         LOGGER.info("Controller successfully initialized!");
     }
@@ -177,8 +264,8 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         transitionLoader.openStage("fxml/GeneratedWorkoutPlanResult.fxml",(Stage)barbellCheck.getScene().getWindow(),"Generierter Trainingsplan",300,300,true);
         GeneratedWorkoutPlanResultController controller = (GeneratedWorkoutPlanResultController)transitionLoader.getTo();
         controller.setGeneratedWorkoutPlan(result);
-
         controller.setFlag(true);
+
     }
 
 

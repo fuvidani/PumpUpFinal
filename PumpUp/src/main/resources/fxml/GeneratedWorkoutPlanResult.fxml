@@ -55,7 +55,7 @@
             <HBox VBox.vgrow="ALWAYS">
                <children>
                   <Region layoutX="970.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                  <ListView prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" prefHeight="571.0" prefWidth="830.0" HBox.hgrow="ALWAYS" />
                   <Region layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
