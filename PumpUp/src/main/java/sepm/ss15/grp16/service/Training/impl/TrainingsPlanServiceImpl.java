@@ -188,6 +188,11 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			LOGGER.error("error validating " + plan);
 			throw new ValidationException("Trainingsplan-ID darf nicht null sein!");
 		}
+
+		if (plan.getDuration() == null) {
+			LOGGER.error("error validating " + plan);
+			throw new ValidationException("Trainingsplan Dauer darf nicht null sein!");
+		}
 		if (plan.getTrainingsSessions() != null) {
 
 			List<TrainingsSession> trainingsSessions = plan.getTrainingsSessions();
