@@ -233,6 +233,6 @@
     </bean>
 
     <bean id="generatedWorkoutPlanResultController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GeneratedWorkoutPlanResultController" scope="prototype">
-
+        <property name="trainingsplanService" ref="trainingsplanService"></property>
     </bean>
 </beans>

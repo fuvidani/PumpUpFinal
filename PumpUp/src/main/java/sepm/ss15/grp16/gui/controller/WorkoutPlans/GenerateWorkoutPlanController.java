@@ -45,9 +45,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
     private List<EquipmentCategory> equipment;
     private List<CheckBox> boxes;
     private CategoryService categoryService;
-    //private ObservableList<CheckBox> equipmentCheckboxes = FXCollections.observableArrayList();
-    //private ObservableList<CheckBox> goalCheckboxes = FXCollections.observableArrayList();
-    //private List<CheckBox> allCheckboxes = new ArrayList<>();
+
 
     @FXML
     private RadioButton strengthRadio;

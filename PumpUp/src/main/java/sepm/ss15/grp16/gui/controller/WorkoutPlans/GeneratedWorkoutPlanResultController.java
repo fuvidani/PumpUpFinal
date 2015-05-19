@@ -23,6 +23,9 @@ import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
+import sepm.ss15.grp16.service.Training.TrainingsplanService;
+import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.exception.ValidationException;
 
 import java.net.URL;
 import java.util.List;
@@ -39,10 +42,14 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     private static final Logger LOGGER = LogManager.getLogger();
     private Trainingsplan generatedWorkoutPlan;
     private StageTransitionLoader transitionLoader;
+    private TrainingsplanService trainingsplanService;
     private BooleanProperty DTOArrived = new SimpleBooleanProperty();
 
     @FXML
     private ListView<TrainingsSession>  listView;
+
+    @FXML
+    private Button saveButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -103,6 +110,10 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
 
     }
 
+    public void setTrainingsplanService(TrainingsplanService service){
+        this.trainingsplanService = service;
+    }
+
     public void setGeneratedWorkoutPlan(Trainingsplan generatedWorkoutPlan){
         this.generatedWorkoutPlan = generatedWorkoutPlan;
         LOGGER.info("Generated workoutplan arrived.");
@@ -117,6 +128,23 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     @FXML
     public void saveWorkoutPlanClicked(){
         LOGGER.info("Save button clicked, delegating request towards the service layer...");
+        try{
+            trainingsplanService.create(generatedWorkoutPlan);
+        }catch (ServiceException e){
+            LOGGER.error("Service threw exception, catched in GUI. Real reason: " + e.toString());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehler beim Generieren");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText("Generierter Trainingsplan");
+        alert.setContentText("Der neu generierte Trainingsplan wurde erfolgreich gespeichert.");
+        alert.showAndWait();
+        saveButton.setDisable(true);
     }
 
     @FXML
@@ -147,7 +175,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         List<TrainingsSession> sessions = generatedWorkoutPlan.getTrainingsSessions();
         ObservableList<TrainingsSession> data = FXCollections.observableArrayList(sessions);
         listView.setItems(data);
-        LOGGER.info("I WAS HERE");
+        LOGGER.info("Generated workout successfully displayed!");
     }
 
 

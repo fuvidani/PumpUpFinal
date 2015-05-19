@@ -22,7 +22,7 @@
          <children>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveWorkoutPlanClicked" text="Trainingsplan speichern" HBox.hgrow="ALWAYS">
+                  <Button fx:id="saveButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveWorkoutPlanClicked" text="Trainingsplan speichern" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />
                      </font>
