@@ -219,7 +219,8 @@ public class MainController extends Controller implements Initializable {
             }
 
             PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(user_id);
-            if(actualBodyfathistory != null){
+
+            if(actualPictureHistory != null){
                 String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
                 LOGGER.debug("Loading from resources: " + pathToResource);
                 String pathOfNewImage = pathToResource + actualPictureHistory.getLocation();

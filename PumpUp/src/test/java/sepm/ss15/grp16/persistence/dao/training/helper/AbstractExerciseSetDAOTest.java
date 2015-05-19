@@ -157,7 +157,7 @@ public abstract class AbstractExerciseSetDAOTest {
 		ExerciseSet exerciseSet = new ExerciseSet();
 
 		exerciseSet.setRepeat(20);
-		exerciseSet.setType(ExerciseSet.SetType.getSetType(ExerciseSet.SetType.REPEAT));
+		exerciseSet.setType(ExerciseSet.SetType.repeat);
 		exerciseSet.setOrder_nr(1);
 		exerciseSet.setIsDeleted(false);
 
@@ -183,6 +183,7 @@ public abstract class AbstractExerciseSetDAOTest {
 
 		plan.setName("testtraining");
 		plan.setDescr("testdescription");
+		plan.setDuration(10);
 		plan.setIsDeleted(false);
 
 		plan = getTrainingsplanDAO().create(plan);
