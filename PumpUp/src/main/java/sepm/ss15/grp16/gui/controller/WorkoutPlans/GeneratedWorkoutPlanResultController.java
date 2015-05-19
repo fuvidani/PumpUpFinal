@@ -71,7 +71,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
                         Pane pane = null;
                         if (t != null) {
                             pane = new Pane();
-                            //String value = t.getName() + "\n\n";
                             String title = t.getName();
                             String value = "";
 
@@ -96,7 +95,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
                             final double em = leftText.getLayoutBounds().getHeight();
                             middleText.relocate(0, 2 * em);
 
-                            //setText(leftText);
                             pane.getChildren().addAll(leftText, middleText);
                         }
                         setText("");

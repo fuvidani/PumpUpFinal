@@ -259,9 +259,14 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
             return;
         }
         LOGGER.info("Generated workoutplan from service received, delegating towards the next window...");
+
+        // Open new stage
         transitionLoader.openStage("fxml/GeneratedWorkoutPlanResult.fxml",(Stage)barbellCheck.getScene().getWindow(),"Generierter Trainingsplan",300,300,true);
+        // Get the controller of the new stage
         GeneratedWorkoutPlanResultController controller = (GeneratedWorkoutPlanResultController)transitionLoader.getTo();
+        // Delegate the object towards the controller of the new stage
         controller.setGeneratedWorkoutPlan(result);
+        // Signal the controller about the arrival
         controller.setFlag(true);
 
     }
