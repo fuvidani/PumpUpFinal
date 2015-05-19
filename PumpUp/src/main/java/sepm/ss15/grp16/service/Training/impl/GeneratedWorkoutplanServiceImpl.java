@@ -69,46 +69,42 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
     private Trainingsplan generateForEndurance(List<EquipmentCategory> equipment, User user) throws ServiceException{
         // TODO: implement me
         LOGGER.info("Entering the generating algorithms for an endurance workout plan.");
-        double BMI = user.getHeight(); // TODO: change this
+
+        double height = user.getHeight()/100.0;
+        LOGGER.info("HEIGHT: " + height);
+        WeightHistory history = weightHistoryService.getActualWeight(user.getUser_id());
+        double weight = history.getWeight();
+        LOGGER.info("WEIGHT: " + weight);
+        double BMI = weight/(Math.pow(height,2));
+        LOGGER.info("BMI: " + BMI);
         int age = user.getAge();
         boolean male = user.isGender();
-        List<Exercise> exercises = exerciseService.findAll();
+        List<Exercise> exercisesWithoutEquipment = exerciseService.getWithoutCategory(equipment);
+        List<Exercise> exercisesForEndurance = exerciseService.getAllEnduranceExercises();
+        List<Exercise> exercises = new ArrayList<Exercise>();
+        for(Exercise exercise: exercisesWithoutEquipment){
+            if(exercisesForEndurance.contains(exercise)){
+                exercises.add(exercise);
+            }
+        }
         Trainingsplan result;
+        int weeklyCalorieGoal;
+        int days;
+        int numberOfExercises;
+        double multiplier = 1;
         /**
          * Young user between 1 - 25 years.
          */
         if(age <= 25) {
-            if (BMI < 18.5) {                               // Underweight
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
-            } else if (BMI >= 18.5 && BMI <= 24.9) {        // Normal
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
-
+            if (BMI <= 24.9) {                               // Underweight and Normal
+                weeklyCalorieGoal = male ? 1800 : 1350;
+                days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
-
+                weeklyCalorieGoal = male ? 1050 : 800;
+                days = 3;
+                numberOfExercises = 4;
             } else {                                        // Obese
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
-
+                
             }
         }
 
@@ -117,36 +113,12 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 25 && age <= 35){
             if (BMI < 18.5) {                               // Underweight
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             } else if (BMI >= 18.5 && BMI <= 24.9) {        // Normal
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             } else {                                        // Obese
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             }
         }
@@ -156,36 +128,13 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 35 && age <= 50){
             if (BMI < 18.5) {                               // Underweight
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             } else if (BMI >= 18.5 && BMI <= 24.9) {        // Normal
-                if(equipment.isEmpty()){
-                    // no equipment available
 
-                }else {
-
-                }
 
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             } else {                                        // Obese
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             }
         }
@@ -195,36 +144,13 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else {
             if (BMI < 18.5) {                               // Underweight
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             } else if (BMI >= 18.5 && BMI <= 24.9) {        // Normal
-                if(equipment.isEmpty()){
-                    // no equipment available
 
-                }else {
-
-                }
 
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             } else {                                        // Obese
-                if(equipment.isEmpty()){
-                    // no equipment available
-
-                }else {
-
-                }
 
             }
         }
@@ -273,6 +199,9 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
     @Override
     public void validate(Gen_WorkoutplanPreferences dto) throws ValidationException {
         LOGGER.info("Entering validation in service.");
+        if(dto == null){
+            throw new ValidationException("Es wurden leere Parameter übergeben!");
+        }
         TrainingsCategory goal = dto.getGoal();
         if(goal == null){
             throw new ValidationException("Bitte wählen Sie eines von den 4 Trainingszielen aus!");

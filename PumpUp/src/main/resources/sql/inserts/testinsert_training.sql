@@ -3,7 +3,7 @@ MERGE INTO exercise VALUES (1, 'liegestuetz', 'eine der besten uebungen ueberhau
 MERGE INTO gif VALUES (1, 1, 'menshealth');
 MERGE INTO gif VALUES (2, 1, 'youtube');
 
--- Training
+-- training
 MERGE INTO TrainingsPlan VALUES (1, NULL, 'Testtraining1', 'Testtrainingbeschreibung', FALSE);
 MERGE INTO TrainingsPlan VALUES (2, NULL, 'Testtraining2', 'Testtrainingbeschreibung', FALSE);
 
