@@ -12,9 +12,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.Training.TrainingsplanService;
@@ -28,6 +30,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Create_Edit_WorkoutPlanController extends Controller implements Initializable {
+	private static final Logger LOGGER = LogManager.getLogger(Create_Edit_WorkoutPlanController.class);
+
 	private StageTransitionLoader transitionLoader;
 
 	private TrainingsplanService trainingsplanService;
@@ -139,11 +143,11 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 			alert.showAndWait();
 			return null;
 		} else {
-
+//TODO
 			if (plan_interClassCommunication != null) {
-				return new Trainingsplan(plan_interClassCommunication.getId(), userService.getLoggedInUser(), name, descr, false, data);
+				return new Trainingsplan(plan_interClassCommunication.getId(), userService.getLoggedInUser(), name, descr, false, 10, data);
 			} else {
-				return new Trainingsplan(null, userService.getLoggedInUser(), name, descr, false, data);
+				return new Trainingsplan(null, userService.getLoggedInUser(), name, descr, false, 10, data);
 			}
 		}
 	}
@@ -177,12 +181,10 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 							//middleText.setFont(_itemFont);
 							middleText.setTextOrigin(VPos.TOP);
 							final double em = leftText.getLayoutBounds().getHeight();
-							middleText.relocate(0, 2*em);
+							middleText.relocate(0, 2 * em);
 
 							//setText(leftText);
 							pane.getChildren().addAll(leftText, middleText);
-						} else {
-							//setText("");
 						}
 						setText("");
 						setGraphic(pane);
@@ -191,7 +193,6 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 				};
 			}
 		});
-		//listViewSessions.setStyle("-fx-alignment: CENTER-RIGHT;");
 	}
 
 	@FXML
@@ -214,7 +215,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 	@FXML
 	void addSession(ActionEvent event) {
 		transitionLoader.openWaitStage("fxml/Session.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf�gen", 600, 400, false);
-		if(session_interClassCommunication != null) {
+		if (session_interClassCommunication != null) {
 			listViewSessions.getItems().add(session_interClassCommunication);
 			setUpListView();
 		}

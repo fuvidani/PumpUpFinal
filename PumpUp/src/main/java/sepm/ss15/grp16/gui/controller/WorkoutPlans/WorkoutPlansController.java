@@ -11,6 +11,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
@@ -33,6 +35,8 @@ import java.util.ResourceBundle;
  * This controller is the central point of all workout plans assigned to the user.
  */
 public class WorkoutPlansController extends Controller implements Initializable {
+	private static final Logger LOGGER = LogManager.getLogger(WorkoutPlansController.class);
+
 	private TrainingsplanService trainingsplanService;
 	private UserService userService;
 
@@ -150,7 +154,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 				//User user = userService.getLoggedInUser();
 				User user = new User(1, null, null, null, null, null);
 
-				list = trainingsplanService.find(new Trainingsplan(null, user, null, null, null, null));
+				list = trainingsplanService.find(new Trainingsplan(null, user, null, null, null, null, null));
 				if (list == null) list = new ArrayList<>();
 			} else {
 				list = trainingsplanService.findAll();

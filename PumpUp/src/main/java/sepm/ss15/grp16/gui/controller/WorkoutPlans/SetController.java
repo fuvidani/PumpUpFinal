@@ -114,9 +114,9 @@ public class SetController extends Controller implements Initializable {
 		ExerciseSet.SetType setType;
 
 		if (repeat_type.equals("Wiederholung")) {
-			setType = new ExerciseSet.SetType(ExerciseSet.SetType.REPEAT);
+			setType = ExerciseSet.SetType.repeat;
 		} else {
-			setType = new ExerciseSet.SetType(ExerciseSet.SetType.TIME);
+			setType = ExerciseSet.SetType.time;
 		}
 
 		if (repeat == null || repeat.equals("")) {

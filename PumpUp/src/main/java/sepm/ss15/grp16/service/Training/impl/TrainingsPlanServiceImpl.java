@@ -75,7 +75,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 
 	@Override
 	public Trainingsplan update(Trainingsplan plan) throws ServiceException {
-		validate(plan);
+		validate_withoutID(plan);
 		try {
 			LOGGER.info("Service try to update Trainingsplan " + plan);
 			Trainingsplan trainingsplan = trainingsplanDAO.update(plan);
