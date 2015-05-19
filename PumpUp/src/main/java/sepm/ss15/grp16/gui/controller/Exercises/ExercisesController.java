@@ -277,14 +277,15 @@ public class ExercisesController extends Controller implements Initializable{
             exercise = null;
         }
 
-        transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
-
+        transitionLoader.openWaitStage("fxml/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
+        this.setContent();
         if(backup!=null){
             //TODO
         exercise = new Exercise(backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), userService.getLoggedInUser(), null);
         }
 
     }
+
 
     @FXML
     void editExerciseButtonClicked(ActionEvent event) {

@@ -267,14 +267,23 @@ public class ManageExerciseController extends Controller implements Initializabl
                 return;
 
             //exercise got set from other controller
-            if(this.exercise!=null && !observablePicListData.isEmpty()){
-                String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-                file =new File(pathToResource+"/"+newValue);
+//            if(this.exercise!=null && !observablePicListData.isEmpty()){
+//                String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+//                file =new File(pathToResource+"/"+newValue);
+//                picture = file.getName();
+//            }else{
+//                file =  new File("/"+newValue);
+//                picture = file.toString();
+//            }
+                            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+            if(newValue.contains("img_ex")){
+                                file =new File(pathToResource+"/"+newValue);
                 picture = file.getName();
+//
             }else{
-                file =  new File("/"+newValue);
-                picture = file.toString();
+                file =new File(newValue);
             }
+
             LOGGER.debug(picture);
 
             inputStream = new FileInputStream(file);

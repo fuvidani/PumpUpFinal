@@ -366,7 +366,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                 directory.mkdir();
             }
             GregorianCalendar calendar = new GregorianCalendar();
-            String ownName = "img_ex_" + (calendar.getTimeInMillis()) + Math.abs(originalName.hashCode());
+            String ownName = "/img_ex_" + (calendar.getTimeInMillis()) + Math.abs(originalName.hashCode());
             FileInputStream inputStream = new FileInputStream(originalName);
             File file1 = new File(pathToResource + ownName+".jpg"); //file storing
             FileOutputStream out = new FileOutputStream(file1);
