@@ -1,4 +1,4 @@
-﻿drop table categoryName;
+drop table categoryName;
 drop table gif;
 drop table exercise_category;
 drop table exercise;
