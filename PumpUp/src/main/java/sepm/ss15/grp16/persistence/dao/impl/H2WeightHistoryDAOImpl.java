@@ -126,14 +126,14 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
     public WeightHistory getActualWeight(int user_id) throws PersistenceException {
 
         LOGGER.info("Finding actual weighthistory...");
-        WeightHistory foundWeightHistory;
+        WeightHistory foundWeightHistory = null;
 
         try {
             getActualWeightStatement.setInt(1, user_id);
             ResultSet rs = getActualWeightStatement.executeQuery();
-            rs.next();
-            foundWeightHistory = new WeightHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));
-
+            if(rs.next() == true){
+                foundWeightHistory = new WeightHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));
+            }
         }catch(SQLException e){
             throw new PersistenceException("Failed to get actual weight", e);
         }

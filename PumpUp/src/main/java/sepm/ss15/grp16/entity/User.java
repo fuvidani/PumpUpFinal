@@ -13,7 +13,7 @@ public class User implements DTO{
 
     private Integer user_id;
     private String username;
-    private Boolean gender;
+    private Boolean gender; //true: male, false: female
     private Integer age;
     private Integer height;
     private String email;
