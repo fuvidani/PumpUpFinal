@@ -177,6 +177,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         transitionLoader.openStage("fxml/GeneratedWorkoutPlanResult.fxml",(Stage)barbellCheck.getScene().getWindow(),"Generierter Trainingsplan",300,300,true);
         GeneratedWorkoutPlanResultController controller = (GeneratedWorkoutPlanResultController)transitionLoader.getTo();
         controller.setGeneratedWorkoutPlan(result);
+
         controller.setFlag(true);
     }
 

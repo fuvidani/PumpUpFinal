@@ -2,20 +2,24 @@ package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -30,6 +34,14 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     private Trainingsplan generatedWorkoutPlan;
     private StageTransitionLoader transitionLoader;
     private BooleanProperty DTOArrived = new SimpleBooleanProperty();
+
+    @FXML
+    private TableView<TrainingsSession> tableView;
+    @FXML
+    private TableColumn<TrainingsSession, String> column1;
+
+    @FXML
+    private TableColumn<TrainingsSession, String> column2;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,7 +97,27 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     }
 
     private void displayWorkoutPlan(){
+        column1 = new TableColumn<>("Tag 1");
+        column2 = new TableColumn<>("Tag 2");
+        column1.setCellValueFactory(session  ->new SimpleStringProperty(session.getValue().toString()));
+        column2.setCellValueFactory(session  ->new SimpleStringProperty(session.getValue().toString()));
+        List<TrainingsSession> sessions = generatedWorkoutPlan.getTrainingsSessions();
+        int amountOfSessions = sessions.size();
+        if(amountOfSessions > 2){
+            int i = 2;
+            while (i != amountOfSessions){
+                i++;
+                TableColumn<TrainingsSession,String> tableColumn = new TableColumn<>("Tag " + i);
+                tableColumn.setMinWidth(240);
+                tableColumn.setCellValueFactory(session  ->new SimpleStringProperty(session.getValue().toString()));
+                tableView.getColumns().add(tableColumn);
+            }
+        }
 
+        ObservableList<TrainingsSession> trainingsSessions =  FXCollections.observableArrayList(sessions);
+        tableView.setItems(trainingsSessions);
+        LOGGER.info("I WAS HERE");
     }
+
 
 }
