@@ -281,16 +281,6 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     @Override
     public void delete(Exercise exercise) throws PersistenceException {
 
-        /**
-         * if current logedin user != exercise user
-         * don't allow to delete otherwise delete --> set flag
-         */
-
-
-
-        if(exercise.getUser()!=null)
-            throw new PersistenceException("cannot delete SYSTEM exercises!");
-
 
         LOGGER.debug("deleting an exercise in dao layer" + exercise);
        if(exercise==null)

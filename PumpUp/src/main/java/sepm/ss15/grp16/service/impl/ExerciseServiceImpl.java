@@ -95,7 +95,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         LOGGER.debug("deleting exercise in service");
         try{
 
-            if(userService.getLoggedInUser()!=exercise.getUser())
+            if(exercise.getUser()!=null && !userService.getLoggedInUser().equals(exercise.getUser()))
                 throw new ValidationException("can not delete an exercise from another user or the system");
 
             exerciseDAO.delete(exercise);

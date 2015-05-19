@@ -266,20 +266,10 @@ public class ManageExerciseController extends Controller implements Initializabl
             if(observablePicListData.isEmpty())
                 return;
 
-            //exercise got set from other controller
-//            if(this.exercise!=null && !observablePicListData.isEmpty()){
-//                String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-//                file =new File(pathToResource+"/"+newValue);
-//                picture = file.getName();
-//            }else{
-//                file =  new File("/"+newValue);
-//                picture = file.toString();
-//            }
-                            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
             if(newValue.contains("img_ex")){
                                 file =new File(pathToResource+"/"+newValue);
                 picture = file.getName();
-//
             }else{
                 file =new File(newValue);
             }
@@ -303,9 +293,9 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     void cancelClicked(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Uebung verlassen");
-        alert.setHeaderText("Das Uebungsfenster schliessen und alle Aenderungen verwerfen?");
-        alert.setContentText("Moechten Sie die Uebungsuebersicht wirklich beenden?");
+        alert.setTitle("\u00dcbung verlassen");
+        alert.setHeaderText("Das \u00dcbungsfenster schlie\u00dfen und alle Aenderungen verwerfen?");
+        alert.setContentText("M\\u00f6chten Sie die \u00dcbungsuebersicht wirklich beenden?");
         ButtonType yes = new ButtonType("Ja");
         ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(yes, cancel);
