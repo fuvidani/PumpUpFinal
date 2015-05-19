@@ -83,9 +83,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         int age = user.getAge();
         boolean male = user.isGender();
         List<Exercise> exercisesWithoutEquipment = exerciseService.getWithoutCategory(equipment);
-        LOGGER.info("Exercises without equipment size: " + exercisesWithoutEquipment.size());
         List<Exercise> exercisesForEndurance = exerciseService.getAllEnduranceExercises();
-        LOGGER.info("Exercises For Endurance size: " + exercisesForEndurance.size());
         List<Exercise> exercises = new ArrayList<Exercise>();
         for(Exercise exercise: exercisesWithoutEquipment){
             if(exercisesForEndurance.contains(exercise)){
@@ -174,21 +172,23 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         List<TrainingsSession> sessions = new ArrayList<TrainingsSession>();
         for(int i = 1; i <= days; i++){
             List<ExerciseSet> sets = new ArrayList<ExerciseSet>();
+            List<Exercise> internExercises = new ArrayList<>();
+            for(Exercise e : exercises){
+                internExercises.add(e);
+            }
             for(int j=1; j <=numberOfExercises; j++){
-                LOGGER.info("Size of exercises: "+exercises.size());
-                int rand = random.nextInt(exercises.size());
-                Exercise nextExercise = exercises.get(rand);
+                int rand = random.nextInt(internExercises.size());
+                Exercise nextExercise = internExercises.get(rand);
                 int duration =(int) Math.round((caloriesPerExercise/nextExercise.getCalories())* multiplier);
                 ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.time,j,false);
                 sets.add(set);
-                exercises.remove(rand);
+                internExercises.remove(rand);
             }
             TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
             sessions.add(session);
         }
         result = new Trainingsplan(user, "Generierter Trainingsplan für Ausdauer", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Ausdauer zu entwickeln.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
-        LOGGER.info(result.toString());
         return result;
     }
 

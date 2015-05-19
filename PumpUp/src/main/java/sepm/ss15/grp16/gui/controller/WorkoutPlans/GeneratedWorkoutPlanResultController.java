@@ -1,5 +1,9 @@
 package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -25,10 +29,18 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     private static final Logger LOGGER = LogManager.getLogger();
     private Trainingsplan generatedWorkoutPlan;
     private StageTransitionLoader transitionLoader;
+    private BooleanProperty DTOArrived = new SimpleBooleanProperty();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.transitionLoader = new StageTransitionLoader(this);
+        DTOArrived.addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                displayWorkoutPlan();
+            }
+        });
         LOGGER.info("GeneratedWorkoutPlanResult successfully initialized!");
 
     }
@@ -68,5 +80,12 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         }
     }
 
+    public void setFlag(boolean val){
+        DTOArrived.set(val);
+    }
+
+    private void displayWorkoutPlan(){
+
+    }
 
 }
