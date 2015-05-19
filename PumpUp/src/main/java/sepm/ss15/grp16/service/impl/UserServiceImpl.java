@@ -80,20 +80,20 @@ public class UserServiceImpl implements UserService {
         String email = user.getEmail();
 
         if(username == null || username.length() > 25 || username.length() < 2){
-            errorMsg += "Username is required and has to be between 2 and 25 characters long.";
+            errorMsg += "Der Username muss angegeben und zwischen 2 und 25 Zeichen lang sein.\n";
         }
 
         if(age == null || age < 0){
-            errorMsg += "Age is required and has to be a number greater than 0.";
+            errorMsg += "Das Alter muss eine gültige Zahl größer 0 sein.\n";
         }
 
         if(height == null || height < 0){
-            errorMsg += "Height is required and has to be a number greater than 0.";
+            errorMsg += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
         }
 
         if(email != null){
             if(email.length() > 320){
-                errorMsg += "Email address can only be 320 characters long.";
+                errorMsg += "Die E-Mail-Adresse darf maximal 320 Zeichen lang sein.\n";
             }
         }
 

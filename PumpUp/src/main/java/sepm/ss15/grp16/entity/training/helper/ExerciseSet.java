@@ -155,61 +155,7 @@ public class ExerciseSet implements DTOHelper {
 				'}';
 	}
 
-	public static class SetType {
-		public static final String REPEAT = "repeat";
-		public static final String TIME = "time";
-
-		private String type;
-
-		public SetType(String type) {
-			this.type = type;
-		}
-
-		public SetType(SetType setType) {
-			this.type = setType.type;
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) return true;
-			if (!(o instanceof SetType)) return false;
-
-			SetType setType = (SetType) o;
-
-			return !(type != null ? !type.equals(setType.type) : setType.type != null);
-
-		}
-
-		@Override
-		public int hashCode() {
-			return type != null ? type.hashCode() : 0;
-		}
-
-		@Override
-		public String toString() {
-			return type;
-		}
-
-		public static SetType getSetType(String type){
-			SetType setType = null;
-
-			if(type.equals(REPEAT)){
-				setType = new SetType(REPEAT);
-			}
-
-			if(type.equals(TIME)){
-				setType = new SetType(TIME);
-			}
-
-			return setType;
-		}
+	public enum SetType {
+		repeat, time
 	}
 }

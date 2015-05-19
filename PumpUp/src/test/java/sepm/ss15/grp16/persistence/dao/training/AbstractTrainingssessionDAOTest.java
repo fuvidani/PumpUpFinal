@@ -89,6 +89,7 @@ public abstract class AbstractTrainingssessionDAOTest extends AbstractDAOTest<Tr
 
 		plan.setName("testtraining");
 		plan.setDescr("testdescription");
+		plan.setDuration(10);
 		plan.setIsDeleted(false);
 
 		return plan;

@@ -11,6 +11,7 @@ import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
 
     private Connection con;
     private PreparedStatement createStatement;
+    private PreparedStatement getActualPictureStatement;
     private static final Logger LOGGER = LogManager.getLogger();
 
     public H2PictureHistoryDAOImpl(DBHandler handler) throws PersistenceException {
@@ -32,6 +34,8 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         try {
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO picturehistory VALUES(?, ?, ?, ?);");
+            this.getActualPictureStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND " +
+                    "picturehistory_id = (SELECT max(picturehistory_id) from picturehistory);");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
@@ -64,6 +68,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             pictureHistory.setPicturehistory_id(rs_pictureHistoryNextVal.getInt(1));
             pictureHistory.setDate(new java.util.Date());
 
+            /*
             String pathToImg = getClass().getClassLoader().getResource("img").toString().substring(6);
             File directory = new File(pathToImg);
             if (!directory.exists()) {
@@ -79,8 +84,23 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
 
             outputSteam.close();
             inputStream.close();
+            */
 
-            pictureHistory.setLocation(fileName);
+            LOGGER.debug("Saving image...");
+            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+
+            LOGGER.debug("Saving in resources: " + pathToResource);
+            String saveName = "/u" + pictureHistory.getUser_id() + "p" + pictureHistory.getPicturehistory_id() + ".jpg";
+            String pathOfNewImage = pathToResource + saveName;
+            LOGGER.debug("Saving image with path: " + pathOfNewImage);
+            File picture = new File(pathOfNewImage);
+            InputStream inputStream = new FileInputStream(pictureHistory.getLocation());
+            OutputStream outputSteam = new FileOutputStream(picture);
+            IOUtils.copy(inputStream, outputSteam);
+            outputSteam.close();
+            inputStream.close();
+            LOGGER.debug("Saved image with name: " + saveName);
+            pictureHistory.setLocation(saveName);
 
             createStatement.setInt(1, pictureHistory.getPicturehistory_id());
             createStatement.setInt(2, pictureHistory.getUser_id());
@@ -98,6 +118,8 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         } catch (IOException e) {
             LOGGER.error("Failed to create new pictureHistory. IO failed");
             throw new PersistenceException("Failed to create a new pictureHistory", e);
+        } catch (URISyntaxException e){
+            e.printStackTrace();
         }
 
         LOGGER.info("Created pictureHistory successfully");
@@ -148,5 +170,25 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
     @Override
     public void delete(PictureHistory dto) throws PersistenceException {
         //TODO: Implement me
+    }
+
+    @Override
+    public PictureHistory getActualPicture(int user_id) throws PersistenceException {
+
+        LOGGER.info("Finding actual picturehistory...");
+        PictureHistory foundPictureHistory = null;
+
+        try {
+            getActualPictureStatement.setInt(1, user_id);
+            ResultSet rs = getActualPictureStatement.executeQuery();
+            if(rs.next() == true){
+                foundPictureHistory = new PictureHistory(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDate(4));
+            }
+        }catch(SQLException e){
+            throw new PersistenceException("Failed to get actual picture", e);
+        }
+
+        LOGGER.info("Successfully found actual picturehistory...");
+        return foundPictureHistory;
     }
 }

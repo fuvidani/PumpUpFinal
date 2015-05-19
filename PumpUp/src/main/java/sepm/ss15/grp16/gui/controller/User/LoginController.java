@@ -2,6 +2,7 @@ package sepm.ss15.grp16.gui.controller.User;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -119,12 +120,7 @@ public class LoginController  extends Controller implements Initializable {
 
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
 
-            loader.setControllerFactory(new Callback<Class<?>, Object>() {
-                @Override
-                public Object call(Class<?> clazz) {
-                    return context.getBean(clazz);
-                }
-            });
+            loader.setControllerFactory(context::getBean);
 
             loader.setLocation(LoginController.class.getClassLoader().getResource("fxml/Main.fxml"));
             Pane page = loader.load();
@@ -146,12 +142,7 @@ public class LoginController  extends Controller implements Initializable {
             dialogStage.setMinWidth(500);
             dialogStage.setMinHeight(500);
             dialogStage.setMaximized(true);
-            dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent e) {
-                    e.consume();
-                }
-            });
+            dialogStage.setOnCloseRequest(Event::consume);
 
             LOGGER.info("New stage successfully launched!");
             Stage stage = (Stage)this.loginPane.getScene().getWindow();
