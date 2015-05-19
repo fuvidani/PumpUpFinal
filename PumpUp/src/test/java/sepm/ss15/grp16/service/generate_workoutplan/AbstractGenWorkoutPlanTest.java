@@ -6,6 +6,7 @@ import sepm.ss15.grp16.service.*;
 import sepm.ss15.grp16.service.Training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -51,7 +52,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     }
 
     private Gen_WorkoutplanPreferences dummyPreferences()throws ServiceException{
-        return new Gen_WorkoutplanPreferences(1,new TrainingsCategory(0,"Ausdauer"), categoryService.getAllEquipment());
+        return new Gen_WorkoutplanPreferences(1,new TrainingsCategory(0,"Ausdauer"), new ArrayList<>());
     }
 
     private void dummyUser() throws ServiceException{

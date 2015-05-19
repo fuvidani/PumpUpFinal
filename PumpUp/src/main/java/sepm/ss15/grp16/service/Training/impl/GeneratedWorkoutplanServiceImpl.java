@@ -3,7 +3,9 @@ package sepm.ss15.grp16.service.Training.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.*;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.Training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.Training.TrainingsplanService;
@@ -14,6 +16,7 @@ import sepm.ss15.grp16.service.exception.ValidationException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Daniel Fuevesi on 15.05.15.
@@ -80,14 +83,16 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         int age = user.getAge();
         boolean male = user.isGender();
         List<Exercise> exercisesWithoutEquipment = exerciseService.getWithoutCategory(equipment);
+        LOGGER.info("Exercises without equipment size: " + exercisesWithoutEquipment.size());
         List<Exercise> exercisesForEndurance = exerciseService.getAllEnduranceExercises();
+        LOGGER.info("Exercises For Endurance size: " + exercisesForEndurance.size());
         List<Exercise> exercises = new ArrayList<Exercise>();
         for(Exercise exercise: exercisesWithoutEquipment){
             if(exercisesForEndurance.contains(exercise)){
                 exercises.add(exercise);
             }
         }
-        Trainingsplan result;
+        Trainingsplan result = new Trainingsplan();
         int weeklyCalorieGoal;
         int days;
         int numberOfExercises;
@@ -162,11 +167,29 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 numberOfExercises = 3;
             }
         }
+
         double caloriesPerDay = weeklyCalorieGoal*1.0/days;
         double caloriesPerExercise = caloriesPerDay/numberOfExercises;
-        
+        Random random = new Random();
+        List<TrainingsSession> sessions = new ArrayList<TrainingsSession>();
+        for(int i = 1; i <= days; i++){
+            List<ExerciseSet> sets = new ArrayList<ExerciseSet>();
+            for(int j=1; j <=numberOfExercises; j++){
+                LOGGER.info("Size of exercises: "+exercises.size());
+                int rand = random.nextInt(exercises.size());
+                Exercise nextExercise = exercises.get(rand);
+                int duration =(int) Math.round((caloriesPerExercise/nextExercise.getCalories())* multiplier);
+                ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.time,j,false);
+                sets.add(set);
+                exercises.remove(rand);
+            }
+            TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
+            sessions.add(session);
+        }
+        result = new Trainingsplan(user, "Generierter Trainingsplan für Ausdauer", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Ausdauer zu entwickeln.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
-        return null;
+        LOGGER.info(result.toString());
+        return result;
     }
 
     /**
