@@ -97,4 +97,14 @@ public class PictureHistory implements DTO{
         result = 31 * result + (location != null ? location.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "PictureHistory{" +
+                "picturehistory_id=" + picturehistory_id +
+                ", user_id=" + user_id +
+                ", location='" + location + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }

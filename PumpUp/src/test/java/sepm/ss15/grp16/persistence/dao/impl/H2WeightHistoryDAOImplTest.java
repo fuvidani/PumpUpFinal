@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.persistence.dao.AbstractWeightHistoryDaoTest;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.dao.WeightHistoryDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 
@@ -24,6 +25,11 @@ public class H2WeightHistoryDAOImplTest extends AbstractWeightHistoryDaoTest {
 
     @Autowired
     private DBHandler dbConnector;
+
+    @Autowired
+    public void setUserDAO(UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
 
     @Autowired
     public void setWeightHistoryDAO(WeightHistoryDAO weightHistoryDAO) {
