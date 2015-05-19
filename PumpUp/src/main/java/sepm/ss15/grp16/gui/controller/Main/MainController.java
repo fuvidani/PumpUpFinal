@@ -123,11 +123,9 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void calendarClicked(ActionEvent event) {
-<<<<<<< HEAD
-        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) userDataTableView.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
-=======
-        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, false);
->>>>>>> 7184a7f229638130760c3ead886fe94bd35db939
+
+        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+
     }
 
     @FXML
@@ -160,7 +158,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void manageBodyPhotosClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/BodyPhotos.fxml", (Stage)usernameLabel.getScene().getWindow(),"Fotos", 1000, 600, false);
+        transitionLoader.openStage("fxml/BodyPhotos.fxml", (Stage) usernameLabel.getScene().getWindow(), "Fotos", 1000, 600, false);
     }
 
     @FXML
@@ -189,14 +187,6 @@ public class MainController extends Controller implements Initializable {
         transitionLoader.openStage("fxml/Exercises.fxml", (Stage) usernameLabel.getScene().getWindow(), "Übungen", 800, 600, true);
     }
 
-<<<<<<< HEAD
-=======
-    @FXML
-    void openCalendarMenuClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 800, 600, false);
-
-    }
->>>>>>> 7184a7f229638130760c3ead886fe94bd35db939
 
     @FXML
     void aboutMenuClicked(ActionEvent event) {
