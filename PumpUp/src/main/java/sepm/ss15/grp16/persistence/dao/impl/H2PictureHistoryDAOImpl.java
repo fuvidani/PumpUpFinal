@@ -68,24 +68,6 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             pictureHistory.setPicturehistory_id(rs_pictureHistoryNextVal.getInt(1));
             pictureHistory.setDate(new java.util.Date());
 
-            /*
-            String pathToImg = getClass().getClassLoader().getResource("img").toString().substring(6);
-            File directory = new File(pathToImg);
-            if (!directory.exists()) {
-                directory.mkdir();
-            }
-
-            String fileName = "/" + pathToImg + "/u" + pictureHistory.getUser_id() + "p" + pictureHistory.getPicturehistory_id() + ".jpg";
-            File picture = new File(fileName);
-
-            InputStream inputStream = new FileInputStream(pictureHistory.getLocation());
-            OutputStream outputSteam = new FileOutputStream(picture);
-            IOUtils.copy(inputStream, outputSteam);
-
-            outputSteam.close();
-            inputStream.close();
-            */
-
             LOGGER.debug("Saving image...");
             String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
 

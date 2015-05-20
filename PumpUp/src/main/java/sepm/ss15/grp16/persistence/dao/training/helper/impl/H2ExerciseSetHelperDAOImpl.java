@@ -113,7 +113,7 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 
 				set.setIsDeleted(rs.getBoolean("isDeleted"));
 				set.setRepeat(rs.getInt("repeat"));
-				set.setType(ExerciseSet.SetType.getSetType(rs.getString("type")));
+				set.setType(ExerciseSet.SetType.valueOf(rs.getString("type")));
 				set.setOrder_nr(rs.getInt("order_nr"));
 
 				set.setExercise(exerciseDAO.searchByID(rs.getInt("ID_Exercise")));
@@ -144,7 +144,7 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 
 				set.setIsDeleted(rs.getBoolean("isDeleted"));
 				set.setRepeat(rs.getInt("repeat"));
-				set.setType(ExerciseSet.SetType.getSetType(rs.getString("type")));
+				set.setType(ExerciseSet.SetType.valueOf(rs.getString("type")));
 				set.setOrder_nr(rs.getInt("order_nr"));
 
 				set.setExercise(exerciseDAO.searchByID(rs.getInt("ID_Exercise")));
@@ -211,7 +211,7 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 					set.setUser(uid != null ? userDAO.searchByID(uid) : null);
 
 					set.setIsDeleted(rs.getBoolean("isDeleted"));
-					set.setType(ExerciseSet.SetType.getSetType(rs.getString("type")));
+					set.setType(ExerciseSet.SetType.valueOf(rs.getString("type")));
 					set.setRepeat(rs.getInt("repeat"));
 					set.setOrder_nr(rs.getInt("order_nr"));
 
@@ -247,7 +247,7 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
 					set.setUser(uid != null ? userDAO.searchByID(uid) : null);
 
 					set.setIsDeleted(rs.getBoolean("isDeleted"));
-					set.setType(ExerciseSet.SetType.getSetType(rs.getString("type")));
+					set.setType(ExerciseSet.SetType.valueOf(rs.getString("type")));
 					set.setRepeat(rs.getInt("repeat"));
 					set.setOrder_nr(rs.getInt("order_nr"));
 

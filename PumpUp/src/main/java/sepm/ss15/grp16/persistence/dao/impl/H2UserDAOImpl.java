@@ -89,7 +89,7 @@ public class H2UserDAOImpl implements UserDAO {
         try {
 
             Statement findAllStatement = con.createStatement();
-            ResultSet rs_allUsers = findAllStatement.executeQuery("SELECT * FROM user;");
+            ResultSet rs_allUsers = findAllStatement.executeQuery("SELECT * FROM user WHERE isDeleted = false;");
 
             while (rs_allUsers.next()) {
                 User foundUser = new User(rs_allUsers.getInt(1), rs_allUsers.getString(2), rs_allUsers.getBoolean(3),

@@ -17,9 +17,14 @@ import static org.junit.Assert.assertTrue;
  * @author Michael Sober
  * @version 1.0
  */
-public abstract class AbstractUserDaoTest {
+public abstract class AbstractUserDaoTest extends AbstractDAOTest<User>{
 
     protected UserDAO userDAO;
+
+    @Override
+    public DAO<User> getDAO() {
+        return userDAO;
+    }
 
     @Test(expected = PersistenceException.class)
     public void createWithNullShouldThrowException() throws Exception{
@@ -29,11 +34,7 @@ public abstract class AbstractUserDaoTest {
     @Test
     public void createWithValidUserShouldPersist() throws Exception {
         User testUser = new User(null, "msober", true, 20, 194, "michael.sober@ymail.com", "/path/playlist/", false);
-        List<User> allUsers = userDAO.findAll();
-        assertFalse(allUsers.contains(testUser));
-        userDAO.create(testUser);
-        allUsers = userDAO.findAll();
-        assertTrue(allUsers.contains(testUser));
+        createValid(testUser);
     }
 
     @Test(expected = PersistenceException.class)
@@ -44,13 +45,7 @@ public abstract class AbstractUserDaoTest {
     @Test
     public void deleteWithValidUserShouldPersist() throws Exception{
         User testUser = new User(null, "msober", true, 20, 194, "michael.p.sober@gmail.com", "/path/playlist/", false);
-        userDAO.create(testUser);
-        List<User> allUsers = userDAO.findAll();
-        assertTrue(allUsers.contains(testUser));
-        userDAO.delete(testUser);
-        testUser.setIsDeleted(true);
-        allUsers = userDAO.findAll();
-        assertTrue(allUsers.contains(testUser));
+        deleteValid(testUser);
     }
 
     @Test(expected = PersistenceException.class)
@@ -62,25 +57,14 @@ public abstract class AbstractUserDaoTest {
     public void updateWithValidParametersShouldPersist() throws Exception{
         User userBeforeUpdate = new User(null, "msober", true, 20, 194, "michael.p.sober@gmail.com", "/path/playlist/", false);
         User userAfterUpdate = new User(null, "ksober", false, 18, 174, "michael.sober@ymail.com", "/newpath/playlist", false);
-        userDAO.create(userBeforeUpdate);
         userAfterUpdate.setUser_id(userBeforeUpdate.getUser_id());
-        List<User> allJockeys = userDAO.findAll();
-        assertTrue(allJockeys.contains(userBeforeUpdate));
-        userDAO.update(userAfterUpdate);
-        allJockeys = userDAO.findAll();
-        assertTrue(allJockeys.contains(userAfterUpdate));
+        updateValid(userBeforeUpdate, userAfterUpdate);
     }
 
     @Test
     public void searchByIDShouldFindUser() throws Exception{
-        User testUser1 = new User(null, "msober", true, 20, 194, "michael.p.sober@gmail.com", "/path/playlist/", false);
-        User testUser2 = new User(null, "ksober", false, 18, 174, "k.p.sober@gmail.com", "/otherpath/playlist/", false);
-        User testUser3 = new User(null, "psober", true, 48, 188, "p.a.sober@gmail.com", "/anotherpath/playlist/", false);
-        userDAO.create(testUser1);
-        userDAO.create(testUser2);
-        userDAO.create(testUser3);
-        User foundTestUser2 = userDAO.searchByID(testUser2.getUser_id());
-        assertEquals(testUser2, foundTestUser2);
+        User testUser = new User(null, "msober", true, 20, 194, "michael.sober@ymail.com", "/path/playlist/", false);
+        searchByIDValid(testUser);
     }
 
 }
