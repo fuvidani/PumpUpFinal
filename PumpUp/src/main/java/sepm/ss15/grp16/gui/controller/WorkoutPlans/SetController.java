@@ -1,5 +1,6 @@
 package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,16 +11,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sepm.ss15.grp16.entity.AbsractCategory;
 import sepm.ss15.grp16.entity.Exercise;
+import sepm.ss15.grp16.entity.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.Exercises.ShowExerciseController;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 import sepm.ss15.grp16.service.impl.UserServiceImpl;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -36,7 +41,7 @@ public class SetController extends Controller implements Initializable {
 	private UserServiceImpl userService;
 	private ExerciseServiceImpl exerciseService;
 
-	private Exercise selection;
+	private static Exercise selection;
 
 	public static TrainingsSession session_interClassCommunication;
 
@@ -74,6 +79,27 @@ public class SetController extends Controller implements Initializable {
 
 			tblcName.setCellValueFactory(new PropertyValueFactory<>("name"));
 			tblcCalo.setCellValueFactory(new PropertyValueFactory<>("calories"));
+			tblcCat.setCellValueFactory(p -> {
+				List<AbsractCategory> categories = p.getValue().getCategories();
+				List<TrainingsCategory> trainingsCategories = new ArrayList<>();
+
+				for (AbsractCategory absractCategory : categories) {
+					if (absractCategory instanceof TrainingsCategory) {
+						trainingsCategories.add((TrainingsCategory) absractCategory);
+					}
+				}
+
+				String value = "";
+				for (int i = 0; i < trainingsCategories.size(); i++) {
+					TrainingsCategory category = trainingsCategories.get(i);
+					if (i + 1 == trainingsCategories.size()) {
+						value += category.getName();
+					} else {
+						value += category.getName() + ", ";
+					}
+				}
+				return new SimpleStringProperty(value);
+			});
 
 			ObservableList<Exercise> data = FXCollections.observableArrayList(
 					exerciseService.findAll()
@@ -101,7 +127,8 @@ public class SetController extends Controller implements Initializable {
 
 	@FXML
 	void onClickShow(ActionEvent event) {
-		transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) tblvExercises.getScene().getWindow(), selection.getName(), 500, 500, true);
+		ShowExerciseController.exercise_interClassCommunication = selection;
+		transitionLoader.openWaitStage("fxml/ShowExercise.fxml", (Stage) tblvExercises.getScene().getWindow(), selection.getName(), 500, 500, true);
 	}
 
 	@FXML
@@ -196,5 +223,9 @@ public class SetController extends Controller implements Initializable {
 
 	public void setExerciseService(ExerciseServiceImpl exerciseService) {
 		this.exerciseService = exerciseService;
+	}
+
+	public Exercise getExercise() {
+		return selection;
 	}
 }

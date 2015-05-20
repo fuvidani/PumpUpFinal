@@ -13,14 +13,14 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.entity.*;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
-import sepm.ss15.grp16.service.Training.TrainingsplanService;
-import sepm.ss15.grp16.service.Training.impl.TrainingsPlanServiceImpl;
+import sepm.ss15.grp16.service.training.TrainingsplanService;
+import sepm.ss15.grp16.service.training.impl.TrainingsPlanServiceImpl;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
@@ -58,6 +58,15 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	private Text txtDuration;
+
+	@FXML
+	private Text txtCal_sum;
+
+	@FXML
+	private Text txtCal_mean;
+
+	@FXML
+	private Text txtCat;
 
 	@FXML
 	private ListView<Trainingsplan> workoutPlansListView;
@@ -102,9 +111,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 							}
 							calenderBtn.setDisable(false);
 							copyBtn.setDisable(false);
-							//TODO
-							/*deleteBtn.setDisable(false);
-							editBtn.setDisable(false);*/
+							updateInformations(new_val);
 
 						}
 					});
@@ -117,6 +124,64 @@ public class WorkoutPlansController extends Controller implements Initializable 
 			e.printStackTrace();
 		}
 	}
+
+	private void updateInformations(Trainingsplan plan) {
+
+		if (plan != null && plan.getTrainingsSessions() != null) {
+			int calories_sum = 0;
+			List<TrainingsCategory> trainingsCategoryList = new ArrayList<>();
+			List<EquipmentCategory> equipmentCategoryList = new ArrayList<>();
+			List<MusclegroupCategory> musclegroupCategories = new ArrayList<>();
+
+			for (TrainingsSession session : plan.getTrainingsSessions()) {
+				for (ExerciseSet set : session.getExerciseSets()) {
+					calories_sum += set.getRepeat() * set.getExercise().getCalories();
+
+					List<AbsractCategory> absractCategories = set.getExercise().getCategories();
+
+					for (AbsractCategory category : absractCategories) {
+						if (category instanceof TrainingsCategory && ! trainingsCategoryList.contains(category)) {
+							trainingsCategoryList.add((TrainingsCategory) category);
+						} else if (category instanceof EquipmentCategory && ! equipmentCategoryList.contains(category)) {
+							equipmentCategoryList.add((EquipmentCategory) category);
+						} else if (category instanceof MusclegroupCategory && ! musclegroupCategories.contains(category)) {
+							musclegroupCategories.add((MusclegroupCategory) category);
+						}
+					}
+				}
+			}
+			int calories_mean = calories_sum / plan.getTrainingsSessions().size();
+			txtCal_sum.setText(String.valueOf(calories_sum));
+			txtCal_mean.setText(String.valueOf(calories_mean));
+
+			String value = null;
+			if (!trainingsCategoryList.isEmpty()) {
+				value = "Art: \n";
+				for (TrainingsCategory category : trainingsCategoryList) {
+					value += "    - " + category.getName() + "\n";
+				}
+			}
+			if (!equipmentCategoryList.isEmpty()) {
+				value += " \nGe\u00e4rte: \n";
+				for (EquipmentCategory category : equipmentCategoryList) {
+					value += "    - " + category.getName() + "\n";
+				}
+			}
+			if (!musclegroupCategories.isEmpty()) {
+				value += " \nMuskeln: \n";
+				for (MusclegroupCategory category : musclegroupCategories) {
+					value += "    - " + category.getName() + "\n";
+				}
+			}
+
+			txtCat.setText(value);
+		} else  {
+			txtCat.setText("");
+			txtCal_sum.setText("");
+			txtCal_mean.setText("");
+		}
+	}
+
 
 	private void updateSessionList(List<TrainingsSession> sessions) {
 		listViewSessions.getItems().clear();

@@ -3,7 +3,6 @@ package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.VPos;
@@ -11,25 +10,29 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sepm.ss15.grp16.entity.AbsractCategory;
+import sepm.ss15.grp16.entity.EquipmentCategory;
+import sepm.ss15.grp16.entity.MusclegroupCategory;
+import sepm.ss15.grp16.entity.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
-import sepm.ss15.grp16.service.Training.TrainingsplanService;
-import sepm.ss15.grp16.service.Training.impl.TrainingsPlanServiceImpl;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.training.TrainingsplanService;
+import sepm.ss15.grp16.service.training.impl.TrainingsPlanServiceImpl;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
 
 public class Create_Edit_WorkoutPlanController extends Controller implements Initializable {
 	private static final Logger LOGGER = LogManager.getLogger(Create_Edit_WorkoutPlanController.class);
@@ -54,6 +57,15 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 
 	@FXML
 	private TextArea txtDescr;
+
+	@FXML
+	private Text txtCal_sum;
+
+	@FXML
+	private Text txtCal_mean;
+
+	@FXML
+	private Text txtCat;
 
 	@FXML
 	private Button btnDeleteSession;
@@ -87,11 +99,13 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 			txtDuration.setText(String.valueOf(plan_interClassCommunication.getDuration()));
 
 			if (plan_interClassCommunication.getTrainingsSessions() != null) {
+
 				ObservableList<TrainingsSession> data =
 						FXCollections.observableArrayList(
 								plan_interClassCommunication.getTrainingsSessions()
 						);
 				listViewSessions.setItems(data);
+				updateInformations();
 			}
 		}
 
@@ -103,6 +117,61 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 						btnEditSession.setDisable(false);
 					}
 				});
+	}
+
+	private void updateInformations() {
+
+		List<TrainingsSession> sessions = listViewSessions.getItems();
+
+		if (sessions != null) {
+			int calories_sum = 0;
+			List<TrainingsCategory> trainingsCategoryList = new ArrayList<>();
+			List<EquipmentCategory> equipmentCategoryList = new ArrayList<>();
+			List<MusclegroupCategory> musclegroupCategories = new ArrayList<>();
+
+			for (TrainingsSession session : plan_interClassCommunication.getTrainingsSessions()) {
+				for (ExerciseSet set : session.getExerciseSets()) {
+					calories_sum += set.getRepeat() * set.getExercise().getCalories();
+
+					List<AbsractCategory> absractCategories = set.getExercise().getCategories();
+
+					for (AbsractCategory category : absractCategories) {
+						if (category instanceof TrainingsCategory && ! trainingsCategoryList.contains(category)) {
+							trainingsCategoryList.add((TrainingsCategory) category);
+						} else if (category instanceof EquipmentCategory && ! equipmentCategoryList.contains(category)) {
+							equipmentCategoryList.add((EquipmentCategory) category);
+						} else if (category instanceof MusclegroupCategory && ! musclegroupCategories.contains(category)) {
+							musclegroupCategories.add((MusclegroupCategory) category);
+						}
+					}
+				}
+			}
+			int calories_mean = calories_sum / plan_interClassCommunication.getTrainingsSessions().size();
+			txtCal_sum.setText(String.valueOf(calories_sum));
+			txtCal_mean.setText(String.valueOf(calories_mean));
+
+			String value = null;
+			if (!trainingsCategoryList.isEmpty()) {
+				value = "Art: \n";
+				for (TrainingsCategory category : trainingsCategoryList) {
+					value += "    - " + category.getName() + "\n";
+				}
+			}
+			if (!equipmentCategoryList.isEmpty()) {
+				value += " \nGe\u00e4rte: \n";
+				for (EquipmentCategory category : equipmentCategoryList) {
+					value += "    - " + category.getName() + "\n";
+				}
+			}
+			if (!musclegroupCategories.isEmpty()) {
+				value += " \nMuskeln: \n";
+				for (MusclegroupCategory category : musclegroupCategories) {
+					value += "    - " + category.getName() + "\n";
+				}
+			}
+
+			txtCat.setText(value);
+		}
 	}
 
 	@FXML
@@ -258,6 +327,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 		if (session_interClassCommunication != null) {
 			listViewSessions.getItems().add(session_interClassCommunication);
 			setUpListView();
+			updateInformations();
 		}
 	}
 
@@ -273,6 +343,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 			listViewSessions.getItems().add(session_interClassCommunication);
 			session_interClassCommunication = null;
 			setUpListView();
+			updateInformations();
 		}
 	}
 
@@ -283,6 +354,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 		if (selection != null) {
 			listViewSessions.getSelectionModel().clearSelection();
 			data.remove(data.indexOf(selection));
+			updateInformations();
 		}
 	}
 

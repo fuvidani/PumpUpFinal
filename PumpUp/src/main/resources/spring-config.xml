@@ -48,6 +48,12 @@
         <property name="userService" ref="userService"/>
     </bean>
 
+    <bean id="showExerciseController" class="sepm.ss15.grp16.gui.controller.Exercises.ShowExerciseController" scope="prototype">
+        <property name="exerciseController" ref="exerciseController"/>
+        <property name="exerciseService" ref="exerciseService"/>
+        <property name="categoryService" ref="categoryService"/>
+        <property name="userService" ref="userService"/>
+    </bean>
 
     <!-- Main Beans -->
 

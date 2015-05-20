@@ -16,9 +16,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.Exercises.ShowExerciseController;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.impl.UserServiceImpl;
 
@@ -37,7 +39,7 @@ public class SessionController extends Controller implements Initializable {
 	public static TrainingsSession session_interClassCommunication;
 	public static ExerciseSet set_interClassCommunication;
 
-	private ExerciseSet selection;
+	private static ExerciseSet selection;
 
 	@FXML
 	private Button btnDelete;
@@ -61,13 +63,10 @@ public class SessionController extends Controller implements Initializable {
 	private TableColumn<ExerciseSet, Integer> tblcOrder;
 
 	@FXML
-	private TableColumn<ExerciseSet, ?> tblcType;
+	private TableColumn<ExerciseSet, String> tblcType;
 
 	@FXML
 	private TableColumn<ExerciseSet, String> tblcExercise;
-
-	@FXML
-	private TableColumn<ExerciseSet, Integer> tblcRepeat;
 
 	@FXML
 	private Button btnCancle;
@@ -77,8 +76,9 @@ public class SessionController extends Controller implements Initializable {
 		this.transitionLoader = new StageTransitionLoader(this);
 
 		tblcOrder.setCellValueFactory(new PropertyValueFactory<>("order_nr"));
-		tblcRepeat.setCellValueFactory(new PropertyValueFactory<>("repeat"));
 		tblcExercise.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getExercise().getName()));
+		tblcType.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getRepeat() +
+				((p.getValue().getType() == ExerciseSet.SetType.repeat) ? " x" : " min")));
 
 		tblvExerciseTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
 			if (newValue != null) {
@@ -172,7 +172,8 @@ public class SessionController extends Controller implements Initializable {
 
 	@FXML
 	void onClickShow(ActionEvent event) {
-		transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) tblvExerciseTable.getScene().getWindow(), selection.getExercise().getName(), 500, 500, true);
+		ShowExerciseController.exercise_interClassCommunication = selection.getExercise();
+		transitionLoader.openWaitStage("fxml/ShowExercise.fxml", (Stage) tblvExerciseTable.getScene().getWindow(), selection.getExercise().getName(), 500, 500, true);
 	}
 
 	@FXML
@@ -224,4 +225,7 @@ public class SessionController extends Controller implements Initializable {
 		this.userService = userService;
 	}
 
+	public Exercise getExercise() {
+		return selection.getExercise();
+	}
 }
