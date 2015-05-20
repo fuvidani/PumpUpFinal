@@ -217,7 +217,8 @@
     </bean>
 
     <bean id="workoutPlanToCalendarController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlanToCalendarController" scope="prototype">
-
+        <property name="userService" ref="userService"/>
+        <property name="trainingsplanService" ref="trainingsplanService"/>
     </bean>
 
     <bean id="workoutPlansController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlansController" scope="prototype">

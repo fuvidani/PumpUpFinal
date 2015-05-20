@@ -428,7 +428,8 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	void embedInCalenderClicked(ActionEvent event) {
-		transitionLoader.openStage("fxml/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender einf\u00dcgen", 600, 400, false);
+		WorkoutPlanToCalendarController.plan_interClassCommunication = selection;
+		transitionLoader.openWaitStage("fxml/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender exportieren", 800, 600, false);
 	}
 
 	@FXML
