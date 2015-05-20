@@ -18,24 +18,21 @@ import java.io.IOException;
  */
 public class StageTransitionLoader {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-    private Controller from;
-    private Controller to;
+	private static final Logger LOGGER = LogManager.getLogger();
+	private Controller from;
+	private Controller to;
 
+	public StageTransitionLoader(Controller from) {
+		this.from = from;
+	}
 
-    public StageTransitionLoader(Controller from){
-        this.from = from;
-    }
+	public Controller getFrom(){
+		return this.from;
+	}
 
-
-    public Controller getFrom(){
-        return this.from;
-    }
-
-    public Controller getTo(){
-        return this.to;
-    }
-
+	public Controller getTo(){
+		return this.to;
+	}
 
 	/**
 	 * This method opens the desired stage of the calling controller.
@@ -101,5 +98,4 @@ public class StageTransitionLoader {
 		}
 		return stage;
 	}
-
 }

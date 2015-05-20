@@ -16,7 +16,7 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
-import sepm.ss15.grp16.service.Training.TrainingsplanService;
+import sepm.ss15.grp16.service.training.TrainingsplanService;
 
 import java.sql.SQLException;
 

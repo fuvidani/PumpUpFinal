@@ -168,7 +168,7 @@
         <property name="userDAO" ref="userDAO"/>
     </bean>
 
-    <bean id="trainingsplanService" class="sepm.ss15.grp16.service.Training.impl.TrainingsPlanServiceImpl">
+    <bean id="trainingsplanService" class="sepm.ss15.grp16.service.training.impl.TrainingsPlanServiceImpl">
         <constructor-arg name="trainingsplanDAO" ref="trainingsplanDAO"/>
         <constructor-arg name="trainingsSessionDAO" ref="trainingsSessionDAO"/>
         <constructor-arg name="exerciseService" ref="exerciseService"/>
