@@ -58,14 +58,14 @@ public class H2TrainingssessionHelperDAOImpl implements TrainingsSessionHelperDA
 					"VALUES (?, ?, ?, ?)");
 			ps_findAll = con.prepareStatement("SELECT * FROM TrainingsSession WHERE isDeleted = FALSE ");
 
-			ps_findID = con.prepareStatement("SELECT * FROM TrainingsSession WHERE ID_Session = ?");
+			ps_findID = con.prepareStatement("SELECT * FROM TrainingsSession WHERE ID_Session = ? AND isDeleted = FALSE");
 			ps_delete = con.prepareStatement("UPDATE TrainingsSession SET isDeleted = TRUE WHERE ID_Session = ?");
 			ps_update = con.prepareStatement("UPDATE TrainingsSession " +
 					"SET ID_Plan = ?, name = ?, UID = ?, isDeleted = ? WHERE ID_Session = ?");
 
-			ps_find_ByUID = con.prepareStatement("SELECT * FROM TrainingsSession WHERE UID = ?");
-			ps_find_ByIDPlan = con.prepareStatement("SELECT * FROM TrainingsSession WHERE ID_Plan = ?");
-			ps_find_IDPlan = con.prepareStatement("SELECT ID_Plan FROM TrainingsSession WHERE ID_Session = ?");
+			ps_find_ByUID = con.prepareStatement("SELECT * FROM TrainingsSession WHERE UID = ? AND isDeleted = FALSE");
+			ps_find_ByIDPlan = con.prepareStatement("SELECT * FROM TrainingsSession WHERE ID_Plan = ? AND isDeleted = FALSE");
+			ps_find_IDPlan = con.prepareStatement("SELECT ID_Plan FROM TrainingsSession WHERE ID_Session = ? AND isDeleted = FALSE");
 
 			/** Sequences **/
 			ps_seq_TS = con.prepareStatement("SELECT currval('seq_TS')");

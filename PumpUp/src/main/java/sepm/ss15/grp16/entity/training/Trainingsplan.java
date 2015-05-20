@@ -15,6 +15,7 @@ public class Trainingsplan implements DTO {
 	private String name;
 	private String descr;
 	private Boolean isDeleted = false;
+	private Integer duration;
 
 	private User user;
 
@@ -23,16 +24,18 @@ public class Trainingsplan implements DTO {
 	public Trainingsplan() {
 	}
 
-	public Trainingsplan(Integer id, User user, String name, String descr, Boolean isDeleted, List<TrainingsSession> trainingsSessions) {
+	public Trainingsplan(Integer id, User user, String name, String descr, Boolean isDeleted, Integer duration, List<TrainingsSession> trainingsSessions) {
 		this.id = id;
 		this.user = user;
 		this.name = name;
 		this.descr = descr;
 		this.isDeleted = isDeleted;
+		this.duration = duration;
 		this.trainingsSessions = trainingsSessions;
 	}
 
-	public Trainingsplan(User user, String name, String descr, Boolean isDeleted, List<TrainingsSession> trainingsSessions) {
+	public Trainingsplan(User user, String name, String descr, Boolean isDeleted, Integer duration, List<TrainingsSession> trainingsSessions) {
+		this.duration = duration;
 		this.id = null;
 		this.user = user;
 		this.name = name;
@@ -47,6 +50,7 @@ public class Trainingsplan implements DTO {
 		this.name = trainingsplan.name;
 		this.descr = trainingsplan.descr;
 		this.isDeleted = trainingsplan.isDeleted;
+		this.duration = trainingsplan.duration;
 		this.trainingsSessions = trainingsplan.trainingsSessions;
 	}
 
@@ -87,6 +91,14 @@ public class Trainingsplan implements DTO {
 		}
 	}
 
+	public Integer getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+
 	public List<TrainingsSession> getTrainingsSessions() {
 		return trainingsSessions;
 	}
@@ -113,12 +125,25 @@ public class Trainingsplan implements DTO {
 		Trainingsplan that = (Trainingsplan) o;
 
 		return !(id != null ? !id.equals(that.id) : that.id != null) &&
-				!(user != null ? !user.equals(that.user) : that.user != null) &&
 				!(name != null ? !name.equals(that.name) : that.name != null) &&
 				!(descr != null ? !descr.equals(that.descr) : that.descr != null) &&
 				!(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
+				!(duration != null ? !duration.equals(that.duration) : that.duration != null) &&
+				!(user != null ? !user.equals(that.user) : that.user != null) &&
 				equalLists(trainingsSessions, that.trainingsSessions);
 
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (descr != null ? descr.hashCode() : 0);
+		result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
+		result = 31 * result + (duration != null ? duration.hashCode() : 0);
+		result = 31 * result + (user != null ? user.hashCode() : 0);
+		result = 31 * result + (trainingsSessions != null ? trainingsSessions.hashCode() : 0);
+		return result;
 	}
 
 	public boolean equalLists(List<TrainingsSession> one, List<TrainingsSession> two) {
@@ -135,24 +160,14 @@ public class Trainingsplan implements DTO {
 	}
 
 	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (user != null ? user.hashCode() : 0);
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (descr != null ? descr.hashCode() : 0);
-		result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
-		result = 31 * result + (trainingsSessions != null ? trainingsSessions.hashCode() : 0);
-		return result;
-	}
-
-	@Override
 	public String toString() {
 		return "Trainingsplan{" +
 				"id=" + id +
-				", user=" + user +
 				", name='" + name + '\'' +
 				", descr='" + descr + '\'' +
 				", isDeleted=" + isDeleted +
+				", duration=" + duration +
+				", user=" + user +
 				", trainingsSessions=" + trainingsSessions +
 				'}';
 	}

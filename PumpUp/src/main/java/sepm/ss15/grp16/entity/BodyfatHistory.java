@@ -97,4 +97,14 @@ public class BodyfatHistory implements DTO {
         result = 31 * result + (bodyfat != null ? bodyfat.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "BodyfatHistory{" +
+                "bodyfathistory_id=" + bodyfathistory_id +
+                ", user_id=" + user_id +
+                ", bodyfat=" + bodyfat +
+                ", date=" + date +
+                '}';
+    }
 }

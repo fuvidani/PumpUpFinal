@@ -53,6 +53,9 @@
 
     <bean id="mainController" class="sepm.ss15.grp16.gui.controller.Main.MainController" scope="prototype">
         <property name="userService" ref="userService" />
+        <property name="weightHistoryService" ref="weightHistoryService" />
+        <property name="bodyfatHistoryService" ref="bodyfatHistoryService" />
+        <property name="pictureHistoryService" ref="pictureHistoryService" />
     </bean>
 
     <bean id="userDataController" class="sepm.ss15.grp16.gui.controller.Main.Main_UserDataController" scope="prototype">
@@ -133,6 +136,13 @@
         <property name="pictureHistoryService" ref="pictureHistoryService" />
     </bean>
 
+    <bean id="userEditController" class="sepm.ss15.grp16.gui.controller.User.UserEditController"
+          scope="prototype">
+        <property name="userService" ref="userService" />
+        <property name="weightHistoryService" ref="weightHistoryService" />
+        <property name="bodyfatHistoryService" ref="bodyfatHistoryService" />
+    </bean>
+
     <bean id="trainingsplanDAO" class="sepm.ss15.grp16.persistence.dao.training.impl.H2TrainingsplanDAOImpl" scope="singleton" lazy-init="true">
         <constructor-arg name="handler" ref="dbConnector"/>
         <property name="trainingsSessionHelperDAO" ref="trainingsSessionHelperDAO"/>
@@ -158,7 +168,7 @@
         <property name="userDAO" ref="userDAO"/>
     </bean>
 
-    <bean id="trainingsplanService" class="sepm.ss15.grp16.service.Training.impl.TrainingsPlanServiceImpl">
+    <bean id="trainingsplanService" class="sepm.ss15.grp16.service.training.impl.TrainingsPlanServiceImpl">
         <constructor-arg name="trainingsplanDAO" ref="trainingsplanDAO"/>
         <constructor-arg name="trainingsSessionDAO" ref="trainingsSessionDAO"/>
         <constructor-arg name="exerciseService" ref="exerciseService"/>
