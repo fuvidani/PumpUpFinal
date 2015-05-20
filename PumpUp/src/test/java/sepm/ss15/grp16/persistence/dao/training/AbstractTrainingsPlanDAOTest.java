@@ -1,19 +1,18 @@
 package sepm.ss15.grp16.persistence.dao.training;
 
 import sepm.ss15.grp16.entity.*;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.Trainingsplan;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
-import sepm.ss15.grp16.entity.training.TrainingsSession;
-import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,16 +149,16 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 		Assert.assertTrue(getDAO().findAll().contains(trainingsplan_descr));
 		Assert.assertTrue(getDAO().findAll().contains(trainingsplan4_session));
 
-		List<Trainingsplan> list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, "asdf", null, null, null));
+		List<Trainingsplan> list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, "asdf", null, null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan_name));
 
-		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, user, null, null, null, null));
+		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, user, null, null, null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan_user));
 
-		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, "xyz", null, null));
+		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, "xyz", null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan_descr));
 
-		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, null, null, dummySession()));
+		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, null, null, null, dummySession()));
 		Assert.assertTrue(list.contains(trainingsplan4_session));
 	}
 
@@ -190,16 +189,16 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 		Assert.assertTrue(getDAO().findAll().contains(trainingsplan_descr));
 		Assert.assertTrue(getDAO().findAll().contains(trainingsplan4_session));
 
-		List<Trainingsplan> list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, "asdf", null, null, null));
+		List<Trainingsplan> list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, "asdf", null, null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan_name));
 
-		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, user, null, null, null, null));
+		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, user, null, null, null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan_user));
 
-		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, "xyz", null, null));
+		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, "xyz", null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan_descr));
 
-		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, null, null, dummySession()));
+		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, null, null, null, dummySession()));
 		Assert.assertTrue(list.contains(trainingsplan4_session));
 	}
 
@@ -230,16 +229,16 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 		Assert.assertTrue(getDAO().findAll().contains(trainingsplan_descr));
 		Assert.assertTrue(getDAO().findAll().contains(trainingsplan4_session));
 
-		List<Trainingsplan> list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, "asdf", null, null, null));
+		List<Trainingsplan> list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, "asdf", null, null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan_name));
 
-		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, user, null, null, null, null));
+		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, user, null, null, null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan_user));
 
-		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, "xyz", null, null));
+		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, "xyz", null, null, null));
 		Assert.assertTrue(list.contains(trainingsplan_descr));
 
-		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, null, null, dummySession()));
+		list = ((TrainingsplanDAO) getDAO()).find(new Trainingsplan(null, null, null, null, null, null, dummySession()));
 		Assert.assertTrue(list.contains(trainingsplan4_session));
 	}
 
@@ -286,11 +285,11 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 
 	private Exercise dummyExercise() throws PersistenceException {
 		List<String> gifList = new ArrayList<>();
-		URL url = this.getClass().getResource("/img/pushup.jpg");
-		gifList.add(url.toString().substring(6));
+		//URL url = this.getClass().getResource("/img/pushup.jpg");
+		//gifList.add(url.toString().substring(6));
 		List<AbsractCategory> categoryList = new ArrayList<>();
-		categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
-		categoryList.add(new TrainingsCategory(2, "kraft"));
+		//categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
+		//categoryList.add(new TrainingsCategory(2, "kraft"));
 
 		Exercise liegestuetz = new Exercise(null, "beinheben", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , dummyUser(), categoryList);
 
@@ -304,12 +303,12 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 			ExerciseSet set = new ExerciseSet();
 
 			set.setRepeat(15);
-			set.setType(ExerciseSet.SetType.getSetType(ExerciseSet.SetType.REPEAT));
+			set.setType(ExerciseSet.SetType.repeat);
 			set.setExercise(dummyExercise());
 			set.setIsDeleted(false);
 			set.setUser(dummyUser());
 
-			set.setOrder_nr(i);
+			set.setOrder_nr(i+1);
 			sets.add(set);
 		}
 		return sets;
@@ -334,6 +333,7 @@ public abstract class AbstractTrainingsPlanDAOTest extends AbstractDAOTest<Train
 		trainingsplan.setName("testtraining");
 		trainingsplan.setDescr("testdescription");
 		trainingsplan.setIsDeleted(false);
+		trainingsplan.setDuration(5);
 
 		return trainingsplan;
 	}

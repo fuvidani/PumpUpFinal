@@ -2,7 +2,7 @@ package sepm.ss15.grp16.gui.controller.User;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,15 +15,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.gui.controller.Main.MainController;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -119,12 +116,7 @@ public class LoginController  extends Controller implements Initializable {
 
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
 
-            loader.setControllerFactory(new Callback<Class<?>, Object>() {
-                @Override
-                public Object call(Class<?> clazz) {
-                    return context.getBean(clazz);
-                }
-            });
+            loader.setControllerFactory(context::getBean);
 
             loader.setLocation(LoginController.class.getClassLoader().getResource("fxml/Main.fxml"));
             Pane page = loader.load();
@@ -134,8 +126,6 @@ public class LoginController  extends Controller implements Initializable {
             dialogStage.setTitle("PumpUp!");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(loginPane.getScene().getWindow());
-            //RegistrationController registrationController = loader.getController();
-            //registrationController.setLoginController(this);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
@@ -146,12 +136,7 @@ public class LoginController  extends Controller implements Initializable {
             dialogStage.setMinWidth(500);
             dialogStage.setMinHeight(500);
             dialogStage.setMaximized(true);
-            dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent e) {
-                    e.consume();
-                }
-            });
+            dialogStage.setOnCloseRequest(Event::consume);
 
             LOGGER.info("New stage successfully launched!");
             Stage stage = (Stage)this.loginPane.getScene().getWindow();

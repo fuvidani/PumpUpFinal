@@ -142,6 +142,7 @@ public abstract class AbstractSessionHelperDAOTest {
 
 		plan.setName("testtraining");
 		plan.setDescr("testdescription");
+		plan.setDuration(10);
 		plan.setIsDeleted(false);
 
 		plan = getTrainingsplanDAO().create(plan);

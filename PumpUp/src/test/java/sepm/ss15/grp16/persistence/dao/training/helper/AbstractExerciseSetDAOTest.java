@@ -142,11 +142,11 @@ public abstract class AbstractExerciseSetDAOTest {
 
 	private Exercise createExercise() throws PersistenceException {
 		List<String> gifList = new ArrayList<>();
-		URL url = this.getClass().getResource("/img/pushup.jpg");
-		gifList.add(url.toString().substring(6));
+		//URL url = this.getClass().getResource("/img/pushup.jpg");
+		//gifList.add(url.toString().substring(6));
 		List<AbsractCategory> categoryList = new ArrayList<>();
-		categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
-		categoryList.add(new TrainingsCategory(2, "kraft"));
+		//categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
+		//categoryList.add(new TrainingsCategory(2, "kraft"));
 
 		Exercise liegestuetz = new Exercise(null, "beinheben", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , null, categoryList);
 
@@ -157,7 +157,7 @@ public abstract class AbstractExerciseSetDAOTest {
 		ExerciseSet exerciseSet = new ExerciseSet();
 
 		exerciseSet.setRepeat(20);
-		exerciseSet.setType(ExerciseSet.SetType.getSetType(ExerciseSet.SetType.REPEAT));
+		exerciseSet.setType(ExerciseSet.SetType.repeat);
 		exerciseSet.setOrder_nr(1);
 		exerciseSet.setIsDeleted(false);
 
@@ -183,6 +183,7 @@ public abstract class AbstractExerciseSetDAOTest {
 
 		plan.setName("testtraining");
 		plan.setDescr("testdescription");
+		plan.setDuration(10);
 		plan.setIsDeleted(false);
 
 		plan = getTrainingsplanDAO().create(plan);

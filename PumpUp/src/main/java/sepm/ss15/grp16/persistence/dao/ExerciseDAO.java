@@ -51,4 +51,42 @@ public interface ExerciseDAO extends DAO<Exercise>{
      */
     void delete(Exercise exercise) throws  PersistenceException;
 
+    /**
+     * get all exercises which train only endurance
+     * @return a list of all exercises with endurance purposes
+     * @throws PersistenceException
+     */
+    List<Exercise> getAllEnduranceExercises() throws PersistenceException;
+
+    /**
+     * get all exercises which train only strength
+     * @return a list of all exercises with strength purposes
+     * @throws PersistenceException
+     */
+    List<Exercise> getAllStrengthExercises()throws PersistenceException;
+
+    /**
+     * get all exercises which train only balance
+     * @return a list of all exercises with balance purposes
+     * @throws PersistenceException
+     */
+    List<Exercise> getAllBalanceExercises()throws PersistenceException;
+
+    /**
+     * get all exercises which train only flexibility
+     * @return a list of all exercises with flexibility purposes
+     * @throws PersistenceException
+     */
+    List<Exercise> getAllFlexibilityExercises()throws PersistenceException;
+
+    /**
+     * getting all exercises which have the given category specified
+     * by the categoryID
+     * @param id the id of the category specifying for the exercies
+     * @return a list of all exercises which are qulifyed by the categoryID
+     * @throws PersistenceException
+     */
+    List<Exercise> getAllExercisesWithCategoryID(Integer id)throws PersistenceException;
+
+
 }
