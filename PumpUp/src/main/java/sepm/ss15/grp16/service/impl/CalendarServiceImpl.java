@@ -164,17 +164,9 @@ public class CalendarServiceImpl implements CalendarService{
                         cal.roll(Calendar.DATE, true); //increment day
                         break;
                     }
-
-                    cal.roll(Calendar.DATE, true); //increment day
                 }
+                cal.roll(Calendar.DATE, true); //increment day
             }
-        }
-
-        //TODO remove this
-        try {
-            LOGGER.debug(calendarDAO.findAll());
-        } catch (PersistenceException e) {
-            e.printStackTrace();
         }
     }
 

@@ -1,8 +1,6 @@
 package sepm.ss15.grp16.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by David on 2015.05.15..
@@ -16,7 +14,7 @@ public class Appointment implements DTO {
     private Boolean isDeleted;
 
     private String sessionName;
-    private List<String> setNames = new ArrayList<>();
+    private String setNames;
 
     public Appointment(Integer appointment_id, Date datum, Integer session_id, Integer user_id, Boolean isDeleted) {
         this.appointment_id = appointment_id;
@@ -78,11 +76,11 @@ public class Appointment implements DTO {
         this.sessionName = sessionName;
     }
 
-    public List<String> getSetNames() {
+    public String getSetNames() {
         return setNames;
     }
 
-    public void setSetNames(List<String> setNames) {
+    public void setSetNames(String setNames) {
         this.setNames = setNames;
     }
 

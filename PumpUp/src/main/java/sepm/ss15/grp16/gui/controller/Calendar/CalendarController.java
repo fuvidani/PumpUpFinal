@@ -64,12 +64,13 @@ public class CalendarController extends Controller implements Initializable{
 
                 LOGGER.debug("Execute javascript: addEvent..");
                 // Java to JS, function to create single event
-                engine.executeScript("function addEvent(id, title, start) {\n" +
+                engine.executeScript("function addEvent(id, title, start, sets) {\n" +
                         "var eventData = {\n" +
                         "   id: id,\n" +
                         "   title: title,\n" +
                         "   start: start,\n" +
-                        "   allDay: true\n" +
+                        "   allDay: true,\n" +
+                        "   url: sets\n" +
                         "};\n" +
                         "$('#calendar').fullCalendar('renderEvent', eventData, true);\n" +
                         "}");
@@ -79,7 +80,7 @@ public class CalendarController extends Controller implements Initializable{
             // Java to JS, send JSON list
             engine.executeScript("function addListEvents(result) {\n" +
                     "for(var i=0; i<result.length; i++){\n" +
-                    "   addEvent(result[i].appointment_id, result[i].sessionName, result[i].datum);" +
+                    "   addEvent(result[i].appointment_id, result[i].sessionName, result[i].datum, result[i].setNames);" +
                     "};\n" +
                     "}");
 
@@ -121,7 +122,7 @@ public class CalendarController extends Controller implements Initializable{
 
         Trainingsplan trainingsplan = new Trainingsplan(null,userService.getLoggedInUser(),"plan","description",false,sessionList);
 
-        DayOfWeek[] days = {DayOfWeek.FRIDAY};
+        DayOfWeek[] days = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY};
 
         WorkoutplanExport export = new WorkoutplanExport(trainingsplan,days,new Date());
 

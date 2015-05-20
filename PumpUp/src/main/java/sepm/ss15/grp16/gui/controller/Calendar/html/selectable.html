@@ -17,6 +17,7 @@
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
+
 			defaultDate: new Date(),
 			selectable: false,
 			selectHelper: true,
@@ -25,8 +26,12 @@
 
 			eventDrop: function(event, delta, revertFunc) {
                drag.updateEvent(event.id, event.start.format());
-            }
-    }
+            },
+
+            eventRender: function(event, element) {
+            element.attr('title', event.url);
+        }
+
 
 		});
 	});
@@ -45,7 +50,6 @@
 		max-width: 900px;
 		margin: 0 auto;
 	}
-
 
 </style>
 </head>
