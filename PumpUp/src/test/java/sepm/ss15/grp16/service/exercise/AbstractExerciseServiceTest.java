@@ -1,4 +1,4 @@
-package ServiceTest.Exercise;
+package sepm.ss15.grp16.service.exercise;
 
 import sepm.ss15.grp16.entity.*;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.Assert;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
     private UserService userService = getUserService();
 
     @Test
-    public void createValid()throws ServiceException {
+    public void createValid()throws ServiceException, URISyntaxException {
 
         //creating a user
         User lukas = new User(null, "lukas", true, 22, 178, false);
@@ -37,7 +38,7 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
         Assert.assertNotNull(lukas.getId());
 
         List<String> gifList = new ArrayList<>();
-        URL url = this.getClass().getResource("/img/pushup.jpg");
+        String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
         gifList.add(url.toString().substring(6));
         List<AbsractCategory> categoryList = new ArrayList<>();
         categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
@@ -62,7 +63,7 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
     }
 
     //        @Test
-    public void updateValid()throws ServiceException {
+    public void updateValid()throws ServiceException, URISyntaxException {
 
         //creating a user
         User lukas = new User(null, "lukas", true, 22, 178, false);
@@ -71,7 +72,7 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
         Assert.assertNotNull(lukas.getId());
 
         List<String> gifList = new ArrayList<>();
-        URL url = this.getClass().getResource("/img/pushup.jpg");
+        String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
         gifList.add(url.toString().substring(6));
         List<AbsractCategory> categoryList = new ArrayList<>();
         categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
@@ -116,9 +117,9 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
     }
 
     //    @Test(expected = ServiceException.class)
-    public void updateWithNoID() throws ServiceException{
+    public void updateWithNoID() throws ServiceException, URISyntaxException{
         List<String> gifList = new ArrayList<>();
-        URL url = this.getClass().getResource("/img/pushup.jpg");
+        String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
         gifList.add(url.toString().substring(6));
         Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
         Exercise e = exerciseService.create(liegestuetz);
@@ -128,11 +129,11 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
 
 
     //    @Test
-    public void deleteValid()throws ServiceException{
+    public void deleteValid()throws ServiceException, URISyntaxException{
 
 
         List<String> gifList = new ArrayList<>();
-        URL url = this.getClass().getResource("/img/pushup.jpg");
+        String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
         gifList.add(url.toString().substring(6));
         Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
         List<Exercise> exerciseList = exerciseService.findAll();
@@ -160,10 +161,10 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
     }
 
     //    @Test
-    public void getById()throws ServiceException{
+    public void getById()throws ServiceException, URISyntaxException{
 
         List<String> gifList = new ArrayList<>();
-        URL url = this.getClass().getResource("/img/pushup.jpg");
+        String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
         gifList.add(url.toString().substring(6));
         Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
         List<Exercise> exerciseList = exerciseService.findAll();
