@@ -85,11 +85,11 @@ MERGE INTO exercise KEY(id) VALUES
  Verschränken Sie die Arme vor der Brust und halten Sie sie fest an den Körper gepresst. Jetzt spannen Sie die Bauchmuskeln fest an,
  lösen Kopf und Schultern vom Boden und kommen schließlich langsam mit dem gesamten Oberkörper nach oben, bis die Ellbogen die Oberschenkel
  nahe der Hüften berühren. Senken Sie sich anschließend wieder langsam ab, bis die Schulterblätter den Boden berühren.
- Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauch-muskeln angespannt.', 0.5, '"https://www.youtube.com/embed/O_kqAgdD17E?feature=player_detailpage', null, false),
+ Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauch-muskeln angespannt.', 0.5, '', null, false),
   (5, 'Strandschere', 'Legen Sie sich mit gestreckten Beinen auf die linke Seite und stützen Sie den Kopf mit dem linken Arm ab.
   Die andere Hand stützen Sie vor Ihrer Brust auf. Heben Sie dann Ihr rechtes Bein so hoch wie möglich an und halten Sie es gestreckt für
   drei Sekunden in der', 0.02, null, null, false),
-  (6, 'Auf der Stelle Laufen', '', 0.3, null, null, false),
+  (6, 'Auf der Stelle Laufen', '', 0.3, '', null, false),
   (7, 'Einbeinige Kniebeuge', 'Kraft, Koordination, Balance und Ausdauer. Und mit ein bisschen Kreativität können Sie die Übung endlos
   variieren. Stellen Sie sich auf den rechten Fuß und heben Sie Ihr linkes Bein gestreckt nach vorn an.
   Halten Sie sich mit der linken Hand an einer Stuhllehne oder einem anderen, etwa hüfthohen Gegenstand fest,
@@ -112,14 +112,14 @@ MERGE INTO exercise KEY(id) VALUES
   (10, 'Seilspringen', 'Versuchen Sie eine geringe Sprunghöhe um Kraft zu schonen und versuchen Sie es auch einmal rückwärts', 0.1, '', null, false),
   (11, 'BOXEN-Schläge', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und schlagen führen Sie gezielte Schläge aus',0.2, '', null, false),
   (12, 'BOXEN-Tritte', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und treten sie mit dem Schienbein gegen den Sandsack.
-  Dehnen Sie sich vorher ausreichend', 0.5,' ', null, false),
-  (13, 'Armstrecken mit Kurzhantel', '', 0.4, ' ', null, false),
-  (14, 'Bizeps mit Langhantel', '', 0.3,  ' ',null, false),
-  (15, 'Kniebeugen mit Langhantel', '', 0.5,  ' ',null, false),
-  (16, 'Bauchmuskeln Mit Roller', '', 0.2, ' ', null, false),
-  (17, 'Beinheben mit Yogaball', '', 0.1, ' ', null, false),
-  (18, 'Crunches mit Yogaball', '', 0.1, ' ', null, false),
-  (19, 'Superman', '', 0.1,  ' ',null, false);
+  Dehnen Sie sich vorher ausreichend', 0.5,'', null, false),
+  (13, 'Armstrecken mit Kurzhantel', '', 0.4, '', null, false),
+  (14, 'Bizeps mit Langhantel', '', 0.3,  '',null, false),
+  (15, 'Kniebeugen mit Langhantel', '', 0.5,  '',null, false),
+  (16, 'Bauchmuskeln Mit Roller', '', 0.2, '', null, false),
+  (17, 'Beinheben mit Yogaball', '', 0.1, '', null, false),
+  (18, 'Crunches mit Yogaball', '', 0.1, '', null, false),
+  (19, 'Superman', '', 0.1,  '',null, false);
 
 merge INTO exercise_category KEY(exerciseid, categoryid) VALUES
   --liegestuetz, kraft, bizeps/trizeps/bauchmuskeln
