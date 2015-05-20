@@ -22,6 +22,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.*;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.WorkoutPlans.SessionController;
+import sepm.ss15.grp16.gui.controller.WorkoutPlans.SetController;
 import sepm.ss15.grp16.service.CategoryService;
 import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.UserService;
@@ -429,5 +431,4 @@ public class ManageExerciseController extends Controller implements Initializabl
 
         return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(),exerciseGifList, false, userService.getLoggedInUser(), temp);
     }
-
 }

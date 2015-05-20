@@ -170,7 +170,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 	public Trainingsplan update(Trainingsplan dto) throws PersistenceException {
 
 		try {
-			ps_update.setObject(1, dto.getUser());
+			ps_update.setObject(1, dto.getUser() != null ? dto.getUser().getId() : null);
 			ps_update.setString(2, dto.getName());
 			ps_update.setString(3, dto.getDescr());
 			ps_update.setInt(4, dto.getDuration());
@@ -201,6 +201,16 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 				for (TrainingsSession session : sessions_toDelete) {
 					trainingsSessionHelperDAO.delete(session);
 				}
+
+				sessions.removeAll(sessions_toDelete);
+				if (sessions.size() > 0) updateSets(sessions);
+
+			} else if (sessions != null &&
+					dto.getTrainingsSessions() != null &&
+					sessions.size() == dto.getTrainingsSessions().size()) {
+
+				updateSets(dto.getTrainingsSessions());
+
 			} else if (sessions == null && dto.getTrainingsSessions() != null) {
 				for (TrainingsSession session : dto.getTrainingsSessions()) {
 					trainingsSessionHelperDAO.create(session, dto.getId());
@@ -216,6 +226,48 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 			LOGGER.error("" + e.getMessage());
 			throw new PersistenceException("failed to update " + dto, e);
 		}
+	}
+
+	private void updateSets(List<TrainingsSession> sessions) throws PersistenceException {
+
+		if (sessions != null) {
+			for (TrainingsSession session : sessions) {
+				List<ExerciseSet> sets = exerciseSetHelperDAO.searchBySessionID(session.getId());
+
+				if (sets != null &&
+						session.getExerciseSets() != null &&
+						sets.size() != session.getExerciseSets().size()) {
+
+					List<ExerciseSet> set_toDelete = new ArrayList<>();
+					List<ExerciseSet> set_toCreate = new ArrayList<>();
+
+					set_toDelete.addAll(sets.stream().filter(set ->
+							!session.getExerciseSets().contains(set)).collect(Collectors.toList()));
+
+					set_toCreate.addAll(session.getExerciseSets().stream().filter(set ->
+							!sets.contains(set)).collect(Collectors.toList()));
+
+					for (ExerciseSet set : set_toCreate) {
+						exerciseSetHelperDAO.create(set, session.getId());
+					}
+
+					for (ExerciseSet set : set_toDelete) {
+						exerciseSetHelperDAO.delete(set);
+					}
+
+				} else if (sets == null && session.getExerciseSets() != null) {
+
+					for (ExerciseSet set : session.getExerciseSets()) {
+						exerciseSetHelperDAO.create(set, session.getId());
+					}
+				} else if (session.getExerciseSets() == null && sets != null) {
+					for (ExerciseSet set : sets) {
+						exerciseSetHelperDAO.delete(set);
+					}
+				}
+			}
+		}
+
 	}
 
 	@Override

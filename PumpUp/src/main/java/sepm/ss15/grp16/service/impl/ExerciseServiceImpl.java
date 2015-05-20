@@ -94,6 +94,8 @@ public class ExerciseServiceImpl implements ExerciseService {
     public void delete(Exercise exercise) throws ServiceException {
         LOGGER.debug("deleting exercise in service");
         try{
+            if(exercise==null || exercise.getId()==null)
+                throw new ValidationException("can not validatate exercise with null value");
 
             if(exercise.getUser()!=null && !userService.getLoggedInUser().equals(exercise.getUser()))
                 throw new ValidationException("can not delete an exercise from another user or the system");

@@ -48,7 +48,7 @@ public class H2DBConnectorImpl implements DBHandler {
 
 				con.setAutoCommit(false);
 				execScripts();
-				//populateTest();
+				populateTest();
 				con.setAutoCommit(true);
 
 			} catch (ClassNotFoundException | SQLException | FileNotFoundException | URISyntaxException e) {

@@ -248,19 +248,23 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             }
             //creating new pictures
             List<String> gifNames = new ArrayList<>();
-            for(String s : exercise.getGifLinks()){
-                if(!oldExercise.getGifLinks().contains(s)){
-                   this.createPictures(s, exercise.getId());
-                }//end if
+            if(exercise.getGifLinks()!=null) {
+                for (String s : exercise.getGifLinks()) {
+                    if (!oldExercise.getGifLinks().contains(s)) {
+                        this.createPictures(s, exercise.getId());
+                    }
+                }
             }
             ResultSet rs = null;
 
             deleteCategoryStatement.setInt(1, exercise.getId());
             deleteCategoryStatement.execute();
-            for(AbsractCategory a : exercise.getCategories()){
-                createCategoryStatement.setInt(1, id);
-                createCategoryStatement.setInt(2, a.getId());
-                createCategoryStatement.execute();
+            if(exercise.getCategories()!=null) {
+                for (AbsractCategory a : exercise.getCategories()) {
+                    createCategoryStatement.setInt(1, id);
+                    createCategoryStatement.setInt(2, a.getId());
+                    createCategoryStatement.execute();
+                }
             }
             return exercise;
         }catch (SQLException e){
