@@ -57,6 +57,9 @@ public class WorkoutPlansController extends Controller implements Initializable 
 	private TextArea trainingDescr;
 
 	@FXML
+	private Text txtDuration;
+
+	@FXML
 	private ListView<Trainingsplan> workoutPlansListView;
 
 	@FXML
@@ -89,6 +92,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 						if (workoutPlansListView.getSelectionModel().getSelectedItems() != null && new_val != null) {
 							updateSessionList(new_val.getTrainingsSessions());
 							selection = new Trainingsplan(new_val);
+							txtDuration.setText(String.valueOf(new_val.getDuration()));
 							trainingDescr.setText(new_val.getDescr());
 							trainingNameLabel.setText(new_val.getName());
 
@@ -96,10 +100,11 @@ public class WorkoutPlansController extends Controller implements Initializable 
 								deleteBtn.setDisable(false);
 								editBtn.setDisable(false);
 							}
-							deleteBtn.setDisable(false);
-							editBtn.setDisable(false);
 							calenderBtn.setDisable(false);
 							copyBtn.setDisable(false);
+							//TODO
+							/*deleteBtn.setDisable(false);
+							editBtn.setDisable(false);*/
 
 						}
 					});
@@ -143,7 +148,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 				workoutPlanTable.getColumns().add(col);
 			}
 		}
-		workoutPlanTable.setPlaceholder(new Label("Trainingsplan enthhält keine Sessions"));*/
+		workoutPlanTable.setPlaceholder(new Label("Trainingsplan enth\u00e4lt keine Sessions"));*/
 	}
 
 	@FXML
@@ -151,8 +156,8 @@ public class WorkoutPlansController extends Controller implements Initializable 
 		try {
 			List<Trainingsplan> list;
 			if (customWorkoutPlansCheck.isSelected()) {
-				//User user = userService.getLoggedInUser();
-				User user = new User(1, null, null, null, null, null);
+				User user = userService.getLoggedInUser();
+				//User user = new User(1, null, null, null, null, null);
 
 				list = trainingsplanService.find(new Trainingsplan(null, user, null, null, null, null, null));
 				if (list == null) list = new ArrayList<>();
@@ -195,6 +200,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 		trainingDescr.setText("");
 		trainingNameLabel.setText("");
 		listViewSessions.getItems().clear();
+		workoutPlansListView.getSelectionModel().clearSelection();
 
 		deleteBtn.setDisable(true);
 		editBtn.setDisable(true);
@@ -231,7 +237,6 @@ public class WorkoutPlansController extends Controller implements Initializable 
 						Pane pane = null;
 						if (t != null) {
 							pane = new Pane();
-							//String value = t.getName() + "\n\n";
 							String title = t.getName();
 							String value = "";
 
@@ -251,7 +256,6 @@ public class WorkoutPlansController extends Controller implements Initializable 
 							final double em = leftText.getLayoutBounds().getHeight();
 							middleText.relocate(0, 2 * em);
 
-							//setText(leftText);
 							pane.getChildren().addAll(leftText, middleText);
 						}
 						setText("");
@@ -279,11 +283,14 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	void copyWorkoutPlanClicked(ActionEvent event) {
-/*		Create_Edit_WorkoutPlanController.plan_interClassCommunication = selection;
-		transitionLoader.openWaitStage("fxml/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan erstellen / bearbeiten", 1300, 700, false);
+		Trainingsplan toCopy = new Trainingsplan(selection);
+		toCopy.setId(null);
+		Create_Edit_WorkoutPlanController.plan_interClassCommunication = toCopy;
+		transitionLoader.openWaitStage("fxml/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
+				"Trainingsplan " + selection.getName() + " kopieren", 1000, 620, true);
 		updateTable();
 		setUpListView();
-		clearSelection();*/
+		clearSelection();
 	}
 
 	@FXML
@@ -298,9 +305,9 @@ public class WorkoutPlansController extends Controller implements Initializable 
 	void deleteWorkoutPlanClicked(ActionEvent event) {
 		try {
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setTitle("Löschen bestätigen");
+			alert.setTitle("L\u00f6schen best\u00e4tigen");
 			alert.setHeaderText("Sind Sie sicher?");
-			alert.setContentText(selection.getName() + " wirklich löschen?");
+			alert.setContentText(selection.getName() + " wirklich l\u00f6schen?");
 			ButtonType yes = new ButtonType("Ja");
 			ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
 			alert.getButtonTypes().setAll(yes, cancel);
@@ -319,6 +326,12 @@ public class WorkoutPlansController extends Controller implements Initializable 
 				clearSelection();
 			}
 		} catch (ServiceException e) {
+			LOGGER.error("Error opening SetStage, Errormessage: " + e);
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Fehler");
+			alert.setHeaderText("Fehler beim \u00f6ffnen des Fensters!");
+			alert.setContentText(e.getMessage());
+			alert.showAndWait();
 			e.printStackTrace();
 		}
 	}
@@ -328,10 +341,8 @@ public class WorkoutPlansController extends Controller implements Initializable 
 		Stage thiststage = (Stage) listViewSessions.getScene().getWindow();
 		Create_Edit_WorkoutPlanController.plan_interClassCommunication = selection;
 
-		thiststage.hide();
 		transitionLoader.openWaitStage("fxml/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
 				"Trainingsplan " + selection.getName() + " bearbeiten", 1000, 620, true);
-		thiststage.show();
 
 		updateTable();
 		setUpListView();
@@ -352,7 +363,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	void embedInCalenderClicked(ActionEvent event) {
-		transitionLoader.openStage("fxml/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender einfügen", 600, 400, false);
+		transitionLoader.openStage("fxml/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender einf\u00dcgen", 600, 400, false);
 	}
 
 	@FXML

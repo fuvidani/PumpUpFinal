@@ -167,7 +167,7 @@ public class H2TrainingssessionHelperDAOImpl implements TrainingsSessionHelperDA
 		try {
 			ps_update.setInt(1, id_plan);
 			ps_update.setString(2, session.getName());
-			ps_update.setObject(3, session.getUser());
+			ps_update.setObject(3, session.getUser().getId());
 			ps_update.setBoolean(4, session.getIsDeleted());
 			ps_update.setInt(5, session.getId());
 

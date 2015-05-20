@@ -3,14 +3,16 @@ package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,6 +50,9 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 	private TextField txtName;
 
 	@FXML
+	private TextField txtDuration;
+
+	@FXML
 	private TextArea txtDescr;
 
 	@FXML
@@ -66,12 +71,20 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 	public void initialize(URL location, ResourceBundle resources) {
 		this.transitionLoader = new StageTransitionLoader(this);
 
-		listViewSessions.setOrientation(Orientation.HORIZONTAL);
 		setUpListView();
 
 		if (plan_interClassCommunication != null) {
-			txtName.setText(plan_interClassCommunication.getName());
+			if (plan_interClassCommunication.getId() != null) {
+				txtName.setText(plan_interClassCommunication.getName());
+			} else {
+				String name = userService.getLoggedInUser().getUsername() + "'";
+				if (!name.endsWith("s'")) {
+					name += "s";
+				}
+				txtName.setText(name + " " + plan_interClassCommunication.getName());
+			}
 			txtDescr.setText((plan_interClassCommunication.getDescr()));
+			txtDuration.setText(String.valueOf(plan_interClassCommunication.getDuration()));
 
 			if (plan_interClassCommunication.getTrainingsSessions() != null) {
 				ObservableList<TrainingsSession> data =
@@ -86,9 +99,10 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 				(ov, old_val, new_val) -> {
 					if (listViewSessions.getSelectionModel().getSelectedItems() != null && new_val != null) {
 						selection = new TrainingsSession(new_val);
+						btnDeleteSession.setDisable(false);
+						btnEditSession.setDisable(false);
 					}
 				});
-
 	}
 
 	@FXML
@@ -98,7 +112,11 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 		if (trainingsplan != null) {
 			try {
 				if (plan_interClassCommunication != null) {
-					trainingsplanService.update(trainingsplan);
+					if (plan_interClassCommunication.getId() == null) {
+						trainingsplanService.create(trainingsplan);
+					} else {
+						trainingsplanService.update(trainingsplan);
+					}
 				} else {
 					trainingsplanService.create(trainingsplan);
 				}
@@ -108,34 +126,57 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 				this.stage.close();
 
 			} catch (ServiceException e) {
+				LOGGER.error("Error opening Create_Edit_Stage, Errormessage: " + e);
 				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setTitle("Fahler");
+				alert.setTitle("Fehler");
+				alert.setHeaderText("Fehler beim \u00f6ffnen des Fensters!");
 				alert.setContentText(e.getMessage());
 				alert.showAndWait();
+				e.printStackTrace();
 			}
 		}
 	}
 
 	private Trainingsplan createValidPlan() {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle("Fahler");
+		alert.setTitle("Fehler");
 		alert.setHeaderText("Falsche Daten!");
 		boolean error = false;
 		String errormessage = "";
 
 		String name = txtName.getText();
 		String descr = txtDescr.getText();
+		String duration = txtDuration.getText();
+
+		Integer duration_int = null;
 
 		if (name == null || name.equals("")) {
 			error = true;
 			errormessage = "Name ist leer!";
 		}
 
+		if (duration == null || duration.equals("")) {
+			error = true;
+			errormessage = "Dauer ist leer!";
+		}
+
+		if (duration == null || duration.equals("")) {
+			error = true;
+			errormessage = "Dauer ist leer!";
+		} else {
+			try {
+				duration_int = Integer.parseInt(duration);
+			} catch (NumberFormatException e) {
+				error = true;
+				errormessage = "Dauer muss eine ganzzahlige Zahl sein!";
+			}
+		}
+
 		List<TrainingsSession> data = listViewSessions.getItems();
 
 		if (data == null || data.isEmpty()) {
 			error = true;
-			errormessage = "Keine Sessions hinzugef�gt!";
+			errormessage = "Keine Sessions hinzugef\u00fcgt!";
 		}
 
 		if (error) {
@@ -143,11 +184,10 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 			alert.showAndWait();
 			return null;
 		} else {
-//TODO
 			if (plan_interClassCommunication != null) {
-				return new Trainingsplan(plan_interClassCommunication.getId(), userService.getLoggedInUser(), name, descr, false, 10, data);
+				return new Trainingsplan(plan_interClassCommunication.getId(), userService.getLoggedInUser(), name, descr, false, duration_int, data);
 			} else {
-				return new Trainingsplan(null, userService.getLoggedInUser(), name, descr, false, 10, data);
+				return new Trainingsplan(null, userService.getLoggedInUser(), name, descr, false, duration_int, data);
 			}
 		}
 	}
@@ -198,9 +238,9 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 	@FXML
 	void cancelClicked(ActionEvent event) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("�nderungen verwerfen");
+		alert.setTitle("\u00c4nderungen verwerfen");
 		alert.setHeaderText("Wollen Sie wirklich abbrechen?");
-		alert.setContentText("Alle �nderungen w�rden verlorgen gehen!");
+		alert.setContentText("Alle \u00c4nderungen w\u00fcrden verlorgen gehen!");
 		ButtonType yes = new ButtonType("Ja");
 		ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
 		alert.getButtonTypes().setAll(yes, cancel);
@@ -214,7 +254,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 
 	@FXML
 	void addSession(ActionEvent event) {
-		transitionLoader.openWaitStage("fxml/Session.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf�gen", 600, 400, false);
+		transitionLoader.openWaitStage("fxml/Session.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf\u00fcgen", 600, 400, false);
 		if (session_interClassCommunication != null) {
 			listViewSessions.getItems().add(session_interClassCommunication);
 			setUpListView();

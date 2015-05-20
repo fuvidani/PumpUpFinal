@@ -170,7 +170,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
 	public Trainingsplan update(Trainingsplan dto) throws PersistenceException {
 
 		try {
-			ps_update.setObject(1, dto.getUser());
+			ps_update.setObject(1, dto.getUser().getId());
 			ps_update.setString(2, dto.getName());
 			ps_update.setString(3, dto.getDescr());
 			ps_update.setInt(4, dto.getDuration());

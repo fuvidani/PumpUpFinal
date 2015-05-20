@@ -7,10 +7,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 import sepm.ss15.grp16.service.impl.UserServiceImpl;
@@ -25,6 +29,10 @@ import java.util.ResourceBundle;
  * Date: 15.05.2015
  */
 public class SetController extends Controller implements Initializable {
+	private static final Logger LOGGER = LogManager.getLogger(SetController.class);
+
+	private StageTransitionLoader transitionLoader;
+
 	private UserServiceImpl userService;
 	private ExerciseServiceImpl exerciseService;
 
@@ -61,6 +69,7 @@ public class SetController extends Controller implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		this.transitionLoader = new StageTransitionLoader(this);
 		try {
 
 			tblcName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -80,13 +89,19 @@ public class SetController extends Controller implements Initializable {
 			});
 
 		} catch (ServiceException e) {
+			LOGGER.error("Error opening SetStage, Errormessage: " + e);
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Fehler");
+			alert.setHeaderText("Fehler beim \u00f6ffnen des Fensters!");
+			alert.setContentText(e.getMessage());
+			alert.showAndWait();
 			e.printStackTrace();
 		}
 	}
 
 	@FXML
 	void onClickShow(ActionEvent event) {
-
+		transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) tblvExercises.getScene().getWindow(), selection.getName(), 500, 500, true);
 	}
 
 	@FXML
@@ -101,7 +116,7 @@ public class SetController extends Controller implements Initializable {
 
 	private ExerciseSet createValidSet() {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle("Fahler");
+		alert.setTitle("Fehler");
 		alert.setHeaderText("Falsche Daten!");
 		boolean error = false;
 		String errormessage = "";
@@ -161,18 +176,18 @@ public class SetController extends Controller implements Initializable {
 	@FXML
 	void onClickCancle(ActionEvent event) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Änderungen verwerfen");
+		alert.setTitle("\u00c4nderungen verwerfen");
 		alert.setHeaderText("Wollen Sie wirklich abbrechen?");
-		alert.setContentText("Alle Änderungen würden verlorgen gehen!");
+		alert.setContentText("Alle \u00c4nderungen w\u00fcrden verlorgen gehen!");
 		ButtonType yes = new ButtonType("Ja");
 		ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
 		alert.getButtonTypes().setAll(yes, cancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == yes) {
+			session_interClassCommunication = null;
 			this.stage.close();
 		}
-		session_interClassCommunication = null;
 	}
 
 	public void setUserService(UserServiceImpl userService) {

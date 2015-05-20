@@ -14,6 +14,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
@@ -26,6 +28,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SessionController extends Controller implements Initializable {
+	private static final Logger LOGGER = LogManager.getLogger(SessionController.class);
 
 	private StageTransitionLoader transitionLoader;
 
@@ -94,7 +97,6 @@ public class SessionController extends Controller implements Initializable {
 
 			tblvExerciseTable.setItems(data);
 		}
-
 	}
 
 	@FXML
@@ -108,7 +110,7 @@ public class SessionController extends Controller implements Initializable {
 
 	private TrainingsSession createValidSession() {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle("Fahler");
+		alert.setTitle("Fehler");
 		alert.setHeaderText("Falsche Daten!");
 		boolean error = false;
 		String errormessage = "";
@@ -124,7 +126,7 @@ public class SessionController extends Controller implements Initializable {
 
 		if (data == null || data.isEmpty()) {
 			error = true;
-			errormessage = "Keine Übungen hinzugefügt!";
+			errormessage = "Keine \u00dcbungen hinzugef\u00fcgt!";
 		}
 
 		if (error) {
@@ -154,28 +156,29 @@ public class SessionController extends Controller implements Initializable {
 	@FXML
 	void onClickCancel(ActionEvent event) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Änderungen verwerfen");
+		alert.setTitle("\u00c4nderungen verwerfen");
 		alert.setHeaderText("Wollen Sie wirklich abbrechen?");
-		alert.setContentText("Alle Änderungen würden verlorgen gehen!");
+		alert.setContentText("Alle \u00c4nderungen w\u00fcrden verlorgen gehen!");
 		ButtonType yes = new ButtonType("Ja");
 		ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
 		alert.getButtonTypes().setAll(yes, cancel);
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == yes) {
+			session_interClassCommunication = null;
 			this.stage.close();
 		}
 	}
 
 	@FXML
 	void onClickShow(ActionEvent event) {
-
+		transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) tblvExerciseTable.getScene().getWindow(), selection.getExercise().getName(), 500, 500, true);
 	}
 
 	@FXML
 	void onClickAdd(ActionEvent event) {
 		SetController.session_interClassCommunication = session_interClassCommunication;
-		transitionLoader.openWaitStage("fxml/ExerciseSet.fxml", (Stage) tblvExerciseTable.getScene().getWindow(), "Übung hinzufügen", 500, 500, false);
+		transitionLoader.openWaitStage("fxml/ExerciseSet.fxml", (Stage) tblvExerciseTable.getScene().getWindow(), "\u00dcbung hinzuf\u00fcgen", 500, 500, false);
 
 		if (set_interClassCommunication != null) {
 			tblvExerciseTable.getItems().add(set_interClassCommunication);
@@ -192,7 +195,7 @@ public class SessionController extends Controller implements Initializable {
 
 	@FXML
 	void onClickEdit(ActionEvent event) {
-		transitionLoader.openWaitStage("fxml/ExerciseSet.fxml", (Stage) tblvExerciseTable.getScene().getWindow(), "Übung bearbeiten", 500, 500, false);
+		transitionLoader.openWaitStage("fxml/ExerciseSet.fxml", (Stage) tblvExerciseTable.getScene().getWindow(), "\u00dcbung bearbeiten", 500, 500, false);
 
 		if (set_interClassCommunication != null) {
 			tblvExerciseTable.getItems().remove(selection);
