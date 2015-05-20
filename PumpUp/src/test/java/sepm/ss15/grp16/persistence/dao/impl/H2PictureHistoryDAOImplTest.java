@@ -9,8 +9,11 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import sepm.ss15.grp16.entity.PictureHistory;
 import sepm.ss15.grp16.persistence.dao.AbstractPictureHistoryDaoTest;
+import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.dao.PictureHistoryDAO;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 
 /**
@@ -30,6 +33,11 @@ public class H2PictureHistoryDAOImplTest extends AbstractPictureHistoryDaoTest {
         this.pictureHistoryDAO = pictureHistoryDAO;
     }
 
+    @Autowired
+    public void setUserDAO(UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
+
     @Before
     public void setUp() throws Exception {
         dbConnector.getConnection().setAutoCommit(false);
@@ -40,4 +48,5 @@ public class H2PictureHistoryDAOImplTest extends AbstractPictureHistoryDaoTest {
         dbConnector.getConnection().rollback();
         dbConnector.getConnection().setAutoCommit(true);
     }
+
 }

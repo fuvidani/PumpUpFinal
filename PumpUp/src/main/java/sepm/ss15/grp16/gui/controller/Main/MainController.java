@@ -123,9 +123,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void calendarClicked(ActionEvent event) {
-
-        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
-
+        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, false);
     }
 
     @FXML
@@ -158,7 +156,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void manageBodyPhotosClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/BodyPhotos.fxml", (Stage) usernameLabel.getScene().getWindow(), "Fotos", 1000, 600, false);
+        transitionLoader.openStage("fxml/BodyPhotos.fxml", (Stage)usernameLabel.getScene().getWindow(),"Fotos", 1000, 600, false);
     }
 
     @FXML
@@ -187,6 +185,11 @@ public class MainController extends Controller implements Initializable {
         transitionLoader.openStage("fxml/Exercises.fxml", (Stage) usernameLabel.getScene().getWindow(), "Übungen", 800, 600, true);
     }
 
+    @FXML
+    void openCalendarMenuClicked(ActionEvent event) {
+        transitionLoader.openStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 800, 600, false);
+
+    }
 
     @FXML
     void aboutMenuClicked(ActionEvent event) {
@@ -216,7 +219,8 @@ public class MainController extends Controller implements Initializable {
             }
 
             PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(user_id);
-            if(actualBodyfathistory != null){
+
+            if(actualPictureHistory != null){
                 String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
                 LOGGER.debug("Loading from resources: " + pathToResource);
                 String pathOfNewImage = pathToResource + actualPictureHistory.getLocation();

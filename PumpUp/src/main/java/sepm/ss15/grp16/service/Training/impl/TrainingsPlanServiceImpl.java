@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.service.Training.impl;
+package sepm.ss15.grp16.service.training.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +10,7 @@ import sepm.ss15.grp16.persistence.dao.training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.ExerciseService;
-import sepm.ss15.grp16.service.Training.TrainingsplanService;
+import sepm.ss15.grp16.service.training.TrainingsplanService;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
@@ -187,6 +187,11 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 		if (plan.getId() == null) {
 			LOGGER.error("error validating " + plan);
 			throw new ValidationException("Trainingsplan-ID darf nicht null sein!");
+		}
+
+		if (plan.getDuration() == null) {
+			LOGGER.error("error validating " + plan);
+			throw new ValidationException("Trainingsplan Dauer darf nicht null sein!");
 		}
 		if (plan.getTrainingsSessions() != null) {
 
