@@ -350,7 +350,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
         try {
 
             String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-
+            String endung = originalName.substring(originalName.lastIndexOf('.'));
             File directory = new File(pathToResource);
             if (!directory.exists()) {
                 directory.mkdir();
@@ -358,7 +358,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             GregorianCalendar calendar = new GregorianCalendar();
             String ownName = "/img_ex_" + (calendar.getTimeInMillis()) + Math.abs(originalName.hashCode());
             FileInputStream inputStream = new FileInputStream(originalName);
-            File file1 = new File(pathToResource + ownName+".jpg"); //file storing
+            File file1 = new File(pathToResource + ownName+endung); //file storing
             FileOutputStream out = new FileOutputStream(file1);
             IOUtils.copy(inputStream, out); //copy content from input to output
             out.close();
@@ -368,9 +368,9 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             Integer gifId = rs.getInt(1);
             insertGifStatement.setInt(1, gifId);
             insertGifStatement.setInt(2, exerciseID);
-            insertGifStatement.setString(3, ownName.concat(".jpg"));
+            insertGifStatement.setString(3, ownName.concat(endung));
             insertGifStatement.execute();
-            return ownName.concat(".jpg");
+            return ownName.concat(endung);
         }catch (FileNotFoundException e){
             throw new PersistenceException(e);
         }catch (IOException e){
