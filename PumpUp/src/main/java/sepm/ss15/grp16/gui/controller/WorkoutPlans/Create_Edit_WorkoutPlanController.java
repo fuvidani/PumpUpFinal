@@ -123,7 +123,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 
 		List<TrainingsSession> sessions = listViewSessions.getItems();
 
-		if (sessions != null) {
+		if (sessions != null && plan_interClassCommunication != null) {
 			int calories_sum = 0;
 			List<TrainingsCategory> trainingsCategoryList = new ArrayList<>();
 			List<EquipmentCategory> equipmentCategoryList = new ArrayList<>();
@@ -317,6 +317,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == yes) {
 			plan_interClassCommunication = null;
+			session_interClassCommunication = null;
 			this.stage.close();
 		}
 	}

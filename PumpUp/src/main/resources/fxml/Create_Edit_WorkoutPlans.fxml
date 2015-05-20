@@ -242,12 +242,12 @@
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="btnEditSession" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editSession" text="Session bearbeiten">
+                              <Button fx:id="btnEditSession" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editSession" text="Session bearbeiten">
                                  <VBox.margin>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="btnDeleteSession" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteSession" text="Session löschen">
+                              <Button fx:id="btnDeleteSession" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteSession" text="Session löschen">
                                  <VBox.margin>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </VBox.margin>

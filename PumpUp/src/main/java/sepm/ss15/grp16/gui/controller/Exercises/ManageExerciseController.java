@@ -163,8 +163,6 @@ public class ManageExerciseController extends Controller implements Initializabl
 
     private ObservableList<CheckBox> checkboxes = FXCollections.observableArrayList();
     private List<CheckBox> allCheckboxes = new ArrayList<>();
-    private SessionController sessionController;
-    private SetController setController;
 
     public void setExerciseService(Service<Exercise> exerciseService){
         this.exerciseService=exerciseService;
@@ -182,17 +180,6 @@ public class ManageExerciseController extends Controller implements Initializabl
         this.exerciseController=exerciseController;
         exercise=exerciseController.getExercise();
         //TODO ueber spring mit bean loesen
-    }
-
-
-    public void setSessionController(SessionController sessionController) {
-        this.sessionController = sessionController;
-	    exercise=sessionController.getExercise();
-    }
-
-    public void setSetController(SetController setController) {
-        this.setController = setController;
-	    exercise=setController.getExercise();
     }
 
     @Override
