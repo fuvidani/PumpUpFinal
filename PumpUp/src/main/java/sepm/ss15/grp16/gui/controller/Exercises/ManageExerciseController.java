@@ -185,17 +185,11 @@ public class ManageExerciseController extends Controller implements Initializabl
 
         //dynamisches laden von checkboxen
         try {
-            for (MusclegroupCategory m : categoryService.getAllMusclegroup()){
-                CheckBox box = new CheckBox(m.getName());
-                box.setId(""+m.getId());
-                checkboxes.add(box);
-                allCheckboxes.add(box);
-            }
-            vboxMuscle.getChildren().addAll(checkboxes);
-            checkboxes.clear();
+            webViewVideo.setVisible(false);
             for(TrainingsCategory t : categoryService.getAllTrainingstype()){
                 CheckBox box = new CheckBox(t.getName());
                 box.setId(""+t.getId());
+                LOGGER.debug("trainingsboxID: " + box.getId());
                 checkboxes.add(box);
                 allCheckboxes.add(box);
 
@@ -203,15 +197,28 @@ public class ManageExerciseController extends Controller implements Initializabl
             vboxType.getChildren().addAll(checkboxes);
             checkboxes.clear();
 
+            for (MusclegroupCategory m : categoryService.getAllMusclegroup()){
+                CheckBox box = new CheckBox(m.getName());
+                box.setId(""+m.getId());
+                LOGGER.debug("muscleboxID: " + box.getId());
+                checkboxes.add(box);
+                allCheckboxes.add(box);
+            }
+            vboxMuscle.getChildren().addAll(checkboxes);
+            checkboxes.clear();
+
+
             for(EquipmentCategory e : categoryService.getAllEquipment()){
                 CheckBox box = new CheckBox(e.getName());
                 box.setId(""+e.getId());
+                LOGGER.debug("equipmentsboxID: " + box.getId());
                 checkboxes.add(box);
                 allCheckboxes.add(box);
 
             }
             vboxEquipment.getChildren().addAll(checkboxes);
             checkboxes.clear();
+
         }catch (ServiceException e){
             LOGGER.error(e);
             e.printStackTrace();
@@ -219,6 +226,7 @@ public class ManageExerciseController extends Controller implements Initializabl
         imagesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
                 showPic(oldValue, newValue);
             }
         });
@@ -266,15 +274,14 @@ public class ManageExerciseController extends Controller implements Initializabl
             if(observablePicListData.isEmpty())
                 return;
 
-            //exercise got set from other controller
-            if(this.exercise!=null && !observablePicListData.isEmpty()){
-                String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
-                file =new File(storingPath + "\\"+newValue);
-                picture = "/"+file.getName();
+            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+            if(newValue.contains("img_ex")){
+                                file =new File(pathToResource+"/"+newValue);
+                picture = file.getName();
             }else{
-                file =  new File(newValue);
-                picture = file.toString();
+                file =new File(newValue);
             }
+
             LOGGER.debug(picture);
 
             inputStream = new FileInputStream(file);
@@ -294,9 +301,9 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     void cancelClicked(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Uebung verlassen");
-        alert.setHeaderText("Das Uebungsfenster schliessen und alle Aenderungen verwerfen?");
-        alert.setContentText("Moechten Sie die Uebungsuebersicht wirklich beenden?");
+        alert.setTitle("\u00dcbung verlassen");
+        alert.setHeaderText("Das \u00dcbungsfenster schlie\u00dfen und alle Aenderungen verwerfen?");
+        alert.setContentText("M\\u00f6chten Sie die \u00dcbungsuebersicht wirklich beenden?");
         ButtonType yes = new ButtonType("Ja");
         ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(yes, cancel);
@@ -392,9 +399,9 @@ public class ManageExerciseController extends Controller implements Initializabl
     private void removeClicked(){
 
         LOGGER.debug("removing pictuer " + picture);
-        observablePicListData.remove(picture);
-        exerciseGifList.remove(picture);
-        LOGGER.debug("list contins picture to remove:  " + observablePicListData.contains(picture));
+        observablePicListData.remove("/" + picture);
+        exerciseGifList.remove("/"+picture);
+        LOGGER.debug("list contins picture to remove:  " + observablePicListData.contains("/"+picture));
         imagesListView.setItems(observablePicListData);
         imagesListView.setVisible(false);
         imagesListView.setVisible(true);
@@ -411,10 +418,11 @@ public class ManageExerciseController extends Controller implements Initializabl
         }catch (NumberFormatException e){
             calories = 1.0;
         }
-        //TODO set logged in user
+
 
         List<AbsractCategory> temp = new ArrayList<>();
         for(CheckBox c : allCheckboxes){
+
             if(c.isSelected())
                 temp.add(new TrainingsCategory(Integer.parseInt(c.getId()), c.getText()));
         }

@@ -11,6 +11,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.persistence.dao.AbstractBodyfatHistoryDaoTest;
 import sepm.ss15.grp16.persistence.dao.BodyfatHistoryDAO;
+import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 
 /**
@@ -24,6 +25,11 @@ public class H2BodyfatHistoryDAOImplTest extends AbstractBodyfatHistoryDaoTest {
 
     @Autowired
     private DBHandler dbConnector;
+
+    @Autowired
+    public void setUserDAO(UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
 
     @Autowired
     public void setBodyfatHistoryDAO(BodyfatHistoryDAO bodyfatHistoryDAO) {

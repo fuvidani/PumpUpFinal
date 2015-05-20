@@ -2,6 +2,7 @@ package sepm.ss15.grp16.persistence.dao;
 
 import org.junit.Test;
 import sepm.ss15.grp16.entity.BodyfatHistory;
+import sepm.ss15.grp16.entity.User;
 import sepm.ss15.grp16.persistence.dao.BodyfatHistoryDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
@@ -18,9 +19,15 @@ import static org.junit.Assert.assertTrue;
  * @author Michael Sober
  * @version 1.0
  */
-public abstract class AbstractBodyfatHistoryDaoTest {
+public abstract class AbstractBodyfatHistoryDaoTest extends AbstractDAOTest<BodyfatHistory>{
 
     protected BodyfatHistoryDAO bodyfatHistoryDAO;
+    protected UserDAO userDAO;
+
+    @Override
+    public DAO<BodyfatHistory> getDAO() {
+        return bodyfatHistoryDAO;
+    }
 
     @Test(expected = PersistenceException.class)
     public void createWithNullShouldThrowException() throws Exception{
@@ -29,26 +36,28 @@ public abstract class AbstractBodyfatHistoryDaoTest {
 
     @Test
     public void createWithValidBodyfatHistoryShouldPersist() throws Exception {
-        BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, 1, 23, new Date());
-        List<BodyfatHistory> allUsers = bodyfatHistoryDAO.findAll();
-        assertFalse(allUsers.contains(testBodyfatHistory));
-        bodyfatHistoryDAO.create(testBodyfatHistory);
-        allUsers = bodyfatHistoryDAO.findAll();
-        assertTrue(allUsers.contains(testBodyfatHistory));
+        BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, createUserForTest().getUser_id(), 23, new Date());
+        createValid(testBodyfatHistory);
     }
 
     @Test
     public void getActualWeightWithValidId() throws Exception {
-        BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, 1, 23, new Date());
-        BodyfatHistory testBodyfatHistory1 = new BodyfatHistory(null, 1, 25, new Date());
-        BodyfatHistory testBodyfatHistory2 = new BodyfatHistory(null, 1, 21, new Date());
-        BodyfatHistory testBodyfatHistory3 = new BodyfatHistory(null, 1, 18, new Date());
+        User testUser = createUserForTest();
+        BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, testUser.getUser_id(), 23, new Date());
+        BodyfatHistory testBodyfatHistory1 = new BodyfatHistory(null, testUser.getUser_id(), 25, new Date());
+        BodyfatHistory testBodyfatHistory2 = new BodyfatHistory(null, testUser.getUser_id(), 21, new Date());
+        BodyfatHistory testBodyfatHistory3 = new BodyfatHistory(null, testUser.getUser_id(), 18, new Date());
         bodyfatHistoryDAO.create(testBodyfatHistory);
         bodyfatHistoryDAO.create(testBodyfatHistory1);
         bodyfatHistoryDAO.create(testBodyfatHistory2);
         bodyfatHistoryDAO.create(testBodyfatHistory3);
 
-        BodyfatHistory bodyfatHistory = bodyfatHistoryDAO.getActualBodyfat(1);
+        BodyfatHistory bodyfatHistory = bodyfatHistoryDAO.getActualBodyfat(testUser.getUser_id());
         assertEquals(testBodyfatHistory3, bodyfatHistory);
+    }
+
+    private User createUserForTest() throws Exception{
+        User testUser = new User(null, "maxmustermann", true, 20, 194, "max.mustermann@gmail.com", "/path/playlist/", false);
+        return userDAO.create(testUser);
     }
 }
