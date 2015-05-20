@@ -25,32 +25,30 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
 
     public abstract ExerciseService getExerciseService();
 
-    private ExerciseService exerciseService = getExerciseService();
-    private UserService userService = getUserService();
-
     @Test
     public void createValid()throws ServiceException, URISyntaxException {
 
         //creating a user
         User lukas = new User(null, "lukas", true, 22, 178, false);
-        lukas = userService.create(lukas);
+        lukas = getUserService().create(lukas);
+        getUserService().setLoggedInUser(lukas);
         Assert.assertNotNull(lukas);
         Assert.assertNotNull(lukas.getId());
 
         List<String> gifList = new ArrayList<>();
         String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
-        gifList.add(url.toString().substring(6));
+        gifList.add(url);
         List<AbsractCategory> categoryList = new ArrayList<>();
         categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
         categoryList.add(new TrainingsCategory(2, "kraft"));
 
         Exercise liegestuetz = new Exercise(null, "beinheben", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false , lukas, categoryList);
 
-        List<Exercise> exerciseList = exerciseService.findAll();
+        List<Exercise> exerciseList = getExerciseService().findAll();
         Assert.assertFalse(exerciseList.contains(liegestuetz));
-        Exercise e =  exerciseService.create(liegestuetz);
+        Exercise e =  getExerciseService().create(liegestuetz);
         Assert.assertNotNull(e);
-        exerciseList = exerciseService.findAll();
+        exerciseList = getExerciseService().findAll();
 
         Assert.assertTrue(exerciseList.contains(e));
     }
@@ -58,45 +56,49 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
     //    @Test(expected = PersistenceException.class)
     public void createWithNull() throws ServiceException{
         Exercise exercise = null;
-        exerciseService.create(exercise);
+        getExerciseService().create(exercise);
 
     }
 
-    //        @Test
+            @Test
     public void updateValid()throws ServiceException, URISyntaxException {
 
         //creating a user
         User lukas = new User(null, "lukas", true, 22, 178, false);
-        lukas = userService.create(lukas);
+        lukas = getUserService().create(lukas);
+                getUserService().setLoggedInUser(lukas);
         Assert.assertNotNull(lukas);
         Assert.assertNotNull(lukas.getId());
 
         List<String> gifList = new ArrayList<>();
         String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
-        gifList.add(url.toString().substring(6));
+        gifList.add(url);
         List<AbsractCategory> categoryList = new ArrayList<>();
         categoryList.add(new MusclegroupCategory(5, "Bizeps NEU"));
         categoryList.add(new TrainingsCategory(2, "kraft"));
         Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, lukas, categoryList);
 
-        List<Exercise> exerciseList = exerciseService.findAll();
+        List<Exercise> exerciseList = getExerciseService().findAll();
         Assert.assertFalse(exerciseList.contains(liegestuetz));
-        Exercise e = exerciseService.create(liegestuetz);
+        Exercise e = getExerciseService().create(liegestuetz);
         Assert.assertNotNull(e);
-        exerciseList = exerciseService.findAll();
+        exerciseList = getExerciseService().findAll();
+                for(Exercise ex : exerciseList){
+                    System.out.println("exercises: \n"+ex);
+                }
         Assert.assertTrue(exerciseList.contains(e));
 
-        e.setName("diamond Pull up");
+                e.setName("diamond Pull up");
         e.setDescription("perfect trainings exercice");
         e.setCalories(23.0);
         e.setGifLinks(gifList);
-        gifList.add(url.toString().substring(6));
+        gifList.add(url);
         categoryList = new ArrayList<>();
         categoryList.add(new MusclegroupCategory(3, "Bizeps NEU"));
         categoryList.add(new TrainingsCategory(4, "kraft"));
         e.setCategories(categoryList);
-        exerciseService.update(e);
-        exerciseList = exerciseService.findAll();
+        getExerciseService().update(e);
+        exerciseList = getExerciseService().findAll();
         Assert.assertTrue(exerciseList.contains(e));
     }
 
@@ -111,66 +113,66 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTest<Ex
         Assert.assertFalse(exercises.contains(seilspringen));
     }
 
-    //    @Test(expected = ServiceException.class)
+        @Test(expected = ServiceException.class)
     public void updateWithNull()throws ServiceException{
-        exerciseService.update(null);
+        getExerciseService().update(null);
     }
 
-    //    @Test(expected = ServiceException.class)
+        @Test(expected = ServiceException.class)
     public void updateWithNoID() throws ServiceException, URISyntaxException{
         List<String> gifList = new ArrayList<>();
         String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
-        gifList.add(url.toString().substring(6));
+        gifList.add(url);
         Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
-        Exercise e = exerciseService.create(liegestuetz);
+        Exercise e = getExerciseService().create(liegestuetz);
         e.setId(null);
-        exerciseService.update(e);
+        getExerciseService().update(e);
     }
 
 
-    //    @Test
+        @Test
     public void deleteValid()throws ServiceException, URISyntaxException{
 
 
         List<String> gifList = new ArrayList<>();
         String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
-        gifList.add(url.toString().substring(6));
+        gifList.add(url);
         Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
-        List<Exercise> exerciseList = exerciseService.findAll();
+        List<Exercise> exerciseList = getExerciseService().findAll();
         Assert.assertFalse(exerciseList.contains(liegestuetz));
-        Exercise e =  exerciseService.create(liegestuetz);
+        Exercise e =  getExerciseService().create(liegestuetz);
         Assert.assertNotNull(e);
-        exerciseList = exerciseService.findAll();
+        exerciseList = getExerciseService().findAll();
         Assert.assertTrue(exerciseList.contains(e));
-        exerciseService.delete(e);
-        exerciseList = exerciseService.findAll();
+        getExerciseService().delete(e);
+        exerciseList = getExerciseService().findAll();
         Assert.assertFalse(exerciseList.contains(e));
 
 
     }
 
-    //    @Test(expected = ServiceException.class)
+        @Test(expected = ServiceException.class)
     public void deleteWithNull()throws ServiceException{
-        exerciseService.delete(null);
+        getExerciseService().delete(null);
     }
 
-    //    @Test(expected = ServiceException.class)
+        @Test(expected = ServiceException.class)
     public void deleteWithNullID()throws ServiceException{
         Exercise e = new Exercise(null, "test", "beschreibung", 0.5,"video", null, false, null, null);
-        exerciseService.delete(e);
+        getExerciseService().delete(e);
     }
 
-    //    @Test
+        @Test
     public void getById()throws ServiceException, URISyntaxException{
 
         List<String> gifList = new ArrayList<>();
         String url = this.getClass().getResource("/img/pushup.jpg").toURI().getPath();
-        gifList.add(url.toString().substring(6));
+        gifList.add(url);
         Exercise liegestuetz = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, null);
-        List<Exercise> exerciseList = exerciseService.findAll();
+        List<Exercise> exerciseList = getExerciseService().findAll();
         Assert.assertFalse(exerciseList.contains(liegestuetz));
-        Exercise e = exerciseService.create(liegestuetz);
-        Exercise byId = exerciseService.searchByID(e.getId());
+        Exercise e = getExerciseService().create(liegestuetz);
+        Exercise byId = getExerciseService().searchByID(e.getId());
         Assert.assertNotNull(byId);
 
 
