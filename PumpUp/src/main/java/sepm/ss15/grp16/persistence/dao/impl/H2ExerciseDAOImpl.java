@@ -351,6 +351,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
             String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
             String endung = originalName.substring(originalName.lastIndexOf('.'));
+
             File directory = new File(pathToResource);
             if (!directory.exists()) {
                 directory.mkdir();

@@ -134,6 +134,7 @@ public class ExercisesController extends Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.transitionLoader = new StageTransitionLoader(this);
+        webViewVideo.setVisible(false);
         uebungColumn.setCellValueFactory(new PropertyValueFactory<Exercise, String>("name"));
         uebungsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Exercise>() {
             @Override
@@ -174,15 +175,16 @@ public class ExercisesController extends Controller implements Initializable{
 
     @FXML
     private void playVideo(){
-
-        webViewVideo.getEngine().load(exercise.getVideolink());
-
-//        webViewVideo.getEngine().load(exercise.getVideolink());
+        if(exercise.getVideolink()==null || exercise.getVideolink().isEmpty()){
+            webViewVideo.setVisible(false);
+        }else{
+            webViewVideo.setVisible(true);
+            webViewVideo.getEngine().load(exercise.getVideolink());
+        }
     }
 
     private void updateFilteredData() {
         ObservableList<Exercise> temp = FXCollections.observableArrayList();
-
         for (Exercise e : filteredData) {
             if (matchesFilter(e))
                 temp.add(e);

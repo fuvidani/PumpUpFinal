@@ -68,7 +68,7 @@ merge INTO category VALUES(0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0)
 
 
 MERGE INTO exercise KEY(id) VALUES
-  (0, 'Liegestötz', 'Legen Sie sich auf den Bauch, strecken Sie die Beine, schließen Sie die Füße und stellen Sie die Zehenspitzen auf.
+  (0, 'Liegestütz', 'Legen Sie sich auf den Bauch, strecken Sie die Beine, schließen Sie die Füße und stellen Sie die Zehenspitzen auf.
   Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie
   bilden, von den Fersen bis zum Nacken.', 0.03, 'https://www.youtube.com/embed/fdA6oWzW96g?feature=player_detailpage', null, false),
   (1, 'Armrotation', 'Eine tolle Übung, um die Schultern vor oder nach den intensiveren Übungen aufzuwärmen oder abzukühlen.
@@ -78,7 +78,7 @@ MERGE INTO exercise KEY(id) VALUES
   (2, 'Daumen hoch', 'Nehmen Sie die Bauchlage ein. Ihre Füße sind hüftbreit geöffnet, die Fußspitzen aufgestellt.
   Strecken Sie die Arme seitlich aus und ballen Sie Ihre Hände zu Fäusten, die Daumen zeigen nach oben.
   Heben Sie nun die Schultern und den Kopf vom Boden an und ziehen Sie die gestreckten Arme so weit wie möglich nach oben.
-  Dabei nähern sich Ihre Schulterblätter an.', 0.01, null, null, false ),
+  Dabei nähern sich Ihre Schulterblätter an.', 0.01, '', null, false ),
   (3, 'Kniebeuge','Wichtig. Die Knie beim Hochgehen nicht ganz durch-strecken sondern etwas tief bleiben.', 0.02, null, null, false),
   (4, 'Crunch it UP', 'Legen Sie sich auf den Rücken. Stellen Sie die Beine angewinkelt hüftbreit auf
  und haken Sie die Füße unter einem Gegenstand (Bett, Sofa, Stuhl, Regal, Couchtisch etc.) ein.

@@ -185,6 +185,7 @@ public class ManageExerciseController extends Controller implements Initializabl
 
         //dynamisches laden von checkboxen
         try {
+            webViewVideo.setVisible(false);
             for (MusclegroupCategory m : categoryService.getAllMusclegroup()){
                 CheckBox box = new CheckBox(m.getName());
                 box.setId(""+m.getId());
