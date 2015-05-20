@@ -1,6 +1,6 @@
-package ServiceTest.Exercise.impl;
+package sepm.ss15.grp16.service.exercise.impl;
 
-import ServiceTest.Exercise.AbstractExerciseServiceTest;
+import sepm.ss15.grp16.service.exercise.AbstractExerciseServiceTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;

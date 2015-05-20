@@ -238,17 +238,12 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             updateStatement.setInt(6, id);
             updateStatement.execute();
 
-//            File toDelete = null;
             String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
             for(String s : oldExercise.getGifLinks()){
                 if(!exercise.getGifLinks().contains(s)){ //picture removed
                     LOGGER.debug("deleting file: " + s);
                     deleteGifStatement.setString(1, s);
                     deleteGifStatement.execute();
-                    //evtl file loeschen
-                  /*  toDelete = new File(storingPath.concat(s.substring(1)));
-                    toDelete.setWritable(true);
-                    toDelete.deleteOnExit();*/
                 }
             }
             //creating new pictures

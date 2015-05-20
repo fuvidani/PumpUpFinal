@@ -221,25 +221,26 @@ public class ExercisesController extends Controller implements Initializable{
     }
 
     private void showExercise(Exercise old, Exercise newExercise){
-        if (newExercise == null && old != null) {
-            newExercise = old;
-            LOGGER.debug("exercise null, ole not!");
-        }
-
         if (newExercise != null && old == null) {
             LOGGER.debug("first click");
         }
 
         if (newExercise == null) {
             LOGGER.debug("exercise null");
-            newExercise = old;
+            return;
+        }
+        if(newExercise!=null){
+            exerciseNameLabel.setText(newExercise.getName());
+            descriptionTextArea.setText(newExercise.getDescription());
+            exercise = newExercise;
+            playVideo();
+            if(exercise.getGifLinks().size()>0) {
+                showPicture(0);
+            }else{
+                imageView.setImage(null);
+            }
         }
 
-        exerciseNameLabel.setText(newExercise.getName());
-        descriptionTextArea.setText(newExercise.getDescription());
-        exercise = newExercise;
-        playVideo();
-        showPicture(0);
     }
 
     private void showPicture(Integer index){
@@ -264,12 +265,16 @@ public class ExercisesController extends Controller implements Initializable{
 
     @FXML
     private void nexPicButtonClicked(){
-        showPicture(Math.abs(++picIndex)%exercise.getGifLinks().size());
+        if(exercise.getGifLinks().size()>0) {
+            showPicture(Math.abs(++picIndex) % exercise.getGifLinks().size());
+        }
     }
 
     @FXML
     private void prevPicButtonClicked(){
-        showPicture(Math.abs(--picIndex) % exercise.getGifLinks().size());
+        if(exercise.getGifLinks().size()>0){
+            showPicture(Math.abs(--picIndex) % exercise.getGifLinks().size());
+        }
     }
 
     @FXML
