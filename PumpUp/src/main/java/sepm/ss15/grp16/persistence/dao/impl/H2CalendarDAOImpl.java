@@ -3,7 +3,9 @@ package sepm.ss15.grp16.persistence.dao.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.Appointment;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.persistence.dao.CalendarDAO;
+import sepm.ss15.grp16.persistence.dao.training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
@@ -23,11 +25,12 @@ public class H2CalendarDAOImpl implements CalendarDAO {
     private PreparedStatement updateStm;
     private PreparedStatement deleteStm;
 
+    private TrainingsSessionDAO trainingsSessionDAO;
+
     private Connection connection;
     private static final Logger LOGGER = LogManager.getLogger(H2CalendarDAOImpl.class);
 
     public H2CalendarDAOImpl(DBHandler handler) throws PersistenceException{
-        LOGGER.info("Creating a new CalenderDAO instance..");
 
         try {
             this.connection = handler.getConnection();
@@ -98,6 +101,13 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             while (rs_findAll.next()){
                 Appointment appointment = new Appointment(rs_findAll.getInt(1),rs_findAll.getDate(2),rs_findAll.getInt(3),rs_findAll.getInt(4),rs_findAll.getBoolean(5));
 
+                appointment.setSessionName(trainingsSessionDAO.searchByID(appointment.getSession_id()).getName());
+                List<String> setNames = new ArrayList<>();
+                for (ExerciseSet exerciseSet: trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()){
+                    setNames.add(exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName());
+                }
+                appointment.setSetNames(setNames);
+
                 result.add(appointment);
             }
 
@@ -159,7 +169,7 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             updateStm.setBoolean(4,appointment.getIsDeleted());
             updateStm.setInt(5,appointment.getUser_id());
 
-            searchByIDStm.executeUpdate();
+            updateStm.executeUpdate();
 
         } catch (SQLException e){
             LOGGER.error("Failed to update record in appointment table. - " + e.getMessage());
@@ -194,5 +204,9 @@ public class H2CalendarDAOImpl implements CalendarDAO {
         }
 
         LOGGER.info("Appointment successfully deleted in appointment table.");
+    }
+
+    public void setSessionDAO(TrainingsSessionDAO trainingsSessionDAO) {
+        this.trainingsSessionDAO = trainingsSessionDAO;
     }
 }

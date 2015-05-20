@@ -18,27 +18,16 @@
 				right: 'month,agendaWeek,agendaDay'
 			},
 			defaultDate: new Date(),
-			selectable: true,
+			selectable: false,
 			selectHelper: true,
-			select: function(start, end) {
-				var title = prompt('Event Title:');
-				var eventData;
-				if (title) {
-					eventData = {
-						title: title,
-						start: start,
-						end: end
-					};
-					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-				}
-				$('#calendar').fullCalendar('unselect');
-			},
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 
 			eventDrop: function(event, delta, revertFunc) {
-               drag.updateEvent();
+               drag.updateEvent(event.id, event.start.format());
             }
+    }
+
 		});
 	});
 
@@ -56,6 +45,7 @@
 		max-width: 900px;
 		margin: 0 auto;
 	}
+
 
 </style>
 </head>

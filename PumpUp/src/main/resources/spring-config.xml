@@ -80,15 +80,18 @@
     <bean id="calendarDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2CalendarDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        <property name="sessionDAO" ref="trainingsSessionDAO"/>
     </bean>
 
     <bean id="calendarService" class="sepm.ss15.grp16.service.impl.CalendarServiceImpl"
           scope="singleton">
         <constructor-arg name="calendarDAO" ref="calendarDAO"/>
+        <property name="userService" ref="userService"/>
     </bean>
 
     <bean id="calendarController" class="sepm.ss15.grp16.gui.controller.Calendar.CalendarController" scope="prototype">
         <property name="calendarService" ref="calendarService"></property>
+        <property name="userService" ref="userService"/>
     </bean>
 
 

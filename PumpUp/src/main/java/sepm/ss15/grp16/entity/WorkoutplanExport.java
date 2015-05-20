@@ -10,8 +10,14 @@ import java.util.Date;
 public class WorkoutplanExport {
 
     private Trainingsplan trainingsplan;
-    private DayOfWeek[] days;
+    private DayOfWeek[] days; //eg: days = {DayOfWeek.FRIDAY, DayOfWeek.SUNDAY};
     private Date datum;
+
+    public WorkoutplanExport(Trainingsplan trainingsplan, DayOfWeek[] days, Date datum) {
+        this.trainingsplan = trainingsplan;
+        this.days = days;
+        this.datum = datum;
+    }
 
     public Trainingsplan getTrainingsplan() {
         return trainingsplan;
