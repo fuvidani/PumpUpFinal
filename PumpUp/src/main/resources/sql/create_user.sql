@@ -47,4 +47,5 @@ CREATE TABLE IF NOT EXISTS picturehistory (
   FOREIGN KEY (user_id) REFERENCES user
 );
 
-INSERT INTO user VALUES (1, 'lukas', true, 22, 178, 'loc.kathrein@gmail.com',null, false);
+MERGE INTO user VALUES (1, 'lukas', true, 22, 178, 'loc.kathrein@gmail.com',null, false);
+ALTER SEQUENCE user_seq RESTART WITH 2;

@@ -1,12 +1,16 @@
 package sepm.ss15.grp16.gui.controller.WorkoutPlans;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +27,7 @@ import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 import sepm.ss15.grp16.service.impl.UserServiceImpl;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +46,8 @@ public class SetController extends Controller implements Initializable {
 	private UserServiceImpl userService;
 	private ExerciseServiceImpl exerciseService;
 
-	private static Exercise selection;
+	private Exercise selection;
+	private ObservableList<Exercise>  masterdata;
 
 	public static TrainingsSession session_interClassCommunication;
 
@@ -72,6 +78,9 @@ public class SetController extends Controller implements Initializable {
 	@FXML
 	private TableColumn<Exercise, String> tblcCat;
 
+	@FXML
+	private TextField txtFilter;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.transitionLoader = new StageTransitionLoader(this);
@@ -101,17 +110,21 @@ public class SetController extends Controller implements Initializable {
 				return new SimpleStringProperty(value);
 			});
 
-			ObservableList<Exercise> data = FXCollections.observableArrayList(
+			masterdata = FXCollections.observableArrayList(
 					exerciseService.findAll()
 			);
 
-			tblvExercises.setItems(data);
+			tblvExercises.setItems(masterdata);
 
 			tblvExercises.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
 				if (newValue != null) {
 					selection = newValue;
 					btnShow.setDisable(false);
 				}
+			});
+
+			txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+				updateFilteredData();
 			});
 
 		} catch (ServiceException e) {
@@ -123,6 +136,23 @@ public class SetController extends Controller implements Initializable {
 			alert.showAndWait();
 			e.printStackTrace();
 		}
+	}
+
+	private void updateFilteredData() {
+		ObservableList<Exercise> filteredData = FXCollections.observableArrayList(masterdata);
+		ObservableList<Exercise> temp = FXCollections.observableArrayList();
+		for (Exercise e : filteredData) {
+			if (matchesFilter(e))
+				temp.add(e);
+		}
+
+		tblvExercises.setItems(temp);
+	}
+
+	private boolean matchesFilter(Exercise e) {
+		String filter = txtFilter.getText();
+		return txtFilter.getText() == null || filter.isEmpty() || e.getName().toLowerCase().contains(filter.toLowerCase());
+
 	}
 
 	@FXML
@@ -155,7 +185,7 @@ public class SetController extends Controller implements Initializable {
 
 		ExerciseSet.SetType setType;
 
-		if (repeat_type.equals("Wiederholung")) {
+		if (repeat_type.equals("Wiederholungen")) {
 			setType = ExerciseSet.SetType.repeat;
 		} else {
 			setType = ExerciseSet.SetType.time;
@@ -223,9 +253,5 @@ public class SetController extends Controller implements Initializable {
 
 	public void setExerciseService(ExerciseServiceImpl exerciseService) {
 		this.exerciseService = exerciseService;
-	}
-
-	public Exercise getExercise() {
-		return selection;
 	}
 }

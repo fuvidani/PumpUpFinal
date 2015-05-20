@@ -16,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
@@ -25,6 +24,7 @@ import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.impl.UserServiceImpl;
 
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -39,7 +39,7 @@ public class SessionController extends Controller implements Initializable {
 	public static TrainingsSession session_interClassCommunication;
 	public static ExerciseSet set_interClassCommunication;
 
-	private static ExerciseSet selection;
+	private ExerciseSet selection;
 
 	@FXML
 	private Button btnDelete;
@@ -49,6 +49,12 @@ public class SessionController extends Controller implements Initializable {
 
 	@FXML
 	private Button btnShow;
+
+	@FXML
+	private Button btnUp;
+
+	@FXML
+	private Button btnDown;
 
 	@FXML
 	private TextField txtName;
@@ -85,6 +91,8 @@ public class SessionController extends Controller implements Initializable {
 				selection = new ExerciseSet(newValue);
 				btnShow.setDisable(false);
 				btnDelete.setDisable(false);
+				btnUp.setDisable(false);
+				btnDown.setDisable(false);
 			}
 		});
 
@@ -96,6 +104,14 @@ public class SessionController extends Controller implements Initializable {
 					);
 
 			tblvExerciseTable.setItems(data);
+
+			tblvExerciseTable.sortPolicyProperty().set(t -> {
+				Comparator<ExerciseSet> comparator = (r1, r2) -> r1.getOrder_nr() < r2.getOrder_nr() ? -1 : 1;
+				FXCollections.sort(tblvExerciseTable.getItems(), comparator);
+				return true;
+			});
+
+			tblcOrder.setSortType(TableColumn.SortType.ASCENDING);
 		}
 	}
 
@@ -148,9 +164,52 @@ public class SessionController extends Controller implements Initializable {
 
 		btnShow.setDisable(true);
 		btnDelete.setDisable(true);
+		btnUp.setDisable(true);
+		btnDown.setDisable(true);
 
 		tblvExerciseTable.getSelectionModel().clearSelection();
 
+	}
+
+	@FXML
+	private void onClickUp(ActionEvent event) {
+
+		ObservableList<ExerciseSet> sets =
+				FXCollections.observableArrayList(
+						tblvExerciseTable.getItems()
+				);
+
+		sets.remove(selection);
+		sets.stream().filter(set -> set.getOrder_nr() + 1 == selection.getOrder_nr()).forEach(set -> {
+			set.setOrder_nr(set.getOrder_nr() + 1);
+			selection.setOrder_nr(selection.getOrder_nr() - 1);
+		});
+		sets.add(selection);
+
+		tblvExerciseTable.getItems().clear();
+		tblvExerciseTable.setItems(sets);
+		tblvExerciseTable.sort();
+		clearSelection();
+	}
+
+	@FXML
+	private void onClickDown(ActionEvent event) {
+		ObservableList<ExerciseSet> sets =
+				FXCollections.observableArrayList(
+						tblvExerciseTable.getItems()
+				);
+
+		sets.remove(selection);
+		sets.stream().filter(set -> set.getOrder_nr() - 1 == selection.getOrder_nr()).forEach(set -> {
+			set.setOrder_nr(set.getOrder_nr() - 1);
+			selection.setOrder_nr(selection.getOrder_nr() + 1);
+		});
+		sets.add(selection);
+
+		tblvExerciseTable.getItems().clear();
+		tblvExerciseTable.setItems(sets);
+		tblvExerciseTable.sort();
+		clearSelection();
 	}
 
 	@FXML
@@ -223,9 +282,5 @@ public class SessionController extends Controller implements Initializable {
 
 	public void setUserService(UserServiceImpl userService) {
 		this.userService = userService;
-	}
-
-	public Exercise getExercise() {
-		return selection.getExercise();
 	}
 }
