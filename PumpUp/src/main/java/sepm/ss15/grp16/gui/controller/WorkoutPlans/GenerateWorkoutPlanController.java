@@ -153,6 +153,12 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         absRollerCheck.setId("20");
         jumpingRopeCheck.setId("17");
         punchbagCheck.setId("18");
+        /**
+         * Balance and Flexibility disabled until implementtion
+         * TODO: remove it after impl.
+         */
+        balanceRadio.setDisable(true);
+        flexibilityRadio.setDisable(true);
         boxes.add(barbellCheck);
         boxes.add(yogaBallCheck);
         boxes.add(dumbbellCheck);
