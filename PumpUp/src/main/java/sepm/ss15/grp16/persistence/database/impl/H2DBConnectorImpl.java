@@ -2,6 +2,7 @@ package sepm.ss15.grp16.persistence.database.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.h2.jdbcx.JdbcDataSource;
 import org.h2.tools.RunScript;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
@@ -24,6 +25,7 @@ public class H2DBConnectorImpl implements DBHandler {
     private static final Logger LOGGER = LogManager.getLogger(H2DBConnectorImpl.class);
 
     private static Connection con = null;
+    private static JdbcDataSource ds;
 
     private String path;
     private String user;
@@ -43,6 +45,11 @@ public class H2DBConnectorImpl implements DBHandler {
                 LOGGER.info("try to get connection to database");
                 Class.forName("org.h2.Driver");
 
+//                ds = new JdbcDataSource();
+//                ds.setURL(path);
+//                ds.setUser(user);
+//                ds.setPassword(password);
+//                con = ds.getConnection();
                 con = DriverManager.getConnection(path, user, password);
                 LOGGER.info("connection successful established");
 

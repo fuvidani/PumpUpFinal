@@ -36,8 +36,10 @@ public class Main extends Application {
     public void start(final Stage primaryStage) throws Exception {
         LOGGER.info("starting application");
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
         FXMLLoader fxmlLoader = new FXMLLoader();
+
+
 
         //add spring context to JavaFX (http://koenserneels.blogspot.co.at/2012/11/javafx-2-with-spring.html)
         fxmlLoader.setControllerFactory(context::getBean);
@@ -64,7 +66,9 @@ public class Main extends Application {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == yes) {
                 // TODO: For cleaning purposes: close DB-connection
+                context.close();
                 primaryStage.close();
+
             } else {
                 primaryStage.show();
             }
