@@ -237,7 +237,6 @@ public class MainController extends Controller implements Initializable {
         } else {
             stage.show();
         }
-        stage.close();
     }
 
 
