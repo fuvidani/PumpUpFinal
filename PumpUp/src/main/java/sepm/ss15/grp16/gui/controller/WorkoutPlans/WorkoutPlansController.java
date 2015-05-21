@@ -108,8 +108,8 @@ public class WorkoutPlansController extends Controller implements Initializable 
 							if (selection.getUser() != null) {
 								deleteBtn.setDisable(false);
 								editBtn.setDisable(false);
+								calenderBtn.setDisable(false);
 							}
-							calenderBtn.setDisable(false);
 							copyBtn.setDisable(false);
 							updateInformations(new_val);
 
@@ -360,7 +360,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	void generateWorkoutPlanClicked(ActionEvent event) {
-		transitionLoader.openWaitStage("fxml/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 1300, 700, false);
+		transitionLoader.openWaitStage("fxml/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 600, 400, false);
 		updateTable();
 		setUpListView();
 		clearSelection();
@@ -428,7 +428,8 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	void embedInCalenderClicked(ActionEvent event) {
-		transitionLoader.openStage("fxml/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender einf\u00dcgen", 600, 400, false);
+		WorkoutPlanToCalendarController.plan_interClassCommunication = selection;
+		transitionLoader.openWaitStage("fxml/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender exportieren", 800, 600, false);
 	}
 
 	@FXML

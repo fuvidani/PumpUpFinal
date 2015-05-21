@@ -59,6 +59,7 @@
 
     <bean id="mainController" class="sepm.ss15.grp16.gui.controller.Main.MainController" scope="prototype">
         <property name="userService" ref="userService" />
+        <property name="calendarService" ref="calendarService"></property>
         <property name="weightHistoryService" ref="weightHistoryService" />
         <property name="bodyfatHistoryService" ref="bodyfatHistoryService" />
         <property name="pictureHistoryService" ref="pictureHistoryService" />
@@ -83,8 +84,22 @@
 
     <!-- Calendar Beans -->
 
-    <bean id="calendarController" class="sepm.ss15.grp16.gui.controller.Calendar.CalendarController" scope="prototype">
+    <bean id="calendarDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2CalendarDAOImpl"
+          scope="singleton">
+        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        <property name="sessionDAO" ref="trainingsSessionDAO"/>
+    </bean>
 
+    <bean id="calendarService" class="sepm.ss15.grp16.service.impl.CalendarServiceImpl"
+          scope="singleton">
+        <constructor-arg name="calendarDAO" ref="calendarDAO"/>
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="calendarController" class="sepm.ss15.grp16.gui.controller.Calendar.CalendarController" scope="prototype">
+        <property name="calendarService" ref="calendarService"></property>
+        <property name="mainController" ref="mainController"></property>
+        <property name="userService" ref="userService"/>
     </bean>
 
 
@@ -193,7 +208,7 @@
     </bean>
 
     <bean id="workoutController" class="sepm.ss15.grp16.gui.controller.Workout.WorkoutController" scope="prototype">
-
+        <constructor-arg name="exerciseDAO" ref="exerciseDAO"/>
     </bean>
 
     <bean id="workoutGraphicsController" class="sepm.ss15.grp16.gui.controller.Workout.WorkoutGraphicsController" scope="prototype">
@@ -212,11 +227,15 @@
 
     <!-- WorkoutPlans Beans-->
 
-    <bean id="generateWorkoutPlanController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GenerateWorkoutPlanController" scope="prototype">
-
+    <bean id="generateWorkoutPlanController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GenerateWorkoutPlanController" scope="singleton">
+        <property name="generatedWorkoutplanService" ref="generatedWorkoutplanService"></property>
+        <property name="categoryService" ref="categoryService"></property>
     </bean>
 
     <bean id="workoutPlanToCalendarController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.WorkoutPlanToCalendarController" scope="prototype">
+        <property name="userService" ref="userService"/>
+        <property name="trainingsplanService" ref="trainingsplanService"/>
+        <property name="calendarService" ref="calendarService"></property>
 
     </bean>
 
@@ -234,10 +253,20 @@
         <property name="userService" ref="userService"/>
     </bean>
 
+
     <bean id="setController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.SetController" scope="prototype">
         <property name="userService" ref="userService"/>
         <property name="exerciseService" ref="exerciseService"/>
     </bean>
 
+    <bean id="generatedWorkoutplanService" class="sepm.ss15.grp16.service.training.impl.GeneratedWorkoutplanServiceImpl">
+        <constructor-arg name="trainingsplanService" ref="trainingsplanService"/>
+        <constructor-arg name="exerciseService" ref="exerciseService"/>
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="weightHistoryService" ref="weightHistoryService"/>
+    </bean>
 
+    <bean id="generatedWorkoutPlanResultController" class="sepm.ss15.grp16.gui.controller.WorkoutPlans.GeneratedWorkoutPlanResultController" scope="prototype">
+        <property name="trainingsplanService" ref="trainingsplanService"></property>
+    </bean>
 </beans>

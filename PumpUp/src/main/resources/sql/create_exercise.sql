@@ -51,6 +51,7 @@ create table if not exists gif(
 
 
 
+
 CREATE SEQUENCE if not exists exercise_seq START WITH 20 INCREMENT BY 1;
 CREATE SEQUENCE if not exists gif_seq START WITH 29 INCREMENT BY 1;
 CREATE SEQUENCE IF NOT exists category_seq START WITH 22 INCREMENT BY 1 ;
@@ -61,7 +62,7 @@ merge INTO categoryname VALUES(0, 'Kategorie'), (1, 'Muskelgruppe'), (2, 'Gerät
 
 merge INTO category VALUES(0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0), (3, 'Flexibilität', 0),
 (4, 'Bizeps', 1), (5, 'Trizeps', 1), (6, 'Bauchmuskeln', 1), (7, 'Schultern', 1), (8, 'Rücken', 1),
-(9, 'Brust', 1), (10, 'Oberschenkel', 1), (11, 'Unterschenkel', 1), (12, 'Wadenbein', 1), 
+(9, 'Brust', 1), (10, 'Oberschenkel', 1), (11, 'Unterschenkel', 1), (12, 'Wadenbein', 1),
 (13, 'Medizinball', 2), (14, 'Klimmzugstange', 2), (15, 'Kurzhantel',2), (16, 'Langhantel', 2), (17, 'Springschnur', 2),
 (18, 'Sandsack', 2), (19, 'Expander', 2), (20, 'Bauchmuskel Roller', 2), (21, 'Yogaball', 2);
 
