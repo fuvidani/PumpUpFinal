@@ -168,6 +168,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         double caloriesPerDay = weeklyCalorieGoal*1.0/days;
         double caloriesPerExercise = caloriesPerDay/numberOfExercises;
         Random random = new Random();
+        LOGGER.info("H E R E: " + exercises.size());
         List<TrainingsSession> sessions = new ArrayList<TrainingsSession>();
         for(int i = 1; i <= days; i++){
             List<ExerciseSet> sets = new ArrayList<ExerciseSet>();
