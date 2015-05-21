@@ -32,8 +32,10 @@ import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 
+import javax.print.URIException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -132,6 +134,7 @@ public class ExercisesController extends Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.transitionLoader = new StageTransitionLoader(this);
+        webViewVideo.setVisible(false);
         uebungColumn.setCellValueFactory(new PropertyValueFactory<Exercise, String>("name"));
         uebungsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Exercise>() {
             @Override
@@ -172,15 +175,16 @@ public class ExercisesController extends Controller implements Initializable{
 
     @FXML
     private void playVideo(){
-
-        webViewVideo.getEngine().load(exercise.getVideolink());
-
-//        webViewVideo.getEngine().load(exercise.getVideolink());
+        if(exercise.getVideolink()==null || exercise.getVideolink().isEmpty()){
+            webViewVideo.setVisible(false);
+        }else{
+            webViewVideo.setVisible(true);
+            webViewVideo.getEngine().load(exercise.getVideolink());
+        }
     }
 
     private void updateFilteredData() {
         ObservableList<Exercise> temp = FXCollections.observableArrayList();
-
         for (Exercise e : filteredData) {
             if (matchesFilter(e))
                 temp.add(e);
@@ -217,58 +221,60 @@ public class ExercisesController extends Controller implements Initializable{
     }
 
     private void showExercise(Exercise old, Exercise newExercise){
-        if (newExercise == null && old != null) {
-            newExercise = old;
-            LOGGER.debug("exercise null, ole not!");
-        }
-
         if (newExercise != null && old == null) {
             LOGGER.debug("first click");
         }
 
         if (newExercise == null) {
             LOGGER.debug("exercise null");
-            newExercise = old;
+            return;
+        }
+        if(newExercise!=null){
+            exerciseNameLabel.setText(newExercise.getName());
+            descriptionTextArea.setText(newExercise.getDescription());
+            exercise = newExercise;
+            playVideo();
+            if(exercise.getGifLinks().size()>0) {
+                showPicture(0);
+            }else{
+                imageView.setImage(null);
+            }
         }
 
-        exerciseNameLabel.setText(newExercise.getName());
-        descriptionTextArea.setText(newExercise.getDescription());
-        exercise = newExercise;
-        playVideo();
-        showPicture(0);
     }
 
     private void showPicture(Integer index){
         try {
-            String seperator = "\\"; //windows default
-            String OS = System.getProperty("os.name").toLowerCase();
-            String directory = getClass().getClassLoader().getResource("img").toString().substring(6);
-            //mac and unix systems
-            if (OS.indexOf("mac")>=0 || OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") >=0) {
-                seperator = "/";
-                directory = seperator.concat(directory);
-            }
-            String file = seperator+exercise.getGifLinks().get(index);
+            if(exercise.getGifLinks().isEmpty())
+                return;
 
-            String path = directory.concat(file);
-            LOGGER.debug("show details method path: " + path);
-            FileInputStream reading = new FileInputStream(path);
+            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+            LOGGER.debug("show details method path: " + pathToResource);
+            FileInputStream reading = new FileInputStream(pathToResource+"/"+exercise.getGifLinks().get(index));
             Image img = new Image(reading);
             imageView.setImage(img);
         }catch (IOException e){
             e.printStackTrace();
             LOGGER.error(e);
+        }catch(URISyntaxException e){
+            e.printStackTrace();
+            LOGGER.error(e);
+
         }
     }
 
     @FXML
     private void nexPicButtonClicked(){
-        showPicture(Math.abs(++picIndex)%exercise.getGifLinks().size());
+        if(exercise.getGifLinks().size()>0) {
+            showPicture(Math.abs(++picIndex) % exercise.getGifLinks().size());
+        }
     }
 
     @FXML
     private void prevPicButtonClicked(){
-        showPicture(Math.abs(--picIndex) % exercise.getGifLinks().size());
+        if(exercise.getGifLinks().size()>0){
+            showPicture(Math.abs(--picIndex) % exercise.getGifLinks().size());
+        }
     }
 
     @FXML
@@ -276,39 +282,58 @@ public class ExercisesController extends Controller implements Initializable{
         Exercise backup = null;
         if(exercise != null){
             //TODO
-             backup = new Exercise(exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), userService.getLoggedInUser(), null);
+            backup = new Exercise(exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), userService.getLoggedInUser(), null);
             exercise = null;
         }
 
-        transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
-
+        transitionLoader.openWaitStage("fxml/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
+        this.setContent();
         if(backup!=null){
             //TODO
-        exercise = new Exercise(backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), userService.getLoggedInUser(), null);
+            exercise = new Exercise(backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), userService.getLoggedInUser(), null);
         }
 
     }
 
+
     @FXML
     void editExerciseButtonClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
+        if(exercise.getUser()!= null &&exercise.getUser().equals(userService.getLoggedInUser())) {
+            transitionLoader.openWaitStage("fxml/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
+            this.setContent();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Editier fehler.");
+            alert.setContentText("System \u00dcbungen k\u00f6nnen nicht editiert werden.");
+            alert.showAndWait();
+        }
 
     }
 
     @FXML
     void deleteExerciseButtonClicked(ActionEvent event) {
         try {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Uebungen loeschen");
-            alert.setHeaderText("Die Uebung " + exercise.getName() + " wirklich loeschen");
-            alert.setContentText("Moechten Sie die Uebung wirklich loeschen?");
-            ButtonType yes = new ButtonType("Ja");
-            ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.CANCEL_CLOSE);
-            alert.getButtonTypes().setAll(yes, cancel);
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == yes) {
-                exerciseService.delete(exercise);
-                masterdata.remove(exercise);
+            if(exercise.getUser()!= null && exercise.getUser().equals(userService.getLoggedInUser())){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("\u00dcbungen l\u00f6schen");
+                alert.setHeaderText("Die \u00dcbung " + exercise.getName() + " wirklich l\u00f6schen");
+                alert.setContentText("M\u00f6chten Sie die \u00dcbung wirklich l\u00f6schen?");
+                ButtonType yes = new ButtonType("Ja");
+                ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.CANCEL_CLOSE);
+                alert.getButtonTypes().setAll(yes, cancel);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == yes) {
+                    exerciseService.delete(exercise);
+                    masterdata.remove(exercise);
+                    this.setContent();
+                }
+            }else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Fehler");
+                alert.setHeaderText("L\u00f6sch fehler.");
+                alert.setContentText("System \u00dcbungen k\u00f6nnen nicht gel\u00f6scht werden.");
+                alert.showAndWait();
             }
             return;
 
@@ -321,15 +346,14 @@ public class ExercisesController extends Controller implements Initializable{
     @FXML
     void getBackButtonClicked(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Uebungen verlassen");
-        alert.setHeaderText("Das Uebungsfenster schliessen.");
-        alert.setContentText("Moechten Sie die Uebungsuebersicht wirklich beenden?");
+        alert.setTitle("\u00dcbungen verlassen");
+        alert.setHeaderText("Das \u00dcbungsfenster schlie\u00dfen.");
+        alert.setContentText("M\u00f6chten Sie die \u00dcbungsuebersicht wirklich beenden?");
         ButtonType yes = new ButtonType("Ja");
         ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(yes, cancel);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
-
             stage.close();
         } else {
             stage.show();
