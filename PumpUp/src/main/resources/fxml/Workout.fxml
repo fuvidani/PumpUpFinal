@@ -12,70 +12,115 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Workout.WorkoutController">
-   <children>
-      <BorderPane prefHeight="750.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <VBox prefHeight="750.0" prefWidth="1300.0" spacing="20.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox VBox.vgrow="NEVER">
-                     <children>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.Workout.WorkoutController">
+    <center>
+        <VBox prefHeight="750.0" prefWidth="1300.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox VBox.vgrow="NEVER">
+                    <children>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="exerciseLabel" alignment="CENTER" text="Liegestütz" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="48.0" />
-                           </font>
+                        <Label fx:id="exerciseLabel" alignment="CENTER" HBox.hgrow="ALWAYS">
+                            <font>
+                                <Font size="48.0" />
+                            </font>
                         </Label>
                         <Region HBox.hgrow="ALWAYS" />
-                     </children>
-                  </HBox>
-                  <HBox spacing="50.0" VBox.vgrow="ALWAYS">
+                    </children>
+                </HBox>
+            <Separator prefWidth="200.0" />
+                <HBox VBox.vgrow="ALWAYS">
+                    <children>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <VBox>
                      <children>
-                        <ImageView fx:id="exerciseImageView" fitHeight="577.0" fitWidth="711.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
+                              <ImageView fx:id="exerciseImageView" fitHeight="100.0" fitWidth="630.0" pickOnBounds="true" preserveRatio="true">
+                                  <viewport>
+                                      <Rectangle2D />
+                                  </viewport>
+                           <VBox.margin>
                               <Insets />
-                           </HBox.margin>
-                           <image>
-                              <Image url="@../img/pushup.jpg" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D />
-                           </viewport>
-                        </ImageView>
-                        <VBox maxWidth="400.0" minWidth="400.0" prefWidth="400.0" spacing="20.0" HBox.hgrow="NEVER">
-                           <children>
-                              <Label fx:id="instructionLabel" maxWidth="400.0" minWidth="400.0" prefWidth="400.0" VBox.vgrow="NEVER" />
-                              <StackPane maxHeight="370.0" minHeight="370.0" prefHeight="370.0" VBox.vgrow="NEVER">
-                                 <children>
-                                    <Label fx:id="counterLable">
-                                       <font>
-                                          <Font name="System Bold" size="40.0" />
-                                       </font></Label>
-                                    <AnchorPane>
-                                       <children>
-                                          <Arc fx:id="circleCounter" centerX="200.0" centerY="200.0" fill="#ffffff00" radiusX="150.0" radiusY="150.0" startAngle="90.0" stroke="RED" strokeWidth="10.0" />
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
-                              </StackPane>
-                              <Button fx:id="pauseButton" maxWidth="400.0" minWidth="400.0" mnemonicParsing="false" onAction="#onPause" prefHeight="62.0" prefWidth="400.0" text="Pause" VBox.vgrow="ALWAYS" />
-                           </children>
-                        </VBox>
+                           </VBox.margin>
+                              </ImageView>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <Label fx:id="discriptionLabel" wrapText="true" />
                      </children>
-                  </HBox>
-               </children>
-            </VBox>
-         </center>
-         <top>
-            <HBox spacing="20.0" BorderPane.alignment="CENTER">
+                  </VBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                        <VBox maxWidth="400.0" minWidth="400.0" prefWidth="400.0" spacing="20.0" HBox.hgrow="NEVER">
+                            <children>
+                                <StackPane maxHeight="370.0" minHeight="370.0" prefHeight="370.0" VBox.vgrow="NEVER">
+                                    <children>
+                                        <Label fx:id="counterLable" wrapText="true">
+                                            <font>
+                                                <Font name="System Bold" size="40.0" />
+                                            </font>
+                                        </Label>
+                                        <AnchorPane>
+                                            <children>
+                                                <Arc fx:id="circleCounter" centerX="200.0" centerY="200.0" fill="#ffffff00" radiusX="150.0" radiusY="150.0" startAngle="90.0" stroke="RED" strokeWidth="10.0" />
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                                </StackPane>
+                                <Label fx:id="instructionLabel" VBox.vgrow="NEVER" />
+                            </children>
+                        </VBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <VBox minWidth="200.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label prefHeight="30.0" text="Letze Übung:" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <Label fx:id="lastExerciseLable" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Dauer" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="durationField" prefHeight="30.0" prefWidth="60.0" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Wiederholungen" HBox.hgrow="ALWAYS" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="repetionField" prefHeight="30.0" prefWidth="60.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+            <HBox>
                <children>
-                  <ImageView fitHeight="101.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <Region minWidth="50.0" HBox.hgrow="NEVER" />
+                          <Button fx:id="pauseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onPause" text="Pause" HBox.hgrow="ALWAYS" />
+                  <Region minWidth="50.0" HBox.hgrow="NEVER" />
                </children>
             </HBox>
-         </top>
-         <bottom>
-            <fx:include source="Workout_MusicPlayer.fxml" />
-         </bottom>
-      </BorderPane>
-   </children>
-</AnchorPane>
+            </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" top="20.0" />
+         </BorderPane.margin>
+        </VBox>
+    </center>
+    <bottom>
+        <fx:include source="Workout_MusicPlayer.fxml" />
+    </bottom>
+   <top>
+      <FlowPane fx:id="exerciseFlow" BorderPane.alignment="CENTER" />
+   </top>
+   <padding>
+      <Insets left="20.0" right="20.0" top="10.0" />
+   </padding>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</BorderPane>
