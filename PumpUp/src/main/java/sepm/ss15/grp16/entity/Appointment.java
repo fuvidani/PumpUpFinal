@@ -13,6 +13,9 @@ public class Appointment implements DTO {
     private Integer user_id;
     private Boolean isDeleted;
 
+    private String sessionName;
+    private String setNames;
+
     public Appointment(Integer appointment_id, Date datum, Integer session_id, Integer user_id, Boolean isDeleted) {
         this.appointment_id = appointment_id;
         this.datum = datum;
@@ -63,6 +66,22 @@ public class Appointment implements DTO {
     @Override
     public void setIsDeleted(Boolean deleted) {
         this.isDeleted = deleted;
+    }
+
+    public String getSessionName() {
+        return sessionName;
+    }
+
+    public void setSessionName(String sessionName) {
+        this.sessionName = sessionName;
+    }
+
+    public String getSetNames() {
+        return setNames;
+    }
+
+    public void setSetNames(String setNames) {
+        this.setNames = setNames;
     }
 
     @Override
