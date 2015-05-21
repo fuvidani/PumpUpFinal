@@ -12,16 +12,15 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.service.CategoryService;
-import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.WeightHistoryService;
 import sepm.ss15.grp16.service.generate_workoutplan.AbstractGenWorkoutPlanTest;
+import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 
 import java.sql.SQLException;
 
 /**
  * Created by Daniel Fuevesi on 19.05.15.
- *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")

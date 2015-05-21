@@ -27,8 +27,8 @@ import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.WeightHistory;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.user.UserEditController;
 import sepm.ss15.grp16.service.*;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -43,38 +43,41 @@ import java.util.ResourceBundle;
 /**
  * Created by Daniel Fuevesi on 05.05.15.
  * Controller of the main stage.
- *
  */
 public class MainController extends Controller implements Initializable {
 
     private static final Logger LOGGER = LogManager.getLogger();
+    @FXML
+    TextField genderTextField;
+    @FXML
+    TextField ageTextField;
+    @FXML
+    TextField heightTextField;
+    @FXML
+    TextField weightTextField;
+    @FXML
+    TextField bodyfatTextField;
+    @FXML
+    TextField emailTextField;
     private UserService userService;
     private CalendarService calendarService;
     private WeightHistoryService weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
     private StageTransitionLoader transitionLoader;
-
     private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
-
     @FXML
     private Label currentTrainingTypeLabel;
-
     @FXML
     private ImageView userImgView;
-
     @FXML
     private Label usernameLabel;
-
     @FXML
     private LineChart<?, ?> userChart;
-
     @FXML
     private WebView webView;
-
     @FXML
     private WebEngine engine;
-
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -92,19 +95,6 @@ public class MainController extends Controller implements Initializable {
         this.pictureHistoryService = pictureHistoryService;
     }
 
-    @FXML
-    TextField genderTextField;
-    @FXML
-    TextField ageTextField;
-    @FXML
-    TextField heightTextField;
-    @FXML
-    TextField weightTextField;
-    @FXML
-    TextField bodyfatTextField;
-    @FXML
-    TextField emailTextField;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.transitionLoader = new StageTransitionLoader(this);
@@ -119,8 +109,8 @@ public class MainController extends Controller implements Initializable {
         path += "/src/main/java/sepm/ss15/grp16/gui/controller/Calendar/html/maincalendar.html";
         engine.load("file:///" + path);
 
-        engine.getLoadWorker().stateProperty().addListener((ov,oldState, newState)->{
-            if(newState == Worker.State.SUCCEEDED){
+        engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
 
                 // JS to Java
                 JSObject script = (JSObject) engine.executeScript("window");
@@ -169,12 +159,12 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void viewCurrentWorkoutPlanClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml",(Stage)usernameLabel.getScene().getWindow(),"Trainingspläne",1000,620, true);
+        transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
     }
 
     @FXML
     void viewAllWorkoutPlansClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml",(Stage)usernameLabel.getScene().getWindow(),"Trainingspläne",1000,620, true);
+        transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
         refreshCalendar();
     }
 
@@ -219,7 +209,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void manageBodyPhotosClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/user/BodyPhotos.fxml", (Stage)usernameLabel.getScene().getWindow(),"Fotos", 1000, 600, false);
+        transitionLoader.openStage("fxml/user/BodyPhotos.fxml", (Stage) usernameLabel.getScene().getWindow(), "Fotos", 1000, 600, false);
     }
 
     @FXML
@@ -258,7 +248,7 @@ public class MainController extends Controller implements Initializable {
         // About the developer, contact + Help
     }
 
-    public void updateUserData(){
+    public void updateUserData() {
         Integer user_id = userService.getLoggedInUser().getUser_id();
         String username = userService.getLoggedInUser().getUsername();
         Boolean gender = userService.getLoggedInUser().isGender();
@@ -271,18 +261,18 @@ public class MainController extends Controller implements Initializable {
         try {
 
             WeightHistory actualWeighthistory = weightHistoryService.getActualWeight(user_id);
-            if(actualWeighthistory != null){
+            if (actualWeighthistory != null) {
                 weight = actualWeighthistory.getWeight();
             }
 
             BodyfatHistory actualBodyfathistory = bodyfatHistoryService.getActualBodyfat(user_id);
-            if(actualBodyfathistory != null){
+            if (actualBodyfathistory != null) {
                 bodyfat = actualBodyfathistory.getBodyfat();
             }
 
             PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(user_id);
 
-            if(actualPictureHistory != null){
+            if (actualPictureHistory != null) {
                 String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
                 LOGGER.debug("Loading from resources: " + pathToResource);
                 String pathOfNewImage = pathToResource + actualPictureHistory.getLocation();
@@ -291,9 +281,9 @@ public class MainController extends Controller implements Initializable {
                 userImgView.setImage(new Image(picture.toURI().toString()));
             }
 
-        }catch(ServiceException e){
+        } catch (ServiceException e) {
             e.printStackTrace();
-        }catch(URISyntaxException e){
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
@@ -302,24 +292,24 @@ public class MainController extends Controller implements Initializable {
         heightTextField.setText(Integer.toString(height));
         genderTextField.setText(gender ? "Männlich" : "Weiblich");
 
-        if(weight != null){
+        if (weight != null) {
             weightTextField.setText(Integer.toString(weight));
         }
 
-        if(bodyfat != null){
+        if (bodyfat != null) {
             bodyfatTextField.setText(Integer.toString(bodyfat));
-        }else{
+        } else {
             bodyfatTextField.setPromptText("Keine Angabe");
         }
 
-        if(email == null || email.isEmpty()){
+        if (email == null || email.isEmpty()) {
             emailTextField.setPromptText("Keine Angabe");
-        }else {
+        } else {
             emailTextField.setText(email);
         }
     }
 
-    public void refreshCalendar(){
+    public void refreshCalendar() {
         engine.executeScript("$('#calendar').fullCalendar('removeEvents');");
 
         Gson gson = new Gson();

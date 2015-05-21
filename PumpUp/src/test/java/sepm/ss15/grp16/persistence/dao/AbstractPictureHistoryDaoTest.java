@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
  * @author Michael Sober
  * @version 1.0
  */
-public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<PictureHistory>{
+public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<PictureHistory> {
 
     protected PictureHistoryDAO pictureHistoryDAO;
     protected UserDAO userDAO;
@@ -27,7 +27,7 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
     }
 
     @Test(expected = PersistenceException.class)
-    public void createWithNullShouldThrowException() throws Exception{
+    public void createWithNullShouldThrowException() throws Exception {
         pictureHistoryDAO.create(null);
     }
 
@@ -42,12 +42,12 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
         String savedImagePath = pathToResource + testPictureHistory.getLocation();
         File savedImage = new File(savedImagePath);
         assertTrue(savedImage.exists());
-        if(savedImage.exists()){
+        if (savedImage.exists()) {
             savedImage.delete();
         }
     }
 
-    private User createUserForTest() throws Exception{
+    private User createUserForTest() throws Exception {
         User testUser = new User(null, "maxmustermann", true, 20, 194, "max.mustermann@gmail.com", "/path/playlist/", false);
         return userDAO.create(testUser);
     }

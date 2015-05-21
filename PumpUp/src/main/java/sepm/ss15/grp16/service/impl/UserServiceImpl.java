@@ -17,11 +17,11 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
-    private UserDAO userDAO;
     private static User loggedInUser;
+    private UserDAO userDAO;
 
-    public UserServiceImpl(UserDAO userDAO) throws ServiceException{
-        if(userDAO == null){
+    public UserServiceImpl(UserDAO userDAO) throws ServiceException {
+        if (userDAO == null) {
             throw new ServiceException("UserDAO is null. Cannot be set in service layer");
         }
         this.userDAO = userDAO;
@@ -30,18 +30,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) throws ServiceException {
         this.validate(user);
-        try{
+        try {
             return userDAO.create(user);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
     public List<User> findAll() throws ServiceException {
-        try{
+        try {
             return userDAO.findAll();
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -49,18 +49,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(User user) throws ServiceException {
         this.validate(user);
-        try{
+        try {
             return userDAO.update(user);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
     public void delete(User user) throws ServiceException {
-        try{
+        try {
             userDAO.delete(user);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void validate(User user) throws ValidationException {
 
-        if(user == null){
+        if (user == null) {
             throw new ValidationException("User is null.");
         }
 
@@ -78,25 +78,25 @@ public class UserServiceImpl implements UserService {
         Integer height = user.getHeight();
         String email = user.getEmail();
 
-        if(username == null || username.length() > 25 || username.length() < 2){
+        if (username == null || username.length() > 25 || username.length() < 2) {
             errorMsg += "Der Username muss angegeben und zwischen 2 und 25 Zeichen lang sein.\n";
         }
 
-        if(age == null || age < 0){
+        if (age == null || age < 0) {
             errorMsg += "Das Alter muss eine gültige Zahl größer 0 sein.\n";
         }
 
-        if(height == null || height < 0){
+        if (height == null || height < 0) {
             errorMsg += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
         }
 
-        if(email != null){
-            if(email.length() > 320){
+        if (email != null) {
+            if (email.length() > 320) {
                 errorMsg += "Die E-Mail-Adresse darf maximal 320 Zeichen lang sein.\n";
             }
         }
 
-        if(!errorMsg.isEmpty()){
+        if (!errorMsg.isEmpty()) {
             throw new ValidationException(errorMsg);
         }
     }

@@ -22,15 +22,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
+import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
-import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.CategoryService;
-import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,7 +44,7 @@ import java.util.ResourceBundle;
  * This controller is responsible for the auto-generated workout plans depending on the user's criteria.
  * This is just a skeleton, further planning and implementation required.
  */
-public class GenerateWorkoutPlanController extends Controller implements Initializable{
+public class GenerateWorkoutPlanController extends Controller implements Initializable {
 
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -108,6 +108,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
     /**
      * Sets the service. Will be injected by Spring.
+     *
      * @param generatedWorkoutplanService service to generate workout plans
      */
     public void setGeneratedWorkoutplanService(GeneratedWorkoutplanService generatedWorkoutplanService) {
@@ -117,6 +118,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
     /**
      * Sets the service. Will be injected by Spring.
+     *
      * @param categoryService service for the categories
      */
     public void setCategoryService(CategoryService categoryService) {
@@ -170,7 +172,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         boxes.add(punchbagCheck);
         selectAllCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(new_val) {
+                if (new_val) {
                     for (CheckBox box : boxes) {
                         box.setSelected(true);
                     }
@@ -180,7 +182,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
         barbellCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(!new_val) {
+                if (!new_val) {
                     selectAllCheck.setSelected(false);
                 }
             }
@@ -188,7 +190,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
         yogaBallCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(!new_val) {
+                if (!new_val) {
                     selectAllCheck.setSelected(false);
                 }
             }
@@ -196,7 +198,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
         dumbbellCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(!new_val) {
+                if (!new_val) {
                     selectAllCheck.setSelected(false);
                 }
             }
@@ -204,7 +206,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
         chinupBarCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(!new_val) {
+                if (!new_val) {
                     selectAllCheck.setSelected(false);
                 }
             }
@@ -212,7 +214,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
         expanderCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(!new_val) {
+                if (!new_val) {
                     selectAllCheck.setSelected(false);
                 }
             }
@@ -220,7 +222,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
         medicineBallCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(!new_val) {
+                if (!new_val) {
                     selectAllCheck.setSelected(false);
                 }
             }
@@ -228,7 +230,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
         absRollerCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(!new_val) {
+                if (!new_val) {
                     selectAllCheck.setSelected(false);
                 }
             }
@@ -236,7 +238,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
         jumpingRopeCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(!new_val) {
+                if (!new_val) {
                     selectAllCheck.setSelected(false);
                 }
             }
@@ -244,7 +246,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
         punchbagCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
             public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if(!new_val) {
+                if (!new_val) {
                     selectAllCheck.setSelected(false);
                 }
             }
@@ -262,26 +264,26 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
      */
     @FXML
     void generateButtonClicked() {
-        for(CheckBox box: boxes){
+        for (CheckBox box : boxes) {
             /*if(!box.isSelected()) {
                 equipment.add(new EquipmentCategory(Integer.parseInt(box.getId()), box.getText()));
             }*/
 
         }
-        RadioButton button = (RadioButton)toggleGroup.getSelectedToggle();
-        TrainingsCategory goal = button != null ? new TrainingsCategory(Integer.parseInt(button.getId()), button.getText()): null;
+        RadioButton button = (RadioButton) toggleGroup.getSelectedToggle();
+        TrainingsCategory goal = button != null ? new TrainingsCategory(Integer.parseInt(button.getId()), button.getText()) : null;
         Gen_WorkoutplanPreferences preferences = new Gen_WorkoutplanPreferences(1, goal, equipment);
         Trainingsplan result;
         try {
             result = generatedWorkoutplanService.generate(preferences);
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             LOGGER.error("Service threw exception, catched in GUI. Real reason: " + e.toString());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehler beim Generieren");
-            if(e instanceof ValidationException){
+            if (e instanceof ValidationException) {
                 alert.setContentText(((ValidationException) e).getValidationMessage());
-            }else {
+            } else {
                 alert.setContentText(e.getMessage());
             }
             alert.showAndWait();
@@ -290,7 +292,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         LOGGER.info("Generated workoutplan from service received, delegating towards the next window...");
 
         Stage stage = null;
-        GeneratedWorkoutPlanResultController controller  = new GeneratedWorkoutPlanResultController();
+        GeneratedWorkoutPlanResultController controller = new GeneratedWorkoutPlanResultController();
         try {
             FXMLLoader loader = new FXMLLoader();
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
@@ -339,9 +341,10 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
     /**
      * Sets the boolean property which signals that the child stage
      * has been closed.
+     *
      * @param val a boolean variable to trigger the listener
      */
-    public void setFlag(boolean val){
+    public void setFlag(boolean val) {
         this.displayClosed.set(val);
     }
 

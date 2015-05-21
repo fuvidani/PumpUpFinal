@@ -19,18 +19,16 @@ import java.util.List;
  */
 public class H2CalendarDAOImpl implements CalendarDAO {
 
+    private static final Logger LOGGER = LogManager.getLogger(H2CalendarDAOImpl.class);
     private PreparedStatement createStm;
     private PreparedStatement findAllStm;
     private PreparedStatement searchByIDStm;
     private PreparedStatement updateStm;
     private PreparedStatement deleteStm;
-
     private TrainingsSessionDAO trainingsSessionDAO;
-
     private Connection connection;
-    private static final Logger LOGGER = LogManager.getLogger(H2CalendarDAOImpl.class);
 
-    public H2CalendarDAOImpl(DBHandler handler) throws PersistenceException{
+    public H2CalendarDAOImpl(DBHandler handler) throws PersistenceException {
 
         try {
             this.connection = handler.getConnection();
@@ -41,12 +39,13 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             this.updateStm = connection.prepareStatement("UPDATE appointment SET datum = ?, session_id = ?, user_id = ?, isDeleted = ? WHERE appointment_id = ?");
             this.deleteStm = connection.prepareStatement("UPDATE appointment SET isDeleted = TRUE WHERE appointment_id = ?");
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statement.", e);
-        }catch (DBException e){
+        } catch (DBException e) {
             throw new PersistenceException("Failed to get db connection.", e);
         }
     }
+
     /**
      * Creates a new appointment.
      *
@@ -58,8 +57,8 @@ public class H2CalendarDAOImpl implements CalendarDAO {
     @Override
     public Appointment create(Appointment appointment) throws PersistenceException {
         LOGGER.info("Creating a new appointment in db.. " + appointment);
-        try{
-            if (appointment == null){
+        try {
+            if (appointment == null) {
                 LOGGER.error("Create parameter (appointment) was null.");
                 throw new PersistenceException("Appointment to be create must not be null");
             }
@@ -76,7 +75,7 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             createStm.setBoolean(5, appointment.getIsDeleted());
 
             createStm.execute();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error("Failed to create record into appointment table. - " + e.getMessage());
             throw new PersistenceException("Failed to create record into appointment table.", e);
         }
@@ -98,12 +97,12 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             ResultSet rs_findAll = findAllStm.executeQuery();
             List<Appointment> result = new ArrayList<>();
 
-            while (rs_findAll.next()){
-                Appointment appointment = new Appointment(rs_findAll.getInt(1),rs_findAll.getDate(2),rs_findAll.getInt(3),rs_findAll.getInt(4),rs_findAll.getBoolean(5));
+            while (rs_findAll.next()) {
+                Appointment appointment = new Appointment(rs_findAll.getInt(1), rs_findAll.getDate(2), rs_findAll.getInt(3), rs_findAll.getInt(4), rs_findAll.getBoolean(5));
 
                 appointment.setSessionName(trainingsSessionDAO.searchByID(appointment.getSession_id()).getName());
                 String setNames = "";
-                for (ExerciseSet exerciseSet: trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()) {
+                for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()) {
                     setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
                 }
                 appointment.setSetNames(setNames);
@@ -131,12 +130,12 @@ public class H2CalendarDAOImpl implements CalendarDAO {
         LOGGER.info("Searching record in appointment table with id: " + id + "..");
 
         try {
-            searchByIDStm.setInt(1,id);
+            searchByIDStm.setInt(1, id);
             ResultSet rs_searchByID = searchByIDStm.executeQuery();
             rs_searchByID.next();
 
             Appointment foundAppointment = null;
-            foundAppointment = new Appointment(rs_searchByID.getInt(1),rs_searchByID.getDate(2),rs_searchByID.getInt(3),rs_searchByID.getInt(4),rs_searchByID.getBoolean(5));
+            foundAppointment = new Appointment(rs_searchByID.getInt(1), rs_searchByID.getDate(2), rs_searchByID.getInt(3), rs_searchByID.getInt(4), rs_searchByID.getBoolean(5));
 
             LOGGER.info("Appointment with id: " + id + ", successfully read from database." + foundAppointment);
             return foundAppointment;
@@ -158,20 +157,20 @@ public class H2CalendarDAOImpl implements CalendarDAO {
     public Appointment update(Appointment appointment) throws PersistenceException {
         LOGGER.info("Updating record in appointment table..");
         try {
-            if (appointment == null){
+            if (appointment == null) {
                 LOGGER.error("Update parameter (appointment) was null.");
                 throw new PersistenceException("Appointment to be updated must not be null");
             }
 
-            updateStm.setDate(1,new java.sql.Date(appointment.getDatum().getTime()));
-            updateStm.setInt(2,appointment.getSession_id());
-            updateStm.setInt(3,appointment.getUser_id());
-            updateStm.setBoolean(4,appointment.getIsDeleted());
-            updateStm.setInt(5,appointment.getId());
+            updateStm.setDate(1, new java.sql.Date(appointment.getDatum().getTime()));
+            updateStm.setInt(2, appointment.getSession_id());
+            updateStm.setInt(3, appointment.getUser_id());
+            updateStm.setBoolean(4, appointment.getIsDeleted());
+            updateStm.setInt(5, appointment.getId());
 
             updateStm.executeUpdate();
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error("Failed to update record in appointment table. - " + e.getMessage());
             throw new PersistenceException("Failed to update record in appointment table.", e);
         }
@@ -191,14 +190,14 @@ public class H2CalendarDAOImpl implements CalendarDAO {
     public void delete(Appointment appointment) throws PersistenceException {
         LOGGER.info("Deleting appointment in appointment table..");
         try {
-            if (appointment == null){
+            if (appointment == null) {
                 LOGGER.error("Delete parameter (appointment) was null.");
                 throw new PersistenceException("Appointment to be deleted must not be null");
             }
 
-            deleteStm.setInt(1,appointment.getUser_id());
+            deleteStm.setInt(1, appointment.getUser_id());
             deleteStm.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error("Failed to delete record in appointment table. - " + e.getMessage());
             throw new PersistenceException("Failed to delete record in appointment table.", e);
         }

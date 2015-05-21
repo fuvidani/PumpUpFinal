@@ -1,72 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
+
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.BodyPhotosController">
-   <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox>
-               <children>
-                  <Label text="Fotos über die gemachten Fortschritte">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets left="50.0" top="30.0" />
-               </padding>
-            </HBox>
-            <HBox>
-               <children>
-                  <Separator prefHeight="12.0" prefWidth="1001.0">
-                     <padding>
-                        <Insets left="20.0" right="20.0" />
-                     </padding>
-                  </Separator>
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <Separator prefHeight="25.0" prefWidth="1000.0">
-                     <padding>
-                        <Insets left="20.0" right="20.0" top="425.0" />
-                     </padding>
-                  </Separator>
-               </children>
-            </HBox>
-            <HBox spacing="50.0">
-               <children>
-                  <Button layoutX="10.0" layoutY="152.0" mnemonicParsing="false" onAction="#shootPhotoClicked" prefHeight="26.0" prefWidth="136.0" text="Foto schießen">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#loadPhotoClicked" prefHeight="26.0" prefWidth="143.0" text="Foto laden">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="10.0" layoutY="106.0" mnemonicParsing="false" onAction="#getBackButtonClicked" text="Zurück">
-                     <HBox.margin>
-                        <Insets left="475.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets left="50.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-      </VBox>
-   </children>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="sepm.ss15.grp16.gui.controller.main.BodyPhotosController">
+    <children>
+        <VBox prefHeight="400.0" prefWidth="600.0" spacing="20.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox>
+                    <children>
+                        <Label text="Fotos über die gemachten Fortschritte">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets left="50.0" top="30.0"/>
+                    </padding>
+                </HBox>
+                <HBox>
+                    <children>
+                        <Separator prefHeight="12.0" prefWidth="1001.0">
+                            <padding>
+                                <Insets left="20.0" right="20.0"/>
+                            </padding>
+                        </Separator>
+                    </children>
+                </HBox>
+                <HBox>
+                    <children>
+                        <Separator prefHeight="25.0" prefWidth="1000.0">
+                            <padding>
+                                <Insets left="20.0" right="20.0" top="425.0"/>
+                            </padding>
+                        </Separator>
+                    </children>
+                </HBox>
+                <HBox spacing="50.0">
+                    <children>
+                        <Button layoutX="10.0" layoutY="152.0" mnemonicParsing="false" onAction="#shootPhotoClicked"
+                                prefHeight="26.0" prefWidth="136.0" text="Foto schießen">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#loadPhotoClicked" prefHeight="26.0" prefWidth="143.0"
+                                text="Foto laden">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Button>
+                        <Button layoutX="10.0" layoutY="106.0" mnemonicParsing="false" onAction="#getBackButtonClicked"
+                                text="Zurück">
+                            <HBox.margin>
+                                <Insets left="475.0"/>
+                            </HBox.margin>
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="50.0"/>
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

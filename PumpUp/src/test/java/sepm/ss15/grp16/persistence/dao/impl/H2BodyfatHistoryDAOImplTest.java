@@ -27,7 +27,7 @@ public class H2BodyfatHistoryDAOImplTest extends AbstractBodyfatHistoryDaoTest {
     private DBHandler dbConnector;
 
     @Autowired
-    public void setUserDAO(UserDAO userDAO){
+    public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 

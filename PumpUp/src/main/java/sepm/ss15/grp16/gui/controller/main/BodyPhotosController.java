@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * Controller of the little window with all photos of the user.
  * For further information see the Mockup.pdf file.
  */
-public class BodyPhotosController  extends Controller implements Initializable{
+public class BodyPhotosController extends Controller implements Initializable {
 
 
     @Override

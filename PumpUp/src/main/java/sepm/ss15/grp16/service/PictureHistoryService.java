@@ -15,6 +15,7 @@ public interface PictureHistoryService extends Service<PictureHistory> {
 
     /**
      * Searches all picturehistory records for one user
+     *
      * @param user_id from the user
      * @return all records from the given user
      * @throws ServiceException, if an error while searching occurs
@@ -23,6 +24,7 @@ public interface PictureHistoryService extends Service<PictureHistory> {
 
     /**
      * Searches for the actual picture of the user
+     *
      * @param user_id from the user
      * @return the actual picture of the user
      * @throws ServiceException, if an error while searching occurs

@@ -15,6 +15,7 @@ public interface CategoryDAO extends DAO<AbsractCategory> {
 
     /**
      * getting exactly one category specified by the given id
+     *
      * @param identificaitonNumber of the category to search for
      * @return exactely one category
      * @throws PersistenceException
@@ -23,6 +24,7 @@ public interface CategoryDAO extends DAO<AbsractCategory> {
 
     /**
      * getting a list of all equipment categorys
+     *
      * @return a list of all equipment categorys like, kurzhantel, langhantel, springschnur ...
      * @throws PersistenceException
      */
@@ -30,16 +32,18 @@ public interface CategoryDAO extends DAO<AbsractCategory> {
 
     /**
      * getting a list of all muscle groups
+     *
      * @return a list of all muslce groups like, bauchmuskeln, oberschenkel, unterschenkel ...
      * @throws PersistenceException
      */
-    List<MusclegroupCategory> getAllMusclegroup()throws PersistenceException;
+    List<MusclegroupCategory> getAllMusclegroup() throws PersistenceException;
 
     /**
      * getting a list of all trainingstypes
+     *
      * @return a list of all trainingstypes: ausdauer, kraft, balance, flexibilitaet
      * @throws PersistenceException
      */
-    List<TrainingsCategory> getAllTrainingstype()throws PersistenceException;
+    List<TrainingsCategory> getAllTrainingstype() throws PersistenceException;
 
 }

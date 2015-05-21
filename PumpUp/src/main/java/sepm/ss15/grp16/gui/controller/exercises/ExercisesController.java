@@ -18,8 +18,8 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.Exercise;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.CategoryService;
 import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.UserService;
@@ -36,90 +36,68 @@ import java.util.ResourceBundle;
  * Created by Daniel Fuevesi on 07.05.15.
  * Controller of the "Übungen" stage.
  */
-public class ExercisesController extends Controller implements Initializable{
+public class ExercisesController extends Controller implements Initializable {
 
 
+    private static Exercise exercise;
+    private final Logger LOGGER = LogManager.getLogger();
     private Service<Exercise> exerciseService;
     private StageTransitionLoader transitionLoader;
-
     @FXML
     private Label exerciseNameLabel;
-
     @FXML
     private Label trainingDeviceLabel1;
-
     @FXML
     private Label trainingDeviceLabel2;
-
     @FXML
     private Label trainingDeviceLabel3;
-
-
     @FXML
     private TextArea descriptionTextArea;
-
     @FXML
     private MediaView smallMediaView;
-
     @FXML
     private MediaView bigMediaView;
-
     @FXML
     private Label categoryTypeLabel;
-
     @FXML
-    private   TableColumn<Exercise, String> uebungColumn;
-
+    private TableColumn<Exercise, String> uebungColumn;
     @FXML
-    private  TableView<Exercise> uebungsTableView;
-
+    private TableView<Exercise> uebungsTableView;
     @FXML
     private ImageView imageView;
-
     @FXML
     private Button nexPic;
-
     @FXML
     private Button prevPic;
-
     @FXML
     private TextField tf_search;
-
     @FXML
     private CheckBox customExercisesCheckbox;
-
     @FXML
     private CheckBox defaultExercisesCheckbox;
-
     @FXML
     private VBox vboxCategory;
-
     @FXML
     private WebView webViewVideo;
-
-
     private CategoryService categoryService;
     private UserService userService;
-    private static Exercise exercise;
     private Integer picIndex = 0;
-    private  ObservableList<Exercise>  masterdata = FXCollections.observableArrayList();
+    private ObservableList<Exercise> masterdata = FXCollections.observableArrayList();
     private ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
-
-    private  final Logger LOGGER = LogManager.getLogger();
 
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
-    public void setExerciseService(Service<Exercise> exerciseService){
-        this.exerciseService=exerciseService;
+    public void setExerciseService(Service<Exercise> exerciseService) {
+        this.exerciseService = exerciseService;
     }
 
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    public Exercise getExercise(){
+    public Exercise getExercise() {
         return exercise;
     }
 
@@ -166,10 +144,10 @@ public class ExercisesController extends Controller implements Initializable{
 
 
     @FXML
-    private void playVideo(){
-        if(exercise.getVideolink()==null || exercise.getVideolink().isEmpty()){
+    private void playVideo() {
+        if (exercise.getVideolink() == null || exercise.getVideolink().isEmpty()) {
             webViewVideo.setVisible(false);
-        }else{
+        } else {
             webViewVideo.setVisible(true);
             webViewVideo.getEngine().load(exercise.getVideolink());
         }
@@ -198,21 +176,21 @@ public class ExercisesController extends Controller implements Initializable{
     }
 
 
-    public void setContent(){
-        try{
+    public void setContent() {
+        try {
             masterdata.removeAll();
             masterdata.addAll(exerciseService.findAll());
             uebungsTableView.setItems(null);
             uebungsTableView.setItems(masterdata);
             uebungsTableView.getColumns().get(0).setVisible(false);
             uebungsTableView.getColumns().get(0).setVisible(true);
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             e.printStackTrace();
             LOGGER.error(e);
         }
     }
 
-    private void showExercise(Exercise old, Exercise newExercise){
+    private void showExercise(Exercise old, Exercise newExercise) {
         if (newExercise != null && old == null) {
             LOGGER.debug("first click");
         }
@@ -221,34 +199,34 @@ public class ExercisesController extends Controller implements Initializable{
             LOGGER.debug("exercise null");
             return;
         }
-        if(newExercise!=null){
+        if (newExercise != null) {
             exerciseNameLabel.setText(newExercise.getName());
             descriptionTextArea.setText(newExercise.getDescription());
             exercise = newExercise;
             playVideo();
-            if(exercise.getGifLinks().size()>0) {
+            if (exercise.getGifLinks().size() > 0) {
                 showPicture(0);
-            }else{
+            } else {
                 imageView.setImage(null);
             }
         }
 
     }
 
-    private void showPicture(Integer index){
+    private void showPicture(Integer index) {
         try {
-            if(exercise.getGifLinks().isEmpty())
+            if (exercise.getGifLinks().isEmpty())
                 return;
 
             String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
             LOGGER.debug("show details method path: " + pathToResource);
-            FileInputStream reading = new FileInputStream(pathToResource+"/"+exercise.getGifLinks().get(index));
+            FileInputStream reading = new FileInputStream(pathToResource + "/" + exercise.getGifLinks().get(index));
             Image img = new Image(reading);
             imageView.setImage(img);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             LOGGER.error(e);
-        }catch(URISyntaxException e){
+        } catch (URISyntaxException e) {
             e.printStackTrace();
             LOGGER.error(e);
 
@@ -256,15 +234,15 @@ public class ExercisesController extends Controller implements Initializable{
     }
 
     @FXML
-    private void nexPicButtonClicked(){
-        if(exercise.getGifLinks().size()>0) {
+    private void nexPicButtonClicked() {
+        if (exercise.getGifLinks().size() > 0) {
             showPicture(Math.abs(++picIndex) % exercise.getGifLinks().size());
         }
     }
 
     @FXML
-    private void prevPicButtonClicked(){
-        if(exercise.getGifLinks().size()>0){
+    private void prevPicButtonClicked() {
+        if (exercise.getGifLinks().size() > 0) {
             showPicture(Math.abs(--picIndex) % exercise.getGifLinks().size());
         }
     }
@@ -272,7 +250,7 @@ public class ExercisesController extends Controller implements Initializable{
     @FXML
     void newExerciseButtonClicked(ActionEvent event) {
         Exercise backup = null;
-        if(exercise != null){
+        if (exercise != null) {
             //TODO
             backup = new Exercise(exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), userService.getLoggedInUser(), null);
             exercise = null;
@@ -280,7 +258,7 @@ public class ExercisesController extends Controller implements Initializable{
 
         transitionLoader.openWaitStage("fxml/exercise/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
         this.setContent();
-        if(backup!=null){
+        if (backup != null) {
             //TODO
             exercise = new Exercise(backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), userService.getLoggedInUser(), null);
         }
@@ -290,10 +268,10 @@ public class ExercisesController extends Controller implements Initializable{
 
     @FXML
     void editExerciseButtonClicked(ActionEvent event) {
-        if(exercise.getUser()!= null &&exercise.getUser().equals(userService.getLoggedInUser())) {
+        if (exercise.getUser() != null && exercise.getUser().equals(userService.getLoggedInUser())) {
             transitionLoader.openWaitStage("fxml/exercise/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
             this.setContent();
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Fehler");
             alert.setHeaderText("Editier fehler.");
@@ -306,7 +284,7 @@ public class ExercisesController extends Controller implements Initializable{
     @FXML
     void deleteExerciseButtonClicked(ActionEvent event) {
         try {
-            if(exercise.getUser()!= null && exercise.getUser().equals(userService.getLoggedInUser())){
+            if (exercise.getUser() != null && exercise.getUser().equals(userService.getLoggedInUser())) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("\u00dcbungen l\u00f6schen");
                 alert.setHeaderText("Die \u00dcbung " + exercise.getName() + " wirklich l\u00f6schen");
@@ -320,7 +298,7 @@ public class ExercisesController extends Controller implements Initializable{
                     masterdata.remove(exercise);
                     this.setContent();
                 }
-            }else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Fehler");
                 alert.setHeaderText("L\u00f6sch fehler.");
@@ -329,7 +307,7 @@ public class ExercisesController extends Controller implements Initializable{
             }
             return;
 
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             LOGGER.error(e);
             e.printStackTrace();
         }
@@ -354,17 +332,17 @@ public class ExercisesController extends Controller implements Initializable{
 
 
     @FXML
-    private void filterCheckboxes(){
+    private void filterCheckboxes() {
         if (defaultExercisesCheckbox.isSelected() && customExercisesCheckbox.isSelected()) {
             filteredData.clear();
             filteredData.addAll(masterdata);
             uebungsTableView.setItems(filteredData);
             return;
-        }else if (defaultExercisesCheckbox.isSelected()) {
+        } else if (defaultExercisesCheckbox.isSelected()) {
 
             filteredData.clear();
             for (Exercise e : masterdata) {
-                if (e.getUser() == null){
+                if (e.getUser() == null) {
                     filteredData.add(e);
                     LOGGER.debug("user for default checkbox: " + e.getUser());
                 }
@@ -372,10 +350,10 @@ public class ExercisesController extends Controller implements Initializable{
 
             uebungsTableView.setItems(filteredData);
             return;
-        }else if(customExercisesCheckbox.isSelected()) {
+        } else if (customExercisesCheckbox.isSelected()) {
             filteredData.clear();
             for (Exercise e : masterdata) {
-                if (e.getUser()!=null && e.getUser().equals(userService.getLoggedInUser())){
+                if (e.getUser() != null && e.getUser().equals(userService.getLoggedInUser())) {
                     filteredData.add(e);
                     LOGGER.debug("user for exercise: " + e.getUser() + " logged in user: " + userService.getLoggedInUser());
                 }
@@ -383,12 +361,11 @@ public class ExercisesController extends Controller implements Initializable{
             }
             uebungsTableView.setItems(filteredData);
             return;
-        }else {
+        } else {
             uebungsTableView.setItems(masterdata);
         }
 
     }
-
 
 
 }

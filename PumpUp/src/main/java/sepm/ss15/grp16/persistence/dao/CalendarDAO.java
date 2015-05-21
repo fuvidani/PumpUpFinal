@@ -12,8 +12,9 @@ public interface CalendarDAO extends DAO<Appointment> {
 
     /**
      * Creates a new appointment.
+     *
      * @param appointment which shall be inserted into the underlying persistance layer.
-     *                 must not be null, id must be null
+     *                    must not be null, id must be null
      * @return the given appointment for further usage
      * @throws PersistenceException if there are complications with the persitance layer
      */
@@ -21,6 +22,7 @@ public interface CalendarDAO extends DAO<Appointment> {
 
     /**
      * Finds all appointments in the persistence, deleted appointments are ignored.
+     *
      * @return List of all appointments stored in the persistence
      * @throws PersistenceException if there are complications with the persitance layer
      */
@@ -35,8 +37,9 @@ public interface CalendarDAO extends DAO<Appointment> {
 
     /**
      * Updating a given appointment with new values in the persistence.
+     *
      * @param appointment which shall be updated
-     *                 must not be null, id must not be null and must not be changed
+     *                    must not be null, id must not be null and must not be changed
      * @return given appointment with updated values
      * @throws PersistenceException if there are complications with the persitance layer
      */
@@ -44,8 +47,9 @@ public interface CalendarDAO extends DAO<Appointment> {
 
     /**
      * Deleting a given appointment in the persistence.
+     *
      * @param appointment which shall be deleted,
-     *            must not be null, id must not be null and must not be changed
+     *                    must not be null, id must not be null and must not be changed
      * @throws PersistenceException if there are complications with the persitance layer
      */
     void delete(Appointment appointment) throws PersistenceException;

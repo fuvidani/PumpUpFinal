@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private Connection con;
     private PreparedStatement createStatement;
     private PreparedStatement getActualWeightStatement;
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public H2WeightHistoryDAOImpl(DBHandler handler) throws PersistenceException {
 
@@ -130,10 +130,10 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
         try {
             getActualWeightStatement.setInt(1, user_id);
             ResultSet rs = getActualWeightStatement.executeQuery();
-            if(rs.next() == true){
+            if (rs.next() == true) {
                 foundWeightHistory = new WeightHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException("Failed to get actual weight", e);
         }
 

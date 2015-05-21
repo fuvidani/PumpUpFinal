@@ -20,7 +20,7 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
     private PictureHistoryDAO pictureHistoryDAO;
 
     public PictureHistoryServiceImpl(PictureHistoryDAO pictureHistoryDAO) throws ServiceException {
-        if(pictureHistoryDAO == null){
+        if (pictureHistoryDAO == null) {
             throw new ServiceException("PictureHistoryDAO is null. Cannot be set in service layer");
         }
         this.pictureHistoryDAO = pictureHistoryDAO;
@@ -29,18 +29,18 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
     @Override
     public PictureHistory create(PictureHistory pictureHistory) throws ServiceException {
         this.validate(pictureHistory);
-        try{
+        try {
             return pictureHistoryDAO.create(pictureHistory);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
     public List<PictureHistory> findAll() throws ServiceException {
-        try{
+        try {
             return pictureHistoryDAO.findAll();
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -64,9 +64,9 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
 
     @Override
     public PictureHistory getActualPicture(int user_id) throws ServiceException {
-        try{
+        try {
             return pictureHistoryDAO.getActualPicture(user_id);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -74,9 +74,9 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
     @Override
     public void validate(PictureHistory pictureHistory) throws ValidationException {
 
-        if(pictureHistory == null){
+        if (pictureHistory == null) {
             throw new ValidationException("Validation not passed. PictureHistory is null");
-        }else if(pictureHistory.getUser_id() == null){
+        } else if (pictureHistory.getUser_id() == null) {
             throw new ValidationException("Validation not passed. No User_id");
         }
 

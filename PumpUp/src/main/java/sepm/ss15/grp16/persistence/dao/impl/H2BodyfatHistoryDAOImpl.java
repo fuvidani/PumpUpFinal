@@ -21,10 +21,10 @@ import java.util.List;
  */
 public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private Connection con;
     private PreparedStatement createStatement;
     private PreparedStatement getActualBodyfatStatement;
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public H2BodyfatHistoryDAOImpl(DBHandler handler) throws PersistenceException {
 
@@ -132,11 +132,11 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
         try {
             getActualBodyfatStatement.setInt(1, user_id);
             ResultSet rs = getActualBodyfatStatement.executeQuery();
-            if(rs.next() == true) {
+            if (rs.next() == true) {
                 foundBodyfatHistory = new BodyfatHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException("Failed to get actual bodyfat", e);
         }
 

@@ -25,10 +25,13 @@ import java.util.List;
 
 /**
  * Created by lukas on 30.04.2015.
- *
  */
 public class H2ExerciseDAOImpl implements ExerciseDAO {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static Connection connection;
+    private static CategoryDAO categoryDAO;
+    private static UserDAO userDAO;
     private PreparedStatement createStatement;
     private PreparedStatement createCategoryStatement;
     private PreparedStatement readStatement;
@@ -44,22 +47,16 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     private PreparedStatement getExerciseWithCategoryStatement;
 
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
-    private static Connection connection;
-    private static CategoryDAO categoryDAO;
-    private static UserDAO userDAO;
-
-
     /**
      * creating an instance of the H2 implementaiton of the exercise
      * also preparing all the statements in the constructor for better performance
+     *
      * @param handler handels all the operations for the connection to the database
      * @throws PersistenceException if
      * @throws DBException
      */
-    private H2ExerciseDAOImpl(DBHandler handler, CategoryDAO categoryDAO, UserDAO userDAO)throws PersistenceException, DBException{
-        try{
+    private H2ExerciseDAOImpl(DBHandler handler, CategoryDAO categoryDAO, UserDAO userDAO) throws PersistenceException, DBException {
+        try {
             LOGGER.info("creating new instance of H2ExerciseDAOImpl");
 
             this.connection = handler.getConnection();
@@ -68,7 +65,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
             //create statements
             createStatement = connection.prepareStatement("INSERT into EXERCISE VALUES (?, ?, ?, ?, ?, ?, ?);");
-            createCategoryStatement =connection.prepareStatement("INSERT INTO exercise_category values(?, ?);");
+            createCategoryStatement = connection.prepareStatement("INSERT INTO exercise_category values(?, ?);");
             insertGifStatement = connection.prepareStatement("insert into gif values(?, ?, ?);");
 
             //update statements
@@ -86,9 +83,9 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             deleteGifStatement = connection.prepareStatement("delete from gif where location=?");
 
             //sequence statements
-            nextvalExercise  = connection.prepareStatement("SELECT NEXTVAL('EXERCISE_SEQ')");
-            nextvalGif  = connection.prepareStatement("SELECT NEXTVAL('GIF_SEQ')");
-        }catch (SQLException e) {
+            nextvalExercise = connection.prepareStatement("SELECT NEXTVAL('EXERCISE_SEQ')");
+            nextvalGif = connection.prepareStatement("SELECT NEXTVAL('GIF_SEQ')");
+        } catch (SQLException e) {
             throw new PersistenceException("failed to prepare statements", e);
         }
     }
@@ -96,6 +93,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     /**
      * creating a new exercise and storing it with all the given pictures into the database
+     *
      * @param exercise which shall be inserted into the underlying persistance layer
      *                 must not be null, exerciseID must be null
      * @return the exercise for further usag
@@ -106,7 +104,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
         try {
 
             LOGGER.info("crating a new exercise" + exercise);
-            if(exercise==null)
+            if (exercise == null)
                 throw new PersistenceException("exercise must not be null");
 
             ResultSet rs = nextvalExercise.executeQuery();
@@ -125,11 +123,11 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             createStatement.setString(3, description);
             createStatement.setDouble(4, calories);
             createStatement.setString(5, videolink);
-           if(exercise.getUser() == null){
-               createStatement.setObject(6, null);
-           }else{
-               createStatement.setObject(6, exercise.getUser().getId());
-           }
+            if (exercise.getUser() == null) {
+                createStatement.setObject(6, null);
+            } else {
+                createStatement.setObject(6, exercise.getUser().getId());
+            }
 
             createStatement.setBoolean(7, isDeleted);
             createStatement.execute();
@@ -137,12 +135,12 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
             LOGGER.info("inserting exercise pictures into table");
 
-            if(gifLinks!=null && !gifLinks.isEmpty()) {
+            if (gifLinks != null && !gifLinks.isEmpty()) {
                 for (String s : gifLinks) {
                     this.createPictures(s, id);
                 }
             }
-            if(exercise.getCategories()!=null && !exercise.getCategories().isEmpty()) {
+            if (exercise.getCategories() != null && !exercise.getCategories().isEmpty()) {
                 for (AbsractCategory a : exercise.getCategories()) {
                     createCategoryStatement.setInt(1, id);
                     createCategoryStatement.setInt(2, a.getId());
@@ -152,8 +150,8 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             Exercise created = new Exercise(name, description, calories, videolink, gifNames, isDeleted, exercise.getUser(), exercise.getCategories());
             created.setId(id);
             LOGGER.debug("new Exercise after insertion into h2 database" + created);
-            return  created;
-        }catch (SQLException e){
+            return created;
+        } catch (SQLException e) {
             throw new PersistenceException("failed to insert excerisce into database", e);
         }
     }
@@ -161,6 +159,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     /**
      * searching for all the dtos stored in the underlying persitance layer
      * which are not deleted
+     *
      * @return list of all exercies stored in the database
      * @throws PersistenceException if an exercise causes problems withi the extraction
      */
@@ -169,13 +168,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
         LOGGER.info("finding all exercises from the h2 database");
         List<Exercise> exerciseList = new ArrayList<>();
 
-        try{
+        try {
             ResultSet rs = readStatement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 exerciseList.add(extractExcercise(rs)); //getting an entity from the resultset
             }
             return exerciseList;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException("failed to get exercises from database", e);
         }
     }
@@ -184,6 +183,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     /**
      * method to search after exactely one exercise
      * exerciseID is primarykey also gets dtos which are already deleted
+     *
      * @param id exercixe to search for
      * @return one exercise exactly due to prim key nature of exerciseID
      * @throws PersistenceException if the given exerciseID is lower 0
@@ -191,21 +191,22 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     @Override
     public Exercise searchByID(int id) throws PersistenceException {
         LOGGER.info("searching after an exercise in dao layer with exerciseID: " + id);
-        try{
-            if(id <0 )
+        try {
+            if (id < 0)
                 throw new PersistenceException("exerciseID must not be lower 0!");
 
             searchByIDStatement.setInt(1, id);
             ResultSet rs = searchByIDStatement.executeQuery();
             rs.next();
             return extractExcercise(rs);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException("can not find given exercise by this exerciseID: " + id);
         }
     }
 
     /**
      * updating a given exercise to new values
+     *
      * @param exercise which shall be updated
      *                 must not be null, exerciseID must not be null
      * @return the updated exercise which is now stored in the database
@@ -214,13 +215,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     @Override
     public Exercise update(Exercise exercise) throws PersistenceException {
         LOGGER.debug("updating a given exercise in dao layer" + exercise);
-        if(exercise==null)
+        if (exercise == null)
             throw new PersistenceException("exercise to update must not be null");
 
-        if(exercise.getId()==null)
+        if (exercise.getId() == null)
             throw new PersistenceException("exercise exerciseID to update must not be null");
 
-        try{
+        try {
             Exercise oldExercise = searchByID(exercise.getId());
 
             Integer id = exercise.getId();
@@ -239,8 +240,8 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             updateStatement.execute();
 
             String storingPath = getClass().getClassLoader().getResource("img").toString().substring(6);
-            for(String s : oldExercise.getGifLinks()){
-                if(!exercise.getGifLinks().contains(s)){ //picture removed
+            for (String s : oldExercise.getGifLinks()) {
+                if (!exercise.getGifLinks().contains(s)) { //picture removed
                     LOGGER.debug("deleting file: " + s);
                     deleteGifStatement.setString(1, s);
                     deleteGifStatement.execute();
@@ -248,7 +249,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             }
             //creating new pictures
             List<String> gifNames = new ArrayList<>();
-            if(exercise.getGifLinks()!=null) {
+            if (exercise.getGifLinks() != null) {
                 for (String s : exercise.getGifLinks()) {
                     if (!oldExercise.getGifLinks().contains(s)) {
                         this.createPictures(s, exercise.getId());
@@ -259,7 +260,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
             deleteCategoryStatement.setInt(1, exercise.getId());
             deleteCategoryStatement.execute();
-            if(exercise.getCategories()!=null) {
+            if (exercise.getCategories() != null) {
                 for (AbsractCategory a : exercise.getCategories()) {
                     createCategoryStatement.setInt(1, id);
                     createCategoryStatement.setInt(2, a.getId());
@@ -267,13 +268,14 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                 }
             }
             return exercise;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException("failed to update given exercise", e);
         }
     }
 
     /**
      * deleting a given exercise --> setting isdeleted flag to TRUE
+     *
      * @param exercise which shall be deleted from the underlying persitance implementation layer
      * @throws PersistenceException if the exercise is null or the exerciseID is null
      */
@@ -282,10 +284,10 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
 
         LOGGER.debug("deleting an exercise in dao layer" + exercise);
-       if(exercise==null)
-           throw new PersistenceException("exercise must not be null!");
+        if (exercise == null)
+            throw new PersistenceException("exercise must not be null!");
 
-        if(exercise.getId()==null)
+        if (exercise.getId() == null)
             throw new PersistenceException("exercise ID must not be null for deletion!");
 
         exercise.setIsDeleted(true);
@@ -295,14 +297,15 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     /**
      * extracting an exercise out of one line from the given resultset
+     *
      * @param rs a resultset which comes from a prepared statement containing all information
      *           for one exercise
      * @return a new instance of an exercise with the attributes from the given resultset
      * @throws PersistenceException if there are any problems with the extraction from the resultset
      */
-    private Exercise extractExcercise(ResultSet rs) throws PersistenceException{
+    private Exercise extractExcercise(ResultSet rs) throws PersistenceException {
         LOGGER.debug("extracting an exercise from a given resultset in dao layer");
-        try{
+        try {
             Integer id = rs.getInt(1);
             String name = rs.getString(2);
             String description = rs.getString(3);
@@ -313,26 +316,26 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             readGifStatement.setInt(1, id);
             ResultSet gifResults = readGifStatement.executeQuery();
             List<String> gifLinks = new ArrayList<>();
-            while(gifResults.next()){
+            while (gifResults.next()) {
                 gifLinks.add(gifResults.getString(3));
             }
 
             List<AbsractCategory> categoryList = new ArrayList<>();
             getCategoryIDStatement.setInt(1, id);
             ResultSet categorySet = getCategoryIDStatement.executeQuery();
-            while (categorySet.next()){
-               Integer categoryID =  categorySet.getInt(2);
+            while (categorySet.next()) {
+                Integer categoryID = categorySet.getInt(2);
                 AbsractCategory absractCategory = categoryDAO.searchByID(categoryID);
                 categoryList.add(absractCategory);
             }
             User user = null;
-            if(userid!=null)
+            if (userid != null)
                 user = userDAO.searchByID(userid);
 
 
-            return new Exercise(id, name, description, calories,videoLink, gifLinks, isDeleted, user, categoryList);
-        }catch (SQLException e){
-            throw new PersistenceException("failed to extract exercise from given restultset" , e);
+            return new Exercise(id, name, description, calories, videoLink, gifLinks, isDeleted, user, categoryList);
+        } catch (SQLException e) {
+            throw new PersistenceException("failed to extract exercise from given restultset", e);
         }
 
     }
@@ -340,12 +343,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     /**
      * creating the pictures and copying the files to our datastorage
      * in the img folder
+     *
      * @param originalName name/path on the users computer for copying
-     * @param exerciseID categoryID of the exercise for linking purposes
+     * @param exerciseID   categoryID of the exercise for linking purposes
      * @return a new string containing our structure/name of the file
      * @throws PersistenceException
      */
-    private String createPictures(String originalName, Integer exerciseID) throws PersistenceException{
+    private String createPictures(String originalName, Integer exerciseID) throws PersistenceException {
         try {
 
             String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
@@ -358,7 +362,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             GregorianCalendar calendar = new GregorianCalendar();
             String ownName = "/img_ex_" + (calendar.getTimeInMillis()) + Math.abs(originalName.hashCode());
             FileInputStream inputStream = new FileInputStream(originalName);
-            File file1 = new File(pathToResource + ownName+endung); //file storing
+            File file1 = new File(pathToResource + ownName + endung); //file storing
             FileOutputStream out = new FileOutputStream(file1);
             IOUtils.copy(inputStream, out); //copy content from input to output
             out.close();
@@ -371,13 +375,13 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             insertGifStatement.setString(3, ownName.concat(endung));
             insertGifStatement.execute();
             return ownName.concat(endung);
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             throw new PersistenceException(e);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new PersistenceException(e);
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException(e);
-        }catch(URISyntaxException e){
+        } catch (URISyntaxException e) {
             throw new PersistenceException(e);
         }
 
@@ -385,38 +389,40 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     /**
      * get all exercises which train only endurance
+     *
      * @return a list of all exercises with endurance purposes
      * @throws PersistenceException
      */
-    public List<Exercise> getAllEnduranceExercises()throws PersistenceException{
-        try{
+    public List<Exercise> getAllEnduranceExercises() throws PersistenceException {
+        try {
             getExerciseWithCategoryStatement.setInt(1, 0);
             ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
             List<Exercise> exercises = new ArrayList<>();
-            while(rs.next()){
+            while (rs.next()) {
                 exercises.add(this.extractExcercise(rs));
             }
             return exercises;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException(e);
         }
     }
 
     /**
      * get all exercises which train only strength
+     *
      * @return a list of all exercises with strength purposes
      * @throws PersistenceException
      */
-    public List<Exercise> getAllStrengthExercises()throws PersistenceException{
-        try{
+    public List<Exercise> getAllStrengthExercises() throws PersistenceException {
+        try {
             getExerciseWithCategoryStatement.setInt(1, 1);
             ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
             List<Exercise> exercises = new ArrayList<>();
-            while(rs.next()){
+            while (rs.next()) {
                 exercises.add(this.extractExcercise(rs));
             }
             return exercises;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException(e);
         }
     }
@@ -424,38 +430,40 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     /**
      * get all exercises which train only balance
+     *
      * @return a list of all exercises with balance purposes
      * @throws PersistenceException
      */
-    public List<Exercise> getAllBalanceExercises()throws PersistenceException{
-        try{
+    public List<Exercise> getAllBalanceExercises() throws PersistenceException {
+        try {
             getExerciseWithCategoryStatement.setInt(1, 2);
             ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
             List<Exercise> exercises = new ArrayList<>();
-            while(rs.next()){
+            while (rs.next()) {
                 exercises.add(this.extractExcercise(rs));
             }
             return exercises;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException(e);
         }
     }
 
     /**
      * get all exercises which train only flexibility
+     *
      * @return a list of all exercises with flexibility purposes
      * @throws PersistenceException
      */
-    public List<Exercise> getAllFlexibilityExercises()throws PersistenceException{
-        try{
+    public List<Exercise> getAllFlexibilityExercises() throws PersistenceException {
+        try {
             getExerciseWithCategoryStatement.setInt(1, 3);
             ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
             List<Exercise> exercises = new ArrayList<>();
-            while(rs.next()){
+            while (rs.next()) {
                 exercises.add(this.extractExcercise(rs));
             }
             return exercises;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException(e);
         }
     }
@@ -464,20 +472,21 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     /**
      * getting all exercises which have the given category specified
      * by the categoryID
+     *
      * @param categoryID the id of the category specifying for the exercies
      * @return a list of all exercises which are qulifyed by the categoryID
      * @throws PersistenceException
      */
-    public List<Exercise> getAllExercisesWithCategoryID(Integer categoryID)throws PersistenceException{
-        try{
+    public List<Exercise> getAllExercisesWithCategoryID(Integer categoryID) throws PersistenceException {
+        try {
             getExerciseWithCategoryStatement.setInt(1, categoryID);
             ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
             List<Exercise> exercises = new ArrayList<>();
-            while(rs.next()){
+            while (rs.next()) {
                 exercises.add(this.extractExcercise(rs));
             }
             return exercises;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException(e);
         }
     }

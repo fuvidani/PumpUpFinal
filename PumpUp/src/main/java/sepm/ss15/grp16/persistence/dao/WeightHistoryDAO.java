@@ -11,10 +11,11 @@ import java.util.List;
  * @author Michael Sober
  * @version 1.0
  */
-public interface WeightHistoryDAO extends DAO<WeightHistory>{
+public interface WeightHistoryDAO extends DAO<WeightHistory> {
 
     /**
      * Searches all weighthistory records for one user
+     *
      * @param user_id from the user
      * @return all records from the given user
      * @throws PersistenceException, if an error while searching occurs
@@ -23,6 +24,7 @@ public interface WeightHistoryDAO extends DAO<WeightHistory>{
 
     /**
      * Searches for the actual weight of the user
+     *
      * @param user_id from the user
      * @return the actual weight of the user
      * @throws PersistenceException, if an error while searching occurs

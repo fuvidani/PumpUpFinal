@@ -15,6 +15,7 @@ public interface BodyfatHistoryService extends Service<BodyfatHistory> {
 
     /**
      * Searches all bodyfathistory records for one user
+     *
      * @param user_id from the user
      * @return all records from the given user
      * @throws ServiceException, if an error while searching occurs
@@ -23,6 +24,7 @@ public interface BodyfatHistoryService extends Service<BodyfatHistory> {
 
     /**
      * Searches for the actual bodyfat of the user
+     *
      * @param user_id from the user
      * @return the actual bodyfat of the user
      * @throws ServiceException, if an error while searching occurs

@@ -15,6 +15,7 @@ public class ImageLoader {
 
     /**
      * Loads a Image from the Resources img folder
+     *
      * @param name name of the image
      * @return
      */

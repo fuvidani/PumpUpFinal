@@ -15,12 +15,12 @@ import java.util.List;
  * @author Michael Sober
  * @version 1.0
  */
-public class WeightHistoryServiceImpl implements WeightHistoryService{
+public class WeightHistoryServiceImpl implements WeightHistoryService {
 
     private WeightHistoryDAO weightHistoryDAO;
 
     public WeightHistoryServiceImpl(WeightHistoryDAO weightHistoryDAO) throws ServiceException {
-        if(weightHistoryDAO == null){
+        if (weightHistoryDAO == null) {
             throw new ServiceException("WeightHistoryDAO is null. Cannot be set in service layer");
         }
         this.weightHistoryDAO = weightHistoryDAO;
@@ -29,18 +29,18 @@ public class WeightHistoryServiceImpl implements WeightHistoryService{
     @Override
     public WeightHistory create(WeightHistory weightHistory) throws ServiceException {
         this.validate(weightHistory);
-        try{
+        try {
             return weightHistoryDAO.create(weightHistory);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
     public List<WeightHistory> findAll() throws ServiceException {
-        try{
+        try {
             return weightHistoryDAO.findAll();
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -58,18 +58,18 @@ public class WeightHistoryServiceImpl implements WeightHistoryService{
 
     @Override
     public List<WeightHistory> searchByUserID(int user_id) throws ServiceException {
-        try{
+        try {
             return weightHistoryDAO.searchByUserID(user_id);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
     public WeightHistory getActualWeight(int user_id) throws ServiceException {
-        try{
+        try {
             return weightHistoryDAO.getActualWeight(user_id);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -77,7 +77,7 @@ public class WeightHistoryServiceImpl implements WeightHistoryService{
     @Override
     public void validate(WeightHistory weightHistory) throws ValidationException {
 
-        if(weightHistory == null){
+        if (weightHistory == null) {
             throw new ValidationException("WeightHistory is null.");
         }
 
@@ -85,15 +85,15 @@ public class WeightHistoryServiceImpl implements WeightHistoryService{
         Integer user_id = weightHistory.getUser_id();
         Integer weight = weightHistory.getWeight();
 
-        if(user_id == null){
+        if (user_id == null) {
             errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
         }
 
-        if(weight == null || weight < 0){
+        if (weight == null || weight < 0) {
             errorMsg += "Das Gewicht muss eine gültige Zahl größer 0 sein.";
         }
 
-        if(!errorMsg.isEmpty()){
+        if (!errorMsg.isEmpty()) {
             throw new ValidationException(errorMsg);
         }
 

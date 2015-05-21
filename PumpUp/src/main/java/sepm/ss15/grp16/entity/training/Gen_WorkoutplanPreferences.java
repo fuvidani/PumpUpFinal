@@ -1,14 +1,13 @@
 package sepm.ss15.grp16.entity.training;
 
 import sepm.ss15.grp16.entity.DTO;
-import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
+import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 
 import java.util.List;
 
 /**
  * Created by Daniel Fuevesi on 15.05.15.
- *
  */
 public class Gen_WorkoutplanPreferences implements DTO {
 
@@ -16,7 +15,7 @@ public class Gen_WorkoutplanPreferences implements DTO {
     private TrainingsCategory goal;
     private List<EquipmentCategory> equipment;
 
-    public Gen_WorkoutplanPreferences(int id, TrainingsCategory goal, List<EquipmentCategory> equipment){
+    public Gen_WorkoutplanPreferences(int id, TrainingsCategory goal, List<EquipmentCategory> equipment) {
         this.id = id;
         this.goal = goal;
         this.equipment = equipment;

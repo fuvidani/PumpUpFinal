@@ -3,7 +3,7 @@ package sepm.ss15.grp16.entity;
 /**
  * Created by Maximilian on 03.05.2015.
  */
-public interface DTO{
+public interface DTO {
 
     public Integer getId();
 
@@ -11,5 +11,5 @@ public interface DTO{
 
     public Boolean getIsDeleted();
 
-    public void setIsDeleted( Boolean deleted);
+    public void setIsDeleted(Boolean deleted);
 }

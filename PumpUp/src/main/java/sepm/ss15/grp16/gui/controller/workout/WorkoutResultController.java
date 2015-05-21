@@ -13,9 +13,8 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
- *
  */
-public class WorkoutResultController extends Controller implements Initializable{
+public class WorkoutResultController extends Controller implements Initializable {
 
 
     @FXML

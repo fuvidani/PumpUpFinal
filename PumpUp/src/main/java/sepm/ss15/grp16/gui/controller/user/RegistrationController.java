@@ -14,8 +14,8 @@ import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.BodyfatHistoryService;
 import sepm.ss15.grp16.service.PictureHistoryService;
 import sepm.ss15.grp16.service.UserService;
@@ -35,8 +35,7 @@ import java.util.ResourceBundle;
  */
 public class RegistrationController extends Controller implements Initializable {
 
-    private StageTransitionLoader transitionLoader;
-
+    private static final Logger LOGGER = LogManager.getLogger();
     @FXML
     Pane registrationPane;
     @FXML
@@ -59,17 +58,15 @@ public class RegistrationController extends Controller implements Initializable 
     RadioButton female_radioButton;
     @FXML
     ImageView picture_imageView;
+    private StageTransitionLoader transitionLoader;
     @FXML
     private ToggleGroup group;
-
     private UserService userService;
     private LoginController loginController;
     private WeightHistoryService weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
     private String filePath;
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -111,7 +108,7 @@ public class RegistrationController extends Controller implements Initializable 
 
         username = username_textField.getText();
 
-        if(!email_textField.getText().isEmpty()) {
+        if (!email_textField.getText().isEmpty()) {
             email = email_textField.getText();
         }
 
@@ -133,10 +130,10 @@ public class RegistrationController extends Controller implements Initializable 
             error += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
         }
 
-        if(!bodyfat_textField.getText().isEmpty()){
+        if (!bodyfat_textField.getText().isEmpty()) {
             try {
                 bodyfat = Integer.parseInt(bodyfat_textField.getText());
-                if(bodyfat < 0 || bodyfat > 100){
+                if (bodyfat < 0 || bodyfat > 100) {
                     error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
                 }
             } catch (NumberFormatException e) {
@@ -166,12 +163,12 @@ public class RegistrationController extends Controller implements Initializable 
             WeightHistory weightHistory = new WeightHistory(null, user.getUser_id(), weight, null);
             weightHistoryService.create(weightHistory);
 
-            if(bodyfat != null) {
+            if (bodyfat != null) {
                 BodyfatHistory bodyfatHistory = new BodyfatHistory(null, user.getUser_id(), bodyfat, null);
                 bodyfatHistoryService.create(bodyfatHistory);
             }
 
-            if(filePath != null){
+            if (filePath != null) {
                 PictureHistory pictureHistory = new PictureHistory(null, user.getUser_id(), filePath, null);
                 pictureHistoryService.create(pictureHistory);
             }

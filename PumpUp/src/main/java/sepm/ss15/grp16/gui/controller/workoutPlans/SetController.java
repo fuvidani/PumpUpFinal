@@ -7,8 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -18,9 +16,9 @@ import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.exercises.ShowExerciseController;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.impl.ExerciseServiceImpl;
 import sepm.ss15.grp16.service.impl.UserServiceImpl;
@@ -36,219 +34,214 @@ import java.util.ResourceBundle;
  * Date: 15.05.2015
  */
 public class SetController extends Controller implements Initializable {
-	private static final Logger LOGGER = LogManager.getLogger(SetController.class);
+    private static final Logger LOGGER = LogManager.getLogger(SetController.class);
+    public static TrainingsSession session_interClassCommunication;
+    private StageTransitionLoader transitionLoader;
+    private UserServiceImpl userService;
+    private ExerciseServiceImpl exerciseService;
+    private Exercise selection;
+    private ObservableList<Exercise> masterdata;
+    @FXML
+    private Button btnShow;
 
-	private StageTransitionLoader transitionLoader;
+    @FXML
+    private RadioButton rdRepeats;
 
-	private UserServiceImpl userService;
-	private ExerciseServiceImpl exerciseService;
+    @FXML
+    private TextField txtRepeat;
 
-	private Exercise selection;
-	private ObservableList<Exercise>  masterdata;
+    @FXML
+    private ToggleGroup tglGrType;
 
-	public static TrainingsSession session_interClassCommunication;
+    @FXML
+    private RadioButton rdMinutes;
 
-	@FXML
-	private Button btnShow;
+    @FXML
+    private TableView<Exercise> tblvExercises;
 
-	@FXML
-	private RadioButton rdRepeats;
+    @FXML
+    private TableColumn<Exercise, String> tblcName;
 
-	@FXML
-	private TextField txtRepeat;
+    @FXML
+    private TableColumn<Exercise, Integer> tblcCalo;
 
-	@FXML
-	private ToggleGroup tglGrType;
+    @FXML
+    private TableColumn<Exercise, String> tblcCat;
 
-	@FXML
-	private RadioButton rdMinutes;
+    @FXML
+    private TextField txtFilter;
 
-	@FXML
-	private TableView<Exercise> tblvExercises;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.transitionLoader = new StageTransitionLoader(this);
+        try {
 
-	@FXML
-	private TableColumn<Exercise, String> tblcName;
+            tblcName.setCellValueFactory(new PropertyValueFactory<>("name"));
+            tblcCalo.setCellValueFactory(new PropertyValueFactory<>("calories"));
+            tblcCat.setCellValueFactory(p -> {
+                List<AbsractCategory> categories = p.getValue().getCategories();
+                List<TrainingsCategory> trainingsCategories = new ArrayList<>();
 
-	@FXML
-	private TableColumn<Exercise, Integer> tblcCalo;
+                for (AbsractCategory absractCategory : categories) {
+                    if (absractCategory instanceof TrainingsCategory) {
+                        trainingsCategories.add((TrainingsCategory) absractCategory);
+                    }
+                }
 
-	@FXML
-	private TableColumn<Exercise, String> tblcCat;
+                String value = "";
+                for (int i = 0; i < trainingsCategories.size(); i++) {
+                    TrainingsCategory category = trainingsCategories.get(i);
+                    if (i + 1 == trainingsCategories.size()) {
+                        value += category.getName();
+                    } else {
+                        value += category.getName() + ", ";
+                    }
+                }
+                return new SimpleStringProperty(value);
+            });
 
-	@FXML
-	private TextField txtFilter;
+            masterdata = FXCollections.observableArrayList(
+                    exerciseService.findAll()
+            );
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		this.transitionLoader = new StageTransitionLoader(this);
-		try {
+            tblvExercises.setItems(masterdata);
 
-			tblcName.setCellValueFactory(new PropertyValueFactory<>("name"));
-			tblcCalo.setCellValueFactory(new PropertyValueFactory<>("calories"));
-			tblcCat.setCellValueFactory(p -> {
-				List<AbsractCategory> categories = p.getValue().getCategories();
-				List<TrainingsCategory> trainingsCategories = new ArrayList<>();
+            tblvExercises.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+                if (newValue != null) {
+                    selection = newValue;
+                    btnShow.setDisable(false);
+                }
+            });
 
-				for (AbsractCategory absractCategory : categories) {
-					if (absractCategory instanceof TrainingsCategory) {
-						trainingsCategories.add((TrainingsCategory) absractCategory);
-					}
-				}
+            txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+                updateFilteredData();
+            });
 
-				String value = "";
-				for (int i = 0; i < trainingsCategories.size(); i++) {
-					TrainingsCategory category = trainingsCategories.get(i);
-					if (i + 1 == trainingsCategories.size()) {
-						value += category.getName();
-					} else {
-						value += category.getName() + ", ";
-					}
-				}
-				return new SimpleStringProperty(value);
-			});
+        } catch (ServiceException e) {
+            LOGGER.error("Error opening SetStage, Errormessage: " + e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehler beim \u00f6ffnen des Fensters!");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
+        }
+    }
 
-			masterdata = FXCollections.observableArrayList(
-					exerciseService.findAll()
-			);
+    private void updateFilteredData() {
+        ObservableList<Exercise> filteredData = FXCollections.observableArrayList(masterdata);
+        ObservableList<Exercise> temp = FXCollections.observableArrayList();
+        for (Exercise e : filteredData) {
+            if (matchesFilter(e))
+                temp.add(e);
+        }
 
-			tblvExercises.setItems(masterdata);
+        tblvExercises.setItems(temp);
+    }
 
-			tblvExercises.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-				if (newValue != null) {
-					selection = newValue;
-					btnShow.setDisable(false);
-				}
-			});
+    private boolean matchesFilter(Exercise e) {
+        String filter = txtFilter.getText();
+        return txtFilter.getText() == null || filter.isEmpty() || e.getName().toLowerCase().contains(filter.toLowerCase());
 
-			txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-				updateFilteredData();
-			});
+    }
 
-		} catch (ServiceException e) {
-			LOGGER.error("Error opening SetStage, Errormessage: " + e);
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Fehler");
-			alert.setHeaderText("Fehler beim \u00f6ffnen des Fensters!");
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
-			e.printStackTrace();
-		}
-	}
+    @FXML
+    void onClickShow(ActionEvent event) {
+        ShowExerciseController.exercise_interClassCommunication = selection;
+        transitionLoader.openWaitStage("fxml/exercise/ShowExercise.fxml", (Stage) tblvExercises.getScene().getWindow(), selection.getName(), 500, 500, true);
+    }
 
-	private void updateFilteredData() {
-		ObservableList<Exercise> filteredData = FXCollections.observableArrayList(masterdata);
-		ObservableList<Exercise> temp = FXCollections.observableArrayList();
-		for (Exercise e : filteredData) {
-			if (matchesFilter(e))
-				temp.add(e);
-		}
+    @FXML
+    void onClickSave(ActionEvent event) {
+        ExerciseSet set = createValidSet();
 
-		tblvExercises.setItems(temp);
-	}
+        if (set != null) {
+            SessionController.set_interClassCommunication = set;
+            this.stage.close();
+        }
+    }
 
-	private boolean matchesFilter(Exercise e) {
-		String filter = txtFilter.getText();
-		return txtFilter.getText() == null || filter.isEmpty() || e.getName().toLowerCase().contains(filter.toLowerCase());
+    private ExerciseSet createValidSet() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Fehler");
+        alert.setHeaderText("Falsche Daten!");
+        boolean error = false;
+        String errormessage = "";
 
-	}
+        String repeat = txtRepeat.getText();
+        Integer repeat_int = null;
 
-	@FXML
-	void onClickShow(ActionEvent event) {
-		ShowExerciseController.exercise_interClassCommunication = selection;
-		transitionLoader.openWaitStage("fxml/exercise/ShowExercise.fxml", (Stage) tblvExercises.getScene().getWindow(), selection.getName(), 500, 500, true);
-	}
+        String repeat_type = ((RadioButton) tglGrType.getSelectedToggle()).getText();
 
-	@FXML
-	void onClickSave(ActionEvent event) {
-		ExerciseSet set = createValidSet();
+        ExerciseSet.SetType setType;
 
-		if (set != null) {
-			SessionController.set_interClassCommunication = set;
-			this.stage.close();
-		}
-	}
+        if (repeat_type.equals("Wiederholungen")) {
+            setType = ExerciseSet.SetType.repeat;
+        } else {
+            setType = ExerciseSet.SetType.time;
+        }
 
-	private ExerciseSet createValidSet() {
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle("Fehler");
-		alert.setHeaderText("Falsche Daten!");
-		boolean error = false;
-		String errormessage = "";
+        if (repeat == null || repeat.equals("")) {
+            error = true;
+            errormessage = "Keine Wiederholungen oder Zeit angegeben!";
+        } else {
+            try {
+                repeat_int = Integer.parseInt(repeat);
+            } catch (NumberFormatException e) {
+                error = true;
+                errormessage = repeat_type + " muss eine ganzzahlige Zahl sein!";
+            }
+        }
 
-		String repeat = txtRepeat.getText();
-		Integer repeat_int = null;
+        tglGrType.getSelectedToggle();
 
-		String repeat_type = ((RadioButton) tglGrType.getSelectedToggle()).getText();
+        if (error) {
+            alert.setContentText(errormessage);
+            alert.showAndWait();
+            return null;
+        } else {
+            Integer id = null;
+            Integer order_nr = null;
+            if (session_interClassCommunication != null && session_interClassCommunication.getId() != null) {
+                id = session_interClassCommunication.getId();
+            }
 
-		ExerciseSet.SetType setType;
+            if (session_interClassCommunication != null) {
+                List<ExerciseSet> sets = session_interClassCommunication.getExerciseSets();
+                if (sets != null) {
+                    order_nr = session_interClassCommunication.getExerciseSets().size() + 1;
+                }
+            } else {
+                order_nr = 1;
+            }
 
-		if (repeat_type.equals("Wiederholungen")) {
-			setType = ExerciseSet.SetType.repeat;
-		} else {
-			setType = ExerciseSet.SetType.time;
-		}
+            return new ExerciseSet(id, selection, userService.getLoggedInUser(),
+                    repeat_int, setType, order_nr, false);
+        }
+    }
 
-		if (repeat == null || repeat.equals("")) {
-			error = true;
-			errormessage = "Keine Wiederholungen oder Zeit angegeben!";
-		} else {
-			try {
-				repeat_int = Integer.parseInt(repeat);
-			} catch (NumberFormatException e) {
-				error = true;
-				errormessage = repeat_type + " muss eine ganzzahlige Zahl sein!";
-			}
-		}
+    @FXML
+    void onClickCancle(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("\u00c4nderungen verwerfen");
+        alert.setHeaderText("Wollen Sie wirklich abbrechen?");
+        alert.setContentText("Alle \u00c4nderungen w\u00fcrden verlorgen gehen!");
+        ButtonType yes = new ButtonType("Ja");
+        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yes, cancel);
 
-		tglGrType.getSelectedToggle();
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == yes) {
+            session_interClassCommunication = null;
+            this.stage.close();
+        }
+    }
 
-		if (error) {
-			alert.setContentText(errormessage);
-			alert.showAndWait();
-			return null;
-		} else {
-			Integer id = null;
-			Integer order_nr = null;
-			if (session_interClassCommunication != null && session_interClassCommunication.getId() != null) {
-				id = session_interClassCommunication.getId();
-			}
+    public void setUserService(UserServiceImpl userService) {
+        this.userService = userService;
+    }
 
-			if (session_interClassCommunication != null) {
-				List<ExerciseSet> sets = session_interClassCommunication.getExerciseSets();
-				if (sets != null) {
-					order_nr = session_interClassCommunication.getExerciseSets().size() + 1;
-				}
-			} else {
-				order_nr = 1;
-			}
-
-			return new ExerciseSet(id, selection, userService.getLoggedInUser(),
-					repeat_int, setType, order_nr, false);
-		}
-	}
-
-	@FXML
-	void onClickCancle(ActionEvent event) {
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("\u00c4nderungen verwerfen");
-		alert.setHeaderText("Wollen Sie wirklich abbrechen?");
-		alert.setContentText("Alle \u00c4nderungen w\u00fcrden verlorgen gehen!");
-		ButtonType yes = new ButtonType("Ja");
-		ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-		alert.getButtonTypes().setAll(yes, cancel);
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == yes) {
-			session_interClassCommunication = null;
-			this.stage.close();
-		}
-	}
-
-	public void setUserService(UserServiceImpl userService) {
-		this.userService = userService;
-	}
-
-	public void setExerciseService(ExerciseServiceImpl exerciseService) {
-		this.exerciseService = exerciseService;
-	}
+    public void setExerciseService(ExerciseServiceImpl exerciseService) {
+        this.exerciseService = exerciseService;
+    }
 }

@@ -19,8 +19,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.user.User;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
@@ -34,24 +34,22 @@ import java.util.ResourceBundle;
  * @author Michael Sober
  * @version 1.0
  */
-public class LoginController  extends Controller implements Initializable {
+public class LoginController extends Controller implements Initializable {
 
-    private StageTransitionLoader transitionLoader;
-
+    private static final Logger LOGGER = LogManager.getLogger();
     @FXML
     Pane loginPane;
     @FXML
     Button login_button;
     @FXML
     Button registrieren_button;
+    private StageTransitionLoader transitionLoader;
     @FXML
     private TableView<User> user_tableView = new TableView<>();
     @FXML
     private TableColumn<User, String> usernameCol;
-
     private UserService userService;
     private ObservableList<User> masterData;
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -100,7 +98,7 @@ public class LoginController  extends Controller implements Initializable {
         User loggedInUser = user_tableView.getSelectionModel().getSelectedItem();
         userService.setLoggedInUser(loggedInUser);
 
-        if(loggedInUser == null){
+        if (loggedInUser == null) {
             LOGGER.error("Tried to login without selecting a user.");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -138,19 +136,19 @@ public class LoginController  extends Controller implements Initializable {
 
 
             LOGGER.info("New stage successfully launched!");
-            Stage stage = (Stage)this.loginPane.getScene().getWindow();
+            Stage stage = (Stage) this.loginPane.getScene().getWindow();
             stage.hide();
             dialogStage.showAndWait();
 
             stage.show();
             // user closed dialog
-        }catch (IOException e){
+        } catch (IOException e) {
             LOGGER.info("Error on opening new stage, reason: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void insertUserInTable(User newUser){
+    public void insertUserInTable(User newUser) {
         LOGGER.info("Inserting new User in tableview");
         masterData.add(newUser);
     }

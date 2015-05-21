@@ -1,6 +1,5 @@
 package sepm.ss15.grp16.service.exercise.impl;
 
-import sepm.ss15.grp16.service.exercise.AbstractExerciseServiceTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -16,6 +15,7 @@ import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.service.ExerciseService;
 import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.UserService;
+import sepm.ss15.grp16.service.exercise.AbstractExerciseServiceTest;
 
 import java.sql.SQLException;
 
@@ -28,13 +28,11 @@ import java.sql.SQLException;
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class ExerciseServiceTestImpl extends AbstractExerciseServiceTest {
     @Autowired
-    private DBHandler dbConnector;
-
-    @Autowired
     UserService userService;
-
     @Autowired
     ExerciseService exerciseService;
+    @Autowired
+    private DBHandler dbConnector;
 
     @Before
     public void setUp() throws DBException, SQLException {

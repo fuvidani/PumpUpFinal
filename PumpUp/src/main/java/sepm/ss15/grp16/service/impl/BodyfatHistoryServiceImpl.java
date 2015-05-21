@@ -20,7 +20,7 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
     private BodyfatHistoryDAO bodyfatHistoryDAO;
 
     public BodyfatHistoryServiceImpl(BodyfatHistoryDAO bodyfatHistoryDAO) throws ServiceException {
-        if(bodyfatHistoryDAO == null){
+        if (bodyfatHistoryDAO == null) {
             throw new ServiceException("BodyfatHistoryDAO is null. Cannot be set in service layer");
         }
         this.bodyfatHistoryDAO = bodyfatHistoryDAO;
@@ -29,18 +29,18 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
     @Override
     public BodyfatHistory create(BodyfatHistory bodyfatHistory) throws ServiceException {
         this.validate(bodyfatHistory);
-        try{
+        try {
             return bodyfatHistoryDAO.create(bodyfatHistory);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
     public List<BodyfatHistory> findAll() throws ServiceException {
-        try{
+        try {
             return bodyfatHistoryDAO.findAll();
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -58,18 +58,18 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
 
     @Override
     public List<BodyfatHistory> searchByUserID(int user_id) throws ServiceException {
-        try{
+        try {
             return bodyfatHistoryDAO.searchByUserID(user_id);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
     public BodyfatHistory getActualBodyfat(int user_id) throws ServiceException {
-        try{
+        try {
             return bodyfatHistoryDAO.getActualBodyfat(user_id);
-        }catch(PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -77,7 +77,7 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
     @Override
     public void validate(BodyfatHistory bodyfatHistory) throws ValidationException {
 
-        if(bodyfatHistory == null){
+        if (bodyfatHistory == null) {
             throw new ValidationException("WeightHistory is null.");
         }
 
@@ -85,15 +85,15 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
         Integer user_id = bodyfatHistory.getUser_id();
         Integer bodyfat = bodyfatHistory.getBodyfat();
 
-        if(user_id == null){
+        if (user_id == null) {
             errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
         }
 
-        if(bodyfat == null || bodyfat < 0 || bodyfat > 100){
+        if (bodyfat == null || bodyfat < 0 || bodyfat > 100) {
             errorMsg += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.";
         }
 
-        if(!errorMsg.isEmpty()){
+        if (!errorMsg.isEmpty()) {
             throw new ValidationException(errorMsg);
         }
 

@@ -10,11 +10,11 @@ public abstract class Controller {
 
     protected Stage stage;
 
-    public void setStage(Stage stage){
-        this.stage = stage;
+    public Stage getStage() {
+        return this.stage;
     }
 
-    public Stage getStage(){
-        return this.stage;
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

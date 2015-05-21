@@ -16,7 +16,7 @@ public interface CalendarService extends Service<Appointment> {
      * The ID is set to the new generated one.
      *
      * @param appointment which shall be sent to the persistence.
-     *            must not be null, id must be null
+     *                    must not be null, id must be null
      * @return the given appointment for further usage
      * @throws ValidationException if the given appointment can't be parse by validate.
      * @throws ServiceException    if there are complications in the service or persistence tier.
@@ -37,7 +37,7 @@ public interface CalendarService extends Service<Appointment> {
      * Validates an appointment and sends it to the persistence for updating.
      *
      * @param appointment which shall be updated
-     *            must not be null, id must not be null and must not be changed
+     *                    must not be null, id must not be null and must not be changed
      * @return given appointment with updated values
      * @throws ValidationException if the given appointment can't be parse by validate.
      * @throws ServiceException    if there are complications in the service or persistence tier.
@@ -49,7 +49,7 @@ public interface CalendarService extends Service<Appointment> {
      * Sends a given appointment to the persistence for deleting.
      *
      * @param appointment which shall be deleted,
-     *            must not be null, id must not be null and must not be changed
+     *                    must not be null, id must not be null and must not be changed
      * @throws ValidationException if the given appointment can't be parse by validate.
      * @throws ServiceException    if there are complications in the service or persistence tier.
      */

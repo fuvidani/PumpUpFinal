@@ -17,7 +17,6 @@ import java.sql.SQLException;
 
 /**
  * Created by lukas on 30.04.2015.
- *
  */
 
 
@@ -28,25 +27,28 @@ public class H2ExerciseDAOImplTest extends AbstractExerciseDaoTest {
     @Autowired
     private DBHandler dbConnector;
 
-
     @Autowired
-    public void setExerciseDAO(ExerciseDAO exerciseDAO){this.exerciseDAO = exerciseDAO;}
-
-    @Autowired
-    public void setUserDAO(UserDAO userDAO){this.userDAO = userDAO;}
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @Override
     public ExerciseDAO getExerciseDAO() {
         return exerciseDAO;
     }
 
+    @Autowired
+    public void setExerciseDAO(ExerciseDAO exerciseDAO) {
+        this.exerciseDAO = exerciseDAO;
+    }
+
     @Before
     public void setUp() {
         try {
             dbConnector.getConnection().setAutoCommit(true);
-        }catch ( DBException e){
+        } catch (DBException e) {
             e.printStackTrace();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

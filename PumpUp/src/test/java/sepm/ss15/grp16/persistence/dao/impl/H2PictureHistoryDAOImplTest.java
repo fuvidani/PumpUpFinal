@@ -32,7 +32,7 @@ public class H2PictureHistoryDAOImplTest extends AbstractPictureHistoryDaoTest {
     }
 
     @Autowired
-    public void setUserDAO(UserDAO userDAO){
+    public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 

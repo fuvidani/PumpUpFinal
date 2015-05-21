@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.entity.calendar;
 
 import sepm.ss15.grp16.entity.training.Trainingsplan;
+
 import java.time.DayOfWeek;
 import java.util.Date;
 

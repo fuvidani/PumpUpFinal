@@ -19,11 +19,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     private CategoryDAO categoryDAO;
 
-    public CategoryServiceImpl(CategoryDAO categoryDAO)throws ServiceException{
-        if(categoryDAO==null){
+    public CategoryServiceImpl(CategoryDAO categoryDAO) throws ServiceException {
+        if (categoryDAO == null) {
             throw new ServiceException("categoryDAO in Service layer null");
         }
-        this.categoryDAO=categoryDAO;
+        this.categoryDAO = categoryDAO;
     }
 
     @Override
@@ -33,6 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * no need for all categorys
+     *
      * @return
      */
     @Override
@@ -58,57 +59,61 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * getting a list of all equipment categorys
+     *
      * @return a list of all equipment categorys like, kurzhantel, langhantel, springschnur ...
      * @throws ServiceException
      */
     @Override
     public List<EquipmentCategory> getAllEquipment() throws ServiceException {
-        try{
+        try {
             return categoryDAO.getAllEquipment();
-        }catch (PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     /**
      * getting a list of all muscle groups
+     *
      * @return a list of all muslce groups like, bauchmuskeln, oberschenkel, unterschenkel ...
      * @throws ServiceException
      */
     @Override
     public List<MusclegroupCategory> getAllMusclegroup() throws ServiceException {
-        try{
-           return categoryDAO.getAllMusclegroup();
-        }catch (PersistenceException e){
+        try {
+            return categoryDAO.getAllMusclegroup();
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     /**
      * getting a list of all trainingstypes
+     *
      * @return a list of all trainingstypes: ausdauer, kraft, balance, flexibilitaet
      * @throws ServiceException
      */
     @Override
     public List<TrainingsCategory> getAllTrainingstype() throws ServiceException {
-       try{
-           return categoryDAO.getAllTrainingstype();
-       }catch (PersistenceException e){
-           throw new ServiceException(e);
-       }
+        try {
+            return categoryDAO.getAllTrainingstype();
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
     }
 
     /**
      * getting exactly one category specified by the given id
+     *
      * @param id of the category to search for
      * @return exactely one category
      * @throws ServiceException
      */
     @Override
     public AbsractCategory searchByID(Integer id) throws ServiceException {
-        try{
+        try {
             return categoryDAO.searchByID(id);
-        }catch (PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }

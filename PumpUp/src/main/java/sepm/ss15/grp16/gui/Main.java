@@ -21,9 +21,17 @@ import java.util.Optional;
  * Created by lukas on 01.05.2015.
  * Edited by Daniel Fuevesi
  */
-public class Main extends Application{
+public class Main extends Application {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
+    public static void main(String[] args) {
+        try {
+            launch(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public void start(final Stage primaryStage) throws Exception {
         LOGGER.info("starting application");
@@ -64,15 +72,6 @@ public class Main extends Application{
         LOGGER.info("configuration successful");
 
         primaryStage.show();
-
-    }
-
-    public static void main(String[] args){
-        try {
-            launch(args);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
     }
 }

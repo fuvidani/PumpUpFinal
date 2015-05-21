@@ -8,10 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -32,126 +28,92 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
  * This controller is responsible for the stage where the user can create
  * m new exercise or edit an existing one.
  */
-public class ManageExerciseController extends Controller implements Initializable{
+public class ManageExerciseController extends Controller implements Initializable {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     @FXML
     private AnchorPane pane;
-
     @FXML
     private CheckBox punchBagCheck;
-
     @FXML
     private ImageView imageView;
-
     @FXML
     private CheckBox chestCheck;
-
     @FXML
     private TextField videoLinkField;
-
     @FXML
     private TextArea descriptionArea;
-
     @FXML
     private CheckBox tricepCheck;
-
     @FXML
     private TextField caloriesField;
-
     @FXML
     private CheckBox legsCheck;
-
     @FXML
     private TextField durationOfQuantityField;
-
     @FXML
     private CheckBox abWheelCheck;
-
     @FXML
     private RadioButton quantityTypeRadio;
-
     @FXML
     private CheckBox balanceCheck;
-
     @FXML
     private CheckBox shoulderCheck;
-
     @FXML
     private CheckBox jumpRopeCheck;
-
     @FXML
     private RadioButton secondsTypeRadio;
-
     @FXML
     private CheckBox enduranceCheck;
-
     @FXML
     private CheckBox strengthCheck;
-
     @FXML
     private CheckBox flexibilityCheck;
-
     @FXML
     private CheckBox backCheck;
-
     @FXML
     private ListView<String> imagesListView;
-
     @FXML
     private CheckBox exerciseBallCheck;
-
     @FXML
     private CheckBox barCheck;
-
     @FXML
     private CheckBox dumbbellCheck;
-
     @FXML
     private CheckBox expanderCheck;
-
     @FXML
     private CheckBox abdominalCheck;
-
     @FXML
     private TextField exerciseNameField;
-
     @FXML
     private CheckBox bicepCheck;
-
     @FXML
     private TextField durationField;
-
     @FXML
     private Button btn_durchsuchen;
-
     @FXML
     private VBox vBox;
-
     @FXML
     private VBox vboxType;
-
     @FXML
     private VBox vboxMuscle;
-
     @FXML
     private VBox vboxEquipment;
-
     @FXML
-    private  WebView webViewVideo;
-
-
+    private WebView webViewVideo;
     private Service<Exercise> exerciseService;
     private CategoryService categoryService;
     private UserService userService;
-    private static final Logger LOGGER = LogManager.getLogger();
     private List<String> exerciseGifList = new ArrayList<>();
     private ObservableList<String> observablePicListData = FXCollections.observableArrayList();
 
@@ -162,8 +124,8 @@ public class ManageExerciseController extends Controller implements Initializabl
     private ObservableList<CheckBox> checkboxes = FXCollections.observableArrayList();
     private List<CheckBox> allCheckboxes = new ArrayList<>();
 
-    public void setExerciseService(Service<Exercise> exerciseService){
-        this.exerciseService=exerciseService;
+    public void setExerciseService(Service<Exercise> exerciseService) {
+        this.exerciseService = exerciseService;
     }
 
     public void setUserService(UserService userService) {
@@ -174,9 +136,9 @@ public class ManageExerciseController extends Controller implements Initializabl
         this.categoryService = categoryService;
     }
 
-    public void setExerciseController(ExercisesController exerciseController){
-        this.exerciseController=exerciseController;
-        exercise=exerciseController.getExercise();
+    public void setExerciseController(ExercisesController exerciseController) {
+        this.exerciseController = exerciseController;
+        exercise = exerciseController.getExercise();
         //TODO ueber spring mit bean loesen
     }
 
@@ -186,9 +148,9 @@ public class ManageExerciseController extends Controller implements Initializabl
         //dynamisches laden von checkboxen
         try {
             webViewVideo.setVisible(false);
-            for(TrainingsCategory t : categoryService.getAllTrainingstype()){
+            for (TrainingsCategory t : categoryService.getAllTrainingstype()) {
                 CheckBox box = new CheckBox(t.getName());
-                box.setId(""+t.getId());
+                box.setId("" + t.getId());
                 LOGGER.debug("trainingsboxID: " + box.getId());
                 checkboxes.add(box);
                 allCheckboxes.add(box);
@@ -197,9 +159,9 @@ public class ManageExerciseController extends Controller implements Initializabl
             vboxType.getChildren().addAll(checkboxes);
             checkboxes.clear();
 
-            for (MusclegroupCategory m : categoryService.getAllMusclegroup()){
+            for (MusclegroupCategory m : categoryService.getAllMusclegroup()) {
                 CheckBox box = new CheckBox(m.getName());
-                box.setId(""+m.getId());
+                box.setId("" + m.getId());
                 LOGGER.debug("muscleboxID: " + box.getId());
                 checkboxes.add(box);
                 allCheckboxes.add(box);
@@ -208,9 +170,9 @@ public class ManageExerciseController extends Controller implements Initializabl
             checkboxes.clear();
 
 
-            for(EquipmentCategory e : categoryService.getAllEquipment()){
+            for (EquipmentCategory e : categoryService.getAllEquipment()) {
                 CheckBox box = new CheckBox(e.getName());
-                box.setId(""+e.getId());
+                box.setId("" + e.getId());
                 LOGGER.debug("equipmentsboxID: " + box.getId());
                 checkboxes.add(box);
                 allCheckboxes.add(box);
@@ -219,7 +181,7 @@ public class ManageExerciseController extends Controller implements Initializabl
             vboxEquipment.getChildren().addAll(checkboxes);
             checkboxes.clear();
 
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             LOGGER.error(e);
             e.printStackTrace();
         }
@@ -233,8 +195,8 @@ public class ManageExerciseController extends Controller implements Initializabl
         setContent();
     }
 
-    private void setContent(){
-        if(exercise!=null) { //update called
+    private void setContent() {
+        if (exercise != null) { //update called
             observablePicListData.removeAll();
             caloriesField.setText("" + exercise.getCalories());
             videoLinkField.setText(exercise.getVideolink());
@@ -244,42 +206,42 @@ public class ManageExerciseController extends Controller implements Initializabl
             observablePicListData.addAll(exerciseGifList);
             imagesListView.setItems(observablePicListData);
 
-           if(!observablePicListData.isEmpty()){
-             showPic(observablePicListData.get(0), observablePicListData.get(0));
-           }
+            if (!observablePicListData.isEmpty()) {
+                showPic(observablePicListData.get(0), observablePicListData.get(0));
+            }
 
-            for(AbsractCategory c : exercise.getCategories()){
+            for (AbsractCategory c : exercise.getCategories()) {
                 allCheckboxes.get(c.getId()).setSelected(true);
             }
         }
     }
 
     @FXML
-    private void playVideo(){
+    private void playVideo() {
         webViewVideo.getEngine().load(videoLinkField.getText());
     }
 
-    private void showPic(String oldValue, String newValue){
+    private void showPic(String oldValue, String newValue) {
         try {
             File file;
             InputStream inputStream;
 
-            if(newValue == null && oldValue !=null){
+            if (newValue == null && oldValue != null) {
                 newValue = oldValue;
             }
 
-            if(newValue == null && oldValue == null)
+            if (newValue == null && oldValue == null)
                 return;
 
-            if(observablePicListData.isEmpty())
+            if (observablePicListData.isEmpty())
                 return;
 
             String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-            if(newValue.contains("img_ex")){
-                                file =new File(pathToResource+"/"+newValue);
+            if (newValue.contains("img_ex")) {
+                file = new File(pathToResource + "/" + newValue);
                 picture = file.getName();
-            }else{
-                file =new File(newValue);
+            } else {
+                file = new File(newValue);
             }
 
             LOGGER.debug(picture);
@@ -294,8 +256,6 @@ public class ManageExerciseController extends Controller implements Initializabl
         }
 
     }
-
-
 
 
     @FXML
@@ -316,19 +276,18 @@ public class ManageExerciseController extends Controller implements Initializabl
     }
 
 
-
     @FXML
     void saveClicked(ActionEvent event) {
-        try{
-            if(exercise==null){
+        try {
+            if (exercise == null) {
                 exerciseService.create(this.extractExercise());
-            }else{
+            } else {
                 Exercise update = this.extractExercise();
                 update.setId(exercise.getId());
                 exerciseService.update(update);
             }
             stage.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.error(e);
             e.printStackTrace();
         }
@@ -351,7 +310,7 @@ public class ManageExerciseController extends Controller implements Initializabl
 
             //Show open file dialog and save picture into file reference
             List<File> files;
-            files =fileChooser.showOpenMultipleDialog(null);
+            files = fileChooser.showOpenMultipleDialog(null);
 
             btn_durchsuchen.setVisible(true);
 
@@ -364,7 +323,7 @@ public class ManageExerciseController extends Controller implements Initializabl
                 imageView.setImage(img);
                 inputStream.close();
 
-                for(File f : files){
+                for (File f : files) {
                     exerciseGifList.add(f.getAbsolutePath());
                 }
                 observablePicListData.addAll(exerciseGifList);
@@ -376,7 +335,7 @@ public class ManageExerciseController extends Controller implements Initializabl
                 Image img = new Image(inputStream);
                 imageView.setImage(img);
                 inputStream.close();
-                for(File f : files){
+                for (File f : files) {
                     LOGGER.debug(f.getName());
                     exerciseGifList.add(f.getAbsolutePath());
                     observablePicListData.add(f.getAbsolutePath());
@@ -396,12 +355,12 @@ public class ManageExerciseController extends Controller implements Initializabl
     }
 
     @FXML
-    private void removeClicked(){
+    private void removeClicked() {
 
         LOGGER.debug("removing pictuer " + picture);
         observablePicListData.remove("/" + picture);
-        exerciseGifList.remove("/"+picture);
-        LOGGER.debug("list contins picture to remove:  " + observablePicListData.contains("/"+picture));
+        exerciseGifList.remove("/" + picture);
+        LOGGER.debug("list contins picture to remove:  " + observablePicListData.contains("/" + picture));
         imagesListView.setItems(observablePicListData);
         imagesListView.setVisible(false);
         imagesListView.setVisible(true);
@@ -411,22 +370,22 @@ public class ManageExerciseController extends Controller implements Initializabl
 
     }
 
-    private Exercise extractExercise(){
-        Double calories =0.0;
-        try{
+    private Exercise extractExercise() {
+        Double calories = 0.0;
+        try {
             calories = Double.parseDouble(caloriesField.getText());
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             calories = 1.0;
         }
 
 
         List<AbsractCategory> temp = new ArrayList<>();
-        for(CheckBox c : allCheckboxes){
+        for (CheckBox c : allCheckboxes) {
 
-            if(c.isSelected())
+            if (c.isSelected())
                 temp.add(new TrainingsCategory(Integer.parseInt(c.getId()), c.getText()));
         }
 
-        return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(),exerciseGifList, false, userService.getLoggedInUser(), temp);
+        return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(), exerciseGifList, false, userService.getLoggedInUser(), temp);
     }
 }

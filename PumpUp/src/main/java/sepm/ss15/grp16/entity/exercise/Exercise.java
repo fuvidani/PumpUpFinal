@@ -124,11 +124,11 @@ public class Exercise implements DTO {
 
         Exercise exercise = (Exercise) o;
 
-        if(this.getId()==null){
-            return  false;
+        if (this.getId() == null) {
+            return false;
         }
 
-        if(this.getId()==((Exercise) o).getId())
+        if (this.getId() == ((Exercise) o).getId())
             return true;
 
         return !(getId() != null ? !getId().equals(exercise.getId()) : exercise.getId() != null);

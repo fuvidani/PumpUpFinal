@@ -15,6 +15,7 @@ public interface WeightHistoryService extends Service<WeightHistory> {
 
     /**
      * Searches all weighthistory records for one user
+     *
      * @param user_id from the user
      * @return all records from the given user
      * @throws ServiceException, if an error while searching occurs
@@ -23,6 +24,7 @@ public interface WeightHistoryService extends Service<WeightHistory> {
 
     /**
      * Searches for the actual weight of the user
+     *
      * @param user_id from the user
      * @return the actual weight of the user
      * @throws ServiceException, if an error while searching occurs

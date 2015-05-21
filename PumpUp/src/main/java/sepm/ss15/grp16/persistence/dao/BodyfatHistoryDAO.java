@@ -11,10 +11,11 @@ import java.util.List;
  * @author Michael Sober
  * @version 1.0
  */
-public interface BodyfatHistoryDAO extends DAO<BodyfatHistory>{
+public interface BodyfatHistoryDAO extends DAO<BodyfatHistory> {
 
     /**
      * Searches all bodyfathistory records for one user
+     *
      * @param user_id from the user
      * @return all records from the given user
      * @throws PersistenceException, if an error while searching occurs
@@ -23,6 +24,7 @@ public interface BodyfatHistoryDAO extends DAO<BodyfatHistory>{
 
     /**
      * Searches for the actual bodyfat of the user
+     *
      * @param user_id from the user
      * @return the actual bodyfat of the user
      * @throws PersistenceException, if an error while searching occurs

@@ -6,8 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.controller.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -55,7 +55,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
     @FXML
     void playlistButtonClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/workout/Playlist.fxml",(Stage)songSecondsCounterLabel.getScene().getWindow(),"Musik - Playlist",700,300, false);
+        transitionLoader.openStage("fxml/workout/Playlist.fxml", (Stage) songSecondsCounterLabel.getScene().getWindow(), "Musik - Playlist", 700, 300, false);
     }
 
 }

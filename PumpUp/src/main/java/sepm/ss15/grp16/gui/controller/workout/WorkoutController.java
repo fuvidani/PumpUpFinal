@@ -80,54 +80,16 @@ public class WorkoutController extends Controller implements Initializable {
 
     @FXML
     private Label discriptionLabel;
-
-    public class ExerciseView extends StackPane {
-
-        public ExerciseView(ExerciseSet exerciseSet) {
-            super();
-
-            setMinHeight(50);
-            setMinWidth(110);
-            setPadding(new Insets(0, 10, 0, 0));
-
-            ImageView imageView = new ImageView(images.get(exerciseSet).get(0));
-            imageView.setFitWidth(100);
-            imageView.setFitHeight(50);
-            getChildren().add(imageView);
-            BorderPane borderPane = new BorderPane();
-            borderPane.setBottom(new Label(exerciseSet.getRepresentationText()));
-            getChildren().add(borderPane);
-        }
-
-
-        public void avtivate() {
-            setStyle("-fx-padding: 10;" +
-                    "-fx-background-color: firebrick;" +
-                    "-fx-background-radius: 5;");
-        }
-    }
-
-
     private Timeline counterTimeline;
     private IntegerProperty timeSeconds;
-
     private ArrayList<ExerciseSet> exerciseList;
     private int activeExercisePosition;
-
     private ArrayList<Image> imageList;
     private int activeImagePosition;
     private Timeline imageTimeline;
-
     private HashMap<ExerciseSet, ArrayList<Image>> images;
     private LinkedList<ExerciseView> exerciseViews;
-
-
-    private enum Status {
-        RUNNUNG, PAUSED, FINISHED;
-    }
-
     private Status status;
-
     private TrainingsSession session;
 
     public WorkoutController(ExerciseDAO exerciseDAO) {
@@ -178,11 +140,9 @@ public class WorkoutController extends Controller implements Initializable {
         durationField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(newValue.isEmpty())
-                {
+                if (newValue.isEmpty()) {
 
-                }
-                else if (newValue.matches("\\d*")) {
+                } else if (newValue.matches("\\d*")) {
                     int value = Integer.parseInt(newValue);
                 } else {
                     durationField.setText(oldValue);
@@ -193,11 +153,9 @@ public class WorkoutController extends Controller implements Initializable {
         repetionField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(newValue.isEmpty())
-                {
+                if (newValue.isEmpty()) {
 
-                }
-                else if (newValue.matches("\\d*")) {
+                } else if (newValue.matches("\\d*")) {
                     int value = Integer.parseInt(newValue);
                 } else {
                     repetionField.setText(oldValue);
@@ -216,7 +174,6 @@ public class WorkoutController extends Controller implements Initializable {
 
         pause();
     }
-
 
     private void loadImages() {
         images = new HashMap<>();
@@ -267,7 +224,6 @@ public class WorkoutController extends Controller implements Initializable {
         durationField.setDisable(true);
         repetionField.setDisable(true);
     }
-
 
     private void pause() {
         circleCounter.setLength(0);
@@ -335,6 +291,37 @@ public class WorkoutController extends Controller implements Initializable {
             pause();
         } else {
             // TODO LOAD TRAININGSRESULTATE
+        }
+    }
+
+
+    private enum Status {
+        RUNNUNG, PAUSED, FINISHED;
+    }
+
+    public class ExerciseView extends StackPane {
+
+        public ExerciseView(ExerciseSet exerciseSet) {
+            super();
+
+            setMinHeight(50);
+            setMinWidth(110);
+            setPadding(new Insets(0, 10, 0, 0));
+
+            ImageView imageView = new ImageView(images.get(exerciseSet).get(0));
+            imageView.setFitWidth(100);
+            imageView.setFitHeight(50);
+            getChildren().add(imageView);
+            BorderPane borderPane = new BorderPane();
+            borderPane.setBottom(new Label(exerciseSet.getRepresentationText()));
+            getChildren().add(borderPane);
+        }
+
+
+        public void avtivate() {
+            setStyle("-fx-padding: 10;" +
+                    "-fx-background-color: firebrick;" +
+                    "-fx-background-radius: 5;");
         }
     }
 }

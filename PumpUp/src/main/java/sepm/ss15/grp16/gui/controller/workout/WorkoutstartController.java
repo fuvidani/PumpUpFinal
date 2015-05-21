@@ -7,8 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.controller.Controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,9 +16,8 @@ import java.util.ResourceBundle;
 /**
  * Created by Daniel Fuevesi on 06.05.15.
  * This controller controls the little pop-up window before the actual training starts.
- *
  */
-public class WorkoutstartController extends Controller implements Initializable{
+public class WorkoutstartController extends Controller implements Initializable {
 
 
     private StageTransitionLoader transitionLoader;
@@ -34,13 +33,13 @@ public class WorkoutstartController extends Controller implements Initializable{
     @FXML
     private Button startButton;
 
-    public WorkoutstartController(){
+    public WorkoutstartController() {
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      this.transitionLoader = new StageTransitionLoader(this);
+        this.transitionLoader = new StageTransitionLoader(this);
     }
 
     @FXML
@@ -52,7 +51,6 @@ public class WorkoutstartController extends Controller implements Initializable{
     void startButtonClicked(ActionEvent event) {
         transitionLoader.openStage("fxml/workout/Workout.fxml", (Stage) toDoListView.getScene().getWindow(), "training", 1100, 750, true);
     }
-
 
 
 }

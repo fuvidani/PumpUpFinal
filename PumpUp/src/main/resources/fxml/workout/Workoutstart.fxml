@@ -1,89 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutstartController">
-   <children>
-      <VBox layoutX="65.0" layoutY="54.0" prefHeight="800.0" prefWidth="1200.0" spacing="80.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox layoutX="65.0" layoutY="54.0" spacing="200.0">
-               <children>
-                  <Label layoutX="65.0" layoutY="59.0" prefHeight="16.0" prefWidth="99.0" text="Training:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="trainingTypeLabel" alignment="CENTER" layoutX="473.0" layoutY="54.0" prefHeight="16.0" prefWidth="264.0" text="Ausdauer">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="65.0" layoutY="212.0" prefHeight="197.0" prefWidth="970.0" spacing="200.0">
-               <children>
-                  <Label layoutX="65.0" layoutY="212.0" prefHeight="16.0" prefWidth="99.0" text="To Do:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <ListView fx:id="toDoListView" layoutX="459.0" layoutY="212.0" prefHeight="176.0" prefWidth="200.0" />
-               </children>
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="65.0" layoutY="535.0" spacing="10.0">
-               <children>
-                  <Label layoutX="65.0" layoutY="538.0" prefHeight="28.0" prefWidth="152.0" text="Musik:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <HBox prefHeight="35.0" prefWidth="704.0" spacing="20.0">
-                     <children>
-                        <Button layoutX="388.0" layoutY="535.0" mnemonicParsing="false" onAction="#browseMusicClicked" prefHeight="35.0" prefWidth="260.0" text="Wählen...">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Label fx:id="musicPathLabel" layoutX="571.0" layoutY="539.0" prefHeight="28.0" prefWidth="609.0" text="C:\Users\Lukas\Music\Musik">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutstartController">
+    <children>
+        <VBox layoutX="65.0" layoutY="54.0" prefHeight="800.0" prefWidth="1200.0" spacing="80.0"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox layoutX="65.0" layoutY="54.0" spacing="200.0">
+                    <children>
+                        <Label layoutX="65.0" layoutY="59.0" prefHeight="16.0" prefWidth="99.0" text="Training:">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
                         </Label>
-                     </children>
-                     <HBox.margin>
-                        <Insets left="200.0" />
-                     </HBox.margin>
-                  </HBox>
-               </children>
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin>
-            </HBox>
-            <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" layoutX="514.0" layoutY="668.0" mnemonicParsing="false" onAction="#startButtonClicked" text="Start!">
-               <font>
-                  <Font size="48.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="400.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-         <padding>
-            <Insets top="25.0" />
-         </padding>
-      </VBox>
-   </children>
+                        <Label fx:id="trainingTypeLabel" alignment="CENTER" layoutX="473.0" layoutY="54.0"
+                               prefHeight="16.0" prefWidth="264.0" text="Ausdauer">
+                            <font>
+                                <Font size="36.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets/>
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="30.0"/>
+                    </VBox.margin>
+                </HBox>
+                <HBox layoutX="65.0" layoutY="212.0" prefHeight="197.0" prefWidth="970.0" spacing="200.0">
+                    <children>
+                        <Label layoutX="65.0" layoutY="212.0" prefHeight="16.0" prefWidth="99.0" text="To Do:">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <ListView fx:id="toDoListView" layoutX="459.0" layoutY="212.0" prefHeight="176.0"
+                                  prefWidth="200.0"/>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="30.0"/>
+                    </VBox.margin>
+                </HBox>
+                <HBox layoutX="65.0" layoutY="535.0" spacing="10.0">
+                    <children>
+                        <Label layoutX="65.0" layoutY="538.0" prefHeight="28.0" prefWidth="152.0" text="Musik:">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                        <HBox prefHeight="35.0" prefWidth="704.0" spacing="20.0">
+                            <children>
+                                <Button layoutX="388.0" layoutY="535.0" mnemonicParsing="false"
+                                        onAction="#browseMusicClicked" prefHeight="35.0" prefWidth="260.0"
+                                        text="Wählen...">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                                <Label fx:id="musicPathLabel" layoutX="571.0" layoutY="539.0" prefHeight="28.0"
+                                       prefWidth="609.0" text="C:\Users\Lukas\Music\Musik">
+                                    <font>
+                                        <Font size="14.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                            <HBox.margin>
+                                <Insets left="200.0"/>
+                            </HBox.margin>
+                        </HBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="30.0"/>
+                    </VBox.margin>
+                </HBox>
+                <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" layoutX="514.0" layoutY="668.0"
+                        mnemonicParsing="false" onAction="#startButtonClicked" text="Start!">
+                    <font>
+                        <Font size="48.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets left="400.0"/>
+                    </VBox.margin>
+                </Button>
+            </children>
+            <padding>
+                <Insets top="25.0"/>
+            </padding>
+        </VBox>
+    </children>
 </AnchorPane>

@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * This controller controls the upper section of the training's stage.
  * It controls which GIF and/or video is shown and animates the ticking clock.
  */
-public class WorkoutGraphicsController extends Controller implements Initializable{
+public class WorkoutGraphicsController extends Controller implements Initializable {
 
 
     @FXML

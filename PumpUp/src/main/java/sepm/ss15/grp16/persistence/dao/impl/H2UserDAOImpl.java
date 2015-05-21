@@ -20,12 +20,12 @@ import java.util.List;
  */
 public class H2UserDAOImpl implements UserDAO {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private Connection con;
     private PreparedStatement createStatement;
     private PreparedStatement updateStatement;
     private PreparedStatement searchByIDStatement;
     private PreparedStatement deleteStatement;
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public H2UserDAOImpl(DBHandler handler) throws PersistenceException {
 

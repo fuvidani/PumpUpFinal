@@ -10,7 +10,7 @@ public abstract class AbsractCategory implements DTO {
     protected Integer id;
     protected String name;
 
-    public AbsractCategory(){
+    public AbsractCategory() {
 
     }
 
@@ -20,23 +20,23 @@ public abstract class AbsractCategory implements DTO {
         this.name = name;
     }
 
-    public Integer getId(){
+    public Integer getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public Boolean getIsDeleted(){
+    public String getName() {
+        return name;
+    }
+
+    public Boolean getIsDeleted() {
         return false;
     }
 
-    public void setIsDeleted( Boolean deleted){
+    public void setIsDeleted(Boolean deleted) {
 
     }
 

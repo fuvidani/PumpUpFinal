@@ -19,8 +19,9 @@ public interface GeneratedWorkoutplanService extends Service<Gen_WorkoutplanPref
      * - user's available training devices ready to use
      * Workout plans will be generated from 3-5 days in a week.
      * The number of sets and repetitions are influenced by the user's condition.
+     *
      * @param preferences the preferences the user made in the GUI
      * @return a generated workout plan suitable for the user's needs and goals
      */
-     Trainingsplan generate(Gen_WorkoutplanPreferences preferences) throws ServiceException;
+    Trainingsplan generate(Gen_WorkoutplanPreferences preferences) throws ServiceException;
 }

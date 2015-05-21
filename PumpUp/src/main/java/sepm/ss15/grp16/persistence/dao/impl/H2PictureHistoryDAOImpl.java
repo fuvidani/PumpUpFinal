@@ -23,10 +23,10 @@ import java.util.List;
  */
 public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private Connection con;
     private PreparedStatement createStatement;
     private PreparedStatement getActualPictureStatement;
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public H2PictureHistoryDAOImpl(DBHandler handler) throws PersistenceException {
 
@@ -99,7 +99,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         } catch (IOException e) {
             LOGGER.error("Failed to create new pictureHistory. IO failed");
             throw new PersistenceException("Failed to create a new pictureHistory", e);
-        } catch (URISyntaxException e){
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
@@ -162,10 +162,10 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         try {
             getActualPictureStatement.setInt(1, user_id);
             ResultSet rs = getActualPictureStatement.executeQuery();
-            if(rs.next() == true){
+            if (rs.next() == true) {
                 foundPictureHistory = new PictureHistory(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDate(4));
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException("Failed to get actual picture", e);
         }
 

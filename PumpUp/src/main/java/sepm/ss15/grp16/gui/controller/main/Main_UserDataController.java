@@ -11,15 +11,14 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 05.05.15.
- *
  */
-public class Main_UserDataController extends Controller implements Initializable{
+public class Main_UserDataController extends Controller implements Initializable {
 
     /**
      * ******************************
-     *                              *
-     *  DO NOT IMPLEMENT THIS!      *
-     *                              *
+     * *
+     * DO NOT IMPLEMENT THIS!      *
+     * *
      * ******************************
      */
 

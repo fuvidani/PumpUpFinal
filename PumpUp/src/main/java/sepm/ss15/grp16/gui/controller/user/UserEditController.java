@@ -29,6 +29,7 @@ import java.util.ResourceBundle;
  */
 public class UserEditController implements Initializable {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     @FXML
     Pane userEditPane;
     @FXML
@@ -41,12 +42,10 @@ public class UserEditController implements Initializable {
     TextField bodyfatTextField;
     @FXML
     TextField emailTextField;
-
     private UserService userService;
     private WeightHistoryService weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private MainController mainController;
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -75,40 +74,40 @@ public class UserEditController implements Initializable {
 
         try {
             WeightHistory actualWeighthistory = weightHistoryService.getActualWeight(user_id);
-            if(actualWeighthistory != null){
+            if (actualWeighthistory != null) {
                 weight = actualWeighthistory.getWeight();
             }
 
             BodyfatHistory actualBodyfathistory = bodyfatHistoryService.getActualBodyfat(user_id);
-            if(actualBodyfathistory != null){
+            if (actualBodyfathistory != null) {
                 bodyfat = actualBodyfathistory.getBodyfat();
             }
-        }catch(ServiceException e){
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
 
         ageTextField.setText(Integer.toString(age));
         heightTextField.setText(Integer.toString(height));
 
-        if(weight != null) {
+        if (weight != null) {
             weightTextField.setText(Integer.toString(weight));
         }
 
-        if(bodyfat != null){
+        if (bodyfat != null) {
             bodyfatTextField.setText(Integer.toString(bodyfat));
-        }else{
+        } else {
             bodyfatTextField.setPromptText("Keine Angabe");
         }
 
-        if(email == null || email.isEmpty()){
+        if (email == null || email.isEmpty()) {
             emailTextField.setPromptText("Keine Angabe");
-        }else {
+        } else {
             emailTextField.setText(email);
         }
     }
 
     @FXML
-    public void saveChangesButtonClicked(){
+    public void saveChangesButtonClicked() {
         LOGGER.debug("Save changes clicked");
 
         Integer user_id = userService.getLoggedInUser().getUser_id();
@@ -119,7 +118,7 @@ public class UserEditController implements Initializable {
         String email = null;
         String error = "";
 
-        if(!emailTextField.getText().isEmpty()) {
+        if (!emailTextField.getText().isEmpty()) {
             email = emailTextField.getText();
         }
 
@@ -141,10 +140,10 @@ public class UserEditController implements Initializable {
             error += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
         }
 
-        if(!bodyfatTextField.getText().isEmpty()){
+        if (!bodyfatTextField.getText().isEmpty()) {
             try {
                 bodyfat = Integer.parseInt(bodyfatTextField.getText());
-                if(bodyfat < 0 || bodyfat > 100){
+                if (bodyfat < 0 || bodyfat > 100) {
                     error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
                 }
             } catch (NumberFormatException e) {
@@ -174,7 +173,7 @@ public class UserEditController implements Initializable {
             WeightHistory weightHistory = new WeightHistory(null, user_id, weight, null);
             weightHistoryService.create(weightHistory);
 
-            if(bodyfat != null) {
+            if (bodyfat != null) {
                 BodyfatHistory bodyfatHistory = new BodyfatHistory(null, user_id, bodyfat, null);
                 bodyfatHistoryService.create(bodyfatHistory);
             }
@@ -187,7 +186,7 @@ public class UserEditController implements Initializable {
             alert.showAndWait();
             Stage stage = (Stage) userEditPane.getScene().getWindow();
             stage.close();
-        } catch (ValidationException e){
+        } catch (ValidationException e) {
             LOGGER.error("Couldn't update User");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");

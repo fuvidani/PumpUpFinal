@@ -8,8 +8,6 @@ import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * This class provides methods for testing WeightHistoryDAOs
@@ -17,7 +15,7 @@ import static org.junit.Assert.assertTrue;
  * @author Michael Sober
  * @version 1.0
  */
-public abstract class AbstractWeightHistoryDaoTest extends AbstractDAOTest<WeightHistory>{
+public abstract class AbstractWeightHistoryDaoTest extends AbstractDAOTest<WeightHistory> {
 
     protected WeightHistoryDAO weightHistoryDAO;
     protected UserDAO userDAO;
@@ -28,7 +26,7 @@ public abstract class AbstractWeightHistoryDaoTest extends AbstractDAOTest<Weigh
     }
 
     @Test(expected = PersistenceException.class)
-    public void createWithNullShouldThrowException() throws Exception{
+    public void createWithNullShouldThrowException() throws Exception {
         weightHistoryDAO.create(null);
     }
 
@@ -54,7 +52,7 @@ public abstract class AbstractWeightHistoryDaoTest extends AbstractDAOTest<Weigh
         assertEquals(testWeightHistory3, actualWeightHistory);
     }
 
-    private User createUserForTest() throws Exception{
+    private User createUserForTest() throws Exception {
         User testUser = new User(null, "maxmustermann", true, 20, 194, "max.mustermann@gmail.com", "/path/playlist/", false);
         return userDAO.create(testUser);
     }

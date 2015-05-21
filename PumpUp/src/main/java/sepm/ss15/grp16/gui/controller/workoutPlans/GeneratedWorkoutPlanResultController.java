@@ -19,10 +19,10 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
-import sepm.ss15.grp16.service.training.TrainingsplanService;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.training.TrainingsplanService;
 
 import java.net.URL;
 import java.util.List;
@@ -47,7 +47,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     private boolean saved;
 
     @FXML
-    private ListView<TrainingsSession>  listView;
+    private ListView<TrainingsSession> listView;
 
     @FXML
     private Button saveButton;
@@ -77,9 +77,9 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
                             String value = "";
 
                             for (ExerciseSet set : t.getExerciseSets()) {
-                                if(set.getType() == ExerciseSet.SetType.time){
-                                    value += set.getOrder_nr() + ": " + set.getRepeat() +" sek. - " + set.getExercise().getName() + "\n\n\n\n";
-                                }else {
+                                if (set.getType() == ExerciseSet.SetType.time) {
+                                    value += set.getOrder_nr() + ": " + set.getRepeat() + " sek. - " + set.getExercise().getName() + "\n\n\n\n";
+                                } else {
                                     value += set.getOrder_nr() + ": " + set.getRepeat() + " -  " + set.getExercise().getName() + "\n\n\n\n";
                                 }
                             }
@@ -89,7 +89,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
                             leftText.setFont(Font.font("Verdana", 16));
 
                             leftText.setTextOrigin(VPos.CENTER);
-                            leftText.relocate(80,0);
+                            leftText.relocate(80, 0);
 
                             final Text middleText = new Text(value);
                             middleText.setFont(Font.font("Verdana", 14));
@@ -114,18 +114,20 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
 
     /**
      * Sets the service. Will be injected by Spring.
+     *
      * @param service service to save the generated workout routine
      */
-    public void setTrainingsplanService(TrainingsplanService service){
+    public void setTrainingsplanService(TrainingsplanService service) {
         this.trainingsplanService = service;
     }
 
     /**
      * This method will only be called by the parent controller.
      * Sets the DTO for later displaying.
+     *
      * @param generatedWorkoutPlan the DTO that must be displayed for the user
      */
-    public void setGeneratedWorkoutPlan(Trainingsplan generatedWorkoutPlan){
+    public void setGeneratedWorkoutPlan(Trainingsplan generatedWorkoutPlan) {
         this.generatedWorkoutPlan = generatedWorkoutPlan;
         LOGGER.info("Generated workoutplan arrived.");
     }
@@ -137,11 +139,11 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
      * Additionally, the button is disabled because the routine can be saved only once.
      */
     @FXML
-    public void saveWorkoutPlanClicked(){
+    public void saveWorkoutPlanClicked() {
         LOGGER.info("Save button clicked, delegating request towards the service layer...");
-        try{
+        try {
             trainingsplanService.create(generatedWorkoutPlan);
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             LOGGER.error("Service threw exception, catched in GUI. Real reason: " + e.toString());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -167,11 +169,11 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
      */
     @FXML
     public void cancelClicked() {
-        if(saved){
+        if (saved) {
             stage.close();
             parent.setFlag(true);
             LOGGER.info("User clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ansicht verlassen.");
             alert.setHeaderText("Wenn Sie abbrechen, wir der angezeigte Trainingsplan nicht gespeichert und verworfen.");
@@ -194,22 +196,24 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     /**
      * Sets the boolean property which signals that the DTO has
      * successfully arrived.
+     *
      * @param val a boolean variable to trigger the listener
      */
-    public void setFlag(boolean val){
+    public void setFlag(boolean val) {
         DTOArrived.set(val);
     }
 
-    public boolean getSaved(){
+    public boolean getSaved() {
         return saved;
     }
 
     /**
      * Sets the parent controller of this one in order to be able to
      * send signal to it.
+     *
      * @param parentController the parent controller
      */
-    public void setParentController(GenerateWorkoutPlanController parentController){
+    public void setParentController(GenerateWorkoutPlanController parentController) {
         this.parent = parentController;
     }
 
@@ -217,12 +221,12 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
      * This method is automatically called by the listener when the generated workout routine
      * has arrived. It simply displays the workout routine with all its sessions and exercises.
      */
-    private void displayWorkoutPlan(){
+    private void displayWorkoutPlan() {
         List<TrainingsSession> sessions = generatedWorkoutPlan.getTrainingsSessions();
         ObservableList<TrainingsSession> data = FXCollections.observableArrayList(sessions);
-        if(sessions.size() == 3){
+        if (sessions.size() == 3) {
             listView.setMaxWidth(760);
-        }else if (sessions.size() == 2){
+        } else if (sessions.size() == 2) {
             listView.setMaxWidth(525);
         }
         listView.setItems(data);

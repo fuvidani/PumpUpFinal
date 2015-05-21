@@ -27,7 +27,7 @@ public class H2WeightHistoryDAOImplTest extends AbstractWeightHistoryDaoTest {
     private DBHandler dbConnector;
 
     @Autowired
-    public void setUserDAO(UserDAO userDAO){
+    public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 

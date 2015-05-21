@@ -10,8 +10,8 @@ import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
@@ -20,17 +20,19 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
- *
  */
-public class CalendarController extends Controller implements Initializable{
+public class CalendarController extends Controller implements Initializable {
 
-    private  final Logger LOGGER = LogManager.getLogger(CalendarController.class);
+    private final Logger LOGGER = LogManager.getLogger(CalendarController.class);
     private CalendarService calendarService;
     private StageTransitionLoader transitionLoader;
 
-    @FXML private WebView webView;
-    @FXML private WebEngine engine;
-    @FXML private Button exportButton;
+    @FXML
+    private WebView webView;
+    @FXML
+    private WebEngine engine;
+    @FXML
+    private Button exportButton;
 
 
     @Override
@@ -45,8 +47,8 @@ public class CalendarController extends Controller implements Initializable{
         path += "/src/main/java/sepm/ss15/grp16/gui/controller/Calendar/html/selectable.html";
         engine.load("file:///" + path);
 
-        engine.getLoadWorker().stateProperty().addListener((ov,oldState, newState)->{
-            if(newState == Worker.State.SUCCEEDED){
+        engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
 
                 // JS to Java
                 JSObject script = (JSObject) engine.executeScript("window");
@@ -74,7 +76,7 @@ public class CalendarController extends Controller implements Initializable{
                     "};\n" +
                     "}");
 
-           refreshCalendar();
+            refreshCalendar();
 
         });
 
@@ -89,7 +91,7 @@ public class CalendarController extends Controller implements Initializable{
     void exportToGoogleClicked() {
     }
 
-    public void refreshCalendar(){
+    public void refreshCalendar() {
         engine.executeScript("$('#calendar').fullCalendar('removeEvents');");
 
         Gson gson = new Gson();

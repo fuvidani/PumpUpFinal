@@ -15,6 +15,7 @@ public interface CategoryService extends Service<AbsractCategory> {
 
     /**
      * getting a list of all equipment categorys
+     *
      * @return a list of all equipment categorys like, kurzhantel, langhantel, springschnur ...
      * @throws ServiceException
      */
@@ -22,6 +23,7 @@ public interface CategoryService extends Service<AbsractCategory> {
 
     /**
      * getting a list of all muscle groups
+     *
      * @return a list of all muslce groups like, bauchmuskeln, oberschenkel, unterschenkel ...
      * @throws ServiceException
      */
@@ -29,6 +31,7 @@ public interface CategoryService extends Service<AbsractCategory> {
 
     /**
      * getting a list of all trainingstypes
+     *
      * @return a list of all trainingstypes: ausdauer, kraft, balance, flexibilitaet
      * @throws ServiceException
      */
@@ -36,6 +39,7 @@ public interface CategoryService extends Service<AbsractCategory> {
 
     /**
      * getting exactly one category specified by the given id
+     *
      * @param id of the category to search for
      * @return exactely one category
      * @throws ServiceException

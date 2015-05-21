@@ -23,11 +23,10 @@ import java.util.List;
 /**
  * Created by David on 2015.05.16..
  */
-public class CalendarServiceImpl implements CalendarService{
+public class CalendarServiceImpl implements CalendarService {
 
-    private CalendarDAO calendarDAO;
     private static final Logger LOGGER = LogManager.getLogger(CalendarServiceImpl.class);
-
+    private CalendarDAO calendarDAO;
     private UserService userService;
 
     public CalendarServiceImpl(CalendarDAO calendarDAO) {
@@ -52,7 +51,7 @@ public class CalendarServiceImpl implements CalendarService{
 
         try {
             return calendarDAO.create(appointment);
-        } catch (PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -70,15 +69,15 @@ public class CalendarServiceImpl implements CalendarService{
         try {
             List<Appointment> filteredAppointments = new ArrayList<>();
 
-            for (Appointment appointment: calendarDAO.findAll()){
-                if (appointment.getUser_id().equals(userService.getLoggedInUser().getId()) || appointment.getUser_id() == null){
+            for (Appointment appointment : calendarDAO.findAll()) {
+                if (appointment.getUser_id().equals(userService.getLoggedInUser().getId()) || appointment.getUser_id() == null) {
                     filteredAppointments.add(appointment);
                 }
             }
 
             return filteredAppointments;
 
-        }catch (PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -100,7 +99,7 @@ public class CalendarServiceImpl implements CalendarService{
 
         try {
             return calendarDAO.update(appointment);
-        }catch (PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -121,7 +120,7 @@ public class CalendarServiceImpl implements CalendarService{
 
         try {
             calendarDAO.delete(appointment);
-        }catch (PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
@@ -152,10 +151,10 @@ public class CalendarServiceImpl implements CalendarService{
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
-        while (true){
-            if (cal.get(Calendar.DAY_OF_WEEK) > workoutplanExport.getDays()[0].getValue() + 1){
+        while (true) {
+            if (cal.get(Calendar.DAY_OF_WEEK) > workoutplanExport.getDays()[0].getValue() + 1) {
                 cal.add(Calendar.DATE, 1); //increment day
-            } else{
+            } else {
                 break;
             }
         }
@@ -169,9 +168,9 @@ public class CalendarServiceImpl implements CalendarService{
                     for (DayOfWeek day : workoutplanExport.getDays()) {
 
                         int dayNum;
-                        if (day.getValue() + 1 < 8){
+                        if (day.getValue() + 1 < 8) {
                             dayNum = day.getValue() + 1;
-                        }else{
+                        } else {
                             dayNum = 1;
                         }
                         if (dayNum == cal.get(Calendar.DAY_OF_WEEK)) {
@@ -187,11 +186,11 @@ public class CalendarServiceImpl implements CalendarService{
                 }
             }
 
-            if (workoutplanExport.getTrainingsplan().getTrainingsSessions().size() < workoutplanExport.getDays().length){
-                while (true){
-                    if (cal.get(Calendar.DAY_OF_WEEK) > workoutplanExport.getDays()[0].getValue() + 1){
+            if (workoutplanExport.getTrainingsplan().getTrainingsSessions().size() < workoutplanExport.getDays().length) {
+                while (true) {
+                    if (cal.get(Calendar.DAY_OF_WEEK) > workoutplanExport.getDays()[0].getValue() + 1) {
                         cal.add(Calendar.DATE, 1); //increment day
-                    } else{
+                    } else {
                         break;
                     }
                 }

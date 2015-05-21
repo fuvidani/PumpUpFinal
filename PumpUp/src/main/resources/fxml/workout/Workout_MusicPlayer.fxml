@@ -1,77 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.media.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutMusicPlayerController">
-   <children>
-      <VBox layoutX="77.0" layoutY="89.0" prefHeight="400.0" prefWidth="1400.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <MediaView fx:id="musicPlayerSlide" fitHeight="100.0" fitWidth="1400.0" />
-            <HBox layoutX="77.0" layoutY="89.0" spacing="65.0">
-               <children>
-                  <HBox layoutX="77.0" layoutY="95.0" spacing="30.0">
-                     <children>
-                        <Label layoutX="77.0" layoutY="95.0" text="Playing:">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="artistAndSongLabel" layoutX="183.0" layoutY="95.0" prefHeight="28.0" prefWidth="453.0" text="An Artist - A Song">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox layoutX="690.0" layoutY="95.0">
-                     <children>
-                        <Label fx:id="songSecondsCounterLabel" layoutX="690.0" layoutY="95.0" prefHeight="23.0" prefWidth="53.0" text="1:39">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="songTotalLengthLabel" layoutX="731.0" layoutY="95.0" prefHeight="23.0" prefWidth="53.0" text="/ 5:30">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox layoutX="800.0" layoutY="89.0" spacing="20.0">
-                     <children>
-                        <Button layoutX="800.0" layoutY="90.0" mnemonicParsing="false" onAction="#rewindButtonClicked" prefHeight="26.0" prefWidth="97.0" text="Rewind">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="170.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutMusicPlayerController">
+    <children>
+        <VBox layoutX="77.0" layoutY="89.0" prefHeight="400.0" prefWidth="1400.0" spacing="10.0"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
+            <children>
+                <MediaView fx:id="musicPlayerSlide" fitHeight="100.0" fitWidth="1400.0"/>
+                <HBox layoutX="77.0" layoutY="89.0" spacing="65.0">
+                    <children>
+                        <HBox layoutX="77.0" layoutY="95.0" spacing="30.0">
+                            <children>
+                                <Label layoutX="77.0" layoutY="95.0" text="Playing:">
+                                    <font>
+                                        <Font size="24.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="artistAndSongLabel" layoutX="183.0" layoutY="95.0" prefHeight="28.0"
+                                       prefWidth="453.0" text="An Artist - A Song">
+                                    <font>
+                                        <Font size="24.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox layoutX="690.0" layoutY="95.0">
+                            <children>
+                                <Label fx:id="songSecondsCounterLabel" layoutX="690.0" layoutY="95.0" prefHeight="23.0"
+                                       prefWidth="53.0" text="1:39">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Label>
+                                <Label fx:id="songTotalLengthLabel" layoutX="731.0" layoutY="95.0" prefHeight="23.0"
+                                       prefWidth="53.0" text="/ 5:30">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox layoutX="800.0" layoutY="89.0" spacing="20.0">
+                            <children>
+                                <Button layoutX="800.0" layoutY="90.0" mnemonicParsing="false"
+                                        onAction="#rewindButtonClicked" prefHeight="26.0" prefWidth="97.0"
+                                        text="Rewind">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="921.0" layoutY="90.0" mnemonicParsing="false"
+                                        onAction="#playButtonClicked" text="Play">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                                <Button layoutX="1007.0" layoutY="89.0" mnemonicParsing="false"
+                                        onAction="#forwardButtonClicked" text="Fast Forward">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <Button layoutX="1577.0" layoutY="90.0" mnemonicParsing="false"
+                                onAction="#playlistButtonClicked" text="Playlist">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
                         </Button>
-                        <Button layoutX="921.0" layoutY="90.0" mnemonicParsing="false" onAction="#playButtonClicked" text="Play">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button layoutX="1007.0" layoutY="89.0" mnemonicParsing="false" onAction="#forwardButtonClicked" text="Fast Forward">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Button layoutX="1577.0" layoutY="90.0" mnemonicParsing="false" onAction="#playlistButtonClicked" text="Playlist">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </HBox>
-         </children>
-      </VBox>
-   </children>
+                    </children>
+                    <padding>
+                        <Insets left="10.0"/>
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>
