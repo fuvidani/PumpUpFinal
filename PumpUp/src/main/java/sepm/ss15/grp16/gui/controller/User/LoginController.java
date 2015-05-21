@@ -137,6 +137,7 @@ public class LoginController  extends Controller implements Initializable {
             dialogStage.setMinHeight(500);
             dialogStage.setMaximized(true);
 
+
             LOGGER.info("New stage successfully launched!");
             Stage stage = (Stage)this.loginPane.getScene().getWindow();
             stage.hide();

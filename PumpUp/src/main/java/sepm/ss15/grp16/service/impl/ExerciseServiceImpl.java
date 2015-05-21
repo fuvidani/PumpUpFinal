@@ -232,23 +232,27 @@ public class ExerciseServiceImpl implements ExerciseService {
      * @return a list of all exercises which do not need the given equipment
      * @throws ServiceException
      */
-    public List<Exercise> getWithoutCategory(List<EquipmentCategory> equipmentCategories)throws ServiceException{
+    public List<Exercise> getWithoutCategory(List<EquipmentCategory> equipmentCategories)throws ServiceException {
         List<Exercise> exercises = this.findAll();
+        if (equipmentCategories.isEmpty()) {
+            return exercises;
+        } else{
         List<EquipmentCategory> userHastNotEuipment = equipmentCategories;
         List<Exercise> exercisesWithEquipment = new ArrayList<>();
 
-        for(Exercise e : exercises){
+        for (Exercise e : exercises) {
             boolean valid = true;
             List<AbsractCategory> categories = e.getCategories();
-            for(AbsractCategory category : categories){
-                if(userHastNotEuipment.contains(category)){
+            for (AbsractCategory category : categories) {
+                if (userHastNotEuipment.contains(category)) {
                     valid = false;
                     break;
                 }
             }
-            if(valid)
+            if (valid)
                 exercisesWithEquipment.add(e);
         }
         return exercisesWithEquipment;
+    }
     }
 }
