@@ -263,9 +263,10 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
     @FXML
     void generateButtonClicked() {
         for(CheckBox box: boxes){
-            if(!box.isSelected()) {
+            /*if(!box.isSelected()) {
                 equipment.add(new EquipmentCategory(Integer.parseInt(box.getId()), box.getText()));
-            }
+            }*/
+
         }
         RadioButton button = (RadioButton)toggleGroup.getSelectedToggle();
         TrainingsCategory goal = button != null ? new TrainingsCategory(Integer.parseInt(button.getId()), button.getText()): null;
