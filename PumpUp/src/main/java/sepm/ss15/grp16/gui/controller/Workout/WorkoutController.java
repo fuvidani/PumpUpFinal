@@ -180,7 +180,11 @@ public class WorkoutController extends Controller implements Initializable {
         durationField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.matches("\\d*") && !newValue.isEmpty()) {
+                if(newValue.isEmpty())
+                {
+
+                }
+                else if (newValue.matches("\\d*")) {
                     int value = Integer.parseInt(newValue);
                 } else {
                     durationField.setText(oldValue);
@@ -191,7 +195,11 @@ public class WorkoutController extends Controller implements Initializable {
         repetionField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.matches("\\d*") && !newValue.isEmpty()) {
+                if(newValue.isEmpty())
+                {
+
+                }
+                else if (newValue.matches("\\d*")) {
                     int value = Integer.parseInt(newValue);
                 } else {
                     repetionField.setText(oldValue);
