@@ -5,16 +5,16 @@
 
     <bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"
           scope="singleton" init-method="openConnection" destroy-method="closeConnection">
-        <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"></constructor-arg>
-        <constructor-arg name="user" value="sa"></constructor-arg>
-        <constructor-arg name="password" value=""></constructor-arg>
+        <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"/>
+        <constructor-arg name="user" value="sa"/>
+        <constructor-arg name="password" value=""/>
     </bean>
 
 
     <!-- Exercises Beans -->
 
     <bean id="categoryDAO" class="sepm.ss15.grp16.persistence.dao.exercise.impl.H2CategoryDAOImpl">
-        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        <constructor-arg name="handler" ref="dbConnector"/>
     </bean>
 
     <bean id="categoryService" class="sepm.ss15.grp16.service.exercise.impl.CategoryServiceImpl">
@@ -24,9 +24,9 @@
 
     <bean id="exerciseDAO" class="sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl"
           scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
-        <constructor-arg name="categoryDAO" ref="categoryDAO"></constructor-arg>
-        <constructor-arg name="userDAO" ref="userDAO"></constructor-arg>
+        <constructor-arg name="handler" ref="dbConnector"/>
+        <constructor-arg name="categoryDAO" ref="categoryDAO"/>
+        <constructor-arg name="userDAO" ref="userDAO"/>
     </bean>
 
     <bean id="exerciseService" class="sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl"
@@ -37,15 +37,15 @@
 
     <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.exercises.ExercisesController"
           scope="singleton">
-        <property name="exerciseService" ref="exerciseService"></property>
+        <property name="exerciseService" ref="exerciseService"/>
         <property name="categoryService" ref="categoryService"/>
         <property name="userService" ref="userService"/>
     </bean>
 
     <bean id="manageExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.ManageExerciseController"
           scope="prototype">
-        <property name="exerciseController" ref="exerciseController"></property>
-        <property name="exerciseService" ref="exerciseService"></property>
+        <property name="exerciseController" ref="exerciseController"/>
+        <property name="exerciseService" ref="exerciseService"/>
         <property name="categoryService" ref="categoryService"/>
         <property name="userService" ref="userService"/>
     </bean>
@@ -62,7 +62,7 @@
 
     <bean id="mainController" class="sepm.ss15.grp16.gui.controller.main.MainController" scope="prototype">
         <property name="userService" ref="userService"/>
-        <property name="calendarService" ref="calendarService"></property>
+        <property name="calendarService" ref="calendarService"/>
         <property name="weightHistoryService" ref="weightHistoryService"/>
         <property name="bodyfatHistoryService" ref="bodyfatHistoryService"/>
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
@@ -89,7 +89,7 @@
 
     <bean id="calendarDAO" class="sepm.ss15.grp16.persistence.dao.calendar.impl.H2CalendarDAOImpl"
           scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        <constructor-arg name="handler" ref="dbConnector"/>
         <property name="sessionDAO" ref="trainingsSessionDAO"/>
     </bean>
 
@@ -100,7 +100,7 @@
     </bean>
 
     <bean id="calendarController" class="sepm.ss15.grp16.gui.controller.calendar.CalendarController" scope="prototype">
-        <property name="calendarService" ref="calendarService"></property>
+        <property name="calendarService" ref="calendarService"/>
     </bean>
 
 
@@ -108,7 +108,7 @@
 
     <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2UserDAOImpl"
           scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        <constructor-arg name="handler" ref="dbConnector"/>
     </bean>
 
     <bean id="userService" class="sepm.ss15.grp16.service.user.impl.UserServiceImpl"
@@ -122,7 +122,7 @@
 
     <bean id="weightHistoryDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2WeightHistoryDAOImpl"
           scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        <constructor-arg name="handler" ref="dbConnector"/>
     </bean>
 
     <bean id="weightHistoryService" class="sepm.ss15.grp16.service.user.impl.WeightHistoryServiceImpl"
@@ -132,7 +132,7 @@
 
     <bean id="bodyfatHistoryDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2BodyfatHistoryDAOImpl"
           scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        <constructor-arg name="handler" ref="dbConnector"/>
     </bean>
 
     <bean id="bodyfatHistoryService" class="sepm.ss15.grp16.service.user.impl.BodyfatHistoryServiceImpl"
@@ -142,7 +142,7 @@
 
     <bean id="pictureHistoryDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2PictureHistoryDAOImpl"
           scope="singleton">
-        <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
+        <constructor-arg name="handler" ref="dbConnector"/>
     </bean>
 
     <bean id="pictureHistoryService" class="sepm.ss15.grp16.service.user.impl.PictureHistoryServiceImpl"
@@ -239,15 +239,15 @@
 
     <bean id="generateWorkoutPlanController"
           class="sepm.ss15.grp16.gui.controller.workoutPlans.GenerateWorkoutPlanController" scope="singleton">
-        <property name="generatedWorkoutplanService" ref="generatedWorkoutplanService"></property>
-        <property name="categoryService" ref="categoryService"></property>
+        <property name="generatedWorkoutplanService" ref="generatedWorkoutplanService"/>
+        <property name="categoryService" ref="categoryService"/>
     </bean>
 
     <bean id="workoutPlanToCalendarController"
           class="sepm.ss15.grp16.gui.controller.workoutPlans.WorkoutPlanToCalendarController" scope="prototype">
         <property name="userService" ref="userService"/>
         <property name="trainingsplanService" ref="trainingsplanService"/>
-        <property name="calendarService" ref="calendarService"></property>
+        <property name="calendarService" ref="calendarService"/>
 
     </bean>
 
@@ -284,6 +284,6 @@
 
     <bean id="generatedWorkoutPlanResultController"
           class="sepm.ss15.grp16.gui.controller.workoutPlans.GeneratedWorkoutPlanResultController" scope="prototype">
-        <property name="trainingsplanService" ref="trainingsplanService"></property>
+        <property name="trainingsplanService" ref="trainingsplanService"/>
     </bean>
 </beans>
