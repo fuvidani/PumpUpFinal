@@ -174,7 +174,8 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void viewAllWorkoutPlansClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/Workoutplans.fxml",(Stage)usernameLabel.getScene().getWindow(),"Trainingspläne",1000,620, true);
+        transitionLoader.openWaitStage("fxml/Workoutplans.fxml",(Stage)usernameLabel.getScene().getWindow(),"Trainingspläne",1000,620, true);
+        refreshCalendar();
     }
 
     @FXML
@@ -184,7 +185,8 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void calendarClicked(ActionEvent event) {
-       transitionLoader.openStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+        transitionLoader.openWaitStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+        refreshCalendar();
     }
 
     @FXML
