@@ -10,12 +10,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.DTO;
+import sepm.ss15.grp16.entity.WorkoutplanExport;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
+import sepm.ss15.grp16.service.CalendarService;
 import sepm.ss15.grp16.service.UserService;
+import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
 
 import java.net.URL;
@@ -33,7 +35,7 @@ import java.util.ResourceBundle;
 public class WorkoutPlanToCalendarController extends Controller implements Initializable {
 	private static final Logger LOGGER = LogManager.getLogger(WorkoutPlanToCalendarController.class);
 
-	//TODO CalenderService calenderService;
+	private CalendarService calendarService;
 	private TrainingsplanService trainingsplanService;
 	private UserService userService;
 
@@ -119,20 +121,22 @@ public class WorkoutPlanToCalendarController extends Controller implements Initi
 
 	@FXML
 	void generateButtonClicked(ActionEvent event) {
-		//TODO cast
-		DTO export = createValidExport();
+
+		WorkoutplanExport export = createValidExport();
 		if (export != null) {
-			//TODO service creation
-			//calendarService.exportToCalendar(WorkoutplanExport)
-			transitionLoader.openWaitStage("fxml/Calender.fxml", (Stage) listviewSessions.getScene().getWindow(), "Trainingsplan in Kalender exportieren", 800, 600, true);
+			try {
+				calendarService.exportToCalendar(export);
+			} catch (ServiceException e) {
+				e.printStackTrace();
+			}
+			transitionLoader.openWaitStage("fxml/Calender.fxml", (Stage) listviewSessions.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
 			plan_interClassCommunication = null;
 
 			this.stage.close();
 		}
 	}
 
-	private DTO createValidExport() {
-		//TODO change signature
+	private WorkoutplanExport createValidExport() {
 
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setTitle("Fehler");
@@ -205,8 +209,7 @@ public class WorkoutPlanToCalendarController extends Controller implements Initi
 			alert.showAndWait();
 			return null;
 		} else {
-			//TODO return new WorkoutplanExport(plan_interClassCommunication, dayOfWeeks, date)
-			return null;
+			return new WorkoutplanExport(plan_interClassCommunication, dayOfWeeks, date);
 		}
 	}
 
@@ -216,6 +219,10 @@ public class WorkoutPlanToCalendarController extends Controller implements Initi
 
 	public void setTrainingsplanService(TrainingsplanService trainingsplanService) {
 		this.trainingsplanService = trainingsplanService;
+	}
+
+	public void setCalendarService(CalendarService calendarService) {
+		this.calendarService = calendarService;
 	}
 }
 

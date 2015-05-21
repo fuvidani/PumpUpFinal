@@ -184,7 +184,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void calendarClicked(ActionEvent event) {
-       transitionLoader.openStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, false);
+       transitionLoader.openStage("fxml/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
     }
 
     @FXML
