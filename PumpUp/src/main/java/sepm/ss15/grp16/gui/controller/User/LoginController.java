@@ -136,10 +136,7 @@ public class LoginController  extends Controller implements Initializable {
             dialogStage.setMinWidth(500);
             dialogStage.setMinHeight(500);
             dialogStage.setMaximized(true);
-<<<<<<< HEAD
 
-=======
->>>>>>> develope
 
             LOGGER.info("New stage successfully launched!");
             Stage stage = (Stage)this.loginPane.getScene().getWindow();
