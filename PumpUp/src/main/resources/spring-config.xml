@@ -225,7 +225,7 @@
 
     </bean>
 
-    <bean id="generatedWorkoutplanService" class="sepm.ss15.grp16.service.Training.impl.GeneratedWorkoutplanServiceImpl">
+    <bean id="generatedWorkoutplanService" class="sepm.ss15.grp16.service.training.impl.GeneratedWorkoutplanServiceImpl">
         <constructor-arg name="trainingsplanService" ref="trainingsplanService"/>
         <constructor-arg name="exerciseService" ref="exerciseService"/>
         <constructor-arg name="userService" ref="userService"/>

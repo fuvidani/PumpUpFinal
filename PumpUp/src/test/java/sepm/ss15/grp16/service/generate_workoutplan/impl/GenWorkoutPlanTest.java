@@ -12,8 +12,7 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.service.CategoryService;
-import sepm.ss15.grp16.service.ExerciseService;
-import sepm.ss15.grp16.service.Training.GeneratedWorkoutplanService;
+import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.WeightHistoryService;
 import sepm.ss15.grp16.service.generate_workoutplan.AbstractGenWorkoutPlanTest;

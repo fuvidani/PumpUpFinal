@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.service.Training;
+package sepm.ss15.grp16.service.training;
 
 import sepm.ss15.grp16.entity.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.training.Trainingsplan;

@@ -3,7 +3,7 @@ package sepm.ss15.grp16.service.generate_workoutplan;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.*;
 import sepm.ss15.grp16.service.*;
-import sepm.ss15.grp16.service.Training.GeneratedWorkoutplanService;
+import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.util.ArrayList;
