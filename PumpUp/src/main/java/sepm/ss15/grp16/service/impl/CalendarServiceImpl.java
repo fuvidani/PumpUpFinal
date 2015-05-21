@@ -152,8 +152,6 @@ public class CalendarServiceImpl implements CalendarService{
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
-        List<TrainingsSession> sessions = workoutplanExport.getTrainingsplan().getTrainingsSessions();
-
         while (true){
             if (cal.get(Calendar.DAY_OF_WEEK) > workoutplanExport.getDays()[0].getValue() + 1){
                 cal.add(Calendar.DATE, 1); //increment day
@@ -170,7 +168,13 @@ public class CalendarServiceImpl implements CalendarService{
                 while (!set) {
                     for (DayOfWeek day : workoutplanExport.getDays()) {
 
-                        if (day.getValue() + 1 == cal.get(Calendar.DAY_OF_WEEK)) {
+                        int dayNum;
+                        if (day.getValue() + 1 < 8){
+                            dayNum = day.getValue() + 1;
+                        }else{
+                            dayNum = 1;
+                        }
+                        if (dayNum == cal.get(Calendar.DAY_OF_WEEK)) {
                             this.create(new Appointment(null, cal.getTime(), session.getId_session(), workoutplanExport.getTrainingsplan().getUser().getUser_id(), false));
                             set = true;
                             cal.add(Calendar.DATE, 1);

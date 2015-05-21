@@ -11,10 +11,8 @@ import netscape.javascript.JSObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.gui.controller.Main.MainController;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.CalendarService;
-import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.net.URL;
@@ -29,9 +27,6 @@ public class CalendarController extends Controller implements Initializable{
     private  final Logger LOGGER = LogManager.getLogger(CalendarController.class);
     private CalendarService calendarService;
     private StageTransitionLoader transitionLoader;
-    private MainController mainController;
-
-    private UserService userService;    //TODO remove this line, and also from spring + setter auch
 
     @FXML private WebView webView;
     @FXML private WebEngine engine;
@@ -108,13 +103,5 @@ public class CalendarController extends Controller implements Initializable{
         LOGGER.debug(json);
         engine.executeScript("addListEvents(" + json + ");");
 
-    }
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController; //TODO remove this
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 }

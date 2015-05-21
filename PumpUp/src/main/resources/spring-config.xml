@@ -98,8 +98,6 @@
 
     <bean id="calendarController" class="sepm.ss15.grp16.gui.controller.Calendar.CalendarController" scope="prototype">
         <property name="calendarService" ref="calendarService"></property>
-        <property name="mainController" ref="mainController"></property>
-        <property name="userService" ref="userService"/>
     </bean>
 
 
