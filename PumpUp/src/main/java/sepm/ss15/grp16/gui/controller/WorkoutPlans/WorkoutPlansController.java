@@ -109,6 +109,10 @@ public class WorkoutPlansController extends Controller implements Initializable 
 								deleteBtn.setDisable(false);
 								editBtn.setDisable(false);
 								calenderBtn.setDisable(false);
+							} else {
+								deleteBtn.setDisable(true);
+								editBtn.setDisable(true);
+								calenderBtn.setDisable(true);
 							}
 							copyBtn.setDisable(false);
 							updateInformations(new_val);
