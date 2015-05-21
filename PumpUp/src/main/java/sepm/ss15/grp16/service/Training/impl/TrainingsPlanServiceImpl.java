@@ -10,10 +10,10 @@ import sepm.ss15.grp16.persistence.dao.training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.ExerciseService;
-import sepm.ss15.grp16.service.training.TrainingsplanService;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.training.TrainingsplanService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			return trainingsplan;
 		} catch (PersistenceException e) {
 			LOGGER.error("" + e);
-			throw new ServiceException(e);
+			throw new ServiceException("Fehler beim Erstellen des Trainingsplans aufgetreten");
 		}
 	}
 
@@ -60,8 +60,8 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			List<Trainingsplan> returnlist = new ArrayList<>();
 
 			for (Trainingsplan plan : list) {
-// TODO				if (plan.getUser() == null || plan.getUser().getId().equals(userService.getLoggedInUser().getId())) {
-				if (plan.getUser() == null) {
+				if (plan.getUser() == null || plan.getUser().getId().equals(userService.getLoggedInUser().getId())) {
+					//if (plan.getUser() == null) {
 					returnlist.add(plan);
 				}
 			}
@@ -69,13 +69,13 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			return returnlist;
 		} catch (PersistenceException e) {
 			LOGGER.error("" + e);
-			throw new ServiceException(e);
+			throw new ServiceException("Fehler beim Anzeigen aller Trainingspl\u00e4ne aufgetreten");
 		}
 	}
 
 	@Override
 	public Trainingsplan update(Trainingsplan plan) throws ServiceException {
-		validate(plan);
+		validate_withoutID(plan);
 		try {
 			LOGGER.info("Service try to update Trainingsplan " + plan);
 			Trainingsplan trainingsplan = trainingsplanDAO.update(plan);
@@ -83,7 +83,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			return trainingsplan;
 		} catch (PersistenceException e) {
 			LOGGER.error("" + e);
-			throw new ServiceException(e);
+			throw new ServiceException("Fehler beim Updaten des Trainingsplans aufgetreten");
 		}
 	}
 
@@ -96,7 +96,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			LOGGER.info("Service delete successful");
 		} catch (PersistenceException e) {
 			LOGGER.error("" + e);
-			throw new ServiceException(e);
+			throw new ServiceException("Fehler beim L\u00f6schen des Trainingsplans aufgetreten");
 		}
 	}
 
@@ -105,19 +105,11 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 		try {
 			LOGGER.info("Service try to search with filter " + filter);
 			List<Trainingsplan> list = trainingsplanDAO.find(filter);
-			List<Trainingsplan> returnlist = new ArrayList<>();
-
-			for (Trainingsplan plan : list) {
-// TODO				if (plan.getUser() == null || plan.getUser().getId().equals(userService.getLoggedInUser().getId())) {
-				if (plan.getUser() == null) {
-					returnlist.add(plan);
-				}
-			}
 			LOGGER.info("Service search successful");
-			return returnlist;
+			return list;
 		} catch (PersistenceException e) {
 			LOGGER.error("" + e);
-			throw new ServiceException(e);
+			throw new ServiceException("Fehler beim Suchen eines Trainingsplans aufgetreten");
 		}
 	}
 
@@ -131,7 +123,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			return plan;
 		} catch (PersistenceException e) {
 			LOGGER.error("" + e);
-			throw new ServiceException(e);
+			throw new ServiceException("Fehler beim Erstellen eines Trainingsplans \u00fcber Session ID " + session.getId() + " aufgetreten");
 		}
 	}
 
@@ -145,7 +137,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			return plan;
 		} catch (PersistenceException e) {
 			LOGGER.error("" + e);
-			throw new ServiceException(e);
+			throw new ServiceException("Fehler beim Erstellen eines Trainingsplans \u00fcber Set ID " + set.getId() + " aufgetreten");
 		}
 	}
 
@@ -158,7 +150,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			return list;
 		} catch (PersistenceException e) {
 			LOGGER.error("" + e);
-			throw new ServiceException(e);
+			throw new ServiceException("Fehler beim Suchen aller Trainingspl\u00e4ne des User " + user.getUsername() + " (ID: " + user.getId() + ") aufgetreten");
 		}
 	}
 
@@ -171,7 +163,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 			return list;
 		} catch (PersistenceException e) {
 			LOGGER.error("" + e);
-			throw new ServiceException(e);
+			throw new ServiceException("Fehler beim Erstellen eines Trainingsplans \u00fcber Plan ID " + ID_plan + " aufgetreten");
 		}
 	}
 

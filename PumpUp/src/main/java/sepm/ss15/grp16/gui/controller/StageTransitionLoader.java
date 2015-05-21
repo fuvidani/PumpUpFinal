@@ -34,6 +34,8 @@ public class StageTransitionLoader {
 		return this.to;
 	}
 
+
+
 	/**
 	 * This method opens the desired stage of the calling controller.
 	 * This is just a prototype: for DTO traffic the method must be upgraded (transmit the transitionLoader itself for example)

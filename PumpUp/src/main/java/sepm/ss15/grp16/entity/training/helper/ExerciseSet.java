@@ -93,6 +93,11 @@ public class ExerciseSet implements DTOHelper {
 		this.order_nr = order_nr;
 	}
 
+	public String getRepresentationText()
+	{
+		return repeat + (type == SetType.repeat ? "x " : "s " ) + exercise.getName();
+	}
+
 	@Override
 	public Integer getId() {
 		return id;
