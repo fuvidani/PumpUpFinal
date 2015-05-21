@@ -6,7 +6,7 @@ import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
-import sepm.ss15.grp16.persistence.dao.UserDAO;
+import sepm.ss15.grp16.persistence.dao.user.UserDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.ArrayList;

@@ -9,7 +9,7 @@ import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
-import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 

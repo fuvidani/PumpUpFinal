@@ -21,7 +21,7 @@ import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.exercises.ShowExerciseController;
-import sepm.ss15.grp16.service.impl.UserServiceImpl;
+import sepm.ss15.grp16.service.user.impl.UserServiceImpl;
 
 import java.net.URL;
 import java.util.Comparator;

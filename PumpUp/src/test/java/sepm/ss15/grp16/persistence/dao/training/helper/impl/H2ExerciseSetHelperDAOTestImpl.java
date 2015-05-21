@@ -9,7 +9,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.dao.training.helper.AbstractExerciseSetDAOTest;
 import sepm.ss15.grp16.persistence.dao.training.helper.ExerciseSetHelperDAO;

@@ -5,8 +5,7 @@ import org.junit.Test;
 import sepm.ss15.grp16.entity.exercise.*;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.service.AbstractServiceTest;
-import sepm.ss15.grp16.service.ExerciseService;
-import sepm.ss15.grp16.service.UserService;
+import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.net.URISyntaxException;

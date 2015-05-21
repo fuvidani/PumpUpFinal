@@ -11,8 +11,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.persistence.dao.DAO;
-import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
-import sepm.ss15.grp16.persistence.dao.UserDAO;
+import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.user.UserDAO;
 import sepm.ss15.grp16.persistence.dao.training.AbstractTrainingsPlanDAOTest;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;

@@ -27,7 +27,7 @@ import sepm.ss15.grp16.entity.training.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.service.CategoryService;
+import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;

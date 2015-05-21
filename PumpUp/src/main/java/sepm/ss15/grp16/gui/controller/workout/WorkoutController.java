@@ -26,8 +26,8 @@ import org.apache.logging.log4j.LogManager;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.gui.controller.ImageLoader;
-import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
+import sepm.ss15.grp16.gui.ImageLoader;
+import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.net.URISyntaxException;

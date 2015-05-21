@@ -18,9 +18,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.*;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.service.CategoryService;
+import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.Service;
-import sepm.ss15.grp16.service.UserService;
+import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.io.File;

@@ -13,23 +13,23 @@
 
     <!-- Exercises Beans -->
 
-    <bean id="categoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2CategoryDAOImpl">
+    <bean id="categoryDAO" class="sepm.ss15.grp16.persistence.dao.exercise.impl.H2CategoryDAOImpl">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
     </bean>
 
-    <bean id="categoryService" class="sepm.ss15.grp16.service.impl.CategoryServiceImpl">
+    <bean id="categoryService" class="sepm.ss15.grp16.service.exercise.impl.CategoryServiceImpl">
         <constructor-arg name="categoryDAO" ref="categoryDAO"/>
     </bean>
 
 
-    <bean id="exerciseDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2ExerciseDAOImpl"
+    <bean id="exerciseDAO" class="sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
         <constructor-arg name="categoryDAO" ref="categoryDAO"></constructor-arg>
         <constructor-arg name="userDAO" ref="userDAO"></constructor-arg>
     </bean>
 
-    <bean id="exerciseService" class="sepm.ss15.grp16.service.impl.ExerciseServiceImpl"
+    <bean id="exerciseService" class="sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl"
           scope="singleton">
         <constructor-arg name="exerciseDAO" ref="exerciseDAO"/>
         <constructor-arg name="userService" ref="userService"/>
@@ -87,13 +87,13 @@
 
     <!-- Calendar Beans -->
 
-    <bean id="calendarDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2CalendarDAOImpl"
+    <bean id="calendarDAO" class="sepm.ss15.grp16.persistence.dao.calendar.impl.H2CalendarDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
         <property name="sessionDAO" ref="trainingsSessionDAO"/>
     </bean>
 
-    <bean id="calendarService" class="sepm.ss15.grp16.service.impl.CalendarServiceImpl"
+    <bean id="calendarService" class="sepm.ss15.grp16.service.calendar.impl.CalendarServiceImpl"
           scope="singleton">
         <constructor-arg name="calendarDAO" ref="calendarDAO"/>
         <property name="userService" ref="userService"/>
@@ -106,12 +106,12 @@
 
     <!-- User Beans-->
 
-    <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2UserDAOImpl"
+    <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2UserDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
     </bean>
 
-    <bean id="userService" class="sepm.ss15.grp16.service.impl.UserServiceImpl"
+    <bean id="userService" class="sepm.ss15.grp16.service.user.impl.UserServiceImpl"
           scope="singleton">
         <constructor-arg name="userDAO" ref="userDAO"/>
     </bean>
@@ -120,32 +120,32 @@
         <property name="userService" ref="userService"/>
     </bean>
 
-    <bean id="weightHistoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2WeightHistoryDAOImpl"
+    <bean id="weightHistoryDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2WeightHistoryDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
     </bean>
 
-    <bean id="weightHistoryService" class="sepm.ss15.grp16.service.impl.WeightHistoryServiceImpl"
+    <bean id="weightHistoryService" class="sepm.ss15.grp16.service.user.impl.WeightHistoryServiceImpl"
           scope="singleton">
         <constructor-arg name="weightHistoryDAO" ref="weightHistoryDAO"/>
     </bean>
 
-    <bean id="bodyfatHistoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2BodyfatHistoryDAOImpl"
+    <bean id="bodyfatHistoryDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2BodyfatHistoryDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
     </bean>
 
-    <bean id="bodyfatHistoryService" class="sepm.ss15.grp16.service.impl.BodyfatHistoryServiceImpl"
+    <bean id="bodyfatHistoryService" class="sepm.ss15.grp16.service.user.impl.BodyfatHistoryServiceImpl"
           scope="singleton">
         <constructor-arg name="bodyfatHistoryDAO" ref="bodyfatHistoryDAO"/>
     </bean>
 
-    <bean id="pictureHistoryDAO" class="sepm.ss15.grp16.persistence.dao.impl.H2PictureHistoryDAOImpl"
+    <bean id="pictureHistoryDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2PictureHistoryDAOImpl"
           scope="singleton">
         <constructor-arg name="handler" ref="dbConnector"></constructor-arg>
     </bean>
 
-    <bean id="pictureHistoryService" class="sepm.ss15.grp16.service.impl.PictureHistoryServiceImpl"
+    <bean id="pictureHistoryService" class="sepm.ss15.grp16.service.user.impl.PictureHistoryServiceImpl"
           scope="singleton">
         <constructor-arg name="pictureHistoryDAO" ref="pictureHistoryDAO"/>
     </bean>

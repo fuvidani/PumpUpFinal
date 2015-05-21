@@ -12,9 +12,9 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
-import sepm.ss15.grp16.service.ExerciseService;
+import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.Service;
-import sepm.ss15.grp16.service.UserService;
+import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.training.AbstractTrainingsServiceTest;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
 
