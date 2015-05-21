@@ -147,25 +147,50 @@ public class CalendarServiceImpl implements CalendarService{
      *                          NOTE: at least one day has to be allowed!!
      */
     @Override
-    public void exportToCalendar(WorkoutplanExport workoutplanExport) throws ServiceException{
+    public void exportToCalendar(WorkoutplanExport workoutplanExport) throws ServiceException {
         Date date = workoutplanExport.getDatum();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
-        for (TrainingsSession session: workoutplanExport.getTrainingsplan().getTrainingsSessions()){
-            boolean set = false;
+        List<TrainingsSession> sessions = workoutplanExport.getTrainingsplan().getTrainingsSessions();
 
-            while(!set) {
-                for (DayOfWeek day : workoutplanExport.getDays()) {
+        while (true){
+            if (cal.get(Calendar.DAY_OF_WEEK) > workoutplanExport.getDays()[0].getValue() + 1){
+                cal.add(Calendar.DATE, 1); //increment day
+            } else{
+                break;
+            }
+        }
 
-                    if (day.getValue() + 1 == cal.get(Calendar.DAY_OF_WEEK)) {
-                        this.create(new Appointment(null, cal.getTime(), session.getId_session(), workoutplanExport.getTrainingsplan().getUser().getUser_id(), false));
-                        set = true;
-                        cal.roll(Calendar.DATE, true); //increment day
+
+        for (int i = 0; i < workoutplanExport.getTrainingsplan().getDuration(); i++) {
+            for (TrainingsSession session : workoutplanExport.getTrainingsplan().getTrainingsSessions()) {
+                boolean set = false;
+
+                while (!set) {
+                    for (DayOfWeek day : workoutplanExport.getDays()) {
+
+                        if (day.getValue() + 1 == cal.get(Calendar.DAY_OF_WEEK)) {
+                            this.create(new Appointment(null, cal.getTime(), session.getId_session(), workoutplanExport.getTrainingsplan().getUser().getUser_id(), false));
+                            set = true;
+                            cal.add(Calendar.DATE, 1);
+                            break;
+                        }
+                    }
+                    if (!set) {
+                        cal.add(Calendar.DATE, 1);
+                    }
+                }
+            }
+
+            if (workoutplanExport.getTrainingsplan().getTrainingsSessions().size() < workoutplanExport.getDays().length){
+                while (true){
+                    if (cal.get(Calendar.DAY_OF_WEEK) > workoutplanExport.getDays()[0].getValue() + 1){
+                        cal.add(Calendar.DATE, 1); //increment day
+                    } else{
                         break;
                     }
                 }
-                cal.roll(Calendar.DATE, true); //increment day
             }
         }
     }
@@ -181,7 +206,6 @@ public class CalendarServiceImpl implements CalendarService{
         Date date;
         try {
             date = formatter.parse(newDate);
-
         } catch (ParseException e) {
             throw new ServiceException(e);
         }
@@ -191,6 +215,7 @@ public class CalendarServiceImpl implements CalendarService{
             appointment.setDatum(date);
 
             calendarDAO.update(appointment);
+
         } catch (PersistenceException e) {
             throw new ServiceException(e);
         }

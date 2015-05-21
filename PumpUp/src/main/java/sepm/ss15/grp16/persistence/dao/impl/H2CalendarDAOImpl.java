@@ -138,7 +138,7 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             Appointment foundAppointment = null;
             foundAppointment = new Appointment(rs_searchByID.getInt(1),rs_searchByID.getDate(2),rs_searchByID.getInt(3),rs_searchByID.getInt(4),rs_searchByID.getBoolean(5));
 
-            LOGGER.info("Appointment with id: " + id + ", successfully read from database.");
+            LOGGER.info("Appointment with id: " + id + ", successfully read from database." + foundAppointment);
             return foundAppointment;
         } catch (SQLException e) {
             LOGGER.error("Failed to search for an appointment with id: " + id + ". - " + e.getMessage());
@@ -167,7 +167,7 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             updateStm.setInt(2,appointment.getSession_id());
             updateStm.setInt(3,appointment.getUser_id());
             updateStm.setBoolean(4,appointment.getIsDeleted());
-            updateStm.setInt(5,appointment.getUser_id());
+            updateStm.setInt(5,appointment.getId());
 
             updateStm.executeUpdate();
 

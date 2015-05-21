@@ -4,27 +4,20 @@ import com.google.gson.Gson;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.entity.WorkoutplanExport;
-import sepm.ss15.grp16.entity.training.TrainingsSession;
-import sepm.ss15.grp16.entity.training.Trainingsplan;
-import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.Main.MainController;
 import sepm.ss15.grp16.gui.controller.StageTransitionLoader;
 import sepm.ss15.grp16.service.CalendarService;
 import sepm.ss15.grp16.service.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.net.URL;
-import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -36,18 +29,20 @@ public class CalendarController extends Controller implements Initializable{
     private  final Logger LOGGER = LogManager.getLogger(CalendarController.class);
     private CalendarService calendarService;
     private StageTransitionLoader transitionLoader;
+    private MainController mainController;
 
     private UserService userService;    //TODO remove this line, and also from spring + setter auch
 
     @FXML private WebView webView;
     @FXML private WebEngine engine;
+    @FXML private Button exportButton;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         LOGGER.info("Initialising CalendarController..");
         this.transitionLoader = new StageTransitionLoader(this);
-
+        exportButton.setDisable(true);
 
         engine = webView.getEngine();
         String path = System.getProperty("user.dir");
@@ -56,7 +51,7 @@ public class CalendarController extends Controller implements Initializable{
         engine.load("file:///" + path);
 
         engine.getLoadWorker().stateProperty().addListener((ov,oldState, newState)->{
-            if(newState== Worker.State.SUCCEEDED){
+            if(newState == Worker.State.SUCCEEDED){
 
                 // JS to Java
                 JSObject script = (JSObject) engine.executeScript("window");
@@ -97,42 +92,6 @@ public class CalendarController extends Controller implements Initializable{
 
     @FXML
     void exportToGoogleClicked() {
-        //TODO remove this test from here
-
-        Exercise exercise1 = new Exercise(null,"liegestuetz","description",0.03,"link",null,false,null,null);
-        Exercise exercise2 = new Exercise(null,"situp","description",0.02,"link",null,false,null,null);
-        ExerciseSet exerciseSet1 = new ExerciseSet(null,exercise1,null,10,null,1,false);
-        ExerciseSet exerciseSet2 = new ExerciseSet(null,exercise2,null,20,null,1,false);
-
-        List<ExerciseSet> list1 = new ArrayList<>();
-        list1.add(exerciseSet1);
-        list1.add(exerciseSet2);
-        list1.add(exerciseSet1);
-
-        List<ExerciseSet> list2 = new ArrayList<>();
-        list1.add(exerciseSet2);
-        list1.add(exerciseSet2);
-
-        TrainingsSession session1 = new TrainingsSession(1,null,"Session1",false,list1);
-        TrainingsSession session2 = new TrainingsSession(2,null,"Session2",false,list2);
-
-        List<TrainingsSession> sessionList = new ArrayList<>();
-        sessionList.add(session1);
-        sessionList.add(session2);
-
-        Trainingsplan trainingsplan = new Trainingsplan(null,userService.getLoggedInUser(),"plan","description",false,sessionList);
-
-        DayOfWeek[] days = {DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY};
-
-        WorkoutplanExport export = new WorkoutplanExport(trainingsplan,days,new Date());
-
-        try {
-            calendarService.exportToCalendar(export);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-
-        this.refreshCalendar();
     }
 
     public void refreshCalendar(){
@@ -149,6 +108,10 @@ public class CalendarController extends Controller implements Initializable{
         LOGGER.debug(json);
         engine.executeScript("addListEvents(" + json + ");");
 
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController; //TODO remove this
     }
 
     public void setUserService(UserService userService) {
