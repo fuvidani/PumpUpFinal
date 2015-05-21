@@ -360,7 +360,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
 	@FXML
 	void generateWorkoutPlanClicked(ActionEvent event) {
-		transitionLoader.openWaitStage("fxml/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 1300, 700, false);
+		transitionLoader.openWaitStage("fxml/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 600, 400, false);
 		updateTable();
 		setUpListView();
 		clearSelection();
