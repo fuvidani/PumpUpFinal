@@ -129,7 +129,7 @@ public class WorkoutPlanToCalendarController extends Controller implements Initi
 			} catch (ServiceException e) {
 				e.printStackTrace();
 			}
-			transitionLoader.openWaitStage("fxml/Calender.fxml", (Stage) listviewSessions.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+			transitionLoader.openWaitStage("fxml/Calendar.fxml", (Stage) listviewSessions.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
 			plan_interClassCommunication = null;
 
 			this.stage.close();
