@@ -1,7 +1,7 @@
 package sepm.ss15.grp16.entity.training.helper;
 
-import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.entity.exercise.Exercise;
+import sepm.ss15.grp16.entity.user.User;
 
 /**
  * Author: Lukas

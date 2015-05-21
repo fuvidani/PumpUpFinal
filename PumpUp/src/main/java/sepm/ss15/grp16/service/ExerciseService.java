@@ -1,10 +1,8 @@
 package sepm.ss15.grp16.service;
 
-import sepm.ss15.grp16.entity.EquipmentCategory;
-import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.entity.User;
-import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
+import sepm.ss15.grp16.entity.exercise.Exercise;
+import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 

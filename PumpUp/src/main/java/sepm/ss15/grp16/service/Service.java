@@ -1,8 +1,6 @@
 package sepm.ss15.grp16.service;
 
 import sepm.ss15.grp16.entity.DTO;
-import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.exception.ServiceException;
 

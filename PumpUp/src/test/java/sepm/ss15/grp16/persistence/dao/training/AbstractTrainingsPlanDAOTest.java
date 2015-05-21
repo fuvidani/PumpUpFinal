@@ -1,9 +1,11 @@
 package sepm.ss15.grp16.persistence.dao.training;
 
-import sepm.ss15.grp16.entity.*;
+import sepm.ss15.grp16.entity.exercise.AbsractCategory;
+import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

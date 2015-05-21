@@ -3,10 +3,9 @@ package sepm.ss15.grp16.persistence.dao.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.h2.util.IOUtils;
-import sepm.ss15.grp16.entity.PictureHistory;
+import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.persistence.dao.PictureHistoryDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
-import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 

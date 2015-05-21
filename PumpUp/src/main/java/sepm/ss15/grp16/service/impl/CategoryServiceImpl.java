@@ -1,10 +1,12 @@
 package sepm.ss15.grp16.service.impl;
 
-import sepm.ss15.grp16.entity.*;
+import sepm.ss15.grp16.entity.exercise.AbsractCategory;
+import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
+import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
+import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.persistence.dao.CategoryDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.CategoryService;
-import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 

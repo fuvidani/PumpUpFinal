@@ -1,6 +1,6 @@
 package sepm.ss15.grp16.persistence.dao;
 
-import sepm.ss15.grp16.entity.BodyfatHistory;
+import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;

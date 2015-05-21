@@ -1,7 +1,7 @@
 package sepm.ss15.grp16.persistence.dao.training.helper;
 
 import sepm.ss15.grp16.entity.training.helper.DTOHelper;
-import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;

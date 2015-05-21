@@ -2,14 +2,14 @@ package sepm.ss15.grp16.persistence.dao;
 
 import org.junit.Assert;
 import org.junit.*;
-import sepm.ss15.grp16.entity.*;
-import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
-import sepm.ss15.grp16.persistence.dao.UserDAO;
+import sepm.ss15.grp16.entity.exercise.AbsractCategory;
+import sepm.ss15.grp16.entity.exercise.Exercise;
+import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
+import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
+import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 

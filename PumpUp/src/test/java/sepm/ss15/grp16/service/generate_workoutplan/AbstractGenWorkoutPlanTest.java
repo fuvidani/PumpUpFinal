@@ -1,7 +1,10 @@
 package sepm.ss15.grp16.service.generate_workoutplan;
 
 import org.junit.Test;
-import sepm.ss15.grp16.entity.*;
+import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
+import sepm.ss15.grp16.entity.training.Gen_WorkoutplanPreferences;
+import sepm.ss15.grp16.entity.user.User;
+import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.service.*;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.exception.ServiceException;

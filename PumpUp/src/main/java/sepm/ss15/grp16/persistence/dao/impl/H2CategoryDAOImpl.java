@@ -2,7 +2,10 @@ package sepm.ss15.grp16.persistence.dao.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.*;
+import sepm.ss15.grp16.entity.exercise.AbsractCategory;
+import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
+import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
+import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.persistence.dao.CategoryDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;

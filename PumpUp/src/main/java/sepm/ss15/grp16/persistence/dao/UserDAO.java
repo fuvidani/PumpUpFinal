@@ -1,9 +1,6 @@
 package sepm.ss15.grp16.persistence.dao;
 
-import sepm.ss15.grp16.entity.User;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
-
-import java.util.List;
+import sepm.ss15.grp16.entity.user.User;
 
 /**
  * This class represents the DAO for a user

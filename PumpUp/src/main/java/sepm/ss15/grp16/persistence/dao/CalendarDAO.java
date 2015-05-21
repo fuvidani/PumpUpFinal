@@ -1,6 +1,6 @@
 package sepm.ss15.grp16.persistence.dao;
 
-import sepm.ss15.grp16.entity.Appointment;
+import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;

@@ -1,17 +1,15 @@
 package sepm.ss15.grp16.service.exercise;
 
-import sepm.ss15.grp16.entity.*;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.entity.exercise.*;
+import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.service.AbstractServiceTest;
 import sepm.ss15.grp16.service.ExerciseService;
-import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.UserService;
 import org.junit.Test;
 import org.junit.Assert;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 

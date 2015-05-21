@@ -1,7 +1,7 @@
 package sepm.ss15.grp16.persistence.dao.training.impl;
 
 import sepm.ss15.grp16.entity.training.TrainingsSession;
-import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.training.helper.TrainingsSessionHelperDAO;
 import sepm.ss15.grp16.persistence.dao.training.helper.impl.H2TrainingssessionHelperDAOImpl;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsSessionDAO;

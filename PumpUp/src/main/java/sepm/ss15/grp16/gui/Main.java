@@ -1,7 +1,6 @@
 package sepm.ss15.grp16.gui;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -9,13 +8,11 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import sepm.ss15.grp16.gui.controller.User.LoginController;
+import sepm.ss15.grp16.gui.controller.user.LoginController;
 
 import java.util.Optional;
 
@@ -37,9 +34,9 @@ public class Main extends Application{
         //add spring context to JavaFX (http://koenserneels.blogspot.co.at/2012/11/javafx-2-with-spring.html)
         fxmlLoader.setControllerFactory(context::getBean);
 
-        fxmlLoader.setLocation(LoginController.class.getClassLoader().getResource("fxml/Login.fxml"));
+        fxmlLoader.setLocation(LoginController.class.getClassLoader().getResource("fxml/user/Login.fxml"));
 
-        Pane pane = (Pane) fxmlLoader.load(LoginController.class.getClassLoader().getResourceAsStream("fxml/Login.fxml"));
+        Pane pane = (Pane) fxmlLoader.load(LoginController.class.getClassLoader().getResourceAsStream("fxml/user/Login.fxml"));
         // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
         LoginController loginController = fxmlLoader.getController();
         primaryStage.setScene(new Scene(pane, 353, 216));

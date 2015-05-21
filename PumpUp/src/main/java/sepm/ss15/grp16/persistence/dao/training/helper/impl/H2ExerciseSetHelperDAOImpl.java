@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
-import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.training.helper.ExerciseSetHelperDAO;
 import sepm.ss15.grp16.persistence.dao.training.helper.TrainingsSessionHelperDAO;

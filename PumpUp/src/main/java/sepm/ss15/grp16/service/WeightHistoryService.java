@@ -1,6 +1,6 @@
 package sepm.ss15.grp16.service;
 
-import sepm.ss15.grp16.entity.WeightHistory;
+import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.util.List;

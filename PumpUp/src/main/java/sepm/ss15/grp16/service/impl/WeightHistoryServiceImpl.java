@@ -1,6 +1,6 @@
 package sepm.ss15.grp16.service.impl;
 
-import sepm.ss15.grp16.entity.WeightHistory;
+import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.persistence.dao.WeightHistoryDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.WeightHistoryService;

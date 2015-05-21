@@ -1,6 +1,6 @@
 package sepm.ss15.grp16.service;
 
-import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.entity.user.User;
 
 /**
  * This interface defines all operations for a user service

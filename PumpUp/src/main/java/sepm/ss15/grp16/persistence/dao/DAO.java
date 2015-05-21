@@ -1,7 +1,6 @@
 package sepm.ss15.grp16.persistence.dao;
 
 import sepm.ss15.grp16.entity.DTO;
-import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;

@@ -2,10 +2,9 @@ package sepm.ss15.grp16.persistence.dao.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.WeightHistory;
+import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.persistence.dao.WeightHistoryDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
-import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 

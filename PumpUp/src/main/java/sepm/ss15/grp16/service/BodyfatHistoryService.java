@@ -1,6 +1,6 @@
 package sepm.ss15.grp16.service;
 
-import sepm.ss15.grp16.entity.BodyfatHistory;
+import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.util.List;

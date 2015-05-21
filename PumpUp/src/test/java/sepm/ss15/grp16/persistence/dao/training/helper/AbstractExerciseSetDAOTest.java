@@ -4,10 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
-import sepm.ss15.grp16.entity.AbsractCategory;
-import sepm.ss15.grp16.entity.Exercise;
-import sepm.ss15.grp16.entity.MusclegroupCategory;
-import sepm.ss15.grp16.entity.TrainingsCategory;
+import sepm.ss15.grp16.entity.exercise.AbsractCategory;
+import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
@@ -15,7 +13,6 @@ import sepm.ss15.grp16.persistence.dao.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 

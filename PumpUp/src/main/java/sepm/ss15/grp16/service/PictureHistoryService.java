@@ -1,7 +1,6 @@
 package sepm.ss15.grp16.service;
 
-import sepm.ss15.grp16.entity.PictureHistory;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package sepm.ss15.grp16.persistence.dao.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.Appointment;
+import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.persistence.dao.CalendarDAO;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsSessionDAO;

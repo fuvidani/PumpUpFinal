@@ -1,8 +1,8 @@
 package sepm.ss15.grp16.persistence.dao;
 
 import org.junit.Test;
-import sepm.ss15.grp16.entity.PictureHistory;
-import sepm.ss15.grp16.entity.User;
+import sepm.ss15.grp16.entity.user.PictureHistory;
+import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.io.File;

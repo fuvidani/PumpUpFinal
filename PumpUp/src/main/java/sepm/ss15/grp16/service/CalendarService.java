@@ -1,7 +1,7 @@
 package sepm.ss15.grp16.service;
 
-import sepm.ss15.grp16.entity.Appointment;
-import sepm.ss15.grp16.entity.WorkoutplanExport;
+import sepm.ss15.grp16.entity.calendar.Appointment;
+import sepm.ss15.grp16.entity.calendar.WorkoutplanExport;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 

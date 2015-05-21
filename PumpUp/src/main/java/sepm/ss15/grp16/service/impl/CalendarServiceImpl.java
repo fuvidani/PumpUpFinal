@@ -2,8 +2,8 @@ package sepm.ss15.grp16.service.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.entity.Appointment;
-import sepm.ss15.grp16.entity.WorkoutplanExport;
+import sepm.ss15.grp16.entity.calendar.Appointment;
+import sepm.ss15.grp16.entity.calendar.WorkoutplanExport;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.persistence.dao.CalendarDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
