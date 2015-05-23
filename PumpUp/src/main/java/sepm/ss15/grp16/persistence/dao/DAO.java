@@ -1,7 +1,6 @@
 package sepm.ss15.grp16.persistence.dao;
 
 import sepm.ss15.grp16.entity.DTO;
-import sepm.ss15.grp16.entity.Exercise;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;
@@ -13,8 +12,9 @@ public interface DAO<T extends DTO> {
 
     /**
      * Creates the given DTO of the generic type in the persictence and sets the new ID to the DTO.
+     *
      * @param dto which shall be inserted into the underlying persistance layer.
-     *                 must not be null, id must be null
+     *            must not be null, id must be null
      * @return the given dto for further usage
      * @throws PersistenceException if there are complications with the persitance layer
      */
@@ -22,6 +22,7 @@ public interface DAO<T extends DTO> {
 
     /**
      * Finds all DTOs of the generic type in the persistence, deleted DTOs are ignored.
+     *
      * @return List of all DTOs stored in the persistence
      * @throws PersistenceException if there are complications with the persitance layer
      */
@@ -36,8 +37,9 @@ public interface DAO<T extends DTO> {
 
     /**
      * Updating a given DTO of the generic type with new values in the persistence.
+     *
      * @param dto which shall be updated
-     *                 must not be null, id must not be null and must not be changed
+     *            must not be null, id must not be null and must not be changed
      * @return given dto with updated values
      * @throws PersistenceException if there are complications with the persitance layer
      */
@@ -45,6 +47,7 @@ public interface DAO<T extends DTO> {
 
     /**
      * Deleting a given DTO ot the generic type in the persistence.
+     *
      * @param dto which shall be deleted,
      *            must not be null, id must not be null and must not be changed
      * @throws PersistenceException if there are complications with the persitance layer

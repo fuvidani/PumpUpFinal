@@ -40,6 +40,9 @@
             <testResource>
                 <directory>src/test/java</directory>
             </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
         </testResources>
     </build>
 
@@ -94,6 +97,12 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+        <!-- Calendar -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
         </dependency>
     </dependencies>
 </project>

@@ -2,19 +2,19 @@
 MERGE INTO TrainingsPlan VALUES (1, NULL, 'Heimtraining für Fortgeschrittene', 'Dieser Trainingsplan ermöglicht mit Hilfe eines Kurz- und Langhantel-Sets sowie einer Bank ein Heimtraining für Fortgeschrittene.
 
 Dabei wird die gesamte Körpermuskulatur in einem 2er-Split trainiert.', 5, FALSE),
-  (2, 1, 'Heimtraining ohne Geräte', 'Dieser Heimtrainingsplan richtet sich an Anfänger, die ihre Fitness durch Kraft- und Cardioübungen verbessern möchten.
+  (2, NULL, 'Heimtraining ohne Geräte', 'Dieser Heimtrainingsplan richtet sich an Anfänger, die ihre Fitness durch Kraft- und Cardioübungen verbessern möchten.
 Das Heimtraining gliedert sich in zwei Ganzkörper-Workouts, die ohne Geräte zu Hause durchgeführt werden können.
 Das Heimtraining ohne Geräte ist durch durch die relativ niedrige Trainingsintensität eher für Anfänger geeignet.
 
 Der Wiederholungsbereich der Kraftübungssätze liegt bei 20. Da es sich bei den Übungen jedoch um Kraftübungen ohne Gewichte handelt, sollten so viele korrekt ausführbare Wiederholungen wie möglich durchgeführt werden.',
    5, FALSE),
-  (3, 1, 'Full-Body Workout', '', 5, FALSE);
+  (3, NULL, 'Full-Body Workout', '', 5, FALSE);
 
 MERGE INTO TrainingsSession VALUES
-  (1, 1, 'Session 1', 1, FALSE),
-  (2, 2, 'Session 1', 1, FALSE),
-  (3, 3, 'Session 1', 1, FALSE),
-  (4, 3, 'Session 2', 1, FALSE);
+  (1, 1, 'Session 1', NULL, FALSE),
+  (2, 2, 'Session 1', NULL, FALSE),
+  (3, 3, 'Session 1', NULL, FALSE),
+  (4, 3, 'Session 2', NULL, FALSE);
 
 MERGE INTO ExerciseSet VALUES
   (1, 8, NULL, 12, 'repeat', 1, 1, FALSE), (2, 8, NULL, 12, 'repeat', 2, 1, FALSE),

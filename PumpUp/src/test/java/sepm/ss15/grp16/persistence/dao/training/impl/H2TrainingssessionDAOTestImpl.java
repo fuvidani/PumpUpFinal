@@ -1,6 +1,5 @@
 package sepm.ss15.grp16.persistence.dao.training.impl;
 
-import sepm.ss15.grp16.persistence.dao.training.AbstractTrainingssessionDAOTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -12,9 +11,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.persistence.dao.DAO;
+import sepm.ss15.grp16.persistence.dao.user.UserDAO;
+import sepm.ss15.grp16.persistence.dao.training.AbstractTrainingssessionDAOTest;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
-import sepm.ss15.grp16.persistence.dao.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 
@@ -28,49 +28,49 @@ import java.sql.SQLException;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
-		{DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTest {
 
-	@Autowired
-	private TrainingsSessionDAO trainingsSessionDAO;
+    @Autowired
+    private TrainingsSessionDAO trainingsSessionDAO;
 
-	@Autowired
-	private TrainingsplanDAO trainingsplanDAO;
+    @Autowired
+    private TrainingsplanDAO trainingsplanDAO;
 
-	@Autowired
-	private DBHandler dbConnector;
+    @Autowired
+    private DBHandler dbConnector;
 
-	@Autowired
-	private UserDAO userDAO;
+    @Autowired
+    private UserDAO userDAO;
 
-	@Override
-	public TrainingsplanDAO getTrainingsplanDAO() {
-		return trainingsplanDAO;
-	}
+    @Override
+    public TrainingsplanDAO getTrainingsplanDAO() {
+        return trainingsplanDAO;
+    }
 
-	@Override
-	public TrainingsSessionDAO getTrainingsSessionDAO() {
-		return trainingsSessionDAO;
-	}
+    @Override
+    public TrainingsSessionDAO getTrainingsSessionDAO() {
+        return trainingsSessionDAO;
+    }
 
-	@Override
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
+    @Override
+    public UserDAO getUserDAO() {
+        return userDAO;
+    }
 
-	@Before
-	public void setUp() throws DBException, SQLException {
-		dbConnector.activateTestMode();
-	}
+    @Before
+    public void setUp() throws DBException, SQLException {
+        dbConnector.activateTestMode();
+    }
 
-	@After
-	public void tearDown() throws DBException, SQLException {
-		dbConnector.deactivateTestMode();
-	}
+    @After
+    public void tearDown() throws DBException, SQLException {
+        dbConnector.deactivateTestMode();
+    }
 
-	@Override
-	public DAO<TrainingsSession> getDAO() {
-		return trainingsSessionDAO;
-	}
+    @Override
+    public DAO<TrainingsSession> getDAO() {
+        return trainingsSessionDAO;
+    }
 }
 

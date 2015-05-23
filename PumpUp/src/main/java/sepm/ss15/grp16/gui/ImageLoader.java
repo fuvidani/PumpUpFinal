@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.gui.controller;
+package sepm.ss15.grp16.gui;
 
 import javafx.scene.image.Image;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +15,7 @@ public class ImageLoader {
 
     /**
      * Loads a Image from the Resources img folder
+     *
      * @param name name of the image
      * @return
      */

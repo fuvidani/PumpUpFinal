@@ -47,6 +47,4 @@ public interface DBHandler {
     public void deactivateTestMode() throws DBException;
 
 
-
-
 }

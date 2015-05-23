@@ -1,9 +1,5 @@
 package sepm.ss15.grp16.service.training.impl;
 
-import sepm.ss15.grp16.service.ExerciseService;
-import sepm.ss15.grp16.service.Service;
-import sepm.ss15.grp16.service.UserService;
-import sepm.ss15.grp16.service.training.AbstractTrainingsServiceTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -16,6 +12,10 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
+import sepm.ss15.grp16.service.exercise.ExerciseService;
+import sepm.ss15.grp16.service.Service;
+import sepm.ss15.grp16.service.user.UserService;
+import sepm.ss15.grp16.service.training.AbstractTrainingsServiceTest;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
 
 import java.sql.SQLException;
@@ -28,43 +28,40 @@ import java.sql.SQLException;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
-		{DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class TrainingsServiceTestImpl extends AbstractTrainingsServiceTest {
 
-	@Autowired
-	private DBHandler dbConnector;
+    @Autowired
+    UserService userService;
+    @Autowired
+    ExerciseService exerciseService;
+    @Autowired
+    TrainingsplanService trainingsplanService;
+    @Autowired
+    private DBHandler dbConnector;
 
-	@Autowired
-	UserService userService;
+    @Before
+    public void setUp() throws DBException, SQLException {
+        dbConnector.activateTestMode();
+    }
 
-	@Autowired
-	ExerciseService exerciseService;
+    @After
+    public void tearDown() throws DBException, SQLException {
+        dbConnector.deactivateTestMode();
+    }
 
-	@Autowired
-	TrainingsplanService trainingsplanService;
+    @Override
+    public UserService getUserService() {
+        return userService;
+    }
 
-	@Before
-	public void setUp() throws DBException, SQLException {
-		dbConnector.activateTestMode();
-	}
+    @Override
+    public ExerciseService getExerciseService() {
+        return exerciseService;
+    }
 
-	@After
-	public void tearDown() throws DBException, SQLException {
-		dbConnector.deactivateTestMode();
-	}
-
-	@Override
-	public UserService getUserService() {
-		return userService;
-	}
-
-	@Override
-	public ExerciseService getExerciseService() {
-		return exerciseService;
-	}
-
-	@Override
-	public Service<Trainingsplan> getService() {
-		return trainingsplanService;
-	}
+    @Override
+    public Service<Trainingsplan> getService() {
+        return trainingsplanService;
+    }
 }

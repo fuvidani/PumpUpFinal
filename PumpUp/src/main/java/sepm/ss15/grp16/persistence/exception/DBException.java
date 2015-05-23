@@ -3,7 +3,7 @@ package sepm.ss15.grp16.persistence.exception;
 /**
  * Created by lukas on 30.04.2015.
  */
-public class DBException extends  Exception {
+public class DBException extends Exception {
 
     public DBException() {
     }

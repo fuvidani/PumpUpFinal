@@ -3,7 +3,7 @@ package sepm.ss15.grp16.service.exception;
 /**
  * Created by lukas on 30.04.2015.
  */
-public class ServiceException extends  Exception {
+public class ServiceException extends Exception {
 
     public ServiceException() {
     }
