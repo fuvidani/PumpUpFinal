@@ -1,12 +1,12 @@
-DROP TABLE categoryName;
-DROP TABLE gif;
-DROP TABLE exercise_category;
-DROP TABLE exercise;
-DROP TABLE category;
-DROP SEQUENCE exercise_seq;
-DROP SEQUENCE category_seq;
-DROP SEQUENCE categoryName_seq;
-DROP SEQUENCE gif_seq;
+DROP TABLE if EXISTS categoryName;
+DROP TABLE if EXISTS  gif;
+DROP TABLE if EXISTS exercise_category;
+DROP TABLE if EXISTS exercise;
+DROP TABLE if EXISTS category;
+DROP SEQUENCE if EXISTS exercise_seq;
+DROP SEQUENCE if EXISTS category_seq;
+DROP SEQUENCE if EXISTS categoryName_seq;
+DROP SEQUENCE if EXISTS gif_seq;
 
 
 CREATE TABLE IF NOT EXISTS categoryName (
@@ -79,7 +79,7 @@ MERGE INTO exercise KEY (id) VALUES
   Strecken Sie die Arme seitlich aus und ballen Sie Ihre Hände zu Fäusten, die Daumen zeigen nach oben.
   Heben Sie nun die Schultern und den Kopf vom Boden an und ziehen Sie die gestreckten Arme so weit wie möglich nach oben.
   Dabei nähern sich Ihre Schulterblätter an.', 0.01, '', NULL, FALSE),
-  (3, 'Kniebeuge', 'Wichtig. Die Knie beim Hochgehen nicht ganz durch-strecken sondern etwas tief bleiben.', 0.02, NULL, NULL, FALSE),
+  (3, 'Kniebeuge', 'Wichtig. Die Knie beim Hochgehen nicht ganz durchstrecken sondern etwas tief bleiben.', 0.02, NULL, NULL, FALSE),
   (4, 'Crunch it UP', 'Legen Sie sich auf den Rücken. Stellen Sie die Beine angewinkelt hüftbreit auf
  und haken Sie die Füße unter einem Gegenstand (Bett, Sofa, Stuhl, Regal, Couchtisch etc.) ein.
  Verschränken Sie die Arme vor der Brust und halten Sie sie fest an den Körper gepresst. Jetzt spannen Sie die Bauchmuskeln fest an,
@@ -118,10 +118,10 @@ MERGE INTO exercise KEY (id) VALUES
   (13, 'Armstrecken mit Kurzhantel', '', 0.4, '', NULL, FALSE),
   (14, 'Bizeps mit Langhantel', '', 0.3, '', NULL, FALSE),
   (15, 'Kniebeugen mit Langhantel', '', 0.5, '', NULL, FALSE),
-  (16, 'Bauchmuskeln Mit Roller', '', 0.2, '', NULL, FALSE),
-  (17, 'Beinheben mit Yogaball', '', 0.1, '', NULL, FALSE),
-  (18, 'Crunches mit Yogaball', '', 0.1, '', NULL, FALSE),
-  (19, 'Superman', '', 0.1, '', NULL, FALSE);
+  (16, 'Bauchmuskeln Mit Roller', '', 0.2, '', 1, FALSE),
+  (17, 'Beinheben mit Yogaball', '', 0.1, '', 1, FALSE),
+  (18, 'Crunches mit Yogaball', '', 0.1, '', 0, FALSE),
+  (19, 'Superman', '', 0.1, '', 0, FALSE);
 
 MERGE INTO exercise_category KEY (exerciseid, categoryid) VALUES
   --liegestuetz, kraft, bizeps/trizeps/bauchmuskeln
@@ -201,13 +201,13 @@ MERGE INTO gif KEY (id) VALUES
   (18, 13, 'img_ex_armstrecken_kurzhantel1.jpg'),
   (19, 13, 'img_ex_armstrecken_kurzhantel2.jpg'),
   --bizeps mit langhantel
-  (20, 14, 'img_ex_bizeps_langhantel1.JPG'),
-  (21, 14, 'img_ex_bizeps_langhantel2.JPG'),
+  (20, 14, 'img_ex_bizeps_langhantel1.jpg'),
+  (21, 14, 'img_ex_bizeps_langhantel2.jpg'),
   --kniebeugen mit langhantel
-  (22, 15, 'img_ex_kniebeugen_langhantel.JPG'),
+  (22, 15, 'img_ex_kniebeugen_langhantel.jpg'),
   --bauchmuskeln mit roller
-  (23, 16, 'img_ex_bauchmuskel_roller1.JPG'),
-  (24, 16, 'img_ex_bauchmuskel_roller2.JPG'),
+  (23, 16, 'img_ex_bauchmuskel_roller1.jpg'),
+  (24, 16, 'img_ex_bauchmuskel_roller2.jpg'),
   --beinheben mit yogaball
   (25, 17, 'img_ex_beinheben_yogaball.jpg'),
   --crunches mit yogaball
