@@ -150,7 +150,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
             return list;
         } catch (PersistenceException e) {
             LOGGER.error("" + e);
-            throw new ServiceException("Fehler beim Suchen aller Trainingspl\u00e4ne des User " + user.getUsername() + " (ID: " + user.getId() + ") aufgetreten");
+            throw new ServiceException("Fehler beim Suchen aller Trainingspl\u00e4ne des user " + user.getUsername() + " (ID: " + user.getId() + ") aufgetreten");
         }
     }
 

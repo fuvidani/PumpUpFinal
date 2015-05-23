@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     public void validate(User user) throws ValidationException {
 
         if (user == null) {
-            throw new ValidationException("User is null.");
+            throw new ValidationException("user is null.");
         }
 
         String errorMsg = "";

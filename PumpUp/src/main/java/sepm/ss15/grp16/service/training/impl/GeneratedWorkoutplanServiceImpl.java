@@ -37,7 +37,6 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
 
     /**
      * Public constructor to be injected by Spring.
-     *
      * @param trainingsplanService service for the workout plans
      * @param exerciseService      service for the specific exercises
      * @param userService          service for the current logged in user
@@ -137,7 +136,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         }
 
         /**
-         *  User between 36 - 50 years.
+         *  user between 36 - 50 years.
          */
         else if (age > 35 && age <= 50) {
             if (BMI <= 24.9) {                               // Underweight and Normal
@@ -266,7 +265,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         }
 
         /**
-         *  User between 36 - 50 years.
+         *  user between 36 - 50 years.
          */
         else if (age > 35 && age <= 50) {
             if (BMI <= 24.9) {                               // Underweight and Normal

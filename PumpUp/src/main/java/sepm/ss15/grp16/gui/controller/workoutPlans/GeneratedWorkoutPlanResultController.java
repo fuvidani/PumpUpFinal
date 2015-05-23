@@ -172,7 +172,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         if (saved) {
             stage.close();
             parent.setFlag(true);
-            LOGGER.info("User clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
+            LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ansicht verlassen.");
@@ -186,7 +186,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
             if (result.get() == yes) {
                 stage.close();
                 parent.setFlag(true);
-                LOGGER.info("User clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
+                LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
             } else {
                 alert.close();
             }
