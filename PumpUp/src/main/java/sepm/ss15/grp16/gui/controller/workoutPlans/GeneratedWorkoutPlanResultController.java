@@ -159,6 +159,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         alert.showAndWait();
         saveButton.setDisable(true);
         saved = true;
+        cancelClicked();
     }
 
     /**
@@ -201,10 +202,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
      */
     public void setFlag(boolean val) {
         DTOArrived.set(val);
-    }
-
-    public boolean getSaved() {
-        return saved;
     }
 
     /**

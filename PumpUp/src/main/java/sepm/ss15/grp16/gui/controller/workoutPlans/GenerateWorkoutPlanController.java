@@ -292,7 +292,6 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         LOGGER.info("Generated workoutplan from service received, delegating towards the next window...");
 
         Stage stage = null;
-        GeneratedWorkoutPlanResultController controller = new GeneratedWorkoutPlanResultController();
         try {
             FXMLLoader loader = new FXMLLoader();
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
@@ -310,9 +309,8 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
             Scene scene = new Scene(page);
             stage.setScene(scene);
 
-            controller = loader.getController();
+           final GeneratedWorkoutPlanResultController controller = loader.getController();
             controller.setStage(stage);
-            final GeneratedWorkoutPlanResultController controller1 = controller;
 
             // Show the dialog and wait until the user closes it
             stage.setMinWidth(300);
@@ -322,19 +320,19 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
                 @Override
                 public void handle(WindowEvent e) {
                     e.consume();
-                    controller1.cancelClicked();
+                    controller.cancelClicked();
                 }
             });
             stage.show();
+            controller.setGeneratedWorkoutPlan(result);
+            controller.setParentController(this);
+            controller.setFlag(true);
             LOGGER.info("New stage successfully launched!");
             // user closed dialog
         } catch (IOException e) {
             LOGGER.info("Error on opening new stage, reason: " + e.getMessage());
             e.printStackTrace();
         }
-        controller.setGeneratedWorkoutPlan(result);
-        controller.setParentController(this);
-        controller.setFlag(true);
 
     }
 
