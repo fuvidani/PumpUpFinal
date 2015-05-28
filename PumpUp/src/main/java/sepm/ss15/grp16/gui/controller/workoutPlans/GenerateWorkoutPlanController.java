@@ -155,12 +155,6 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         absRollerCheck.setId("20");
         jumpingRopeCheck.setId("17");
         punchbagCheck.setId("18");
-        /**
-         * Balance and Flexibility disabled until implementtion
-         * TODO: remove it after impl.
-         */
-        balanceRadio.setDisable(true);
-        flexibilityRadio.setDisable(true);
         boxes.add(barbellCheck);
         boxes.add(yogaBallCheck);
         boxes.add(dumbbellCheck);
@@ -264,12 +258,12 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
      */
     @FXML
     void generateButtonClicked() {
-        for (CheckBox box : boxes) {
-            /*if(!box.isSelected()) {
+        // TODO: remove the following block after inserting enough exercises
+       /* for (CheckBox box : boxes) {
+            if(!box.isSelected()) {
                 equipment.add(new EquipmentCategory(Integer.parseInt(box.getId()), box.getText()));
-            }*/
-
-        }
+            }
+        }*/
         RadioButton button = (RadioButton) toggleGroup.getSelectedToggle();
         TrainingsCategory goal = button != null ? new TrainingsCategory(Integer.parseInt(button.getId()), button.getText()) : null;
         Gen_WorkoutplanPreferences preferences = new Gen_WorkoutplanPreferences(1, goal, equipment);
@@ -291,7 +285,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         }
         LOGGER.info("Generated workoutplan from service received, delegating towards the next window...");
 
-        Stage stage = null;
+        Stage stage;
         try {
             FXMLLoader loader = new FXMLLoader();
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
