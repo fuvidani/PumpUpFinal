@@ -32,7 +32,7 @@
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
-    <!-- ###### User beans ###### -->
+    <!-- ###### user beans ###### -->
 
     <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2UserDAOImpl"
           scope="singleton">

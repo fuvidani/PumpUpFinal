@@ -155,7 +155,7 @@ public class H2UserDAOImpl implements UserDAO {
             throw new PersistenceException("Couldn't delete the user", e);
         }
 
-        LOGGER.info("User successfully deleted");
+        LOGGER.info("user successfully deleted");
     }
 
     @Override
@@ -179,7 +179,7 @@ public class H2UserDAOImpl implements UserDAO {
             throw new PersistenceException("Couldn't search the user", e);
         }
 
-        LOGGER.info("User successfully searched");
+        LOGGER.info("user successfully searched");
 
         return foundUser;
     }

@@ -232,7 +232,7 @@ public class WorkoutController extends Controller implements Initializable {
             status = Status.FINISHED;
             imageTimeline.stop();
             pauseButton.setText("Trainingsresultate");
-            exerciseLabel.setText("Training beendet!");
+            exerciseLabel.setText("training beendet!");
             discriptionLabel.setText(activeExercise().getExercise().getDescription());
             exerciseImageView.setImage(null);
             durationField.setDisable(true);

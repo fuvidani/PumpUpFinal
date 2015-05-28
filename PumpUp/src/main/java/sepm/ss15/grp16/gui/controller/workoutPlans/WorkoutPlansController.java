@@ -230,7 +230,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
             List<Trainingsplan> list;
             if (customWorkoutPlansCheck.isSelected()) {
                 User user = userService.getLoggedInUser();
-                //User user = new User(1, null, null, null, null, null);
+                //user user = new user(1, null, null, null, null, null);
 
                 list = trainingsplanService.find(new Trainingsplan(null, user, null, null, null, null, null));
                 if (list == null) list = new ArrayList<>();

@@ -181,14 +181,14 @@ public class RegistrationController extends Controller implements Initializable 
             Stage stage = (Stage) registrationPane.getScene().getWindow();
             stage.close();
         } catch (ValidationException e) {
-            LOGGER.error("Couldn't create User");
+            LOGGER.error("Couldn't create user");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehlerhafte Angaben");
             alert.setContentText(e.getValidationMessage());
             alert.showAndWait();
         } catch (ServiceException e) {
-            LOGGER.error("Couldn't create User");
+            LOGGER.error("Couldn't create user");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehlerhafte Angaben");
