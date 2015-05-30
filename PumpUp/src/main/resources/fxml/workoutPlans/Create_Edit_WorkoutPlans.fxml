@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0"
-            prefWidth="1300.0" xmlns="http://javafx.com/javafx/8"
+            prefWidth="1300.0" stylesheets="@../../css/application.css"
+            xmlns="http://javafx.com/javafx/8"
             fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.Create_Edit_WorkoutPlanController">
     <bottom>
         <HBox alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
@@ -197,7 +198,7 @@
                                                     <children>
                                                         <Label maxHeight="1.7976931348623157E308"
                                                                maxWidth="1.7976931348623157E308"
-                                                               text="Kalorien insgesamt:">
+                                                               text="Kalorien durschn. :">
                                                             <font>
                                                                 <Font size="14.0"/>
                                                             </font>
@@ -265,29 +266,29 @@
                                         </ListView>
                                     </children>
                                 </VBox>
-                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                      prefWidth="40.0" spacing="10.0">
                                     <children>
                                         <Button fx:id="btnAddSession" maxHeight="1.7976931348623157E308"
                                                 maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                onAction="#addSession" style="-fx-graphic: img/add-icon.png;"
-                                                text="Session hinzufügen">
+                                                onAction="#addSession" prefHeight="50.0" styleClass="btnAdd">
                                             <VBox.margin>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                                <Insets/>
                                             </VBox.margin>
                                         </Button>
                                         <Button fx:id="btnEditSession" disable="true" maxHeight="1.7976931348623157E308"
                                                 maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                onAction="#editSession" text="Session bearbeiten">
+                                                onAction="#editSession" prefHeight="50.0" styleClass="btnEdit">
                                             <VBox.margin>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                                <Insets/>
                                             </VBox.margin>
                                         </Button>
                                         <Button fx:id="btnDeleteSession" disable="true"
                                                 maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                                mnemonicParsing="false" onAction="#deleteSession"
-                                                text="Session löschen">
+                                                mnemonicParsing="false" onAction="#deleteSession" prefHeight="50.0"
+                                                styleClass="btnDelete">
                                             <VBox.margin>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                                <Insets/>
                                             </VBox.margin>
                                         </Button>
                                     </children>

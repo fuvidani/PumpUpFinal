@@ -18,10 +18,19 @@ public interface TrainingsplanService extends Service<Trainingsplan> {
      * find all with filter matching trainingsplans
      *
      * @param filter for the search, must not be valid, you can search after name and user
+     *               (not null user - use getDefaultPlans() for default plans)
      * @return found trainingsplan, null if nothing was found
      * @throws ServiceException fthere are complications with the service layer
      */
     List<Trainingsplan> find(Trainingsplan filter) throws ServiceException;
+
+    /**
+     * get all default plans
+     *
+     * @return list of default plans
+     * @throws ServiceException
+     */
+    List<Trainingsplan> getDefaultPlans() throws ServiceException;
 
     /**
      * generates the corresponding trainingsplan for a trainingssession
