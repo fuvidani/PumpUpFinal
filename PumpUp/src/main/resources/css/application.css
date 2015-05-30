@@ -1,0 +1,107 @@
+.btnUp {
+    -fx-background-image: url('../icons/up.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnUp:hover {
+    -fx-background-color: cyan;
+}
+
+.btnDown {
+    -fx-background-image: url('../icons/down.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnDown:hover {
+    -fx-background-color: cyan;
+}
+
+.btnRight {
+    -fx-background-image: url('../icons/forward.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnRight:hover {
+    -fx-background-color: cyan;
+}
+
+.btnLeft {
+    -fx-background-image: url('../icons/back.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnLeft:hover {
+    -fx-background-color: cyan;
+}
+
+.btnShow {
+    -fx-background-image: url('../icons/search.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnShow:hover {
+    -fx-background-color: cyan;
+}
+
+.btnEdit {
+    -fx-background-image: url('../icons/edit.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnEdit:hover {
+    -fx-background-color: cyan;
+}
+
+.btnDelete {
+    -fx-background-image: url('../icons/delete.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnDelete:hover {
+    -fx-background-color: cyan;
+}
+
+.btnAdd {
+    -fx-background-image: url('../icons/add.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnAdd:hover {
+    -fx-background-color: cyan;
+}
+
+.btnCopy {
+    -fx-background-image: url('../icons/copy.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnCopy:hover {
+    -fx-background-color: cyan;
+}

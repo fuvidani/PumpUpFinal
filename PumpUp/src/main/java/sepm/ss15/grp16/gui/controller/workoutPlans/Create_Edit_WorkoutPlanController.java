@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.AbsractCategory;
@@ -22,16 +23,13 @@ import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
 import sepm.ss15.grp16.service.training.impl.TrainingsPlanServiceImpl;
+import sepm.ss15.grp16.service.user.UserService;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class Create_Edit_WorkoutPlanController extends Controller implements Initializable {
@@ -172,7 +170,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
     }
 
     @FXML
-    void saveWorkoutClicked(ActionEvent event) {
+    public void saveWorkoutClicked(ActionEvent event) {
 
         Trainingsplan trainingsplan = createValidPlan();
         if (trainingsplan != null) {
@@ -269,14 +267,33 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
                         Pane pane = null;
                         if (t != null) {
                             pane = new Pane();
-                            //String value = t.getName() + "\n\n";
                             String title = t.getName();
                             String value = "";
 
+                            Map<Integer, Pair<Integer, ExerciseSet>> setMap = new HashMap<>();
+
                             for (ExerciseSet set : t.getExerciseSets()) {
-                                value += set.getOrder_nr() + ": " + set.getRepeat() + " " + set.getExercise().getName() + "\n";
+                                Pair<Integer, ExerciseSet> set_map = setMap.get(setMap.size());
+
+                                if (set_map != null) {
+                                    if (!set_map.getValue().getExercise().equals(set.getExercise()) ||
+                                            !set_map.getValue().getRepeat().equals(set.getRepeat()) ||
+                                            !set_map.getValue().getType().equals(set.getType())) {
+                                        setMap.put(setMap.size() + 1, new Pair<>(1, set));
+                                    } else {
+                                        setMap.replace(setMap.size(), set_map, new Pair<>(set_map.getKey() + 1, set_map.getValue()));
+                                    }
+                                } else {
+                                    setMap.put(setMap.size() + 1, new Pair<>(1, set));
+                                }
                             }
 
+                            for (Map.Entry<Integer, Pair<Integer, ExerciseSet>> entry : setMap.entrySet()) {
+                                value += entry.getValue().getKey() + "x "
+                                        + entry.getValue().getValue().getRepeat()
+                                        + (entry.getValue().getValue().getType() == ExerciseSet.SetType.time ? "s " : " ")
+                                        + entry.getValue().getValue().getExercise().getName() + "\n";
+                            }
 
                             final Text leftText = new Text(title);
                             //leftText.setFont(_itemFont);
@@ -302,7 +319,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
     }
 
     @FXML
-    void cancelClicked(ActionEvent event) {
+    public void cancelClicked(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("\u00c4nderungen verwerfen");
         alert.setHeaderText("Wollen Sie wirklich abbrechen?");
@@ -320,8 +337,8 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
     }
 
     @FXML
-    void addSession(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/workoutPlans/Session.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf\u00fcgen", 600, 400, false);
+    public void addSession(ActionEvent event) {
+        transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf\u00fcgen", 600, 400, false);
         if (session_interClassCommunication != null) {
             listViewSessions.getItems().add(session_interClassCommunication);
             setUpListView();
@@ -330,12 +347,13 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
     }
 
     @FXML
-    void editSession(ActionEvent event) {
+    public void editSession(ActionEvent event) {
         if (selection != null) {
-            SessionController.session_interClassCommunication = selection;
+            SessionEditController_v2.session_interClassCommunication = selection;
         }
 
-        transitionLoader.openWaitStage("fxml/workoutPlans/Session.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session bearbeiten", 600, 400, false);
+        transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session bearbeiten", 600, 400, false);
+
         if (session_interClassCommunication != null) {
             listViewSessions.getItems().remove(selection);
             listViewSessions.getItems().add(session_interClassCommunication);
@@ -346,13 +364,23 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
     }
 
     @FXML
-    void deleteSession(ActionEvent event) {
-        List<TrainingsSession> data = listViewSessions.getItems();
+    public void deleteSession(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("L�schen best�tigen");
+        alert.setHeaderText("Wollen Sie die �bung wirklich aus der Session l�schen?");
+        ButtonType yes = new ButtonType("Ja");
+        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yes, cancel);
 
-        if (selection != null) {
-            listViewSessions.getSelectionModel().clearSelection();
-            data.remove(data.indexOf(selection));
-            updateInformations();
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == yes) {
+            List<TrainingsSession> data = listViewSessions.getItems();
+
+            if (selection != null) {
+                listViewSessions.getSelectionModel().clearSelection();
+                data.remove(data.indexOf(selection));
+                updateInformations();
+            }
         }
     }
 
