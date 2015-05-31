@@ -155,12 +155,6 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         absRollerCheck.setId("20");
         jumpingRopeCheck.setId("17");
         punchbagCheck.setId("18");
-        /**
-         * Balance and Flexibility disabled until implementtion
-         * TODO: remove it after impl.
-         */
-        balanceRadio.setDisable(true);
-        flexibilityRadio.setDisable(true);
         boxes.add(barbellCheck);
         boxes.add(yogaBallCheck);
         boxes.add(dumbbellCheck);
@@ -264,12 +258,12 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
      */
     @FXML
     void generateButtonClicked() {
-        for (CheckBox box : boxes) {
-            /*if(!box.isSelected()) {
+        // TODO: remove the following block after inserting enough exercises
+       /* for (CheckBox box : boxes) {
+            if(!box.isSelected()) {
                 equipment.add(new EquipmentCategory(Integer.parseInt(box.getId()), box.getText()));
-            }*/
-
-        }
+            }
+        }*/
         RadioButton button = (RadioButton) toggleGroup.getSelectedToggle();
         TrainingsCategory goal = button != null ? new TrainingsCategory(Integer.parseInt(button.getId()), button.getText()) : null;
         Gen_WorkoutplanPreferences preferences = new Gen_WorkoutplanPreferences(1, goal, equipment);
@@ -291,8 +285,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
         }
         LOGGER.info("Generated workoutplan from service received, delegating towards the next window...");
 
-        Stage stage = null;
-        GeneratedWorkoutPlanResultController controller = new GeneratedWorkoutPlanResultController();
+        Stage stage;
         try {
             FXMLLoader loader = new FXMLLoader();
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
@@ -310,9 +303,8 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
             Scene scene = new Scene(page);
             stage.setScene(scene);
 
-            controller = loader.getController();
+           final GeneratedWorkoutPlanResultController controller = loader.getController();
             controller.setStage(stage);
-            final GeneratedWorkoutPlanResultController controller1 = controller;
 
             // Show the dialog and wait until the user closes it
             stage.setMinWidth(300);
@@ -322,19 +314,19 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
                 @Override
                 public void handle(WindowEvent e) {
                     e.consume();
-                    controller1.cancelClicked();
+                    controller.cancelClicked();
                 }
             });
             stage.show();
+            controller.setGeneratedWorkoutPlan(result);
+            controller.setParentController(this);
+            controller.setFlag(true);
             LOGGER.info("New stage successfully launched!");
             // user closed dialog
         } catch (IOException e) {
             LOGGER.info("Error on opening new stage, reason: " + e.getMessage());
             e.printStackTrace();
         }
-        controller.setGeneratedWorkoutPlan(result);
-        controller.setParentController(this);
-        controller.setFlag(true);
 
     }
 

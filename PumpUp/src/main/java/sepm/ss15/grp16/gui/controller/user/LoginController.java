@@ -103,7 +103,7 @@ public class LoginController extends Controller implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehler beim Anmelden");
-            alert.setContentText("Es wurde kein User ausgewählt!");
+            alert.setContentText("Es wurde kein user ausgewählt!");
             alert.showAndWait();
             return;
         }
@@ -149,7 +149,7 @@ public class LoginController extends Controller implements Initializable {
     }
 
     public void insertUserInTable(User newUser) {
-        LOGGER.info("Inserting new User in tableview");
+        LOGGER.info("Inserting new user in tableview");
         masterData.add(newUser);
     }
 }

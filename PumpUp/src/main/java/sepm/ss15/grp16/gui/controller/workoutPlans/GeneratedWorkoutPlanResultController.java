@@ -40,7 +40,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
 
     private static final Logger LOGGER = LogManager.getLogger();
     private Trainingsplan generatedWorkoutPlan;
-    private StageTransitionLoader transitionLoader;
     private TrainingsplanService trainingsplanService;
     private BooleanProperty DTOArrived = new SimpleBooleanProperty();
     private GenerateWorkoutPlanController parent;
@@ -54,7 +53,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.transitionLoader = new StageTransitionLoader(this);
         saved = false;
         DTOArrived.addListener(new ChangeListener<Boolean>() {
 
@@ -78,9 +76,9 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
 
                             for (ExerciseSet set : t.getExerciseSets()) {
                                 if (set.getType() == ExerciseSet.SetType.time) {
-                                    value += set.getOrder_nr() + ": " + set.getRepeat() + " sek. - " + set.getExercise().getName() + "\n\n\n\n";
+                                    value += set.getOrder_nr() + ": " + set.getRepeat() + " Sek. - " + set.getExercise().getName() + "\n\n\n\n";
                                 } else {
-                                    value += set.getOrder_nr() + ": " + set.getRepeat() + " -  " + set.getExercise().getName() + "\n\n\n\n";
+                                    value += set.getOrder_nr() + ": " + set.getRepeat() + " x " + set.getExercise().getName() + "\n\n\n\n";
                                 }
                             }
 
@@ -159,6 +157,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         alert.showAndWait();
         saveButton.setDisable(true);
         saved = true;
+        cancelClicked();
     }
 
     /**
@@ -172,7 +171,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         if (saved) {
             stage.close();
             parent.setFlag(true);
-            LOGGER.info("User clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
+            LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ansicht verlassen.");
@@ -186,7 +185,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
             if (result.get() == yes) {
                 stage.close();
                 parent.setFlag(true);
-                LOGGER.info("User clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
+                LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
             } else {
                 alert.close();
             }
@@ -201,10 +200,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
      */
     public void setFlag(boolean val) {
         DTOArrived.set(val);
-    }
-
-    public boolean getSaved() {
-        return saved;
     }
 
     /**

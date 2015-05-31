@@ -21,6 +21,7 @@ import java.sql.SQLException;
 
 /**
  * Created by Daniel Fuevesi on 19.05.15.
+ * Runs the corresponding tests.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")

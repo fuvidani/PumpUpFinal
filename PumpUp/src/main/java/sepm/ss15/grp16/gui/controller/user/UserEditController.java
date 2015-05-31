@@ -187,14 +187,14 @@ public class UserEditController implements Initializable {
             Stage stage = (Stage) userEditPane.getScene().getWindow();
             stage.close();
         } catch (ValidationException e) {
-            LOGGER.error("Couldn't update User");
+            LOGGER.error("Couldn't update user");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehlerhafte Angaben");
             alert.setContentText(e.getValidationMessage());
             alert.showAndWait();
         } catch (ServiceException e) {
-            LOGGER.error("Couldn't update User");
+            LOGGER.error("Couldn't update user");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehlerhafte Angaben");

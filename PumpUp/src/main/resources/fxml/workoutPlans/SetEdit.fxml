@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+      stylesheets="@../../css/application.css" xmlns="http://javafx.com/javafx/8"
+      fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.old.SetEditController">
+    <children>
+        <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <children>
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+                <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Suchen nach:">
+                            <HBox.margin>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                            </HBox.margin>
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtFilter" maxHeight="1.7976931348623157E308"
+                                   maxWidth="1.7976931348623157E308" promptText="Liegestütz">
+                            <HBox.margin>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                            </HBox.margin>
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                        </TextField>
+                    </children>
+                    <HBox.margin>
+                        <Insets right="50.0"/>
+                    </HBox.margin>
+                </HBox>
+            </children>
+        </HBox>
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+            <children>
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                    <children>
+                        <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0"
+                                  VBox.vgrow="ALWAYS">
+                            <VBox.margin>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                            </VBox.margin>
+                        </ListView>
+                    </children>
+                    <HBox.margin>
+                        <Insets left="8.0"/>
+                    </HBox.margin>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      prefWidth="40.0" spacing="10.0">
+                    <children>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                mnemonicParsing="false" onAction="#OnClickAdd" prefHeight="40.0" styleClass="btnLeft"/>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                mnemonicParsing="false" onAction="#OnClickDelete" prefHeight="40.0"
+                                styleClass="btnRight"/>
+                    </children>
+                    <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                    </HBox.margin>
+                </VBox>
+                <VBox HBox.hgrow="ALWAYS">
+                    <children>
+                        <TableView fx:id="tblvExercises" editable="true" maxHeight="1.7976931348623157E308"
+                                   maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="tblcName" maxWidth="1.7976931348623157E308" minWidth="-1.0"
+                                             prefWidth="180.0" text="Name"/>
+                                <TableColumn fx:id="tblcCat" maxWidth="1.7976931348623157E308" minWidth="-1.0"
+                                             prefWidth="100.0" text="Kategorie"/>
+                                <TableColumn fx:id="tblcCalo" maxWidth="1.7976931348623157E308" minWidth="-1.0"
+                                             prefWidth="60.0" text="Calorien"/>
+                            </columns>
+                            <VBox.margin>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                            </VBox.margin>
+                        </TableView>
+                    </children>
+                </VBox>
+                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      prefWidth="40.0">
+                    <children>
+                        <Button fx:id="btnShow" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                mnemonicParsing="false" onAction="#onClickShow" prefHeight="40.0" styleClass="btnShow"/>
+                    </children>
+                    <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                    </HBox.margin>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>
