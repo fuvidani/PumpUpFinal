@@ -313,8 +313,14 @@ public class ExercisesController extends Controller implements Initializable {
             FileInputStream reading = new FileInputStream(pathToResource + "/" + exercise.getGifLinks().get(index));
             Image img = new Image(reading);
             imageView.setImage(img);
-            leftArrow.setVisible(true);
-            rightArrow.setVisible(true);
+            if(exercise.getGifLinks().size()>1){
+                leftArrow.setVisible(true);
+                rightArrow.setVisible(true);
+            }else{
+                leftArrow.setVisible(false);
+                rightArrow.setVisible(false);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
             LOGGER.error(e);

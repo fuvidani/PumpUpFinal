@@ -11,7 +11,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.exercises.ExercisesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1300.0" stylesheets="@../../css/exerciseStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.exercises.ExercisesController">
     <children>
         <VBox layoutX="142.0" layoutY="47.0" prefHeight="900.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -56,7 +56,7 @@
                            <children>
                               <ImageView fx:id="newImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../img/add139.png" />
+                                    <Image url="@../../icons/add139.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="120.0" />
@@ -64,7 +64,7 @@
                               </ImageView>
                               <ImageView fx:id="deleteImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../img/round73.png" />
+                                    <Image url="@../../icons/round73.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="5.0" />
@@ -72,7 +72,7 @@
                               </ImageView>
                               <ImageView fx:id="editImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../img/configuration21.png" />
+                                    <Image url="@../../icons/configuration21.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets left="5.0" />
@@ -119,18 +119,18 @@
                                             <children>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                                      <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" />
-                                          <ImageView fx:id="leftArrow" fitHeight="32.0" fitWidth="32.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" />
+                                          <ImageView fx:id="leftArrow" fitHeight="32.0" fitWidth="32.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" styleClass="back">
                                              <StackPane.margin>
                                                 <Insets right="250.0" />
                                              </StackPane.margin>
                                              <image>
-                                                <Image url="@../../img/arrow395.png" />
+                                                <Image url="@../../icons/back.png" />
                                              </image>
                                           </ImageView>
-                                          <ImageView fx:id="rightArrow" fitHeight="32.0" fitWidth="32.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fx:id="rightArrow" fitHeight="32.0" fitWidth="32.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" styleClass="forward">
                                              <image>
-                                                <Image url="@../../img/move13.png" />
+                                                <Image url="@../../icons/forward.png" />
                                              </image>
                                              <StackPane.margin>
                                                 <Insets left="250.0" />

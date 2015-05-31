@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="mainBox" maxHeight="1.7976931348623157E308"
-      maxWidth="1.7976931348623157E308" stylesheets="@../../css/application.css" xmlns="http://javafx.com/javafx/8"
+      maxWidth="1.7976931348623157E308" stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8"
       fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.old.SessionEditController">
     <children>
         <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
