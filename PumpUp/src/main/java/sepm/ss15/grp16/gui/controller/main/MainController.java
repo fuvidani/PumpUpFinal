@@ -219,7 +219,7 @@ public class MainController extends Controller implements Initializable {
     @FXML
     void logoutClicked(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Abmelde");
+        alert.setTitle("Abmelden");
         alert.setHeaderText("");
         alert.setContentText("Möchten Sie sich wirklich abmelden?");
         ButtonType yes = new ButtonType("Ja");
@@ -249,7 +249,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void aboutMenuClicked(ActionEvent event) {
-        // About the developer, contact + Help
+        transitionLoader.openWaitStage("fxml/main/About.fxml", (Stage) usernameLabel.getScene().getWindow(), "Information", 400, 400, false);
     }
 
     public void updateUserData() {

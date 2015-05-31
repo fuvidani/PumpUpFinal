@@ -47,5 +47,12 @@ CREATE TABLE IF NOT EXISTS picturehistory (
   FOREIGN KEY (user_id) REFERENCES user
 );
 
-MERGE INTO user VALUES (1, 'lukas', true, 22, 178, 'loc.kathrein@gmail.com',75, false);
+MERGE INTO user VALUES (0, 'lukas', true, 22, 178, 'loc.kathrein@gmail.com',null, false);
+MERGE INTO user VALUES (1, 'frank medrano', true, 35, 160, 'thefrankmedrano@gmail.com',null, false);
+MERGE INTO bodyfathistory VALUES(0,0, 10, '2015-05-23');
+MERGE INTO bodyfathistory VALUES(1,1, 4, '2015-05-23');
+MERGE INTO weighthistory VALUES(0,0, 75, '2015-05-23');
+MERGE INTO weighthistory VALUES(1,1, 65, '2015-05-23');
 ALTER SEQUENCE user_seq RESTART WITH 2;
+ALTER SEQUENCE bodyfathistory_seq RESTART WITH 2;
+ALTER SEQUENCE weighthistory_seq RESTART WITH 2;

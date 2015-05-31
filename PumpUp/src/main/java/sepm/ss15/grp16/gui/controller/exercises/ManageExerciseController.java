@@ -5,11 +5,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -100,8 +102,6 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     private TextField durationField;
     @FXML
-    private Button btn_durchsuchen;
-    @FXML
     private VBox vBox;
     @FXML
     private VBox vboxType;
@@ -111,6 +111,12 @@ public class ManageExerciseController extends Controller implements Initializabl
     private VBox vboxEquipment;
     @FXML
     private WebView webViewVideo;
+    @FXML
+    private ImageView newImg = new ImageView();
+    @FXML
+    private ImageView deleteImg = new ImageView();
+
+
     private Service<Exercise> exerciseService;
     private CategoryService categoryService;
     private UserService userService;
@@ -192,6 +198,25 @@ public class ManageExerciseController extends Controller implements Initializabl
                 showPic(oldValue, newValue);
             }
         });
+
+        deleteImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                removeClicked();
+                event.consume();
+            }
+        });
+
+        newImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                browseClicked(null);
+                event.consume();
+            }
+        });
+
         setContent();
     }
 
@@ -242,6 +267,7 @@ public class ManageExerciseController extends Controller implements Initializabl
                 picture = file.getName();
             } else {
                 file = new File(newValue);
+                picture=file.getAbsolutePath();
             }
 
             LOGGER.debug(picture);
@@ -297,7 +323,7 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     void browseClicked(ActionEvent event) {
         LOGGER.debug("browse clicked");
-        btn_durchsuchen.setVisible(false);
+        newImg.setVisible(false);
         try {
 
             FileChooser fileChooser = new FileChooser();
@@ -312,7 +338,7 @@ public class ManageExerciseController extends Controller implements Initializabl
             List<File> files;
             files = fileChooser.showOpenMultipleDialog(null);
 
-            btn_durchsuchen.setVisible(true);
+            newImg.setVisible(true);
 
             //no preview available so need to store picture
             if (imageView.getImage() == null) {
@@ -357,9 +383,16 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     private void removeClicked() {
 
-        LOGGER.debug("removing pictuer " + picture);
-        observablePicListData.remove("/" + picture);
-        exerciseGifList.remove("/" + picture);
+        if(picture.contains("img_ex")){
+            LOGGER.debug("removing pictuer " + picture);
+            observablePicListData.remove("/" + picture);
+            exerciseGifList.remove("/" + picture);
+
+        }else{
+            observablePicListData.remove(picture);
+            exerciseGifList.remove(picture);
+        }
+
         LOGGER.debug("list contins picture to remove:  " + observablePicListData.contains("/" + picture));
         imagesListView.setItems(observablePicListData);
         imagesListView.setVisible(false);
