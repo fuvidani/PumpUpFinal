@@ -32,6 +32,8 @@
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
+    <bean id="aboutController" class="sepm.ss15.grp16.gui.controller.main.AboutController" scope="prototype"/>
+
     <!-- ###### User beans ###### -->
 
     <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2UserDAOImpl"

@@ -86,6 +86,10 @@ public class ExercisesController extends Controller implements Initializable {
     private VBox vboxCategory;
     @FXML
     private WebView webViewVideo;
+    @FXML
+    private ImageView leftArrow = new ImageView();
+    @FXML
+    private ImageView rightArrow = new ImageView();
 
     @FXML
     private ImageView editImg = new ImageView();
@@ -93,7 +97,8 @@ public class ExercisesController extends Controller implements Initializable {
     private ImageView deleteImg = new ImageView();
     @FXML
     private ImageView newImg = new ImageView();
-
+    @FXML
+    private VBox videoBox = new VBox();
 
     private CategoryService categoryService;
     private UserService userService;
@@ -122,6 +127,8 @@ public class ExercisesController extends Controller implements Initializable {
 
 
         this.transitionLoader = new StageTransitionLoader(this);
+        leftArrow.setVisible(false);
+        rightArrow.setVisible(false);
         webViewVideo.setVisible(false);
         uebungColumn.setCellValueFactory(new PropertyValueFactory<Exercise, String>("name"));
         uebungsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Exercise>() {
@@ -165,18 +172,52 @@ public class ExercisesController extends Controller implements Initializable {
             }
         });
 
+        leftArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                prevPicButtonClicked();
+                event.consume();
+            }
+        });
+
+        rightArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                nexPicButtonClicked();
+                event.consume();
+            }
+        });
+
+
+
         this.setContent();
+
     }
 
 
     @FXML
     private void playVideo() {
-        if (exercise.getVideolink() == null || exercise.getVideolink().isEmpty()) {
-            webViewVideo.setVisible(false);
-        } else {
-            webViewVideo.setVisible(true);
-            webViewVideo.getEngine().load(exercise.getVideolink());
+//        if (exercise.getVideolink() == null || exercise.getVideolink().isEmpty()) {
+//            webViewVideo.setVisible(false);
+//        } else {
+//            webViewVideo.setVisible(true);
+//            webViewVideo.getEngine().load(exercise.getVideolink());
+//        }
+        try {
+            Media media = new Media(getClass().getClassLoader().getResource("Wildlife.mp4").toURI().toString());
+            MediaPlayer player = new MediaPlayer(media);
+            player.setAutoPlay(true);
+            smallMediaView = new MediaView();
+            smallMediaView.setMediaPlayer(player);
+            smallMediaView.setVisible(true);
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
+
     }
 
     private void updateFilteredData() {
@@ -272,6 +313,8 @@ public class ExercisesController extends Controller implements Initializable {
             FileInputStream reading = new FileInputStream(pathToResource + "/" + exercise.getGifLinks().get(index));
             Image img = new Image(reading);
             imageView.setImage(img);
+            leftArrow.setVisible(true);
+            rightArrow.setVisible(true);
         } catch (IOException e) {
             e.printStackTrace();
             LOGGER.error(e);
