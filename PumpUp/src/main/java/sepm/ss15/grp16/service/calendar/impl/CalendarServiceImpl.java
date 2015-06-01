@@ -152,7 +152,15 @@ public class CalendarServiceImpl implements CalendarService {
         cal.setTime(date);
 
         while (true) {
-            if (cal.get(Calendar.DAY_OF_WEEK) > workoutplanExport.getDays()[0].getValue() + 1) {
+            int day;
+
+            if (cal.get(Calendar.DAY_OF_WEEK) == 1){
+                day = 7;
+            } else {
+                day = cal.get(Calendar.DAY_OF_WEEK) - 1;
+            }
+
+            if (day > workoutplanExport.getDays()[0].getValue()) {
                 cal.add(Calendar.DATE, 1); //increment day
             } else {
                 break;
@@ -223,6 +231,18 @@ public class CalendarServiceImpl implements CalendarService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public void deleteAllAppointments() throws ServiceException{
+        try {
+            for (Appointment appointment: calendarDAO.findAll()){
+                calendarDAO.delete(appointment);
+            }
+        } catch (PersistenceException e){
+            throw new ServiceException(e);
+        }
+    }
+
 
     public void setUserService(UserService userService) {
         this.userService = userService;

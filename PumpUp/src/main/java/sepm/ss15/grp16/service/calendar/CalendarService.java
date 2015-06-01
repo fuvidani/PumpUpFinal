@@ -78,4 +78,9 @@ public interface CalendarService extends Service<Appointment> {
      * chatches an event from JS calendar
      */
     void updateEvent(int appointmentID, String newDate) throws ServiceException;
+
+    /**
+     * removes all appointments in service
+     */
+    void deleteAllAppointments() throws ServiceException;
 }
