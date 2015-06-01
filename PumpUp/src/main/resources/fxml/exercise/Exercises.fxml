@@ -54,30 +54,21 @@
                                 </TableView>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="newImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../icons/add139.png" />
-                                 </image>
+                              <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteExerciseButtonClicked" prefHeight="24.0" prefWidth="24.0" styleClass="deleteBtn">
                                  <HBox.margin>
-                                    <Insets left="120.0" />
+                                    <Insets left="110.0" />
                                  </HBox.margin>
-                              </ImageView>
-                              <ImageView fx:id="deleteImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../icons/round73.png" />
-                                 </image>
+                              </Button>
+                              <Button fx:id="editBtn" mnemonicParsing="false" onAction="#editExerciseButtonClicked" prefHeight="24.0" prefWidth="24.0" styleClass="editBtn">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
-                              </ImageView>
-                              <ImageView fx:id="editImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../icons/configuration21.png" />
-                                 </image>
+                              </Button>
+                              <Button fx:id="addBtn" mnemonicParsing="false" onAction="#newExerciseButtonClicked" prefHeight="24.0" prefWidth="24.0" styleClass="addBtn">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
-                              </ImageView>
+                              </Button>
                            </children>
                         </HBox>
                                 <CheckBox fx:id="customExercisesCheckbox" mnemonicParsing="false" onAction="#filterCheckboxes" text="Eigene Übungen">

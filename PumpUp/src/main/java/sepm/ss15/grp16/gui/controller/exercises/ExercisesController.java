@@ -99,6 +99,12 @@ public class ExercisesController extends Controller implements Initializable {
     private ImageView newImg = new ImageView();
     @FXML
     private VBox videoBox = new VBox();
+    @FXML
+    private Button addBtn = new Button();
+    @FXML
+    private Button deleteBtn = new Button();
+    @FXML
+    private Button editBtn = new Button();
 
     private CategoryService categoryService;
     private UserService userService;
@@ -142,33 +148,6 @@ public class ExercisesController extends Controller implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 updateFilteredData();
-            }
-        });
-
-        editImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                editExerciseButtonClicked(null);
-                event.consume();
-            }
-        });
-
-        newImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                newExerciseButtonClicked(null);
-                event.consume();
-            }
-        });
-
-        deleteImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                deleteExerciseButtonClicked(null);
-                event.consume();
             }
         });
 
@@ -277,6 +256,13 @@ public class ExercisesController extends Controller implements Initializable {
             } else {
                 imageView.setImage(null);
             }
+            if(exercise.getUser()==null){
+                deleteBtn.setDisable(true);
+                editBtn.setDisable(true);
+            }else{
+                deleteBtn.setDisable(false);
+                editBtn.setDisable(false);
+            }
         }
         try {
 
@@ -350,15 +336,15 @@ public class ExercisesController extends Controller implements Initializable {
         Exercise backup = null;
         if (exercise != null) {
             //TODO
-            backup = new Exercise(exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), userService.getLoggedInUser(), null);
-            exercise = null;
+            backup = new Exercise(exercise.getName(), exercise.getDescription(), exercise.getCalories(), exercise.getVideolink(), exercise.getGifLinks(), exercise.getIsDeleted(), userService.getLoggedInUser(), exercise.getCategories());
         }
+        exercise = null;
 
         transitionLoader.openWaitStage("fxml/exercise/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
         this.setContent();
         if (backup != null) {
             //TODO categories
-            exercise = new Exercise(backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), userService.getLoggedInUser(), null);
+            exercise = new Exercise(backup.getName(), backup.getDescription(), backup.getCalories(), backup.getVideolink(), backup.getGifLinks(), backup.getIsDeleted(), userService.getLoggedInUser(), backup.getCategories());
         }
 
     }
