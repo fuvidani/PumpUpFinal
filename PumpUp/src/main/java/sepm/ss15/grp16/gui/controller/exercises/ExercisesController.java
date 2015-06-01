@@ -185,12 +185,12 @@ public class ExercisesController extends Controller implements Initializable {
 //            webViewVideo.getEngine().load(exercise.getVideolink());
 //        }
         try {
-            Media media = new Media(getClass().getClassLoader().getResource("Wildlife.mp4").toURI().toString());
-            MediaPlayer player = new MediaPlayer(media);
-            player.setAutoPlay(true);
-            smallMediaView = new MediaView();
-            smallMediaView.setMediaPlayer(player);
-            smallMediaView.setVisible(true);
+//            Media media = new Media(getClass().getClassLoader().getResource("Wildlife.mp4").toURI().toString());
+//            MediaPlayer player = new MediaPlayer(media);
+//            player.setAutoPlay(true);
+//            smallMediaView = new MediaView();
+//            smallMediaView.setMediaPlayer(player);
+//            smallMediaView.setVisible(true);
 
         }catch (Exception e){
             e.printStackTrace();
