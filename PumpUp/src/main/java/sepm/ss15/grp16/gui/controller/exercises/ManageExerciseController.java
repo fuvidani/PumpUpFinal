@@ -112,10 +112,9 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     private WebView webViewVideo;
     @FXML
-    private ImageView newImg = new ImageView();
+    private Button deleteBtn = new Button();
     @FXML
-    private ImageView deleteImg = new ImageView();
-
+    private Button addBtn = new Button();
 
     private Service<Exercise> exerciseService;
     private CategoryService categoryService;
@@ -199,23 +198,6 @@ public class ManageExerciseController extends Controller implements Initializabl
             }
         });
 
-        deleteImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                removeClicked();
-                event.consume();
-            }
-        });
-
-        newImg.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                browseClicked(null);
-                event.consume();
-            }
-        });
 
         setContent();
     }
@@ -230,6 +212,14 @@ public class ManageExerciseController extends Controller implements Initializabl
             exerciseGifList = exercise.getGifLinks();
             observablePicListData.addAll(exerciseGifList);
             imagesListView.setItems(observablePicListData);
+            if(exercise!=null){
+                if(exercise.getGifLinks().size()==0){
+                    deleteBtn.setDisable(true);
+                }else {
+                    deleteBtn.setDisable(false);
+                }
+            }
+
 
             if (!observablePicListData.isEmpty()) {
                 showPic(observablePicListData.get(0), observablePicListData.get(0));
@@ -238,7 +228,12 @@ public class ManageExerciseController extends Controller implements Initializabl
             for (AbsractCategory c : exercise.getCategories()) {
                 allCheckboxes.get(c.getId()).setSelected(true);
             }
+        }else{
+            deleteBtn.setDisable(true);
         }
+
+
+
     }
 
     @FXML
@@ -323,8 +318,9 @@ public class ManageExerciseController extends Controller implements Initializabl
     @FXML
     void browseClicked(ActionEvent event) {
         LOGGER.debug("browse clicked");
-        newImg.setVisible(false);
         try {
+
+            addBtn.setDisable(true);
 
             FileChooser fileChooser = new FileChooser();
 
@@ -338,8 +334,7 @@ public class ManageExerciseController extends Controller implements Initializabl
             List<File> files;
             files = fileChooser.showOpenMultipleDialog(null);
 
-            newImg.setVisible(true);
-
+            addBtn.setDisable(false);
             //no preview available so need to store picture
             if (imageView.getImage() == null) {
 
@@ -372,7 +367,8 @@ public class ManageExerciseController extends Controller implements Initializabl
             imagesListView.setItems(observablePicListData);
             imagesListView.setVisible(false);
             imagesListView.setVisible(true);
-
+            addBtn.setDisable(false);
+            deleteBtn.setDisable(false);
         } catch (IOException e) {
             LOGGER.error(e);
             e.printStackTrace();
@@ -391,6 +387,11 @@ public class ManageExerciseController extends Controller implements Initializabl
         }else{
             observablePicListData.remove(picture);
             exerciseGifList.remove(picture);
+        }
+        if(observablePicListData.size()==0){
+            deleteBtn.setDisable(true);
+        }else {
+            deleteBtn.setDisable(false);
         }
 
         LOGGER.debug("list contins picture to remove:  " + observablePicListData.contains("/" + picture));

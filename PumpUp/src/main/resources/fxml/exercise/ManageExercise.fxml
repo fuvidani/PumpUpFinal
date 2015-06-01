@@ -137,24 +137,18 @@
                                         <VBox>
                                  <children>
                                               <ListView fx:id="imagesListView" prefHeight="168.0" prefWidth="222.0" />
-                                    <HBox>
+                                    <HBox stylesheets="@../../css/exerciseStyle.css">
                                        <children>
-                                          <ImageView fx:id="newImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../img/add139.png" />
-                                             </image>
+                                          <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#removeClicked" prefHeight="24.0" prefWidth="24.0" styleClass="deleteBtn">
                                              <HBox.margin>
-                                                <Insets left="170.0" top="10.0" />
+                                                <Insets left="170.0" top="5.0" />
                                              </HBox.margin>
-                                          </ImageView>
-                                          <ImageView fx:id="deleteImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../img/round73.png" />
-                                             </image>
+                                          </Button>
+                                          <Button fx:id="addBtn" mnemonicParsing="false" onAction="#browseClicked" prefHeight="24.0" prefWidth="24.0" styleClass="addBtn">
                                              <HBox.margin>
-                                                <Insets left="5.0" top="10.0" />
+                                                <Insets left="5.0" top="5.0" />
                                              </HBox.margin>
-                                          </ImageView>
+                                          </Button>
                                        </children>
                                     </HBox>
                                  </children>
