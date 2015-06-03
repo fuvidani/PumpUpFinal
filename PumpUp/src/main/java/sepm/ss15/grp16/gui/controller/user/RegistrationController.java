@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
  * @author Michael Sober
  * @version 1.0
  */
-public class RegistrationController extends Controller implements Initializable {
+public class RegistrationController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
@@ -89,8 +89,8 @@ public class RegistrationController extends Controller implements Initializable 
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.transitionLoader = new StageTransitionLoader(this);
+    public void initController() {
+        loginController = (LoginController) parentController;
     }
 
     @FXML
@@ -178,8 +178,8 @@ public class RegistrationController extends Controller implements Initializable 
             alert.setHeaderText("Registration-Information");
             alert.setContentText("Sie haben sich erfolgreich registriert.");
             alert.showAndWait();
-            Stage stage = (Stage) registrationPane.getScene().getWindow();
-            stage.close();
+            mainFrame.navigateToPerent();
+
         } catch (ValidationException e) {
             LOGGER.error("Couldn't create user");
             Alert alert = new Alert(Alert.AlertType.ERROR);

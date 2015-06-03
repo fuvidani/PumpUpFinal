@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.user.User;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.user.UserService;
@@ -34,7 +35,7 @@ import java.util.ResourceBundle;
  * @author Michael Sober
  * @version 1.0
  */
-public class LoginController extends Controller implements Initializable {
+public class LoginController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
@@ -56,7 +57,7 @@ public class LoginController extends Controller implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
         this.transitionLoader = new StageTransitionLoader(this);
         LOGGER.debug("Initialize LoginController");
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -72,20 +73,10 @@ public class LoginController extends Controller implements Initializable {
     public void registerClicked() {
         LOGGER.debug("Register button clicked");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-            fxmlLoader.setControllerFactory(context::getBean);
-            Stage stage = new Stage();
-            fxmlLoader.setLocation(RegistrationController.class.getClassLoader().getResource("fxml/user/Registration.fxml"));
-            Pane pane = fxmlLoader.load(RegistrationController.class.getClassLoader().getResourceAsStream("fxml/user/Registration.fxml"));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(loginPane.getScene().getWindow());
-            RegistrationController registrationController = fxmlLoader.getController();
-            registrationController.setLoginController(this);
-            stage.setResizable(false);
-            stage.setScene(new Scene(pane));
-            stage.show();
-        } catch (IOException e) {
+            mainFrame.openDialog(PageEnum.Registration);
+
+
+        } catch (Exception e) {
             LOGGER.error("Couldn't open main-window");
             e.printStackTrace();
         }
