@@ -312,4 +312,5 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
         }
 
     }
+
 }
