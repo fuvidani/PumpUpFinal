@@ -135,7 +135,6 @@ public class ExercisesController extends Controller implements Initializable {
         this.transitionLoader = new StageTransitionLoader(this);
         leftArrow.setVisible(false);
         rightArrow.setVisible(false);
-        webViewVideo.setVisible(false);
         uebungColumn.setCellValueFactory(new PropertyValueFactory<Exercise, String>("name"));
         uebungsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Exercise>() {
             @Override
@@ -178,20 +177,20 @@ public class ExercisesController extends Controller implements Initializable {
 
     @FXML
     private void playVideo() {
-//        if (exercise.getVideolink() == null || exercise.getVideolink().isEmpty()) {
-//            webViewVideo.setVisible(false);
-//        } else {
-//            webViewVideo.setVisible(true);
-//            webViewVideo.getEngine().load(exercise.getVideolink());
-//        }
         try {
-            Media media = new Media(getClass().getClassLoader().getResource("Wildlife.mp4").toURI().toString());
+            String pathToResource = getClass().getClassLoader().getResource("video").toURI().toString();
+            String filePath = pathToResource.concat("/"+exercise.getVideolink());
+            Media media = new Media(filePath);
             MediaPlayer player = new MediaPlayer(media);
+
             player.setAutoPlay(true);
+
             smallMediaView = new MediaView();
             smallMediaView.setMediaPlayer(player);
             smallMediaView.setVisible(true);
-
+            smallMediaView.maxHeight(300);
+            smallMediaView.setFitHeight(300);
+            videoBox.getChildren().add(smallMediaView);
         }catch (Exception e){
             e.printStackTrace();
         }

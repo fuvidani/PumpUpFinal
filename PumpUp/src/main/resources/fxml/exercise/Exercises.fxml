@@ -151,8 +151,6 @@
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Button>
-                                                <WebView fx:id="webViewVideo" maxHeight="286.0" minHeight="286.0" prefHeight="286.0" prefWidth="540.0" />
-                                    <MediaView fx:id="smallMediaView" fitHeight="50.0" fitWidth="200.0" />
                                             </children>
                                         </VBox>
                                     </children>

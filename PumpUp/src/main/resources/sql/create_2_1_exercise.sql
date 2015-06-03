@@ -69,26 +69,26 @@ MERGE INTO category VALUES (0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0
 MERGE INTO exercise KEY (id) VALUES
   (0, 'Liegestütz', 'Legen Sie sich auf den Bauch, strecken Sie die Beine, schließen Sie die Füße und stellen Sie die Zehenspitzen auf.
   Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie
-  bilden, von den Fersen bis zum Nacken.', 1.0, 'https://www.youtube.com/embed/fdA6oWzW96g?feature=player_detailpage',
+  bilden, von den Fersen bis zum Nacken.', 1.0, 'pushup.mp4',
    NULL, FALSE),
   (1, 'Armrotation', 'Eine tolle Übung, um die Schultern vor oder nach den intensiveren Übungen aufzuwärmen oder abzukühlen.
   Armrotationen sind besonders dann geeignet, wenn man nach einer Verletzung oder im Alter gerade wieder mit dem Training beginnt
   Stellen Sie sich aufrecht hin, strecken Sie die Arme seitlich aus und machen Sie kleine oder große Kreise.
-  Zuerst kreisen Sie zehnmal in die eine, dann in die andere Richtung.', 0.02, NULL, NULL, FALSE),
+  Zuerst kreisen Sie zehnmal in die eine, dann in die andere Richtung.', 0.02, 'armrotation.mp4', NULL, FALSE),
   (2, 'Daumen hoch', 'Nehmen Sie die Bauchlage ein. Ihre Füße sind hüftbreit geöffnet, die Fußspitzen aufgestellt.
   Strecken Sie die Arme seitlich aus und ballen Sie Ihre Hände zu Fäusten, die Daumen zeigen nach oben.
   Heben Sie nun die Schultern und den Kopf vom Boden an und ziehen Sie die gestreckten Arme so weit wie möglich nach oben.
-  Dabei nähern sich Ihre Schulterblätter an.', 0.01, '', NULL, FALSE),
-  (3, 'Kniebeuge', 'Wichtig. Die Knie beim Hochgehen nicht ganz durch-strecken sondern etwas tief bleiben.', 0.75, NULL, NULL, FALSE),
+  Dabei nähern sich Ihre Schulterblätter an.', 0.01, 'armup.mp4', NULL, FALSE),
+  (3, 'Kniebeuge', 'Wichtig. Die Knie beim Hochgehen nicht ganz durch-strecken sondern etwas tief bleiben.', 0.75, 'kniebeugen.mp4', NULL, FALSE),
   (4, 'Crunch it UP', 'Legen Sie sich auf den Rücken. Stellen Sie die Beine angewinkelt hüftbreit auf
  und haken Sie die Füße unter einem Gegenstand (Bett, Sofa, Stuhl, Regal, Couchtisch etc.) ein.
  Verschränken Sie die Arme vor der Brust und halten Sie sie fest an den Körper gepresst. Jetzt spannen Sie die Bauchmuskeln fest an,
  lösen Kopf und Schultern vom Boden und kommen schließlich langsam mit dem gesamten Oberkörper nach oben, bis die Ellbogen die Oberschenkel
  nahe der Hüften berühren. Senken Sie sich anschließend wieder langsam ab, bis die Schulterblätter den Boden berühren.
- Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauch-muskeln angespannt.', 0.5, '', NULL, FALSE),
+ Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauch-muskeln angespannt.', 0.5, 'crunch.mp4', NULL, FALSE),
   (5, 'Strandschere', 'Legen Sie sich mit gestreckten Beinen auf die linke Seite und stützen Sie den Kopf mit dem linken Arm ab.
   Die andere Hand stützen Sie vor Ihrer Brust auf. Heben Sie dann Ihr rechtes Bein so hoch wie möglich an und halten Sie es gestreckt für
-  drei Sekunden in der', 0.2, NULL, NULL, FALSE),
+  drei Sekunden in der', 0.2, 'strandschere.mp4', NULL, FALSE),
   (6, 'Auf der Stelle Laufen', '', 0.3, '', NULL, FALSE),
   (7, 'Einbeinige Kniebeuge', 'Kraft, Koordination, Balance und Ausdauer. Und mit ein bisschen Kreativität können Sie die Übung endlos
   variieren. Stellen Sie sich auf den rechten Fuß und heben Sie Ihr linkes Bein gestreckt nach vorn an.
@@ -106,7 +106,7 @@ MERGE INTO exercise KEY (id) VALUES
   Beide Knie sollten am tiefsten Punkt im rechten Winkel gebeugt sein. Das vordere Knie befindet sich direkt über der Ferse,
   schieben Sie es nicht über die Zehen hinaus. Nun stoßen Sie sich mit dem linken Bein wieder ab und kommen zurück in die Ausgangsposition.
   Drücken Sie die Knie nicht ganz durch und achten Sie während des Bewegungsablaufs darauf, den Kopf in Verlängerung der Halswirbelsäule
-  und den Rücken gerade zu halten. Wechseln Sie nun die Seite.', 0.8, '', NULL, FALSE),
+  und den Rücken gerade zu halten. Wechseln Sie nun die Seite.', 0.8, 'einbeinige_kniebeugen.mp4', NULL, FALSE),
   (9, 'PLANK', 'Setzen sie die Unterarme schulterbreit auf dem Boden auf und bilden Sie mit dem Rücken eine gerade Linie.
   Halten Sie diese Position.', 0.2, '', NULL, FALSE),
   (10, 'Seilspringen', 'Versuchen Sie eine geringe Sprunghöhe um Kraft zu schonen und versuchen Sie es auch einmal rückwärts', 0.25, '', NULL, FALSE),
@@ -121,7 +121,7 @@ MERGE INTO exercise KEY (id) VALUES
   (16, 'Bauchmuskeln Mit Roller', '', 0.2, '', NULL, FALSE),
   (17, 'Beinheben mit Yogaball', '', 0.2, '', NULL, FALSE),
   (18, 'Crunches mit Yogaball', '', 0.1, '', NULL, FALSE),
-  (19, 'Superman', '', 0.1, '', NULL, FALSE),
+  (19, 'Superman', '', 0.1, 'superman.mp4', NULL, FALSE),
   (20, 'Brust dehnen', '', 0.2, '', NULL, FALSE ),
   (21, 'Schultern dehnen','', 0.2, '', NULL , FALSE ),
   (22, 'Rücken (oben) dehnen', '', 0.2, '', NULL , FALSE ),
@@ -196,68 +196,70 @@ MERGE INTO gif KEY (id) VALUES
   (1, 0, 'img_ex_pushup1.jpg'),
   (2, 0, 'img_ex_pushup2.jpg'),
   --armrotation
-  (3, 1, 'img_ex_armrotation.jpg'),
+  (3, 1, 'img_ex_armrotation1.jpg'),
+  (4, 1, 'img_ex_armrotation2.jpg'),
   --daumen hoch
-  (4, 2, 'img_ex_daumenhoch.jpg'),
+  (5, 2, 'img_ex_daumenhoch.jpg'),
   --kniebeugen
-  (5, 3, 'img_ex_kniebeugen1.jpg'),
-  (6, 3, 'img_ex_kniebeugen2.jpg'),
+  (6, 3, 'img_ex_kniebeugen1.jpg'),
+  (7, 3, 'img_ex_kniebeugen2.jpg'),
   --crunch it up
-  (7, 4, 'img_ex_crunch1.jpg'),
-  (8, 4, 'img_ex_crunch2.jpg'),
+  (8, 4, 'img_ex_crunch1.jpg'),
+  (9, 4, 'img_ex_crunch2.jpg'),
   --strandschere
-  (9, 5, 'img_ex_strandschere1.jpg'),
+  (10, 5, 'img_ex_strandschere1.JPG'),
+  (11, 5, 'img_ex_strandschere2.JPG'),
   -- auf der stelle laufen
-  (10, 6, 'img_ex_standlauf1.jpg'),
+  (12, 6, 'img_ex_standlauf1.jpg'),
   --einbeinige kniebeugen
-  (11, 7, 'img_ex_einb_kniebeugen1.jpg'),
-  (12, 7, 'img_ex_einb_kniebeugen2.jpg'),
+  (13, 7, 'img_ex_einb_kniebeugen1.jpg'),
+  (14, 7, 'img_ex_einb_kniebeugen2.jpg'),
   --ausfallschritt
-  (13, 8, 'img_ex_ausfallschritt.jpg'),
+  (15, 8, 'img_ex_ausfallschritt.jpg'),
   --plank
-  (14, 9, 'img_ex_plank.jpg'),
+  (16, 9, 'img_ex_plank.jpg'),
   --seilspringen
-  (15, 10, 'img_ex_seilspringen.jpg'),
+  (17, 10, 'img_ex_seilspringen.jpg'),
   --boxen schlaege
-  (16, 11, 'img_ex_boxenschlag.jpg'),
+  (18, 11, 'img_ex_boxenschlag.jpg'),
   --boxen tritte
-  (17, 12, 'img_ex_boxentritt.jpg'),
+  (19, 12, 'img_ex_boxentritt.jpg'),
   --armstrecken mit kurzhantel
-  (18, 13, 'img_ex_armstrecken_kurzhantel1.jpg'),
-  (19, 13, 'img_ex_armstrecken_kurzhantel2.jpg'),
+  (20, 13, 'img_ex_armstrecken_kurzhantel1.jpg'),
+  (21, 13, 'img_ex_armstrecken_kurzhantel2.jpg'),
   --bizeps mit langhantel
-  (20, 14, 'img_ex_bizeps_langhantel1.JPG'),
-  (21, 14, 'img_ex_bizeps_langhantel2.JPG'),
+  (22, 14, 'img_ex_bizeps_langhantel1.JPG'),
+  (23, 14, 'img_ex_bizeps_langhantel2.JPG'),
   --kniebeugen mit langhantel
-  (22, 15, 'img_ex_kniebeugen_langhantel.JPG'),
+  (24, 15, 'img_ex_kniebeugen_langhantel.JPG'),
   --bauchmuskeln mit roller
-  (23, 16, 'img_ex_bauchmuskel_roller1.JPG'),
-  (24, 16, 'img_ex_bauchmuskel_roller2.JPG'),
+  (25, 16, 'img_ex_bauchmuskel_roller1.JPG'),
+  (26, 16, 'img_ex_bauchmuskel_roller2.JPG'),
   --beinheben mit yogaball
-  (25, 17, 'img_ex_beinheben_yogaball.jpg'),
+  (27, 17, 'img_ex_beinheben_yogaball.jpg'),
   --crunches mit yogaball
-  (26, 18, 'img_ex_crunch_yogaball.jpg'),
+  (28, 18, 'img_ex_crunch_yogaball.jpg'),
   --superman
-  (27, 19, 'img_ex_superman1.jpg'),
-  (28, 19, 'img_ex_superman2.jpg'),
+  (29, 19, 'img_ex_superman1.jpg'),
+  (30, 19, 'img_ex_superman2.jpg'),
   --Brust dehnen, Flexibilität, Brust
-  (29, 20, 'img_ex_chest_stretch.JPG'),
+  (31, 20, 'img_ex_chest_stretch.JPG'),
   --Schultern dehnen, Flexibilität, Schultern
-  (30, 21, 'img_ex_shoulder_stretch1.JPG'),
-  (31, 21, 'img_ex_shoulder_stretch2.JPG'),
-  (32, 21, 'img_ex_shoulder_stretch3.JPG'),
+  (32, 21, 'img_ex_shoulder_stretch1.JPG'),
+  (33, 21, 'img_ex_shoulder_stretch2.JPG'),
+  (34, 21, 'img_ex_shoulder_stretch3.JPG'),
   --Rücken (oben) dehnen, Flexibilität, Rücken
-  (33, 22, 'img_ex_upper_back_stretch1.JPG'),
+  (35, 22, 'img_ex_upper_back_stretch1.JPG'),
   --Rücken (Mitte) dehnen, Flexibilität, Rücken
-  (34, 23, 'img_ex_middle_back_stretch1.JPG'),
+  (36, 23, 'img_ex_middle_back_stretch1.JPG'),
   --Rücken (unten) dehnen, Flexibilität, Rücken
-  (35, 24, 'img_ex_lower_back_stretch1.JPG'),
+  (37, 24, 'img_ex_lower_back_stretch1.JPG'),
   --Quadrizeps dehnen, Flexibilität, Oberschenkel
-  (36, 25, 'img_ex_quadriceps_stretch1.JPG'),
+  (38, 25, 'img_ex_quadriceps_stretch1.JPG'),
   --Gesäßmuskulatur dehnen, Flexibilität, Oberschenkel
-  (36, 26, 'img_ex_glutes_stretch1.JPG'),
+  (39, 26, 'img_ex_glutes_stretch1.JPG'),
   --Kniesehne dehnen, Flexibilität, Oberschenkel
-  (37, 27, 'img_ex_hamstring_stretch1.JPG');
+  (40, 27, 'img_ex_hamstring_stretch1.JPG');
 
 
 
