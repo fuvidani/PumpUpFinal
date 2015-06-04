@@ -61,9 +61,7 @@ public class ExercisesController extends Controller implements Initializable {
     @FXML
     private TextArea descriptionTextArea;
     @FXML
-    private MediaView smallMediaView;
-    @FXML
-    private MediaView bigMediaView;
+    private MediaView smallMediaView = new MediaView();
     @FXML
     private Label categoryTypeLabel;
     @FXML
@@ -98,13 +96,21 @@ public class ExercisesController extends Controller implements Initializable {
     @FXML
     private ImageView newImg = new ImageView();
     @FXML
-    private VBox videoBox = new VBox();
+    private VBox videoBox;
     @FXML
     private Button addBtn = new Button();
     @FXML
     private Button deleteBtn = new Button();
     @FXML
     private Button editBtn = new Button();
+    @FXML
+    private VBox vboxType = new VBox();
+    @FXML
+    private VBox vboxEquipment = new VBox();
+    @FXML
+    private VBox vboxMuscle = new VBox();
+    @FXML
+    private Button playVideoBtn = new Button();
 
     private CategoryService categoryService;
     private UserService userService;
@@ -178,21 +184,29 @@ public class ExercisesController extends Controller implements Initializable {
     @FXML
     private void playVideo() {
         try {
-            String pathToResource = getClass().getClassLoader().getResource("video").toURI().toString();
-            String filePath = pathToResource.concat("/"+exercise.getVideolink());
-            Media media = new Media(filePath);
-            MediaPlayer player = new MediaPlayer(media);
+            Media media;
+            MediaPlayer player;
 
-            player.setAutoPlay(true);
+            if (exercise.getVideolink()!=null) {
+                String pathToResource = getClass().getClassLoader().getResource("video").toURI().toString();
+                String filePath = pathToResource.concat("/" + exercise.getVideolink());
+                LOGGER.debug("filepath: " + filePath);
+                LOGGER.debug("videolink: " + exercise.getVideolink());
+                 media = new Media(filePath);
+                 player = new MediaPlayer(media);
 
-            smallMediaView = new MediaView();
-            smallMediaView.setMediaPlayer(player);
-            smallMediaView.setVisible(true);
-            smallMediaView.maxHeight(300);
-            smallMediaView.setFitHeight(300);
-            videoBox.getChildren().add(smallMediaView);
+                player.setAutoPlay(true);
+
+                smallMediaView.setMediaPlayer(player);
+                smallMediaView.setVisible(true);
+                smallMediaView.setFitHeight(300);
+                videoBox.getChildren().add(smallMediaView);
+            }else{
+                smallMediaView.setMediaPlayer(null);
+
+                smallMediaView.setVisible(false);
+            }
         }catch (Exception e){
-            e.printStackTrace();
         }
 
 
@@ -200,6 +214,10 @@ public class ExercisesController extends Controller implements Initializable {
 
     private void updateFilteredData() {
         ObservableList<Exercise> temp = FXCollections.observableArrayList();
+        if(!customExercisesCheckbox.isSelected() && !defaultExercisesCheckbox.isSelected()){
+            filteredData=masterdata;
+        }
+
         for (Exercise e : filteredData) {
             if (matchesFilter(e))
                 temp.add(e);
@@ -249,38 +267,58 @@ public class ExercisesController extends Controller implements Initializable {
             exerciseNameLabel.setText(newExercise.getName());
             descriptionTextArea.setText(newExercise.getDescription());
             exercise = newExercise;
+            if(exercise.getVideolink()==null){
+                playVideoBtn.setDisable(true);
+            }else{
+                playVideoBtn.setDisable(false);
+            }
             playVideo();
+
             if (exercise.getGifLinks().size() > 0) {
+                imageView.setVisible(true);
                 showPicture(0);
             } else {
                 imageView.setImage(null);
+                imageView.setVisible(false);
+                leftArrow.setVisible(false);
+                rightArrow.setVisible(false);
             }
             if(exercise.getUser()==null){
                 deleteBtn.setDisable(true);
                 editBtn.setDisable(true);
-            }else{
+            } else{
                 deleteBtn.setDisable(false);
                 editBtn.setDisable(false);
             }
         }
         try {
 
-            if(vboxCategory.getChildren()!=null) {
-                for (int i = 0; i < vboxCategory.getChildren().size(); i++) {
-                    vboxCategory.getChildren().remove(i);
+            if(vboxType.getChildren()!=null) {
+                for (int i = 0; i < vboxType.getChildren().size(); i++) {
+                    vboxType.getChildren().remove(i);
+                }
+            }
+            if(vboxEquipment.getChildren()!=null) {
+                for (int i = 0; i < vboxEquipment.getChildren().size(); i++) {
+                    vboxEquipment.getChildren().remove(i);
+                }
+            }
+            if(vboxMuscle.getChildren()!=null) {
+                for (int i = 0; i < vboxMuscle.getChildren().size(); i++) {
+                    vboxMuscle.getChildren().remove(i);
                 }
             }
             for (TrainingsCategory t : categoryService.getAllTrainingstype()) {
                 if (exercise.getCategories().contains(t))
-                    vboxCategory.getChildren().add(new Label(t.getName()));
+                    vboxType.getChildren().add(new Label(t.getName()));
             }
             for (EquipmentCategory t : categoryService.getAllEquipment()) {
                 if (exercise.getCategories().contains(t))
-                    vboxCategory.getChildren().add(new Label(t.getName()));
+                    vboxEquipment.getChildren().add(new Label(t.getName()));
             }
             for (MusclegroupCategory t : categoryService.getAllMusclegroup()) {
                 if (exercise.getCategories().contains(t))
-                    vboxCategory.getChildren().add(new Label(t.getName()));
+                    vboxMuscle.getChildren().add(new Label(t.getName()));
             }
         }catch (ServiceException e){
             LOGGER.error(e);
@@ -430,7 +468,7 @@ public class ExercisesController extends Controller implements Initializable {
                     filteredData.add(e);
                 }
             }
-
+            uebungsTableView.setItems(null);
             uebungsTableView.setItems(filteredData);
             return;
         } else if (customExercisesCheckbox.isSelected()) {
@@ -440,6 +478,8 @@ public class ExercisesController extends Controller implements Initializable {
                     filteredData.add(e);
                 }
             }
+            uebungsTableView.setItems(null);
+
             uebungsTableView.setItems(filteredData);
             return;
         } else {

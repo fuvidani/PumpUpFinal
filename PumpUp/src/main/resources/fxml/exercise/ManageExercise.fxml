@@ -58,9 +58,6 @@
                                                 <Insets />
                                             </VBox.margin>
                                         </TextArea>
-                                        <Label text="Video Link:" />
-                                        <TextField fx:id="videoLinkField" onAction="#playVideo" promptText="https://www.youtube.com/watch?v=Eh00_rniF8E&amp;ab_channel=ScottMalin" />
-                                        <Button mnemonicParsing="false" onAction="#playVideo" text="play video" />
                                         <WebView fx:id="webViewVideo" prefHeight="266.0" prefWidth="337.0" />
                                     </children>
                                 </VBox>

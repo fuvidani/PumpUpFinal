@@ -106,11 +106,81 @@
                                 </Label>
                                 <HBox prefHeight="300.0">
                                     <children>
-                                        <VBox>
-                                            <children>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                        <VBox />
+                                        <TextArea fx:id="descriptionTextArea" editable="false" maxHeight="113.0" maxWidth="1053.0" prefHeight="99.0" prefWidth="500.0" text="Textuelle Beschreibung." wrapText="true">
+                                            <font>
+                                                <Font size="18.0" />
+                                            </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                        </TextArea>
+                              <VBox prefHeight="672.0" prefWidth="520.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="28.0" prefWidth="401.0" text="Kategorien">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox spacing="70.0">
                                        <children>
-                                                      <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" />
+                                          <VBox>
+                                             <children>
+                                                <HBox prefHeight="17.0">
+                                                   <children>
+                                                      <Label prefWidth="100.0" text="Art">
+                                                         <HBox.margin>
+                                                            <Insets left="70.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label prefWidth="100.0" text="Geräte">
+                                                         <HBox.margin>
+                                                            <Insets left="60.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label prefWidth="100.0" text="Muskelgruppe">
+                                                         <HBox.margin>
+                                                            <Insets left="50.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox>
+                                                   <children>
+                                                      <VBox fx:id="vboxType" prefWidth="100.0" spacing="5.0">
+                                                         <HBox.margin>
+                                                            <Insets left="70.0" />
+                                                         </HBox.margin>
+                                                      </VBox>
+                                                      <VBox fx:id="vboxEquipment" prefWidth="100.0" spacing="5.0">
+                                                         <HBox.margin>
+                                                            <Insets left="60.0" />
+                                                         </HBox.margin>
+                                                      </VBox>
+                                                      <VBox fx:id="vboxMuscle" prefWidth="100.0">
+                                                         <HBox.margin>
+                                                            <Insets left="50.0" />
+                                                         </HBox.margin>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                                    </children>
+                                </HBox>
+                                <HBox prefHeight="500.0">
+                           <children>
+                                        <VBox prefHeight="300.0">
+                                            <children>
+                                    <StackPane prefHeight="321.0" prefWidth="282.0">
+                                       <children>
                                           <ImageView fx:id="leftArrow" fitHeight="32.0" fitWidth="32.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" styleClass="back">
                                              <StackPane.margin>
                                                 <Insets right="250.0" />
@@ -127,45 +197,29 @@
                                                 <Insets left="250.0" />
                                              </StackPane.margin>
                                           </ImageView>
+                                                      <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" />
                                        </children>
                                     </StackPane>
                                             </children>
                                         </VBox>
-                              <Label prefHeight="35.0" prefWidth="173.0" text="Kategorien">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </Label>
-                                        <VBox fx:id="vboxCategory" prefHeight="300.0" prefWidth="218.0" spacing="10.0">
-                                            <HBox.margin>
-                                                <Insets />
-                                            </HBox.margin>
-                                        </VBox>
-                                        <VBox fx:id="videoBox" prefHeight="300.0">
-                                            <children>
-                                                <Button mnemonicParsing="false" onAction="#playVideo" text="play video">
-                                                    <font>
-                                                        <Font size="14.0" />
-                                                    </font>
-                                                </Button>
-                                            </children>
-                                        </VBox>
-                                    </children>
-                                </HBox>
-                                <HBox prefHeight="500.0">
-                                    <children>
-                                        <TextArea fx:id="descriptionTextArea" editable="false" maxHeight="113.0" maxWidth="1053.0" prefHeight="99.0" prefWidth="500.0" text="Textuelle Beschreibung." wrapText="true">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                                        </TextArea>
-                                    </children>
+                              <HBox prefHeight="37.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                                      <Button fx:id="playVideoBtn" mnemonicParsing="false" onAction="#playVideo" text="play video">
+                                                          <font>
+                                                              <Font size="14.0" />
+                                                          </font>
+                                                      </Button>
+                                          <VBox fx:id="videoBox" prefHeight="200.0" prefWidth="100.0" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="100.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
                                 </HBox>
                             </children>
                         </VBox>

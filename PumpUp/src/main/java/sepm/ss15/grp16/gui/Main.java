@@ -45,13 +45,13 @@ public class Main extends Application {
         //add spring context to JavaFX (http://koenserneels.blogspot.co.at/2012/11/javafx-2-with-spring.html)
         fxmlLoader.setControllerFactory(context::getBean);
 
-        fxmlLoader.setLocation(LoginController.class.getClassLoader().getResource("fxml/user/Login.fxml"));
+        fxmlLoader.setLocation(LoginController.class.getClassLoader().getResource("fxml/exercise/Exercises.fxml"));
 
 
-        Pane pane = (Pane) fxmlLoader.load(LoginController.class.getClassLoader().getResourceAsStream("fxml/user/Login.fxml"));
+        Pane pane = (Pane) fxmlLoader.load(LoginController.class.getClassLoader().getResourceAsStream("fxml/exercise/Exercises.fxml"));
         // Pane pane = (Pane) fxmlLoader.load(getClass().getResource("/fxml/Main.fxml"));
-        LoginController loginController = fxmlLoader.getController();
-//        ExercisesController exercisesController = fxmlLoader.getController();
+//        LoginController loginController = fxmlLoader.getController();
+        ExercisesController exercisesController = fxmlLoader.getController();
         primaryStage.setScene(new Scene(pane, 1300, 700));
 //        primaryStage.setMinWidth(350);
 //        primaryStage.setMinHeight(210);

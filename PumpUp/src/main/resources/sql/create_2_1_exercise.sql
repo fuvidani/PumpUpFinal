@@ -89,7 +89,7 @@ MERGE INTO exercise KEY (id) VALUES
   (5, 'Strandschere', 'Legen Sie sich mit gestreckten Beinen auf die linke Seite und stützen Sie den Kopf mit dem linken Arm ab.
   Die andere Hand stützen Sie vor Ihrer Brust auf. Heben Sie dann Ihr rechtes Bein so hoch wie möglich an und halten Sie es gestreckt für
   drei Sekunden in der', 0.2, 'strandschere.mp4', NULL, FALSE),
-  (6, 'Auf der Stelle Laufen', '', 0.3, '', NULL, FALSE),
+  (6, 'Auf der Stelle Laufen', 'laufen Sie auf der Stelle', 0.3, NULL , NULL, FALSE),
   (7, 'Einbeinige Kniebeuge', 'Kraft, Koordination, Balance und Ausdauer. Und mit ein bisschen Kreativität können Sie die Übung endlos
   variieren. Stellen Sie sich auf den rechten Fuß und heben Sie Ihr linkes Bein gestreckt nach vorn an.
   Halten Sie sich mit der linken Hand an einer Stuhllehne oder einem anderen, etwa hüfthohen Gegenstand fest,
@@ -99,36 +99,36 @@ MERGE INTO exercise KEY (id) VALUES
   Das rechte Knie bleibt über dem Mittelfuß. Achten Sie auf den geraden Rücken. Drücken Sie sich anschließend nur mit der Kraft Ihres
   rechten Beins wieder nach oben. Halten Sie sich nur fest, um das Gleichgewicht zu bewahren, und nicht,
   um sich mithilfe der abgestützten Hand hochzuschieben. Strecken Sie das rechte Knie am höchsten Punkt nicht ganz durch.
-  Absolvieren Sie so viele Wiederholungen wie möglich, wechseln Sie dann die Seite.', 1.0, '', NULL, FALSE),
+  Absolvieren Sie so viele Wiederholungen wie möglich, wechseln Sie dann die Seite.', 1.0, 'einbeinige_kniebeugen.mp4', NULL, FALSE),
   (8, 'Ausfallschritt', 'Stellen Sie sich mit hüftbreit geöffneten Füßen aufrecht hin, die Fußspitzen zeigen nach vorne.
   Legen Sie die Hände an den Hinterkopf und richten Sie Ihren Blick in die Ferne. Jetzt machen Sie mit dem linken Fuß einen großen
   Schritt nach vorn und beugen dabei das Knie. Senken Sie Ihre Hüften so tief, bis das hintere Knie fast den Boden berührt.
   Beide Knie sollten am tiefsten Punkt im rechten Winkel gebeugt sein. Das vordere Knie befindet sich direkt über der Ferse,
   schieben Sie es nicht über die Zehen hinaus. Nun stoßen Sie sich mit dem linken Bein wieder ab und kommen zurück in die Ausgangsposition.
   Drücken Sie die Knie nicht ganz durch und achten Sie während des Bewegungsablaufs darauf, den Kopf in Verlängerung der Halswirbelsäule
-  und den Rücken gerade zu halten. Wechseln Sie nun die Seite.', 0.8, 'einbeinige_kniebeugen.mp4', NULL, FALSE),
+  und den Rücken gerade zu halten. Wechseln Sie nun die Seite.', 0.8, NULL, NULL, FALSE),
   (9, 'PLANK', 'Setzen sie die Unterarme schulterbreit auf dem Boden auf und bilden Sie mit dem Rücken eine gerade Linie.
-  Halten Sie diese Position.', 0.2, '', NULL, FALSE),
-  (10, 'Seilspringen', 'Versuchen Sie eine geringe Sprunghöhe um Kraft zu schonen und versuchen Sie es auch einmal rückwärts', 0.25, '', NULL, FALSE),
+  Halten Sie diese Position.', 0.2, NULL, NULL, FALSE),
+  (10, 'Seilspringen', 'Versuchen Sie eine geringe Sprunghöhe um Kraft zu schonen und versuchen Sie es auch einmal rückwärts', 0.25, NULL, NULL, FALSE),
   (11, 'BOXEN-Schläge',
-   'Stellen Sie sich schulterbreit vor den Box/Sandsack und schlagen führen Sie gezielte Schläge aus', 0.2, '', NULL,
+   'Stellen Sie sich schulterbreit vor den Box/Sandsack und schlagen führen Sie gezielte Schläge aus', 0.2, NULL, NULL,
    FALSE),
   (12, 'BOXEN-Tritte', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und treten sie mit dem Schienbein gegen den Sandsack.
-  Dehnen Sie sich vorher ausreichend', 0.5, '', NULL, FALSE),
-  (13, 'Armstrecken mit Kurzhantel', '', 0.4, '', NULL, FALSE),
-  (14, 'Bizeps mit Langhantel', '', 0.3, '', NULL, FALSE),
-  (15, 'Kniebeugen mit Langhantel', '', 0.5, '', NULL, FALSE),
-  (16, 'Bauchmuskeln Mit Roller', '', 0.2, '', NULL, FALSE),
-  (17, 'Beinheben mit Yogaball', '', 0.2, '', NULL, FALSE),
-  (18, 'Crunches mit Yogaball', '', 0.1, '', NULL, FALSE),
+  Dehnen Sie sich vorher ausreichend', 0.5, NULL, NULL, FALSE),
+  (13, 'Armstrecken mit Kurzhantel', '', 0.4, NULL, NULL, FALSE),
+  (14, 'Bizeps mit Langhantel', '', 0.3, NULL, NULL, FALSE),
+  (15, 'Kniebeugen mit Langhantel', '', 0.5, NULL, NULL, FALSE),
+  (16, 'Bauchmuskeln Mit Roller', '', 0.2, NULL, NULL, FALSE),
+  (17, 'Beinheben mit Yogaball', '', 0.2, NULL, NULL, FALSE),
+  (18, 'Crunches mit Yogaball', '', 0.1, NULL, NULL, FALSE),
   (19, 'Superman', '', 0.1, 'superman.mp4', NULL, FALSE),
-  (20, 'Brust dehnen', '', 0.2, '', NULL, FALSE ),
-  (21, 'Schultern dehnen','', 0.2, '', NULL , FALSE ),
-  (22, 'Rücken (oben) dehnen', '', 0.2, '', NULL , FALSE ),
-  (23, 'Rücken (Mitte) dehnen', '', 0.2, '', NULL , FALSE ),
-  (24, 'Rücken (unten) dehnen', '', 0.2, '', NULL , FALSE ),
-  (25, 'Quadrizeps dehnen', '', 0.2, '', NULL , FALSE ),
-  (26, 'Gesäßmuskulatur dehnen', '', 0.2, '', NULL , FALSE ),
+  (20, 'Brust dehnen', '', 0.2, NULL, NULL, FALSE ),
+  (21, 'Schultern dehnen','', 0.2, NULL, NULL , FALSE ),
+  (22, 'Rücken (oben) dehnen', '', 0.2, NULL, NULL , FALSE ),
+  (23, 'Rücken (Mitte) dehnen', '', 0.2, NULL, NULL , FALSE ),
+  (24, 'Rücken (unten) dehnen', '', 0.2, NULL, NULL , FALSE ),
+  (25, 'Quadrizeps dehnen', '', 0.2, NULL, NULL , FALSE ),
+  (26, 'Gesäßmuskulatur dehnen', '', 0.2, NULL, NULL , FALSE ),
   (27, 'Kniesehne dehnen', '', 0.2, '', NULL , FALSE );
 
 
@@ -209,8 +209,6 @@ MERGE INTO gif KEY (id) VALUES
   --strandschere
   (10, 5, 'img_ex_strandschere1.JPG'),
   (11, 5, 'img_ex_strandschere2.JPG'),
-  -- auf der stelle laufen
-  (12, 6, 'img_ex_standlauf1.jpg'),
   --einbeinige kniebeugen
   (13, 7, 'img_ex_einb_kniebeugen1.jpg'),
   (14, 7, 'img_ex_einb_kniebeugen2.jpg'),
@@ -218,32 +216,12 @@ MERGE INTO gif KEY (id) VALUES
   (15, 8, 'img_ex_ausfallschritt.jpg'),
   --plank
   (16, 9, 'img_ex_plank.jpg'),
-  --seilspringen
-  (17, 10, 'img_ex_seilspringen.jpg'),
   --boxen schlaege
-  (18, 11, 'img_ex_boxenschlag.jpg'),
-  --boxen tritte
-  (19, 12, 'img_ex_boxentritt.jpg'),
-  --armstrecken mit kurzhantel
-  (20, 13, 'img_ex_armstrecken_kurzhantel1.jpg'),
-  (21, 13, 'img_ex_armstrecken_kurzhantel2.jpg'),
-  --bizeps mit langhantel
-  (22, 14, 'img_ex_bizeps_langhantel1.JPG'),
-  (23, 14, 'img_ex_bizeps_langhantel2.JPG'),
-  --kniebeugen mit langhantel
-  (24, 15, 'img_ex_kniebeugen_langhantel.JPG'),
-  --bauchmuskeln mit roller
-  (25, 16, 'img_ex_bauchmuskel_roller1.JPG'),
-  (26, 16, 'img_ex_bauchmuskel_roller2.JPG'),
-  --beinheben mit yogaball
-  (27, 17, 'img_ex_beinheben_yogaball.jpg'),
-  --crunches mit yogaball
-  (28, 18, 'img_ex_crunch_yogaball.jpg'),
+  (18, 11, 'img_ex_boxenschlag1.jpg'),
+  (19, 11, 'img_ex_boxenschlag2.jpg'),
   --superman
   (29, 19, 'img_ex_superman1.jpg'),
   (30, 19, 'img_ex_superman2.jpg'),
-  --Brust dehnen, Flexibilität, Brust
-  (31, 20, 'img_ex_chest_stretch.JPG'),
   --Schultern dehnen, Flexibilität, Schultern
   (32, 21, 'img_ex_shoulder_stretch1.JPG'),
   (33, 21, 'img_ex_shoulder_stretch2.JPG'),
