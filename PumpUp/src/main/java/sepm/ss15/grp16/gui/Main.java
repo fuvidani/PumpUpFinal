@@ -40,8 +40,6 @@ public class Main extends Application {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
         FXMLLoader fxmlLoader = new FXMLLoader();
 
-
-
         //add spring context to JavaFX (http://koenserneels.blogspot.co.at/2012/11/javafx-2-with-spring.html)
         fxmlLoader.setControllerFactory(context::getBean);
 

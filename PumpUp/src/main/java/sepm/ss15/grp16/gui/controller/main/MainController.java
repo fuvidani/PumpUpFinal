@@ -27,6 +27,7 @@ import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.WeightHistory;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.user.UserEditController;
@@ -48,7 +49,7 @@ import java.util.ResourceBundle;
  * Created by Daniel Fuevesi on 05.05.15.
  * Controller of the main stage.
  */
-public class MainController extends Controller implements Initializable {
+public class MainController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
@@ -100,7 +101,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
         this.transitionLoader = new StageTransitionLoader(this);
         this.updateUserData();
 
@@ -163,12 +164,14 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void viewCurrentWorkoutPlanClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        //transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Workoutplan);
     }
 
     @FXML
     void viewAllWorkoutPlansClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        //transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Workoutplan);
         refreshCalendar();
     }
 

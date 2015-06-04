@@ -69,4 +69,17 @@ public interface TrainingsplanService extends Service<Trainingsplan> {
      */
     List<TrainingsSession> searchByPlanID(int ID_plan) throws ServiceException;
 
+    /**
+     * increase the difficulty of the given plan by the factor of 0.25
+     *
+     * @param plan to increase
+     */
+    void increaseDifficulty(Trainingsplan plan);
+
+    /**
+     * decrease the difficulty of the given plan by the factor of 0.25
+     *
+     * @param plan to decrease
+     */
+    void decreaseDifficulty(Trainingsplan plan);
 }
