@@ -181,6 +181,24 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
     }
 
     @Override
+    public void increaseDifficulty(Trainingsplan plan) {
+        for (TrainingsSession session : plan.getTrainingsSessions()) {
+            for (ExerciseSet set : session.getExerciseSets()) {
+                set.setRepeat((int) (set.getRepeat() * 1.25));
+            }
+        }
+    }
+
+    @Override
+    public void decreaseDifficulty(Trainingsplan plan) {
+        for (TrainingsSession session : plan.getTrainingsSessions()) {
+            for (ExerciseSet set : session.getExerciseSets()) {
+                set.setRepeat((int) (set.getRepeat() * 0.75));
+            }
+        }
+    }
+
+    @Override
     public void validate(Trainingsplan plan) throws ValidationException {
         if (plan == null) {
             LOGGER.error("error validating " + plan);
