@@ -99,7 +99,7 @@ public class LoginController extends Controller {
             return;
         }
 
-        try {
+/*        try {
             FXMLLoader loader = new FXMLLoader();
 
             ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
@@ -136,7 +136,8 @@ public class LoginController extends Controller {
         } catch (IOException e) {
             LOGGER.info("Error on opening new stage, reason: " + e.getMessage());
             e.printStackTrace();
-        }
+        }*/
+        mainFrame.openMainWindowFrame();
     }
 
     public void insertUserInTable(User newUser) {

@@ -74,7 +74,7 @@ public class FrameWindow extends BorderPane {
      * If the actual site is the main site of the frame the stage gets closed.
      * @param mainPage The site to navigate to.
      */
-    public void navigateToPerent() {
+    public void navigateToParent() {
         if(fxmlStack.size() == 1)
         {
             stage.close();
@@ -101,7 +101,7 @@ public class FrameWindow extends BorderPane {
     {
         while(fxmlStack.size() > 1)
         {
-            navigateToPerent();
+            navigateToParent();
         }
     }
 

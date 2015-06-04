@@ -1,13 +1,11 @@
 package sepm.ss15.grp16.gui.controller.user;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
@@ -24,8 +22,6 @@ import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 
 import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * This class represents the controller for a registration gui
@@ -178,7 +174,7 @@ public class RegistrationController extends Controller {
             alert.setHeaderText("Registration-Information");
             alert.setContentText("Sie haben sich erfolgreich registriert.");
             alert.showAndWait();
-            mainFrame.navigateToPerent();
+            mainFrame.navigateToParent();
 
         } catch (ValidationException e) {
             LOGGER.error("Couldn't create user");

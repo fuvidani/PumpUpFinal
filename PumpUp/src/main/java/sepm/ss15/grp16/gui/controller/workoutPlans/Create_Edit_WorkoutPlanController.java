@@ -21,6 +21,7 @@ import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -32,7 +33,7 @@ import java.net.URL;
 import java.util.*;
 
 
-public class Create_Edit_WorkoutPlanController extends Controller implements Initializable {
+public class Create_Edit_WorkoutPlanController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(Create_Edit_WorkoutPlanController.class);
     public static Trainingsplan plan_interClassCommunication;
     public static TrainingsSession session_interClassCommunication;
@@ -81,7 +82,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
     private Label lblTitel;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
         this.transitionLoader = new StageTransitionLoader(this);
 
         setUpListView();
@@ -195,7 +196,8 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
                 plan_interClassCommunication = null;
                 session_interClassCommunication = null;
 
-                this.stage.close();
+                //this.stage.close();
+                mainFrame.navigateToParent();
 
             } catch (ServiceException e) {
                 LOGGER.error("Error opening Create_Edit_Stage, Errormessage: " + e);
@@ -340,13 +342,15 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
         if (result.get() == yes) {
             plan_interClassCommunication = null;
             session_interClassCommunication = null;
-            this.stage.close();
+            //this.stage.close();
+            mainFrame.navigateToParent();
         }
     }
 
     @FXML
     public void addSession(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf\u00fcgen", 600, 400, false);
+        //transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf\u00fcgen", 600, 400, false);
+        mainFrame.openDialog(PageEnum.SessionEdit);
         if (session_interClassCommunication != null) {
             listViewSessions.getItems().add(session_interClassCommunication);
             session_interClassCommunication = null;
@@ -361,7 +365,8 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
             SessionEditController_v2.session_interClassCommunication = selection;
         }
 
-        transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session bearbeiten", 600, 400, false);
+        //transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session bearbeiten", 600, 400, false);
+        mainFrame.openDialog(PageEnum.SessionEdit);
 
         if (session_interClassCommunication != null) {
             listViewSessions.getItems().remove(selection);

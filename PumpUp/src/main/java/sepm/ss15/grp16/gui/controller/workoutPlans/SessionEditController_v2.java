@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -35,9 +34,8 @@ import sepm.ss15.grp16.service.user.impl.UserServiceImpl;
 import java.net.URL;
 import java.util.*;
 
-public class SessionEditController_v2 extends Controller implements Initializable {
+public class SessionEditController_v2 extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(SessionEditController_v2.class);
-    public static Trainingsplan plan_interClassCommunication;
     public static TrainingsSession session_interClassCommunication;
     private StageTransitionLoader transitionLoader;
     private ExerciseService exerciseService;
@@ -118,7 +116,8 @@ public class SessionEditController_v2 extends Controller implements Initializabl
         TrainingsSession session = createValidSession();
         if (session != null) {
             Create_Edit_WorkoutPlanController.session_interClassCommunication = session;
-            stage.close();
+//            stage.close();
+            mainFrame.navigateToParent();
         }
     }
 
@@ -252,13 +251,13 @@ public class SessionEditController_v2 extends Controller implements Initializabl
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
         this.transitionLoader = new StageTransitionLoader(this);
         try {
             tblcOrder.setCellValueFactory(new PropertyValueFactory<>("order_nr"));
             tblcExercise.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getExercise().getName()));
             tblcType.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getRepeat() +
-                    ((p.getValue().getType() == ExerciseSet.SetType.repeat) ? " x" : " min")));
+                    ((p.getValue().getType() == ExerciseSet.SetType.repeat) ? " x" : " sek")));
 
             tblvExerciseTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
                 if (newValue != null) {
@@ -408,8 +407,8 @@ public class SessionEditController_v2 extends Controller implements Initializabl
         box.getChildren().addAll(repeat, minutes);
 
         if (add) {
-            grid.add(new Label("Sätze:"), 0, 0);
-            grid.add(count, 1, 0);
+            grid.add(new Label("Sätze:"), 1, 0);
+            grid.add(count, 0, 0);
         }
         grid.add(repeat_count, 0, 1);
         grid.add(box, 1, 1);
