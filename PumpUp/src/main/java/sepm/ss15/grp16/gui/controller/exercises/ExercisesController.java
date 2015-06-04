@@ -25,7 +25,7 @@ import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
 import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.Service;
@@ -43,13 +43,12 @@ import java.util.ResourceBundle;
  * Created by Daniel Fuevesi on 07.05.15.
  * Controller of the "Übungen" stage.
  */
-public class ExercisesController extends Controller implements Initializable {
+public class ExercisesController extends Controller {
 
 
     private static Exercise exercise;
     private final Logger LOGGER = LogManager.getLogger();
     private Service<Exercise> exerciseService;
-    private StageTransitionLoader transitionLoader;
     @FXML
     private Label exerciseNameLabel;
     @FXML
@@ -135,10 +134,9 @@ public class ExercisesController extends Controller implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
 
 
-        this.transitionLoader = new StageTransitionLoader(this);
         leftArrow.setVisible(false);
         rightArrow.setVisible(false);
         uebungColumn.setCellValueFactory(new PropertyValueFactory<Exercise, String>("name"));
@@ -377,7 +375,7 @@ public class ExercisesController extends Controller implements Initializable {
         }
         exercise = null;
 
-        transitionLoader.openWaitStage("fxml/exercise/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Manage_exercises);
         this.setContent();
         if (backup != null) {
             //TODO categories
@@ -389,8 +387,12 @@ public class ExercisesController extends Controller implements Initializable {
 
     @FXML
     void editExerciseButtonClicked(ActionEvent event) {
-        if (exercise==null || exercise.getUser() != null && exercise.getUser().equals(userService.getLoggedInUser())) {
-            transitionLoader.openWaitStage("fxml/exercise/ManageExercise.fxml", (Stage) uebungsTableView.getScene().getWindow(), "Übung erstellen/ bearbeiten", 1000, 620, true);
+
+        if (exercise.getUser() != null && exercise.getUser().equals(userService.getLoggedInUser())) {
+
+
+            mainFrame.navigateToChild(PageEnum.Manage_exercises);
+
             this.setContent();
 
         } else {
@@ -402,6 +404,8 @@ public class ExercisesController extends Controller implements Initializable {
         }
 
     }
+
+
 
     @FXML
     void deleteExerciseButtonClicked(ActionEvent event) {
@@ -446,7 +450,7 @@ public class ExercisesController extends Controller implements Initializable {
         alert.getButtonTypes().setAll(yes, cancel);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
-            stage.close();
+            mainFrame.navigateToParent();
         } else {
             stage.show();
         }

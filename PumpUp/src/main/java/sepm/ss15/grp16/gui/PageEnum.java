@@ -13,7 +13,9 @@ public enum PageEnum {
     Workoutplan_generate("fxml/workoutPlans/GenerateWorkoutPlan.fxml", "Trainingsplan generieren", 1000, 620),
     Workoutplan_calender_dialog("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", "Trainingsplan in Kalender exportieren", 800, 600),
     SessionEdit("fxml/workoutPlans/SessionEdit_v2.fxml", "Session hinzuf\u00fcgen", 600, 400),
-    Calendar("fxml/calendar/Calendar.fxml", "Trainingskalender", 1000, 620);
+    Calendar("fxml/calendar/Calendar.fxml", "Trainingskalender", 1000, 620),
+    Exercises("fxml/exercise/Exercises.fxml", "\\u00dcbungen", 1000, 620),
+    Manage_exercises("fxml/exercise/ManageExercise.fxml", "\\u00dcbungen verwalten", 1300, 750);
 
     private final String fxml;
     private final String title;

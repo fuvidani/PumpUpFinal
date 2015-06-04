@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,7 +39,7 @@ import java.util.ResourceBundle;
  * This controller is responsible for the stage where the user can create
  * m new exercise or edit an existing one.
  */
-public class ManageExerciseController extends Controller implements Initializable {
+public class ManageExerciseController extends Controller  {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
@@ -141,17 +140,17 @@ public class ManageExerciseController extends Controller implements Initializabl
         this.categoryService = categoryService;
     }
 
-    public void setExerciseController(ExercisesController exerciseController) {
-        this.exerciseController = exerciseController;
-        exercise = exerciseController.getExercise();
-        //TODO ueber spring mit bean loesen
+   public void setExercise(Exercise exercise){
+        this.exercise = exercise;
     }
 
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
 
         //dynamisches laden von checkboxen
         try {
+            exercise = ((ExercisesController) this.getParentController()).getExercise();
             webViewVideo.setVisible(false);
             for (TrainingsCategory t : categoryService.getAllTrainingstype()) {
                 CheckBox box = new CheckBox(t.getName());
@@ -203,10 +202,9 @@ public class ManageExerciseController extends Controller implements Initializabl
     }
 
     private void setContent() {
-        if (exercise != null) { //update called
+        if (this.exercise != null) { //update called
             observablePicListData.removeAll();
             caloriesField.setText("" + exercise.getCalories());
-            videoLinkField.setText(exercise.getVideolink());
             exerciseNameField.setText(exercise.getName());
             descriptionArea.setText(exercise.getDescription());
             exerciseGifList = exercise.getGifLinks();
@@ -290,7 +288,7 @@ public class ManageExerciseController extends Controller implements Initializabl
         alert.getButtonTypes().setAll(yes, cancel);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
-            stage.close();
+            mainFrame.navigateToParent();
         } else {
             stage.show();
         }
@@ -307,7 +305,7 @@ public class ManageExerciseController extends Controller implements Initializabl
                 update.setId(exercise.getId());
                 exerciseService.update(update);
             }
-            stage.close();
+           mainFrame.navigateToParent();
         } catch (Exception e) {
             LOGGER.error(e);
             e.printStackTrace();
@@ -420,6 +418,6 @@ public class ManageExerciseController extends Controller implements Initializabl
                 temp.add(new TrainingsCategory(Integer.parseInt(c.getId()), c.getText()));
         }
 
-        return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, videoLinkField.getText(), exerciseGifList, false, userService.getLoggedInUser(), temp);
+        return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, null, exerciseGifList, false, userService.getLoggedInUser(), temp);
     }
 }

@@ -8,7 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.web.WebView?>
 
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.exercises.ManageExerciseController">
     <children>
@@ -163,7 +162,7 @@
                                         <Button mnemonicParsing="false" onAction="#saveClicked" text="Speichern" />
                                     </children>
                                     <VBox.margin>
-                                        <Insets left="145.0" top="150.0" />
+                                        <Insets left="145.0" />
                                     </VBox.margin>
                                 </HBox>
                             </children>
