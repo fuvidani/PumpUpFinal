@@ -72,6 +72,12 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
     private Button btnAddSession;
 
     @FXML
+    private Button btnDecreaseDif;
+
+    @FXML
+    private Button btnIncreaseDif;
+
+    @FXML
     private Label lblTitel;
 
     @Override
@@ -110,6 +116,8 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
                         selection = new TrainingsSession(new_val);
                         btnDeleteSession.setDisable(false);
                         btnEditSession.setDisable(false);
+                        btnIncreaseDif.setDisable(false);
+                        btnDecreaseDif.setDisable(false);
                     }
                 });
     }
@@ -341,6 +349,7 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
         transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf\u00fcgen", 600, 400, false);
         if (session_interClassCommunication != null) {
             listViewSessions.getItems().add(session_interClassCommunication);
+            session_interClassCommunication = null;
             setUpListView();
             updateInformations();
         }
@@ -382,6 +391,28 @@ public class Create_Edit_WorkoutPlanController extends Controller implements Ini
                 updateInformations();
             }
         }
+    }
+
+    @FXML
+    public void onClickIncreaseDif(ActionEvent event) {
+        Trainingsplan plan = new Trainingsplan();
+        plan.setTrainingsSessions(listViewSessions.getItems());
+        trainingsplanService.increaseDifficulty(plan);
+        ObservableList<TrainingsSession> data = FXCollections.observableArrayList(plan.getTrainingsSessions());
+        listViewSessions.setItems(data);
+        setUpListView();
+        updateInformations();
+    }
+
+    @FXML
+    public void OnClickDecreaseDif(ActionEvent event) {
+        Trainingsplan plan = new Trainingsplan();
+        plan.setTrainingsSessions(listViewSessions.getItems());
+        trainingsplanService.decreaseDifficulty(plan);
+        ObservableList<TrainingsSession> data = FXCollections.observableArrayList(plan.getTrainingsSessions());
+        listViewSessions.setItems(data);
+        setUpListView();
+        updateInformations();
     }
 
     public void setTrainingsplanService(TrainingsPlanServiceImpl trainingsplanService) {
