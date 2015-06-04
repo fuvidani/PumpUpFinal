@@ -1,12 +1,12 @@
-DROP TABLE categoryName;
-DROP TABLE gif;
-DROP TABLE exercise_category;
-DROP TABLE exercise;
-DROP TABLE category;
-DROP SEQUENCE exercise_seq;
-DROP SEQUENCE category_seq;
-DROP SEQUENCE categoryName_seq;
-DROP SEQUENCE gif_seq;
+DROP TABLE IF EXISTS categoryName;
+DROP TABLE IF EXISTS gif;
+DROP TABLE IF EXISTS exercise_category;
+DROP TABLE IF EXISTS exercise;
+DROP TABLE IF EXISTS category;
+DROP SEQUENCE IF EXISTS exercise_seq;
+DROP SEQUENCE IF EXISTS category_seq;
+DROP SEQUENCE IF EXISTS categoryName_seq;
+DROP SEQUENCE IF EXISTS gif_seq;
 
 
 CREATE TABLE IF NOT EXISTS categoryName (
