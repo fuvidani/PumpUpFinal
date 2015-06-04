@@ -4,12 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
@@ -22,22 +20,21 @@ import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.PageEnum;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
 import sepm.ss15.grp16.service.training.impl.TrainingsPlanServiceImpl;
 import sepm.ss15.grp16.service.user.UserService;
 
-import java.net.URL;
 import java.util.*;
 
 
 public class Create_Edit_WorkoutPlanController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(Create_Edit_WorkoutPlanController.class);
-    public static Trainingsplan plan_interClassCommunication;
-    public static TrainingsSession session_interClassCommunication;
-    private StageTransitionLoader transitionLoader;
+
+    private Trainingsplan plan_interClassCommunication;
+    private TrainingsSession session_interClassCommunication;
+
     private TrainingsplanService trainingsplanService;
     private UserService userService;
     private TrainingsSession selection;
@@ -83,9 +80,9 @@ public class Create_Edit_WorkoutPlanController extends Controller {
 
     @Override
     public void initController() {
-        this.transitionLoader = new StageTransitionLoader(this);
 
         setUpListView();
+        plan_interClassCommunication = ((WorkoutPlansController)this.getParentController()).getPlan_interClassCommunication();
 
         if (plan_interClassCommunication != null) {
             if (plan_interClassCommunication.getId() != null) {
@@ -362,7 +359,8 @@ public class Create_Edit_WorkoutPlanController extends Controller {
     @FXML
     public void editSession(ActionEvent event) {
         if (selection != null) {
-            SessionEditController_v2.session_interClassCommunication = selection;
+            //SessionEditController_v2.session_interClassCommunication = selection;
+            session_interClassCommunication = selection;
         }
 
         //transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session bearbeiten", 600, 400, false);
@@ -426,5 +424,13 @@ public class Create_Edit_WorkoutPlanController extends Controller {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public void setSession_interClassCommunication(TrainingsSession session_interClassCommunication) {
+        this.session_interClassCommunication = session_interClassCommunication;
+    }
+
+    public TrainingsSession getSession_interClassCommunication() {
+        return session_interClassCommunication;
     }
 }

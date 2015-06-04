@@ -35,11 +35,12 @@ import java.util.ResourceBundle;
  */
 public class WorkoutPlanToCalendarController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutPlanToCalendarController.class);
+
     public static Trainingsplan plan_interClassCommunication;
+
     private CalendarService calendarService;
     private TrainingsplanService trainingsplanService;
     private UserService userService;
-    private StageTransitionLoader transitionLoader;
 
 
     @FXML
@@ -74,7 +75,6 @@ public class WorkoutPlanToCalendarController extends Controller {
 
     @Override
     public void initController() {
-        this.transitionLoader = new StageTransitionLoader(this);
         setUpListView();
 
         if (plan_interClassCommunication != null) {

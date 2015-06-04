@@ -38,12 +38,12 @@ import java.util.*;
 public class WorkoutPlansController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutPlansController.class);
 
+    private Trainingsplan plan_interClassCommunication;
+
     private TrainingsplanService trainingsplanService;
     private UserService userService;
 
     private Trainingsplan selection;
-
-    private StageTransitionLoader transitionLoader;
 
     @FXML
     private CheckBox defaultWorkoutPlansCheck;
@@ -89,7 +89,6 @@ public class WorkoutPlansController extends Controller {
 
     @Override
     public void initController() {
-        this.transitionLoader = new StageTransitionLoader(this);
 
         try {
             ObservableList<Trainingsplan> data =
@@ -331,7 +330,8 @@ public class WorkoutPlansController extends Controller {
 
     @FXML
     public void newWorkoutPlanClicked(ActionEvent event) {
-        Create_Edit_WorkoutPlanController.plan_interClassCommunication = null;
+        //Create_Edit_WorkoutPlanController.plan_interClassCommunication = null;
+        plan_interClassCommunication = null;
 
         //transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
         //      "Trainingsplan erstellen", 1000, 620, true);
@@ -346,9 +346,10 @@ public class WorkoutPlansController extends Controller {
     public void copyWorkoutPlanClicked(ActionEvent event) {
         Trainingsplan toCopy = new Trainingsplan(selection);
         toCopy.setId(null);
-        Create_Edit_WorkoutPlanController.plan_interClassCommunication = toCopy;
+        //Create_Edit_WorkoutPlanController.plan_interClassCommunication = toCopy;
+        plan_interClassCommunication = toCopy;
         //transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
-          //      "Trainingsplan " + selection.getName() + " kopieren", 1000, 620, true);
+        //      "Trainingsplan " + selection.getName() + " kopieren", 1000, 620, true);
         mainFrame.navigateToChild(PageEnum.Workoutplan_create_edit);
         updateTable();
         setUpListView();
@@ -402,7 +403,8 @@ public class WorkoutPlansController extends Controller {
     @FXML
     public void editWorkoutPlanClicked(ActionEvent event) {
         Stage thiststage = (Stage) listViewSessions.getScene().getWindow();
-        Create_Edit_WorkoutPlanController.plan_interClassCommunication = selection;
+        //Create_Edit_WorkoutPlanController.plan_interClassCommunication = selection;
+        plan_interClassCommunication = selection;
 
         // transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
         //         "Trainingsplan " + selection.getName() + " bearbeiten", 1000, 620, true);
@@ -428,9 +430,9 @@ public class WorkoutPlansController extends Controller {
     @FXML
     public void embedInCalenderClicked(ActionEvent event) {
         WorkoutPlanToCalendarController.plan_interClassCommunication = selection;
+        plan_interClassCommunication = selection;
         //transitionLoader.openWaitStage("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender exportieren", 800, 600, false);
         mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
-        System.out.println("hallo!");
         mainFrame.navigateToChild(PageEnum.Calendar);
     }
 
@@ -440,12 +442,19 @@ public class WorkoutPlansController extends Controller {
         mainFrame.navigateToParent();
     }
 
-
     public void setTrainingsplanService(TrainingsPlanServiceImpl trainingsplanService) {
         this.trainingsplanService = trainingsplanService;
     }
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public Trainingsplan getPlan_interClassCommunication() {
+        return plan_interClassCommunication;
+    }
+
+    public void setPlan_interClassCommunication(Trainingsplan plan_interClassCommunication) {
+        this.plan_interClassCommunication = plan_interClassCommunication;
     }
 }

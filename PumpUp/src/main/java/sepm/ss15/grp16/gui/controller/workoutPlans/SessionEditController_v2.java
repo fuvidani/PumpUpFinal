@@ -33,11 +33,13 @@ import sepm.ss15.grp16.service.user.impl.UserServiceImpl;
 
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SessionEditController_v2 extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(SessionEditController_v2.class);
-    public static TrainingsSession session_interClassCommunication;
-    private StageTransitionLoader transitionLoader;
+
+    private TrainingsSession session_interClassCommunication;
+
     private ExerciseService exerciseService;
     private UserService userService;
 
@@ -115,7 +117,8 @@ public class SessionEditController_v2 extends Controller {
     void onClickFinish(ActionEvent event) {
         TrainingsSession session = createValidSession();
         if (session != null) {
-            Create_Edit_WorkoutPlanController.session_interClassCommunication = session;
+           // Create_Edit_WorkoutPlanController.session_interClassCommunication = session;
+            ((Create_Edit_WorkoutPlanController)this.getParentController()).setSession_interClassCommunication(session);
 //            stage.close();
             mainFrame.navigateToParent();
         }
@@ -247,12 +250,12 @@ public class SessionEditController_v2 extends Controller {
     @FXML
     void onClickShow(ActionEvent event) {
         ShowExerciseController.exercise_interClassCommunication = selection_exercise;
-        transitionLoader.openWaitStage("fxml/exercise/ShowExercise.fxml", (Stage) tblvExercises.getScene().getWindow(), selection_exercise.getName(), 500, 500, true);
+        //transitionLoader.openWaitStage("fxml/exercise/ShowExercise.fxml", (Stage) tblvExercises.getScene().getWindow(), selection_exercise.getName(), 500, 500, true);
     }
 
     @Override
     public void initController() {
-        this.transitionLoader = new StageTransitionLoader(this);
+        session_interClassCommunication = ((Create_Edit_WorkoutPlanController)this.getParentController()).getSession_interClassCommunication();
         try {
             tblcOrder.setCellValueFactory(new PropertyValueFactory<>("order_nr"));
             tblcExercise.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getExercise().getName()));
@@ -291,13 +294,10 @@ public class SessionEditController_v2 extends Controller {
             tblcCalo.setCellValueFactory(new PropertyValueFactory<>("calories"));
             tblcCat.setCellValueFactory(p -> {
                 List<AbsractCategory> categories = p.getValue().getCategories();
-                List<TrainingsCategory> trainingsCategories = new ArrayList<>();
-
-                for (AbsractCategory absractCategory : categories) {
-                    if (absractCategory instanceof TrainingsCategory) {
-                        trainingsCategories.add((TrainingsCategory) absractCategory);
-                    }
-                }
+                List<TrainingsCategory> trainingsCategories = categories.stream()
+                        .filter(absractCategory -> absractCategory instanceof TrainingsCategory)
+                        .map(absractCategory -> (TrainingsCategory) absractCategory)
+                        .collect(Collectors.toList());
 
                 String value = "";
                 for (int i = 0; i < trainingsCategories.size(); i++) {
@@ -342,10 +342,7 @@ public class SessionEditController_v2 extends Controller {
     private void updateFilteredData() {
         ObservableList<Exercise> filteredData = FXCollections.observableArrayList(masterdata);
         ObservableList<Exercise> temp = FXCollections.observableArrayList();
-        for (Exercise e : filteredData) {
-            if (matchesFilter(e))
-                temp.add(e);
-        }
+        temp.addAll(filteredData.stream().filter(this::matchesFilter).collect(Collectors.toList()));
 
         tblvExercises.setItems(temp);
     }
