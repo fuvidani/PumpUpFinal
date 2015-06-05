@@ -2,7 +2,6 @@ package sepm.ss15.grp16.gui.controller.workout;
 
 import javafx.beans.value.ChangeListener;
 import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
@@ -42,9 +40,16 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
     private Playlist playlist;
     private MusicService musicService;
     private UserService userService;
+    private WorkoutController parent;
 
     private List<MediaPlayer> players;
-    final ProgressBar progress = new ProgressBar();
+    private List<MediaPlayer> original;
+    private boolean playing = false;
+    private boolean muted = false;
+    private boolean shuffled = false;
+
+    @FXML
+    private ProgressBar progress;
     //final TableView<Map> metadataTable = new TableView<>();
     private ChangeListener<Duration> progressChangeListener;
     private MapChangeListener<String, Object> metadataChangeListener;
@@ -68,6 +73,9 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
     private Button btnSkip;
 
     @FXML
+    private Button btnLast;
+
+    @FXML
     private Button btnPlay;
 
     //@FXML
@@ -87,14 +95,12 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
             e.printStackTrace();
         }
 
-        // create some media players.
         players = playlist.getPlayers();
+        original = new ArrayList<>(players);
 
         if (!players.isEmpty()) {
             System.out.println("success!");
             musicPlayerSlide = new MediaView(players.get(0));
-            btnSkip = new Button("Skip");
-            btnPlay = new Button("Pause");
 
             // play each audio file in turn.
             for (int i = 0; i < players.size(); i++) {
@@ -118,6 +124,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
             musicPlayerSlide.setMediaPlayer(players.get(0));
             musicPlayerSlide.getMediaPlayer().play();
             setCurrentlyPlaying(musicPlayerSlide.getMediaPlayer());
+            playing = true;
 
             // silly invisible button used as a template to get the actual preferred size of the Pause button.
             Button invisiblePause = new Button("Pause");
@@ -143,7 +150,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         progressChangeListener = (observableValue, oldValue, newValue) -> {
             songTotalLengthLabel.setText(String.format("/%1$.2f", newPlayer.getTotalDuration().toMinutes()).replace(",", ":"));
             progress.setProgress(1.0 * newPlayer.getCurrentTime().toMillis() / newPlayer.getTotalDuration().toMillis());
-            songSecondsCounterLabel.setText(String.format("%1$.2f", newPlayer.getCurrentTime().toMinutes()).replace(",",":"));
+            songSecondsCounterLabel.setText(String.format("%1$.2f", newPlayer.getCurrentTime().toMinutes()).replace(",", ":"));
         };
         newPlayer.currentTimeProperty().addListener(progressChangeListener);
 
@@ -156,56 +163,57 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
     }
 
     private void setMetaDataDisplay(ObservableMap<String, Object> metadata) {
-        metadataChangeListener = change -> convertMetadataToTableMap(metadata);
+        metadataChangeListener = change -> readMetaData(metadata);
         metadata.addListener(metadataChangeListener);
     }
 
-    private void convertMetadataToTableMap(ObservableMap<String, Object> metadata) {
+    private void readMetaData(ObservableMap<String, Object> metadata) {
         String labeltext = artistAndSongLabel.getText();
-        String artist ="";
+        String artist = "";
         String album = "";
         String title = "";
 
         for (String key : metadata.keySet()) {
-            if(key.equals("artist")) artist = (String) metadata.get(key);
-            if(key.equals("album artist")) artist = (String) metadata.get(key);
-            if(key.equals("album")) album = (String) metadata.get(key);
-            if(key.equals("title")) title = (String) metadata.get(key);
+            if (key.equals("artist")) artist = (String) metadata.get(key);
+            if (key.equals("album artist")) artist = (String) metadata.get(key);
+            if (key.equals("album")) album = (String) metadata.get(key);
+            if (key.equals("title")) title = (String) metadata.get(key);
         }
 
-        System.out.println(String.format("New Metadata: %s %s %s",artist, album, title));
+        System.out.println(String.format("New Metadata: %s %s %s", artist, album, title));
 
-        if(!title.equals("")) labeltext = title;
-        if(!artist.equals("")) labeltext = artist + " - " + labeltext;
-        if(!album.equals("")) labeltext += " (" + album + " )";
+        if (!title.equals("")) labeltext = title;
+        if (!artist.equals("")) labeltext = artist + " - " + labeltext;
+        if (!album.equals("")) labeltext += " (" + album + " )";
         artistAndSongLabel.setText(labeltext);
 
     }
 
-    /**
-     * @return a MediaPlayer for the given source which will report any errors it encounters
-     */
-    private MediaPlayer createPlayer(String mediaSource) {
-        final Media media = new Media(mediaSource);
-        final MediaPlayer player = new MediaPlayer(media);
-        player.setOnError(() -> System.out.println("Media error occurred: " + player.getError()));
-        return player;
-    }
-
-
     @FXML
     void rewindButtonClicked(ActionEvent event) {
+        final MediaPlayer curPlayer = musicPlayerSlide.getMediaPlayer();
+        curPlayer.currentTimeProperty().removeListener(progressChangeListener);
+        curPlayer.getMedia().getMetadata().removeListener(metadataChangeListener);
+        curPlayer.stop();
 
+        Integer last = players.indexOf(curPlayer) - 1;
+        MediaPlayer lastPlayer = players.get(last >= 0 ? last : players.size() + last);
+        musicPlayerSlide.setMediaPlayer(lastPlayer);
+        lastPlayer.play();
     }
 
     @FXML
     void playButtonClicked(ActionEvent event) {
-        if ("Pause".equals(btnPlay.getText())) {
+        if (playing) {
             musicPlayerSlide.getMediaPlayer().pause();
-            btnPlay.setText("Play");
+            btnPlay.getStyleClass().add("btnMusic_Play");
+            btnPlay.getStyleClass().remove("btnMusic_Pause");
+            playing = false;
         } else {
             musicPlayerSlide.getMediaPlayer().play();
-            btnPlay.setText("Pause");
+            btnPlay.getStyleClass().add("btnMusic_Pause");
+            btnPlay.getStyleClass().remove("btnMusic_Play");
+            playing = true;
         }
     }
 
@@ -223,7 +231,35 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
     @FXML
     void playlistButtonClicked(ActionEvent event) {
-        mainFrame.openDialog(PageEnum.Playlist);
+        parent.launchDialog(PageEnum.Playlist);
+    }
+
+    @FXML
+    void onClickMute(ActionEvent event) {
+        if (muted) {
+            musicPlayerSlide.getMediaPlayer().setMute(false);
+            muted = false;
+        } else {
+            musicPlayerSlide.getMediaPlayer().setMute(true);
+            muted = true;
+        }
+    }
+
+    @FXML
+    void onClickShuffle(ActionEvent event) {
+        if(shuffled){
+            players = original;
+        }else {
+            List<MediaPlayer> shuffledList = new ArrayList<>();
+            Random rand = new Random();
+            System.out.println("size: " + original.size());
+            for (int i = 0; i < original.size(); i++) {
+                int randomNum = rand.nextInt(original.size() - i);
+                shuffledList.add(original.get(randomNum));
+            }
+            players = shuffledList;
+        }
+
     }
 
     public void setPlaylist(Playlist playlist) {
@@ -233,5 +269,9 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initController();
+    }
+
+    public void setParent(WorkoutController parent) {
+        this.parent = parent;
     }
 }
