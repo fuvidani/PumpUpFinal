@@ -177,7 +177,7 @@ public class MainController extends Controller {
 
     @FXML
     void exercisesButtonClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/exercise/Exercises.fxml", (Stage) usernameLabel.getScene().getWindow(), "Übungen", 1100, 750, true);
+       mainFrame.navigateToChild(PageEnum.Exercises);
     }
 
     @FXML
@@ -229,7 +229,7 @@ public class MainController extends Controller {
 
     @FXML
     void exercisesMenuClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/exercise/Exercises.fxml", (Stage) usernameLabel.getScene().getWindow(), "Übungen", 800, 600, true);
+      mainFrame.navigateToChild(PageEnum.Exercises);
     }
 
     @FXML

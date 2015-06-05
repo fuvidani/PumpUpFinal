@@ -8,7 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.web.WebView?>
 
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.exercises.ManageExerciseController">
     <children>
@@ -58,9 +57,6 @@
                                                 <Insets />
                                             </VBox.margin>
                                         </TextArea>
-                                        <Label text="Video Link:" />
-                                        <TextField fx:id="videoLinkField" onAction="#playVideo" promptText="https://www.youtube.com/watch?v=Eh00_rniF8E&amp;ab_channel=ScottMalin" />
-                                        <Button mnemonicParsing="false" onAction="#playVideo" text="play video" />
                                         <WebView fx:id="webViewVideo" prefHeight="266.0" prefWidth="337.0" />
                                     </children>
                                 </VBox>
@@ -137,24 +133,18 @@
                                         <VBox>
                                  <children>
                                               <ListView fx:id="imagesListView" prefHeight="168.0" prefWidth="222.0" />
-                                    <HBox>
+                                    <HBox stylesheets="@../../css/exerciseStyle.css">
                                        <children>
-                                          <ImageView fx:id="newImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../img/add139.png" />
-                                             </image>
+                                          <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#removeClicked" prefHeight="24.0" prefWidth="24.0" styleClass="deleteBtn">
                                              <HBox.margin>
-                                                <Insets left="170.0" top="10.0" />
+                                                <Insets left="170.0" top="5.0" />
                                              </HBox.margin>
-                                          </ImageView>
-                                          <ImageView fx:id="deleteImg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../img/round73.png" />
-                                             </image>
+                                          </Button>
+                                          <Button fx:id="addBtn" mnemonicParsing="false" onAction="#browseClicked" prefHeight="24.0" prefWidth="24.0" styleClass="addBtn">
                                              <HBox.margin>
-                                                <Insets left="5.0" top="10.0" />
+                                                <Insets left="5.0" top="5.0" />
                                              </HBox.margin>
-                                          </ImageView>
+                                          </Button>
                                        </children>
                                     </HBox>
                                  </children>
@@ -172,7 +162,7 @@
                                         <Button mnemonicParsing="false" onAction="#saveClicked" text="Speichern" />
                                     </children>
                                     <VBox.margin>
-                                        <Insets left="145.0" top="150.0" />
+                                        <Insets left="145.0" />
                                     </VBox.margin>
                                 </HBox>
                             </children>
