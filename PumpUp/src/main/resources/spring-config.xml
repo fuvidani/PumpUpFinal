@@ -127,7 +127,6 @@
 
     <bean id="manageExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.ManageExerciseController"
           scope="prototype">
-        <property name="exerciseController" ref="exerciseController"/>
         <property name="exerciseService" ref="exerciseService"/>
         <property name="categoryService" ref="categoryService"/>
         <property name="userService" ref="userService"/>

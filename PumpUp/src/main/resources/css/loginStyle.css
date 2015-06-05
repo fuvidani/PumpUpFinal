@@ -1,0 +1,7 @@
+.loginBtn{
+    -fx-background-image: url('../icons/login.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right;
+    -fx-background-size: 25%;
+
+}
