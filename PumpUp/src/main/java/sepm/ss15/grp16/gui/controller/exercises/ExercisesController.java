@@ -296,20 +296,26 @@ public class ExercisesController extends Controller {
                     vboxType.getChildren().remove(i);
                 }
             }
+            vboxType.getChildren().clear();
             if(vboxEquipment.getChildren()!=null) {
                 for (int i = 0; i < vboxEquipment.getChildren().size(); i++) {
                     vboxEquipment.getChildren().remove(i);
                 }
             }
+            vboxEquipment.getChildren().clear();
+
             if(vboxMuscle.getChildren()!=null) {
                 for (int i = 0; i < vboxMuscle.getChildren().size(); i++) {
                     vboxMuscle.getChildren().remove(i);
                 }
             }
+            vboxMuscle.getChildren().clear();
+
             for (TrainingsCategory t : categoryService.getAllTrainingstype()) {
                 if (exercise.getCategories().contains(t))
                     vboxType.getChildren().add(new Label(t.getName()));
             }
+
             for (EquipmentCategory t : categoryService.getAllEquipment()) {
                 if (exercise.getCategories().contains(t))
                     vboxEquipment.getChildren().add(new Label(t.getName()));
