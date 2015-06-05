@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * It consists of a graphicsController and a musicPlayerController.
  */
 
-public class WorkoutController extends Controller implements Initializable {
+public class WorkoutController extends Controller {
 
     private static final int IMAGEDURATION = 1500;
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
@@ -80,6 +80,7 @@ public class WorkoutController extends Controller implements Initializable {
 
     @FXML
     private Label discriptionLabel;
+
     private Timeline counterTimeline;
     private IntegerProperty timeSeconds;
     private ArrayList<ExerciseSet> exerciseList;
@@ -108,7 +109,8 @@ public class WorkoutController extends Controller implements Initializable {
         session.setExerciseSets(list);
     }
 
-    public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initController() {
 
         exerciseList = new ArrayList<>(session.getExerciseSets());
         activeExercisePosition = -1;

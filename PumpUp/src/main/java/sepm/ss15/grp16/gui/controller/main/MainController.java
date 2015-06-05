@@ -182,13 +182,17 @@ public class MainController extends Controller {
 
     @FXML
     void calendarClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+        //transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+        mainFrame.navigateToChild(PageEnum.Calendar);
         refreshCalendar();
     }
 
     @FXML
     void trainingClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/workout/Workoutstart.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingsvorbereitung", 800, 600, false);
+        //transitionLoader.openStage("fxml/workout/Workoutstart.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingsvorbereitung", 800, 600, false);
+        mainFrame.openDialog(PageEnum.Workoutstart);
+        mainFrame.navigateToChild(PageEnum.LiveMode);
+        //mainFrame.navigateToChild(PageEnum.Music);
     }
 
     @FXML
