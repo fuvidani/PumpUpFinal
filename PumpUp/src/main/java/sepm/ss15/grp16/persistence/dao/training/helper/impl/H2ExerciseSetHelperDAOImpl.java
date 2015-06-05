@@ -285,12 +285,12 @@ public class H2ExerciseSetHelperDAOImpl implements ExerciseSetHelperDAO {
     }
 
     private void executeUpdate(PreparedStatement ps) throws SQLException {
-        LOGGER.info("execute: " + ps);
+        LOGGER.debug("execute: " + ps);
         ps.executeUpdate();
     }
 
     private ResultSet executeQuery(PreparedStatement ps) throws SQLException {
-        LOGGER.info("execute: " + ps);
+        LOGGER.debug("execute: " + ps);
         return ps.executeQuery();
     }
 
