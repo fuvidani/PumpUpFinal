@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -18,7 +17,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
@@ -35,9 +34,7 @@ import sepm.ss15.grp16.service.exception.ServiceException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 07.05.15.
@@ -116,6 +113,9 @@ public class ExercisesController extends Controller {
     private Integer picIndex = 0;
     private ObservableList<Exercise> masterdata = FXCollections.observableArrayList();
     private ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
+    private Media media;
+    private MediaPlayer player = null;
+    private boolean isPlaying = false;
 
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -139,6 +139,7 @@ public class ExercisesController extends Controller {
 
         leftArrow.setVisible(false);
         rightArrow.setVisible(false);
+        playVideoBtn.setDisable(true);
         uebungColumn.setCellValueFactory(new PropertyValueFactory<Exercise, String>("name"));
         uebungsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Exercise>() {
             @Override
@@ -180,10 +181,31 @@ public class ExercisesController extends Controller {
 
 
     @FXML
-    private void playVideo() {
+    private void playVideo(){
+        Duration totalDuration =  player.getCycleDuration();
+        Duration currentDuration =  player.getCurrentTime();
+        System.out.println("current: " + currentDuration+ " total: " + totalDuration);
+        if(currentDuration.compareTo(totalDuration)==0){
+            isPlaying=false;
+            player = new MediaPlayer(media);
+            smallMediaView.setMediaPlayer(null);
+            smallMediaView.setMediaPlayer(player);
+        }
+        if(isPlaying){
+            player.pause();
+            isPlaying=false;
+        }else{
+            player.play();
+            isPlaying=true;
+        }
+
+
+    }
+
+
+    private void showVideo() {
         try {
-            Media media;
-            MediaPlayer player;
+
 
             if (exercise.getVideolink()!=null) {
                 String pathToResource = getClass().getClassLoader().getResource("video").toURI().toString();
@@ -193,7 +215,7 @@ public class ExercisesController extends Controller {
                  media = new Media(filePath);
                  player = new MediaPlayer(media);
 
-                player.setAutoPlay(true);
+                player.setAutoPlay(false);
 
                 smallMediaView.setMediaPlayer(player);
                 smallMediaView.setVisible(true);
@@ -245,7 +267,8 @@ public class ExercisesController extends Controller {
             uebungsTableView.setItems(masterdata);
             uebungsTableView.getColumns().get(0).setVisible(false);
             uebungsTableView.getColumns().get(0).setVisible(true);
-
+            editBtn.setDisable(true);
+            deleteBtn.setDisable(true);
         } catch (ServiceException e) {
             e.printStackTrace();
             LOGGER.error(e);
@@ -270,7 +293,7 @@ public class ExercisesController extends Controller {
             }else{
                 playVideoBtn.setDisable(false);
             }
-            playVideo();
+            showVideo();
 
             if (exercise.getGifLinks().size() > 0) {
                 imageView.setVisible(true);

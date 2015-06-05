@@ -64,6 +64,7 @@ public class LoginController extends Controller {
         try {
             masterData = FXCollections.observableList(userService.findAll());
             user_tableView.setItems(masterData);
+            user_tableView.getSelectionModel().selectFirst();
         } catch (ServiceException e) {
             e.printStackTrace();
         }
