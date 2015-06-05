@@ -31,11 +31,6 @@ import java.util.*;
  * This controller controls the lower section of the training's stage.
  */
 public class WorkoutMusicPlayerController extends Controller implements Initializable {
-    private static final String MUSIC_DIR = "C:\\Users\\Lukas\\Desktop\\Music";
-    public static final String TAG_COLUMN_NAME = "Tag";
-    public static final String VALUE_COLUMN_NAME = "Value";
-    public static final List<String> SUPPORTED_FILE_EXTENSIONS = Arrays.asList(".mp3", ".m4a");
-    public static final int FILE_EXTENSION_LEN = 4;
 
     private Playlist playlist;
     private MusicService musicService;
@@ -50,7 +45,6 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
     @FXML
     private ProgressBar progress;
-    //final TableView<Map> metadataTable = new TableView<>();
     private ChangeListener<Duration> progressChangeListener;
     private MapChangeListener<String, Object> metadataChangeListener;
 
@@ -77,9 +71,6 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
     @FXML
     private Button btnPlay;
-
-    //@FXML
-    //private ProgressBar progress = new ProgressBar();
 
     public WorkoutMusicPlayerController(MusicService musicService, UserService userService) {
         this.musicService = musicService;
@@ -126,12 +117,6 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
             setCurrentlyPlaying(musicPlayerSlide.getMediaPlayer());
             playing = true;
 
-            // silly invisible button used as a template to get the actual preferred size of the Pause button.
-            Button invisiblePause = new Button("Pause");
-            invisiblePause.setVisible(false);
-            btnPlay.prefHeightProperty().bind(invisiblePause.heightProperty());
-            btnPlay.prefWidthProperty().bind(invisiblePause.widthProperty());
-
             VBox.setVgrow(vBoxProg, Priority.ALWAYS);
             vBoxProg.setAlignment(Pos.CENTER);
             vBoxProg.getChildren().setAll(progress);
@@ -155,7 +140,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         newPlayer.currentTimeProperty().addListener(progressChangeListener);
 
         String source = newPlayer.getMedia().getSource();
-        source = source.substring(0, source.length() - FILE_EXTENSION_LEN);
+        source = source.substring(0, source.length() - 4);
         source = source.substring(source.lastIndexOf("/") + 1).replaceAll("%20", " ");
         artistAndSongLabel.setText(source);
 
@@ -247,9 +232,9 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
     @FXML
     void onClickShuffle(ActionEvent event) {
-        if(shuffled){
+        if (shuffled) {
             players = original;
-        }else {
+        } else {
             List<MediaPlayer> shuffledList = new ArrayList<>();
             Random rand = new Random();
             System.out.println("size: " + original.size());
@@ -260,6 +245,33 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
             players = shuffledList;
         }
 
+    }
+
+    public void reduceVol(Integer percent) {
+        Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
+        Double new_vol = vol + (vol * (percent / 100));
+        new_vol = new_vol > 1 ? 1 : new_vol;
+        this.
+                musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+    }
+
+    public void reduceVol() {
+        reduceVol(50);
+    }
+
+    public void raiseVol(Integer percent) {
+        Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
+        Double new_vol = vol - (vol * (percent / 100));
+        new_vol = new_vol < 0 ? 0 : new_vol;
+        musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+    }
+
+    public void raiseVol() {
+        raiseVol(50);
+    }
+
+    public void stopMusic() {
+        musicPlayerSlide.getMediaPlayer().stop();
     }
 
     public void setPlaylist(Playlist playlist) {
