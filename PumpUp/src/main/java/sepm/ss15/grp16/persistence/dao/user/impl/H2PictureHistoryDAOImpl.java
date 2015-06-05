@@ -34,7 +34,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO picturehistory VALUES(?, ?, ?, ?);");
             this.getActualPictureStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND " +
-                    "picturehistory_id = (SELECT max(picturehistory_id) from picturehistory);");
+                    "picturehistory_id = (SELECT max(picturehistory_id) from picturehistory WHERE user_id = ?);");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
@@ -161,6 +161,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
 
         try {
             getActualPictureStatement.setInt(1, user_id);
+            getActualPictureStatement.setInt(2, user_id);
             ResultSet rs = getActualPictureStatement.executeQuery();
             if (rs.next() == true) {
                 foundPictureHistory = new PictureHistory(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDate(4));
