@@ -8,9 +8,9 @@ import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.persistence.dao.calendar.CalendarDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.calendar.CalendarService;
-import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.user.UserService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -151,7 +151,35 @@ public class CalendarServiceImpl implements CalendarService {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
-        while (true) {
+        for (int i = 0; i < workoutplanExport.getTrainingsplan().getDuration(); i++){
+            for (TrainingsSession session : workoutplanExport.getTrainingsplan().getTrainingsSessions()) {
+                boolean set = false;
+
+                while (!set) {
+                    for (DayOfWeek day : workoutplanExport.getDays()) {
+
+                        int dayNum;
+                        if (day.getValue() + 1 < 8) {
+                            dayNum = day.getValue() + 1;
+                        } else {
+                            dayNum = 1;
+                        }
+                        if (dayNum == cal.get(Calendar.DAY_OF_WEEK)) {
+                            this.create(new Appointment(null, cal.getTime(), session.getId_session(), userService.getLoggedInUser().getUser_id(), false));
+                            set = true;
+                            cal.add(Calendar.DATE, 1);
+                            break;
+                        }
+                    }
+                    if (!set) {
+                        cal.add(Calendar.DATE, 1);
+                    }
+                }
+            }
+
+        }
+
+       /* while (true) {
             int day;
 
             if (cal.get(Calendar.DAY_OF_WEEK) == 1){
@@ -203,7 +231,7 @@ public class CalendarServiceImpl implements CalendarService {
                     }
                 }
             }
-        }
+        }*/
     }
 
     /**
@@ -241,6 +269,44 @@ public class CalendarServiceImpl implements CalendarService {
         } catch (PersistenceException e){
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public Appointment getCurrentAppointment() throws ServiceException{
+        List<Appointment> allAppointment = this.findAll();
+        Appointment currentAppointment = null;
+
+        //filter old appointments
+        for (Appointment appointment: this.findAll()){
+            Calendar appointmentDate = Calendar.getInstance();
+            appointmentDate.setLenient(false);
+            appointmentDate.setTime(appointment.getDatum());
+            appointmentDate.set(Calendar.HOUR_OF_DAY, 0);
+            appointmentDate.set(Calendar.MINUTE,0);
+            appointmentDate.set(Calendar.SECOND,0);
+            appointmentDate.set(Calendar.MILLISECOND,0);
+
+            Calendar today = Calendar.getInstance();
+            today.setLenient(false);
+            today.set(Calendar.HOUR_OF_DAY, 0);
+            today.set(Calendar.MINUTE,0);
+            today.set(Calendar.SECOND,0);
+            today.set(Calendar.MILLISECOND,0);
+
+
+            if (appointmentDate.before(today)){
+                allAppointment.remove(appointment);
+            }
+        }
+
+        //search for next appointment
+        for (Appointment appointment: allAppointment){
+            if (currentAppointment == null || appointment.getDatum().before(currentAppointment.getDatum())){
+                currentAppointment = appointment;
+            }
+        }
+
+        return currentAppointment;
     }
 
 

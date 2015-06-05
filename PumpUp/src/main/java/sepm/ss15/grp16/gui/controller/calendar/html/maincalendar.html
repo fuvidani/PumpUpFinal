@@ -26,6 +26,7 @@
                 selectHelper: true,
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
+                firstDay: 1,
 
                 eventDrop: function (event, delta, revertFunc) {
                     drag.updateEvent(event.id, event.start.format());

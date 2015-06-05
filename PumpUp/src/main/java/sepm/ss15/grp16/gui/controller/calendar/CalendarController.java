@@ -93,6 +93,7 @@ public class CalendarController extends Controller implements Initializable {
 
     @FXML
     public void deleteAllAppointmentsClicked(){
+        
         try {
             calendarService.deleteAllAppointments();
         } catch (ServiceException e) {
