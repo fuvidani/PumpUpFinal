@@ -1,13 +1,11 @@
 package sepm.ss15.grp16.gui.controller.user;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
@@ -16,16 +14,14 @@ import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
 import sepm.ss15.grp16.service.user.PictureHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
-import sepm.ss15.grp16.service.exception.ServiceException;
-import sepm.ss15.grp16.service.exception.ValidationException;
 
 import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * This class represents the controller for a registration gui
@@ -33,7 +29,7 @@ import java.util.ResourceBundle;
  * @author Michael Sober
  * @version 1.0
  */
-public class RegistrationController extends Controller implements Initializable {
+public class RegistrationController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
@@ -89,8 +85,8 @@ public class RegistrationController extends Controller implements Initializable 
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.transitionLoader = new StageTransitionLoader(this);
+    public void initController() {
+        loginController = (LoginController) parentController;
     }
 
     @FXML
@@ -178,17 +174,17 @@ public class RegistrationController extends Controller implements Initializable 
             alert.setHeaderText("Registration-Information");
             alert.setContentText("Sie haben sich erfolgreich registriert.");
             alert.showAndWait();
-            Stage stage = (Stage) registrationPane.getScene().getWindow();
-            stage.close();
+            mainFrame.navigateToParent();
+
         } catch (ValidationException e) {
-            LOGGER.error("Couldn't create User");
+            LOGGER.error("Couldn't create user");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehlerhafte Angaben");
             alert.setContentText(e.getValidationMessage());
             alert.showAndWait();
         } catch (ServiceException e) {
-            LOGGER.error("Couldn't create User");
+            LOGGER.error("Couldn't create user");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehlerhafte Angaben");

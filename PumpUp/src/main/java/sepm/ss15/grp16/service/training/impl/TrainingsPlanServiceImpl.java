@@ -9,11 +9,11 @@ import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsSessionDAO;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
-import sepm.ss15.grp16.service.exercise.ExerciseService;
-import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
+import sepm.ss15.grp16.service.user.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +114,19 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
     }
 
     @Override
+    public List<Trainingsplan> getDefaultPlans() throws ServiceException {
+        List<Trainingsplan> list = findAll();
+        List<Trainingsplan> list_filterd = new ArrayList<>(list);
+
+        for (Trainingsplan plan : list) {
+            if (plan.getUser() != null) {
+                list_filterd.remove(plan);
+            }
+        }
+        return list_filterd;
+    }
+
+    @Override
     public Trainingsplan getPlanBySession(TrainingsSession session) throws ServiceException {
         validate(session);
         try {
@@ -150,7 +163,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
             return list;
         } catch (PersistenceException e) {
             LOGGER.error("" + e);
-            throw new ServiceException("Fehler beim Suchen aller Trainingspl\u00e4ne des User " + user.getUsername() + " (ID: " + user.getId() + ") aufgetreten");
+            throw new ServiceException("Fehler beim Suchen aller Trainingspl\u00e4ne des user " + user.getUsername() + " (ID: " + user.getId() + ") aufgetreten");
         }
     }
 
@@ -164,6 +177,24 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
         } catch (PersistenceException e) {
             LOGGER.error("" + e);
             throw new ServiceException("Fehler beim Erstellen eines Trainingsplans \u00fcber Plan ID " + ID_plan + " aufgetreten");
+        }
+    }
+
+    @Override
+    public void increaseDifficulty(Trainingsplan plan) {
+        for (TrainingsSession session : plan.getTrainingsSessions()) {
+            for (ExerciseSet set : session.getExerciseSets()) {
+                set.setRepeat((int) (set.getRepeat() * 1.25));
+            }
+        }
+    }
+
+    @Override
+    public void decreaseDifficulty(Trainingsplan plan) {
+        for (TrainingsSession session : plan.getTrainingsSessions()) {
+            for (ExerciseSet set : session.getExerciseSets()) {
+                set.setRepeat((int) (set.getRepeat() * 0.75));
+            }
         }
     }
 

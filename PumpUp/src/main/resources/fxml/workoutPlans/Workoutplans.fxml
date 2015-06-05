@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0"
-            prefWidth="1300.0" xmlns="http://javafx.com/javafx/8"
+            prefWidth="1300.0" stylesheets="@../../css/trainingStyle.css"
+            xmlns="http://javafx.com/javafx/8"
             fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.WorkoutPlansController">
     <bottom>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -14,13 +15,6 @@
                     <children>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                             <children>
-                                <Button layoutX="10.0" layoutY="330.0" maxHeight="1.7976931348623157E308"
-                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#newWorkoutPlanClicked" text="Neuen Plan anlegen">
-                                    <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                    </HBox.margin>
-                                </Button>
                                 <Button layoutX="10.0" layoutY="304.0" maxHeight="1.7976931348623157E308"
                                         maxWidth="1.7976931348623157E308" mnemonicParsing="false"
                                         onAction="#generateWorkoutPlanClicked" text="Plan generieren">
@@ -28,31 +22,9 @@
                                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                                     </HBox.margin>
                                 </Button>
-                                <Button fx:id="deleteBtn" disable="true" layoutX="10.0" layoutY="356.0"
-                                        maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                        mnemonicParsing="false" onAction="#deleteWorkoutPlanClicked"
-                                        text="Plan löschen">
-                                    <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                    </HBox.margin>
-                                </Button>
-                                <Button fx:id="editBtn" disable="true" maxHeight="1.7976931348623157E308"
-                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#editWorkoutPlanClicked" text="Plan bearbeiten">
-                                    <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                    </HBox.margin>
-                                </Button>
                                 <Button fx:id="calenderBtn" disable="true" maxHeight="1.7976931348623157E308"
                                         maxWidth="1.7976931348623157E308" mnemonicParsing="false"
                                         onAction="#embedInCalenderClicked" text="In Kalender einfügen">
-                                    <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                    </HBox.margin>
-                                </Button>
-                                <Button fx:id="copyBtn" disable="true" layoutX="10.0" layoutY="226.0"
-                                        maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                        mnemonicParsing="false" onAction="#copyWorkoutPlanClicked" text="Plan kopieren">
                                     <HBox.margin>
                                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                                     </HBox.margin>
@@ -96,27 +68,70 @@
             <children>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <children>
-                        <ListView fx:id="workoutPlansListView" maxHeight="1.7976931348623157E308"
-                                  maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                            <children>
+                                <ListView fx:id="workoutPlansListView" maxHeight="1.7976931348623157E308"
+                                          maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                    </VBox.margin>
+                                    <HBox.margin>
+                                        <Insets top="8.0"/>
+                                    </HBox.margin>
+                                </ListView>
+                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
+                                      maxWidth="1.7976931348623157E308" prefWidth="40.0" spacing="10.0"
+                                      HBox.hgrow="ALWAYS">
+                                    <children>
+                                        <Button fx:id="newBtn" maxHeight="1.7976931348623157E308"
+                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                onAction="#newWorkoutPlanClicked" prefHeight="50.0"
+                                                styleClass="btnAdd"/>
+                                        <Button fx:id="editBtn" disable="true" maxHeight="1.7976931348623157E308"
+                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                onAction="#editWorkoutPlanClicked" prefHeight="50.0"
+                                                styleClass="btnEdit"/>
+                                        <Button fx:id="copyBtn" disable="true" maxHeight="1.7976931348623157E308"
+                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                onAction="#copyWorkoutPlanClicked" prefHeight="50.0"
+                                                styleClass="btnCopy"/>
+                                        <Button fx:id="deleteBtn" disable="true" maxHeight="1.7976931348623157E308"
+                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                onAction="#deleteWorkoutPlanClicked" prefHeight="50.0"
+                                                styleClass="btnDelete"/>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                    </HBox.margin>
+                                </VBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                        </HBox>
+                        <VBox>
+                            <children>
+                                <CheckBox fx:id="customWorkoutPlansCheck" maxHeight="1.7976931348623157E308"
+                                          maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                          onAction="#filterUserPlans" text="Eigene Pläne">
+                                    <VBox.margin>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                    </VBox.margin>
+                                </CheckBox>
+                                <CheckBox fx:id="defaultWorkoutPlansCheck" mnemonicParsing="false"
+                                          onAction="#filterDefPlans" text="Vorgefertigte Pläne">
+                                    <VBox.margin>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                    </VBox.margin>
+                                </CheckBox>
+                            </children>
                             <VBox.margin>
                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
-                        </ListView>
-                        <CheckBox fx:id="customWorkoutPlansCheck" mnemonicParsing="false" onAction="#filterUserPlans"
-                                  text="Eigene Pläne">
-                            <VBox.margin>
-                                <Insets bottom="8.0" left="30.0" right="8.0" top="8.0"/>
-                            </VBox.margin>
-                        </CheckBox>
-                        <CheckBox fx:id="defaultWorkoutPlansCheck" mnemonicParsing="false" onAction="#filterDefPlans"
-                                  text="Vorgefertigte Pläne">
-                            <VBox.margin>
-                                <Insets bottom="8.0" left="30.0" right="8.0" top="8.0"/>
-                            </VBox.margin>
-                        </CheckBox>
+                        </VBox>
                     </children>
                     <HBox.margin>
-                        <Insets top="10.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </HBox.margin>
                 </VBox>
                 <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL">
@@ -136,7 +151,7 @@
                                                 <VBox maxHeight="1.7976931348623157E308"
                                                       maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                                     <children>
-                                                        <HBox maxHeight="1.7976931348623157E308"
+                                                        <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
                                                               maxWidth="1.7976931348623157E308">
                                                             <children>
                                                                 <VBox fillWidth="false"
@@ -303,12 +318,16 @@
                                                                             <font>
                                                                                 <Font size="14.0"/>
                                                                             </font>
+                                                                            <VBox.margin>
+                                                                                <Insets bottom="8.0" left="8.0"
+                                                                                        right="8.0" top="8.0"/>
+                                                                            </VBox.margin>
                                                                         </Label>
                                                                         <Text fx:id="txtCat" strokeType="OUTSIDE"
                                                                               strokeWidth="0.0">
                                                                             <VBox.margin>
-                                                                                <Insets bottom="8.0" left="20.0"
-                                                                                        top="8.0"/>
+                                                                                <Insets bottom="8.0" left="8.0"
+                                                                                        right="8.0" top="8.0"/>
                                                                             </VBox.margin>
                                                                         </Text>
                                                                     </children>
@@ -371,7 +390,7 @@
                                         </VBox>
                                     </children>
                                     <BorderPane.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                                     </BorderPane.margin>
                                 </VBox>
                             </center>
@@ -379,6 +398,9 @@
                     </children>
                 </VBox>
             </children>
+            <BorderPane.margin>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+            </BorderPane.margin>
         </HBox>
     </center>
     <top>
@@ -396,21 +418,18 @@
                             </HBox.margin>
                         </Label>
                     </children>
-                    <padding>
-                        <Insets left="80.0"/>
-                    </padding>
                     <VBox.margin>
-                        <Insets top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </VBox.margin>
                 </HBox>
                 <Separator prefWidth="200.0">
-                    <padding>
-                        <Insets left="30.0" right="30.0" top="10.0"/>
-                    </padding>
+                    <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                    </VBox.margin>
                 </Separator>
             </children>
             <BorderPane.margin>
-                <Insets/>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
             </BorderPane.margin>
         </VBox>
     </top>

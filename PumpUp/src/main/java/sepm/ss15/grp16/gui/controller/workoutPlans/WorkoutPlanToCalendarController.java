@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.calendar.WorkoutplanExport;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.calendar.CalendarService;
@@ -32,13 +33,14 @@ import java.util.ResourceBundle;
 /**
  * Created by Daniel Fuevesi on 08.05.15.
  */
-public class WorkoutPlanToCalendarController extends Controller implements Initializable {
+public class WorkoutPlanToCalendarController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutPlanToCalendarController.class);
+
     public static Trainingsplan plan_interClassCommunication;
+
     private CalendarService calendarService;
     private TrainingsplanService trainingsplanService;
     private UserService userService;
-    private StageTransitionLoader transitionLoader;
 
 
     @FXML
@@ -72,8 +74,7 @@ public class WorkoutPlanToCalendarController extends Controller implements Initi
     private ListView<TrainingsSession> listviewSessions;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.transitionLoader = new StageTransitionLoader(this);
+    public void initController() {
         setUpListView();
 
         if (plan_interClassCommunication != null) {
@@ -127,10 +128,12 @@ public class WorkoutPlanToCalendarController extends Controller implements Initi
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
-            transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) listviewSessions.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+            //transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) listviewSessions.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+            //this.stage.close();
+            mainFrame.navigateToParent();
+            //mainFrame.navigateToChild(PageEnum.Calendar);
             plan_interClassCommunication = null;
 
-            this.stage.close();
         }
     }
 

@@ -4,13 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.AbsractCategory;
@@ -21,32 +21,29 @@ import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.user.User;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
 import sepm.ss15.grp16.service.training.impl.TrainingsPlanServiceImpl;
+import sepm.ss15.grp16.service.user.UserService;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
  * This controller is the central point of all workout plans assigned to the user.
  */
-public class WorkoutPlansController extends Controller implements Initializable {
+public class WorkoutPlansController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutPlansController.class);
+
+    private Trainingsplan plan_interClassCommunication;
 
     private TrainingsplanService trainingsplanService;
     private UserService userService;
 
     private Trainingsplan selection;
-
-    private StageTransitionLoader transitionLoader;
 
     @FXML
     private CheckBox defaultWorkoutPlansCheck;
@@ -91,8 +88,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
     private Button copyBtn;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.transitionLoader = new StageTransitionLoader(this);
+    public void initController() {
 
         try {
             ObservableList<Trainingsplan> data =
@@ -112,13 +108,12 @@ public class WorkoutPlansController extends Controller implements Initializable 
                             if (selection.getUser() != null) {
                                 deleteBtn.setDisable(false);
                                 editBtn.setDisable(false);
-                                calenderBtn.setDisable(false);
                             } else {
                                 deleteBtn.setDisable(true);
                                 editBtn.setDisable(true);
-                                calenderBtn.setDisable(true);
                             }
                             copyBtn.setDisable(false);
+                            calenderBtn.setDisable(false);
                             updateInformations(new_val);
 
                         }
@@ -190,47 +185,20 @@ public class WorkoutPlansController extends Controller implements Initializable 
         }
     }
 
-
     private void updateSessionList(List<TrainingsSession> sessions) {
         listViewSessions.getItems().clear();
         if (sessions != null) {
             ObservableList<TrainingsSession> data = FXCollections.observableArrayList(sessions);
             listViewSessions.setItems(data);
         }
-
-
-		/*if (sessions.get(0) != null) {
-            for (int i = 0; i < sessions.get(0).size(); i++) {
-				TableColumn<List<TrainingsSession>, String> col = new TableColumn<>(sessions.get(0).get(i).getName());
-
-				final int k = i;
-				col.setCellValueFactory(p -> {
-					List<ExerciseSet> sets = p.getValue().get(k).getExerciseSets();
-					String value = "";
-					if (sets != null) {
-						for (ExerciseSet set : sets) {
-							value += set.getOrder_nr() + ": " + set.getRepeat() + " " + set.getExercise().getName() + "\n";
-						}
-					} else {
-						value += "";
-					}
-					return new SimpleStringProperty(value);
-				});
-				col.setMinWidth(200);
-
-				workoutPlanTable.getColumns().add(col);
-			}
-		}
-		workoutPlanTable.setPlaceholder(new Label("Trainingsplan enth\u00e4lt keine Sessions"));*/
     }
 
     @FXML
-    void filterUserPlans(ActionEvent event) {
+    public void filterUserPlans(ActionEvent event) {
         try {
             List<Trainingsplan> list;
             if (customWorkoutPlansCheck.isSelected()) {
                 User user = userService.getLoggedInUser();
-                //User user = new User(1, null, null, null, null, null);
 
                 list = trainingsplanService.find(new Trainingsplan(null, user, null, null, null, null, null));
                 if (list == null) list = new ArrayList<>();
@@ -247,14 +215,12 @@ public class WorkoutPlansController extends Controller implements Initializable 
     }
 
     @FXML
-    void filterDefPlans(ActionEvent event) {
+    public void filterDefPlans(ActionEvent event) {
         try {
             List<Trainingsplan> list;
-            if (customWorkoutPlansCheck.isSelected()) {
 
-                list = trainingsplanService.find(new Trainingsplan());
-                if (list == null) list = new ArrayList<>();
-
+            if (defaultWorkoutPlansCheck.isSelected()) {
+                list = trainingsplanService.getDefaultPlans();
             } else {
                 list = trainingsplanService.findAll();
             }
@@ -272,6 +238,7 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
         trainingDescr.setText("");
         trainingNameLabel.setText("");
+        txtDuration.setText("");
         listViewSessions.getItems().clear();
         workoutPlansListView.getSelectionModel().clearSelection();
 
@@ -313,8 +280,29 @@ public class WorkoutPlansController extends Controller implements Initializable 
                             String title = t.getName();
                             String value = "";
 
+                            Map<Integer, Pair<Integer, ExerciseSet>> setMap = new HashMap<>();
+
                             for (ExerciseSet set : t.getExerciseSets()) {
-                                value += set.getOrder_nr() + ": " + set.getRepeat() + " " + set.getExercise().getName() + "\n";
+                                Pair<Integer, ExerciseSet> set_map = setMap.get(setMap.size());
+
+                                if (set_map != null) {
+                                    if (!set_map.getValue().getExercise().equals(set.getExercise()) ||
+                                            !set_map.getValue().getRepeat().equals(set.getRepeat()) ||
+                                            !set_map.getValue().getType().equals(set.getType())) {
+                                        setMap.put(setMap.size() + 1, new Pair<>(1, set));
+                                    } else {
+                                        setMap.replace(setMap.size(), set_map, new Pair<>(set_map.getKey() + 1, set_map.getValue()));
+                                    }
+                                } else {
+                                    setMap.put(setMap.size() + 1, new Pair<>(1, set));
+                                }
+                            }
+
+                            for (Map.Entry<Integer, Pair<Integer, ExerciseSet>> entry : setMap.entrySet()) {
+                                value += entry.getValue().getKey() + "x "
+                                        + entry.getValue().getValue().getRepeat()
+                                        + (entry.getValue().getValue().getType() == ExerciseSet.SetType.time ? "s " : " ")
+                                        + entry.getValue().getValue().getExercise().getName() + "\n";
                             }
 
 
@@ -341,13 +329,13 @@ public class WorkoutPlansController extends Controller implements Initializable 
     }
 
     @FXML
-    void newWorkoutPlanClicked(ActionEvent event) {
-        Create_Edit_WorkoutPlanController.plan_interClassCommunication = null;
+    public void newWorkoutPlanClicked(ActionEvent event) {
+        //Create_Edit_WorkoutPlanController.plan_interClassCommunication = null;
+        plan_interClassCommunication = null;
 
-        Stage thiststage = (Stage) listViewSessions.getScene().getWindow();
-        thiststage.hide();
-        transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan erstellen", 1300, 700, false);
-        thiststage.show();
+        //transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
+        //      "Trainingsplan erstellen", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Workoutplan_create_edit);
 
         updateTable();
         setUpListView();
@@ -355,27 +343,30 @@ public class WorkoutPlansController extends Controller implements Initializable 
     }
 
     @FXML
-    void copyWorkoutPlanClicked(ActionEvent event) {
+    public void copyWorkoutPlanClicked(ActionEvent event) {
         Trainingsplan toCopy = new Trainingsplan(selection);
         toCopy.setId(null);
-        Create_Edit_WorkoutPlanController.plan_interClassCommunication = toCopy;
-        transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
-                "Trainingsplan " + selection.getName() + " kopieren", 1000, 620, true);
+        //Create_Edit_WorkoutPlanController.plan_interClassCommunication = toCopy;
+        plan_interClassCommunication = toCopy;
+        //transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
+        //      "Trainingsplan " + selection.getName() + " kopieren", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Workoutplan_create_edit);
         updateTable();
         setUpListView();
         clearSelection();
     }
 
     @FXML
-    void generateWorkoutPlanClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/workoutPlans/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 600, 400, false);
+    public void generateWorkoutPlanClicked(ActionEvent event) {
+        //transitionLoader.openWaitStage("fxml/workoutPlans/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 600, 400, false);
+        mainFrame.navigateToChild(PageEnum.Workoutplan_generate);
         updateTable();
         setUpListView();
         clearSelection();
     }
 
     @FXML
-    void deleteWorkoutPlanClicked(ActionEvent event) {
+    public void deleteWorkoutPlanClicked(ActionEvent event) {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("L\u00f6schen best\u00e4tigen");
@@ -410,12 +401,14 @@ public class WorkoutPlansController extends Controller implements Initializable 
     }
 
     @FXML
-    void editWorkoutPlanClicked(ActionEvent event) {
+    public void editWorkoutPlanClicked(ActionEvent event) {
         Stage thiststage = (Stage) listViewSessions.getScene().getWindow();
-        Create_Edit_WorkoutPlanController.plan_interClassCommunication = selection;
+        //Create_Edit_WorkoutPlanController.plan_interClassCommunication = selection;
+        plan_interClassCommunication = selection;
 
-        transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
-                "Trainingsplan " + selection.getName() + " bearbeiten", 1000, 620, true);
+        // transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
+        //         "Trainingsplan " + selection.getName() + " bearbeiten", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Workoutplan_create_edit);
 
         updateTable();
         setUpListView();
@@ -435,16 +428,19 @@ public class WorkoutPlansController extends Controller implements Initializable 
     }
 
     @FXML
-    void embedInCalenderClicked(ActionEvent event) {
+    public void embedInCalenderClicked(ActionEvent event) {
         WorkoutPlanToCalendarController.plan_interClassCommunication = selection;
-        transitionLoader.openWaitStage("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender exportieren", 800, 600, false);
+        plan_interClassCommunication = selection;
+        //transitionLoader.openWaitStage("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender exportieren", 800, 600, false);
+        mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
+        mainFrame.navigateToChild(PageEnum.Calendar);
     }
 
     @FXML
-    void getBackClicked(ActionEvent event) {
-        this.stage.close();
+    public void getBackClicked(ActionEvent event) {
+        //this.stage.close();
+        mainFrame.navigateToParent();
     }
-
 
     public void setTrainingsplanService(TrainingsPlanServiceImpl trainingsplanService) {
         this.trainingsplanService = trainingsplanService;
@@ -452,5 +448,13 @@ public class WorkoutPlansController extends Controller implements Initializable 
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public Trainingsplan getPlan_interClassCommunication() {
+        return plan_interClassCommunication;
+    }
+
+    public void setPlan_interClassCommunication(Trainingsplan plan_interClassCommunication) {
+        this.plan_interClassCommunication = plan_interClassCommunication;
     }
 }

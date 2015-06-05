@@ -78,7 +78,11 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
     public Trainingsplan create(Trainingsplan dto) throws PersistenceException {
 
         try {
-            ps_create.setObject(1, dto.getUser() != null ? dto.getUser().getId() : null);
+            //ps_create.setObject(1, dto.getUser() != null ? dto.getUser().getId() : null);
+
+            if(dto.getUser() != null ) ps_create.setInt(1, dto.getUser().getId());
+            else ps_create.setNull(1, java.sql.Types.INTEGER);
+
             ps_create.setString(2, dto.getName());
             ps_create.setString(3, dto.getDescr());
             ps_create.setInt(4, dto.getDuration());
@@ -170,7 +174,11 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
     public Trainingsplan update(Trainingsplan dto) throws PersistenceException {
 
         try {
-            ps_update.setObject(1, dto.getUser() != null ? dto.getUser().getId() : null);
+            //ps_update.setObject(1, dto.getUser() != null ? dto.getUser().getId() : null);
+
+            if(dto.getUser() != null ) ps_update.setInt(1, dto.getUser().getId());
+            else ps_update.setNull(1, java.sql.Types.INTEGER);
+
             ps_update.setString(2, dto.getName());
             ps_update.setString(3, dto.getDescr());
             ps_update.setInt(4, dto.getDuration());
@@ -305,7 +313,10 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
             PreparedStatement ps_find;
 
             if (filter.getUser() != null) {
-                ps_find_user.setInt(1, filter.getUser().getId());
+                //ps_find_user.setObject(1, filter.getUser().getId());
+
+                if(filter.getUser().getId() != null ) ps_find_user.setInt(1, filter.getUser().getId());
+                else ps_find_user.setNull(1, java.sql.Types.INTEGER);
 
                 if (filter.getName() != null) ps_find_user.setString(2, filter.getName());
                 else ps_find_user.setString(2, "%");
@@ -359,12 +370,12 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
     }
 
     private void executeUpdate(PreparedStatement ps) throws SQLException {
-        LOGGER.info("execute: " + ps);
+        LOGGER.debug("execute: " + ps);
         ps.executeUpdate();
     }
 
     private ResultSet executeQuery(PreparedStatement ps) throws SQLException {
-        LOGGER.info("execute: " + ps);
+        LOGGER.debug("execute: " + ps);
         return ps.executeQuery();
     }
 

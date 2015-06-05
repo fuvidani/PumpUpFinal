@@ -6,17 +6,17 @@
     <!-- ###### Database beans ###### -->
 
 
-    <!--<bean id="h2Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start" destroy-method="stop" depends-on="h2WebServer" scope="singleton">-->
-        <!--<constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092" />-->
-    <!--</bean>-->
-    <!--<bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop" scope="singleton">-->
-        <!--<constructor-arg value="-web,-webAllowOthers,-webPort,8082"/>-->
-    <!--</bean>-->
+    <bean id="h2Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start" destroy-method="stop" depends-on="h2WebServer" scope="singleton">
+        <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092" />
+    </bean>
+    <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop" scope="singleton">
+        <constructor-arg value="-web,-webAllowOthers,-webPort,8082"/>
+    </bean>
 
-    <!--<bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"-->
-          <!--scope="singleton" init-method="openConnection" destroy-method="closeConnection" depends-on="h2Server">-->
     <bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"
-    scope="singleton" init-method="openConnection" destroy-method="closeConnection">
+          scope="singleton" init-method="openConnection" destroy-method="closeConnection" depends-on="h2Server">
+    <!--<bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"-->
+    <!--scope="singleton" init-method="openConnection" destroy-method="closeConnection">-->
         <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"/>
         <constructor-arg name="user" value="sa"/>
         <constructor-arg name="password" value=""/>
@@ -31,6 +31,8 @@
         <property name="bodyfatHistoryService" ref="bodyfatHistoryService"/>
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
+
+    <bean id="aboutController" class="sepm.ss15.grp16.gui.controller.main.AboutController" scope="prototype"/>
 
     <!-- ###### User beans ###### -->
 
@@ -117,7 +119,7 @@
     </bean>
 
     <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.exercises.ExercisesController"
-          scope="singleton">
+          scope="prototype">
         <property name="exerciseService" ref="exerciseService"/>
         <property name="categoryService" ref="categoryService"/>
         <property name="userService" ref="userService"/>
@@ -125,7 +127,6 @@
 
     <bean id="manageExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.ManageExerciseController"
           scope="prototype">
-        <property name="exerciseController" ref="exerciseController"/>
         <property name="exerciseService" ref="exerciseService"/>
         <property name="categoryService" ref="categoryService"/>
         <property name="userService" ref="userService"/>
@@ -223,14 +224,9 @@
         <property name="userService" ref="userService"/>
     </bean>
 
-    <bean id="sessionController" class="sepm.ss15.grp16.gui.controller.workoutPlans.SessionController"
-          scope="prototype">
-        <property name="userService" ref="userService"/>
-    </bean>
-
-    <bean id="setController" class="sepm.ss15.grp16.gui.controller.workoutPlans.SetController" scope="prototype">
-        <property name="userService" ref="userService"/>
+    <bean id="sessionEditController_v2" class="sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2">
         <property name="exerciseService" ref="exerciseService"/>
+        <property name="userService" ref="userService"/>
     </bean>
 
     <bean id="generatedWorkoutplanService"

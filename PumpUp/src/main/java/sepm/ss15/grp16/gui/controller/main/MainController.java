@@ -27,6 +27,7 @@ import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.WeightHistory;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.user.UserEditController;
@@ -48,21 +49,21 @@ import java.util.ResourceBundle;
  * Created by Daniel Fuevesi on 05.05.15.
  * Controller of the main stage.
  */
-public class MainController extends Controller implements Initializable {
+public class MainController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    TextField genderTextField;
+    Label genderTextField;
     @FXML
-    TextField ageTextField;
+    Label ageTextField;
     @FXML
-    TextField heightTextField;
+    Label heightTextField;
     @FXML
-    TextField weightTextField;
+    Label weightTextField;
     @FXML
-    TextField bodyfatTextField;
+    Label bodyfatTextField;
     @FXML
-    TextField emailTextField;
+    Label emailTextField;
     private UserService userService;
     private CalendarService calendarService;
     private WeightHistoryService weightHistoryService;
@@ -100,7 +101,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
         this.transitionLoader = new StageTransitionLoader(this);
         this.updateUserData();
 
@@ -163,18 +164,20 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void viewCurrentWorkoutPlanClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        //transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Workoutplan);
     }
 
     @FXML
     void viewAllWorkoutPlansClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        //transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Workoutplan);
         refreshCalendar();
     }
 
     @FXML
     void exercisesButtonClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/exercise/Exercises.fxml", (Stage) usernameLabel.getScene().getWindow(), "Übungen", 1100, 750, true);
+       mainFrame.navigateToChild(PageEnum.Exercises);
     }
 
     @FXML
@@ -192,20 +195,8 @@ public class MainController extends Controller implements Initializable {
     void editBodyDataClicked(ActionEvent event) {
         LOGGER.debug("Edit user button clicked");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-            fxmlLoader.setControllerFactory(context::getBean);
-            Stage stage = new Stage();
-            fxmlLoader.setLocation(UserEditController.class.getClassLoader().getResource("fxml/user/UserEdit.fxml"));
-            Pane pane = fxmlLoader.load(UserEditController.class.getClassLoader().getResourceAsStream("fxml/user/UserEdit.fxml"));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(usernameLabel.getScene().getWindow());
-            UserEditController userEditController = fxmlLoader.getController();
-            userEditController.setMainController(this);
-            stage.setResizable(false);
-            stage.setScene(new Scene(pane));
-            stage.show();
-        } catch (IOException e) {
+            mainFrame.openDialog(PageEnum.UserEdit);
+        } catch (Exception e) {
             LOGGER.error("Couldn't open useredit-window");
             e.printStackTrace();
         }
@@ -219,7 +210,7 @@ public class MainController extends Controller implements Initializable {
     @FXML
     void logoutClicked(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Abmelde");
+        alert.setTitle("Abmelden");
         alert.setHeaderText("");
         alert.setContentText("Möchten Sie sich wirklich abmelden?");
         ButtonType yes = new ButtonType("Ja");
@@ -238,7 +229,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void exercisesMenuClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/exercise/Exercises.fxml", (Stage) usernameLabel.getScene().getWindow(), "Übungen", 800, 600, true);
+      mainFrame.navigateToChild(PageEnum.Exercises);
     }
 
     @FXML
@@ -249,7 +240,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void aboutMenuClicked(ActionEvent event) {
-        // About the developer, contact + Help
+        transitionLoader.openWaitStage("fxml/main/About.fxml", (Stage) usernameLabel.getScene().getWindow(), "Information", 400, 400, false);
     }
 
     public void updateUserData() {
@@ -298,16 +289,18 @@ public class MainController extends Controller implements Initializable {
 
         if (weight != null) {
             weightTextField.setText(Integer.toString(weight));
+        }else {
+            weightTextField.setText("Keine Angabe");
         }
 
         if (bodyfat != null) {
             bodyfatTextField.setText(Integer.toString(bodyfat));
         } else {
-            bodyfatTextField.setPromptText("Keine Angabe");
+            bodyfatTextField.setText("Keine Angabe");
         }
 
         if (email == null || email.isEmpty()) {
-            emailTextField.setPromptText("Keine Angabe");
+            emailTextField.setText("Keine Angabe");
         } else {
             emailTextField.setText(email);
         }

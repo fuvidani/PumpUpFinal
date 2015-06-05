@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.web.WebView?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="sepm.ss15.grp16.gui.controller.exercises.ManageExerciseController">
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.exercises.ManageExerciseController">
     <children>
-        <VBox prefHeight="750.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox prefHeight="750.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox>
                     <children>
                         <Label prefHeight="23.0" prefWidth="183.0" text="Übung">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
                     </children>
                     <VBox.margin>
-                        <Insets left="60.0" top="20.0"/>
+                        <Insets left="60.0" top="20.0" />
                     </VBox.margin>
                 </HBox>
                 <Separator prefWidth="200.0">
                     <VBox.margin>
-                        <Insets left="20.0" right="30.0" top="10.0"/>
+                        <Insets left="20.0" right="30.0" top="10.0" />
                     </VBox.margin>
                 </Separator>
                 <HBox prefHeight="690.0" prefWidth="1270.0" spacing="50.0">
@@ -38,148 +38,146 @@
                                     <children>
                                         <Label text="Daten">
                                             <font>
-                                                <Font size="24.0"/>
+                                                <Font size="24.0" />
                                             </font>
                                         </Label>
                                         <VBox spacing="5.0">
                                             <children>
-                                                <Label text="Name:"/>
-                                                <TextField fx:id="exerciseNameField" promptText="Name der Übung"/>
+                                                <Label text="Name:" />
+                                                <TextField fx:id="exerciseNameField" promptText="Name der Übung" />
                                             </children>
                                         </VBox>
                                     </children>
                                 </VBox>
                                 <VBox prefWidth="337.0" spacing="5.0">
                                     <children>
-                                        <Label text="Beschreibung:"/>
-                                        <TextArea fx:id="descriptionArea" prefHeight="124.0" prefWidth="337.0"
-                                                  promptText="Eine ausführliche Anleitung, wie die Übung auszuführen ist."
-                                                  wrapText="true">
+                                        <Label text="Beschreibung:" />
+                                        <TextArea fx:id="descriptionArea" prefHeight="124.0" prefWidth="337.0" promptText="Eine ausführliche Anleitung, wie die Übung auszuführen ist." wrapText="true">
                                             <VBox.margin>
-                                                <Insets/>
+                                                <Insets />
                                             </VBox.margin>
                                         </TextArea>
-                                        <Label text="Video Link:"/>
-                                        <TextField fx:id="videoLinkField" onAction="#playVideo"
-                                                   promptText="https://www.youtube.com/watch?v=Eh00_rniF8E&amp;ab_channel=ScottMalin"/>
-                                        <Button mnemonicParsing="false" onAction="#playVideo" text="play video"/>
-                                        <WebView fx:id="webViewVideo" prefHeight="266.0" prefWidth="337.0"/>
+                                        <WebView fx:id="webViewVideo" prefHeight="266.0" prefWidth="337.0" />
                                     </children>
                                 </VBox>
                             </children>
                             <HBox.margin>
-                                <Insets left="20.0" top="10.0"/>
+                                <Insets left="20.0" top="10.0" />
                             </HBox.margin>
                         </VBox>
                         <VBox prefHeight="672.0" prefWidth="520.0">
                             <children>
                                 <Label alignment="CENTER" prefHeight="28.0" prefWidth="401.0" text="Kategorien">
                                     <font>
-                                        <Font size="24.0"/>
+                                        <Font size="24.0" />
                                     </font>
                                 </Label>
                                 <HBox spacing="70.0">
                                     <children>
                                         <VBox fx:id="vboxType" spacing="5.0">
                                             <children>
-                                                <Label text="Art"/>
+                                                <Label text="Art" />
                                             </children>
                                         </VBox>
                                         <VBox fx:id="vboxEquipment" spacing="5.0">
                                             <children>
-                                                <Label text="Geräte"/>
+                                                <Label text="Geräte" />
                                             </children>
                                         </VBox>
                                         <VBox fx:id="vboxMuscle">
                                             <children>
-                                                <Label text="Muskelgruppe"/>
+                                                <Label text="Muskelgruppe" />
                                             </children>
                                         </VBox>
                                     </children>
                                     <VBox.margin>
-                                        <Insets top="30.0"/>
+                                        <Insets top="30.0" />
                                     </VBox.margin>
                                 </HBox>
                                 <Label text="Infos">
                                     <font>
-                                        <Font size="24.0"/>
+                                        <Font size="24.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets bottom="20.0" left="20.0" top="10.0"/>
+                                        <Insets bottom="20.0" left="20.0" top="10.0" />
                                     </VBox.margin>
                                 </Label>
                                 <VBox spacing="10.0">
                                     <children>
-                                        <Label text="Kalorien pro Einheit"/>
-                                        <TextField fx:id="caloriesField" prefHeight="26.0" prefWidth="348.0"
-                                                   promptText="kcal">
+                                        <Label text="Kalorien pro Einheit" />
+                                        <TextField fx:id="caloriesField" prefHeight="26.0" prefWidth="348.0" promptText="kcal">
                                             <VBox.margin>
-                                                <Insets right="250.0"/>
+                                                <Insets right="250.0" />
                                             </VBox.margin>
                                         </TextField>
                                     </children>
                                 </VBox>
-                                <VBox prefHeight="285.0" prefWidth="383.0" spacing="5.0"/>
+                                <VBox prefHeight="285.0" prefWidth="383.0" spacing="5.0" />
                             </children>
                             <HBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </HBox.margin>
                         </VBox>
                         <VBox prefHeight="610.0" prefWidth="338.0" spacing="20.0">
                             <children>
-                                <Label alignment="CENTER" prefHeight="28.0" prefWidth="339.0" text="Bild">
+                                <Label alignment="CENTER" prefHeight="28.0" prefWidth="339.0" text="Bilder">
                                     <font>
-                                        <Font size="24.0"/>
+                                        <Font size="24.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </VBox.margin>
                                 </Label>
-                                <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="300.0" pickOnBounds="true"
-                                           preserveRatio="true">
-                                    <VBox.margin>
-                                        <Insets left="20.0"/>
-                                    </VBox.margin>
-                                </ImageView>
                                 <HBox spacing="20.0">
                                     <children>
-                                        <ListView fx:id="imagesListView" prefHeight="200.0" prefWidth="196.0"/>
-                                        <VBox prefHeight="200.0" prefWidth="100.0">
-                                            <children>
-                                                <Button fx:id="btn_durchsuchen" mnemonicParsing="false"
-                                                        onAction="#browseClicked" text="Bild hinzufügen"/>
-                                                <Button fx:id="btn_entfernen" mnemonicParsing="false"
-                                                        onAction="#removeClicked" text="Bild entfernen">
-                                                    <VBox.margin>
-                                                        <Insets top="20.0"/>
-                                                    </VBox.margin>
-                                                </Button>
-                                            </children>
+                                        <VBox>
+                                 <children>
+                                              <ListView fx:id="imagesListView" prefHeight="168.0" prefWidth="222.0" />
+                                    <HBox stylesheets="@../../css/exerciseStyle.css">
+                                       <children>
+                                          <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#removeClicked" prefHeight="24.0" prefWidth="24.0" styleClass="deleteBtn">
+                                             <HBox.margin>
+                                                <Insets left="170.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button fx:id="addBtn" mnemonicParsing="false" onAction="#browseClicked" prefHeight="24.0" prefWidth="24.0" styleClass="addBtn">
+                                             <HBox.margin>
+                                                <Insets left="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
                                         </VBox>
                                     </children>
                                 </HBox>
+                                <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="276.0" pickOnBounds="true" preserveRatio="true">
+                                    <VBox.margin>
+                                        <Insets left="20.0" />
+                                    </VBox.margin>
+                                </ImageView>
                                 <HBox spacing="30.0">
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#cancelClicked" text="Abbrechen"/>
-                                        <Button mnemonicParsing="false" onAction="#saveClicked" text="Speichern"/>
+                                        <Button mnemonicParsing="false" onAction="#cancelClicked" text="Abbrechen" />
+                                        <Button mnemonicParsing="false" onAction="#saveClicked" text="Speichern" />
                                     </children>
                                     <VBox.margin>
-                                        <Insets left="145.0" top="150.0"/>
+                                        <Insets left="145.0" />
                                     </VBox.margin>
                                 </HBox>
                             </children>
                             <HBox.margin>
-                                <Insets top="10.0"/>
+                                <Insets top="10.0" />
                             </HBox.margin>
                         </VBox>
                     </children>
                     <padding>
-                        <Insets right="20.0"/>
+                        <Insets right="20.0" />
                     </padding>
                 </HBox>
             </children>
             <padding>
-                <Insets left="15.0" right="15.0"/>
+                <Insets left="15.0" right="15.0" />
             </padding>
         </VBox>
     </children>
