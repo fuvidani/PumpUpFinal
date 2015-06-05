@@ -31,7 +31,7 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO weighthistory VALUES(?, ?, ?, ?);");
             this.getActualWeightStatement = con.prepareStatement("SELECT * FROM weighthistory WHERE user_id = ? AND " +
-                    "weighthistory_id = (SELECT max(weighthistory_id) from weighthistory);");
+                    "weighthistory_id = (SELECT max(weighthistory_id) from weighthistory WHERE user_id = ?);");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
@@ -129,6 +129,7 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
 
         try {
             getActualWeightStatement.setInt(1, user_id);
+            getActualWeightStatement.setInt(2, user_id);
             ResultSet rs = getActualWeightStatement.executeQuery();
             if (rs.next() == true) {
                 foundWeightHistory = new WeightHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));

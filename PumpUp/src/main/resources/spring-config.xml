@@ -119,7 +119,7 @@
     </bean>
 
     <bean id="exerciseController" class="sepm.ss15.grp16.gui.controller.exercises.ExercisesController"
-          scope="singleton">
+          scope="prototype">
         <property name="exerciseService" ref="exerciseService"/>
         <property name="categoryService" ref="categoryService"/>
         <property name="userService" ref="userService"/>
