@@ -195,20 +195,8 @@ public class MainController extends Controller {
     void editBodyDataClicked(ActionEvent event) {
         LOGGER.debug("Edit user button clicked");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-            fxmlLoader.setControllerFactory(context::getBean);
-            Stage stage = new Stage();
-            fxmlLoader.setLocation(UserEditController.class.getClassLoader().getResource("fxml/user/UserEdit.fxml"));
-            Pane pane = fxmlLoader.load(UserEditController.class.getClassLoader().getResourceAsStream("fxml/user/UserEdit.fxml"));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(usernameLabel.getScene().getWindow());
-            UserEditController userEditController = fxmlLoader.getController();
-            userEditController.setMainController(this);
-            stage.setResizable(false);
-            stage.setScene(new Scene(pane));
-            stage.show();
-        } catch (IOException e) {
+            mainFrame.openDialog(PageEnum.UserEdit);
+        } catch (Exception e) {
             LOGGER.error("Couldn't open useredit-window");
             e.printStackTrace();
         }
