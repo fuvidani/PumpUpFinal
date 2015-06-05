@@ -1,3 +1,8 @@
+.root, .tableView, .navigation, .spliter{
+    -fx-background-color: lightgrey;
+    -fx-border-color: lightgray;
+}
+
 .btnLogin {
     -fx-background-image: url('../icons/Login.png');
     -fx-background-repeat: no-repeat;

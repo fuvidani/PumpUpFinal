@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -10,40 +14,34 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0"
-            prefWidth="1300.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
+
+<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="root" stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
     <top>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <children>
-                <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="29.0"
-                         prefWidth="601.0" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
+                <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="601.0" styleClass="topMenu" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
                     <menus>
                         <Menu mnemonicParsing="false" text="Username">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#editBodyDataClicked"
-                                          text="Körperdaten ändern"/>
-                                <MenuItem mnemonicParsing="false" onAction="#manageBodyPhotosClicked"
-                                          text="Eigene Fotos verwalten"/>
-                                <MenuItem mnemonicParsing="false" onAction="#logoutClicked" text="Abmelden"/>
+                                <MenuItem mnemonicParsing="false" onAction="#editBodyDataClicked" text="Körperdaten ändern" />
+                                <MenuItem mnemonicParsing="false" onAction="#manageBodyPhotosClicked" text="Eigene Fotos verwalten" />
+                                <MenuItem mnemonicParsing="false" onAction="#logoutClicked" text="Abmelden" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="View">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#calendarClicked"
-                                          text="Trainingskalender..."/>
+                                <MenuItem mnemonicParsing="false" onAction="#calendarClicked" text="Trainingskalender..." />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#viewAllWorkoutPlansClicked"
-                                          text="Trainingspläne..."/>
-                                <MenuItem mnemonicParsing="false" onAction="#exercisesMenuClicked" text="Übungen..."/>
+                                <MenuItem mnemonicParsing="false" onAction="#viewAllWorkoutPlansClicked" text="Trainingspläne..." />
+                                <MenuItem mnemonicParsing="false" onAction="#exercisesMenuClicked" text="Übungen..." />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#aboutMenuClicked" text="About"/>
+                                <MenuItem mnemonicParsing="false" onAction="#aboutMenuClicked" text="About" />
                             </items>
                         </Menu>
                     </menus>
@@ -52,208 +50,166 @@
         </HBox>
     </top>
     <center>
-        <SplitPane dividerPositions="0.5632183908045977" maxHeight="1.7976931348623157E308"
-                   maxWidth="1.7976931348623157E308" orientation="VERTICAL" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.5897009966777409" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
             <items>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="mainBox">
                     <children>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                             <children>
-                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                      spacing="10.0" HBox.hgrow="ALWAYS">
+                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <Label fx:id="usernameLabel" maxHeight="1.7976931348623157E308"
-                                               maxWidth="1.7976931348623157E308" text="Willkommen, Username!">
+                                        <Label fx:id="usernameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Willkommen, Username!">
                                             <font>
-                                                <Font size="24.0"/>
+                                                <Font size="24.0" />
                                             </font>
                                         </Label>
-                                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                              spacing="15.0" VBox.vgrow="ALWAYS">
+                                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0" VBox.vgrow="ALWAYS">
                                             <children>
-                                                <ImageView fx:id="userImgView" fitHeight="281.0" fitWidth="268.0"
-                                                           pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                                <ImageView fx:id="userImgView" fitHeight="281.0" fitWidth="268.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                                                     <image>
-                                                        <Image url="@../../img/fett-zu-muskeln.jpg"/>
+                                                        <Image url="@../../img/fett-zu-muskeln.jpg" />
                                                     </image>
                                                     <viewport>
-                                                        <Rectangle2D/>
+                                                        <Rectangle2D />
                                                     </viewport>
                                                 </ImageView>
-                                                <VBox maxHeight="1.7976931348623157E308"
-                                                      maxWidth="1.7976931348623157E308" spacing="20.0"
-                                                      HBox.hgrow="ALWAYS">
+                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" HBox.hgrow="ALWAYS">
                                                     <children>
                                                         <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Geschlecht:">
                                                                     <font>
-                                                                        <Font size="17.0"/>
+                                                                        <Font size="17.0" />
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT"
-                                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                                      HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                                        <TextField fx:id="genderTextField"
-                                                                                   editable="false" prefHeight="26.0"/>
+                                                      <Label fx:id="genderTextField" text="Label">
+                                                         <HBox.margin>
+                                                            <Insets left="130.0" />
+                                                         </HBox.margin>
+                                                      </Label>
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="10.0"
-                                                              maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Alter:">
                                                                     <font>
-                                                                        <Font size="17.0"/>
+                                                                        <Font size="17.0" />
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT"
-                                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                                      HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                                        <TextField fx:id="ageTextField" editable="false"
-                                                                                   prefHeight="26.0"/>
+                                                      <Label fx:id="ageTextField" text="Label" />
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="51.0"
-                                                              maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="51.0" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Größe:">
                                                                     <font>
-                                                                        <Font size="17.0"/>
+                                                                        <Font size="17.0" />
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT"
-                                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                                      HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                                        <TextField fx:id="heightTextField"
-                                                                                   editable="false" prefHeight="26.0"/>
+                                                      <Label fx:id="heightTextField" text="Label" />
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="92.0"
-                                                              maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="92.0" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Gewicht:">
                                                                     <font>
-                                                                        <Font size="17.0"/>
+                                                                        <Font size="17.0" />
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT"
-                                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                                      HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                                        <TextField fx:id="weightTextField"
-                                                                                   editable="false" prefHeight="26.0"/>
+                                                      <Label fx:id="weightTextField" text="Label" />
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="133.0"
-                                                              maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="133.0" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Körperfett:">
                                                                     <font>
-                                                                        <Font size="17.0"/>
+                                                                        <Font size="17.0" />
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT"
-                                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                                      HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                                        <TextField fx:id="bodyfatTextField"
-                                                                                   editable="false" prefHeight="26.0"/>
+                                                      <Label fx:id="bodyfatTextField" text="Label" />
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="174.0"
-                                                              maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="174.0" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="E-Mail:">
                                                                     <font>
-                                                                        <Font size="17.0"/>
+                                                                        <Font size="17.0" />
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT"
-                                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                                      HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                                        <TextField fx:id="emailTextField"
-                                                                                   editable="false" prefHeight="26.0"/>
+                                                      <Label fx:id="emailTextField" text="Label" />
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
                                                     </children>
                                                     <HBox.margin>
-                                                        <Insets/>
+                                                        <Insets />
                                                     </HBox.margin>
                                                 </VBox>
                                             </children>
                                         </HBox>
                                     </children>
                                     <HBox.margin>
-                                        <Insets left="20.0"/>
+                                        <Insets left="20.0" />
                                     </HBox.margin>
                                 </VBox>
                             </children>
                         </HBox>
-                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <xAxis>
-                                <CategoryAxis side="BOTTOM"/>
+                                <CategoryAxis side="BOTTOM" />
                             </xAxis>
                             <yAxis>
-                                <NumberAxis side="LEFT"/>
+                                <NumberAxis side="LEFT" />
                             </yAxis>
                         </LineChart>
                     </children>
                     <padding>
-                        <Insets bottom="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
                     </padding>
                 </HBox>
-                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="mainBox">
                     <children>
-                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0"
-                              HBox.hgrow="ALWAYS">
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
                             <children>
                                 <HBox alignment="CENTER">
                                     <children>
-                                        <Region layoutX="603.0" layoutY="10.0" prefHeight="44.0" prefWidth="0.0"
-                                                HBox.hgrow="ALWAYS"/>
-                                        <Label text="Aktuelles Trainingsziel:">
-                                            <font>
-                                                <Font size="24.0"/>
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="currentTrainingTypeLabel" alignment="TOP_RIGHT"
-                                               contentDisplay="CENTER" prefHeight="28.0" prefWidth="149.0"
-                                               text="Ausdauer" HBox.hgrow="ALWAYS">
-                                            <font>
-                                                <Font size="24.0"/>
-                                            </font>
-                                        </Label>
-                                        <Region prefHeight="44.0" prefWidth="0.0" HBox.hgrow="ALWAYS"/>
-                                        <Region layoutX="672.0" layoutY="10.0" prefHeight="44.0" prefWidth="0.0"
-                                                HBox.hgrow="ALWAYS"/>
+                                        <Region layoutX="603.0" layoutY="10.0" prefHeight="44.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+                                        <Region prefHeight="44.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+                                        <Region layoutX="672.0" layoutY="10.0" prefHeight="44.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
                                     </children>
                                     <VBox.margin>
-                                        <Insets left="10.0" right="10.0"/>
+                                        <Insets left="10.0" right="10.0" />
                                     </VBox.margin>
                                 </HBox>
-                                <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0"/>
+                                <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" styleClass="webCalender" />
                             </children>
                         </VBox>
                     </children>
                     <padding>
-                        <Insets top="10.0"/>
+                        <Insets top="10.0" />
                     </padding>
                 </HBox>
             </items>
@@ -262,23 +218,21 @@
     <bottom>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
             <children>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                        mnemonicParsing="false" onAction="#trainingClicked" prefHeight="0.0" prefWidth="0.0"
-                        text="Training" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
+                <Region HBox.hgrow="ALWAYS" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="0.0" prefWidth="0.0" styleClass="trainingBtn" text="Training" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                     <HBox.margin>
-                        <Insets/>
+                        <Insets />
                     </HBox.margin>
                 </Button>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Region HBox.hgrow="ALWAYS"/>
+                <Region HBox.hgrow="ALWAYS" />
+                <Region HBox.hgrow="ALWAYS" />
             </children>
             <BorderPane.margin>
-                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
             </BorderPane.margin>
         </HBox>
     </bottom>

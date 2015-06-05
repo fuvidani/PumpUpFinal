@@ -53,17 +53,17 @@ public class MainController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    TextField genderTextField;
+    Label genderTextField;
     @FXML
-    TextField ageTextField;
+    Label ageTextField;
     @FXML
-    TextField heightTextField;
+    Label heightTextField;
     @FXML
-    TextField weightTextField;
+    Label weightTextField;
     @FXML
-    TextField bodyfatTextField;
+    Label bodyfatTextField;
     @FXML
-    TextField emailTextField;
+    Label emailTextField;
     private UserService userService;
     private CalendarService calendarService;
     private WeightHistoryService weightHistoryService;
@@ -289,16 +289,18 @@ public class MainController extends Controller {
 
         if (weight != null) {
             weightTextField.setText(Integer.toString(weight));
+        }else {
+            weightTextField.setText("Keine Angabe");
         }
 
         if (bodyfat != null) {
             bodyfatTextField.setText(Integer.toString(bodyfat));
         } else {
-            bodyfatTextField.setPromptText("Keine Angabe");
+            bodyfatTextField.setText("Keine Angabe");
         }
 
         if (email == null || email.isEmpty()) {
-            emailTextField.setPromptText("Keine Angabe");
+            emailTextField.setText("Keine Angabe");
         } else {
             emailTextField.setText(email);
         }
