@@ -2,6 +2,7 @@ package sepm.ss15.grp16.gui.controller.user;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -44,7 +47,6 @@ public class LoginController extends Controller {
     Button login_button;
     @FXML
     Button registrieren_button;
-    private StageTransitionLoader transitionLoader;
     @FXML
     private TableView<User> user_tableView = new TableView<>();
     @FXML
@@ -58,12 +60,19 @@ public class LoginController extends Controller {
 
     @Override
     public void initController() {
-        this.transitionLoader = new StageTransitionLoader(this);
+
         LOGGER.debug("Initialize LoginController");
-        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         try {
             masterData = FXCollections.observableList(userService.findAll());
+            usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
             user_tableView.setItems(masterData);
+            user_tableView.getSelectionModel().selectFirst();
+            user_tableView.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+                if (event.getCode() == KeyCode.ENTER) {
+                    loginButtonClicked();
+                    event.consume();
+                }
+            });
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -74,8 +83,6 @@ public class LoginController extends Controller {
         LOGGER.debug("Register button clicked");
         try {
             mainFrame.openDialog(PageEnum.Registration);
-
-
         } catch (Exception e) {
             LOGGER.error("Couldn't open main-window");
             e.printStackTrace();
@@ -99,44 +106,6 @@ public class LoginController extends Controller {
             return;
         }
 
-/*        try {
-            FXMLLoader loader = new FXMLLoader();
-
-            ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-
-            loader.setControllerFactory(context::getBean);
-
-            loader.setLocation(LoginController.class.getClassLoader().getResource("fxml/main/Main.fxml"));
-            Pane page = loader.load();
-
-            // Create the dialog Stage.
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("PumpUp!");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(loginPane.getScene().getWindow());
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            Controller to = loader.getController();
-            to.setStage(dialogStage);
-
-            // Show the dialog and wait until the user closes it
-            dialogStage.setMinWidth(500);
-            dialogStage.setMinHeight(500);
-            dialogStage.setMaximized(true);
-
-
-            LOGGER.info("New stage successfully launched!");
-            Stage stage = (Stage) this.loginPane.getScene().getWindow();
-            stage.hide();
-            dialogStage.showAndWait();
-
-            stage.show();
-            // user closed dialog
-        } catch (IOException e) {
-            LOGGER.info("Error on opening new stage, reason: " + e.getMessage());
-            e.printStackTrace();
-        }*/
         mainFrame.openMainWindowFrame();
     }
 

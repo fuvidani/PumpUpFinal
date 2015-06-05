@@ -1,9 +1,13 @@
 package sepm.ss15.grp16.gui.controller.user;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
@@ -27,7 +32,7 @@ import java.util.ResourceBundle;
  * @author Michael Sober
  * @version 1.0
  */
-public class UserEditController implements Initializable {
+public class UserEditController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
@@ -64,7 +69,9 @@ public class UserEditController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
+
+        mainController = (MainController) parentController;
         Integer user_id = userService.getLoggedInUser().getUser_id();
         Integer age = userService.getLoggedInUser().getAge();
         Integer height = userService.getLoggedInUser().getHeight();
