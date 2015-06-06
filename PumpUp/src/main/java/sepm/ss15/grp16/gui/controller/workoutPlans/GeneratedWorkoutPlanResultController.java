@@ -1,5 +1,13 @@
 package sepm.ss15.grp16.gui.controller.workoutPlans;
 
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
+import facebook4j.FacebookFactory;
+import facebook4j.auth.AccessToken;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -9,10 +17,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.VPos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +36,7 @@ import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -229,5 +242,20 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         LOGGER.info("Generated workout successfully displayed!");
     }
 
+    @FXML
+    public void shareFacebookClicked() throws Exception{
+        // Setting up the webview
+        WebView webView = new WebView();
+        final WebEngine webEngine = webView.getEngine();
+        webEngine.setJavaScriptEnabled(true);
+
+        // Read the html file and let the web engine load it.
+        File file = new File(getClass().getClassLoader().getResource("facebook.html").toURI().getPath());
+        webEngine.load(file.toURI().toURL().toString());
+        Stage stage = new Stage();
+        stage.initOwner(this.stage);
+        stage.setScene(new Scene(webView, 1000, 800));
+        stage.show();
+    }
 
 }
