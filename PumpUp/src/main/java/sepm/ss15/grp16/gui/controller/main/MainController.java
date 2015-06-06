@@ -6,23 +6,19 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
@@ -30,7 +26,6 @@ import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.gui.controller.user.UserEditController;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
@@ -39,11 +34,8 @@ import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 05.05.15.
@@ -182,7 +174,8 @@ public class MainController extends Controller {
 
     @FXML
     void calendarClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+        //transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+        mainFrame.navigateToChild(PageEnum.Calendar);
         refreshCalendar();
     }
 
