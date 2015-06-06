@@ -1,5 +1,7 @@
 .root, .mainBox, .webCalender, .spliter{
     -fx-background-color: white;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 15pt;
 
 }
 
@@ -28,7 +30,6 @@
 }
 
 .button:hover {
-    -fx-background-size: 90%;
 }
 
 .table-view {
