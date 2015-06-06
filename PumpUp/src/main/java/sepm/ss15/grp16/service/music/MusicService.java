@@ -10,4 +10,5 @@ import sepm.ss15.grp16.service.exception.ServiceException;
  */
 public interface MusicService extends Service<Playlist> {
 
+    Playlist getMotivations() throws ServiceException;
 }

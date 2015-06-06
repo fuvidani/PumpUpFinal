@@ -29,6 +29,7 @@ import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.net.URISyntaxException;
@@ -85,6 +86,7 @@ public class WorkoutController extends Controller {
 
     @FXML
     private WorkoutMusicPlayerController musicPlayerController;
+    private MotivatonModul motivationModul;
 
     private Timeline counterTimeline;
     private IntegerProperty timeSeconds;
@@ -98,7 +100,8 @@ public class WorkoutController extends Controller {
     private Status status;
     private TrainingsSession session;
 
-    public WorkoutController(ExerciseDAO exerciseDAO) {
+    public WorkoutController(ExerciseDAO exerciseDAO, MotivatonModul motivationModul) {
+        this.motivationModul = motivationModul;
         LinkedList<ExerciseSet> list = new LinkedList<>();
 
         try {
@@ -117,6 +120,8 @@ public class WorkoutController extends Controller {
     @Override
     public void initController() {
         musicPlayerController.setParent(this);
+        motivationModul.setMusicPlayerController(musicPlayerController);
+        musicPlayerController.play();
         exerciseList = new ArrayList<>(session.getExerciseSets());
         activeExercisePosition = -1;
 

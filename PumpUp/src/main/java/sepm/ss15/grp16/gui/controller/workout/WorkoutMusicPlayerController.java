@@ -6,12 +6,9 @@ import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -94,6 +91,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         }
         if (playlist == null) {
             mainPane.setVisible(false);
+            musicPlayerSlide = null;
         } else {
             players = playlist.getPlayers();
             original = new ArrayList<>(players);
@@ -124,9 +122,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
                 // start playing the first track.
                 musicPlayerSlide.setMediaPlayer(players.get(0));
                 playlist.setActivePlayer(players.get(0));
-                musicPlayerSlide.getMediaPlayer().play();
                 setCurrentlyPlaying(musicPlayerSlide.getMediaPlayer());
-                playing = true;
 
                 //VBox.setVgrow(vBoxProg, Priority.ALWAYS);
                 //vBoxProg.setAlignment(Pos.CENTER);
@@ -250,7 +246,6 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         } else {
             List<MediaPlayer> shuffledList = new ArrayList<>();
             Random rand = new Random();
-            System.out.println("size: " + original.size());
             for (int i = 0; i < original.size(); i++) {
                 int randomNum = rand.nextInt(original.size() - i);
                 shuffledList.add(original.get(randomNum));
@@ -261,12 +256,20 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
     }
 
+    public void play(){
+        if (musicPlayerSlide != null) {
+            musicPlayerSlide.getMediaPlayer().play();
+            playing = true;
+        }
+    }
+
     public void reduceVol(Integer percent) {
-        Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
-        Double new_vol = vol + (vol * (percent / 100));
-        new_vol = new_vol > 1 ? 1 : new_vol;
-        this.
-                musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+        if (musicPlayerSlide != null) {
+            Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
+            Double new_vol = vol + (vol * (percent / 100));
+            new_vol = new_vol > 1 ? 1 : new_vol;
+            this.musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+        }
     }
 
     public void reduceVol() {
@@ -274,10 +277,12 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
     }
 
     public void raiseVol(Integer percent) {
-        Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
-        Double new_vol = vol - (vol * (percent / 100));
-        new_vol = new_vol < 0 ? 0 : new_vol;
-        musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+        if (musicPlayerSlide != null) {
+            Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
+            Double new_vol = vol - (vol * (percent / 100));
+            new_vol = new_vol < 0 ? 0 : new_vol;
+            musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+        }
     }
 
     public void raiseVol() {
@@ -285,8 +290,10 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
     }
 
     public void stopMusic() {
-        musicPlayerSlide.getMediaPlayer().stop();
-        musicPlayerSlide = null;
+        if (musicPlayerSlide != null) {
+            musicPlayerSlide.getMediaPlayer().stop();
+            musicPlayerSlide = null;
+        }
     }
 
     public void setPlaylist(Playlist playlist) {

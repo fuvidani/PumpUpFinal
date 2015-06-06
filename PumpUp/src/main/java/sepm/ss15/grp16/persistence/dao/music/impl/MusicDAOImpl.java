@@ -7,9 +7,11 @@ import sepm.ss15.grp16.persistence.dao.music.MusicDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Author: Lukas
@@ -84,5 +86,41 @@ public class MusicDAOImpl implements MusicDAO {
     @Override
     public void delete(Playlist dto) throws PersistenceException {
         throw new UnsupportedOperationException("delete not supported!");
+    }
+
+    @Override
+    public Playlist getMotivations() throws PersistenceException {
+        Playlist dto = null;
+        try {
+            dto = new Playlist();
+            URL url = getClass().getClassLoader().getResource("sound/motivation");
+
+            if (url != null) {
+                File dir = new File(URLDecoder.decode(url.getFile(), "UTF-8"));
+
+                List<MediaPlayer> songList = new ArrayList<>();
+                String[] pathList = dir.list();
+                String dirpath = dir.getAbsolutePath();
+
+                if (pathList == null) {
+                    return null;
+                }
+
+                for (String path : pathList) {
+                    path = dirpath + "\\" + path;
+                    path = path.replace("\\", "/");
+                    File file = new File(path);
+                    if (file.isFile() && checkSupportedFormat(getExtension(file.getPath()))) {
+                        Media media = new Media(file.toURI().toString());
+                        MediaPlayer player = new MediaPlayer(media);
+                        songList.add(player);
+                    }
+                }
+                dto.setPlayers(songList);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return dto;
     }
 }

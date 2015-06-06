@@ -88,4 +88,16 @@ public class MusicServiceImpl implements MusicService {
     public void validate(Playlist dto) throws ValidationException {
     }
 
+    @Override
+    public Playlist getMotivations() throws ServiceException{
+        try {
+            LOGGER.info("Service try to load Motivation-Playlist");
+            Playlist playlist = musicDAO.getMotivations();
+            LOGGER.info("Service loading Motivation-Playlist successful");
+            return playlist;
+        } catch (PersistenceException e) {
+            LOGGER.error("" + e);
+            throw new ServiceException("Fehler beim Laden der Motivation-Playlist");
+        }
+    }
 }
