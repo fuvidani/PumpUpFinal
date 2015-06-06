@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.gui.controller.user;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,7 @@ import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.user.PictureHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 
@@ -69,30 +71,105 @@ public class PhotoDiaryController extends Controller {
     @FXML
     public void forwardButtonClicked(){
         try {
-            if (indexOfCurrentPicture < pictureHistoryList.size()) {
+            if (indexOfCurrentPicture < pictureHistoryList.size()-1) {
                 indexOfCurrentPicture++;
                 ImageLoader imageLoader = new ImageLoader();
                 Image image = imageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
             }
         }catch(Exception e){
-            e.printStackTrace();
+            LOGGER.error("Couldn't go forward in picturehistory");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehler beim durchblättern der Fotos");
+            alert.setContentText("Das nächste Foto konnte nicht geladen werden.");
+            alert.showAndWait();
         }
     }
 
     @FXML
     public void backwardButtonClicked(){
-
+        try {
+            if (indexOfCurrentPicture > 0) {
+                indexOfCurrentPicture--;
+                ImageLoader imageLoader = new ImageLoader();
+                Image image = imageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
+                imageView.setImage(image);
+            }
+        }catch(Exception e){
+            LOGGER.error("Couldn't go backward in picturehistory");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehler beim durchblättern der Fotos");
+            alert.setContentText("Das vorherige Foto konnte nicht geladen werden.");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     public void addButtonClicked(){
-        
+        try {
+            if (selectedPicturePath != null) {
+                PictureHistory pictureHistory = new PictureHistory(null, userService.getLoggedInUser().getUser_id(), selectedPicturePath, null);
+                pictureHistoryService.create(pictureHistory);
+                pictureHistoryList.add(pictureHistory);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText("Foto-Information");
+                alert.setContentText("Das Foto wurde erfolgreich zu ihrem Tagebuch hinzugefügt.");
+                alert.showAndWait();
+            }else{
+                LOGGER.error("Couldn't create picturehistory");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Fehler");
+                alert.setHeaderText("Fehlerhafte Angaben");
+                alert.setContentText("Es wurde kein Bild ausgewählt.");
+                alert.showAndWait();
+            }
+        }catch (ValidationException e) {
+            LOGGER.error("Couldn't create picturehistory");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehlerhafte Angaben");
+            alert.setContentText(e.getValidationMessage());
+            alert.showAndWait();
+        } catch (ServiceException e) {
+            LOGGER.error("Couldn't create picturehistory");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehlerhafte Angaben");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     @FXML
     public void deleteButtonClicked(){
+        try {
+            System.out.println(pictureHistoryList.get(indexOfCurrentPicture));
+            pictureHistoryService.delete(pictureHistoryList.get(indexOfCurrentPicture));
+            pictureHistoryList.remove(indexOfCurrentPicture);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText("Foto-Information");
+            alert.setContentText("Das Foto wurde erfolgreich aus ihrem Tagebuch gelöscht.");
+            alert.showAndWait();
 
+        }catch (ValidationException e) {
+            LOGGER.error("Couldn't delete picturehistory");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehlerhafte Angaben");
+            alert.setContentText(e.getValidationMessage());
+            alert.showAndWait();
+        } catch (ServiceException e) {
+            LOGGER.error("Couldn't delete picturehistory");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehlerhafte Angaben");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     @FXML

@@ -99,7 +99,7 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
         }
 
         if (picturePath == null || picturePath.isEmpty()) {
-            errorMsg += "Es muss der Pfad fuer ein Bild angegeben werden.";
+            errorMsg += "Es muss ein Bild ausgewählt worden sein.";
         }
 
         if (!errorMsg.isEmpty()) {

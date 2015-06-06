@@ -251,7 +251,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
 
         try {
             deleteStatement.setBoolean(1, true);
-            deleteStatement.setInt(2, pictureHistory.getUser_id());
+            deleteStatement.setInt(2, pictureHistory.getId());
             deleteStatement.executeUpdate();
             pictureHistory.setIsDeleted(true);
         } catch (SQLException e) {

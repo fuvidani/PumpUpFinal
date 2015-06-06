@@ -76,7 +76,10 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="selectPictureButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectPictureButtonClicked" prefWidth="50.0" styleClass="selectPictureBtn" />
+                        <Button fx:id="selectPictureButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectPictureButtonClicked" prefWidth="50.0" styleClass="selectPictureBtn">
+                           <tooltip>
+                              <Tooltip text="Foto auswählen" />
+                           </tooltip></Button>
                         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#webCamButtonClicked" prefWidth="50.0" styleClass="webcamBtn">
                            <HBox.margin>
                               <Insets right="10.0" />
