@@ -1,3 +1,8 @@
+.footer {
+-fx-background-color: lightgray;
+}
+
+
 .btnTakePicture {
     -fx-background-image: url('../icons/Photo_camera.png');
     -fx-background-repeat: no-repeat;

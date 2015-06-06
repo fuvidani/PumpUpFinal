@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="690.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.user.WebcamController">
+<BorderPane prefHeight="690.0" prefWidth="900.0" stylesheets="@../../css/webcamStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.user.WebcamController">
     <bottom>
-        <FlowPane fx:id="fpBottomPane" alignment="CENTER" columnHalignment="CENTER" hgap="50.0" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color:#ccc;">
+        <FlowPane fx:id="fpBottomPane" alignment="CENTER" columnHalignment="CENTER" hgap="50.0" prefHeight="80.0" prefWidth="200.0" styleClass="footer">
             <children>
                 <Button fx:id="btnStartCamera" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#startCamera" prefHeight="50.0" prefWidth="50.0" styleClass="btnTakePicture" stylesheets="@../../css/webcamStyle.css">
                     <font>
