@@ -3,6 +3,7 @@ package sepm.ss15.grp16.gui.controller.user;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -28,7 +29,8 @@ public class PhotoDiaryController extends Controller {
 
     @FXML
     ImageView imageView;
-
+    @FXML
+    Label dateLabel;
     @FXML
     Button selectPictureButton;
 
@@ -61,6 +63,7 @@ public class PhotoDiaryController extends Controller {
                 ImageLoader imageLoader = new ImageLoader();
                 Image image = imageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
+                dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -76,6 +79,7 @@ public class PhotoDiaryController extends Controller {
                 ImageLoader imageLoader = new ImageLoader();
                 Image image = imageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
+                dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         }catch(Exception e){
             LOGGER.error("Couldn't go forward in picturehistory");
@@ -95,6 +99,7 @@ public class PhotoDiaryController extends Controller {
                 ImageLoader imageLoader = new ImageLoader();
                 Image image = imageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
+                dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         }catch(Exception e){
             LOGGER.error("Couldn't go backward in picturehistory");
@@ -112,7 +117,8 @@ public class PhotoDiaryController extends Controller {
             if (selectedPicturePath != null) {
                 PictureHistory pictureHistory = new PictureHistory(null, userService.getLoggedInUser().getUser_id(), selectedPicturePath, null);
                 pictureHistoryService.create(pictureHistory);
-                pictureHistoryList.add(pictureHistory);
+                //pictureHistoryList.add(pictureHistory);
+                reloadImages();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText("Foto-Information");
@@ -148,7 +154,7 @@ public class PhotoDiaryController extends Controller {
         try {
             System.out.println(pictureHistoryList.get(indexOfCurrentPicture));
             pictureHistoryService.delete(pictureHistoryList.get(indexOfCurrentPicture));
-            pictureHistoryList.remove(indexOfCurrentPicture);
+            reloadImages();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information");
             alert.setHeaderText("Foto-Information");
@@ -194,6 +200,22 @@ public class PhotoDiaryController extends Controller {
     @FXML
     public void webCamButtonClicked(){
 
+    }
+
+    private void reloadImages(){
+        User loggedInUser = userService.getLoggedInUser();
+        try {
+            pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
+            indexOfCurrentPicture = 0;
+            if(!pictureHistoryList.isEmpty()) {
+                ImageLoader imageLoader = new ImageLoader();
+                Image image = imageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
+                imageView.setImage(image);
+                dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 

@@ -13,14 +13,27 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label maxHeight="1.7976931348623157E308" text="Fototagebuch">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </Label>
+                  <HBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label maxHeight="1.7976931348623157E308" text="Fototagebuch">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="dateLabel" maxHeight="1.7976931348623157E308" text="Foto vom 01.01.2015" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
