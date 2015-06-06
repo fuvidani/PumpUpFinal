@@ -62,7 +62,7 @@ public class FrameWindow extends BorderPane {
         addItemToMenu(user, "Abmelden", new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                navigateToPerent();
+                navigateToParent();
             }
         });
         Menu view = new Menu("View");
@@ -135,9 +135,7 @@ public class FrameWindow extends BorderPane {
         }
     }
 
-
-<<<<<<< HEAD
-    protected void navigateToMain()
+    private void navigateToMain()
     {
         while(fxmlStack.size() > 1)
         {
@@ -145,8 +143,6 @@ public class FrameWindow extends BorderPane {
         }
     }
 
-=======
->>>>>>> LoaderBrunch
     /**
      * Opens a new site in a new frame as a child of the actual site and waits while the Dialog is closed.
      * The Controllers get referenced to each other
@@ -209,14 +205,6 @@ public class FrameWindow extends BorderPane {
             navigateToMain();
             navigateToChild(page);
         });
-    }
-
-    private void navigateToMain()
-    {
-        while(fxmlStack.size() > 1)
-        {
-            navigateToPerent();
-        }
     }
 
     private Stage openStage(PageEnum mainPage)
