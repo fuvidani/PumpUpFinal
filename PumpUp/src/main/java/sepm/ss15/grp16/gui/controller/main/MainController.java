@@ -61,7 +61,6 @@ public class MainController extends Controller {
     private WeightHistoryService weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
-    private StageTransitionLoader transitionLoader;
     private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
     @FXML
     private Label currentTrainingTypeLabel;
@@ -94,7 +93,6 @@ public class MainController extends Controller {
 
     @Override
     public void initController() {
-        this.transitionLoader = new StageTransitionLoader(this);
         this.updateUserData();
 
         /**
@@ -102,7 +100,7 @@ public class MainController extends Controller {
          */
         engine = webView.getEngine();
         String path = System.getProperty("user.dir");
-        path.replace("\\\\", "/");
+        path = path.replace("\\", "/");
         path += "/src/main/java/sepm/ss15/grp16/gui/controller/Calendar/html/maincalendar.html";
         engine.load("file:///" + path);
 
@@ -155,88 +153,15 @@ public class MainController extends Controller {
     }
 
     @FXML
-    void viewCurrentWorkoutPlanClicked(ActionEvent event) {
-        //transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
-        mainFrame.navigateToChild(PageEnum.Workoutplan);
-    }
-
-    @FXML
-    void viewAllWorkoutPlansClicked(ActionEvent event) {
-        //transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
-        mainFrame.navigateToChild(PageEnum.Workoutplan);
-        refreshCalendar();
-    }
-
-    @FXML
-    void exercisesButtonClicked(ActionEvent event) {
-       mainFrame.navigateToChild(PageEnum.Exercises);
-    }
-
-    @FXML
-    void calendarClicked(ActionEvent event) {
-        //transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
-        mainFrame.navigateToChild(PageEnum.Calendar);
-        refreshCalendar();
-    }
-
-    @FXML
     void trainingClicked(ActionEvent event) {
-        //transitionLoader.openStage("fxml/workout/Workoutstart.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingsvorbereitung", 800, 600, false);
         mainFrame.openDialog(PageEnum.Workoutstart);
         mainFrame.navigateToChild(PageEnum.LiveMode);
-        //mainFrame.navigateToChild(PageEnum.Music);
-    }
-
-    @FXML
-    void editBodyDataClicked(ActionEvent event) {
-        LOGGER.debug("Edit user button clicked");
-        try {
-            mainFrame.openDialog(PageEnum.UserEdit);
-        } catch (Exception e) {
-            LOGGER.error("Couldn't open useredit-window");
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void manageBodyPhotosClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/user/BodyPhotos.fxml", (Stage) usernameLabel.getScene().getWindow(), "Fotos", 1000, 600, false);
-    }
-
-    @FXML
-    void logoutClicked(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Abmelden");
-        alert.setHeaderText("");
-        alert.setContentText("Möchten Sie sich wirklich abmelden?");
-        ButtonType yes = new ButtonType("Ja");
-        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(yes, cancel);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == yes) {
-            // TODO: For cleaning purposes: close DB-connection
-            stage.close();
-        } else {
-            stage.show();
-        }
-    }
-
-
-    @FXML
-    void exercisesMenuClicked(ActionEvent event) {
-      mainFrame.navigateToChild(PageEnum.Exercises);
     }
 
     @FXML
     void openCalendarMenuClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 800, 600, false);
+        mainFrame.navigateToChild(PageEnum.Calendar);
 
-    }
-
-    @FXML
-    void aboutMenuClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/main/About.fxml", (Stage) usernameLabel.getScene().getWindow(), "Information", 400, 400, false);
     }
 
     public void updateUserData() {

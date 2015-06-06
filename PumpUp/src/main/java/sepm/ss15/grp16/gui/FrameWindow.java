@@ -10,6 +10,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.h2.store.Page;
 import org.springframework.context.ApplicationContext;
 import sepm.ss15.grp16.gui.controller.Controller;
 
@@ -57,23 +58,18 @@ public class FrameWindow extends BorderPane {
     private void initMenu()
     {
         Menu user = new Menu("User");
-        addNavigationItemToMenu(user, "Körperdaten ändern", null);
-        addNavigationItemToMenu(user, "Eigene Fotos verwalten", null);
-        addItemToMenu(user, "Abmelden", new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                navigateToParent();
-            }
-        });
+        addNavigationDialogItemToMenu(user, "KÃ¶rperdaten Ã¤ndern", PageEnum.UserEdit);
+        addNavigationItemToMenu(user, "Eigene Fotos verwalten", PageEnum.Fotos);
+        addItemToMenu(user, "Abmelden", event -> navigateToParent());
         Menu view = new Menu("View");
-        addNavigationItemToMenu(view, "Trainingskalender", null);
-        addNavigationItemToMenu(view, "Trainingspläne", null);
-        addNavigationItemToMenu(view, "Übungen", null);
+        addNavigationItemToMenu(view, "Trainingskalender", PageEnum.Calendar);
+        addNavigationItemToMenu(view, "TrainingsplÃ¤ne", PageEnum.Workoutplan);
+        addNavigationItemToMenu(view, "Ãœbungen", PageEnum.Exercises);
 
         personalMenu = new Menu();
 
         Menu help = new Menu("Help");
-        addNavigationItemToMenu(view, "About", null);
+        addNavigationDialogItemToMenu(help, "About", PageEnum.About);
 
         menuBar = new MenuBar(user, view, personalMenu, help);
     }
@@ -204,6 +200,14 @@ public class FrameWindow extends BorderPane {
         addItemToMenu(menu, titel, event -> {
             navigateToMain();
             navigateToChild(page);
+        });
+    }
+
+    public void addNavigationDialogItemToMenu(Menu menu, String titel, PageEnum page)
+    {
+        addItemToMenu(menu, titel, event -> {
+            navigateToMain();
+            openDialog(page);
         });
     }
 
