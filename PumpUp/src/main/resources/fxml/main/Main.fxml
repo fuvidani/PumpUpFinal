@@ -15,7 +15,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="root" stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
+<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
     <center>
         <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
             <items>
@@ -161,7 +161,7 @@
                     <children>
                         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
                             <children>
-                                <WebView fx:id="webView" prefHeight="300.0" prefWidth="200.0" styleClass="webCalender" />
+                                <WebView fx:id="webView" prefHeight="300.0" prefWidth="200.0" />
                             </children>
                         </VBox>
                     </children>
@@ -177,7 +177,7 @@
             <children>
                 <Region HBox.hgrow="ALWAYS" />
                 <Region HBox.hgrow="ALWAYS" />
-                <Button contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="0.0" prefWidth="0.0" styleClass="trainingBtn" text="Training" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
+                <Button contentDisplay="LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#trainingClicked" prefWidth="200.0" styleClass="trainingBtn" text="Training" BorderPane.alignment="CENTER">
                     <font>
                         <Font size="24.0" />
                     </font>

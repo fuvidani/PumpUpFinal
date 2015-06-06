@@ -1,19 +1,18 @@
-.root, .mainBox, .webCalender, .spliter{
+.root, .mainBox, .spliter{
     -fx-background-color: white;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 15pt;
 }
 
 .trainingBtn{
-    -fx-background-image: url('../icons/training.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: 75%;
-    -fx-background-size: 10%;
-    -fx-text-alignment: left;
+    /*-fx-background-image: url('../icons/training.png');*/
+    /*-fx-background-repeat: no-repeat;*/
+    /*-fx-background-position: 75%;*/
+    /*-fx-background-size: 100%;*/
+    /*-fx-text-alignment: left;*/
 }
-
 .btnLogin {
-    -fx-background-image: url('../icons/Login.png');
+    -fx-background-image: url('../icons/login.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-color: transparent;
@@ -28,7 +27,16 @@
     -fx-background-size: 100%;
 }
 
+.topLogo{
+    -fx-background-image: url('../icons/pumpup.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
 .button:hover {
+    -fx-background-size: 90%;
 }
 
 .table-view {
@@ -60,7 +68,7 @@
 }
 
 .table-view .column-header .label {
-    -fx-font-size: 15pt;
+    -fx-font-size: 30pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: black;
     -fx-alignment: center-left;
@@ -81,7 +89,7 @@
     -fx-padding: 1 0 0 0;
 }
 
-.menu, .topMenu{
+.menu, .topMenu, .menu-bar{
     -fx-background-color: lightgray;
 }
 
@@ -91,13 +99,14 @@
 }
 
 .menu-item .label {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .menu-item:focused {
     -fx-background-color: black;
     -fx-base: white;
 }
+
 
 .menu-item:focused .label {
     -fx-text-fill: white;
