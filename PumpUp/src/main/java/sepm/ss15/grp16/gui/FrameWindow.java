@@ -215,7 +215,7 @@ public class FrameWindow extends BorderPane {
         dialogStage.setMinWidth(mainPage.getMinWidth());
         dialogStage.setMinHeight(mainPage.getMinHeight());
 
-        return stage;
+        return dialogStage;
     }
 
     private void reloadMenu(PageEnum mainPage) {
