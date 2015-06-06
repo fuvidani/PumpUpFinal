@@ -32,7 +32,7 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO bodyfathistory VALUES(?, ?, ?, ?);");
             this.getActualBodyfatStatement = con.prepareStatement("SELECT * FROM bodyfathistory WHERE user_id = ? AND " +
-                    "bodyfathistory_id = (SELECT max(bodyfathistory_id) from bodyfathistory);");
+                    "bodyfathistory_id = (SELECT max(bodyfathistory_id) from bodyfathistory WHERE user_id = ?);");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
@@ -131,6 +131,7 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
 
         try {
             getActualBodyfatStatement.setInt(1, user_id);
+            getActualBodyfatStatement.setInt(2, user_id);
             ResultSet rs = getActualBodyfatStatement.executeQuery();
             if (rs.next() == true) {
                 foundBodyfatHistory = new BodyfatHistory(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getDate(4));

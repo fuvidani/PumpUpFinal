@@ -6,30 +6,26 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.WeightHistory;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.gui.controller.user.UserEditController;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
@@ -38,31 +34,28 @@ import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 05.05.15.
  * Controller of the main stage.
  */
-public class MainController extends Controller implements Initializable {
+public class MainController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    TextField genderTextField;
+    Label genderTextField;
     @FXML
-    TextField ageTextField;
+    Label ageTextField;
     @FXML
-    TextField heightTextField;
+    Label heightTextField;
     @FXML
-    TextField weightTextField;
+    Label weightTextField;
     @FXML
-    TextField bodyfatTextField;
+    Label bodyfatTextField;
     @FXML
-    TextField emailTextField;
+    Label emailTextField;
     private UserService userService;
     private CalendarService calendarService;
     private WeightHistoryService weightHistoryService;
@@ -100,7 +93,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
         this.transitionLoader = new StageTransitionLoader(this);
         this.updateUserData();
 
@@ -163,49 +156,43 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void viewCurrentWorkoutPlanClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        //transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Workoutplan);
     }
 
     @FXML
     void viewAllWorkoutPlansClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        //transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
+        mainFrame.navigateToChild(PageEnum.Workoutplan);
         refreshCalendar();
     }
 
     @FXML
     void exercisesButtonClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/exercise/Exercises.fxml", (Stage) usernameLabel.getScene().getWindow(), "Übungen", 1100, 750, true);
+       mainFrame.navigateToChild(PageEnum.Exercises);
     }
 
     @FXML
     void calendarClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+        //transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
+        mainFrame.navigateToChild(PageEnum.Calendar);
         refreshCalendar();
     }
 
     @FXML
     void trainingClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/workout/Workoutstart.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingsvorbereitung", 800, 600, false);
+        //transitionLoader.openStage("fxml/workout/Workoutstart.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingsvorbereitung", 800, 600, false);
+        mainFrame.openDialog(PageEnum.Workoutstart);
+        mainFrame.navigateToChild(PageEnum.LiveMode);
+        //mainFrame.navigateToChild(PageEnum.Music);
     }
 
     @FXML
     void editBodyDataClicked(ActionEvent event) {
         LOGGER.debug("Edit user button clicked");
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-            fxmlLoader.setControllerFactory(context::getBean);
-            Stage stage = new Stage();
-            fxmlLoader.setLocation(UserEditController.class.getClassLoader().getResource("fxml/user/UserEdit.fxml"));
-            Pane pane = fxmlLoader.load(UserEditController.class.getClassLoader().getResourceAsStream("fxml/user/UserEdit.fxml"));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(usernameLabel.getScene().getWindow());
-            UserEditController userEditController = fxmlLoader.getController();
-            userEditController.setMainController(this);
-            stage.setResizable(false);
-            stage.setScene(new Scene(pane));
-            stage.show();
-        } catch (IOException e) {
+            mainFrame.openDialog(PageEnum.UserEdit);
+        } catch (Exception e) {
             LOGGER.error("Couldn't open useredit-window");
             e.printStackTrace();
         }
@@ -238,7 +225,7 @@ public class MainController extends Controller implements Initializable {
 
     @FXML
     void exercisesMenuClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/exercise/Exercises.fxml", (Stage) usernameLabel.getScene().getWindow(), "Übungen", 800, 600, true);
+      mainFrame.navigateToChild(PageEnum.Exercises);
     }
 
     @FXML
@@ -298,16 +285,18 @@ public class MainController extends Controller implements Initializable {
 
         if (weight != null) {
             weightTextField.setText(Integer.toString(weight));
+        }else {
+            weightTextField.setText("Keine Angabe");
         }
 
         if (bodyfat != null) {
             bodyfatTextField.setText(Integer.toString(bodyfat));
         } else {
-            bodyfatTextField.setPromptText("Keine Angabe");
+            bodyfatTextField.setText("Keine Angabe");
         }
 
         if (email == null || email.isEmpty()) {
-            emailTextField.setPromptText("Keine Angabe");
+            emailTextField.setText("Keine Angabe");
         } else {
             emailTextField.setText(email);
         }
