@@ -16,6 +16,8 @@ public class Playlist implements DTO {
     private String dir;
     private List<MediaPlayer> players;
 
+    MediaPlayer activePlayer;
+
     public Playlist() {
 
     }
@@ -74,6 +76,14 @@ public class Playlist implements DTO {
     @Override
     public void setIsDeleted(Boolean deleted) {
 
+    }
+
+    public MediaPlayer getActivePlayer() {
+        return activePlayer;
+    }
+
+    public void setActivePlayer(MediaPlayer activePlayer) {
+        this.activePlayer = activePlayer;
     }
 
     @Override

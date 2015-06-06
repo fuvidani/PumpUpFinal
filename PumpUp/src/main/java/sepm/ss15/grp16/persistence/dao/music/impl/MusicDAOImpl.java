@@ -3,7 +3,6 @@ package sepm.ss15.grp16.persistence.dao.music.impl;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import sepm.ss15.grp16.entity.music.Playlist;
-import sepm.ss15.grp16.entity.music.Song;
 import sepm.ss15.grp16.persistence.dao.music.MusicDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
@@ -21,7 +20,7 @@ public class MusicDAOImpl implements MusicDAO {
     public Playlist create(Playlist dto) throws PersistenceException {
 
         if (dto == null || dto.getDir() == null) {
-            throw new PersistenceException(new NullPointerException());
+            return null;
         }
 
         List<MediaPlayer> songList = new ArrayList<>();
@@ -31,7 +30,7 @@ public class MusicDAOImpl implements MusicDAO {
         String dirpath = dir.getAbsolutePath();
 
         if (pathList == null) {
-            throw new PersistenceException(new NullPointerException());
+            return null;
         }
 
         for (String path : pathList) {
@@ -65,35 +64,6 @@ public class MusicDAOImpl implements MusicDAO {
             }
         }
         return false;
-    }
-
-    private Song getSong(File file) {
-        Song song = new Song();
-        song.setSongfile(file);
-        Media media = new Media(file.toURI().toString());
-
-        Set<String> metadatas = media.getMetadata().keySet();
-
-        for (String metadata : metadatas) {
-            handleMetadata(metadata, media.getMetadata().get(metadata), song);
-        }
-        System.out.println(song);
-        return song;
-    }
-
-    private Song handleMetadata(String key, Object value, Song song) {
-        switch (key) {
-            case "album":
-                song.setAlbum(value.toString());
-                break;
-            case "artist":
-                song.setArtist(value.toString());
-                break;
-            case "title":
-                song.setTitle(value.toString());
-                break;
-        }
-        return song;
     }
 
     @Override

@@ -2,10 +2,7 @@ package sepm.ss15.grp16.gui.controller.workout;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,7 +44,12 @@ public class WorkoutstartController extends Controller {
 
     @Override
     public void initController() {
-
+        User user = userService.getLoggedInUser();
+        String playlist = user.getPlaylist();
+        if(playlist!= null){
+            musicPathLabel.setText(playlist);
+            dir_selection = new File(playlist);
+        }
     }
 
     @FXML
@@ -65,20 +67,33 @@ public class WorkoutstartController extends Controller {
     @FXML
     void startButtonClicked(ActionEvent event) {
         //transitionLoader.openStage("fxml/workout/Workout.fxml", (Stage) toDoListView.getScene().getWindow(), "training", 1100, 750, true);
-        try {
-            User user = userService.getLoggedInUser();
-            user.setPlaylist(dir_selection.getAbsolutePath());
-            userService.update(user);
-            userService.setLoggedInUser(user);
-        } catch (ServiceException e) {
-            LOGGER.error("Error setting last playlist to user, Errormessage: " + e);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fehler");
-            alert.setHeaderText("Fehler beim laden der Musik aufgetreten!");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+        if(dir_selection!= null) {
+            try {
+                User user = userService.getLoggedInUser();
+                user.setPlaylist(dir_selection.getAbsolutePath());
+                userService.update(user);
+                userService.setLoggedInUser(user);
+                mainFrame.navigateToParent();
+            } catch (ServiceException e) {
+                LOGGER.error("Error setting last playlist to user, Errormessage: " + e);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Fehler");
+                alert.setHeaderText("Fehler beim laden der Musik aufgetreten!");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Keine Musik gewählt");
+            alert.setHeaderText("Sie haben keine Musik gewählt");
+            alert.setContentText("Wollen Sie ohne Musik trainieren?");
+            ButtonType yes = new ButtonType("Ja");
+            ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.NO);
+            alert.getButtonTypes().setAll(yes, cancel);
+            if(alert.showAndWait().get() == yes){
+                mainFrame.navigateToParent();
+            }
         }
-        mainFrame.navigateToParent();
     }
 
 

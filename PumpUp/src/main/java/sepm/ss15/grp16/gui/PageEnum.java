@@ -18,8 +18,8 @@ public enum PageEnum {
     Exercises("fxml/exercise/Exercises.fxml", "\\u00dcbungen", 1000, 620),
     Manage_exercises("fxml/exercise/ManageExercise.fxml", "\\u00dcbungen verwalten", 1300, 750),
     LiveMode("fxml/workout/Workout.fxml", "", 1300, 750),
-    Playlist("fxml/workout/Playlist.fxml", "Playlist",800, 600),
-    Workoutstart("fxml/workout/Workoutstart.fxml", "Mit Training beginnen",800, 600);
+    Playlist("fxml/workout/Playlist.fxml", "Playlist", 300, 500),
+    Workoutstart("fxml/workout/Workoutstart.fxml", "Mit Training beginnen", 800, 600);
 
     private final String fxml;
     private final String title;

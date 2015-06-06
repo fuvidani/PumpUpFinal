@@ -279,6 +279,5 @@
 
     <bean id="musicService" class="sepm.ss15.grp16.service.music.impl.MusicServiceImpl">
         <constructor-arg ref="musicDAO"/>
-        <constructor-arg ref="userService"/>
     </bean>
 </beans>

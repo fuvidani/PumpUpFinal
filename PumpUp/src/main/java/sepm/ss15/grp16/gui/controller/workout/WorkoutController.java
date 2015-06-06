@@ -305,6 +305,10 @@ public class WorkoutController extends Controller {
         mainFrame.openDialog(page);
     }
 
+    public WorkoutMusicPlayerController getMusicPlayerController() {
+        return musicPlayerController;
+    }
+
     private enum Status {
         RUNNUNG, PAUSED, FINISHED;
     }
