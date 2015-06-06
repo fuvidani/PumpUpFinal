@@ -35,7 +35,7 @@
     <center>
         <BorderPane fx:id="webCamBorderPane" prefHeight="200.0" prefWidth="200.0">
             <center>
-                <ImageView fx:id="webCamImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                <ImageView fx:id="webCamImageView" fitHeight="450.0" fitWidth="475.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
             </center>
         </BorderPane>
     </center>

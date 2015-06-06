@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,28 +58,14 @@ public class WebcamController extends Controller {
             webCamOptions.add(webCamDetails);
             webCamCounter++;
         }
+
         cameraComboBox.setItems(webCamOptions);
         cameraComboBox.setPromptText("Kamera auswählen:");
         cameraComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                System.out.println("WebCam Index: " + newValue.getWebCamIndex() + ": WebCam Name:" + newValue.getWebCamName());
                 initializeWebCam(newValue.getWebCamIndex());
             }
         });
-        Platform.runLater(this::setImageViewSize);
-
-    }
-
-    private void setImageViewSize() {
-
-        double height = webCamBorderPane.getHeight();
-        double width = webCamBorderPane.getWidth();
-        webCamImageView.setFitHeight(height);
-        webCamImageView.setFitWidth(width);
-        webCamImageView.prefHeight(height);
-        webCamImageView.prefWidth(width);
-        webCamImageView.setPreserveRatio(true);
-
     }
 
     private void initializeWebCam(final int webCamIndex) {
@@ -92,11 +79,11 @@ public class WebcamController extends Controller {
                     selectedWebcam = Webcam.getWebcams().get(webCamIndex);
                     selectedWebcam.open();
                 } else {
-                    closeCamera();
+                    closeWebCam();
                     selectedWebcam = Webcam.getWebcams().get(webCamIndex);
                     selectedWebcam.open();
                 }
-                startWebCamStream();
+                startShowingImages();
                 return null;
             }
 
@@ -106,7 +93,7 @@ public class WebcamController extends Controller {
         webCamFooterFlowPane.setDisable(false);
     }
 
-    private void startWebCamStream() {
+    private void startShowingImages() {
 
         stopWebcam = false;
         Task<Void> task = new Task<Void>() {
@@ -119,9 +106,8 @@ public class WebcamController extends Controller {
                         if ((takenImage = selectedWebcam.getImage()) != null) {
 
                             Platform.runLater(() -> {
-                                final Image mainiamge = SwingFXUtils
-                                        .toFXImage(takenImage, null);
-                                imageProperty.set(mainiamge);
+                                final Image mainImage = SwingFXUtils.toFXImage(takenImage, null);
+                                imageProperty.set(mainImage);
                             });
 
                             takenImage.flush();
@@ -143,7 +129,7 @@ public class WebcamController extends Controller {
 
     }
 
-    private void closeCamera() {
+    private void closeWebCam() {
         LOGGER.info("Closing webcam...");
         if (selectedWebcam != null) {
             selectedWebcam.close();
@@ -151,23 +137,10 @@ public class WebcamController extends Controller {
         LOGGER.info("Webcam closed");
     }
 
-    private void stopCamera() {
-        LOGGER.info("Stopping webcam...");
-        stopWebcam = true;
-        LOGGER.info("Webcam stopped");
-    }
-
-    private void startCamera() {
-        LOGGER.info("Starting webcam...");
-        stopWebcam = false;
-        startWebCamStream();
-        LOGGER.info("Webcam started");
-    }
-
-    private void disposeCamera() {
+    private void disposeWebCam() {
         LOGGER.info("Dispose webcam...");
         stopWebcam = true;
-        closeCamera();
+        closeWebCam();
         LOGGER.info("Disposed webcam");
     }
 
@@ -178,6 +151,11 @@ public class WebcamController extends Controller {
             if (selectedWebcam != null) {
                 BufferedImage image = selectedWebcam.getImage();
                 ImageIO.write(image, "JPG", new File("webcamaufnahme.jpg"));
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText("Foto-Information");
+                alert.setContentText("Das Foto wurde erfolgreich gespeichert.");
+                alert.showAndWait();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -185,6 +163,12 @@ public class WebcamController extends Controller {
         LOGGER.info("Image successfully taken");
     }
 
+    /**
+     * This class encapsulates the details of a webcam device
+     *
+     * @author Michael Sober
+     * @version 1.0
+     */
     private class WebCamDetails {
 
         private String webCamName;
@@ -213,10 +197,7 @@ public class WebcamController extends Controller {
 
         @Override
         public String toString() {
-            return "WebCamDetails{" +
-                    "webCamName='" + webCamName + '\'' +
-                    ", webCamIndex=" + webCamIndex +
-                    '}';
+            return webCamName;
         }
     }
 }
