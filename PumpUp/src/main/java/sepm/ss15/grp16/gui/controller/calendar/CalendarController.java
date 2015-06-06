@@ -92,6 +92,11 @@ public class CalendarController extends Controller implements Initializable {
     }
 
     @FXML
+    public void zuruckClicked() {
+        mainFrame.navigateToParent();
+    }
+
+    @FXML
     public void deleteAllAppointmentsClicked(){
 
         try {
