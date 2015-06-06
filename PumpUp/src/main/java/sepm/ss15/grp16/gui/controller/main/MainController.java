@@ -154,13 +154,12 @@ public class MainController extends Controller {
         /**
          * #######      END CALENDAR      #######
          */
-        this.makeUserChart();
 
     }
 
     private void makeUserChart(){
         try {
-
+            userChart.getData().clear();
             LineChart.Series<String, Number> weightSeries = new LineChart.Series<String, Number>();
             LineChart.Series<String, Number> bodyFatSeries = new LineChart.Series<String, Number>();
             List<WeightHistory> weightHistoryList = weightHistoryService.findAll();
@@ -341,6 +340,7 @@ public class MainController extends Controller {
         } else {
             emailTextField.setText(email);
         }
+        this.makeUserChart();
     }
 
     public void refreshCalendar() {

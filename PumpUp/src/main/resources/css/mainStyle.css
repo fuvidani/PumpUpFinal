@@ -81,3 +81,29 @@
     -fx-padding: 1 0 0 0;
 }
 
+.menu, .topMenu{
+    -fx-background-color: lightgray;
+}
+
+.menu:hover{
+    -fx-background-color: black;
+    -fx-base:white;
+}
+
+.menu-item .label {
+    -fx-text-fill: white;
+}
+
+.menu-item:focused {
+    -fx-background-color: black;
+    -fx-base: white;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: white;
+
+}
+    /*sub menues*/
+.context-menu, .context-menu:hover {
+    -fx-background-color: lightgray;
+}

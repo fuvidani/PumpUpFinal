@@ -17,7 +17,7 @@
 
 <BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="root" stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
     <top>
-        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="menueHbox">
             <children>
                 <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="601.0" styleClass="topMenu" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
                     <menus>
