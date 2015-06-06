@@ -16,41 +16,8 @@
 <?import javafx.scene.web.WebView?>
 
 <BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="root" stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
-    <top>
-        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="menueHbox">
-            <children>
-                <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="601.0" styleClass="topMenu" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="Username">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#editBodyDataClicked" text="Körperdaten ändern" />
-                                <MenuItem mnemonicParsing="false" onAction="#manageBodyPhotosClicked" text="Eigene Fotos verwalten" />
-                                <MenuItem mnemonicParsing="false" onAction="#logoutClicked" text="Abmelden" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="View">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#calendarClicked" text="Trainingskalender..." />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#viewAllWorkoutPlansClicked" text="Trainingspläne..." />
-                                <MenuItem mnemonicParsing="false" onAction="#exercisesMenuClicked" text="Übungen..." />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
-                            <items>
-                                <MenuItem mnemonicParsing="false" onAction="#aboutMenuClicked" text="About" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </children>
-        </HBox>
-    </top>
     <center>
-        <SplitPane dividerPositions="0.5897009966777409" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
             <items>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="mainBox">
                     <children>
@@ -190,21 +157,11 @@
                         <Insets bottom="10.0" right="10.0" top="10.0" />
                     </padding>
                 </HBox>
-                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="mainBox">
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="mainBox">
                     <children>
                         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
                             <children>
-                                <HBox alignment="CENTER">
-                                    <children>
-                                        <Region layoutX="603.0" layoutY="10.0" prefHeight="44.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                                        <Region prefHeight="44.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                                        <Region layoutX="672.0" layoutY="10.0" prefHeight="44.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                                    </children>
-                                    <VBox.margin>
-                                        <Insets left="10.0" right="10.0" />
-                                    </VBox.margin>
-                                </HBox>
-                                <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />
+                                <WebView fx:id="webView" prefHeight="300.0" prefWidth="200.0" styleClass="webCalender" />
                             </children>
                         </VBox>
                     </children>

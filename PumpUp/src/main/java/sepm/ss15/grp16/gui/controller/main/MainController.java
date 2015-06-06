@@ -6,26 +6,19 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
@@ -33,7 +26,6 @@ import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.gui.controller.user.UserEditController;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
@@ -42,13 +34,8 @@ import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 05.05.15.
@@ -74,20 +61,19 @@ public class MainController extends Controller {
     private WeightHistoryService weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
-    private StageTransitionLoader transitionLoader;
     private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
-
+    @FXML
+    private Label currentTrainingTypeLabel;
     @FXML
     private ImageView userImgView;
     @FXML
     private Label usernameLabel;
     @FXML
-    private  LineChart<String, Number> userChart;
+    private LineChart<?, ?> userChart;
     @FXML
     private WebView webView;
     @FXML
     private WebEngine engine;
-
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -107,7 +93,6 @@ public class MainController extends Controller {
 
     @Override
     public void initController() {
-
         this.updateUserData();
 
         /**
@@ -115,7 +100,7 @@ public class MainController extends Controller {
          */
         engine = webView.getEngine();
         String path = System.getProperty("user.dir");
-        path.replace("\\\\", "/");
+        path = path.replace("\\", "/");
         path += "/src/main/java/sepm/ss15/grp16/gui/controller/Calendar/html/maincalendar.html";
         engine.load("file:///" + path);
 
@@ -157,37 +142,6 @@ public class MainController extends Controller {
 
     }
 
-    private void makeUserChart(){
-        try {
-            userChart.getData().clear();
-            LineChart.Series<String, Number> weightSeries = new LineChart.Series<String, Number>();
-            LineChart.Series<String, Number> bodyFatSeries = new LineChart.Series<String, Number>();
-            List<WeightHistory> weightHistoryList = weightHistoryService.findAll();
-            List<BodyfatHistory> bodyfatHistoryList = bodyfatHistoryService.findAll();
-
-            for(WeightHistory w : weightHistoryList){
-                if(w.getUser_id()==userService.getLoggedInUser().getUser_id()){
-                    weightSeries.getData().add(new LineChart.Data<>(""+w.getDate(), w.getWeight()));
-                }            }
-            int counter = 0;
-            for(BodyfatHistory b : bodyfatHistoryList){
-                if(b.getUser_id()==userService.getLoggedInUser().getUser_id()) {
-
-                    int bodyFatTOKG = weightHistoryList.get(counter).getWeight() * b.getBodyfat() / 100;
-                    bodyFatSeries.getData().add(new LineChart.Data("" + b.getDate(), bodyFatTOKG));
-                    counter++;
-                }
-            }
-            weightSeries.setName("Körpergewicht");
-            bodyFatSeries.setName("Körperfettanteil");
-            userChart.getData().add(weightSeries);
-            userChart.getData().add(bodyFatSeries);
-        }catch (ServiceException e){
-            e.printStackTrace();
-            LOGGER.error(e);
-        }
-    }
-
     @FXML
     void editUserDataButtonClicked(ActionEvent event) {
         // TODO: Either small dialog window for editing data or live editing into the table itself.
@@ -199,84 +153,15 @@ public class MainController extends Controller {
     }
 
     @FXML
-    void viewCurrentWorkoutPlanClicked(ActionEvent event) {
-        //transitionLoader.openStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
-        mainFrame.navigateToChild(PageEnum.Workoutplan);
-    }
-
-    @FXML
-    void viewAllWorkoutPlansClicked(ActionEvent event) {
-        //transitionLoader.openWaitStage("fxml/workoutPlans/Workoutplans.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingspläne", 1000, 620, true);
-        mainFrame.navigateToChild(PageEnum.Workoutplan);
-        refreshCalendar();
-    }
-
-    @FXML
-    void exercisesButtonClicked(ActionEvent event) {
-        mainFrame.navigateToChild(PageEnum.Exercises);
-    }
-
-    @FXML
-    void calendarClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
-        refreshCalendar();
-    }
-
-    @FXML
     void trainingClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/workout/Workoutstart.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingsvorbereitung", 800, 600, false);
-    }
-
-    @FXML
-    void editBodyDataClicked(ActionEvent event) {
-        LOGGER.debug("Edit user button clicked");
-        try {
-            mainFrame.openDialog(PageEnum.UserEdit);
-        } catch (Exception e) {
-            LOGGER.error("Couldn't open useredit-window");
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void manageBodyPhotosClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/user/BodyPhotos.fxml", (Stage) usernameLabel.getScene().getWindow(), "Fotos", 1000, 600, false);
-    }
-
-    @FXML
-    void logoutClicked(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Abmelden");
-        alert.setHeaderText("");
-        alert.setContentText("Möchten Sie sich wirklich abmelden?");
-        ButtonType yes = new ButtonType("Ja");
-        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(yes, cancel);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == yes) {
-            // TODO: For cleaning purposes: close DB-connection
-            stage.close();
-        } else {
-            stage.show();
-        }
-    }
-
-
-    @FXML
-    void exercisesMenuClicked(ActionEvent event) {
-        mainFrame.navigateToChild(PageEnum.Exercises);
+        mainFrame.openDialog(PageEnum.Workoutstart);
+        mainFrame.navigateToChild(PageEnum.LiveMode);
     }
 
     @FXML
     void openCalendarMenuClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/calendar/Calendar.fxml", (Stage) usernameLabel.getScene().getWindow(), "Trainingskalender", 800, 600, false);
+        mainFrame.navigateToChild(PageEnum.Calendar);
 
-    }
-
-    @FXML
-    void aboutMenuClicked(ActionEvent event) {
-        transitionLoader.openWaitStage("fxml/main/About.fxml", (Stage) usernameLabel.getScene().getWindow(), "Information", 400, 400, false);
     }
 
     public void updateUserData() {
@@ -340,7 +225,6 @@ public class MainController extends Controller {
         } else {
             emailTextField.setText(email);
         }
-        this.makeUserChart();
     }
 
     public void refreshCalendar() {

@@ -1,0 +1,11 @@
+.table-view:disabled {
+    -fx-opacity: 100;
+}
+
+.table-view:disabled > .column-header-background:disabled > .nested-column-header:disabled > .table-column:disabled > .label:disabled {
+    -fx-opacity: 100;
+}
+
+.table-row-cell:disabled:selected {
+    -fx-opacity: 100;
+}
