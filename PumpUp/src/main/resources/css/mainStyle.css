@@ -1,0 +1,11 @@
+.root, .mainBox, .webCalender, .spliter{
+    -fx-background-color: lightgrey;
+}
+
+.trainingBtn{
+    -fx-background-image: url('../icons/training.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 75%;
+    -fx-background-size: 10%;
+    -fx-text-alignment: left;
+}
