@@ -97,6 +97,8 @@
 
     <bean id="photoDiaryController" class="sepm.ss15.grp16.gui.controller.user.PhotoDiaryController"
           scope="prototype">
+        <property name="userService" ref="userService"/>
+        <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
     <!-- ###### Exercise beans ###### -->
