@@ -24,7 +24,10 @@ import sepm.ss15.grp16.service.music.MusicService;
 import sepm.ss15.grp16.service.user.UserService;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
@@ -184,6 +187,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         Integer last = players.indexOf(curPlayer) - 1;
         MediaPlayer lastPlayer = players.get(last >= 0 ? last : players.size() + last);
         musicPlayerSlide.setMediaPlayer(lastPlayer);
+        setCurrentlyPlaying(lastPlayer);
         lastPlayer.play();
     }
 
@@ -211,6 +215,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
         MediaPlayer nextPlayer = players.get((players.indexOf(curPlayer) + 1) % players.size());
         musicPlayerSlide.setMediaPlayer(nextPlayer);
+        setCurrentlyPlaying(nextPlayer);
         nextPlayer.play();
     }
 
@@ -234,6 +239,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
     void onClickShuffle(ActionEvent event) {
         if (shuffled) {
             players = original;
+            shuffled = false;
         } else {
             List<MediaPlayer> shuffledList = new ArrayList<>();
             Random rand = new Random();
@@ -243,6 +249,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
                 shuffledList.add(original.get(randomNum));
             }
             players = shuffledList;
+            shuffled = true;
         }
 
     }
@@ -272,6 +279,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
     public void stopMusic() {
         musicPlayerSlide.getMediaPlayer().stop();
+        musicPlayerSlide = null;
     }
 
     public void setPlaylist(Playlist playlist) {

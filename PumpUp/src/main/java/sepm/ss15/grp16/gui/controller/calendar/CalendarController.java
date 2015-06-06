@@ -88,7 +88,24 @@ public class CalendarController extends Controller implements Initializable {
 
 
     @FXML
-    void exportToGoogleClicked() {
+    public void exportToGoogleClicked() {
+    }
+
+    @FXML
+    public void zuruckClicked() {
+        mainFrame.navigateToParent();
+    }
+
+    @FXML
+    public void deleteAllAppointmentsClicked(){
+
+        try {
+            calendarService.deleteAllAppointments();
+        } catch (ServiceException e) {
+            e.printStackTrace(); //TODO change
+        }
+
+        refreshCalendar();
     }
 
     public void refreshCalendar() {
@@ -106,4 +123,6 @@ public class CalendarController extends Controller implements Initializable {
         engine.executeScript("addListEvents(" + json + ");");
 
     }
+
+
 }
