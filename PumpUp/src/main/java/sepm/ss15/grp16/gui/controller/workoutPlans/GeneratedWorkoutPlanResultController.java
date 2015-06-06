@@ -48,14 +48,13 @@ import java.util.ResourceBundle;
  * When the generated workout plan has arrived it is instantly displayed and the user can
  * save the plan, dismiss it or export it to the own calendar.
  */
-public class GeneratedWorkoutPlanResultController extends Controller implements Initializable {
+public class GeneratedWorkoutPlanResultController extends Controller{
 
 
     private static final Logger LOGGER = LogManager.getLogger();
     private Trainingsplan generatedWorkoutPlan;
     private TrainingsplanService trainingsplanService;
     private BooleanProperty DTOArrived = new SimpleBooleanProperty();
-    private GenerateWorkoutPlanController parent;
     private boolean saved;
 
     @FXML
@@ -65,7 +64,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     private Button saveButton;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
         saved = false;
         DTOArrived.addListener(new ChangeListener<Boolean>() {
 
@@ -117,7 +116,9 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
                 };
             }
         });
-
+        GenerateWorkoutPlanController controller = (GenerateWorkoutPlanController)this.getParentController();
+        this.generatedWorkoutPlan = controller.getGeneratedWorkoutPlan();
+        this.setFlag(true);
 
         LOGGER.info("GeneratedWorkoutPlanResult successfully initialized!");
 
@@ -130,17 +131,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
      */
     public void setTrainingsplanService(TrainingsplanService service) {
         this.trainingsplanService = service;
-    }
-
-    /**
-     * This method will only be called by the parent controller.
-     * Sets the DTO for later displaying.
-     *
-     * @param generatedWorkoutPlan the DTO that must be displayed for the user
-     */
-    public void setGeneratedWorkoutPlan(Trainingsplan generatedWorkoutPlan) {
-        this.generatedWorkoutPlan = generatedWorkoutPlan;
-        LOGGER.info("Generated workoutplan arrived.");
     }
 
     /**
@@ -182,8 +172,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     @FXML
     public void cancelClicked() {
         if (saved) {
-            stage.close();
-            parent.setFlag(true);
+            mainFrame.navigateToParent();
             LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -196,8 +185,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == yes) {
-                stage.close();
-                parent.setFlag(true);
+                mainFrame.navigateToParent();
                 LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
             } else {
                 alert.close();
@@ -215,15 +203,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         DTOArrived.set(val);
     }
 
-    /**
-     * Sets the parent controller of this one in order to be able to
-     * send signal to it.
-     *
-     * @param parentController the parent controller
-     */
-    public void setParentController(GenerateWorkoutPlanController parentController) {
-        this.parent = parentController;
-    }
 
     /**
      * This method is automatically called by the listener when the generated workout routine
@@ -244,17 +223,18 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
 
     @FXML
     public void shareFacebookClicked() throws Exception{
+        String appID = "428485184010923";
+        String appSecret = "62d1eb97169a4ec1af1c2efe06155544";
+        String accessToken = "CAACEdEose0cBALQD3De2s9zW445h6MQk142fd5JZCyVZAxlMHOaFuxoox6T6kNOFZCjYdeEW08D0xb6fFanHxigHBpZBgHsERe26BcixBkgLUFiUYOYBKG3WPqmvVx0X6Nw1u1ebnNm0ncldZC0Q6CKLWITRw5s34RoDZBhtB5CDG2fgMRjLS4Ws1vXnBKLBWzdviBEOX0EDYn3B8ZChMqkFTZAGBGRTWWAZD";
+
         // Setting up the webview
         WebView webView = new WebView();
         final WebEngine webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
-
-        // Read the html file and let the web engine load it.
-        File file = new File(getClass().getClassLoader().getResource("facebook.html").toURI().getPath());
-        webEngine.load(file.toURI().toURL().toString());
+        webEngine.load("https://www.facebook.com/dialog/feed?app_id=428485184010923&display=popup&name=PumpUp!&description=Share%20your%20workout%20results%20with%20PumpUp!&caption=Do%20you%20want%20to%20get%20in%20shape?&link=https%3A%2F%2Fdevelopers.facebook.com%2Fapps%2F428485184010923%2F&redirect_uri=https%3A%2F%2Ffacebook.com%2F");
         Stage stage = new Stage();
         stage.initOwner(this.stage);
-        stage.setScene(new Scene(webView, 1000, 800));
+        stage.setScene(new Scene(webView, 500, 300));
         stage.show();
     }
 
