@@ -9,7 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,6 +45,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -71,18 +76,18 @@ public class MainController extends Controller {
     private PictureHistoryService pictureHistoryService;
     private StageTransitionLoader transitionLoader;
     private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
-    @FXML
-    private Label currentTrainingTypeLabel;
+
     @FXML
     private ImageView userImgView;
     @FXML
     private Label usernameLabel;
     @FXML
-    private LineChart<?, ?> userChart;
+    private  LineChart<String, Number> userChart;
     @FXML
     private WebView webView;
     @FXML
     private WebEngine engine;
+
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -102,7 +107,7 @@ public class MainController extends Controller {
 
     @Override
     public void initController() {
-        this.transitionLoader = new StageTransitionLoader(this);
+
         this.updateUserData();
 
         /**
@@ -149,7 +154,39 @@ public class MainController extends Controller {
         /**
          * #######      END CALENDAR      #######
          */
+        this.makeUserChart();
 
+    }
+
+    private void makeUserChart(){
+        try {
+
+            LineChart.Series<String, Number> weightSeries = new LineChart.Series<String, Number>();
+            LineChart.Series<String, Number> bodyFatSeries = new LineChart.Series<String, Number>();
+            List<WeightHistory> weightHistoryList = weightHistoryService.findAll();
+            List<BodyfatHistory> bodyfatHistoryList = bodyfatHistoryService.findAll();
+
+            for(WeightHistory w : weightHistoryList){
+                if(w.getUser_id()==userService.getLoggedInUser().getUser_id()){
+                    weightSeries.getData().add(new LineChart.Data<>(""+w.getDate(), w.getWeight()));
+                }            }
+            int counter = 0;
+            for(BodyfatHistory b : bodyfatHistoryList){
+                if(b.getUser_id()==userService.getLoggedInUser().getUser_id()) {
+
+                    int bodyFatTOKG = weightHistoryList.get(counter).getWeight() * b.getBodyfat() / 100;
+                    bodyFatSeries.getData().add(new LineChart.Data("" + b.getDate(), bodyFatTOKG));
+                    counter++;
+                }
+            }
+            weightSeries.setName("Körpergewicht");
+            bodyFatSeries.setName("Körperfettanteil");
+            userChart.getData().add(weightSeries);
+            userChart.getData().add(bodyFatSeries);
+        }catch (ServiceException e){
+            e.printStackTrace();
+            LOGGER.error(e);
+        }
     }
 
     @FXML
@@ -177,7 +214,7 @@ public class MainController extends Controller {
 
     @FXML
     void exercisesButtonClicked(ActionEvent event) {
-       mainFrame.navigateToChild(PageEnum.Exercises);
+        mainFrame.navigateToChild(PageEnum.Exercises);
     }
 
     @FXML
@@ -229,7 +266,7 @@ public class MainController extends Controller {
 
     @FXML
     void exercisesMenuClicked(ActionEvent event) {
-      mainFrame.navigateToChild(PageEnum.Exercises);
+        mainFrame.navigateToChild(PageEnum.Exercises);
     }
 
     @FXML
