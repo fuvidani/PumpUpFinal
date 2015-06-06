@@ -16,7 +16,10 @@ public enum PageEnum {
     SessionEdit("fxml/workoutPlans/SessionEdit_v2.fxml", "Session hinzuf\u00fcgen", 600, 400),
     Calendar("fxml/calendar/Calendar.fxml", "Trainingskalender", 1000, 620),
     Exercises("fxml/exercise/Exercises.fxml", "\\u00dcbungen", 1000, 620),
-    Manage_exercises("fxml/exercise/ManageExercise.fxml", "\\u00dcbungen verwalten", 1300, 750);
+    Manage_exercises("fxml/exercise/ManageExercise.fxml", "\\u00dcbungen verwalten", 1300, 750),
+    LiveMode("fxml/workout/Workout.fxml", "", 1300, 750),
+    Playlist("fxml/workout/Playlist.fxml", "Playlist",800, 600),
+    Workoutstart("fxml/workout/Workoutstart.fxml", "Mit Training beginnen",800, 600);
 
     private final String fxml;
     private final String title;
