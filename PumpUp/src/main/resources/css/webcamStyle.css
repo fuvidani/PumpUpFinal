@@ -1,4 +1,4 @@
-.footer {
+.footer, .header {
 -fx-background-color: lightgray;
 }
 
@@ -9,4 +9,16 @@
     -fx-background-position: center;
     -fx-background-color: transparent;
     -fx-background-size: 100%;
+}
+
+.btnTakePictureDelay {
+    -fx-background-image: url('../icons/Counterclockwise.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnTakePicture:hover, .btnTakePictureDelay:hover {
+    -fx-background-size: 90%;
 }
