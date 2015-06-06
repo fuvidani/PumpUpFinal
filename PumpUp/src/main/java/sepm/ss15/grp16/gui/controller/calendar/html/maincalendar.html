@@ -7,6 +7,7 @@
     <script src='lib/moment.min.js'></script>
     <script src='lib/jquery.min.js'></script>
     <script src='fullcalendar.min.js'></script>
+    <script src='lang-all.js'></script>
     <script>
 
         $(document).ready(function () {
@@ -18,12 +19,14 @@
                     right: ''
                 },
 
+                lang: 'de',
                 defaultView: 'basicWeek',
                 defaultDate: new Date(),
                 selectable: false,
                 selectHelper: true,
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
+                firstDay: 1,
 
                 eventDrop: function (event, delta, revertFunc) {
                     drag.updateEvent(event.id, event.start.format());
@@ -32,7 +35,6 @@
                 eventRender: function (event, element) {
                     element.attr('title', event.url);
                 }
-
 
             });
         });
