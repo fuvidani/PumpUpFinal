@@ -92,7 +92,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        if (players == null) {
+        if (playlist == null) {
             mainPane.setVisible(false);
         } else {
             players = playlist.getPlayers();
