@@ -204,7 +204,13 @@ public class MainController extends Controller {
 
     @FXML
     void manageBodyPhotosClicked(ActionEvent event) {
-        transitionLoader.openStage("fxml/user/BodyPhotos.fxml", (Stage) usernameLabel.getScene().getWindow(), "Fotos", 1000, 600, false);
+        LOGGER.debug("Show photo diary clicked");
+        try {
+            mainFrame.openDialog(PageEnum.PhotoDiary);
+        } catch (Exception e) {
+            LOGGER.error("Couldn't open photodiary-window");
+            e.printStackTrace();
+        }
     }
 
     @FXML
