@@ -46,12 +46,12 @@ public class PlaylistController extends Controller {
             String source = p.getValue().getMedia().getSource();
             source = source.substring(0, source.length() - 4);
             source = source.substring(source.lastIndexOf("/") + 1).replaceAll("%20", " ");
-            return new SimpleStringProperty(title.equals("") ? source : title);
+            return new SimpleStringProperty((title == null || title.equals("")) ? source : title);
         });
         artistColumn.setCellValueFactory(p -> {
             String artist = (String) p.getValue().getMedia().getMetadata().get("artist");
             String album_artist = (String) p.getValue().getMedia().getMetadata().get("album artist");
-            String artist_return = artist.equals("") ? (album_artist.equals("") ? "" : album_artist) : artist;
+            String artist_return = (artist == null || artist.equals("")) ? (album_artist == null || album_artist.equals("") ? "" : album_artist) : artist;
             return new SimpleStringProperty(artist_return);
         });
         lengthColumn.setCellValueFactory(p -> new SimpleStringProperty(String.format("%1$.2f", p.getValue().getTotalDuration().toMinutes()).replace(",", ":")));
