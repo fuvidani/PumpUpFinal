@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.gui.controller.Controller;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,7 @@ import java.io.IOException;
  */
 public class WebcamController extends Controller {
 
+    private static final Dimension RESOLUTION = new Dimension(640,480);
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
     ComboBox<WebCamDetails> cameraComboBox;
@@ -68,19 +70,21 @@ public class WebcamController extends Controller {
         });
     }
 
-    private void initializeWebCam(final int webCamIndex) {
+    private void initializeWebCam(final int webCamIndex){
 
-        Task<Void> webCamIntilizer = new Task<Void>() {
+        Task<Void> webCamInitializer = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
 
                 if (selectedWebcam == null) {
                     selectedWebcam = Webcam.getWebcams().get(webCamIndex);
+                    selectedWebcam.setViewSize(RESOLUTION);
                     selectedWebcam.open();
                 } else {
                     closeWebCam();
                     selectedWebcam = Webcam.getWebcams().get(webCamIndex);
+                    selectedWebcam.setViewSize(RESOLUTION);
                     selectedWebcam.open();
                 }
                 startShowingImages();
@@ -89,14 +93,31 @@ public class WebcamController extends Controller {
 
         };
 
-        new Thread(webCamIntilizer).start();
+        new Thread(webCamInitializer).start();
         webCamFooterFlowPane.setDisable(false);
+    }
+
+    private void destroySelectedWebCam(){
+        Task<Void> webCamDestroyer = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+
+                if (selectedWebcam != null) {
+                    disposeWebCam();
+                }
+                return null;
+            }
+
+        };
+
+        new Thread(webCamDestroyer).start();
     }
 
     private void startShowingImages() {
 
         stopWebcam = false;
-        Task<Void> task = new Task<Void>() {
+        Task<Void> showImagesTask = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
@@ -122,7 +143,7 @@ public class WebcamController extends Controller {
             }
 
         };
-        Thread th = new Thread(task);
+        Thread th = new Thread(showImagesTask);
         th.setDaemon(true);
         th.start();
         webCamImageView.imageProperty().bind(imageProperty);
@@ -151,6 +172,7 @@ public class WebcamController extends Controller {
             if (selectedWebcam != null) {
                 BufferedImage image = selectedWebcam.getImage();
                 ImageIO.write(image, "JPG", new File("webcamaufnahme.jpg"));
+                destroySelectedWebCam();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText("Foto-Information");
