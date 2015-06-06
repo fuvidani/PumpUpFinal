@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.gui.ImageLoader;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -199,7 +200,13 @@ public class PhotoDiaryController extends Controller {
 
     @FXML
     public void webCamButtonClicked(){
-
+        LOGGER.debug("Edit user button clicked");
+        try {
+            mainFrame.openDialog(PageEnum.Webcam);
+        } catch (Exception e) {
+            LOGGER.error("Couldn't open useredit-window");
+            e.printStackTrace();
+        }
     }
 
     private void reloadImages(){

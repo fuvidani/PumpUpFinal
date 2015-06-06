@@ -101,6 +101,10 @@
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
+    <bean id="webcamController" class="sepm.ss15.grp16.gui.controller.user.WebcamController"
+          scope="prototype">
+    </bean>
+
     <!-- ###### Exercise beans ###### -->
 
     <bean id="exerciseDAO" class="sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl"

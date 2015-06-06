@@ -50,6 +50,8 @@
         <!-- Testing -->
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
+        <!-- Webcam -->
+        <webcam.version>0.3.10</webcam.version>
         <!-- Spring -->
         <spring.version>4.1.6.RELEASE</spring.version>
         <!-- Database -->
@@ -103,6 +105,12 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.3.1</version>
+        </dependency>
+        <!-- Webcam -->
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>${webcam.version}</version>
         </dependency>
     </dependencies>
 </project>

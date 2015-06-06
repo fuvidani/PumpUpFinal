@@ -10,6 +10,7 @@ public enum PageEnum {
     Login("fxml/user/Login.fxml", "Login", 10, 10),
     UserEdit("fxml/user/UserEdit.fxml", "Userdaten bearbeiten", 10, 10),
     PhotoDiary("fxml/user/PhotoDiary.fxml", "Fototagebuch", 700, 600),
+    Webcam("fxml/user/Webcam.fxml", "Webcam", 900, 690),
     Workoutplan("fxml/workoutPlans/Workoutplans.fxml", "Traininspläne", 1000, 620),
     Workoutplan_create_edit("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", "Traininsplan bearbeiten/erstellen", 1000, 620),
     Workoutplan_generate("fxml/workoutPlans/GenerateWorkoutPlan.fxml", "Trainingsplan generieren", 1000, 620),
