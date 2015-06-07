@@ -1,3 +1,13 @@
+.workoutPlanBox {
+    -fx-font-size: 12pt;
+}
+
+#trainings-table-view .column-header .label {
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+
+}
+
 .btnUp {
     -fx-background-image: url('../icons/up.png');
     -fx-background-repeat: no-repeat;

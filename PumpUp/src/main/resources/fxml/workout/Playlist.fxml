@@ -26,7 +26,7 @@
    <center>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tblPlaylist" disable="true" layoutX="248.0" layoutY="78.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mouseTransparent="true" stylesheets="@../../css/playlist.css" HBox.hgrow="ALWAYS">
+            <TableView fx:id="tblPlaylist" disable="true" layoutX="248.0" layoutY="78.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mouseTransparent="true" stylesheets="@../../css/playlistStyle.css" HBox.hgrow="ALWAYS">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
