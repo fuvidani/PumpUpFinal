@@ -284,15 +284,15 @@
 
     </bean>
 
-    <bean id="musicDAO" class="sepm.ss15.grp16.persistence.dao.music.impl.MusicDAOImpl">
+    <bean id="musicDAO" class="sepm.ss15.grp16.persistence.dao.music.impl.MusicDAOImpl" scope="singleton">
 
     </bean>
 
-    <bean id="musicService" class="sepm.ss15.grp16.service.music.impl.MusicServiceImpl">
+    <bean id="musicService" class="sepm.ss15.grp16.service.music.impl.MusicServiceImpl" scope="prototype">
         <constructor-arg ref="musicDAO"/>
     </bean>
 
-    <bean id="motivationModul" class="sepm.ss15.grp16.gui.controller.workout.MotivatonModul">
+    <bean id="motivationModul" class="sepm.ss15.grp16.gui.controller.workout.MotivatonModul" scope="prototype">
         <constructor-arg ref="musicService"/>
     </bean>
 </beans>
