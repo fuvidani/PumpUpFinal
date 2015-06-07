@@ -16,6 +16,7 @@ import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.workout.WorkoutController;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -36,7 +37,7 @@ import java.util.ResourceBundle;
 public class WorkoutPlanToCalendarController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutPlanToCalendarController.class);
 
-    public static Trainingsplan plan_interClassCommunication;
+   private Trainingsplan plan_interClassCommunication;
 
     private CalendarService calendarService;
     private TrainingsplanService trainingsplanService;
@@ -76,6 +77,7 @@ public class WorkoutPlanToCalendarController extends Controller {
     @Override
     public void initController() {
         setUpListView();
+        plan_interClassCommunication=((WorkoutPlansController)this.getParentController()).getPlan_interClassCommunication();
 
         if (plan_interClassCommunication != null) {
             txtName.setText(plan_interClassCommunication.getName());
@@ -114,7 +116,7 @@ public class WorkoutPlanToCalendarController extends Controller {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
             plan_interClassCommunication = null;
-            this.stage.close();
+            mainFrame.navigateToParent();
         }
     }
 
@@ -128,10 +130,7 @@ public class WorkoutPlanToCalendarController extends Controller {
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
-            //transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) listviewSessions.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
-            //this.stage.close();
             mainFrame.navigateToParent();
-            //mainFrame.navigateToChild(PageEnum.Calendar);
             plan_interClassCommunication = null;
 
         }

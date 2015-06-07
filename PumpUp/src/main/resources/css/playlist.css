@@ -1,5 +1,6 @@
 .table-view:disabled {
     -fx-opacity: 100;
+    -fx-font-size: 9pt;
 }
 
 .table-view:disabled > .column-header-background:disabled > .nested-column-header:disabled > .table-column:disabled > .label:disabled {
