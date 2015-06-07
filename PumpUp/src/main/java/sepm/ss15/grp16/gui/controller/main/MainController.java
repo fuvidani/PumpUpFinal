@@ -231,24 +231,23 @@ public class MainController extends Controller {
 
     private void makeUserChart(){
         try {
+            int loggedInUserID = userService.getLoggedInUser().getUser_id();
             userChart.getData().clear();
             LineChart.Series<String, Number> weightSeries = new LineChart.Series<String, Number>();
             LineChart.Series<String, Number> bodyFatSeries = new LineChart.Series<String, Number>();
-            List<WeightHistory> weightHistoryList = weightHistoryService.findAll();
-            List<BodyfatHistory> bodyfatHistoryList = bodyfatHistoryService.findAll();
+            List<WeightHistory> weightHistoryList = weightHistoryService.searchByUserID(loggedInUserID);
+            List<BodyfatHistory> bodyfatHistoryList = bodyfatHistoryService.searchByUserID(loggedInUserID);
 
             for(WeightHistory w : weightHistoryList){
-                if(w.getUser_id()==userService.getLoggedInUser().getUser_id()){
                     weightSeries.getData().add(new LineChart.Data<>(""+w.getDate(), w.getWeight()));
-                }            }
-            int counter = 0;
-            for(BodyfatHistory b : bodyfatHistoryList){
-                if(b.getUser_id()==userService.getLoggedInUser().getUser_id()) {
+            }
 
-                    int bodyFatTOKG = weightHistoryList.get(counter).getWeight() * b.getBodyfat() / 100;
-                    bodyFatSeries.getData().add(new LineChart.Data("" + b.getDate(), bodyFatTOKG));
-                    counter++;
-                }
+            int counter = 0;
+
+            for(BodyfatHistory b : bodyfatHistoryList){
+                int bodyFatTOKG = weightHistoryList.get(counter).getWeight() * b.getBodyfat() / 100;
+                bodyFatSeries.getData().add(new LineChart.Data("" + b.getDate(), bodyFatTOKG));
+                counter++;
             }
             weightSeries.setName("K\u00f6rpergewicht");
             bodyFatSeries.setName("K\u00f6rperfettanteil");
