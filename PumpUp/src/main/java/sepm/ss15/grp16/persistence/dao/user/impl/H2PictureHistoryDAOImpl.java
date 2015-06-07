@@ -26,15 +26,24 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
     private static final Logger LOGGER = LogManager.getLogger();
     private Connection con;
     private PreparedStatement createStatement;
+    private PreparedStatement updateStatement;
     private PreparedStatement getActualPictureStatement;
+    private PreparedStatement getByUserID;
+    private PreparedStatement searchByIDStatement;
+    private PreparedStatement deleteStatement;
 
     public H2PictureHistoryDAOImpl(DBHandler handler) throws PersistenceException {
 
         try {
             this.con = handler.getConnection();
-            this.createStatement = con.prepareStatement("INSERT INTO picturehistory VALUES(?, ?, ?, ?);");
+            this.createStatement = con.prepareStatement("INSERT INTO picturehistory VALUES(?, ?, ?, ?, ?);");
+            this.updateStatement = con.prepareStatement("UPDATE picturehistory SET user_id = ?, location = ? , date = ?," +
+                    " isDeleted = ? WHERE picturehistory_id = ?");
+            this.getByUserID = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND isDeleted = false");
+            this.searchByIDStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE picturehistory_id = ?");
+            this.deleteStatement = con.prepareStatement("UPDATE picturehistory SET isDeleted = ? WHERE picturehistory_id = ?");
             this.getActualPictureStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND " +
-                    "picturehistory_id = (SELECT max(picturehistory_id) from picturehistory WHERE user_id = ?);");
+                    "picturehistory_id = (SELECT max(picturehistory_id) from picturehistory WHERE user_id = ?) AND isDeleted = false;");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
@@ -44,9 +53,27 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
     }
 
     @Override
-    public List<PictureHistory> searchByUserID(int user_id) {
-        //TODO: Implement me
-        return null;
+    public List<PictureHistory> searchByUserID(int user_id) throws PersistenceException {
+
+        LOGGER.info("Searching pictures from user with id: " + user_id);
+        List<PictureHistory> pictureHistoryList = new ArrayList<>();
+
+        try{
+            getByUserID.setInt(1, user_id);
+            ResultSet resultSet = getByUserID.executeQuery();
+
+            while(resultSet.next()){
+                PictureHistory pictureHistory = new PictureHistory(resultSet.getInt(1), resultSet.getInt(2),
+                        resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5));
+                pictureHistoryList.add(pictureHistory);
+            }
+
+        }catch(SQLException e){
+            throw new PersistenceException("Failed to find pictures from user with id: " + user_id, e);
+        }
+
+        LOGGER.info("Searching pictures from user with id: " + user_id + " was successful");
+        return pictureHistoryList;
     }
 
     @Override
@@ -87,6 +114,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             createStatement.setInt(2, pictureHistory.getUser_id());
             createStatement.setString(3, pictureHistory.getLocation());
             createStatement.setDate(4, new java.sql.Date(pictureHistory.getDate().getTime()));
+            createStatement.setBoolean(5, pictureHistory.getIsDeleted());
 
             createStatement.execute();
 
@@ -118,11 +146,11 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         try {
 
             Statement findAllStatement = con.createStatement();
-            ResultSet rs_allPictureHistories = findAllStatement.executeQuery("SELECT * FROM picturehistory;");
+            ResultSet rs_allPictureHistories = findAllStatement.executeQuery("SELECT * FROM picturehistory WHERE isDeleted = false;");
 
             while (rs_allPictureHistories.next()) {
                 PictureHistory foundPictureHistory = new PictureHistory(rs_allPictureHistories.getInt(1), rs_allPictureHistories.getInt(2),
-                        rs_allPictureHistories.getString(3), rs_allPictureHistories.getDate(4));
+                        rs_allPictureHistories.getString(3), rs_allPictureHistories.getDate(4), rs_allPictureHistories.getBoolean(5));
                 pictureHistoryList.add(foundPictureHistory);
             }
 
@@ -138,19 +166,100 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
 
     @Override
     public PictureHistory searchByID(int id) throws PersistenceException {
-        //TODO: Implement me
-        return null;
+
+        LOGGER.info("Searching picturehistory with id: " + id);
+        PictureHistory pictureHistory = null;
+
+        try{
+            searchByIDStatement.setInt(1, id);
+            ResultSet resultSet = searchByIDStatement.executeQuery();
+
+            if(resultSet.next()){
+                pictureHistory = new PictureHistory(resultSet.getInt(1), resultSet.getInt(2),
+                        resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5));
+            }
+
+        }catch(SQLException e){
+            throw new PersistenceException("Failed to find picturehistory with id: " + id, e);
+        }
+
+        LOGGER.info("Searching picturehistory with id: " + id + " was successful");
+        return pictureHistory;
     }
 
     @Override
-    public PictureHistory update(PictureHistory dto) throws PersistenceException {
-        //TODO: Implement me
-        return null;
+    public PictureHistory update(PictureHistory pictureHistory) throws PersistenceException {
+
+        LOGGER.info("Updating a picturehistory...");
+
+        if (pictureHistory == null) {
+            LOGGER.error("Updating with null failed");
+            throw new PersistenceException("pictureHistory isn't allowed to be null");
+        }
+
+        try {
+
+            LOGGER.debug("Saving image...");
+            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+
+            LOGGER.debug("Saving in resources: " + pathToResource);
+            String saveName = "/u" + pictureHistory.getUser_id() + "p" + pictureHistory.getPicturehistory_id() + ".jpg";
+            String pathOfNewImage = pathToResource + saveName;
+            LOGGER.debug("Saving image with path: " + pathOfNewImage);
+            File picture = new File(pathOfNewImage);
+            InputStream inputStream = new FileInputStream(pictureHistory.getLocation());
+            OutputStream outputSteam = new FileOutputStream(picture);
+            IOUtils.copy(inputStream, outputSteam);
+            outputSteam.close();
+            inputStream.close();
+            LOGGER.debug("Saved image with name: " + saveName);
+            pictureHistory.setLocation(saveName);
+
+            updateStatement.setInt(1, pictureHistory.getUser_id());
+            updateStatement.setString(2, pictureHistory.getLocation());
+            updateStatement.setDate(3, new java.sql.Date(pictureHistory.getDate().getTime()));
+            updateStatement.setBoolean(4, pictureHistory.getIsDeleted());
+            updateStatement.setInt(5, pictureHistory.getPicturehistory_id());
+
+            updateStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Updating the picturehistory in the database failed");
+            throw new PersistenceException("Couldn't update the picturehistory", e);
+        } catch (FileNotFoundException e) {
+            LOGGER.error("Failed to update pictureHistory. File not found");
+            throw new PersistenceException("Failed to create a new pictureHistory", e);
+        } catch (IOException e) {
+            LOGGER.error("Failed to update pictureHistory. IO failed");
+            throw new PersistenceException("Failed to create a new pictureHistory", e);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        LOGGER.info("Updated a picturehistory successfully");
+        return pictureHistory;
     }
 
     @Override
-    public void delete(PictureHistory dto) throws PersistenceException {
-        //TODO: Implement me
+    public void delete(PictureHistory pictureHistory) throws PersistenceException {
+
+        LOGGER.info("Deleting a picturehistory...");
+
+        if (pictureHistory == null) {
+            LOGGER.error("Deleting with null failed");
+            throw new PersistenceException("picturehistory isn't allowed to be null");
+        }
+
+        try {
+            deleteStatement.setBoolean(1, true);
+            deleteStatement.setInt(2, pictureHistory.getId());
+            deleteStatement.executeUpdate();
+            pictureHistory.setIsDeleted(true);
+        } catch (SQLException e) {
+            LOGGER.error("Deleting the picturehistory from the database failed");
+            throw new PersistenceException("Couldn't delete the picturehistory", e);
+        }
+
+        LOGGER.info("picturehistory successfully deleted");
     }
 
     @Override
@@ -163,8 +272,8 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             getActualPictureStatement.setInt(1, user_id);
             getActualPictureStatement.setInt(2, user_id);
             ResultSet rs = getActualPictureStatement.executeQuery();
-            if (rs.next() == true) {
-                foundPictureHistory = new PictureHistory(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDate(4));
+            if (rs.next()) {
+                foundPictureHistory = new PictureHistory(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getDate(4), rs.getBoolean(5));
             }
         } catch (SQLException e) {
             throw new PersistenceException("Failed to get actual picture", e);
