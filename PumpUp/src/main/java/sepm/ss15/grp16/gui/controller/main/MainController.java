@@ -26,6 +26,7 @@ import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.workout.WorkoutstartController;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
@@ -75,6 +76,9 @@ public class MainController extends Controller {
     private WebView webView;
     @FXML
     private WebEngine engine;
+
+    private  Appointment executionAppointment;
+
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -144,25 +148,35 @@ public class MainController extends Controller {
     }
 
     @FXML
-    void editUserDataButtonClicked(ActionEvent event) {
-        // TODO: Either small dialog window for editing data or live editing into the table itself.
-    }
-
-    @FXML
-    void statisicsButtonClicked(ActionEvent event) {
-        // TODO: Michi's Statistiken
-    }
-
-    @FXML
     void trainingClicked(ActionEvent event) {
-        mainFrame.openDialog(PageEnum.Workoutstart);
-        mainFrame.navigateToChild(PageEnum.LiveMode);
+        try {
+            executionAppointment = calendarService.getCurrentAppointment();
+
+            if(executionAppointment != null) {
+                mainFrame.openDialog(PageEnum.Workoutstart);
+                WorkoutstartController workoutstartController = (WorkoutstartController) getChildController();
+
+                if(workoutstartController.started()) {
+                    mainFrame.navigateToChild(PageEnum.LiveMode);
+                }
+            }
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Keine Übung zur Ausführung!");
+                alert.setContentText("Keine Übung zur Ausführung!");
+                ButtonType ok = new ButtonType("OK");
+                alert.getButtonTypes().setAll(ok);
+                alert.showAndWait().get();
+            }
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 
-    @FXML
-    void openCalendarMenuClicked(ActionEvent event) {
-        mainFrame.navigateToChild(PageEnum.Calendar);
-
+    public Appointment getExecutionAppointment()
+    {
+        return  executionAppointment;
     }
 
     public void updateUserData() {

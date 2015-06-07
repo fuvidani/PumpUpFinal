@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Arc?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutController">
     <center>
         <VBox prefHeight="750.0" prefWidth="1300.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
@@ -114,7 +114,7 @@
         <fx:include fx:id="musicPlayer" source="Workout_MusicPlayer.fxml" />
     </bottom>
     <top>
-        <FlowPane fx:id="exerciseFlow" BorderPane.alignment="CENTER" />
+        <FlowPane fx:id="exerciseFlow" prefWrapLength="1.0E13" BorderPane.alignment="CENTER" />
     </top>
     <padding>
         <Insets left="20.0" right="20.0" top="10.0" />

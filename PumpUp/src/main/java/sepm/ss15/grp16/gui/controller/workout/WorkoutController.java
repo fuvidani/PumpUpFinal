@@ -28,6 +28,7 @@ import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
@@ -102,23 +103,12 @@ public class WorkoutController extends Controller {
 
     public WorkoutController(ExerciseDAO exerciseDAO, MotivatonModul motivationModul) {
         this.motivationModul = motivationModul;
-        LinkedList<ExerciseSet> list = new LinkedList<>();
-
-        try {
-            list.add(new ExerciseSet(exerciseDAO.searchByID(0), null, 10, ExerciseSet.SetType.repeat, 1, false));
-            list.add(new ExerciseSet(exerciseDAO.searchByID(1), null, 15, ExerciseSet.SetType.time, 2, false));
-            list.add(new ExerciseSet(exerciseDAO.searchByID(2), null, 10, ExerciseSet.SetType.repeat, 3, false));
-            list.add(new ExerciseSet(exerciseDAO.searchByID(3), null, 20, ExerciseSet.SetType.time, 4, false));
-
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-        }
-        session = new TrainingsSession();
-        session.setExerciseSets(list);
     }
 
     @Override
     public void initController() {
+        session = ((MainController) getParentController()).getExecutionAppointment().getSession();
+
         musicPlayerController.setParent(this);
         motivationModul.setMusicPlayerController(musicPlayerController);
         musicPlayerController.play();
