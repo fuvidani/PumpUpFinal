@@ -231,7 +231,7 @@ public class MainController extends Controller {
 
     private void makeUserChart(){
         try {
-
+            userChart.getData().clear();
             LineChart.Series<String, Number> weightSeries = new LineChart.Series<String, Number>();
             LineChart.Series<String, Number> bodyFatSeries = new LineChart.Series<String, Number>();
             List<WeightHistory> weightHistoryList = weightHistoryService.findAll();

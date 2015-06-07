@@ -144,7 +144,8 @@
                                 </VBox>
                             </children>
                         </HBox>
-                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="326.0" prefWidth="677.0" HBox.hgrow="ALWAYS">
+                  <HBox maxWidth="200.0" minHeight="200.0" prefHeight="100.0" prefWidth="200.0" />
+                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="326.0" prefWidth="605.0" HBox.hgrow="ALWAYS">
                             <xAxis>
                                 <CategoryAxis side="BOTTOM" />
                             </xAxis>
@@ -175,7 +176,7 @@
     <bottom>
         <HBox prefHeight="50.0" BorderPane.alignment="CENTER">
             <children>
-            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="trainingHbox">
                <children>
                       <Button contentDisplay="LEFT" maxHeight="64.0" maxWidth="1.7976931348623157E308" minHeight="64.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0" prefWidth="120.0" styleClass="trainingBtn" text="Training">
                           <font>
