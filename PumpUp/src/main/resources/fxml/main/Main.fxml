@@ -15,13 +15,13 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="root" stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
+<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
     <center>
         <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
             <items>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="mainBox">
                     <children>
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="326.0" prefWidth="616.0">
                             <children>
                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
                                     <children>
@@ -144,7 +144,8 @@
                                 </VBox>
                             </children>
                         </HBox>
-                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                  <HBox maxWidth="200.0" minHeight="200.0" prefHeight="100.0" prefWidth="200.0" />
+                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="326.0" prefWidth="605.0" HBox.hgrow="ALWAYS">
                             <xAxis>
                                 <CategoryAxis side="BOTTOM" />
                             </xAxis>
@@ -161,7 +162,7 @@
                     <children>
                         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
                             <children>
-                                <WebView fx:id="webView" prefHeight="300.0" prefWidth="200.0" styleClass="webCalender" />
+                                <WebView fx:id="webView" prefHeight="300.0" prefWidth="200.0" />
                             </children>
                         </VBox>
                     </children>
@@ -173,20 +174,24 @@
         </SplitPane>
     </center>
     <bottom>
-        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+        <HBox prefHeight="50.0" BorderPane.alignment="CENTER">
             <children>
-                <Region HBox.hgrow="ALWAYS" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Button contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="0.0" prefWidth="0.0" styleClass="trainingBtn" text="Training" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
-                    <font>
-                        <Font size="24.0" />
-                    </font>
-                    <HBox.margin>
-                        <Insets />
-                    </HBox.margin>
-                </Button>
-                <Region HBox.hgrow="ALWAYS" />
-                <Region HBox.hgrow="ALWAYS" />
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="trainingHbox">
+               <children>
+                      <Button contentDisplay="LEFT" maxHeight="64.0" maxWidth="1.7976931348623157E308" minHeight="64.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0" prefWidth="120.0" styleClass="trainingBtn" text="Training">
+                          <font>
+                              <Font size="24.0" />
+                          </font>
+                          <HBox.margin>
+                              <Insets />
+                          </HBox.margin>
+                      </Button>
+                  <Button mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0" styleClass="trainginPic" text=" " />
+               </children>
+               <HBox.margin>
+                  <Insets left="600.0" />
+               </HBox.margin>
+            </HBox>
             </children>
             <BorderPane.margin>
                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

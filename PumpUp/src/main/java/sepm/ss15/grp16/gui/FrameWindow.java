@@ -49,7 +49,12 @@ public class FrameWindow extends BorderPane {
 
         stage.setScene(new Scene(this));
         stage.setTitle(mainPage.getTitle());
-
+        Scene scene = stage.getScene();
+        try {
+            scene.getStylesheets().add(getClass().getClassLoader().getResource("css").toURI().toString().concat("/mainStyle.css"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         initMenu();
 
         navigateToChild(mainPage);

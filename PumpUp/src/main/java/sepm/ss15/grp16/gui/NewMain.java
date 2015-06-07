@@ -37,9 +37,9 @@ public class NewMain extends Application{
          primaryStage.setOnCloseRequest(e -> {
 //                e.consume();
 //                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//                alert.setTitle("Programm schlie�en");
+//                alert.setTitle("Programm schlie\u00dfen");
 //                alert.setHeaderText("Das Programm wird beendet.");
-//                alert.setContentText("M�chten Sie das Programm wirklich beenden?");
+//                alert.setContentText("M\u00f6chten Sie das Programm wirklich beenden?");
 //                ButtonType yes = new ButtonType("Ja");
 //            ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
 //            alert.getButtonTypes().setAll(yes, cancel);
