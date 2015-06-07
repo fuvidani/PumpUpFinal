@@ -176,8 +176,6 @@ public class WebcamController extends Controller {
         try {
             if (selectedWebcam != null) {
                 BufferedImage image = selectedWebcam.getImage();
-                ImageIO.write(image, "JPG", new File("webcamaufnahme.jpg"));
-
 
                 FileChooser filechooser = new FileChooser();
                 FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg");
@@ -186,12 +184,7 @@ public class WebcamController extends Controller {
 
                 File file = filechooser.showSaveDialog(null);
                 if(file != null){
-                    try{
-                        ImageIO.write(image, "JPG", file);
-                    } catch (IOException e){
-                        LOGGER.error("Saving image from webcam failed");
-                        e.printStackTrace();
-                    }
+                    ImageIO.write(image, "JPG", file);
                 }
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -201,6 +194,7 @@ public class WebcamController extends Controller {
                 alert.showAndWait();
             }
         } catch (IOException e) {
+            LOGGER.error("Saving image from webcam failed");
             e.printStackTrace();
         }
         webCamFooterFlowPane.setDisable(false);
