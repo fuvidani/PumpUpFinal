@@ -246,11 +246,28 @@
                                                                                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                                                             </VBox.margin>
                                                                         </Label>
-                                                                        <Text fx:id="txtCat" strokeType="OUTSIDE" strokeWidth="0.0">
-                                                                            <VBox.margin>
-                                                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                                                                            </VBox.margin>
-                                                                        </Text>
+                                                      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0">
+                                                         <children>
+                                                            <Label fx:id="txtTraining" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <Label fx:id="txtEquip" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <Label fx:id="txtMuscle" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                         </VBox.margin>
+                                                      </HBox>
                                                                     </children>
                                                                 </VBox>
                                                             </children>

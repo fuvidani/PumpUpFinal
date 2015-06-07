@@ -48,12 +48,13 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
     @Override
     public WeightHistory update(WeightHistory weightHistory) throws ServiceException {
         //TODO: Implement me
-        return null;
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public void delete(WeightHistory weightHistory) throws ServiceException {
         //TODO: Implement me
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override

@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS picturehistory (
   user_id           INTEGER NOT NULL,
   location          VARCHAR NOT NULL,
   date              DATE    NOT NULL,
+  isDeleted BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (user_id) REFERENCES user
 );
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="690.0" prefWidth="900.0" stylesheets="@../../css/webcamStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.user.WebcamController">
+    <bottom>
+        <FlowPane fx:id="webCamFooterFlowPane" alignment="CENTER" columnHalignment="CENTER" hgap="50.0" prefHeight="80.0" prefWidth="200.0" styleClass="footer">
+            <children>
+                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#takePicture" prefHeight="50.0" prefWidth="50.0" styleClass="btnTakePicture" stylesheets="@../../css/webcamStyle.css">
+                    <font>
+                        <Font name="Segoe UI" size="18.0" fx:id="x1" />
+                    </font>
+               <tooltip>
+                  <Tooltip text="Foto schießen" />
+               </tooltip>
+                </Button>
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="btnTakePictureDelay" stylesheets="@../../css/webcamStyle.css">
+               <font>
+                  <Font name="Segoe UI" size="18.0" fx:id="x11" />
+               </font>
+               <tooltip>
+                  <Tooltip text="Foto schießen (5s)" />
+               </tooltip>
+            </Button>
+            </children>
+        </FlowPane>
+    </bottom>
+    <center>
+        <BorderPane fx:id="webCamBorderPane" prefHeight="200.0" prefWidth="200.0">
+            <center>
+                <ImageView fx:id="webCamImageView" fitHeight="450.0" fitWidth="475.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+            </center>
+        </BorderPane>
+    </center>
+   <top>
+      <GridPane prefHeight="50.0" styleClass="header" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="PumpUp Webcam">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" GridPane.columnIndex="1">
+               <children>
+                  <ComboBox fx:id="cameraComboBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" GridPane.columnIndex="1" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </GridPane>
+   </top>
+</BorderPane>

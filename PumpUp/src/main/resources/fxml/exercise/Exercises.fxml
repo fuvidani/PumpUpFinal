@@ -128,7 +128,7 @@
                                              <children>
                                                 <HBox prefHeight="17.0">
                                                    <children>
-                                                      <Label prefWidth="100.0" text="Art">
+                                                      <Label prefWidth="100.0" styleClass="categoryHeader" text="Art">
                                                          <HBox.margin>
                                                             <Insets left="70.0" />
                                                          </HBox.margin>
@@ -136,15 +136,15 @@
                                                             <Font size="16.0" />
                                                          </font>
                                                       </Label>
-                                                      <Label prefWidth="100.0" text="Geräte">
+                                                      <Label prefWidth="80.0" styleClass="categoryHeader" text="Geräte">
                                                          <HBox.margin>
-                                                            <Insets left="60.0" />
+                                                            <Insets left="40.0" />
                                                          </HBox.margin>
                                                          <font>
                                                             <Font size="16.0" />
                                                          </font>
                                                       </Label>
-                                                      <Label prefWidth="130.0" text="Muskelgruppe">
+                                                      <Label prefWidth="150.0" styleClass="categoryHeader" text="Muskelgruppe">
                                                          <HBox.margin>
                                                             <Insets left="50.0" />
                                                          </HBox.margin>
@@ -163,12 +163,12 @@
                                                       </VBox>
                                                       <VBox fx:id="vboxEquipment" prefWidth="100.0" spacing="5.0">
                                                          <HBox.margin>
-                                                            <Insets left="60.0" />
+                                                            <Insets left="45.0" />
                                                          </HBox.margin>
                                                       </VBox>
-                                                      <VBox fx:id="vboxMuscle" prefWidth="100.0">
+                                                      <VBox fx:id="vboxMuscle" prefWidth="160.0">
                                                          <HBox.margin>
-                                                            <Insets left="50.0" />
+                                                            <Insets left="25.0" />
                                                          </HBox.margin>
                                                       </VBox>
                                                    </children>

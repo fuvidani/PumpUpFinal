@@ -63,7 +63,7 @@ public class FrameWindow extends BorderPane {
     {
         Menu user = new Menu("User");
         addNavigationDialogItemToMenu(user, "Körperdaten ändern", PageEnum.UserEdit);
-        addNavigationItemToMenu(user, "Eigene Fotos verwalten", PageEnum.Fotos);
+        addNavigationDialogItemToMenu(user, "Eigene Fotos verwalten", PageEnum.PhotoDiary);
         addItemToMenu(user, "Abmelden", event -> navigateToParent());
         Menu view = new Menu("View");
         addNavigationItemToMenu(view, "Trainingskalender", PageEnum.Calendar);
@@ -75,7 +75,7 @@ public class FrameWindow extends BorderPane {
         Menu help = new Menu("Help");
         addNavigationDialogItemToMenu(help, "About", PageEnum.About);
 
-        menuBar = new MenuBar(user, view, personalMenu, help);
+        menuBar = new MenuBar(user, view, help);
     }
 
     /**
@@ -94,9 +94,9 @@ public class FrameWindow extends BorderPane {
                 activeController.setChildController(controller); //????
             }
             activeController = controller;
-            controller.initController();
-
             reloadMenu(mainPage);
+
+            controller.initController();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,9 +126,9 @@ public class FrameWindow extends BorderPane {
                 controller.setChildController(activeController);
                 activeController.setParentController(controller); ///???
                 activeController = controller;
-                controller.initController();
-
                 reloadMenu(page);
+
+                controller.initController();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -175,7 +175,7 @@ public class FrameWindow extends BorderPane {
     {
         if(personalMenu.getItems().size() == 0)
         {
-            personalMenu.setVisible(true);
+            menuBar.getMenus().add(2, personalMenu);
         }
         MenuItem item = new MenuItem(titel);
         item.setOnAction(event);
@@ -199,7 +199,7 @@ public class FrameWindow extends BorderPane {
         menu.getItems().add(item);
     }
 
-    public void addNavigationItemToMenu(Menu menu, String titel, PageEnum page)
+    private void addNavigationItemToMenu(Menu menu, String titel, PageEnum page)
     {
         addItemToMenu(menu, titel, event -> {
             navigateToMain();
@@ -207,7 +207,7 @@ public class FrameWindow extends BorderPane {
         });
     }
 
-    public void addNavigationDialogItemToMenu(Menu menu, String titel, PageEnum page)
+    private void addNavigationDialogItemToMenu(Menu menu, String titel, PageEnum page)
     {
         addItemToMenu(menu, titel, event -> {
             navigateToMain();
@@ -227,7 +227,7 @@ public class FrameWindow extends BorderPane {
     }
 
     private void reloadMenu(PageEnum mainPage) {
-        personalMenu.setVisible(false);
+        menuBar.getMenus().remove(personalMenu);
         personalMenu.setText(mainPage.getTitle());
         personalMenu.getItems().clear();
     }

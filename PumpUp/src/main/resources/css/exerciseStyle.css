@@ -19,3 +19,9 @@
     -fx-background-color: transparent;
 
 }
+
+.categoryHeader{
+    -fx-background-color: white;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 17pt;
+}
