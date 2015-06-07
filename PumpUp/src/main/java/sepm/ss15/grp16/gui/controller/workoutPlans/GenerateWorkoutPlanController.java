@@ -25,7 +25,6 @@ import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
@@ -48,7 +47,6 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private StageTransitionLoader transitionLoader;
     private GeneratedWorkoutplanService generatedWorkoutplanService;
     private ToggleGroup toggleGroup;
     private List<EquipmentCategory> equipment;
@@ -127,7 +125,6 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.transitionLoader = new StageTransitionLoader(this);
         displayClosed.addListener(new ChangeListener<Boolean>() {
 
             @Override

@@ -10,7 +10,6 @@ import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -25,7 +24,6 @@ public class CalendarController extends Controller implements Initializable {
 
     private final Logger LOGGER = LogManager.getLogger(CalendarController.class);
     private CalendarService calendarService;
-    private StageTransitionLoader transitionLoader;
 
     @FXML
     private WebView webView;
@@ -38,7 +36,6 @@ public class CalendarController extends Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         LOGGER.info("Initialising CalendarController..");
-        this.transitionLoader = new StageTransitionLoader(this);
 
         engine = webView.getEngine();
         String path = System.getProperty("user.dir");

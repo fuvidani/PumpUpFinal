@@ -7,7 +7,6 @@ import javafx.stage.DirectoryChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.user.User;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.user.UserService;
@@ -25,7 +24,6 @@ public class WorkoutstartController extends Controller {
 
     private UserService userService;
 
-    private StageTransitionLoader transitionLoader;
     @FXML
     private ListView<?> toDoListView;
 

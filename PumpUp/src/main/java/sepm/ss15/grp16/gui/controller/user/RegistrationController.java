@@ -12,7 +12,6 @@ import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
@@ -54,7 +53,6 @@ public class RegistrationController extends Controller {
     RadioButton female_radioButton;
     @FXML
     ImageView picture_imageView;
-    private StageTransitionLoader transitionLoader;
     @FXML
     private ToggleGroup group;
     private UserService userService;
