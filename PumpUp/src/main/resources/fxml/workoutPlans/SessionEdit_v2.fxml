@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import java.net.URL?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0"
-            prefWidth="800.0" stylesheets="@../../css/trainingStyle.css"
-            xmlns="http://javafx.com/javafx/8"
+            prefWidth="800.0" styleClass="workoutPlanBox" xmlns="http://javafx.com/javafx/8"
             fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2">
     <center>
         <HBox>
@@ -68,8 +68,9 @@
                 </VBox>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <TableView fx:id="tblvExerciseTable" editable="true" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <TableView id="trainings-table-view" fx:id="tblvExerciseTable" editable="true"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="tblcOrder" maxWidth="1.7976931348623157E308" minWidth="-1.0"
                                              prefWidth="30.0" text="Nr."/>
@@ -120,8 +121,9 @@
                                 </TextField>
                             </children>
                         </HBox>
-                        <TableView fx:id="tblvExercises" editable="true" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <TableView id="trainings-table-view" fx:id="tblvExercises" editable="true"
+                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                   VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="tblcName" maxWidth="1.7976931348623157E308" minWidth="-1.0"
                                              prefWidth="180.0" text="Name"/>
@@ -226,4 +228,8 @@
             </children>
         </VBox>
     </bottom>
+    <stylesheets>
+        <URL value="@../../css/trainingStyle.css"/>
+        <URL value="@../../css/mainStyle.css"/>
+    </stylesheets>
 </BorderPane>

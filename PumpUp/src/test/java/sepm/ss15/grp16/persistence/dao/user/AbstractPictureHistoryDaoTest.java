@@ -5,12 +5,11 @@ import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
 import sepm.ss15.grp16.persistence.dao.DAO;
-import sepm.ss15.grp16.persistence.dao.user.PictureHistoryDAO;
-import sepm.ss15.grp16.persistence.dao.user.UserDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -49,6 +48,99 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
         if (savedImage.exists()) {
             savedImage.delete();
         }
+    }
+
+    @Test
+    public void searchWithValidUserID() throws Exception {
+        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+        String testImagePath = pathToResource + "/testbild.jpg";
+
+        User testUser = createUserForTest();
+
+        PictureHistory testPictureHistory1 = new PictureHistory(null, testUser.getUser_id(), testImagePath, new Date());
+        PictureHistory testPictureHistory2 = new PictureHistory(null, testUser.getUser_id(), testImagePath, new Date());
+        PictureHistory testPictureHistory3 = new PictureHistory(null, testUser.getUser_id(), testImagePath, new Date());
+
+        pictureHistoryDAO.create(testPictureHistory1);
+        pictureHistoryDAO.create(testPictureHistory2);
+        pictureHistoryDAO.create(testPictureHistory3);
+
+        List<PictureHistory> pictureHistoryList = pictureHistoryDAO.searchByUserID(testUser.getUser_id());
+
+        assertTrue(pictureHistoryList.contains(testPictureHistory1));
+        assertTrue(pictureHistoryList.contains(testPictureHistory2));
+        assertTrue(pictureHistoryList.contains(testPictureHistory3));
+
+        for (int i = 0; i < pictureHistoryList.size(); i++) {
+            String savedImagePath = pathToResource + pictureHistoryList.get(i).getLocation();
+            File savedImage = new File(savedImagePath);
+            assertTrue(savedImage.exists());
+            if (savedImage.exists()) {
+                savedImage.delete();
+            }
+        }
+    }
+
+    @Test
+    public void searchByIDShouldFind() throws Exception {
+        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+        String testImagePath = pathToResource + "/testbild.jpg";
+
+        User testUser = createUserForTest();
+
+        PictureHistory testPictureHistory = new PictureHistory(null, testUser.getUser_id(), testImagePath, new Date());
+        searchByIDValid(testPictureHistory);
+
+        String savedImagePath = pathToResource + testPictureHistory.getLocation();
+        File savedImage = new File(savedImagePath);
+        assertTrue(savedImage.exists());
+        if (savedImage.exists()) {
+            savedImage.delete();
+        }
+    }
+
+    @Test
+    public void deleteWithValidPictureHistoryShouldPersist() throws Exception {
+        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+        String testImagePath = pathToResource + "/testbild.jpg";
+
+        User testUser = createUserForTest();
+
+        PictureHistory testPictureHistory = new PictureHistory(null, testUser.getUser_id(), testImagePath, new Date());
+        deleteValid(testPictureHistory);
+
+        String savedImagePath = pathToResource + testPictureHistory.getLocation();
+        File savedImage = new File(savedImagePath);
+        assertTrue(savedImage.exists());
+        if (savedImage.exists()) {
+            savedImage.delete();
+        }
+    }
+
+    @Test
+    public void updateWithValidPictureHistoryShouldPersist() throws Exception {
+        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+        String testImagePath = pathToResource + "/testbild.jpg";
+        String testImagePath2 = pathToResource + "/testbild.jpg";
+
+        PictureHistory testPictureHistoryBefore = new PictureHistory(null, createUserForTest().getUser_id(), testImagePath, new Date());
+        PictureHistory testPictureHistoryAfter = new PictureHistory(null, createUserForTest().getUser_id(), testImagePath2, new Date());
+        updateValid(testPictureHistoryBefore, testPictureHistoryAfter);
+
+        String savedImagePath = pathToResource + testPictureHistoryBefore.getLocation();
+        String savedImagePath2 = pathToResource + testPictureHistoryAfter.getLocation();
+        File savedImage = new File(savedImagePath);
+        File savedImage2 = new File(savedImagePath2);
+        assertTrue(savedImage.exists());
+        assert (savedImage2.exists());
+
+        if (savedImage.exists()) {
+            savedImage.delete();
+        }
+        if (savedImage2.exists()) {
+            savedImage2.delete();
+        }
+
     }
 
     private User createUserForTest() throws Exception {

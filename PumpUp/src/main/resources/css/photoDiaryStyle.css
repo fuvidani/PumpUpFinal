@@ -1,0 +1,51 @@
+.deleteBtn {
+    -fx-background-image: url('../icons/delete.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.addBtn {
+    -fx-background-image: url('../icons/add.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.selectPictureBtn {
+    -fx-background-image: url('../icons/pictureSelect.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.webcamBtn {
+    -fx-background-image: url('../icons/Photo_camera.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.forwardBtn {
+    -fx-background-image: url('../icons/forward.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.backBtn {
+    -fx-background-image: url('../icons/back.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.button:hover {
+    -fx-background-size: 90%;
+}

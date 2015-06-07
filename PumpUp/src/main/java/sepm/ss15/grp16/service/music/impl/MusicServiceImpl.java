@@ -5,14 +5,11 @@ import javafx.scene.media.MediaPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.music.Playlist;
-import sepm.ss15.grp16.entity.music.Song;
-import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.music.MusicDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.music.MusicService;
-import sepm.ss15.grp16.service.user.UserService;
 
 import java.util.List;
 
@@ -22,19 +19,15 @@ import java.util.List;
  */
 public class MusicServiceImpl implements MusicService {
     private static final Logger LOGGER = LogManager.getLogger(MusicServiceImpl.class);
-    private final UserService userService;
     private final MusicDAO musicDAO;
-
+    MediaPlayer mediaPlayer;
     private
 
     Media media;
-    MediaPlayer mediaPlayer;
-
     private Playlist playlist;
 
-    public MusicServiceImpl(MusicDAO musicDAO, UserService userService) {
+    public MusicServiceImpl(MusicDAO musicDAO) {
         this.musicDAO = musicDAO;
-        this.userService = userService;
     }
 
     @Override
@@ -92,62 +85,16 @@ public class MusicServiceImpl implements MusicService {
     public void validate(Playlist dto) throws ValidationException {
     }
 
-
     @Override
-    public Song getCurrentSong() throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public Playlist getCurrentPlaylist() throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public void startMusic() throws ServiceException {
-        User user = userService.getLoggedInUser();
-        this.playlist = this.create(new Playlist(user, user.getPlaylist(), null));
-        if (playlist != null && playlist.getPlayers() != null && playlist.getPlayers().size() > 0) {
-            if (mediaPlayer != null) mediaPlayer.stop();
-            mediaPlayer = playlist.getPlayers().get(0);
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.play();
+    public Playlist getMotivations() throws ServiceException {
+        try {
+            LOGGER.info("Service try to load Motivation-Playlist");
+            Playlist playlist = musicDAO.getMotivations();
+            LOGGER.info("Service loading Motivation-Playlist successful");
+            return playlist;
+        } catch (PersistenceException e) {
+            LOGGER.error("" + e);
+            throw new ServiceException("Fehler beim Laden der Motivation-Playlist");
         }
-    }
-
-    @Override
-    public void stopMusic() throws ServiceException {
-        if (mediaPlayer != null) mediaPlayer.stop();
-    }
-
-    @Override
-    public void nextSong() throws ServiceException {
-
-    }
-
-    @Override
-    public void resetSong() throws ServiceException {
-
-    }
-
-    @Override
-    public void increaseVol() throws ServiceException {
-
-    }
-
-    @Override
-    public void increaseVol(Double percent) throws ServiceException {
-
-    }
-
-    @Override
-    public void decreaseVol() throws ServiceException {
-
-    }
-
-    @Override
-    public void decreaseVol(Double percent) throws ServiceException {
-
     }
 }

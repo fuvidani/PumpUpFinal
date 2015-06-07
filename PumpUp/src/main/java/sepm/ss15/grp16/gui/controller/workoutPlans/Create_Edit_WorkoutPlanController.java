@@ -58,7 +58,13 @@ public class Create_Edit_WorkoutPlanController extends Controller {
     private Text txtCal_mean;
 
     @FXML
-    private Text txtCat;
+    private Label txtTraining;
+
+    @FXML
+    private Label txtEquip;
+
+    @FXML
+    private Label txtMuscle;
 
     @FXML
     private Button btnDeleteSession;
@@ -82,7 +88,7 @@ public class Create_Edit_WorkoutPlanController extends Controller {
     public void initController() {
 
         setUpListView();
-        plan_interClassCommunication = ((WorkoutPlansController)this.getParentController()).getPlan_interClassCommunication();
+        plan_interClassCommunication = ((WorkoutPlansController) this.getParentController()).getPlan_interClassCommunication();
 
         if (plan_interClassCommunication != null) {
             if (plan_interClassCommunication.getId() != null) {
@@ -118,6 +124,8 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                         btnDecreaseDif.setDisable(false);
                     }
                 });
+        btnIncreaseDif.setTooltip(new Tooltip("Schwierigkeit erhöhen"));
+        btnDecreaseDif.setTooltip(new Tooltip("Schwierigkeit reduzieren"));
     }
 
     private void updateInformations() {
@@ -147,31 +155,31 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                     }
                 }
             }
-            int calories_mean = calories_sum / plan_interClassCommunication.getTrainingsSessions().size();
-            txtCal_sum.setText(String.valueOf(calories_sum));
-            txtCal_mean.setText(String.valueOf(calories_mean));
-
-            String value = null;
+            String value_training = "";
+            String value_equip = "";
+            String value_muscle = "";
             if (!trainingsCategoryList.isEmpty()) {
-                value = "Art: \n";
+                value_training = "Art: \n";
                 for (TrainingsCategory category : trainingsCategoryList) {
-                    value += "    - " + category.getName() + "\n";
+                    value_training += "    - " + category.getName() + "\n";
                 }
             }
             if (!equipmentCategoryList.isEmpty()) {
-                value += " \nGe\u00e4rte: \n";
+                value_equip = "Ge\u00e4rte: \n";
                 for (EquipmentCategory category : equipmentCategoryList) {
-                    value += "    - " + category.getName() + "\n";
+                    value_equip += "    - " + category.getName() + "\n";
                 }
             }
             if (!musclegroupCategories.isEmpty()) {
-                value += " \nMuskeln: \n";
+                value_muscle = "Muskeln: \n";
                 for (MusclegroupCategory category : musclegroupCategories) {
-                    value += "    - " + category.getName() + "\n";
+                    value_muscle += "    - " + category.getName() + "\n";
                 }
             }
 
-            txtCat.setText(value);
+            txtTraining.setText(value_training);
+            txtEquip.setText(value_equip);
+            txtMuscle.setText(value_muscle);
         }
     }
 
@@ -425,11 +433,11 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         this.userService = userService;
     }
 
-    public void setSession_interClassCommunication(TrainingsSession session_interClassCommunication) {
-        this.session_interClassCommunication = session_interClassCommunication;
-    }
-
     public TrainingsSession getSession_interClassCommunication() {
         return session_interClassCommunication;
+    }
+
+    public void setSession_interClassCommunication(TrainingsSession session_interClassCommunication) {
+        this.session_interClassCommunication = session_interClassCommunication;
     }
 }

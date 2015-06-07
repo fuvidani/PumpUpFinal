@@ -1,58 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.web.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.calendar.CalendarController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="sepm.ss15.grp16.gui.controller.calendar.CalendarController">
     <children>
-        <VBox prefHeight="750.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox prefHeight="750.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox>
                     <children>
                         <Label text="Kalender">
                             <font>
-                                <Font size="24.0" />
+                                <Font size="24.0"/>
                             </font>
                         </Label>
                     </children>
                     <VBox.margin>
-                        <Insets left="50.0" top="20.0" />
+                        <Insets left="50.0" top="20.0"/>
                     </VBox.margin>
                 </HBox>
                 <HBox>
                     <children>
-                        <Separator prefHeight="15.0" prefWidth="1240.0" />
+                        <Separator prefHeight="15.0" prefWidth="1240.0"/>
                     </children>
                     <VBox.margin>
-                        <Insets />
+                        <Insets/>
                     </VBox.margin>
                     <padding>
-                        <Insets left="30.0" right="30.0" top="10.0" />
+                        <Insets left="30.0" right="30.0" top="10.0"/>
                     </padding>
                 </HBox>
-                <WebView fx:id="webView" prefWidth="-1.0" />
+                <WebView fx:id="webView" prefWidth="-1.0"/>
                 <HBox alignment="CENTER_RIGHT" spacing="20.0">
                     <children>
-                  <HBox prefHeight="25.0" prefWidth="85.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#zuruckClicked" text="Zurück" />
-                     </children>
-                  </HBox>
-                        <Button fx:id="exportButton" layoutX="10.0" layoutY="653.0" mnemonicParsing="false" onAction="#exportToGoogleClicked" text="Export zu Google Calendar" />
-                  <Button mnemonicParsing="false" onAction="#deleteAllAppointmentsClicked" text="Alle Termine löschen" />
+                        <HBox prefHeight="25.0" prefWidth="85.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#zuruckClicked" text="Zurück"/>
+                            </children>
+                        </HBox>
+                        <Button fx:id="exportButton" layoutX="10.0" layoutY="653.0" mnemonicParsing="false"
+                                onAction="#exportToGoogleClicked" text="Export zu Google Calendar"/>
+                        <Button mnemonicParsing="false" onAction="#deleteAllAppointmentsClicked"
+                                text="Alle Termine löschen"/>
                     </children>
                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
                     </VBox.margin>
                 </HBox>
             </children>

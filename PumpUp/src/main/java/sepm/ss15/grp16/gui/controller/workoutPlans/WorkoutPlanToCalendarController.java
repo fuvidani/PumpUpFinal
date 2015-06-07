@@ -4,31 +4,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.calendar.WorkoutplanExport;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
-import sepm.ss15.grp16.gui.PageEnum;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.calendar.CalendarService;
-import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
+import sepm.ss15.grp16.service.user.UserService;
 
-import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
@@ -36,7 +30,7 @@ import java.util.ResourceBundle;
 public class WorkoutPlanToCalendarController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutPlanToCalendarController.class);
 
-    public static Trainingsplan plan_interClassCommunication;
+    private Trainingsplan plan_interClassCommunication;
 
     private CalendarService calendarService;
     private TrainingsplanService trainingsplanService;
@@ -76,6 +70,7 @@ public class WorkoutPlanToCalendarController extends Controller {
     @Override
     public void initController() {
         setUpListView();
+        plan_interClassCommunication = ((WorkoutPlansController) this.getParentController()).getPlan_interClassCommunication();
 
         if (plan_interClassCommunication != null) {
             txtName.setText(plan_interClassCommunication.getName());
@@ -114,7 +109,7 @@ public class WorkoutPlanToCalendarController extends Controller {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
             plan_interClassCommunication = null;
-            this.stage.close();
+            mainFrame.navigateToParent();
         }
     }
 
@@ -128,10 +123,7 @@ public class WorkoutPlanToCalendarController extends Controller {
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
-            //transitionLoader.openWaitStage("fxml/calendar/Calendar.fxml", (Stage) listviewSessions.getScene().getWindow(), "Trainingskalender", 1000, 500, true);
-            //this.stage.close();
             mainFrame.navigateToParent();
-            //mainFrame.navigateToChild(PageEnum.Calendar);
             plan_interClassCommunication = null;
 
         }

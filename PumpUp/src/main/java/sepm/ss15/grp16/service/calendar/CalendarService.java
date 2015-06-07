@@ -86,8 +86,14 @@ public interface CalendarService extends Service<Appointment> {
 
     /**
      * Returns the current appointment
+     *
      * @return current Appointment. if calendar is empty or there is no appointment after today returns null.
      * @throws ServiceException
      */
     Appointment getCurrentAppointment() throws ServiceException;
+
+    /**
+     * exports all appointments to google calendar
+     */
+    void exportToGoogle();
 }

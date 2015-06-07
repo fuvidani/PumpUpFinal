@@ -85,6 +85,7 @@ public class WorkoutController extends Controller {
 
     @FXML
     private WorkoutMusicPlayerController musicPlayerController;
+    private MotivatonModul motivationModul;
 
     private Timeline counterTimeline;
     private IntegerProperty timeSeconds;
@@ -98,7 +99,8 @@ public class WorkoutController extends Controller {
     private Status status;
     private TrainingsSession session;
 
-    public WorkoutController(ExerciseDAO exerciseDAO) {
+    public WorkoutController(ExerciseDAO exerciseDAO, MotivatonModul motivationModul) {
+        this.motivationModul = motivationModul;
         LinkedList<ExerciseSet> list = new LinkedList<>();
 
         try {
@@ -117,6 +119,8 @@ public class WorkoutController extends Controller {
     @Override
     public void initController() {
         musicPlayerController.setParent(this);
+        motivationModul.setMusicPlayerController(musicPlayerController);
+        musicPlayerController.play();
         exerciseList = new ArrayList<>(session.getExerciseSets());
         activeExercisePosition = -1;
 
@@ -303,6 +307,10 @@ public class WorkoutController extends Controller {
 
     public void launchDialog(PageEnum page) {
         mainFrame.openDialog(page);
+    }
+
+    public WorkoutMusicPlayerController getMusicPlayerController() {
+        return musicPlayerController;
     }
 
     private enum Status {

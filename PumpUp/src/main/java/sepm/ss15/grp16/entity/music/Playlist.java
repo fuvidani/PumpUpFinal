@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Playlist implements DTO {
 
+    MediaPlayer activePlayer;
     private User user;
     private String dir;
     private List<MediaPlayer> players;
@@ -76,6 +77,14 @@ public class Playlist implements DTO {
 
     }
 
+    public MediaPlayer getActivePlayer() {
+        return activePlayer;
+    }
+
+    public void setActivePlayer(MediaPlayer activePlayer) {
+        this.activePlayer = activePlayer;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,7 +115,7 @@ public class Playlist implements DTO {
                 '}';
     }
 
-    public enum SupportedFormat{
+    public enum SupportedFormat {
         mp3, wav
     }
 }

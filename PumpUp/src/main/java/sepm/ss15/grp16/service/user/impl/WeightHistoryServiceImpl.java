@@ -3,9 +3,9 @@ package sepm.ss15.grp16.service.user.impl;
 import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.persistence.dao.user.WeightHistoryDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
-import sepm.ss15.grp16.service.user.WeightHistoryService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.user.WeightHistoryService;
 
 import java.util.List;
 
@@ -47,13 +47,13 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 
     @Override
     public WeightHistory update(WeightHistory weightHistory) throws ServiceException {
-        //TODO: Implement me
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(WeightHistory weightHistory) throws ServiceException {
         //TODO: Implement me
+        throw new UnsupportedOperationException();
     }
 
     @Override

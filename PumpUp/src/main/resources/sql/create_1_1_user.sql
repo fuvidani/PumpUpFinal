@@ -44,15 +44,16 @@ CREATE TABLE IF NOT EXISTS picturehistory (
   user_id           INTEGER NOT NULL,
   location          VARCHAR NOT NULL,
   date              DATE    NOT NULL,
+  isDeleted         BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (user_id) REFERENCES user
 );
 
-MERGE INTO user VALUES (0, 'lukas', true, 22, 178, 'loc.kathrein@gmail.com',null, false);
-MERGE INTO user VALUES (1, 'frank medrano', true, 35, 160, 'thefrankmedrano@gmail.com',null, false);
-MERGE INTO bodyfathistory VALUES(0,0, 10, '2015-05-23');
-MERGE INTO bodyfathistory VALUES(1,1, 4, '2015-05-23');
-MERGE INTO weighthistory VALUES(0,0, 75, '2015-05-23');
-MERGE INTO weighthistory VALUES(1,1, 65, '2015-05-23');
+MERGE INTO user VALUES (0, 'lukas', TRUE, 22, 178, 'loc.kathrein@gmail.com', NULL, FALSE);
+MERGE INTO user VALUES (1, 'frank medrano', TRUE, 35, 160, 'thefrankmedrano@gmail.com', NULL, FALSE);
+MERGE INTO bodyfathistory VALUES (0, 0, 10, '2015-05-23'), (1, 0, 11, '2015-05-24'), (2, 0, 12, '2015-05-25');
+MERGE INTO bodyfathistory VALUES (3, 1, 4, '2015-05-23');
+MERGE INTO weighthistory VALUES (0, 0, 75, '2015-05-23'), (1, 0, 80, '2015-05-24'), (2, 0, 85, '2015-05-25');
+MERGE INTO weighthistory VALUES (3, 1, 65, '2015-05-23');
 ALTER SEQUENCE user_seq RESTART WITH 2;
-ALTER SEQUENCE bodyfathistory_seq RESTART WITH 2;
-ALTER SEQUENCE weighthistory_seq RESTART WITH 2;
+ALTER SEQUENCE bodyfathistory_seq RESTART WITH 4;
+ALTER SEQUENCE weighthistory_seq RESTART WITH 4;

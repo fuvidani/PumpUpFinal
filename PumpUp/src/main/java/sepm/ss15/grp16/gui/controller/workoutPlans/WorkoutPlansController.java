@@ -22,7 +22,6 @@ import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.gui.PageEnum;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
@@ -67,7 +66,13 @@ public class WorkoutPlansController extends Controller {
     private Text txtCal_mean;
 
     @FXML
-    private Text txtCat;
+    private Label txtTraining;
+
+    @FXML
+    private Label txtEquip;
+
+    @FXML
+    private Label txtMuscle;
 
     @FXML
     private ListView<Trainingsplan> workoutPlansListView;
@@ -122,7 +127,6 @@ public class WorkoutPlansController extends Controller {
             setUpListView();
             workoutPlansListView.setItems(data);
 
-
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -157,29 +161,35 @@ public class WorkoutPlansController extends Controller {
             txtCal_sum.setText(String.valueOf(calories_sum));
             txtCal_mean.setText(String.valueOf(calories_mean));
 
-            String value = null;
+            String value_training = "";
+            String value_equip = "";
+            String value_muscle = "";
             if (!trainingsCategoryList.isEmpty()) {
-                value = "Art: \n";
+                value_training = "Art: \n";
                 for (TrainingsCategory category : trainingsCategoryList) {
-                    value += "    - " + category.getName() + "\n";
+                    value_training += "    - " + category.getName() + "\n";
                 }
             }
             if (!equipmentCategoryList.isEmpty()) {
-                value += " \nGe\u00e4rte: \n";
+                value_equip = "Ge\u00e4rte: \n";
                 for (EquipmentCategory category : equipmentCategoryList) {
-                    value += "    - " + category.getName() + "\n";
+                    value_equip += "    - " + category.getName() + "\n";
                 }
             }
             if (!musclegroupCategories.isEmpty()) {
-                value += " \nMuskeln: \n";
+                value_muscle = "Muskeln: \n";
                 for (MusclegroupCategory category : musclegroupCategories) {
-                    value += "    - " + category.getName() + "\n";
+                    value_muscle += "    - " + category.getName() + "\n";
                 }
             }
 
-            txtCat.setText(value);
+            txtTraining.setText(value_training);
+            txtEquip.setText(value_equip);
+            txtMuscle.setText(value_muscle);
         } else {
-            txtCat.setText("");
+            txtTraining.setText("");
+            txtEquip.setText("");
+            txtMuscle.setText("");
             txtCal_sum.setText("");
             txtCal_mean.setText("");
         }
@@ -430,7 +440,6 @@ public class WorkoutPlansController extends Controller {
 
     @FXML
     public void embedInCalenderClicked(ActionEvent event) {
-        WorkoutPlanToCalendarController.plan_interClassCommunication = selection;
         plan_interClassCommunication = selection;
         //transitionLoader.openWaitStage("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender exportieren", 800, 600, false);
         mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);

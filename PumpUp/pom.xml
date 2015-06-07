@@ -50,12 +50,15 @@
         <!-- Testing -->
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
+        <!-- Webcam -->
+        <webcam.version>0.3.10</webcam.version>
         <!-- Spring -->
         <spring.version>4.1.6.RELEASE</spring.version>
         <!-- Database -->
         <h2.version>1.4.187</h2.version>
         <!-- Logging -->
         <log4j.version>2.2</log4j.version>
+        <sl4j.version>1.7.12</sl4j.version>
         <!-- Maven plugins -->
         <mvn-compiler.version>3.1</mvn-compiler.version>
         <mvn-exec.version>1.4.0</mvn-exec.version>
@@ -98,17 +101,53 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${sl4j.version}</version>
+        </dependency>
         <!-- Calendar -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client</artifactId>
+            <version>1.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-calendar</artifactId>
+            <version>v3-rev127-1.20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-java6</artifactId>
+            <version>1.11.0-beta</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>1.11.0-beta</version>
+        </dependency>
+        <!-- Webcam -->
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>${webcam.version}</version>
+        </dependency>
         <!-- Facebook -->
         <dependency>
-            <groupId>com.restfb</groupId>
-            <artifactId>restfb</artifactId>
-            <version>1.11.0</version>
+        <groupId>com.restfb</groupId>
+        <artifactId>restfb</artifactId>
+        <version>1.11.0</version>
         </dependency>
     </dependencies>
 </project>

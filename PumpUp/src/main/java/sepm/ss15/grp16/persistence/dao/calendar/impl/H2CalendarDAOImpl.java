@@ -107,6 +107,8 @@ public class H2CalendarDAOImpl implements CalendarDAO {
                 }
                 appointment.setSetNames(setNames);
 
+                appointment.setSession(trainingsSessionDAO.searchByID(appointment.getSession_id()));
+
                 result.add(appointment);
             }
 
@@ -136,6 +138,18 @@ public class H2CalendarDAOImpl implements CalendarDAO {
 
             Appointment foundAppointment = null;
             foundAppointment = new Appointment(rs_searchByID.getInt(1), rs_searchByID.getDate(2), rs_searchByID.getInt(3), rs_searchByID.getInt(4), rs_searchByID.getBoolean(5));
+
+            if (foundAppointment != null) {
+                foundAppointment.setSessionName(trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getName());
+                String setNames = "";
+                for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getExerciseSets()) {
+                    setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
+                }
+                foundAppointment.setSetNames(setNames);
+
+                foundAppointment.setSession(trainingsSessionDAO.searchByID(foundAppointment.getSession_id()));
+
+            }
 
             LOGGER.info("Appointment with id: " + id + ", successfully read from database." + foundAppointment);
             return foundAppointment;

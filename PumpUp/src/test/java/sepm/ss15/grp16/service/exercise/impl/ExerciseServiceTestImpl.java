@@ -12,10 +12,10 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
-import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.Service;
-import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exercise.AbstractExerciseServiceTest;
+import sepm.ss15.grp16.service.exercise.ExerciseService;
+import sepm.ss15.grp16.service.user.UserService;
 
 import java.sql.SQLException;
 

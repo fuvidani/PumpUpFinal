@@ -41,47 +41,46 @@ public class FrameWindow extends BorderPane {
         init(context, stage, mainPage);
     }
 
-    private void init(ApplicationContext context, Stage stage, PageEnum mainPage)
-    {
+    private void init(ApplicationContext context, Stage stage, PageEnum mainPage) {
         this.context = context;
         this.stage = stage;
 
         stage.setScene(new Scene(this));
         stage.setTitle(mainPage.getTitle());
-
+        Scene scene = stage.getScene();
+        try {
+            scene.getStylesheets().add(getClass().getClassLoader().getResource("css").toURI().toString().concat("/mainStyle.css"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initMenu();
 
         navigateToChild(mainPage);
     }
 
-    private void initMenu()
-    {
+    private void initMenu() {
         Menu user = new Menu("User");
-        addNavigationItemToMenu(user, "Körperdaten ändern", null);
-        addNavigationItemToMenu(user, "Eigene Fotos verwalten", null);
-        addItemToMenu(user, "Abmelden", new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                navigateToParent();
-            }
-        });
+        addNavigationDialogItemToMenu(user, "KÃ¶rperdaten Ã¤ndern", PageEnum.UserEdit);
+        addNavigationDialogItemToMenu(user, "Eigene Fotos verwalten", PageEnum.PhotoDiary);
+        addItemToMenu(user, "Abmelden", event -> navigateToParent());
         Menu view = new Menu("View");
-        addNavigationItemToMenu(view, "Trainingskalender", null);
-        addNavigationItemToMenu(view, "Trainingspläne", null);
-        addNavigationItemToMenu(view, "Übungen", null);
+        addNavigationItemToMenu(view, "Trainingskalender", PageEnum.Calendar);
+        addNavigationItemToMenu(view, "TrainingsplÃ¤ne", PageEnum.Workoutplan);
+        addNavigationItemToMenu(view, "Ãœbungen", PageEnum.Exercises);
 
         personalMenu = new Menu();
 
         Menu help = new Menu("Help");
-        addNavigationItemToMenu(view, "About", null);
+        addNavigationDialogItemToMenu(help, "About", PageEnum.About);
 
-        menuBar = new MenuBar(user, view, personalMenu, help);
+        menuBar = new MenuBar(user, view, help);
     }
 
     /**
      * Opens a new site in the frame as a child of the actual site.
      * The Controllers get referenced to each other
      * and afterwords initController in the new Controller is is called.
+     *
      * @param mainPage The site to navigate to.
      */
     public void navigateToChild(PageEnum mainPage) {
@@ -90,13 +89,13 @@ public class FrameWindow extends BorderPane {
             controller.setMainFrame(this);
             fxmlStack.push(mainPage);
             controller.setParentController(activeController);
-            if(activeController != null) {
+            if (activeController != null) {
                 activeController.setChildController(controller); //????
             }
             activeController = controller;
-            controller.initController();
-
             reloadMenu(mainPage);
+
+            controller.initController();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,12 +110,10 @@ public class FrameWindow extends BorderPane {
      * If the actual site is the main site of the frame the stage gets closed.
      */
     public void navigateToParent() {
-        if(fxmlStack.size() == 1)
-        {
+        if (fxmlStack.size() == 1) {
             stage.close();
             activeController = null;
-        }
-        else {
+        } else {
             try {
                 fxmlStack.pop();
                 PageEnum page = fxmlStack.peek();
@@ -126,19 +123,17 @@ public class FrameWindow extends BorderPane {
                 controller.setChildController(activeController);
                 activeController.setParentController(controller); ///???
                 activeController = controller;
-                controller.initController();
-
                 reloadMenu(page);
+
+                controller.initController();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void navigateToMain()
-    {
-        while(fxmlStack.size() > 1)
-        {
+    private void navigateToMain() {
+        while (fxmlStack.size() > 1) {
             navigateToParent();
         }
     }
@@ -147,6 +142,7 @@ public class FrameWindow extends BorderPane {
      * Opens a new site in a new frame as a child of the actual site and waits while the Dialog is closed.
      * The Controllers get referenced to each other
      * and afterwords initController in the new Controller is is called.
+     *
      * @param mainPage The site to navigate to.
      */
     public void openDialog(PageEnum mainPage) {
@@ -171,44 +167,44 @@ public class FrameWindow extends BorderPane {
         stage.show();
     }
 
-    public void addPageManeItem(String titel, EventHandler<ActionEvent> event)
-    {
-        if(personalMenu.getItems().size() == 0)
-        {
-            personalMenu.setVisible(true);
+    public void addPageManeItem(String titel, EventHandler<ActionEvent> event) {
+        if (personalMenu.getItems().size() == 0) {
+            menuBar.getMenus().add(2, personalMenu);
         }
         MenuItem item = new MenuItem(titel);
         item.setOnAction(event);
         personalMenu.getItems().add(item);
     }
 
-    private void activeteMenuBar()
-    {
+    private void activeteMenuBar() {
         setTop(menuBar);
     }
 
-    private void deactiveteMenuBar()
-    {
+    private void deactiveteMenuBar() {
         setTop(null);
     }
 
-    private void addItemToMenu(Menu menu, String titel, EventHandler<ActionEvent> eventHandler)
-    {
+    private void addItemToMenu(Menu menu, String titel, EventHandler<ActionEvent> eventHandler) {
         MenuItem item = new MenuItem(titel);
         item.setOnAction(eventHandler);
         menu.getItems().add(item);
     }
 
-    public void addNavigationItemToMenu(Menu menu, String titel, PageEnum page)
-    {
+    private void addNavigationItemToMenu(Menu menu, String titel, PageEnum page) {
         addItemToMenu(menu, titel, event -> {
             navigateToMain();
             navigateToChild(page);
         });
     }
 
-    private Stage openStage(PageEnum mainPage)
-    {
+    private void addNavigationDialogItemToMenu(Menu menu, String titel, PageEnum page) {
+        addItemToMenu(menu, titel, event -> {
+            navigateToMain();
+            openDialog(page);
+        });
+    }
+
+    private Stage openStage(PageEnum mainPage) {
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.APPLICATION_MODAL);
         dialogStage.initOwner(stage);
@@ -219,7 +215,7 @@ public class FrameWindow extends BorderPane {
     }
 
     private void reloadMenu(PageEnum mainPage) {
-        personalMenu.setVisible(false);
+        menuBar.getMenus().remove(personalMenu);
         personalMenu.setText(mainPage.getTitle());
         personalMenu.getItems().clear();
     }

@@ -3,9 +3,9 @@ package sepm.ss15.grp16.service.user.impl;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.persistence.dao.user.BodyfatHistoryDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
-import sepm.ss15.grp16.service.user.BodyfatHistoryService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.user.BodyfatHistoryService;
 
 import java.util.List;
 
@@ -47,13 +47,12 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
 
     @Override
     public BodyfatHistory update(BodyfatHistory bodyfatHistory) throws ServiceException {
-        //TODO: Implement me
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(BodyfatHistory bodyfatHistory) throws ServiceException {
-        //TODO: Implement me
+        throw new UnsupportedOperationException();
     }
 
     @Override

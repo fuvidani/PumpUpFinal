@@ -5,13 +5,13 @@ import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
 import sepm.ss15.grp16.persistence.dao.DAO;
-import sepm.ss15.grp16.persistence.dao.user.BodyfatHistoryDAO;
-import sepm.ss15.grp16.persistence.dao.user.UserDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This class provides methods for testing BodyfatHistoryDAOs
@@ -54,6 +54,37 @@ public abstract class AbstractBodyfatHistoryDaoTest extends AbstractDAOTest<Body
 
         BodyfatHistory bodyfatHistory = bodyfatHistoryDAO.getActualBodyfat(testUser.getUser_id());
         assertEquals(testBodyfatHistory3, bodyfatHistory);
+    }
+
+    @Test
+    public void searchWithValidUserID() throws Exception {
+
+        User testUser = createUserForTest();
+
+        BodyfatHistory testBodyfatHistory1 = new BodyfatHistory(null, testUser.getUser_id(), 25, new Date());
+        BodyfatHistory testBodyfatHistory2 = new BodyfatHistory(null, testUser.getUser_id(), 21, new Date());
+        BodyfatHistory testBodyfatHistory3 = new BodyfatHistory(null, testUser.getUser_id(), 30, new Date());
+
+        bodyfatHistoryDAO.create(testBodyfatHistory1);
+        bodyfatHistoryDAO.create(testBodyfatHistory2);
+        bodyfatHistoryDAO.create(testBodyfatHistory3);
+
+        List<BodyfatHistory> bodyfatHistoryList = bodyfatHistoryDAO.searchByUserID(testUser.getUser_id());
+
+        assertTrue(bodyfatHistoryList.contains(testBodyfatHistory1));
+        assertTrue(bodyfatHistoryList.contains(testBodyfatHistory2));
+        assertTrue(bodyfatHistoryList.contains(testBodyfatHistory3));
+
+    }
+
+    @Test
+    public void searchByIDShouldFind() throws Exception {
+
+        User testUser = createUserForTest();
+
+        BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, testUser.getUser_id(), 25, new Date());
+        searchByIDValid(testBodyfatHistory);
+
     }
 
     private User createUserForTest() throws Exception {

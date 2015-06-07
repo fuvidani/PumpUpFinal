@@ -89,7 +89,7 @@ MERGE INTO exercise KEY (id) VALUES
   (5, 'Strandschere', 'Legen Sie sich mit gestreckten Beinen auf die linke Seite und stützen Sie den Kopf mit dem linken Arm ab.
   Die andere Hand stützen Sie vor Ihrer Brust auf. Heben Sie dann Ihr rechtes Bein so hoch wie möglich an und halten Sie es gestreckt für
   drei Sekunden in der', 0.2, 'strandschere.mp4', NULL, FALSE),
-  (6, 'Auf der Stelle Laufen', 'laufen Sie auf der Stelle', 0.3, NULL , NULL, FALSE),
+  (6, 'Auf der Stelle Laufen', 'laufen Sie auf der Stelle', 0.3, NULL, NULL, FALSE),
   (7, 'Einbeinige Kniebeuge', 'Kraft, Koordination, Balance und Ausdauer. Und mit ein bisschen Kreativität können Sie die Übung endlos
   variieren. Stellen Sie sich auf den rechten Fuß und heben Sie Ihr linkes Bein gestreckt nach vorn an.
   Halten Sie sich mit der linken Hand an einer Stuhllehne oder einem anderen, etwa hüfthohen Gegenstand fest,
@@ -122,14 +122,14 @@ MERGE INTO exercise KEY (id) VALUES
   (17, 'Beinheben mit Yogaball', '', 0.2, NULL, NULL, FALSE),
   (18, 'Crunches mit Yogaball', '', 0.1, NULL, NULL, FALSE),
   (19, 'Superman', '', 0.1, 'superman.mp4', NULL, FALSE),
-  (20, 'Brust dehnen', '', 0.2, NULL, NULL, FALSE ),
-  (21, 'Schultern dehnen','', 0.2, NULL, NULL , FALSE ),
-  (22, 'Rücken (oben) dehnen', '', 0.2, NULL, NULL , FALSE ),
-  (23, 'Rücken (Mitte) dehnen', '', 0.2, NULL, NULL , FALSE ),
-  (24, 'Rücken (unten) dehnen', '', 0.2, NULL, NULL , FALSE ),
-  (25, 'Quadrizeps dehnen', '', 0.2, NULL, NULL , FALSE ),
-  (26, 'Gesäßmuskulatur dehnen', '', 0.2, NULL, NULL , FALSE ),
-  (27, 'Kniesehne dehnen', '', 0.2, '', NULL , FALSE );
+  (20, 'Brust dehnen', '', 0.2, NULL, NULL, FALSE),
+  (21, 'Schultern dehnen', '', 0.2, NULL, NULL, FALSE),
+  (22, 'Rücken (oben) dehnen', '', 0.2, NULL, NULL, FALSE),
+  (23, 'Rücken (Mitte) dehnen', '', 0.2, NULL, NULL, FALSE),
+  (24, 'Rücken (unten) dehnen', '', 0.2, NULL, NULL, FALSE),
+  (25, 'Quadrizeps dehnen', '', 0.2, NULL, NULL, FALSE),
+  (26, 'Gesäßmuskulatur dehnen', '', 0.2, NULL, NULL, FALSE),
+  (27, 'Kniesehne dehnen', '', 0.2, '', NULL, FALSE);
 
 
 MERGE INTO exercise_category KEY (exerciseid, categoryid) VALUES
