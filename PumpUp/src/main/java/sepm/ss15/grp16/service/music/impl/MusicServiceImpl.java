@@ -10,7 +10,6 @@ import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.music.MusicService;
-import sepm.ss15.grp16.service.user.UserService;
 
 import java.util.List;
 
@@ -21,12 +20,10 @@ import java.util.List;
 public class MusicServiceImpl implements MusicService {
     private static final Logger LOGGER = LogManager.getLogger(MusicServiceImpl.class);
     private final MusicDAO musicDAO;
-
+    MediaPlayer mediaPlayer;
     private
 
     Media media;
-    MediaPlayer mediaPlayer;
-
     private Playlist playlist;
 
     public MusicServiceImpl(MusicDAO musicDAO) {
@@ -89,7 +86,7 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public Playlist getMotivations() throws ServiceException{
+    public Playlist getMotivations() throws ServiceException {
         try {
             LOGGER.info("Service try to load Motivation-Playlist");
             Playlist playlist = musicDAO.getMotivations();

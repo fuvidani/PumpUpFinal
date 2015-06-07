@@ -6,23 +6,25 @@
     <!-- ###### Database beans ###### -->
 
 
-    <bean id="h2Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start" destroy-method="stop" depends-on="h2WebServer" scope="singleton">
-        <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092" />
+    <bean id="h2Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start"
+          destroy-method="stop" depends-on="h2WebServer" scope="singleton">
+        <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092"/>
     </bean>
-    <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop" scope="singleton">
+    <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start"
+          destroy-method="stop" scope="singleton">
         <constructor-arg value="-web,-webAllowOthers,-webPort,8082"/>
     </bean>
 
     <bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"
           scope="singleton" init-method="openConnection" destroy-method="closeConnection" depends-on="h2Server">
-    <!--<bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"-->
-    <!--scope="singleton" init-method="openConnection" destroy-method="closeConnection">-->
+        <!--<bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"-->
+        <!--scope="singleton" init-method="openConnection" destroy-method="closeConnection">-->
         <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"/>
         <constructor-arg name="user" value="sa"/>
         <constructor-arg name="password" value=""/>
     </bean>
 
-<!-- ###### Main beans ###### -->
+    <!-- ###### Main beans ###### -->
 
     <bean id="mainController" class="sepm.ss15.grp16.gui.controller.main.MainController" scope="prototype">
         <property name="userService" ref="userService"/>

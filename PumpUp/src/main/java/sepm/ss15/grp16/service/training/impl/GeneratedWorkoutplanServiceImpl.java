@@ -11,13 +11,13 @@ import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
-import sepm.ss15.grp16.service.exercise.ExerciseService;
-import sepm.ss15.grp16.service.user.UserService;
-import sepm.ss15.grp16.service.user.WeightHistoryService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
+import sepm.ss15.grp16.service.user.UserService;
+import sepm.ss15.grp16.service.user.WeightHistoryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
 
     /**
      * Public constructor to be injected by Spring.
+     *
      * @param trainingsplanService service for the workout plans
      * @param exerciseService      service for the specific exercises
      * @param userService          service for the current logged in user
@@ -327,7 +328,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @param user      the current logged in user
      * @return a goal-driven, auto-generated workout plan
      */
-    private Trainingsplan generateForBalance(List<EquipmentCategory> equipment, User user) throws ServiceException{
+    private Trainingsplan generateForBalance(List<EquipmentCategory> equipment, User user) throws ServiceException {
         LOGGER.info("Entering the generating algorithms for an balance workout plan.");
 
         double height = user.getHeight() / 100.0;
@@ -453,7 +454,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @param user      the current logged in user
      * @return a goal-driven, auto-generated workout plan
      */
-    private Trainingsplan generateForFlexibility(List<EquipmentCategory> equipment, User user) throws  ServiceException{
+    private Trainingsplan generateForFlexibility(List<EquipmentCategory> equipment, User user) throws ServiceException {
         LOGGER.info("Entering the generating algorithms for an balance workout plan.");
 
         double height = user.getHeight() / 100.0;

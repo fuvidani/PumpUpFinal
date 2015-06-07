@@ -86,6 +86,7 @@ public interface CalendarService extends Service<Appointment> {
 
     /**
      * Returns the current appointment
+     *
      * @return current Appointment. if calendar is empty or there is no appointment after today returns null.
      * @throws ServiceException
      */

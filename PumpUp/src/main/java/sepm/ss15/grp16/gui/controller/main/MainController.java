@@ -7,15 +7,11 @@ import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +20,6 @@ import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.PageEnum;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -36,7 +31,6 @@ import sepm.ss15.grp16.service.user.WeightHistoryService;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Daniel Fuevesi on 05.05.15.
@@ -70,7 +64,7 @@ public class MainController extends Controller {
     @FXML
     private Label usernameLabel;
     @FXML
-    private  LineChart<String, Number> userChart;
+    private LineChart<String, Number> userChart;
     @FXML
     private WebView webView;
     @FXML
@@ -211,7 +205,7 @@ public class MainController extends Controller {
 
         if (weight != null) {
             weightTextField.setText(Integer.toString(weight));
-        }else {
+        } else {
             weightTextField.setText("Keine Angabe");
         }
 
@@ -229,7 +223,7 @@ public class MainController extends Controller {
         makeUserChart();
     }
 
-    private void makeUserChart(){
+    private void makeUserChart() {
         try {
             int loggedInUserID = userService.getLoggedInUser().getUser_id();
             userChart.getData().clear();
@@ -238,13 +232,13 @@ public class MainController extends Controller {
             List<WeightHistory> weightHistoryList = weightHistoryService.searchByUserID(loggedInUserID);
             List<BodyfatHistory> bodyfatHistoryList = bodyfatHistoryService.searchByUserID(loggedInUserID);
 
-            for(WeightHistory w : weightHistoryList){
-                    weightSeries.getData().add(new LineChart.Data<>(""+w.getDate(), w.getWeight()));
+            for (WeightHistory w : weightHistoryList) {
+                weightSeries.getData().add(new LineChart.Data<>("" + w.getDate(), w.getWeight()));
             }
 
             int counter = 0;
 
-            for(BodyfatHistory b : bodyfatHistoryList){
+            for (BodyfatHistory b : bodyfatHistoryList) {
                 int bodyFatTOKG = weightHistoryList.get(counter).getWeight() * b.getBodyfat() / 100;
                 bodyFatSeries.getData().add(new LineChart.Data("" + b.getDate(), bodyFatTOKG));
                 counter++;
@@ -253,7 +247,7 @@ public class MainController extends Controller {
             bodyFatSeries.setName("K\u00f6rperfettanteil");
             userChart.getData().add(weightSeries);
             userChart.getData().add(bodyFatSeries);
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             e.printStackTrace();
             LOGGER.error(e);
         }

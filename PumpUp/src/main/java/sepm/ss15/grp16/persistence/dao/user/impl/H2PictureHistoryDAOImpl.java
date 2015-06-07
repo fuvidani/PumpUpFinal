@@ -58,17 +58,17 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         LOGGER.info("Searching pictures from user with id: " + user_id);
         List<PictureHistory> pictureHistoryList = new ArrayList<>();
 
-        try{
+        try {
             searchByUserIDStatement.setInt(1, user_id);
             ResultSet resultSet = searchByUserIDStatement.executeQuery();
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 PictureHistory pictureHistory = new PictureHistory(resultSet.getInt(1), resultSet.getInt(2),
                         resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5));
                 pictureHistoryList.add(pictureHistory);
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException("Failed to find pictures from user with id: " + user_id, e);
         }
 
@@ -170,16 +170,16 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         LOGGER.info("Searching picturehistory with id: " + id);
         PictureHistory pictureHistory = null;
 
-        try{
+        try {
             searchByIDStatement.setInt(1, id);
             ResultSet resultSet = searchByIDStatement.executeQuery();
 
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 pictureHistory = new PictureHistory(resultSet.getInt(1), resultSet.getInt(2),
                         resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5));
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             throw new PersistenceException("Failed to find picturehistory with id: " + id, e);
         }
 

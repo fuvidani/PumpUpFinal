@@ -4568,10 +4568,10 @@
                 '<div class="fc-content-skeleton">' +
                 '<table>' +
                 (this.numbersVisible ?
-                '<thead>' +
-                this.rowHtml('number', row) + // leverages RowRenderer. View will define render method
-                '</thead>' :
-                    ''
+                    '<thead>' +
+                    this.rowHtml('number', row) + // leverages RowRenderer. View will define render method
+                    '</thead>' :
+                        ''
                 ) +
                 '</table>' +
                 '</div>' +
@@ -5082,27 +5082,27 @@
 
             return '<a class="' + classes.join(' ') + '"' +
                 (event.url ?
-                ' href="' + htmlEscape(event.url) + '"' :
-                    ''
+                    ' href="' + htmlEscape(event.url) + '"' :
+                        ''
                 ) +
                 (skinCss ?
-                ' style="' + skinCss + '"' :
-                    ''
+                    ' style="' + skinCss + '"' :
+                        ''
                 ) +
                 '>' +
                 '<div class="fc-content">' +
                 (this.isRTL ?
-                titleHtml + ' ' + timeHtml : // put a natural space in between
-                timeHtml + ' ' + titleHtml   //
+                    titleHtml + ' ' + timeHtml : // put a natural space in between
+                    timeHtml + ' ' + titleHtml   //
                 ) +
                 '</div>' +
                 (isResizableFromStart ?
-                    '<div class="fc-resizer fc-start-resizer" />' :
-                    ''
+                        '<div class="fc-resizer fc-start-resizer" />' :
+                        ''
                 ) +
                 (isResizableFromEnd ?
-                    '<div class="fc-resizer fc-end-resizer" />' :
-                    ''
+                        '<div class="fc-resizer fc-end-resizer" />' :
+                        ''
                 ) +
                 '</a>';
         },
@@ -5738,10 +5738,10 @@
                 axisHtml =
                     '<td class="fc-axis fc-time ' + view.widgetContentClass + '" ' + view.axisStyleAttr() + '>' +
                     ((!slotNormal || !minutes) ? // if irregular slot duration, or on the hour, then display the time
-                    '<span>' + // for matchCellWidths
-                    htmlEscape(slotDate.format(this.axisFormat)) +
-                    '</span>' :
-                        ''
+                        '<span>' + // for matchCellWidths
+                        htmlEscape(slotDate.format(this.axisFormat)) +
+                        '</span>' :
+                            ''
                     ) +
                     '</td>';
 
@@ -6288,29 +6288,29 @@
 
             return '<a class="' + classes.join(' ') + '"' +
                 (event.url ?
-                ' href="' + htmlEscape(event.url) + '"' :
-                    ''
+                    ' href="' + htmlEscape(event.url) + '"' :
+                        ''
                 ) +
                 (skinCss ?
-                ' style="' + skinCss + '"' :
-                    ''
+                    ' style="' + skinCss + '"' :
+                        ''
                 ) +
                 '>' +
                 '<div class="fc-content">' +
                 (timeText ?
-                '<div class="fc-time"' +
-                ' data-start="' + htmlEscape(startTimeText) + '"' +
-                ' data-full="' + htmlEscape(fullTimeText) + '"' +
-                '>' +
-                '<span>' + htmlEscape(timeText) + '</span>' +
-                '</div>' :
-                    ''
+                    '<div class="fc-time"' +
+                    ' data-start="' + htmlEscape(startTimeText) + '"' +
+                    ' data-full="' + htmlEscape(fullTimeText) + '"' +
+                    '>' +
+                    '<span>' + htmlEscape(timeText) + '</span>' +
+                    '</div>' :
+                        ''
                 ) +
                 (event.title ?
-                '<div class="fc-title">' +
-                htmlEscape(event.title) +
-                '</div>' :
-                    ''
+                    '<div class="fc-title">' +
+                    htmlEscape(event.title) +
+                    '</div>' :
+                        ''
                 ) +
                 '</div>' +
                 '<div class="fc-bg"/>' +
@@ -6321,8 +6321,8 @@
                      ) +
                      */
                 (isResizableFromEnd ?
-                    '<div class="fc-resizer fc-end-resizer" />' :
-                    ''
+                        '<div class="fc-resizer fc-end-resizer" />' :
+                        ''
                 ) +
                 '</a>';
         },
@@ -10525,9 +10525,9 @@
                 '<tr>' +
                 '<td class="' + this.widgetContentClass + '">' +
                 (this.dayGrid ?
-                '<div class="fc-day-grid"/>' +
-                '<hr class="fc-divider ' + this.widgetHeaderClass + '"/>' :
-                    ''
+                    '<div class="fc-day-grid"/>' +
+                    '<hr class="fc-divider ' + this.widgetHeaderClass + '"/>' :
+                        ''
                 ) +
                 '<div class="fc-time-grid-container">' +
                 '<div class="fc-time-grid"/>' +

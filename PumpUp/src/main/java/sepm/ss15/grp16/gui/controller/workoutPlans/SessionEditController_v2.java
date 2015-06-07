@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,9 +19,7 @@ import sepm.ss15.grp16.entity.exercise.AbsractCategory;
 import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
-import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.exercises.ShowExerciseController;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -31,8 +28,10 @@ import sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.impl.UserServiceImpl;
 
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SessionEditController_v2 extends Controller {
@@ -117,8 +116,8 @@ public class SessionEditController_v2 extends Controller {
     void onClickFinish(ActionEvent event) {
         TrainingsSession session = createValidSession();
         if (session != null) {
-           // Create_Edit_WorkoutPlanController.session_interClassCommunication = session;
-            ((Create_Edit_WorkoutPlanController)this.getParentController()).setSession_interClassCommunication(session);
+            // Create_Edit_WorkoutPlanController.session_interClassCommunication = session;
+            ((Create_Edit_WorkoutPlanController) this.getParentController()).setSession_interClassCommunication(session);
 //            stage.close();
             mainFrame.navigateToParent();
         }
@@ -255,7 +254,7 @@ public class SessionEditController_v2 extends Controller {
 
     @Override
     public void initController() {
-        session_interClassCommunication = ((Create_Edit_WorkoutPlanController)this.getParentController()).getSession_interClassCommunication();
+        session_interClassCommunication = ((Create_Edit_WorkoutPlanController) this.getParentController()).getSession_interClassCommunication();
         try {
             tblcOrder.setCellValueFactory(new PropertyValueFactory<>("order_nr"));
             tblcExercise.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getExercise().getName()));

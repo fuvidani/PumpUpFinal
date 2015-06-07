@@ -2,20 +2,15 @@ package sepm.ss15.grp16.gui;
 
 import com.github.sarxos.webcam.Webcam;
 import javafx.application.Application;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Optional;
-
 /**
  * Created by Maximilian on 22.05.2015.
  */
-public class NewMain extends Application{
+public class NewMain extends Application {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
@@ -34,7 +29,7 @@ public class NewMain extends Application{
 
         FrameWindow mainFrame = new FrameWindow(context, primaryStage, PageEnum.Login);
 
-         primaryStage.setOnCloseRequest(e -> {
+        primaryStage.setOnCloseRequest(e -> {
 //                e.consume();
 //                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 //                alert.setTitle("Programm schlie\u00dfen");
@@ -46,8 +41,8 @@ public class NewMain extends Application{
 //
 //            Optional<ButtonType> result = alert.showAndWait();
 //            if (result.get() == yes) {
-                context.close();
-                primaryStage.close();
+            context.close();
+            primaryStage.close();
 
 //            } else {
 //                primaryStage.show();

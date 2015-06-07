@@ -5,12 +5,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -19,27 +17,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.*;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.Service;
-import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.exercise.CategoryService;
+import sepm.ss15.grp16.service.user.UserService;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
  * This controller is responsible for the stage where the user can create
  * m new exercise or edit an existing one.
  */
-public class ManageExerciseController extends Controller  {
+public class ManageExerciseController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
@@ -140,7 +136,7 @@ public class ManageExerciseController extends Controller  {
         this.categoryService = categoryService;
     }
 
-   public void setExercise(Exercise exercise){
+    public void setExercise(Exercise exercise) {
         this.exercise = exercise;
     }
 
@@ -210,10 +206,10 @@ public class ManageExerciseController extends Controller  {
             exerciseGifList = exercise.getGifLinks();
             observablePicListData.addAll(exerciseGifList);
             imagesListView.setItems(observablePicListData);
-            if(exercise!=null){
-                if(exercise.getGifLinks().size()==0){
+            if (exercise != null) {
+                if (exercise.getGifLinks().size() == 0) {
                     deleteBtn.setDisable(true);
-                }else {
+                } else {
                     deleteBtn.setDisable(false);
                 }
             }
@@ -226,10 +222,9 @@ public class ManageExerciseController extends Controller  {
             for (AbsractCategory c : exercise.getCategories()) {
                 allCheckboxes.get(c.getId()).setSelected(true);
             }
-        }else{
+        } else {
             deleteBtn.setDisable(true);
         }
-
 
 
     }
@@ -260,7 +255,7 @@ public class ManageExerciseController extends Controller  {
                 picture = file.getName();
             } else {
                 file = new File(newValue);
-                picture=file.getAbsolutePath();
+                picture = file.getAbsolutePath();
             }
 
             LOGGER.debug(picture);
@@ -305,7 +300,7 @@ public class ManageExerciseController extends Controller  {
                 update.setId(exercise.getId());
                 exerciseService.update(update);
             }
-           mainFrame.navigateToParent();
+            mainFrame.navigateToParent();
         } catch (Exception e) {
             LOGGER.error(e);
             e.printStackTrace();
@@ -377,18 +372,18 @@ public class ManageExerciseController extends Controller  {
     @FXML
     private void removeClicked() {
 
-        if(picture.contains("img_ex")){
+        if (picture.contains("img_ex")) {
             LOGGER.debug("removing pictuer " + picture);
             observablePicListData.remove("/" + picture);
             exerciseGifList.remove("/" + picture);
 
-        }else{
+        } else {
             observablePicListData.remove(picture);
             exerciseGifList.remove(picture);
         }
-        if(observablePicListData.size()==0){
+        if (observablePicListData.size() == 0) {
             deleteBtn.setDisable(true);
-        }else {
+        } else {
             deleteBtn.setDisable(false);
         }
 

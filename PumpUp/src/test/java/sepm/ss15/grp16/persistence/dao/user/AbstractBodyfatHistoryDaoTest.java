@@ -2,15 +2,11 @@ package sepm.ss15.grp16.persistence.dao.user;
 
 import org.junit.Test;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
-import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
 import sepm.ss15.grp16.persistence.dao.DAO;
-import sepm.ss15.grp16.persistence.dao.user.BodyfatHistoryDAO;
-import sepm.ss15.grp16.persistence.dao.user.UserDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -61,7 +57,7 @@ public abstract class AbstractBodyfatHistoryDaoTest extends AbstractDAOTest<Body
     }
 
     @Test
-    public void searchWithValidUserID() throws Exception{
+    public void searchWithValidUserID() throws Exception {
 
         User testUser = createUserForTest();
 
@@ -82,7 +78,7 @@ public abstract class AbstractBodyfatHistoryDaoTest extends AbstractDAOTest<Body
     }
 
     @Test
-    public void searchByIDShouldFind() throws Exception{
+    public void searchByIDShouldFind() throws Exception {
 
         User testUser = createUserForTest();
 

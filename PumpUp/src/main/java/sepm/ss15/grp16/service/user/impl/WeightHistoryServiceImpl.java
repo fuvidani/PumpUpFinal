@@ -3,9 +3,9 @@ package sepm.ss15.grp16.service.user.impl;
 import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.persistence.dao.user.WeightHistoryDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
-import sepm.ss15.grp16.service.user.WeightHistoryService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.user.WeightHistoryService;
 
 import java.util.List;
 

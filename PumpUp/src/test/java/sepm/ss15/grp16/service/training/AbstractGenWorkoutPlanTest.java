@@ -5,11 +5,10 @@ import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
+import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
-import sepm.ss15.grp16.service.exception.ServiceException;
-import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,6 +28,7 @@ public abstract class AbstractGenWorkoutPlanTest {
 
     /**
      * Service injected by the Framework.
+     *
      * @param service a GeneratedWorkoutplanService
      */
     protected void setService(GeneratedWorkoutplanService service) {
@@ -37,6 +37,7 @@ public abstract class AbstractGenWorkoutPlanTest {
 
     /**
      * Service injected by the Framework.
+     *
      * @param service a CategoryService
      */
     protected void setService(CategoryService service) {
@@ -45,6 +46,7 @@ public abstract class AbstractGenWorkoutPlanTest {
 
     /**
      * Service injected by the Framework.
+     *
      * @param service a UserService
      */
     protected void setService(UserService service) {
@@ -53,6 +55,7 @@ public abstract class AbstractGenWorkoutPlanTest {
 
     /**
      * Service injected by the Framework.
+     *
      * @param service a WeightHistoryService
      */
     protected void setService(WeightHistoryService service) {
@@ -63,6 +66,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Test of service.generate(.) with null used as parameter.
      * Should throw a service exception
+     *
      * @throws ServiceException
      */
     @Test(expected = ServiceException.class)
@@ -74,6 +78,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Test for service.generate(.) with valid parameters.
      * In all cases, the method must return a valid generated workout routine.
+     *
      * @throws ServiceException
      */
     @Test
@@ -87,6 +92,7 @@ public abstract class AbstractGenWorkoutPlanTest {
 
     /**
      * Creates a dummy workout preference for the main test.
+     *
      * @return a valid workout preference for Endurance
      * @throws ServiceException
      */
@@ -96,6 +102,7 @@ public abstract class AbstractGenWorkoutPlanTest {
 
     /**
      * Creates a dummy workout preference for the main test.
+     *
      * @return a valid workout preference for Strength
      * @throws ServiceException
      */
@@ -105,6 +112,7 @@ public abstract class AbstractGenWorkoutPlanTest {
 
     /**
      * Creates a dummy workout preference for the main test.
+     *
      * @return a valid workout preference for Balance
      * @throws ServiceException
      */
@@ -114,6 +122,7 @@ public abstract class AbstractGenWorkoutPlanTest {
 
     /**
      * Creates a dummy workout preference for the main test.
+     *
      * @return a valid workout preference for Flexibility
      * @throws ServiceException
      */
@@ -123,6 +132,7 @@ public abstract class AbstractGenWorkoutPlanTest {
 
     /**
      * Creates a dummy user that is used by the main test.
+     *
      * @throws ServiceException
      */
     private void dummyUser() throws ServiceException {

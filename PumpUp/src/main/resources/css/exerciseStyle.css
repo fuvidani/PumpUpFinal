@@ -1,18 +1,20 @@
-.editBtn{
+.editBtn {
     -fx-background-image: url('../icons/configuration21.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-color: transparent;
 
 }
-.deleteBtn{
+
+.deleteBtn {
     -fx-background-image: url('../icons/delete_small.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-color: transparent;
 
 }
-.addBtn{
+
+.addBtn {
     -fx-background-image: url('../icons/add139.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
@@ -20,7 +22,7 @@
 
 }
 
-.categoryHeader{
+.categoryHeader {
     -fx-background-color: white;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 17pt;

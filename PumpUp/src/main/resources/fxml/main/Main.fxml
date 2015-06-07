@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.web.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -14,165 +10,200 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
-
-<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="mainRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            prefHeight="700.0" prefWidth="1300.0" styleClass="mainRoot"
+            xmlns="http://javafx.com/javafx/8" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
     <center>
-        <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                   orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
             <items>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="mainBox">
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0"
+                      styleClass="mainBox">
                     <children>
-                  <VBox prefHeight="315.0" prefWidth="700.0">
-                     <children>
-                                  <Label fx:id="usernameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Willkommen, Username!">
-                                      <font>
-                                          <Font size="24.0" />
-                                      </font>
-                                  </Label>
-                              <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="280.0" prefWidth="1094.0">
-                                  <children>
-                                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0">
+                        <VBox prefHeight="315.0" prefWidth="700.0">
+                            <children>
+                                <Label fx:id="usernameLabel" maxHeight="1.7976931348623157E308"
+                                       maxWidth="1.7976931348623157E308" text="Willkommen, Username!">
+                                    <font>
+                                        <Font size="24.0"/>
+                                    </font>
+                                </Label>
+                                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                      prefHeight="280.0" prefWidth="1094.0">
+                                    <children>
+                                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                              spacing="15.0">
                                             <children>
-                                                <ImageView fx:id="userImgView" fitHeight="280.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                                <ImageView fx:id="userImgView" fitHeight="280.0" fitWidth="270.0"
+                                                           pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                                                     <image>
-                                                        <Image url="@../../icons/fat_to_muscle.png" />
+                                                        <Image url="@../../icons/fat_to_muscle.png"/>
                                                     </image>
                                                     <viewport>
-                                                        <Rectangle2D />
+                                                        <Rectangle2D/>
                                                     </viewport>
                                                 </ImageView>
-                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="280.0" spacing="20.0" HBox.hgrow="ALWAYS">
+                                                <VBox maxHeight="1.7976931348623157E308"
+                                                      maxWidth="1.7976931348623157E308" prefHeight="280.0"
+                                                      spacing="20.0" HBox.hgrow="ALWAYS">
                                                     <children>
-                                                        <HBox maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
+                                                        <HBox maxHeight="1.7976931348623157E308" styleClass="userInfo"
+                                                              VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Geschlecht:">
                                                                     <font>
-                                                                        <Font size="17.0" />
+                                                                        <Font size="17.0"/>
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT"
+                                                                      nodeOrientation="LEFT_TO_RIGHT"
+                                                                      HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                      <Label fx:id="genderTextField" text="Label">
-                                                         <HBox.margin>
-                                                            <Insets left="130.0" />
-                                                         </HBox.margin>
-                                                      </Label>
+                                                                        <Label fx:id="genderTextField" text="Label">
+                                                                            <HBox.margin>
+                                                                                <Insets left="130.0"/>
+                                                                            </HBox.margin>
+                                                                        </Label>
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="10.0"
+                                                              maxHeight="1.7976931348623157E308" styleClass="userInfo"
+                                                              VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Alter:">
                                                                     <font>
-                                                                        <Font size="17.0" />
+                                                                        <Font size="17.0"/>
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT"
+                                                                      nodeOrientation="LEFT_TO_RIGHT"
+                                                                      HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                      <Label fx:id="ageTextField" text="Label" />
+                                                                        <Label fx:id="ageTextField" text="Label"/>
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="51.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="51.0"
+                                                              maxHeight="1.7976931348623157E308" styleClass="userInfo"
+                                                              VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Größe:">
                                                                     <font>
-                                                                        <Font size="17.0" />
+                                                                        <Font size="17.0"/>
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT"
+                                                                      nodeOrientation="LEFT_TO_RIGHT"
+                                                                      HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                      <Label fx:id="heightTextField" text="Label" />
+                                                                        <Label fx:id="heightTextField" text="Label"/>
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="92.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="92.0"
+                                                              maxHeight="1.7976931348623157E308" styleClass="userInfo"
+                                                              VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Gewicht:">
                                                                     <font>
-                                                                        <Font size="17.0" />
+                                                                        <Font size="17.0"/>
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT"
+                                                                      nodeOrientation="LEFT_TO_RIGHT"
+                                                                      HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                      <Label fx:id="weightTextField" text="Label" />
+                                                                        <Label fx:id="weightTextField" text="Label"/>
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="133.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="133.0"
+                                                              maxHeight="1.7976931348623157E308" styleClass="userInfo"
+                                                              VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="Körperfett:">
                                                                     <font>
-                                                                        <Font size="17.0" />
+                                                                        <Font size="17.0"/>
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT"
+                                                                      nodeOrientation="LEFT_TO_RIGHT"
+                                                                      HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                      <Label fx:id="bodyfatTextField" text="Label" />
+                                                                        <Label fx:id="bodyfatTextField" text="Label"/>
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="10.0" layoutY="174.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
+                                                        <HBox layoutX="10.0" layoutY="174.0"
+                                                              maxHeight="1.7976931348623157E308" styleClass="userInfo"
+                                                              VBox.vgrow="ALWAYS">
                                                             <children>
                                                                 <Label text="E-Mail:">
                                                                     <font>
-                                                                        <Font size="17.0" />
+                                                                        <Font size="17.0"/>
                                                                     </font>
                                                                 </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
+                                                                <HBox alignment="TOP_RIGHT"
+                                                                      nodeOrientation="LEFT_TO_RIGHT"
+                                                                      HBox.hgrow="ALWAYS">
                                                                     <children>
-                                                      <Label fx:id="emailTextField" text="Label" />
+                                                                        <Label fx:id="emailTextField" text="Label"/>
                                                                     </children>
                                                                 </HBox>
                                                             </children>
                                                         </HBox>
                                                     </children>
                                                     <HBox.margin>
-                                                        <Insets left="30.0" top="10.0" />
+                                                        <Insets left="30.0" top="10.0"/>
                                                     </HBox.margin>
                                                 </VBox>
                                             </children>
-                                 <padding>
-                                    <Insets top="20.0" />
-                                 </padding>
+                                            <padding>
+                                                <Insets top="20.0"/>
+                                            </padding>
                                         </HBox>
-                                  </children>
-                              </HBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets left="25.0" top="10.0" />
-                     </HBox.margin>
-                  </VBox>
-                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="290.0" HBox.hgrow="ALWAYS">
+                                    </children>
+                                </HBox>
+                            </children>
+                            <HBox.margin>
+                                <Insets left="25.0" top="10.0"/>
+                            </HBox.margin>
+                        </VBox>
+                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308"
+                                   maxWidth="1.7976931348623157E308" prefHeight="290.0" HBox.hgrow="ALWAYS">
                             <xAxis>
-                                <CategoryAxis side="BOTTOM" />
+                                <CategoryAxis side="BOTTOM"/>
                             </xAxis>
                             <yAxis>
-                                <NumberAxis side="LEFT" />
+                                <NumberAxis side="LEFT"/>
                             </yAxis>
-                     <HBox.margin>
-                        <Insets top="60.0" />
-                     </HBox.margin>
+                            <HBox.margin>
+                                <Insets top="60.0"/>
+                            </HBox.margin>
                         </LineChart>
                     </children>
                     <padding>
-                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" right="10.0" top="10.0"/>
                     </padding>
                 </HBox>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="mainBox">
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0"
+                      styleClass="mainBox">
                     <children>
-                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0"
+                              HBox.hgrow="ALWAYS">
                             <children>
-                                <WebView fx:id="webView" prefHeight="300.0" prefWidth="200.0" />
+                                <WebView fx:id="webView" prefHeight="300.0" prefWidth="200.0"/>
                             </children>
                         </VBox>
                     </children>
                     <padding>
-                        <Insets top="10.0" />
+                        <Insets top="10.0"/>
                     </padding>
                 </HBox>
             </items>
@@ -181,25 +212,28 @@
     <bottom>
         <HBox prefHeight="64.0" prefWidth="1299.0" styleClass="footer" BorderPane.alignment="CENTER">
             <children>
-            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <children>
-                      <Button contentDisplay="LEFT" maxHeight="64.0" maxWidth="1.7976931348623157E308" minHeight="64.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0" prefWidth="120.0" styleClass="trainingBtn" text="Training">
-                          <font>
-                              <Font size="24.0" />
-                          </font>
-                          <HBox.margin>
-                              <Insets />
-                          </HBox.margin>
-                      </Button>
-                  <Button mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0" styleClass="trainginPic" text=" " />
-               </children>
-               <HBox.margin>
-                  <Insets left="600.0" />
-               </HBox.margin>
-            </HBox>
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                    <children>
+                        <Button contentDisplay="LEFT" maxHeight="64.0" maxWidth="1.7976931348623157E308"
+                                minHeight="64.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0"
+                                prefWidth="120.0" styleClass="trainingBtn" text="Training">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets/>
+                            </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0"
+                                styleClass="trainginPic" text=" "/>
+                    </children>
+                    <HBox.margin>
+                        <Insets left="600.0"/>
+                    </HBox.margin>
+                </HBox>
             </children>
             <BorderPane.margin>
-                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
             </BorderPane.margin>
         </HBox>
     </bottom>

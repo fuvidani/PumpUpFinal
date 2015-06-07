@@ -7,7 +7,6 @@ import sepm.ss15.grp16.entity.music.Playlist;
 import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
 import sepm.ss15.grp16.persistence.dao.DAO;
 
-import java.io.File;
 import java.net.URISyntaxException;
 
 /**

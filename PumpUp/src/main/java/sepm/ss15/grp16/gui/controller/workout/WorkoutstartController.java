@@ -46,7 +46,7 @@ public class WorkoutstartController extends Controller {
     public void initController() {
         User user = userService.getLoggedInUser();
         String playlist = user.getPlaylist();
-        if(playlist!= null){
+        if (playlist != null) {
             musicPathLabel.setText(playlist);
             dir_selection = new File(playlist);
         }
@@ -67,7 +67,7 @@ public class WorkoutstartController extends Controller {
     @FXML
     void startButtonClicked(ActionEvent event) {
         //transitionLoader.openStage("fxml/workout/Workout.fxml", (Stage) toDoListView.getScene().getWindow(), "training", 1100, 750, true);
-        if(dir_selection!= null) {
+        if (dir_selection != null) {
             try {
                 User user = userService.getLoggedInUser();
                 user.setPlaylist(dir_selection.getAbsolutePath());
@@ -90,7 +90,7 @@ public class WorkoutstartController extends Controller {
             ButtonType yes = new ButtonType("Ja");
             ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.NO);
             alert.getButtonTypes().setAll(yes, cancel);
-            if(alert.showAndWait().get() == yes){
+            if (alert.showAndWait().get() == yes) {
                 mainFrame.navigateToParent();
             }
         }

@@ -29,7 +29,6 @@ import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
-import sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.net.URISyntaxException;
