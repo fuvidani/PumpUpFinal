@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.entity.calendar;
 
 import sepm.ss15.grp16.entity.DTO;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ public class Appointment implements DTO {
 
     private String sessionName;
     private String setNames;
+    private TrainingsSession session;
 
     public Appointment(Integer appointment_id, Date datum, Integer session_id, Integer user_id, Boolean isDeleted) {
         this.appointment_id = appointment_id;
@@ -84,6 +86,14 @@ public class Appointment implements DTO {
 
     public void setSetNames(String setNames) {
         this.setNames = setNames;
+    }
+
+    public TrainingsSession getSession() {
+        return session;
+    }
+
+    public void setSession(TrainingsSession session) {
+        this.session = session;
     }
 
     @Override
