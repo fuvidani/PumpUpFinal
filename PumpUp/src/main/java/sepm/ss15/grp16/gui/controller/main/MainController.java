@@ -7,7 +7,9 @@ import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebEngine;
@@ -69,6 +71,8 @@ public class MainController extends Controller {
     private WebView webView;
     @FXML
     private WebEngine engine;
+    @FXML
+    private Button trainingPicBtn = new Button();
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -134,6 +138,7 @@ public class MainController extends Controller {
         /**
          * #######      END CALENDAR      #######
          */
+        trainingPicBtn.setTooltip(new Tooltip("Training starten"));
 
     }
 

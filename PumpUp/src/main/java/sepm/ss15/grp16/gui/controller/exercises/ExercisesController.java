@@ -136,6 +136,10 @@ public class ExercisesController extends Controller {
     @Override
     public void initController() {
 
+        addBtn.setTooltip(new Tooltip("Neue Übung anlegen"));
+        deleteBtn.setTooltip(new Tooltip("Übung löschen"));
+        editBtn.setTooltip(new Tooltip("Übung bearbeiten"));
+        
 
         leftArrow.setVisible(false);
         rightArrow.setVisible(false);
