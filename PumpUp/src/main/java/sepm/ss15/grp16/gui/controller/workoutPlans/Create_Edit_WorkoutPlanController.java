@@ -203,7 +203,6 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                 alert.setHeaderText("Fehler beim \u00f6ffnen des Fensters!");
                 alert.setContentText(e.getMessage());
                 alert.showAndWait();
-                e.printStackTrace();
             }
         }
     }

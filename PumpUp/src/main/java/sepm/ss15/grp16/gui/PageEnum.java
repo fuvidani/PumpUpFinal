@@ -7,7 +7,7 @@ public enum PageEnum {
 
     Main("fxml/main/Main.fxml", "Main", 1000, 620),
     Registration("fxml/user/Registration.fxml", "Registration", 10, 10),
-    Login("fxml/user/Login.fxml", "Login", 10, 10),
+    Login("fxml/user/Login.fxml", "Login", 400, 400),
     UserEdit("fxml/user/UserEdit.fxml", "Userdaten bearbeiten", 10, 10),
     Workoutplan("fxml/workoutPlans/Workoutplans.fxml", "Traininspläne", 1000, 620),
     Workoutplan_create_edit("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", "Traininsplan bearbeiten/erstellen", 1000, 620),
@@ -15,8 +15,13 @@ public enum PageEnum {
     Workoutplan_calender_dialog("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", "Trainingsplan in Kalender exportieren", 800, 600),
     SessionEdit("fxml/workoutPlans/SessionEdit_v2.fxml", "Session hinzuf\u00fcgen", 600, 400),
     Calendar("fxml/calendar/Calendar.fxml", "Trainingskalender", 1000, 620),
-    Exercises("fxml/exercise/Exercises.fxml", "\\u00dcbungen", 1000, 620),
-    Manage_exercises("fxml/exercise/ManageExercise.fxml", "\\u00dcbungen verwalten", 1300, 750);
+    Exercises("fxml/exercise/Exercises.fxml", "\u00dcbungen", 1000, 620),
+    Manage_exercises("fxml/exercise/ManageExercise.fxml", "\\u00dcbungen verwalten", 1300, 750),
+    LiveMode("fxml/workout/Workout.fxml", "", 1300, 750),
+    Playlist("fxml/workout/Playlist.fxml", "Playlist", 300, 500),
+    Workoutstart("fxml/workout/Workoutstart.fxml", "Mit Training beginnen", 800, 600),
+    About("fxml/main/About.fxml", "Über", 300, 500),
+    Fotos("fxml/user/BodyPhotos.fxml", "Fotos", 1000, 600);
 
     private final String fxml;
     private final String title;

@@ -219,7 +219,7 @@
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                                      <Button fx:id="playVideoBtn" mnemonicParsing="false" onAction="#playVideo" text="play video">
+                                                      <Button fx:id="playVideoBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#playVideo" text="Video abspielen">
                                                           <font>
                                                               <Font size="14.0" />
                                                           </font>

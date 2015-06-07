@@ -122,7 +122,6 @@ public class WorkoutPlansController extends Controller {
             setUpListView();
             workoutPlansListView.setItems(data);
 
-
         } catch (ServiceException e) {
             e.printStackTrace();
         }

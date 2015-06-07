@@ -184,7 +184,6 @@ public class ExercisesController extends Controller {
     private void playVideo(){
         Duration totalDuration =  player.getCycleDuration();
         Duration currentDuration =  player.getCurrentTime();
-        System.out.println("current: " + currentDuration+ " total: " + totalDuration);
         if(currentDuration.compareTo(totalDuration)==0){
             isPlaying=false;
             player = new MediaPlayer(media);
@@ -480,8 +479,6 @@ public class ExercisesController extends Controller {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
             mainFrame.navigateToParent();
-        } else {
-            stage.show();
         }
     }
 
