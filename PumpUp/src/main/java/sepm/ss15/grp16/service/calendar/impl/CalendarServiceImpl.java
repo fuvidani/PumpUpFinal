@@ -366,18 +366,19 @@ public class CalendarServiceImpl implements CalendarService {
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
                         HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                        .setDataStoreFactory(DATA_STORE_FACTORY)
+                        //.setDataStoreFactory(DATA_STORE_FACTORY)
                         .setAccessType("offline")
                         .build();
         Credential credential = null;
+
         try {
             credential = new AuthorizationCodeInstalledApp(
                     flow, new LocalServerReceiver()).authorize("user");
         } catch (Exception e) {
             e.printStackTrace(); //TODO change
         }
-        System.out.println(
-                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        //System.out.println(
+        //        "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         return credential;
     }
 
