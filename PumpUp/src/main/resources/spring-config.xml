@@ -256,7 +256,7 @@
 
     <bean id="workoutstartController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutstartController"
           scope="prototype">
-
+        <constructor-arg name="userService" ref="userService"/>
     </bean>
 
     <bean id="playlistController" class="sepm.ss15.grp16.gui.controller.workout.PlaylistController" scope="prototype">
@@ -265,6 +265,7 @@
 
     <bean id="workoutController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutController" scope="prototype">
         <constructor-arg name="exerciseDAO" ref="exerciseDAO"/>
+        <constructor-arg name="motivationModul" ref="motivationModul"/>
     </bean>
 
     <bean id="workoutGraphicsController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutGraphicsController"
@@ -274,11 +275,24 @@
 
     <bean id="workoutMusicPlayerController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutMusicPlayerController"
           scope="prototype">
-
+        <constructor-arg index="0" ref="musicService"/>
+        <constructor-arg index="1" ref="userService"/>
     </bean>
 
     <bean id="workoutResultController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutResultController"
           scope="prototype">
 
+    </bean>
+
+    <bean id="musicDAO" class="sepm.ss15.grp16.persistence.dao.music.impl.MusicDAOImpl">
+
+    </bean>
+
+    <bean id="musicService" class="sepm.ss15.grp16.service.music.impl.MusicServiceImpl">
+        <constructor-arg ref="musicDAO"/>
+    </bean>
+
+    <bean id="motivationModul" class="sepm.ss15.grp16.gui.controller.workout.MotivatonModul">
+        <constructor-arg ref="musicService"/>
     </bean>
 </beans>

@@ -78,4 +78,16 @@ public interface CalendarService extends Service<Appointment> {
      * chatches an event from JS calendar
      */
     void updateEvent(int appointmentID, String newDate) throws ServiceException;
+
+    /**
+     * removes all appointments in service
+     */
+    void deleteAllAppointments() throws ServiceException;
+
+    /**
+     * Returns the current appointment
+     * @return current Appointment. if calendar is empty or there is no appointment after today returns null.
+     * @throws ServiceException
+     */
+    Appointment getCurrentAppointment() throws ServiceException;
 }

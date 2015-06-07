@@ -10,8 +10,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -25,17 +25,17 @@ import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
-import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.ImageLoader;
+import sepm.ss15.grp16.gui.PageEnum;
+import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 06.05.15.
@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * It consists of a graphicsController and a musicPlayerController.
  */
 
-public class WorkoutController extends Controller implements Initializable {
+public class WorkoutController extends Controller {
 
     private static final int IMAGEDURATION = 1500;
     private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
@@ -80,6 +80,14 @@ public class WorkoutController extends Controller implements Initializable {
 
     @FXML
     private Label discriptionLabel;
+
+    @FXML
+    private Node WorkoutMusicPlayer;
+
+    @FXML
+    private WorkoutMusicPlayerController musicPlayerController;
+    private MotivatonModul motivationModul;
+
     private Timeline counterTimeline;
     private IntegerProperty timeSeconds;
     private ArrayList<ExerciseSet> exerciseList;
@@ -92,7 +100,8 @@ public class WorkoutController extends Controller implements Initializable {
     private Status status;
     private TrainingsSession session;
 
-    public WorkoutController(ExerciseDAO exerciseDAO) {
+    public WorkoutController(ExerciseDAO exerciseDAO, MotivatonModul motivationModul) {
+        this.motivationModul = motivationModul;
         LinkedList<ExerciseSet> list = new LinkedList<>();
 
         try {
@@ -108,8 +117,11 @@ public class WorkoutController extends Controller implements Initializable {
         session.setExerciseSets(list);
     }
 
-    public void initialize(URL location, ResourceBundle resources) {
-
+    @Override
+    public void initController() {
+        musicPlayerController.setParent(this);
+        motivationModul.setMusicPlayerController(musicPlayerController);
+        musicPlayerController.play();
         exerciseList = new ArrayList<>(session.getExerciseSets());
         activeExercisePosition = -1;
 
@@ -294,6 +306,13 @@ public class WorkoutController extends Controller implements Initializable {
         }
     }
 
+    public void launchDialog(PageEnum page) {
+        mainFrame.openDialog(page);
+    }
+
+    public WorkoutMusicPlayerController getMusicPlayerController() {
+        return musicPlayerController;
+    }
 
     private enum Status {
         RUNNUNG, PAUSED, FINISHED;

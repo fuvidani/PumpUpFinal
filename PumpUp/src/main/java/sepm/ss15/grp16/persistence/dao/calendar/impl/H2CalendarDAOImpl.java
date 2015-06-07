@@ -195,7 +195,7 @@ public class H2CalendarDAOImpl implements CalendarDAO {
                 throw new PersistenceException("Appointment to be deleted must not be null");
             }
 
-            deleteStm.setInt(1, appointment.getUser_id());
+            deleteStm.setInt(1, appointment.getId());
             deleteStm.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("Failed to delete record in appointment table. - " + e.getMessage());

@@ -34,24 +34,24 @@ public class NewMain extends Application{
 
         FrameWindow mainFrame = new FrameWindow(context, primaryStage, PageEnum.Login);
 
-        primaryStage.setOnCloseRequest(e -> {
-            e.consume();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Programm schlie�en");
-            alert.setHeaderText("Das Programm wird beendet.");
-            alert.setContentText("M�chten Sie das Programm wirklich beenden?");
-            ButtonType yes = new ButtonType("Ja");
-            ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-            alert.getButtonTypes().setAll(yes, cancel);
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == yes) {
+         primaryStage.setOnCloseRequest(e -> {
+//                e.consume();
+//                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                alert.setTitle("Programm schlie�en");
+//                alert.setHeaderText("Das Programm wird beendet.");
+//                alert.setContentText("M�chten Sie das Programm wirklich beenden?");
+//                ButtonType yes = new ButtonType("Ja");
+//            ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
+//            alert.getButtonTypes().setAll(yes, cancel);
+//
+//            Optional<ButtonType> result = alert.showAndWait();
+//            if (result.get() == yes) {
                 context.close();
                 primaryStage.close();
 
-            } else {
-                primaryStage.show();
-            }
+//            } else {
+//                primaryStage.show();
+//            }
         });
 
         LOGGER.info("configuration successful");
