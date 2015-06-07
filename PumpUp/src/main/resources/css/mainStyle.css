@@ -87,7 +87,7 @@
     -fx-background-color: black;
 }
 
-.menu, .topMenu, .menu-bar{
+.menu, .topMenu, .menu-bar, .footer, .root{
     -fx-background-color: lightgray;
 }
 
@@ -137,4 +137,11 @@
 }
 .axis:left {
     -fx-border-color: transparent black transparent transparent;
+}
+
+.userInfo{
+
+    -fx-border-color: black black black black;
+    -fx-background-color: transparent;
+
 }
