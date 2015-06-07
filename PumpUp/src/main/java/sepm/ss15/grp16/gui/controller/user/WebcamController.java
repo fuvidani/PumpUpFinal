@@ -170,6 +170,7 @@ public class WebcamController extends Controller {
     @FXML
     public void takePicture() {
         LOGGER.info("Taking image with webcam...");
+        stopWebcam = true;
         webCamFooterFlowPane.setDisable(true);
         try {
             if (selectedWebcam != null) {
@@ -183,19 +184,20 @@ public class WebcamController extends Controller {
                 File file = filechooser.showSaveDialog(null);
                 if(file != null){
                     ImageIO.write(image, "JPG", file);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information");
+                    alert.setHeaderText("Foto-Information");
+                    alert.setContentText("Das Foto wurde erfolgreich gespeichert.");
+                    alert.showAndWait();
                 }
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information");
-                alert.setHeaderText("Foto-Information");
-                alert.setContentText("Das Foto wurde erfolgreich gespeichert.");
-                alert.showAndWait();
             }
         } catch (IOException e) {
             LOGGER.error("Saving image from webcam failed");
             e.printStackTrace();
         }
         webCamFooterFlowPane.setDisable(false);
+        stopWebcam = false;
+        startShowingImages();
         LOGGER.info("Image successfully taken");
     }
 

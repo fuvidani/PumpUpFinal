@@ -191,7 +191,7 @@ public class PhotoDiaryController extends Controller {
 
         if (selectedFile != null) {
             selectedPicturePath = selectedFile.getPath();
-            Image image = new Image(selectedFile.toURI().toString(), imageView.getFitWidth(), imageView.getFitHeight(), false, false);
+            Image image = new Image(selectedFile.toURI().toString());
             imageView.setImage(image);
         }
         selectPictureButton.setDisable(false);
@@ -219,7 +219,7 @@ public class PhotoDiaryController extends Controller {
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
     }
 }

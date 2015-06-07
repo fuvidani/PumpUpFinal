@@ -31,6 +31,9 @@
                            <font>
                               <Font size="24.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
                         </Label>
                      </children>
                   </HBox>
