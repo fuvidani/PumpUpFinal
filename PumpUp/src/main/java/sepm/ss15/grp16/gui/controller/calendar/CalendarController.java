@@ -39,7 +39,6 @@ public class CalendarController extends Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         LOGGER.info("Initialising CalendarController..");
         this.transitionLoader = new StageTransitionLoader(this);
-        exportButton.setDisable(true);
 
         engine = webView.getEngine();
         String path = System.getProperty("user.dir");
@@ -89,6 +88,7 @@ public class CalendarController extends Controller implements Initializable {
 
     @FXML
     public void exportToGoogleClicked() {
+        calendarService.exportToGoogle();
     }
 
     @FXML
