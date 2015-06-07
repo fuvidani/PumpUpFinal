@@ -35,6 +35,7 @@ import sepm.ss15.grp16.service.user.WeightHistoryService;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -69,7 +70,7 @@ public class MainController extends Controller {
     @FXML
     private Label usernameLabel;
     @FXML
-    private LineChart<?, ?> userChart;
+    private  LineChart<String, Number> userChart;
     @FXML
     private WebView webView;
     @FXML
@@ -206,7 +207,7 @@ public class MainController extends Controller {
         usernameLabel.setText("Willkommen, " + username + "!");
         ageTextField.setText(Integer.toString(age));
         heightTextField.setText(Integer.toString(height));
-        genderTextField.setText(gender ? "Männlich" : "Weiblich");
+        genderTextField.setText(gender ? "M\u00e4nnlich" : "Weiblich");
 
         if (weight != null) {
             weightTextField.setText(Integer.toString(weight));
@@ -225,7 +226,40 @@ public class MainController extends Controller {
         } else {
             emailTextField.setText(email);
         }
+        makeUserChart();
     }
+
+    private void makeUserChart(){
+        try {
+
+            LineChart.Series<String, Number> weightSeries = new LineChart.Series<String, Number>();
+            LineChart.Series<String, Number> bodyFatSeries = new LineChart.Series<String, Number>();
+            List<WeightHistory> weightHistoryList = weightHistoryService.findAll();
+            List<BodyfatHistory> bodyfatHistoryList = bodyfatHistoryService.findAll();
+
+            for(WeightHistory w : weightHistoryList){
+                if(w.getUser_id()==userService.getLoggedInUser().getUser_id()){
+                    weightSeries.getData().add(new LineChart.Data<>(""+w.getDate(), w.getWeight()));
+                }            }
+            int counter = 0;
+            for(BodyfatHistory b : bodyfatHistoryList){
+                if(b.getUser_id()==userService.getLoggedInUser().getUser_id()) {
+
+                    int bodyFatTOKG = weightHistoryList.get(counter).getWeight() * b.getBodyfat() / 100;
+                    bodyFatSeries.getData().add(new LineChart.Data("" + b.getDate(), bodyFatTOKG));
+                    counter++;
+                }
+            }
+            weightSeries.setName("K\u00f6rpergewicht");
+            bodyFatSeries.setName("K\u00f6rperfettanteil");
+            userChart.getData().add(weightSeries);
+            userChart.getData().add(bodyFatSeries);
+        }catch (ServiceException e){
+            e.printStackTrace();
+            LOGGER.error(e);
+        }
+    }
+
 
     public void refreshCalendar() {
         engine.executeScript("$('#calendar').fullCalendar('removeEvents');");
