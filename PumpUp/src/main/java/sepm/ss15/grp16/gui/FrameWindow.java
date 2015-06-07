@@ -1,5 +1,6 @@
 package sepm.ss15.grp16.gui;
 
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +49,7 @@ public class FrameWindow extends BorderPane {
 
         stage.setScene(new Scene(this));
         stage.setTitle(mainPage.getTitle());
+
         Scene scene = stage.getScene();
         try {
             scene.getStylesheets().add(getClass().getClassLoader().getResource("css").toURI().toString().concat("/mainStyle.css"));
@@ -55,6 +57,15 @@ public class FrameWindow extends BorderPane {
             e.printStackTrace();
         }
         initMenu();
+        stage.fullScreenProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue == true)
+            {
+                deactiveteMenuBar();
+            }
+            else {
+                activeteMenuBar();
+            }
+        });
 
         navigateToChild(mainPage);
     }
@@ -180,6 +191,11 @@ public class FrameWindow extends BorderPane {
         MenuItem item = new MenuItem(titel);
         item.setOnAction(event);
         personalMenu.getItems().add(item);
+    }
+
+    public void openFullScreenMode()
+    {
+        stage.setFullScreen(true);
     }
 
     private void activeteMenuBar()

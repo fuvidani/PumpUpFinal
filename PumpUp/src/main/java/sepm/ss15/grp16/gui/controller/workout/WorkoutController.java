@@ -117,6 +117,13 @@ public class WorkoutController extends Controller {
     public void initController() {
         session = ((MainController) getParentController()).getExecutionAppointment().getSession();
 
+        mainFrame.addPageManeItem("Open Fullscreen", event1 -> {
+            mainFrame.openFullScreenMode();
+        });
+        mainFrame.addPageManeItem("Abort Training", event1 -> {
+            mainFrame.navigateToParent();
+        });
+
         exerciseImageView.setPreserveRatio(true);
         exerciseImageView.fitWidthProperty().bind(pictureFitPane.widthProperty());
         exerciseImageView.fitHeightProperty().bind(pictureFitPane.heightProperty());
