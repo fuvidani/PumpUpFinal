@@ -22,7 +22,7 @@ public enum PageEnum {
     LiveMode("fxml/workout/Workout.fxml", "", 1300, 750),
     Playlist("fxml/workout/Playlist.fxml", "Playlist", 300, 500),
     Workoutstart("fxml/workout/Workoutstart.fxml", "Mit Training beginnen", 800, 600),
-    About("fxml/main/About.fxml", "Über", 300, 500),
+    About("fxml/main/About.fxml", "Über", 600, 400),
     Fotos("fxml/user/BodyPhotos.fxml", "Fotos", 1000, 600);
 
     private final String fxml;

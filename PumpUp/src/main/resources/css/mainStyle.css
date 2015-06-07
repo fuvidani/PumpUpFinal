@@ -141,3 +141,15 @@
     -fx-background-color: transparent;
 
 }
+
+.aboutGrid .label{
+    -fx-background-color: white;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 10pt;
+}
+
+.aboutDescription{
+    -fx-background-color: white;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 14pt;
+}
