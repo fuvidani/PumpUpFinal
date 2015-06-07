@@ -21,26 +21,26 @@
             <items>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="mainBox">
                     <children>
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="326.0" prefWidth="616.0">
-                            <children>
-                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label fx:id="usernameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Willkommen, Username!">
-                                            <font>
-                                                <Font size="24.0" />
-                                            </font>
-                                        </Label>
-                                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0" VBox.vgrow="ALWAYS">
+                  <VBox prefHeight="315.0" prefWidth="700.0">
+                     <children>
+                                  <Label fx:id="usernameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Willkommen, Username!">
+                                      <font>
+                                          <Font size="24.0" />
+                                      </font>
+                                  </Label>
+                              <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="280.0" prefWidth="1094.0">
+                                  <children>
+                                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0">
                                             <children>
-                                                <ImageView fx:id="userImgView" fitHeight="281.0" fitWidth="268.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                                <ImageView fx:id="userImgView" fitHeight="280.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                                                     <image>
-                                                        <Image url="@../../img/fett-zu-muskeln.jpg" />
+                                                        <Image url="@../../icons/fat_to_muscle.png" />
                                                     </image>
                                                     <viewport>
                                                         <Rectangle2D />
                                                     </viewport>
                                                 </ImageView>
-                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" HBox.hgrow="ALWAYS">
+                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="280.0" spacing="20.0" HBox.hgrow="ALWAYS">
                                                     <children>
                                                         <HBox maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
                                                             <children>
@@ -132,26 +132,25 @@
                                                         </HBox>
                                                     </children>
                                                     <HBox.margin>
-                                                        <Insets left="50.0" />
+                                                        <Insets left="30.0" />
                                                     </HBox.margin>
                                                 </VBox>
                                             </children>
                                         </HBox>
-                                    </children>
-                                    <HBox.margin>
-                                        <Insets left="20.0" />
-                                    </HBox.margin>
-                                </VBox>
-                            </children>
-                        </HBox>
-                  <HBox maxWidth="200.0" minWidth="200.0" prefHeight="100.0" prefWidth="200.0" />
-                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="326.0" prefWidth="677.0" HBox.hgrow="ALWAYS">
+                                  </children>
+                              </HBox>
+                     </children>
+                  </VBox>
+                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="290.0" HBox.hgrow="ALWAYS">
                             <xAxis>
                                 <CategoryAxis side="BOTTOM" />
                             </xAxis>
                             <yAxis>
                                 <NumberAxis side="LEFT" />
                             </yAxis>
+                     <HBox.margin>
+                        <Insets top="25.0" />
+                     </HBox.margin>
                         </LineChart>
                     </children>
                     <padding>
@@ -174,7 +173,7 @@
         </SplitPane>
     </center>
     <bottom>
-        <HBox prefHeight="50.0" styleClass="footer" BorderPane.alignment="CENTER">
+        <HBox prefHeight="64.0" prefWidth="1299.0" styleClass="footer" BorderPane.alignment="CENTER">
             <children>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
