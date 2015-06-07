@@ -69,7 +69,7 @@ public abstract class AbstractDAOTest<T extends DTO> {
 
         T dto_found = getDAO().searchByID(dto.getId());
         debugglist = getDAO().findAll();
-        LOGGER.info("Normales dto" + dto);
+        LOGGER.info(dto);
         LOGGER.info(dto_found);
         Assert.assertEquals(dto_found, dto);
     }

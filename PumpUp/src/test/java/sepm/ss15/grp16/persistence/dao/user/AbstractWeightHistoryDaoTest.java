@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.persistence.dao.user;
 
 import org.junit.Test;
+import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
@@ -10,8 +11,10 @@ import sepm.ss15.grp16.persistence.dao.user.WeightHistoryDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This class provides methods for testing WeightHistoryDAOs
@@ -54,6 +57,37 @@ public abstract class AbstractWeightHistoryDaoTest extends AbstractDAOTest<Weigh
 
         WeightHistory actualWeightHistory = weightHistoryDAO.getActualWeight(testUser.getUser_id());
         assertEquals(testWeightHistory3, actualWeightHistory);
+    }
+
+    @Test
+    public void searchWithValidUserID() throws Exception{
+
+        User testUser = createUserForTest();
+
+        WeightHistory testWeightHistory1 = new WeightHistory(null, testUser.getUser_id(), 25, new Date());
+        WeightHistory testWeightHistory2 = new WeightHistory(null, testUser.getUser_id(), 21, new Date());
+        WeightHistory testWeightHistory3 = new WeightHistory(null, testUser.getUser_id(), 30, new Date());
+
+        weightHistoryDAO.create(testWeightHistory1);
+        weightHistoryDAO.create(testWeightHistory2);
+        weightHistoryDAO.create(testWeightHistory3);
+
+        List<WeightHistory> weightHistoryList = weightHistoryDAO.searchByUserID(testUser.getUser_id());
+
+        assertTrue(weightHistoryList.contains(testWeightHistory1));
+        assertTrue(weightHistoryList.contains(testWeightHistory2));
+        assertTrue(weightHistoryList.contains(testWeightHistory3));
+
+    }
+
+    @Test
+    public void searchByIDShouldFind() throws Exception{
+
+        User testUser = createUserForTest();
+
+        WeightHistory testWeightHistory = new WeightHistory(null, testUser.getUser_id(), 25, new Date());
+        searchByIDValid(testWeightHistory);
+
     }
 
     private User createUserForTest() throws Exception {

@@ -28,7 +28,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
     private PreparedStatement createStatement;
     private PreparedStatement updateStatement;
     private PreparedStatement getActualPictureStatement;
-    private PreparedStatement getByUserID;
+    private PreparedStatement searchByUserIDStatement;
     private PreparedStatement searchByIDStatement;
     private PreparedStatement deleteStatement;
 
@@ -39,7 +39,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             this.createStatement = con.prepareStatement("INSERT INTO picturehistory VALUES(?, ?, ?, ?, ?);");
             this.updateStatement = con.prepareStatement("UPDATE picturehistory SET user_id = ?, location = ? , date = ?," +
                     " isDeleted = ? WHERE picturehistory_id = ?");
-            this.getByUserID = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND isDeleted = false");
+            this.searchByUserIDStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND isDeleted = false");
             this.searchByIDStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE picturehistory_id = ?");
             this.deleteStatement = con.prepareStatement("UPDATE picturehistory SET isDeleted = ? WHERE picturehistory_id = ?");
             this.getActualPictureStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND " +
@@ -59,8 +59,8 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         List<PictureHistory> pictureHistoryList = new ArrayList<>();
 
         try{
-            getByUserID.setInt(1, user_id);
-            ResultSet resultSet = getByUserID.executeQuery();
+            searchByUserIDStatement.setInt(1, user_id);
+            ResultSet resultSet = searchByUserIDStatement.executeQuery();
 
             while(resultSet.next()){
                 PictureHistory pictureHistory = new PictureHistory(resultSet.getInt(1), resultSet.getInt(2),
