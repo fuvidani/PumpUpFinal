@@ -98,4 +98,14 @@ public class WeightHistory implements DTO {
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "WeightHistory{" +
+                "weightHistory_id=" + weightHistory_id +
+                ", user_id=" + user_id +
+                ", weight=" + weight +
+                ", date=" + date +
+                '}';
+    }
 }

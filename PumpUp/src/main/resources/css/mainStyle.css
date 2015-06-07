@@ -1,11 +1,155 @@
-.root, .mainBox, .webCalender, .spliter{
-    -fx-background-color: lightgrey;
+.root, .mainBox{
+    -fx-background-color: white;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 15pt;
 }
 
 .trainingBtn{
+    -fx-background-color: transparent;
+}
+
+
+
+.trainginPic{
     -fx-background-image: url('../icons/training.png');
     -fx-background-repeat: no-repeat;
-    -fx-background-position: 75%;
-    -fx-background-size: 10%;
-    -fx-text-alignment: left;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnLogin {
+    -fx-background-image: url('../icons/login.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnRegister {
+    -fx-background-image: url('../icons/Clipboard_with_pencil.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.topLogo{
+    -fx-background-image: url('../icons/pumpup.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.button:hover {
+    -fx-background-size: 90%;
+}
+
+.table-view {
+
+    -fx-base: white;
+    /*for the inner layout of the table view*/
+    -fx-control-inner-background: white;
+    /*outer root element*/
+    -fx-background-color: white;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-color: black;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 30pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: black;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: black;
+}
+
+.menu, .topMenu, .menu-bar, .footer, .mainRoot{
+    -fx-background-color: lightgray;
+}
+
+.menu:hover{
+    -fx-background-color: black;
+    -fx-base:white;
+}
+
+.menu-item .label {
+    -fx-text-fill: black;
+}
+
+.menu-item:focused {
+    -fx-background-color: black;
+    -fx-base: white;
+}
+
+
+.menu-item:focused .label {
+    -fx-text-fill: white;
+
+}
+    /*sub menues*/
+.context-menu, .context-menu:hover {
+    -fx-background-color: lightgray;
+}
+
+/*chart background (lines next to axes) and content background (where the actual lines are)*/
+.chart, .chart-plot-background{
+    -fx-background-color: transparent;
+}
+
+
+/*grid lines*/
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines {
+    -fx-stroke: black;
+}
+.axis {
+    -fx-tick-mark-visible: false;
+    -fx-minor-tick-visible: false;
+    -fx-tick-length: 3;
+    -fx-minor-tick-length: 0;
+    -fx-border-color: transparent;
+}
+.axis:bottom {
+    -fx-border-color: black transparent transparent transparent;
+}
+.axis:left {
+    -fx-border-color: transparent black transparent transparent;
+}
+
+.userInfo{
+
+    -fx-border-color: black black black black;
+    -fx-background-color: transparent;
+
+}
+
+.aboutGrid .label{
+    -fx-background-color: white;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 10pt;
+}
+
+.aboutDescription{
+    -fx-background-color: white;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 14pt;
 }

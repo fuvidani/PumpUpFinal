@@ -47,19 +47,31 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
 
     @Override
     public PictureHistory update(PictureHistory pictureHistory) throws ServiceException {
-        //TODO: Implement me
-        return null;
+        this.validate(pictureHistory);
+        try {
+            return pictureHistoryDAO.update(pictureHistory);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public void delete(PictureHistory pictureHistory) throws ServiceException {
-        //TODO: Implement me
+        this.validate(pictureHistory);
+        try {
+            pictureHistoryDAO.delete(pictureHistory);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public List<PictureHistory> searchByUserID(int user_id) throws ServiceException {
-        //TODO: Implement me
-        return null;
+        try {
+            return pictureHistoryDAO.searchByUserID(user_id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
@@ -76,8 +88,22 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
 
         if (pictureHistory == null) {
             throw new ValidationException("Validation not passed. PictureHistory is null");
-        } else if (pictureHistory.getUser_id() == null) {
-            throw new ValidationException("Validation not passed. No User_id");
+        }
+
+        String errorMsg = "";
+        Integer user_id = pictureHistory.getUser_id();
+        String picturePath = pictureHistory.getLocation();
+
+        if (user_id == null || user_id < 0) {
+            errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
+        }
+
+        if (picturePath == null || picturePath.isEmpty()) {
+            errorMsg += "Es muss ein Bild ausgewählt worden sein.";
+        }
+
+        if (!errorMsg.isEmpty()) {
+            throw new ValidationException(errorMsg);
         }
 
     }

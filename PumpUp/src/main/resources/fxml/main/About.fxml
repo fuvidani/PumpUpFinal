@@ -5,18 +5,17 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.AboutController">
+<AnchorPane maxHeight="-Infinity" maxWidth="600.0" minHeight="-Infinity" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.AboutController">
    <children>
-      <Label layoutX="27.0" layoutY="28.0" text="Über das Programm">
+      <Label layoutX="20.0" layoutY="18.0" text="Über das Programm">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
-      <GridPane layoutX="27.0" layoutY="150.0" prefHeight="180.0" prefWidth="324.0">
+      <GridPane layoutX="27.0" layoutY="142.0" prefHeight="188.0" prefWidth="518.0" styleClass="aboutGrid">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="80.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="168.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="10.0" prefWidth="225.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="10.0" prefWidth="232.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -41,6 +40,6 @@
             <Label text="Testing " GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Label layoutX="21.0" layoutY="75.0" prefHeight="61.0" prefWidth="343.0" text="Dieses Programm wurde im Rahmen der Vorlesung Softwareentwicklung und Projektmanagement im SS15 erstellt. Credits go to:" wrapText="true" />
+      <Label layoutX="21.0" layoutY="60.0" prefWidth="550.0" styleClass="aboutDescription" text="Dieses Programm wurde im Rahmen der Vorlesung Softwareentwicklung und Projektmanagement im SS15 erstellt. Credits go to:" wrapText="true" />
    </children>
 </AnchorPane>
