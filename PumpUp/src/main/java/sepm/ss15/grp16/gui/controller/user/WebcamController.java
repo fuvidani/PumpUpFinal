@@ -53,9 +53,7 @@ public class WebcamController extends Controller {
     @Override
     public void initController() {
 
-        webCamBorderPane.getScene().getWindow().setOnCloseRequest(e -> {
-            destroySelectedWebCam();
-        });
+        webCamBorderPane.getScene().getWindow().setOnCloseRequest(e -> WebcamController.this.destroySelectedWebCam());
 
         webCamFooterFlowPane.setDisable(true);
         ObservableList<WebCamDetails> webCamOptions = FXCollections.observableArrayList();
