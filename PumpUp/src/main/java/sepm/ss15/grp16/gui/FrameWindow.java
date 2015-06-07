@@ -10,7 +10,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.h2.store.Page;
 import org.springframework.context.ApplicationContext;
 import sepm.ss15.grp16.gui.controller.Controller;
 
@@ -51,7 +50,7 @@ public class FrameWindow extends BorderPane {
         stage.setTitle(mainPage.getTitle());
         Scene scene = stage.getScene();
         try {
-            scene.getStylesheets().add(getClass().getClassLoader().getResource("css").toURI().toString().concat("/mainStyle.css"));
+            //scene.getStylesheets().add(getClass().getClassLoader().getResource("css").toURI().toString().concat("/mainStyle.css"));
         }catch (Exception e){
             e.printStackTrace();
         }
