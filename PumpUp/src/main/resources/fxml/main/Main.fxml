@@ -15,7 +15,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
+<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="mainRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
     <center>
         <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
             <items>
@@ -132,14 +132,20 @@
                                                         </HBox>
                                                     </children>
                                                     <HBox.margin>
-                                                        <Insets left="30.0" />
+                                                        <Insets left="30.0" top="10.0" />
                                                     </HBox.margin>
                                                 </VBox>
                                             </children>
+                                 <padding>
+                                    <Insets top="20.0" />
+                                 </padding>
                                         </HBox>
                                   </children>
                               </HBox>
                      </children>
+                     <HBox.margin>
+                        <Insets left="25.0" top="10.0" />
+                     </HBox.margin>
                   </VBox>
                         <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="290.0" HBox.hgrow="ALWAYS">
                             <xAxis>
@@ -149,7 +155,7 @@
                                 <NumberAxis side="LEFT" />
                             </yAxis>
                      <HBox.margin>
-                        <Insets top="25.0" />
+                        <Insets top="60.0" />
                      </HBox.margin>
                         </LineChart>
                     </children>

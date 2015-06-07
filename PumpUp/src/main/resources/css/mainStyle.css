@@ -87,7 +87,7 @@
     -fx-background-color: black;
 }
 
-.menu, .topMenu, .menu-bar, .footer, .root{
+.menu, .topMenu, .menu-bar, .footer, .mainRoot{
     -fx-background-color: lightgray;
 }
 
