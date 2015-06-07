@@ -16,12 +16,22 @@ public class PictureHistory implements DTO {
     private Integer user_id;
     private String location;
     private Date date;
+    private Boolean isDeleted;
 
     public PictureHistory(Integer picturehistory_id, Integer user_id, String location, Date date) {
         this.picturehistory_id = picturehistory_id;
         this.user_id = user_id;
         this.location = location;
         this.date = date;
+        this.isDeleted = false;
+    }
+
+    public PictureHistory(Integer picturehistory_id, Integer user_id, String location, Date date, Boolean isDeleted) {
+        this.picturehistory_id = picturehistory_id;
+        this.user_id = user_id;
+        this.location = location;
+        this.date = date;
+        this.isDeleted = isDeleted;
     }
 
     public Integer getPicturehistory_id() {
@@ -68,13 +78,12 @@ public class PictureHistory implements DTO {
 
     @Override
     public Boolean getIsDeleted() {
-        //TODO
-        return null;
+        return isDeleted;
     }
 
     @Override
     public void setIsDeleted(Boolean deleted) {
-        //TODO
+        this.isDeleted = deleted;
     }
 
     @Override
@@ -84,12 +93,12 @@ public class PictureHistory implements DTO {
 
         PictureHistory that = (PictureHistory) o;
 
-        if (location != null ? !location.equals(that.location) : that.location != null) return false;
         if (picturehistory_id != null ? !picturehistory_id.equals(that.picturehistory_id) : that.picturehistory_id != null)
             return false;
         if (user_id != null ? !user_id.equals(that.user_id) : that.user_id != null) return false;
+        if (location != null ? !location.equals(that.location) : that.location != null) return false;
+        return !(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null);
 
-        return true;
     }
 
     @Override
@@ -97,6 +106,7 @@ public class PictureHistory implements DTO {
         int result = picturehistory_id != null ? picturehistory_id.hashCode() : 0;
         result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
         result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
         return result;
     }
 
@@ -107,6 +117,7 @@ public class PictureHistory implements DTO {
                 ", user_id=" + user_id +
                 ", location='" + location + '\'' +
                 ", date=" + date +
+                ", isDeleted=" + isDeleted +
                 '}';
     }
 }

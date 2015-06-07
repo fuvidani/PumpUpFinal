@@ -1,5 +1,6 @@
 package sepm.ss15.grp16.gui;
 
+import com.github.sarxos.webcam.Webcam;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -19,6 +20,7 @@ public class NewMain extends Application{
 
     public static void main(String[] args) {
         try {
+            Webcam.getDefault();
             launch(args);
         } catch (Exception e) {
             e.printStackTrace();
@@ -28,7 +30,6 @@ public class NewMain extends Application{
 
     public void start(final Stage primaryStage) throws Exception {
         LOGGER.info("starting application");
-
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
 
         FrameWindow mainFrame = new FrameWindow(context, primaryStage, PageEnum.Login);

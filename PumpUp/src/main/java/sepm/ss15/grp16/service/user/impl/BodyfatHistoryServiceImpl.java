@@ -48,12 +48,13 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
     @Override
     public BodyfatHistory update(BodyfatHistory bodyfatHistory) throws ServiceException {
         //TODO: Implement me
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public void delete(BodyfatHistory bodyfatHistory) throws ServiceException {
         //TODO: Implement me
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
