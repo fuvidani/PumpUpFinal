@@ -19,8 +19,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Arc;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
@@ -83,6 +88,9 @@ public class WorkoutController extends Controller {
     private Label discriptionLabel;
 
     @FXML
+    private Pane pictureFitPane;
+
+    @FXML
     private Node WorkoutMusicPlayer;
 
     @FXML
@@ -109,6 +117,10 @@ public class WorkoutController extends Controller {
     public void initController() {
         session = ((MainController) getParentController()).getExecutionAppointment().getSession();
 
+        exerciseImageView.setPreserveRatio(true);
+        exerciseImageView.fitWidthProperty().bind(pictureFitPane.widthProperty());
+        exerciseImageView.fitHeightProperty().bind(pictureFitPane.heightProperty());
+
         musicPlayerController.setParent(this);
         motivationModul.setMusicPlayerController(musicPlayerController);
         musicPlayerController.play();
@@ -132,36 +144,25 @@ public class WorkoutController extends Controller {
         counterLable.textProperty().bind(timeSeconds.asString());
 
         counterTimeline = new Timeline();
-        counterTimeline.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                pause();
+        counterTimeline.setOnFinished(event -> pause());
+
+        durationField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+
+            } else if (newValue.matches("\\d*")) {
+                int value = Integer.parseInt(newValue);
+            } else {
+                durationField.setText(oldValue);
             }
         });
 
-        durationField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.isEmpty()) {
+        repetionField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
 
-                } else if (newValue.matches("\\d*")) {
-                    int value = Integer.parseInt(newValue);
-                } else {
-                    durationField.setText(oldValue);
-                }
-            }
-        });
-
-        repetionField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.isEmpty()) {
-
-                } else if (newValue.matches("\\d*")) {
-                    int value = Integer.parseInt(newValue);
-                } else {
-                    repetionField.setText(oldValue);
-                }
+            } else if (newValue.matches("\\d*")) {
+                int value = Integer.parseInt(newValue);
+            } else {
+                repetionField.setText(oldValue);
             }
         });
 
@@ -313,24 +314,27 @@ public class WorkoutController extends Controller {
         public ExerciseView(ExerciseSet exerciseSet) {
             super();
 
-            setMinHeight(50);
-            setMinWidth(110);
-            setPadding(new Insets(0, 10, 0, 0));
+            setMinHeight(90);
 
             ImageView imageView = new ImageView(images.get(exerciseSet).get(0));
-            imageView.setFitWidth(100);
-            imageView.setFitHeight(50);
+            imageView.setFitHeight(90);
+            imageView.setPreserveRatio(true);
             getChildren().add(imageView);
             BorderPane borderPane = new BorderPane();
-            borderPane.setBottom(new Label(exerciseSet.getRepresentationText()));
+            Label label = new Label(exerciseSet.getRepresentationText());
+            label.setStyle("-fx-font-weight: bold");
+            borderPane.setBottom(label);
             getChildren().add(borderPane);
+            setStyle("-fx-padding: 10;" +
+                    "-fx-background-color: rgba(222, 222, 222, 1);" +
+                    "-fx-background-radius: 5");
         }
 
 
         public void avtivate() {
             setStyle("-fx-padding: 10;" +
-                    "-fx-background-color: firebrick;" +
-                    "-fx-background-radius: 5;");
+                            "-fx-background-color: firebrick;" +
+                            "-fx-background-radius: 5");
         }
     }
 }

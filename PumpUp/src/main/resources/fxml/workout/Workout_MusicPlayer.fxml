@@ -9,9 +9,9 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="1300.0" stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutMusicPlayerController">
-    <children>
-        <VBox fx:id="mainPane" layoutX="77.0" layoutY="89.0" prefHeight="400.0" prefWidth="1400.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutMusicPlayerController">
+    <center>
+        <VBox fx:id="mainPane" layoutX="77.0" layoutY="89.0" spacing="10.0">
             <children>
                 <MediaView fx:id="musicPlayerSlide" fitHeight="50.0" fitWidth="1400.0" />
             <VBox fx:id="vBoxProg" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
@@ -23,7 +23,7 @@
                   </ProgressBar>
                </children>
             </VBox>
-                <HBox alignment="CENTER" layoutX="77.0" layoutY="89.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER" layoutX="77.0" layoutY="89.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                     <children>
                         <HBox alignment="TOP_CENTER" layoutX="77.0" layoutY="95.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <children>
@@ -107,5 +107,5 @@
                 </HBox>
             </children>
         </VBox>
-    </children>
-</AnchorPane>
+    </center>
+</BorderPane>

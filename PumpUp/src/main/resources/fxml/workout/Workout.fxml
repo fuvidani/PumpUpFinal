@@ -13,7 +13,7 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutController">
     <center>
-        <VBox prefHeight="750.0" prefWidth="1300.0" spacing="20.0" BorderPane.alignment="CENTER">
+        <VBox spacing="20.0" BorderPane.alignment="CENTER">
             <children>
                 <HBox VBox.vgrow="NEVER">
                     <children>
@@ -30,17 +30,17 @@
                 <HBox VBox.vgrow="ALWAYS">
                     <children>
                         <Region HBox.hgrow="ALWAYS" />
-                        <VBox>
+                        <VBox HBox.hgrow="ALWAYS">
                             <children>
-                                <ImageView fx:id="exerciseImageView" fitHeight="100.0" fitWidth="630.0" pickOnBounds="true" preserveRatio="true">
-                                    <viewport>
-                                        <Rectangle2D />
-                                    </viewport>
-                                    <VBox.margin>
-                                        <Insets />
-                                    </VBox.margin>
-                                </ImageView>
-                                <Region VBox.vgrow="ALWAYS" />
+                        <Pane fx:id="pictureFitPane" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <children>
+                                      <ImageView fx:id="exerciseImageView" pickOnBounds="true" preserveRatio="true">
+                                          <viewport>
+                                              <Rectangle2D />
+                                          </viewport>
+                                      </ImageView>
+                           </children>
+                        </Pane>
                                 <Label fx:id="discriptionLabel" wrapText="true" />
                             </children>
                         </VBox>
@@ -71,13 +71,8 @@
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
                         <VBox minWidth="200.0" prefWidth="200.0" spacing="20.0">
                             <children>
-                                <HBox>
-                                    <children>
-                                        <Label prefHeight="30.0" text="Letze Übung:" />
-                                        <Region HBox.hgrow="ALWAYS" />
-                                        <Label fx:id="lastExerciseLable" />
-                                    </children>
-                                </HBox>
+                                  <Label prefHeight="30.0" text="Letze Übung:" />
+                                  <Label fx:id="lastExerciseLable" style="-fx-font-weight: bold;" styleClass="asdf" />
                                 <HBox>
                                     <children>
                                         <Label text="Dauer" />
@@ -97,10 +92,10 @@
                         <Region HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
-                <HBox>
+                <HBox VBox.vgrow="ALWAYS">
                     <children>
                         <Region minWidth="50.0" HBox.hgrow="NEVER" />
-                        <Button fx:id="pauseButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onPause" text="Pause" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="pauseButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onPause" prefHeight="50.0" text="Pause" HBox.hgrow="ALWAYS" />
                         <Region minWidth="50.0" HBox.hgrow="NEVER" />
                     </children>
                 </HBox>
@@ -114,7 +109,7 @@
         <fx:include fx:id="musicPlayer" source="Workout_MusicPlayer.fxml" />
     </bottom>
     <top>
-        <FlowPane fx:id="exerciseFlow" prefWrapLength="1.0E13" BorderPane.alignment="CENTER" />
+        <FlowPane fx:id="exerciseFlow" hgap="10.0" maxHeight="100.0" prefHeight="100.0" prefWrapLength="1.0E13" BorderPane.alignment="CENTER" />
     </top>
     <padding>
         <Insets left="20.0" right="20.0" top="10.0" />
