@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.FileChooser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.gui.controller.Controller;
@@ -51,6 +52,10 @@ public class WebcamController extends Controller {
 
     @Override
     public void initController() {
+
+        webCamBorderPane.getScene().getWindow().setOnCloseRequest(e -> {
+            destroySelectedWebCam();
+        });
 
         webCamFooterFlowPane.setDisable(true);
         ObservableList<WebCamDetails> webCamOptions = FXCollections.observableArrayList();
@@ -147,7 +152,6 @@ public class WebcamController extends Controller {
         th.setDaemon(true);
         th.start();
         webCamImageView.imageProperty().bind(imageProperty);
-
     }
 
     private void closeWebCam() {
@@ -168,11 +172,28 @@ public class WebcamController extends Controller {
     @FXML
     public void takePicture() {
         LOGGER.info("Taking image with webcam...");
+        webCamFooterFlowPane.setDisable(true);
         try {
             if (selectedWebcam != null) {
                 BufferedImage image = selectedWebcam.getImage();
                 ImageIO.write(image, "JPG", new File("webcamaufnahme.jpg"));
-                destroySelectedWebCam();
+
+
+                FileChooser filechooser = new FileChooser();
+                FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg");
+                filechooser.getExtensionFilters().add(extFilterJPG);
+                filechooser.setTitle("Bild speichern: ");
+
+                File file = filechooser.showSaveDialog(null);
+                if(file != null){
+                    try{
+                        ImageIO.write(image, "JPG", file);
+                    } catch (IOException e){
+                        LOGGER.error("Saving image from webcam failed");
+                        e.printStackTrace();
+                    }
+                }
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText("Foto-Information");
@@ -182,6 +203,7 @@ public class WebcamController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        webCamFooterFlowPane.setDisable(false);
         LOGGER.info("Image successfully taken");
     }
 
