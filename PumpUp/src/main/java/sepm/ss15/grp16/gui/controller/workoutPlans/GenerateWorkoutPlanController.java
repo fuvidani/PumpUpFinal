@@ -1,52 +1,30 @@
 package sepm.ss15.grp16.gui.controller.workoutPlans;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.Version;
-import com.restfb.types.FacebookType;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Pane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.gui.PageEnum;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
@@ -64,7 +42,6 @@ public class GenerateWorkoutPlanController extends Controller {
     private CategoryService categoryService;
     private BooleanProperty displayClosed = new SimpleBooleanProperty();
     private Trainingsplan generatedWorkoutPlan;
-
 
 
     /**
@@ -141,12 +118,12 @@ public class GenerateWorkoutPlanController extends Controller {
 
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                stage.close();
+                mainFrame.navigateToParent();
             }
         });
         toggleGroup = new ToggleGroup();
-        boxes = new LinkedList<CheckBox>();
-        equipment = new ArrayList<EquipmentCategory>();
+        boxes = new LinkedList<>();
+        equipment = new ArrayList<>();
         strengthRadio.setToggleGroup(toggleGroup);
         strengthRadio.setId("1");
         balanceRadio.setToggleGroup(toggleGroup);
@@ -293,11 +270,8 @@ public class GenerateWorkoutPlanController extends Controller {
             return;
         }
         LOGGER.info("Generated workoutplan from service received, delegating towards the next window...");
-
         this.generatedWorkoutPlan = result;
         mainFrame.navigateToChild(PageEnum.Workoutplan_generate_result);
-
-
     }
 
     /**
@@ -308,5 +282,24 @@ public class GenerateWorkoutPlanController extends Controller {
         return this.generatedWorkoutPlan;
     }
 
+    /**
+     * Children controllers will call this method to know which goal the user picked.
+     * @return the goal as a string
+     */
+    public String getSelectedGoal(){
+        return ((RadioButton) toggleGroup.getSelectedToggle()).getText();
+    }
 
+    /**
+     * This method will be called by the child controller to signal its closure.
+     * The change in the variable triggers a listener.
+     * @param val true or false
+     */
+    public void setFlag(boolean val){
+        if(displayClosed.get() == val){
+            displayClosed.set(!val);
+        }else {
+            displayClosed.set(val);
+        }
+    }
 }

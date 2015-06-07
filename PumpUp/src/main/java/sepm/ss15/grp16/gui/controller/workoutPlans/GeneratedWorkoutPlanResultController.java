@@ -3,11 +3,8 @@ package sepm.ss15.grp16.gui.controller.workoutPlans;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
+import com.restfb.Version;
 import com.restfb.types.FacebookType;
-import facebook4j.Facebook;
-import facebook4j.FacebookException;
-import facebook4j.FacebookFactory;
-import facebook4j.auth.AccessToken;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -15,7 +12,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -31,16 +27,11 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
-
-import java.io.File;
-import java.net.URL;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 16.05.15.
@@ -62,6 +53,9 @@ public class GeneratedWorkoutPlanResultController extends Controller{
 
     @FXML
     private Button saveButton;
+
+    @FXML
+    private Label goalLabel;
 
     @Override
     public void initController() {
@@ -118,8 +112,8 @@ public class GeneratedWorkoutPlanResultController extends Controller{
         });
         GenerateWorkoutPlanController controller = (GenerateWorkoutPlanController)this.getParentController();
         this.generatedWorkoutPlan = controller.getGeneratedWorkoutPlan();
+        goalLabel.setText(controller.getSelectedGoal());
         this.setFlag(true);
-
         LOGGER.info("GeneratedWorkoutPlanResult successfully initialized!");
 
     }
@@ -173,6 +167,8 @@ public class GeneratedWorkoutPlanResultController extends Controller{
     public void cancelClicked() {
         if (saved) {
             mainFrame.navigateToParent();
+            GenerateWorkoutPlanController controller = (GenerateWorkoutPlanController)this.getParentController();
+            controller.setFlag(true);
             LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -186,6 +182,8 @@ public class GeneratedWorkoutPlanResultController extends Controller{
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == yes) {
                 mainFrame.navigateToParent();
+                GenerateWorkoutPlanController controller = (GenerateWorkoutPlanController)this.getParentController();
+                controller.setFlag(true);
                 LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
             } else {
                 alert.close();
@@ -216,6 +214,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
         } else if (sessions.size() == 2) {
             listView.setMaxWidth(525);
         }
+        listView.setItems(null);
         listView.setItems(data);
 
         LOGGER.info("Generated workout successfully displayed!");
@@ -223,11 +222,20 @@ public class GeneratedWorkoutPlanResultController extends Controller{
 
     @FXML
     public void shareFacebookClicked() throws Exception{
-        String appID = "428485184010923";
-        String appSecret = "62d1eb97169a4ec1af1c2efe06155544";
-        String accessToken = "CAACEdEose0cBALQD3De2s9zW445h6MQk142fd5JZCyVZAxlMHOaFuxoox6T6kNOFZCjYdeEW08D0xb6fFanHxigHBpZBgHsERe26BcixBkgLUFiUYOYBKG3WPqmvVx0X6Nw1u1ebnNm0ncldZC0Q6CKLWITRw5s34RoDZBhtB5CDG2fgMRjLS4Ws1vXnBKLBWzdviBEOX0EDYn3B8ZChMqkFTZAGBGRTWWAZD";
+        /*String appID = "MY_APP_ID";
+        String appSecret = "MY_APP_SECRET";
+        String accessToken = "MY_ACCESS_TOKEN";
 
-        // Setting up the webview
+        FacebookClient facebookClient = new DefaultFacebookClient(accessToken, appSecret, Version.VERSION_2_3);
+        String proof = new DefaultFacebookClient().obtainAppSecretProof(
+                accessToken, appSecret);
+        System.out.println("Here's my proof: " + proof);
+        FacebookType publishMessageResponse =
+                facebookClient.publish("me/feed", FacebookType.class,
+                        Parameter.with("message", "RestFB test"),
+                        Parameter.with("appsecret_proof", proof));
+
+        System.out.println("Published message ID: " + publishMessageResponse.getId());*/
         WebView webView = new WebView();
         final WebEngine webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
@@ -236,6 +244,24 @@ public class GeneratedWorkoutPlanResultController extends Controller{
         stage.initOwner(this.stage);
         stage.setScene(new Scene(webView, 500, 300));
         stage.show();
+    }
+
+    /**
+     * increase the difficulty of the given plan by the factor of 0.25
+     */
+    @FXML
+    public void increaseDifficultyClicked(){
+        trainingsplanService.increaseDifficulty(generatedWorkoutPlan);
+        displayWorkoutPlan();
+    }
+
+    /**
+     * decrease the difficulty of the given plan by the factor of 0.25
+     */
+    @FXML
+    public void decreaseDifficultyClicked(){
+        trainingsplanService.decreaseDifficulty(generatedWorkoutPlan);
+        displayWorkoutPlan();
     }
 
 }

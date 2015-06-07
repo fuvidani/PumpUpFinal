@@ -13,14 +13,29 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.GeneratedWorkoutPlanResultController">
     <top>
-        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ihr generierter Trainingsplan" BorderPane.alignment="CENTER">
-            <font>
-                <Font size="24.0" />
-            </font>
-            <BorderPane.margin>
-                <Insets top="8.0" />
-            </BorderPane.margin>
-        </Label>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <HBox spacing="10.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ihr generierter Trainingsplan für" BorderPane.alignment="CENTER">
+                        <font>
+                            <Font size="24.0" />
+                        </font>
+                        <BorderPane.margin>
+                            <Insets top="8.0" />
+                        </BorderPane.margin>
+                    </Label>
+                  <Label fx:id="goalLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
     </top>
     <bottom>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -37,8 +52,18 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#increaseDifficultyClicked" text="Plan schwieriger machen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decreaseDifficultyClicked" text="Plan leichter machen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                         <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelClicked" text="Abbrechen" HBox.hgrow="ALWAYS">
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelClicked" text="Zurück" HBox.hgrow="ALWAYS">
                             <font>
                                 <Font size="18.0" />
                             </font>

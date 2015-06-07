@@ -359,8 +359,8 @@ public class WorkoutPlansController extends Controller {
     @FXML
     public void generateWorkoutPlanClicked(ActionEvent event) {
         //transitionLoader.openWaitStage("fxml/workoutPlans/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 600, 400, false);
-        mainFrame.navigateToChild(PageEnum.Workoutplan_generate);
-        //mainFrame.openDialog(PageEnum.Workoutplan_generate);
+       // mainFrame.navigateToChild(PageEnum.Workoutplan_generate);
+        mainFrame.openDialog(PageEnum.Workoutplan_generate);
         updateTable();
         setUpListView();
         clearSelection();
