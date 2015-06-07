@@ -479,8 +479,6 @@ public class ExercisesController extends Controller {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
             mainFrame.navigateToParent();
-        } else {
-            stage.show();
         }
     }
 
