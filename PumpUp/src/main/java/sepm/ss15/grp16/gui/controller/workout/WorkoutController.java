@@ -237,8 +237,8 @@ public class WorkoutController extends Controller {
         counterTimeline.playFromStart();
         if (activeExercisePosition > 0) {
             workoutResult.setExecution(exerciseList.get(activeExercisePosition - 1),
-                    repetionField.getText() == null ? null : Integer.parseInt(repetionField.getText()),
-                    durationField.getText() == null ? null : Integer.parseInt(durationField.getText()));
+                    repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
+                    durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
             repetionField.setDisable(true);
         }
     }
@@ -305,8 +305,8 @@ public class WorkoutController extends Controller {
             pause();
         } else {
             workoutResult.setExecution(activeExercise(),
-                    repetionField.getText() == null ? null : Integer.parseInt(repetionField.getText()),
-                    durationField.getText() == null ? null : Integer.parseInt(durationField.getText()));
+                    repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
+                    durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
             mainFrame.openDialog(PageEnum.WorkoutResult);
             mainFrame.navigateToParent();
         }

@@ -7,9 +7,7 @@ import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.web.WebEngine;
@@ -162,8 +160,8 @@ public class MainController extends Controller {
             else
             {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Keine Übung zur Ausführung!");
-                alert.setContentText("Keine Übung zur Ausführung!");
+                alert.setTitle("Keine ï¿½bung zur Ausfï¿½hrung!");
+                alert.setContentText("Keine ï¿½bung zur Ausfï¿½hrung!");
                 ButtonType ok = new ButtonType("OK");
                 alert.getButtonTypes().setAll(ok);
                 alert.showAndWait().get();
