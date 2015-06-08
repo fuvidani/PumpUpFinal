@@ -22,7 +22,6 @@ import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.gui.PageEnum;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
@@ -370,7 +369,8 @@ public class WorkoutPlansController extends Controller {
     @FXML
     public void generateWorkoutPlanClicked(ActionEvent event) {
         //transitionLoader.openWaitStage("fxml/workoutPlans/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 600, 400, false);
-        mainFrame.navigateToChild(PageEnum.Workoutplan_generate);
+       // mainFrame.navigateToChild(PageEnum.Workoutplan_generate);
+        mainFrame.openDialog(PageEnum.Workoutplan_generate);
         updateTable();
         setUpListView();
         clearSelection();

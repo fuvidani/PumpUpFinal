@@ -256,7 +256,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
     }
 
-    public void play(){
+    public void play() {
         if (musicPlayerSlide != null) {
             musicPlayerSlide.getMediaPlayer().play();
             playing = true;
@@ -296,10 +296,6 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         }
     }
 
-    public void setPlaylist(Playlist playlist) {
-        this.playlist = playlist;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initController();
@@ -311,5 +307,9 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
 
     public Playlist getPlaylist() {
         return playlist;
+    }
+
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
     }
 }

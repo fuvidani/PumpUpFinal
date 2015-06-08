@@ -41,30 +41,34 @@ import java.util.*;
 public class CalendarServiceImpl implements CalendarService {
 
     private static final Logger LOGGER = LogManager.getLogger(CalendarServiceImpl.class);
-    private CalendarDAO calendarDAO;
-    private UserService userService;
-
-    /** Application name. */
+    /**
+     * Application name.
+     */
     private static final String APPLICATION_NAME =
             "PumpUp!";
-
-    /** Directory to store user credentials. */
+    /**
+     * Directory to store user credentials.
+     */
     private static final java.io.File DATA_STORE_DIR = new java.io.File(
             System.getProperty("user.home"), ".credentials/calendar-api-quickstart");
-
-    /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
-
-    /** Global instance of the JSON factory. */
+    /**
+     * Global instance of the JSON factory.
+     */
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
-
-    /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
-
-    /** Global instance of the scopes required by this quickstart. */
+    /**
+     * Global instance of the scopes required by this quickstart.
+     */
     private static final List<String> SCOPES =
             Arrays.asList(CalendarScopes.CALENDAR);
+    /**
+     * Global instance of the {@link FileDataStoreFactory}.
+     */
+    private static FileDataStoreFactory DATA_STORE_FACTORY;
+    /**
+     * Global instance of the HTTP transport.
+     */
+    private static HttpTransport HTTP_TRANSPORT;
 
     static {
         try {
@@ -75,8 +79,53 @@ public class CalendarServiceImpl implements CalendarService {
         }
     }
 
+    private CalendarDAO calendarDAO;
+    private UserService userService;
+
     public CalendarServiceImpl(CalendarDAO calendarDAO) {
         this.calendarDAO = calendarDAO;
+    }
+
+    public static Credential authorize() throws IOException {
+        // Load client secrets.
+        InputStream in =
+                CalendarServiceImpl.class.getResourceAsStream("client_secret.json");
+        GoogleClientSecrets clientSecrets =
+                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+
+        // Build flow and trigger user authorization request.
+        GoogleAuthorizationCodeFlow flow =
+                new GoogleAuthorizationCodeFlow.Builder(
+                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                        //.setDataStoreFactory(DATA_STORE_FACTORY)
+                        .setAccessType("offline")
+                        .build();
+        Credential credential = null;
+
+        try {
+            credential = new AuthorizationCodeInstalledApp(
+                    flow, new LocalServerReceiver()).authorize("user");
+        } catch (Exception e) {
+            e.printStackTrace(); //TODO change
+        }
+        //System.out.println(
+        //        "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        return credential;
+    }
+
+    /**
+     * Build and return an authorized Calendar client service.
+     *
+     * @return an authorized Calendar client service
+     * @throws IOException
+     */
+    public static com.google.api.services.calendar.Calendar
+    getCalendarService() throws IOException {
+        Credential credential = authorize();
+        return new com.google.api.services.calendar.Calendar.Builder(
+                HTTP_TRANSPORT, JSON_FACTORY, credential)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
     }
 
     /**
@@ -197,7 +246,7 @@ public class CalendarServiceImpl implements CalendarService {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
-        for (int i = 0; i < workoutplanExport.getTrainingsplan().getDuration(); i++){
+        for (int i = 0; i < workoutplanExport.getTrainingsplan().getDuration(); i++) {
             for (TrainingsSession session : workoutplanExport.getTrainingsplan().getTrainingsSessions()) {
                 boolean set = false;
 
@@ -307,47 +356,47 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
-    public void deleteAllAppointments() throws ServiceException{
+    public void deleteAllAppointments() throws ServiceException {
         try {
-            for (Appointment appointment: calendarDAO.findAll()){
+            for (Appointment appointment : calendarDAO.findAll()) {
                 calendarDAO.delete(appointment);
             }
-        } catch (PersistenceException e){
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public Appointment getCurrentAppointment() throws ServiceException{
+    public Appointment getCurrentAppointment() throws ServiceException {
         List<Appointment> allAppointment = this.findAll();
         Appointment currentAppointment = null;
 
         //filter old appointments
-        for (Appointment appointment: this.findAll()){
+        for (Appointment appointment : this.findAll()) {
             Calendar appointmentDate = Calendar.getInstance();
             appointmentDate.setLenient(false);
             appointmentDate.setTime(appointment.getDatum());
             appointmentDate.set(Calendar.HOUR_OF_DAY, 0);
-            appointmentDate.set(Calendar.MINUTE,0);
-            appointmentDate.set(Calendar.SECOND,0);
-            appointmentDate.set(Calendar.MILLISECOND,0);
+            appointmentDate.set(Calendar.MINUTE, 0);
+            appointmentDate.set(Calendar.SECOND, 0);
+            appointmentDate.set(Calendar.MILLISECOND, 0);
 
             Calendar today = Calendar.getInstance();
             today.setLenient(false);
             today.set(Calendar.HOUR_OF_DAY, 0);
-            today.set(Calendar.MINUTE,0);
-            today.set(Calendar.SECOND,0);
-            today.set(Calendar.MILLISECOND,0);
+            today.set(Calendar.MINUTE, 0);
+            today.set(Calendar.SECOND, 0);
+            today.set(Calendar.MILLISECOND, 0);
 
 
-            if (appointmentDate.before(today)){
+            if (appointmentDate.before(today)) {
                 allAppointment.remove(appointment);
             }
         }
 
         //search for next appointment
-        for (Appointment appointment: allAppointment){
-            if (currentAppointment == null || appointment.getDatum().before(currentAppointment.getDatum())){
+        for (Appointment appointment : allAppointment) {
+            if (currentAppointment == null || appointment.getDatum().before(currentAppointment.getDatum())) {
                 currentAppointment = appointment;
             }
         }
@@ -355,49 +404,8 @@ public class CalendarServiceImpl implements CalendarService {
         return currentAppointment;
     }
 
-    public static Credential authorize() throws IOException {
-        // Load client secrets.
-        InputStream in =
-                CalendarServiceImpl.class.getResourceAsStream("client_secret.json");
-        GoogleClientSecrets clientSecrets =
-                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-
-        // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow =
-                new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                        //.setDataStoreFactory(DATA_STORE_FACTORY)
-                        .setAccessType("offline")
-                        .build();
-        Credential credential = null;
-
-        try {
-            credential = new AuthorizationCodeInstalledApp(
-                    flow, new LocalServerReceiver()).authorize("user");
-        } catch (Exception e) {
-            e.printStackTrace(); //TODO change
-        }
-        //System.out.println(
-        //        "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
-        return credential;
-    }
-
-    /**
-     * Build and return an authorized Calendar client service.
-     * @return an authorized Calendar client service
-     * @throws IOException
-     */
-    public static com.google.api.services.calendar.Calendar
-    getCalendarService() throws IOException {
-        Credential credential = authorize();
-        return new com.google.api.services.calendar.Calendar.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-    }
-
     @Override
-    public void exportToGoogle(){
+    public void exportToGoogle() {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -410,7 +418,7 @@ public class CalendarServiceImpl implements CalendarService {
         }
 
         try {
-            for (Appointment appointment: findAll()){
+            for (Appointment appointment : findAll()) {
                 Event event = new Event()
                         .setSummary(appointment.getSessionName())
                         .setDescription(appointment.getSetNames());

@@ -13,7 +13,6 @@ import javafx.scene.web.WebView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.*;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exercise.impl.CategoryServiceImpl;
@@ -31,7 +30,6 @@ import java.util.ResourceBundle;
 public class ShowExerciseController extends Controller implements Initializable {
     private static final Logger LOGGER = LogManager.getLogger(ShowExerciseController.class);
     public static Exercise exercise_interClassCommunication;
-    private StageTransitionLoader transitionLoader;
     private ExercisesController exerciseController;
     private ExerciseServiceImpl exerciseService;
     private CategoryServiceImpl categoryService;

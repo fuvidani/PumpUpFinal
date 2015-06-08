@@ -51,7 +51,7 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
     }
 
     @Test
-    public void searchWithValidUserID() throws Exception{
+    public void searchWithValidUserID() throws Exception {
         String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
         String testImagePath = pathToResource + "/testbild.jpg";
 
@@ -71,7 +71,7 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
         assertTrue(pictureHistoryList.contains(testPictureHistory2));
         assertTrue(pictureHistoryList.contains(testPictureHistory3));
 
-        for(int i = 0; i < pictureHistoryList.size(); i++){
+        for (int i = 0; i < pictureHistoryList.size(); i++) {
             String savedImagePath = pathToResource + pictureHistoryList.get(i).getLocation();
             File savedImage = new File(savedImagePath);
             assertTrue(savedImage.exists());
@@ -82,7 +82,7 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
     }
 
     @Test
-    public void searchByIDShouldFind() throws Exception{
+    public void searchByIDShouldFind() throws Exception {
         String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
         String testImagePath = pathToResource + "/testbild.jpg";
 
@@ -100,7 +100,7 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
     }
 
     @Test
-    public void deleteWithValidPictureHistoryShouldPersist() throws Exception{
+    public void deleteWithValidPictureHistoryShouldPersist() throws Exception {
         String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
         String testImagePath = pathToResource + "/testbild.jpg";
 
@@ -118,7 +118,7 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
     }
 
     @Test
-    public void updateWithValidPictureHistoryShouldPersist() throws Exception{
+    public void updateWithValidPictureHistoryShouldPersist() throws Exception {
         String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
         String testImagePath = pathToResource + "/testbild.jpg";
         String testImagePath2 = pathToResource + "/testbild.jpg";
@@ -132,7 +132,7 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
         File savedImage = new File(savedImagePath);
         File savedImage2 = new File(savedImagePath2);
         assertTrue(savedImage.exists());
-        assert(savedImage2.exists());
+        assert (savedImage2.exists());
 
         if (savedImage.exists()) {
             savedImage.delete();

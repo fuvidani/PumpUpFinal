@@ -7,7 +7,6 @@ import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.user.User;
-import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.user.UserDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 

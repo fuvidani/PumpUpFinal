@@ -1,7 +1,6 @@
 package sepm.ss15.grp16.gui.controller.workout;
 
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import sepm.ss15.grp16.entity.music.Playlist;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.music.MusicService;
@@ -43,7 +42,7 @@ public class MotivatonModul {
         MusicPlayerController.reduceVol();
         player.play();
 
-        while (player.getStatus() == MediaPlayer.Status.PLAYING){
+        while (player.getStatus() == MediaPlayer.Status.PLAYING) {
             //wait
         }
         MusicPlayerController.raiseVol();

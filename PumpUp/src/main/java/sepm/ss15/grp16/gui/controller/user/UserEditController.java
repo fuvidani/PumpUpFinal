@@ -1,13 +1,8 @@
 package sepm.ss15.grp16.gui.controller.user;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -17,14 +12,11 @@ import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.main.MainController;
+import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
-import sepm.ss15.grp16.service.exception.ServiceException;
-import sepm.ss15.grp16.service.exception.ValidationException;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * This class represents the controller for a user-edit gui

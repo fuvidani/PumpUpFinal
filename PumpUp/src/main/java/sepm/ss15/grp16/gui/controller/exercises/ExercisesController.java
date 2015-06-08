@@ -26,10 +26,10 @@ import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.Service;
-import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.exercise.CategoryService;
+import sepm.ss15.grp16.service.user.UserService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -136,6 +136,10 @@ public class ExercisesController extends Controller {
     @Override
     public void initController() {
 
+        addBtn.setTooltip(new Tooltip("Neue Übung anlegen"));
+        deleteBtn.setTooltip(new Tooltip("Übung löschen"));
+        editBtn.setTooltip(new Tooltip("Übung bearbeiten"));
+        
 
         leftArrow.setVisible(false);
         rightArrow.setVisible(false);
@@ -174,28 +178,27 @@ public class ExercisesController extends Controller {
         });
 
 
-
         this.setContent();
 
     }
 
 
     @FXML
-    private void playVideo(){
-        Duration totalDuration =  player.getCycleDuration();
-        Duration currentDuration =  player.getCurrentTime();
-        if(currentDuration.compareTo(totalDuration)==0){
-            isPlaying=false;
+    private void playVideo() {
+        Duration totalDuration = player.getCycleDuration();
+        Duration currentDuration = player.getCurrentTime();
+        if (currentDuration.compareTo(totalDuration) == 0) {
+            isPlaying = false;
             player = new MediaPlayer(media);
             smallMediaView.setMediaPlayer(null);
             smallMediaView.setMediaPlayer(player);
         }
-        if(isPlaying){
+        if (isPlaying) {
             player.pause();
-            isPlaying=false;
-        }else{
+            isPlaying = false;
+        } else {
             player.play();
-            isPlaying=true;
+            isPlaying = true;
         }
 
 
@@ -206,13 +209,13 @@ public class ExercisesController extends Controller {
         try {
 
 
-            if (exercise.getVideolink()!=null) {
+            if (exercise.getVideolink() != null) {
                 String pathToResource = getClass().getClassLoader().getResource("video").toURI().toString();
                 String filePath = pathToResource.concat("/" + exercise.getVideolink());
                 LOGGER.debug("filepath: " + filePath);
                 LOGGER.debug("videolink: " + exercise.getVideolink());
-                 media = new Media(filePath);
-                 player = new MediaPlayer(media);
+                media = new Media(filePath);
+                player = new MediaPlayer(media);
 
                 player.setAutoPlay(false);
 
@@ -220,12 +223,12 @@ public class ExercisesController extends Controller {
                 smallMediaView.setVisible(true);
                 smallMediaView.setFitHeight(300);
                 videoBox.getChildren().add(smallMediaView);
-            }else{
+            } else {
                 smallMediaView.setMediaPlayer(null);
 
                 smallMediaView.setVisible(false);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
         }
 
 
@@ -233,8 +236,8 @@ public class ExercisesController extends Controller {
 
     private void updateFilteredData() {
         ObservableList<Exercise> temp = FXCollections.observableArrayList();
-        if(!customExercisesCheckbox.isSelected() && !defaultExercisesCheckbox.isSelected()){
-            filteredData=masterdata;
+        if (!customExercisesCheckbox.isSelected() && !defaultExercisesCheckbox.isSelected()) {
+            filteredData = masterdata;
         }
 
         for (Exercise e : filteredData) {
@@ -287,9 +290,9 @@ public class ExercisesController extends Controller {
             exerciseNameLabel.setText(newExercise.getName());
             descriptionTextArea.setText(newExercise.getDescription());
             exercise = newExercise;
-            if(exercise.getVideolink()==null){
+            if (exercise.getVideolink() == null) {
                 playVideoBtn.setDisable(true);
-            }else{
+            } else {
                 playVideoBtn.setDisable(false);
             }
             showVideo();
@@ -303,30 +306,30 @@ public class ExercisesController extends Controller {
                 leftArrow.setVisible(false);
                 rightArrow.setVisible(false);
             }
-            if(exercise.getUser()==null){
+            if (exercise.getUser() == null) {
                 deleteBtn.setDisable(true);
                 editBtn.setDisable(true);
-            } else{
+            } else {
                 deleteBtn.setDisable(false);
                 editBtn.setDisable(false);
             }
         }
         try {
 
-            if(vboxType.getChildren()!=null) {
+            if (vboxType.getChildren() != null) {
                 for (int i = 0; i < vboxType.getChildren().size(); i++) {
                     vboxType.getChildren().remove(i);
                 }
             }
             vboxType.getChildren().clear();
-            if(vboxEquipment.getChildren()!=null) {
+            if (vboxEquipment.getChildren() != null) {
                 for (int i = 0; i < vboxEquipment.getChildren().size(); i++) {
                     vboxEquipment.getChildren().remove(i);
                 }
             }
             vboxEquipment.getChildren().clear();
 
-            if(vboxMuscle.getChildren()!=null) {
+            if (vboxMuscle.getChildren() != null) {
                 for (int i = 0; i < vboxMuscle.getChildren().size(); i++) {
                     vboxMuscle.getChildren().remove(i);
                 }
@@ -346,7 +349,7 @@ public class ExercisesController extends Controller {
                 if (exercise.getCategories().contains(t))
                     vboxMuscle.getChildren().add(new Label(t.getName()));
             }
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             LOGGER.error(e);
             e.printStackTrace();
         }
@@ -362,10 +365,10 @@ public class ExercisesController extends Controller {
             FileInputStream reading = new FileInputStream(pathToResource + "/" + exercise.getGifLinks().get(index));
             Image img = new Image(reading);
             imageView.setImage(img);
-            if(exercise.getGifLinks().size()>1){
+            if (exercise.getGifLinks().size() > 1) {
                 leftArrow.setVisible(true);
                 rightArrow.setVisible(true);
-            }else{
+            } else {
                 leftArrow.setVisible(false);
                 rightArrow.setVisible(false);
             }
@@ -432,7 +435,6 @@ public class ExercisesController extends Controller {
         }
 
     }
-
 
 
     @FXML

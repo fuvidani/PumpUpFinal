@@ -20,7 +20,7 @@ import sepm.ss15.grp16.persistence.dao.music.MusicDAO;
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class MusicDAOTestImpl extends AbstractMusicDAOTest{
+public class MusicDAOTestImpl extends AbstractMusicDAOTest {
 
     @Autowired
     private MusicDAO musicDAO;

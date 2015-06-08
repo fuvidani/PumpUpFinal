@@ -1,16 +1,14 @@
-.root, .mainBox{
+.root, .mainBox {
     -fx-background-color: white;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 15pt;
 }
 
-.trainingBtn{
+.trainingBtn {
     -fx-background-color: transparent;
 }
 
-
-
-.trainginPic{
+.trainginPic {
     -fx-background-image: url('../icons/training.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
@@ -34,7 +32,7 @@
     -fx-background-size: 100%;
 }
 
-.topLogo{
+.topLogo {
     -fx-background-image: url('../icons/pumpup.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
@@ -83,13 +81,13 @@
     -fx-background-color: black;
 }
 
-.menu, .topMenu, .menu-bar, .footer, .mainRoot{
+.menu, .topMenu, .menu-bar, .footer, .mainRoot {
     -fx-background-color: lightgray;
 }
 
-.menu:hover{
+.menu:hover {
     -fx-background-color: black;
-    -fx-base:white;
+    -fx-base: white;
 }
 
 .menu-item .label {
@@ -101,26 +99,26 @@
     -fx-base: white;
 }
 
-
 .menu-item:focused .label {
     -fx-text-fill: white;
 
 }
-    /*sub menues*/
+
+/*sub menues*/
 .context-menu, .context-menu:hover {
     -fx-background-color: lightgray;
 }
 
 /*chart background (lines next to axes) and content background (where the actual lines are)*/
-.chart, .chart-plot-background{
+.chart, .chart-plot-background {
     -fx-background-color: transparent;
 }
-
 
 /*grid lines*/
 .chart-vertical-grid-lines, .chart-horizontal-grid-lines {
     -fx-stroke: black;
 }
+
 .axis {
     -fx-tick-mark-visible: false;
     -fx-minor-tick-visible: false;
@@ -128,27 +126,29 @@
     -fx-minor-tick-length: 0;
     -fx-border-color: transparent;
 }
+
 .axis:bottom {
     -fx-border-color: black transparent transparent transparent;
 }
+
 .axis:left {
     -fx-border-color: transparent black transparent transparent;
 }
 
-.userInfo{
+.userInfo {
 
     -fx-border-color: black black black black;
     -fx-background-color: transparent;
 
 }
 
-.aboutGrid .label{
+.aboutGrid .label {
     -fx-background-color: white;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 10pt;
 }
 
-.aboutDescription{
+.aboutDescription {
     -fx-background-color: white;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 14pt;

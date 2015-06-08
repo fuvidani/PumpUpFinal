@@ -1,7 +1,6 @@
 .footer, .header {
--fx-background-color: lightgray;
+    -fx-background-color: lightgray;
 }
-
 
 .btnTakePicture {
     -fx-background-image: url('../icons/Photo_camera.png');

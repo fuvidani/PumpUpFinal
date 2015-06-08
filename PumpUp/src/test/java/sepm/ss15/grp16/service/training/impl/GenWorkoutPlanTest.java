@@ -12,10 +12,10 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
-import sepm.ss15.grp16.service.user.UserService;
-import sepm.ss15.grp16.service.user.WeightHistoryService;
 import sepm.ss15.grp16.service.training.AbstractGenWorkoutPlanTest;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
+import sepm.ss15.grp16.service.user.UserService;
+import sepm.ss15.grp16.service.user.WeightHistoryService;
 
 import java.sql.SQLException;
 

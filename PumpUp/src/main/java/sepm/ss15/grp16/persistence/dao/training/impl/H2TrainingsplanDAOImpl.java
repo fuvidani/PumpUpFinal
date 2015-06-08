@@ -5,13 +5,13 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
-import sepm.ss15.grp16.persistence.dao.user.UserDAO;
-import sepm.ss15.grp16.persistence.dao.user.impl.H2UserDAOImpl;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.dao.training.helper.ExerciseSetHelperDAO;
 import sepm.ss15.grp16.persistence.dao.training.helper.TrainingsSessionHelperDAO;
 import sepm.ss15.grp16.persistence.dao.training.helper.impl.H2ExerciseSetHelperDAOImpl;
 import sepm.ss15.grp16.persistence.dao.training.helper.impl.H2TrainingssessionHelperDAOImpl;
+import sepm.ss15.grp16.persistence.dao.user.UserDAO;
+import sepm.ss15.grp16.persistence.dao.user.impl.H2UserDAOImpl;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
@@ -80,7 +80,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
         try {
             //ps_create.setObject(1, dto.getUser() != null ? dto.getUser().getId() : null);
 
-            if(dto.getUser() != null ) ps_create.setInt(1, dto.getUser().getId());
+            if (dto.getUser() != null) ps_create.setInt(1, dto.getUser().getId());
             else ps_create.setNull(1, java.sql.Types.INTEGER);
 
             ps_create.setString(2, dto.getName());
@@ -176,7 +176,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
         try {
             //ps_update.setObject(1, dto.getUser() != null ? dto.getUser().getId() : null);
 
-            if(dto.getUser() != null ) ps_update.setInt(1, dto.getUser().getId());
+            if (dto.getUser() != null) ps_update.setInt(1, dto.getUser().getId());
             else ps_update.setNull(1, java.sql.Types.INTEGER);
 
             ps_update.setString(2, dto.getName());
@@ -315,7 +315,7 @@ public class H2TrainingsplanDAOImpl implements TrainingsplanDAO {
             if (filter.getUser() != null) {
                 //ps_find_user.setObject(1, filter.getUser().getId());
 
-                if(filter.getUser().getId() != null ) ps_find_user.setInt(1, filter.getUser().getId());
+                if (filter.getUser().getId() != null) ps_find_user.setInt(1, filter.getUser().getId());
                 else ps_find_user.setNull(1, java.sql.Types.INTEGER);
 
                 if (filter.getName() != null) ps_find_user.setString(2, filter.getName());

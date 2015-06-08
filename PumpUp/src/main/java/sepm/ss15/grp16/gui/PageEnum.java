@@ -14,6 +14,7 @@ public enum PageEnum {
     Workoutplan("fxml/workoutPlans/Workoutplans.fxml", "Traininspläne", 1000, 620),
     Workoutplan_create_edit("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", "Traininsplan bearbeiten/erstellen", 1000, 620),
     Workoutplan_generate("fxml/workoutPlans/GenerateWorkoutPlan.fxml", "Trainingsplan generieren", 1000, 620),
+    Workoutplan_generate_result("fxml/workoutPlans/GeneratedWorkoutPlanResult.fxml","Generierter Trainingsplan",300,300),
     Workoutplan_calender_dialog("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", "Trainingsplan in Kalender exportieren", 800, 600),
     SessionEdit("fxml/workoutPlans/SessionEdit_v2.fxml", "Session hinzuf\u00fcgen", 600, 400),
     Calendar("fxml/calendar/Calendar.fxml", "Trainingskalender", 1000, 620),

@@ -1,12 +1,14 @@
 .table-view:disabled {
     -fx-opacity: 100;
-    -fx-font-size: 9pt;
+    -fx-font-size: 10pt;
 }
 
 .table-view:disabled > .column-header-background:disabled > .nested-column-header:disabled > .table-column:disabled > .label:disabled {
     -fx-opacity: 100;
+    -fx-font-size: 12pt;
 }
 
 .table-row-cell:disabled:selected {
     -fx-opacity: 100;
+    -fx-font-weight: bold;
 }

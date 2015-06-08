@@ -3,9 +3,9 @@ package sepm.ss15.grp16.service.user.impl;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.persistence.dao.user.PictureHistoryDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
-import sepm.ss15.grp16.service.user.PictureHistoryService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.user.PictureHistoryService;
 
 import java.util.List;
 

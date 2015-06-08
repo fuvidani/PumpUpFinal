@@ -88,7 +88,7 @@ public class Create_Edit_WorkoutPlanController extends Controller {
     public void initController() {
 
         setUpListView();
-        plan_interClassCommunication = ((WorkoutPlansController)this.getParentController()).getPlan_interClassCommunication();
+        plan_interClassCommunication = ((WorkoutPlansController) this.getParentController()).getPlan_interClassCommunication();
 
         if (plan_interClassCommunication != null) {
             if (plan_interClassCommunication.getId() != null) {
@@ -124,8 +124,8 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                         btnDecreaseDif.setDisable(false);
                     }
                 });
-        btnIncreaseDif.setTooltip( new Tooltip("Schwierigkeit erhöhen"));
-        btnDecreaseDif.setTooltip( new Tooltip("Schwierigkeit reduzieren"));
+        btnIncreaseDif.setTooltip(new Tooltip("Schwierigkeit erhöhen"));
+        btnDecreaseDif.setTooltip(new Tooltip("Schwierigkeit reduzieren"));
     }
 
     private void updateInformations() {
@@ -433,11 +433,11 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         this.userService = userService;
     }
 
-    public void setSession_interClassCommunication(TrainingsSession session_interClassCommunication) {
-        this.session_interClassCommunication = session_interClassCommunication;
-    }
-
     public TrainingsSession getSession_interClassCommunication() {
         return session_interClassCommunication;
+    }
+
+    public void setSession_interClassCommunication(TrainingsSession session_interClassCommunication) {
+        this.session_interClassCommunication = session_interClassCommunication;
     }
 }

@@ -8,6 +8,6 @@ import sepm.ss15.grp16.persistence.exception.PersistenceException;
  * Author: Lukas
  * Date: 04.06.2015
  */
-public interface MusicDAO extends DAO<Playlist>{
+public interface MusicDAO extends DAO<Playlist> {
     Playlist getMotivations() throws PersistenceException;
 }

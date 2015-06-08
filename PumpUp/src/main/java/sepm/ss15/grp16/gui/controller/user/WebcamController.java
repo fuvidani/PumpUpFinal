@@ -35,7 +35,7 @@ import java.io.IOException;
  */
 public class WebcamController extends Controller {
 
-    private static final Dimension RESOLUTION = new Dimension(640,480);
+    private static final Dimension RESOLUTION = new Dimension(640, 480);
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
     ComboBox<WebCamDetails> cameraComboBox;
@@ -73,7 +73,7 @@ public class WebcamController extends Controller {
         });
     }
 
-    private void initializeWebCam(final int webCamIndex){
+    private void initializeWebCam(final int webCamIndex) {
 
         Task<Void> webCamInitializer = new Task<Void>() {
 
@@ -100,7 +100,7 @@ public class WebcamController extends Controller {
         webCamFooterFlowPane.setDisable(false);
     }
 
-    private void destroySelectedWebCam(){
+    private void destroySelectedWebCam() {
         Task<Void> webCamDestroyer = new Task<Void>() {
 
             @Override
@@ -182,7 +182,7 @@ public class WebcamController extends Controller {
                 filechooser.setTitle("Bild speichern: ");
 
                 File file = filechooser.showSaveDialog(null);
-                if(file != null){
+                if (file != null) {
                     ImageIO.write(image, "JPG", file);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information");

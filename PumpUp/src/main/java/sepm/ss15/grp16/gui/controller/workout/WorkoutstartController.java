@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.user.User;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -32,7 +31,6 @@ public class WorkoutstartController extends Controller {
 
     private UserService userService;
 
-    private StageTransitionLoader transitionLoader;
     @FXML
     private ListView<ExerciseSet> toDoListView;
 
@@ -55,7 +53,7 @@ public class WorkoutstartController extends Controller {
     public void initController() {
         User user = userService.getLoggedInUser();
         String playlist = user.getPlaylist();
-        if(playlist!= null){
+        if (playlist != null) {
             musicPathLabel.setText(playlist);
             dir_selection = new File(playlist);
         }
@@ -104,7 +102,7 @@ public class WorkoutstartController extends Controller {
     @FXML
     void startButtonClicked(ActionEvent event) {
         //transitionLoader.openStage("fxml/workout/Workout.fxml", (Stage) toDoListView.getScene().getWindow(), "training", 1100, 750, true);
-        if(dir_selection!= null) {
+        if (dir_selection != null) {
             try {
                 User user = userService.getLoggedInUser();
                 user.setPlaylist(dir_selection.getAbsolutePath());
@@ -128,7 +126,7 @@ public class WorkoutstartController extends Controller {
             ButtonType yes = new ButtonType("Ja");
             ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.NO);
             alert.getButtonTypes().setAll(yes, cancel);
-            if(alert.showAndWait().get() == yes){
+            if (alert.showAndWait().get() == yes) {
                 mainFrame.navigateToParent();
                 started = true;
             }
