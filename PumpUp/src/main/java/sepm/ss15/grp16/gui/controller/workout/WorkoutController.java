@@ -19,15 +19,23 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Arc;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
+import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.WorkoutResult;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
@@ -81,6 +89,9 @@ public class WorkoutController extends Controller {
     private Label discriptionLabel;
 
     @FXML
+    private Pane pictureFitPane;
+
+    @FXML
     private Node WorkoutMusicPlayer;
 
     @FXML
@@ -98,26 +109,32 @@ public class WorkoutController extends Controller {
     private LinkedList<ExerciseView> exerciseViews;
     private Status status;
     private TrainingsSession session;
+    private WorkoutResult workoutResult;
 
     public WorkoutController(ExerciseDAO exerciseDAO, MotivatonModul motivationModul) {
         this.motivationModul = motivationModul;
-        LinkedList<ExerciseSet> list = new LinkedList<>();
-
-        try {
-            list.add(new ExerciseSet(exerciseDAO.searchByID(0), null, 10, ExerciseSet.SetType.repeat, 1, false));
-            list.add(new ExerciseSet(exerciseDAO.searchByID(1), null, 15, ExerciseSet.SetType.time, 2, false));
-            list.add(new ExerciseSet(exerciseDAO.searchByID(2), null, 10, ExerciseSet.SetType.repeat, 3, false));
-            list.add(new ExerciseSet(exerciseDAO.searchByID(3), null, 20, ExerciseSet.SetType.time, 4, false));
-
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-        }
-        session = new TrainingsSession();
-        session.setExerciseSets(list);
     }
 
     @Override
     public void initController() {
+        Appointment appointment = ((MainController) getParentController()).getExecutionAppointment();
+        workoutResult = new WorkoutResult(appointment);
+        session = appointment.getSession();
+
+        mainFrame.addPageManeItem("Open Fullscreen", event1 -> {
+            mainFrame.openFullScreenMode();
+        });
+        mainFrame.addPageManeItem("Training abbrechen", event1 -> {
+            mainFrame.navigateToParent();
+        });
+
+        exerciseImageView.setPreserveRatio(true);
+        exerciseImageView.fitWidthProperty().bind(pictureFitPane.widthProperty());
+        exerciseImageView.fitHeightProperty().bind(pictureFitPane.heightProperty());
+
+        durationField.setDisable(true);
+        repetionField.setDisable(true);
+
         musicPlayerController.setParent(this);
         motivationModul.setMusicPlayerController(musicPlayerController);
         musicPlayerController.play();
@@ -129,48 +146,34 @@ public class WorkoutController extends Controller {
         imageTimeline = new Timeline();
         imageTimeline.setCycleCount(Timeline.INDEFINITE);
         imageTimeline.getKeyFrames().add(
-                new KeyFrame(Duration.millis(IMAGEDURATION), new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        activeImagePosition = (activeImagePosition + 1) % imageList.size();
-                        exerciseImageView.setImage(imageList.get(activeImagePosition));
-                    }
+                new KeyFrame(Duration.millis(IMAGEDURATION), event -> {
+                    activeImagePosition = (activeImagePosition + 1) % imageList.size();
+                    exerciseImageView.setImage(imageList.get(activeImagePosition));
                 }, new KeyValue[0]));
 
         timeSeconds = new SimpleIntegerProperty();
         counterLable.textProperty().bind(timeSeconds.asString());
 
         counterTimeline = new Timeline();
-        counterTimeline.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                pause();
+        counterTimeline.setOnFinished(event -> pause());
+
+        durationField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+
+            } else if (newValue.matches("\\d*")) {
+                int value = Integer.parseInt(newValue);
+            } else {
+                durationField.setText(oldValue);
             }
         });
 
-        durationField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.isEmpty()) {
+        repetionField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
 
-                } else if (newValue.matches("\\d*")) {
-                    int value = Integer.parseInt(newValue);
-                } else {
-                    durationField.setText(oldValue);
-                }
-            }
-        });
-
-        repetionField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.isEmpty()) {
-
-                } else if (newValue.matches("\\d*")) {
-                    int value = Integer.parseInt(newValue);
-                } else {
-                    repetionField.setText(oldValue);
-                }
+            } else if (newValue.matches("\\d*")) {
+                int value = Integer.parseInt(newValue);
+            } else {
+                repetionField.setText(oldValue);
             }
         });
 
@@ -232,12 +235,28 @@ public class WorkoutController extends Controller {
         status = Status.RUNNUNG;
         pauseButton.setText("Stop");
         counterTimeline.playFromStart();
-        durationField.setDisable(true);
-        repetionField.setDisable(true);
+        if (activeExercisePosition > 0) {
+            workoutResult.setExecution(exerciseList.get(activeExercisePosition - 1),
+                    repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
+                    durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
+            repetionField.setDisable(true);
+        }
     }
 
     private void pause() {
         circleCounter.setLength(0);
+
+        if (activeExercisePosition >= 0) {
+            lastExerciseLable.setText(activeExercise().getExercise().getName());
+            if (activeExercise().getType() == ExerciseSet.SetType.repeat) {
+                durationField.setText(counterLable.getText());
+                repetionField.setText(activeExercise().getRepeat() + "");
+            } else {
+                durationField.setText((activeExercise().getRepeat() - timeSeconds.getValue()) + "");
+                repetionField.setText("");
+                repetionField.setDisable(false);
+            }
+        }
 
         if (allExercisesDone()) {
             status = Status.FINISHED;
@@ -246,23 +265,7 @@ public class WorkoutController extends Controller {
             exerciseLabel.setText("training beendet!");
             discriptionLabel.setText(activeExercise().getExercise().getDescription());
             exerciseImageView.setImage(null);
-            durationField.setDisable(true);
-            repetionField.setDisable(true);
         } else {
-            if (activeExercisePosition >= 0) {
-                lastExerciseLable.setText(activeExercise().getExercise().getName());
-                if (activeExercise().getType() == ExerciseSet.SetType.repeat) {
-                    durationField.setText(counterLable.getText());
-                    repetionField.setText(activeExercise().getRepeat() + "");
-                } else {
-                    durationField.setText(activeExercise().getRepeat() + "");
-                    repetionField.setText("");
-                }
-            }
-
-            durationField.setDisable(false);
-            repetionField.setDisable(false);
-
             switchToNextExercise();
 
             status = Status.PAUSED;
@@ -301,7 +304,11 @@ public class WorkoutController extends Controller {
             counterTimeline.stop();
             pause();
         } else {
-            // TODO LOAD TRAININGSRESULTATE
+            workoutResult.setExecution(activeExercise(),
+                    repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
+                    durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
+            mainFrame.openDialog(PageEnum.WorkoutResult);
+            mainFrame.navigateToParent();
         }
     }
 
@@ -322,24 +329,32 @@ public class WorkoutController extends Controller {
         public ExerciseView(ExerciseSet exerciseSet) {
             super();
 
-            setMinHeight(50);
-            setMinWidth(110);
-            setPadding(new Insets(0, 10, 0, 0));
+            setMinHeight(90);
 
             ImageView imageView = new ImageView(images.get(exerciseSet).get(0));
-            imageView.setFitWidth(100);
-            imageView.setFitHeight(50);
+            imageView.setFitHeight(90);
+            imageView.setPreserveRatio(true);
             getChildren().add(imageView);
             BorderPane borderPane = new BorderPane();
-            borderPane.setBottom(new Label(exerciseSet.getRepresentationText()));
+            Label label = new Label(exerciseSet.getRepresentationText());
+            label.setStyle("-fx-font-weight: bold");
+            borderPane.setBottom(label);
             getChildren().add(borderPane);
+            setStyle("-fx-padding: 10;" +
+                    "-fx-background-color: rgba(222, 222, 222, 1);" +
+                    "-fx-background-radius: 5");
         }
 
 
         public void avtivate() {
             setStyle("-fx-padding: 10;" +
                     "-fx-background-color: firebrick;" +
-                    "-fx-background-radius: 5;");
+                    "-fx-background-radius: 5");
         }
+    }
+
+    public WorkoutResult getWorkoutResult()
+    {
+        return workoutResult;
     }
 }

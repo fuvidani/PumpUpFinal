@@ -270,11 +270,6 @@
         <constructor-arg name="motivationModul" ref="motivationModul"/>
     </bean>
 
-    <bean id="workoutGraphicsController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutGraphicsController"
-          scope="prototype">
-
-    </bean>
-
     <bean id="workoutMusicPlayerController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutMusicPlayerController"
           scope="prototype">
         <constructor-arg index="0" ref="musicService"/>
