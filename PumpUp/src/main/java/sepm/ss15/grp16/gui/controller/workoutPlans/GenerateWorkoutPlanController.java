@@ -114,13 +114,13 @@ public class GenerateWorkoutPlanController extends Controller {
 
     @Override
     public void initController() {
-        displayClosed.addListener(new ChangeListener<Boolean>() {
+        /*displayClosed.addListener(new ChangeListener<Boolean>() {
 
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                mainFrame.navigateToParent();
+                //mainFrame.navigateToParent();
             }
-        });
+        });*/
         toggleGroup = new ToggleGroup();
         boxes = new LinkedList<>();
         equipment = new ArrayList<>();
@@ -231,8 +231,7 @@ public class GenerateWorkoutPlanController extends Controller {
                 }
             }
         });
-
-
+        this.displayClosed.set(false);
         LOGGER.info("Controller successfully initialized!");
     }
 
@@ -271,7 +270,8 @@ public class GenerateWorkoutPlanController extends Controller {
         }
         LOGGER.info("Generated workoutplan from service received, delegating towards the next window...");
         this.generatedWorkoutPlan = result;
-        mainFrame.navigateToChild(PageEnum.Workoutplan_generate_result);
+        this.displayClosed.set(true);
+        mainFrame.navigateToParent();
     }
 
     /**
@@ -287,19 +287,15 @@ public class GenerateWorkoutPlanController extends Controller {
      * @return the goal as a string
      */
     public String getSelectedGoal(){
-        return ((RadioButton) toggleGroup.getSelectedToggle()).getText();
+        return (toggleGroup.getSelectedToggle()) != null ? ((RadioButton) toggleGroup.getSelectedToggle()).getText() : null;
     }
 
     /**
-     * This method will be called by the child controller to signal its closure.
-     * The change in the variable triggers a listener.
-     * @param val true or false
+     * This method will be called by the parent controller to determine
+     * whether the "Generate" button has been hit or not.
+     * @return true if user decided to generate a workout plan, otherwise false
      */
-    public void setFlag(boolean val){
-        if(displayClosed.get() == val){
-            displayClosed.set(!val);
-        }else {
-            displayClosed.set(val);
-        }
+    public boolean getFlag(){
+        return this.displayClosed.get();
     }
 }
