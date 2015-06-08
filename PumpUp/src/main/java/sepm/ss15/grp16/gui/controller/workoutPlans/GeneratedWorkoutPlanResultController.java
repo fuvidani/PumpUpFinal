@@ -110,7 +110,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
                 };
             }
         });
-        GenerateWorkoutPlanController controller = (GenerateWorkoutPlanController)this.getParentController();
+        WorkoutPlansController controller = (WorkoutPlansController)this.getParentController();
         this.generatedWorkoutPlan = controller.getGeneratedWorkoutPlan();
         goalLabel.setText(controller.getSelectedGoal());
         this.setFlag(true);
@@ -167,8 +167,6 @@ public class GeneratedWorkoutPlanResultController extends Controller{
     public void cancelClicked() {
         if (saved) {
             mainFrame.navigateToParent();
-            GenerateWorkoutPlanController controller = (GenerateWorkoutPlanController)this.getParentController();
-            controller.setFlag(true);
             LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -182,8 +180,6 @@ public class GeneratedWorkoutPlanResultController extends Controller{
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == yes) {
                 mainFrame.navigateToParent();
-                GenerateWorkoutPlanController controller = (GenerateWorkoutPlanController)this.getParentController();
-                controller.setFlag(true);
                 LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
             } else {
                 alert.close();
@@ -222,20 +218,6 @@ public class GeneratedWorkoutPlanResultController extends Controller{
 
     @FXML
     public void shareFacebookClicked() throws Exception{
-        /*String appID = "MY_APP_ID";
-        String appSecret = "MY_APP_SECRET";
-        String accessToken = "MY_ACCESS_TOKEN";
-
-        FacebookClient facebookClient = new DefaultFacebookClient(accessToken, appSecret, Version.VERSION_2_3);
-        String proof = new DefaultFacebookClient().obtainAppSecretProof(
-                accessToken, appSecret);
-        System.out.println("Here's my proof: " + proof);
-        FacebookType publishMessageResponse =
-                facebookClient.publish("me/feed", FacebookType.class,
-                        Parameter.with("message", "RestFB test"),
-                        Parameter.with("appsecret_proof", proof));
-
-        System.out.println("Published message ID: " + publishMessageResponse.getId());*/
         WebView webView = new WebView();
         final WebEngine webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
