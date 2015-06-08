@@ -221,7 +221,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
         WebView webView = new WebView();
         final WebEngine webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
-        webEngine.load("https://www.facebook.com/dialog/feed?app_id=428485184010923&display=popup&name=PumpUp!&description=Share%20your%20workout%20results%20with%20PumpUp!&caption=Do%20you%20want%20to%20get%20in%20shape?&link=https%3A%2F%2Fdevelopers.facebook.com%2Fapps%2F428485184010923%2F&redirect_uri=https%3A%2F%2Ffacebook.com%2F");
+        webEngine.load("https://www.facebook.com/dialog/feed?app_id=428485184010923&display=popup&name=PumpUp!&description=Share%20your%20workout%20results%20with%20PumpUp!&caption=Do%20you%20want%20to%20get%20in%20shape?&link=https%3A%2F%2Ffacebook.com%2FPumpUpTUVienna%2F&redirect_uri=https%3A%2F%2Ffacebook.com%2F");
         Stage stage = new Stage();
         stage.initOwner(this.stage);
         stage.setScene(new Scene(webView, 500, 300));
