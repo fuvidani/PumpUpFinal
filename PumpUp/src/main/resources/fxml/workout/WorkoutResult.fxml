@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -7,43 +9,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutResultController">
-    <children>
-        <VBox prefHeight="750.0" prefWidth="1300.0" spacing="5.0" AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutResultController">
+    <center>
+        <VBox prefHeight="750.0" prefWidth="1300.0" spacing="5.0">
             <children>
                 <HBox>
                     <children>
                         <Label text="Trainingsresultat">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                         </Label>
                     </children>
                     <VBox.margin>
-                        <Insets left="50.0" top="20.0"/>
+                        <Insets left="50.0" top="20.0" />
                     </VBox.margin>
                 </HBox>
                 <HBox>
                     <children>
-                        <Separator prefHeight="15.0" prefWidth="1240.0"/>
+                        <Separator prefHeight="15.0" prefWidth="1240.0" />
                     </children>
                     <padding>
-                        <Insets left="30.0" right="30.0" top="10.0"/>
+                        <Insets left="30.0" right="30.0" top="10.0" />
                     </padding>
                     <VBox.margin>
-                        <Insets/>
+                        <Insets />
                     </VBox.margin>
                 </HBox>
                 <HBox spacing="100.0">
                     <children>
                         <TableView fx:id="exercisesTable" prefHeight="400.0" prefWidth="306.0">
                             <columns>
-                                <TableColumn prefWidth="130.0" text="Übung"/>
-                                <TableColumn prefWidth="91.0" text="Anzahl"/>
-                                <TableColumn prefWidth="84.0" text="Dauer"/>
+                                <TableColumn fx:id="exercise" prefWidth="130.0" text="Übung" />
+                                <TableColumn fx:id="repete" prefWidth="91.0" text="Anzahl" />
+                                <TableColumn fx:id="duration" prefWidth="84.0" text="Dauer" />
                             </columns>
                         </TableView>
                         <VBox>
@@ -52,50 +52,50 @@
                                     <children>
                                         <Label text="Intensität">
                                             <font>
-                                                <Font size="18.0"/>
+                                                <Font size="18.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </HBox>
                                 <LineChart fx:id="workoutChart" prefHeight="400.0" prefWidth="671.0">
                                     <xAxis>
-                                        <CategoryAxis side="BOTTOM"/>
+                                        <CategoryAxis side="BOTTOM" />
                                     </xAxis>
                                     <yAxis>
-                                        <NumberAxis side="LEFT"/>
+                                        <NumberAxis side="LEFT" />
                                     </yAxis>
                                 </LineChart>
                             </children>
                         </VBox>
                     </children>
                     <padding>
-                        <Insets left="30.0"/>
+                        <Insets left="30.0" />
                     </padding>
                 </HBox>
                 <VBox spacing="10.0">
                     <children>
                         <HBox alignment="CENTER">
                             <children>
-                                <Label text="Mit diesem Training hast du">
+                                <Label text="Mit diesem Training hast du ca.">
                                     <font>
-                                        <Font size="18.0"/>
+                                        <Font size="18.0" />
                                     </font>
                                 </Label>
                             </children>
                             <VBox.margin>
-                                <Insets top="50.0"/>
+                                <Insets top="50.0" />
                             </VBox.margin>
                         </HBox>
                         <HBox alignment="CENTER" spacing="20.0">
                             <children>
-                                <Label fx:id="burnedCaloriesLabel" text="42">
+                                <Label fx:id="burnedCaloriesLabel">
                                     <font>
-                                        <Font size="36.0"/>
+                                        <Font size="36.0" />
                                     </font>
                                 </Label>
                                 <Label text="kcal">
                                     <font>
-                                        <Font size="36.0"/>
+                                        <Font size="36.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -104,7 +104,7 @@
                             <children>
                                 <Label text="verbrennt!">
                                     <font>
-                                        <Font size="24.0"/>
+                                        <Font size="24.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -113,19 +113,18 @@
                 </VBox>
                 <HBox spacing="970.0">
                     <children>
-                        <Button layoutX="10.0" layoutY="653.0" mnemonicParsing="false" onAction="#shareFacebookClicked"
-                                text="Share on Facebook"/>
+                        <Button layoutX="10.0" layoutY="653.0" mnemonicParsing="false" onAction="#shareFacebookClicked" text="Share on Facebook" />
                         <Button mnemonicParsing="false" onAction="#endWorkoutClicked" text="Beenden">
                             <font>
-                                <Font size="18.0"/>
+                                <Font size="18.0" />
                             </font>
                         </Button>
                     </children>
                     <VBox.margin>
-                        <Insets left="30.0" right="30.0" top="30.0"/>
+                        <Insets left="30.0" right="30.0" top="30.0" />
                     </VBox.margin>
                 </HBox>
             </children>
         </VBox>
-    </children>
-</AnchorPane>
+    </center>
+</BorderPane>

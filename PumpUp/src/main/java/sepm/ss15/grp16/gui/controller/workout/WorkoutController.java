@@ -28,7 +28,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
+import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
+import sepm.ss15.grp16.entity.training.WorkoutResult;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
@@ -108,6 +110,7 @@ public class WorkoutController extends Controller {
     private LinkedList<ExerciseView> exerciseViews;
     private Status status;
     private TrainingsSession session;
+    private WorkoutResult workoutResult;
 
     public WorkoutController(ExerciseDAO exerciseDAO, MotivatonModul motivationModul) {
         this.motivationModul = motivationModul;
@@ -115,18 +118,23 @@ public class WorkoutController extends Controller {
 
     @Override
     public void initController() {
-        session = ((MainController) getParentController()).getExecutionAppointment().getSession();
+        Appointment appointment = ((MainController) getParentController()).getExecutionAppointment();
+        workoutResult = new WorkoutResult(appointment);
+        session = appointment.getSession();
 
         mainFrame.addPageManeItem("Open Fullscreen", event1 -> {
             mainFrame.openFullScreenMode();
         });
-        mainFrame.addPageManeItem("Abort Training", event1 -> {
+        mainFrame.addPageManeItem("Training abbrechen", event1 -> {
             mainFrame.navigateToParent();
         });
 
         exerciseImageView.setPreserveRatio(true);
         exerciseImageView.fitWidthProperty().bind(pictureFitPane.widthProperty());
         exerciseImageView.fitHeightProperty().bind(pictureFitPane.heightProperty());
+
+        durationField.setDisable(true);
+        repetionField.setDisable(true);
 
         musicPlayerController.setParent(this);
         motivationModul.setMusicPlayerController(musicPlayerController);
@@ -139,12 +147,9 @@ public class WorkoutController extends Controller {
         imageTimeline = new Timeline();
         imageTimeline.setCycleCount(Timeline.INDEFINITE);
         imageTimeline.getKeyFrames().add(
-                new KeyFrame(Duration.millis(IMAGEDURATION), new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        activeImagePosition = (activeImagePosition + 1) % imageList.size();
-                        exerciseImageView.setImage(imageList.get(activeImagePosition));
-                    }
+                new KeyFrame(Duration.millis(IMAGEDURATION), event -> {
+                    activeImagePosition = (activeImagePosition + 1) % imageList.size();
+                    exerciseImageView.setImage(imageList.get(activeImagePosition));
                 }, new KeyValue[0]));
 
         timeSeconds = new SimpleIntegerProperty();
@@ -231,12 +236,28 @@ public class WorkoutController extends Controller {
         status = Status.RUNNUNG;
         pauseButton.setText("Stop");
         counterTimeline.playFromStart();
-        durationField.setDisable(true);
-        repetionField.setDisable(true);
+        if (activeExercisePosition > 0) {
+            workoutResult.setExecution(exerciseList.get(activeExercisePosition - 1),
+                    repetionField.getText() == null ? null : Integer.parseInt(repetionField.getText()),
+                    durationField.getText() == null ? null : Integer.parseInt(durationField.getText()));
+            repetionField.setDisable(true);
+        }
     }
 
     private void pause() {
         circleCounter.setLength(0);
+
+        if (activeExercisePosition >= 0) {
+            lastExerciseLable.setText(activeExercise().getExercise().getName());
+            if (activeExercise().getType() == ExerciseSet.SetType.repeat) {
+                durationField.setText(counterLable.getText());
+                repetionField.setText(activeExercise().getRepeat() + "");
+            } else {
+                durationField.setText((activeExercise().getRepeat() - timeSeconds.getValue()) + "");
+                repetionField.setText("");
+                repetionField.setDisable(false);
+            }
+        }
 
         if (allExercisesDone()) {
             status = Status.FINISHED;
@@ -245,23 +266,7 @@ public class WorkoutController extends Controller {
             exerciseLabel.setText("training beendet!");
             discriptionLabel.setText(activeExercise().getExercise().getDescription());
             exerciseImageView.setImage(null);
-            durationField.setDisable(true);
-            repetionField.setDisable(true);
         } else {
-            if (activeExercisePosition >= 0) {
-                lastExerciseLable.setText(activeExercise().getExercise().getName());
-                if (activeExercise().getType() == ExerciseSet.SetType.repeat) {
-                    durationField.setText(counterLable.getText());
-                    repetionField.setText(activeExercise().getRepeat() + "");
-                } else {
-                    durationField.setText(activeExercise().getRepeat() + "");
-                    repetionField.setText("");
-                }
-            }
-
-            durationField.setDisable(false);
-            repetionField.setDisable(false);
-
             switchToNextExercise();
 
             status = Status.PAUSED;
@@ -300,7 +305,11 @@ public class WorkoutController extends Controller {
             counterTimeline.stop();
             pause();
         } else {
-            // TODO LOAD TRAININGSRESULTATE
+            workoutResult.setExecution(activeExercise(),
+                    repetionField.getText() == null ? null : Integer.parseInt(repetionField.getText()),
+                    durationField.getText() == null ? null : Integer.parseInt(durationField.getText()));
+            mainFrame.openDialog(PageEnum.WorkoutResult);
+            mainFrame.navigateToParent();
         }
     }
 
@@ -340,8 +349,13 @@ public class WorkoutController extends Controller {
 
         public void avtivate() {
             setStyle("-fx-padding: 10;" +
-                            "-fx-background-color: firebrick;" +
-                            "-fx-background-radius: 5");
+                    "-fx-background-color: firebrick;" +
+                    "-fx-background-radius: 5");
         }
+    }
+
+    public WorkoutResult getWorkoutResult()
+    {
+        return workoutResult;
     }
 }
