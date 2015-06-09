@@ -1,60 +1,47 @@
 package sepm.ss15.grp16.gui.controller.workoutPlans;
 
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
-import sepm.ss15.grp16.gui.StageTransitionLoader;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
-
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
  * This controller is responsible for the auto-generated workout plans depending on the user's criteria.
  * This is just a skeleton, further planning and implementation required.
  */
-public class GenerateWorkoutPlanController extends Controller implements Initializable {
+public class GenerateWorkoutPlanController extends Controller {
 
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private StageTransitionLoader transitionLoader;
     private GeneratedWorkoutplanService generatedWorkoutplanService;
     private ToggleGroup toggleGroup;
     private List<EquipmentCategory> equipment;
     private List<CheckBox> boxes;
     private CategoryService categoryService;
     private BooleanProperty displayClosed = new SimpleBooleanProperty();
+    private Trainingsplan generatedWorkoutPlan;
 
 
     /**
@@ -126,18 +113,17 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.transitionLoader = new StageTransitionLoader(this);
-        displayClosed.addListener(new ChangeListener<Boolean>() {
+    public void initController() {
+        /*displayClosed.addListener(new ChangeListener<Boolean>() {
 
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                stage.close();
+                //mainFrame.navigateToParent();
             }
-        });
+        });*/
         toggleGroup = new ToggleGroup();
-        boxes = new LinkedList<CheckBox>();
-        equipment = new ArrayList<EquipmentCategory>();
+        boxes = new LinkedList<>();
+        equipment = new ArrayList<>();
         strengthRadio.setToggleGroup(toggleGroup);
         strengthRadio.setId("1");
         balanceRadio.setToggleGroup(toggleGroup);
@@ -245,8 +231,7 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
                 }
             }
         });
-
-
+        this.displayClosed.set(false);
         LOGGER.info("Controller successfully initialized!");
     }
 
@@ -284,61 +269,33 @@ public class GenerateWorkoutPlanController extends Controller implements Initial
             return;
         }
         LOGGER.info("Generated workoutplan from service received, delegating towards the next window...");
-
-        Stage stage;
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
-            loader.setControllerFactory(context::getBean);
-
-
-            loader.setLocation(this.getClass().getClassLoader().getResource("fxml/workoutPlans/GeneratedWorkoutPlanResult.fxml"));
-            Pane page = loader.load();
-
-            // Create the dialog Stage.
-            stage = new Stage();
-            stage.setTitle("Generierter Trainingsplan");
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(barbellCheck.getScene().getWindow());
-            Scene scene = new Scene(page);
-            stage.setScene(scene);
-
-            final GeneratedWorkoutPlanResultController controller = loader.getController();
-            controller.setStage(stage);
-
-            // Show the dialog and wait until the user closes it
-            stage.setMinWidth(300);
-            stage.setMinHeight(300);
-            stage.setMaximized(true);
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent e) {
-                    e.consume();
-                    controller.cancelClicked();
-                }
-            });
-            stage.show();
-            controller.setGeneratedWorkoutPlan(result);
-            controller.setParentController(this);
-            controller.setFlag(true);
-            LOGGER.info("New stage successfully launched!");
-            // user closed dialog
-        } catch (IOException e) {
-            LOGGER.info("Error on opening new stage, reason: " + e.getMessage());
-            e.printStackTrace();
-        }
-
+        this.generatedWorkoutPlan = result;
+        this.displayClosed.set(true);
+        mainFrame.navigateToParent();
     }
 
     /**
-     * Sets the boolean property which signals that the child stage
-     * has been closed.
-     *
-     * @param val a boolean variable to trigger the listener
+     * Children controllers will call this method to get DTO
+     * @return the generated workout routine iff the corresponding method has been called
      */
-    public void setFlag(boolean val) {
-        this.displayClosed.set(val);
+    public Trainingsplan getGeneratedWorkoutPlan(){
+        return this.generatedWorkoutPlan;
     }
 
+    /**
+     * Children controllers will call this method to know which goal the user picked.
+     * @return the goal as a string
+     */
+    public String getSelectedGoal(){
+        return (toggleGroup.getSelectedToggle()) != null ? ((RadioButton) toggleGroup.getSelectedToggle()).getText() : null;
+    }
 
+    /**
+     * This method will be called by the parent controller to determine
+     * whether the "Generate" button has been hit or not.
+     * @return true if user decided to generate a workout plan, otherwise false
+     */
+    public boolean getFlag(){
+        return this.displayClosed.get();
+    }
 }

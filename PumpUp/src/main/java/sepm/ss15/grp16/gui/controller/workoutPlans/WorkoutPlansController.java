@@ -38,7 +38,8 @@ public class WorkoutPlansController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutPlansController.class);
 
     private Trainingsplan plan_interClassCommunication;
-
+    private Trainingsplan generatedWorkoutPlan;
+    private String selectedGoal;
     private TrainingsplanService trainingsplanService;
     private UserService userService;
 
@@ -368,11 +369,32 @@ public class WorkoutPlansController extends Controller {
 
     @FXML
     public void generateWorkoutPlanClicked(ActionEvent event) {
-        //transitionLoader.openWaitStage("fxml/workoutPlans/GenerateWorkoutPlan.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan generieren", 600, 400, false);
-        mainFrame.navigateToChild(PageEnum.Workoutplan_generate);
-        updateTable();
-        setUpListView();
-        clearSelection();
+        mainFrame.openDialog(PageEnum.Workoutplan_generate);
+        GenerateWorkoutPlanController controller = (GenerateWorkoutPlanController) this.getChildController();
+        if(controller.getFlag()) {
+            this.generatedWorkoutPlan = controller.getGeneratedWorkoutPlan();
+            this.selectedGoal = controller.getSelectedGoal();
+            mainFrame.navigateToChild(PageEnum.Workoutplan_generate_result);
+            updateTable();
+            setUpListView();
+            clearSelection();
+        }
+    }
+
+    /**
+     * Will be called by the GeneratedWorkoutPlanResultController to get the DTO.
+     * @return the generated workout plan by the service
+     */
+    public Trainingsplan getGeneratedWorkoutPlan(){
+        return this.generatedWorkoutPlan;
+    }
+
+    /**
+     * Children controllers will call this method to know which goal the user picked.
+     * @return the goal as a string
+     */
+    public String getSelectedGoal(){
+        return this.selectedGoal;
     }
 
     @FXML

@@ -1,5 +1,10 @@
 package sepm.ss15.grp16.gui.controller.workoutPlans;
 
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.Version;
+import com.restfb.types.FacebookType;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -7,12 +12,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.VPos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,11 +30,8 @@ import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
-
-import java.net.URL;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 16.05.15.
@@ -34,14 +39,13 @@ import java.util.ResourceBundle;
  * When the generated workout plan has arrived it is instantly displayed and the user can
  * save the plan, dismiss it or export it to the own calendar.
  */
-public class GeneratedWorkoutPlanResultController extends Controller implements Initializable {
+public class GeneratedWorkoutPlanResultController extends Controller{
 
 
     private static final Logger LOGGER = LogManager.getLogger();
     private Trainingsplan generatedWorkoutPlan;
     private TrainingsplanService trainingsplanService;
     private BooleanProperty DTOArrived = new SimpleBooleanProperty();
-    private GenerateWorkoutPlanController parent;
     private boolean saved;
 
     @FXML
@@ -50,8 +54,11 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     @FXML
     private Button saveButton;
 
+    @FXML
+    private Label goalLabel;
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
         saved = false;
         DTOArrived.addListener(new ChangeListener<Boolean>() {
 
@@ -103,8 +110,10 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
                 };
             }
         });
-
-
+        WorkoutPlansController controller = (WorkoutPlansController)this.getParentController();
+        this.generatedWorkoutPlan = controller.getGeneratedWorkoutPlan();
+        goalLabel.setText(controller.getSelectedGoal());
+        this.setFlag(true);
         LOGGER.info("GeneratedWorkoutPlanResult successfully initialized!");
 
     }
@@ -116,17 +125,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
      */
     public void setTrainingsplanService(TrainingsplanService service) {
         this.trainingsplanService = service;
-    }
-
-    /**
-     * This method will only be called by the parent controller.
-     * Sets the DTO for later displaying.
-     *
-     * @param generatedWorkoutPlan the DTO that must be displayed for the user
-     */
-    public void setGeneratedWorkoutPlan(Trainingsplan generatedWorkoutPlan) {
-        this.generatedWorkoutPlan = generatedWorkoutPlan;
-        LOGGER.info("Generated workoutplan arrived.");
     }
 
     /**
@@ -168,8 +166,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
     @FXML
     public void cancelClicked() {
         if (saved) {
-            stage.close();
-            parent.setFlag(true);
+            mainFrame.navigateToParent();
             LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -182,8 +179,7 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == yes) {
-                stage.close();
-                parent.setFlag(true);
+                mainFrame.navigateToParent();
                 LOGGER.info("user clicked 'Cancel', leaving GeneratedWorkoutPlanResult...");
             } else {
                 alert.close();
@@ -201,15 +197,6 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         DTOArrived.set(val);
     }
 
-    /**
-     * Sets the parent controller of this one in order to be able to
-     * send signal to it.
-     *
-     * @param parentController the parent controller
-     */
-    public void setParentController(GenerateWorkoutPlanController parentController) {
-        this.parent = parentController;
-    }
 
     /**
      * This method is automatically called by the listener when the generated workout routine
@@ -223,10 +210,40 @@ public class GeneratedWorkoutPlanResultController extends Controller implements 
         } else if (sessions.size() == 2) {
             listView.setMaxWidth(525);
         }
+        listView.setItems(null);
         listView.setItems(data);
 
         LOGGER.info("Generated workout successfully displayed!");
     }
 
+    @FXML
+    public void shareFacebookClicked() throws Exception{
+        WebView webView = new WebView();
+        final WebEngine webEngine = webView.getEngine();
+        webEngine.setJavaScriptEnabled(true);
+        webEngine.load("https://www.facebook.com/dialog/feed?app_id=428485184010923&display=popup&name=PumpUp!&description=Share%20your%20workout%20results%20with%20PumpUp!&caption=Do%20you%20want%20to%20get%20in%20shape?&link=https%3A%2F%2Ffacebook.com%2FPumpUpTUVienna%2F&redirect_uri=https%3A%2F%2Ffacebook.com%2F");
+        Stage stage = new Stage();
+        stage.initOwner(this.stage);
+        stage.setScene(new Scene(webView, 500, 300));
+        stage.show();
+    }
+
+    /**
+     * increase the difficulty of the given plan by the factor of 0.25
+     */
+    @FXML
+    public void increaseDifficultyClicked(){
+        trainingsplanService.increaseDifficulty(generatedWorkoutPlan);
+        displayWorkoutPlan();
+    }
+
+    /**
+     * decrease the difficulty of the given plan by the factor of 0.25
+     */
+    @FXML
+    public void decreaseDifficultyClicked(){
+        trainingsplanService.decreaseDifficulty(generatedWorkoutPlan);
+        displayWorkoutPlan();
+    }
 
 }
