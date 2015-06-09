@@ -1,8 +1,12 @@
 package sepm.ss15.grp16.gui.controller.user;
 
 import com.github.sarxos.webcam.Webcam;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,11 +15,13 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.gui.controller.Controller;
@@ -38,22 +44,30 @@ public class WebcamController extends Controller {
     private static final Dimension RESOLUTION = new Dimension(640, 480);
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    ComboBox<WebCamDetails> cameraComboBox;
+    private Label countDownLabel;
     @FXML
-    BorderPane webCamBorderPane;
+    private ComboBox<WebCamDetails> cameraComboBox;
     @FXML
-    FlowPane webCamFooterFlowPane;
+    private BorderPane webCamBorderPane;
+    @FXML
+    private FlowPane webCamFooterFlowPane;
     @FXML
     ImageView webCamImageView;
     private BufferedImage takenImage;
     private Webcam selectedWebcam = null;
     private boolean stopWebcam = false;
     private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
+    private IntegerProperty countDownProperty = new SimpleIntegerProperty();
+    private int countDownValue;
+    private Timeline timeline;
+
 
     @Override
     public void initController() {
 
-        webCamBorderPane.getScene().getWindow().setOnCloseRequest(e -> WebcamController.this.destroySelectedWebCam());
+        countDownLabel.setVisible(false);
+        countDownLabel.textProperty().bind(countDownProperty.asString());
+        webCamBorderPane.getScene().getWindow().setOnCloseRequest(e -> WebcamController.this.onCloseAction());
 
         webCamFooterFlowPane.setDisable(true);
         ObservableList<WebCamDetails> webCamOptions = FXCollections.observableArrayList();
@@ -97,28 +111,11 @@ public class WebcamController extends Controller {
         };
 
         new Thread(webCamInitializer).start();
-        webCamFooterFlowPane.setDisable(false);
-    }
-
-    private void destroySelectedWebCam() {
-        Task<Void> webCamDestroyer = new Task<Void>() {
-
-            @Override
-            protected Void call() throws Exception {
-
-                if (selectedWebcam != null) {
-                    disposeWebCam();
-                }
-                return null;
-            }
-
-        };
-
-        new Thread(webCamDestroyer).start();
     }
 
     private void startShowingImages() {
-
+        
+        webCamFooterFlowPane.setDisable(false);
         stopWebcam = false;
         Task<Void> showImagesTask = new Task<Void>() {
 
@@ -152,21 +149,6 @@ public class WebcamController extends Controller {
         webCamImageView.imageProperty().bind(imageProperty);
     }
 
-    private void closeWebCam() {
-        LOGGER.info("Closing webcam...");
-        if (selectedWebcam != null) {
-            selectedWebcam.close();
-        }
-        LOGGER.info("Webcam closed");
-    }
-
-    private void disposeWebCam() {
-        LOGGER.info("Dispose webcam...");
-        stopWebcam = true;
-        closeWebCam();
-        LOGGER.info("Disposed webcam");
-    }
-
     @FXML
     public void takePicture() {
         LOGGER.info("Taking image with webcam...");
@@ -197,8 +179,66 @@ public class WebcamController extends Controller {
         }
         webCamFooterFlowPane.setDisable(false);
         stopWebcam = false;
+        countDownLabel.setVisible(false);
         startShowingImages();
         LOGGER.info("Image successfully taken");
+    }
+
+    @FXML
+    public void takePictureWithCountDown() {
+        LOGGER.info("Taking image with webcam after 5s countdown...");
+        webCamFooterFlowPane.setDisable(true);
+        countDownLabel.setVisible(true);
+        countDownValue = 5;
+        countDownProperty.set(countDownValue);
+        timeline = new Timeline(new KeyFrame(
+                Duration.millis(1000),
+                ae -> countDownProperty.set(countDownValue--)));
+        timeline.setOnFinished(event -> takePicture());
+        timeline.setCycleCount(6);
+        timeline.playFromStart();
+        LOGGER.info("Image successfully taken after 5s");
+    }
+
+    private void closeWebCam() {
+        LOGGER.info("Closing webcam...");
+        if (selectedWebcam != null) {
+            selectedWebcam.close();
+        }
+        LOGGER.info("Webcam closed");
+    }
+
+    private void disposeWebCam() {
+        LOGGER.info("Dispose webcam...");
+        stopWebcam = true;
+        closeWebCam();
+        LOGGER.info("Disposed webcam");
+    }
+
+
+
+    private void destroySelectedWebCam() {
+        Task<Void> webCamDestroyer = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+
+                if (selectedWebcam != null) {
+                    disposeWebCam();
+                }
+                return null;
+            }
+
+        };
+
+        new Thread(webCamDestroyer).start();
+    }
+
+    private void onCloseAction() {
+        if(timeline != null) {
+            timeline.stop();
+        }
+        destroySelectedWebCam();
     }
 
     /**
