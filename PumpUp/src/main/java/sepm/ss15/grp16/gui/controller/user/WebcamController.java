@@ -82,14 +82,14 @@ public class WebcamController extends Controller {
         cameraComboBox.setPromptText("Kamera auswählen:");
         cameraComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                initializeWebCam(newValue.getWebCamIndex());
+                startWebCam(newValue.getIndex());
             }
         });
     }
 
-    private void initializeWebCam(final int webCamIndex) {
+    private void startWebCam(final int webCamIndex) {
 
-        Task<Void> webCamInitializer = new Task<Void>() {
+        Task<Void> webCamStarter = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
@@ -110,13 +110,14 @@ public class WebcamController extends Controller {
 
         };
 
-        new Thread(webCamInitializer).start();
+        new Thread(webCamStarter).start();
     }
 
     private void startShowingImages() {
-        
+
         webCamFooterFlowPane.setDisable(false);
         stopWebcam = false;
+
         Task<Void> showImagesTask = new Task<Void>() {
 
             @Override
@@ -124,7 +125,8 @@ public class WebcamController extends Controller {
 
                 while (!stopWebcam) {
                     try {
-                        if ((takenImage = selectedWebcam.getImage()) != null) {
+                        takenImage = selectedWebcam.getImage();
+                        if (takenImage != null) {
 
                             Platform.runLater(() -> {
                                 final Image mainImage = SwingFXUtils.toFXImage(takenImage, null);
@@ -135,7 +137,7 @@ public class WebcamController extends Controller {
 
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        LOGGER.error(e.getMessage());
                     }
                 }
 
@@ -175,7 +177,6 @@ public class WebcamController extends Controller {
             }
         } catch (IOException e) {
             LOGGER.error("Saving image from webcam failed");
-            e.printStackTrace();
         }
         webCamFooterFlowPane.setDisable(false);
         stopWebcam = false;
@@ -191,6 +192,7 @@ public class WebcamController extends Controller {
         countDownLabel.setVisible(true);
         countDownValue = 5;
         countDownProperty.set(countDownValue);
+        countDownValue--;
         timeline = new Timeline(new KeyFrame(
                 Duration.millis(1000),
                 ae -> countDownProperty.set(countDownValue--)));
@@ -214,8 +216,6 @@ public class WebcamController extends Controller {
         closeWebCam();
         LOGGER.info("Disposed webcam");
     }
-
-
 
     private void destroySelectedWebCam() {
         Task<Void> webCamDestroyer = new Task<Void>() {
@@ -249,33 +249,33 @@ public class WebcamController extends Controller {
      */
     private class WebCamDetails {
 
-        private String webCamName;
-        private int webCamIndex;
+        private String name;
+        private int index;
 
         public WebCamDetails(String webCamName, int webCamIndex) {
-            this.webCamName = webCamName;
-            this.webCamIndex = webCamIndex;
+            this.name = webCamName;
+            this.index = webCamIndex;
         }
 
-        public String getWebCamName() {
-            return webCamName;
+        public String getName() {
+            return name;
         }
 
-        public void setWebCamName(String webCamName) {
-            this.webCamName = webCamName;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public int getWebCamIndex() {
-            return webCamIndex;
+        public int getIndex() {
+            return index;
         }
 
-        public void setWebCamIndex(int webCamIndex) {
-            this.webCamIndex = webCamIndex;
+        public void setIndex(int index) {
+            this.index = index;
         }
 
         @Override
         public String toString() {
-            return webCamName;
+            return name;
         }
     }
 }
