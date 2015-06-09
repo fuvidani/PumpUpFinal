@@ -204,7 +204,6 @@ public class PhotoDiaryController extends Controller {
             mainFrame.openDialog(PageEnum.Webcam);
         } catch (Exception e) {
             LOGGER.error("Couldn't open useredit-window");
-            e.printStackTrace();
         }
     }
 
