@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -40,18 +41,21 @@
     <bottom>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
             <children>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" HBox.hgrow="ALWAYS">
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="1180.0" spacing="20.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Button fx:id="saveButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveWorkoutPlanClicked" text="Trainingsplan speichern" HBox.hgrow="ALWAYS">
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelClicked" styleClass="backBtn" stylesheets="@../../css/gen_workout_resultStyle.css" HBox.hgrow="ALWAYS">
                             <font>
                                 <Font size="18.0" />
                             </font>
+                     <tooltip>
+                        <Tooltip text="Zurück">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip>
                         </Button>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#shareFacebookClicked" text="Auf Facebook teilen" HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
+                        <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                   <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#increaseDifficultyClicked" text="Plan schwieriger machen">
                      <font>
                         <Font size="18.0" />
@@ -62,11 +66,21 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
-                        <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelClicked" text="Zurück" HBox.hgrow="ALWAYS">
+                  <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="saveButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveWorkoutPlanClicked" prefHeight="50.0" styleClass="savePlanBtn" stylesheets="@../../css/gen_workout_resultStyle.css" text=" " HBox.hgrow="ALWAYS">
                             <font>
                                 <Font size="18.0" />
                             </font>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                     <tooltip>
+                        <Tooltip text="Trainingsplan speichern">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip>
                         </Button>
                     </children>
                     <HBox.margin>
@@ -85,7 +99,7 @@
                 <HBox VBox.vgrow="ALWAYS">
                     <children>
                         <Region layoutX="970.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" prefHeight="571.0" prefWidth="870.0" HBox.hgrow="ALWAYS" />
+                        <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" prefHeight="571.0" prefWidth="870.0" stylesheets="@./" HBox.hgrow="ALWAYS" />
                         <Region layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>

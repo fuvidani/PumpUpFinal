@@ -90,13 +90,13 @@ public class GeneratedWorkoutPlanResultController extends Controller{
 
 
                             final Text leftText = new Text(title);
-                            leftText.setFont(Font.font("Verdana", 16));
+                            leftText.setFont(Font.font("Palatino Linotype", 20));
 
                             leftText.setTextOrigin(VPos.CENTER);
                             leftText.relocate(80, 0);
 
                             final Text middleText = new Text(value);
-                            middleText.setFont(Font.font("Verdana", 14));
+                            middleText.setFont(Font.font("Palatino Linotype", 16));
                             middleText.setTextOrigin(VPos.TOP);
                             final double em = leftText.getLayoutBounds().getHeight();
                             middleText.relocate(0, 2 * em);
