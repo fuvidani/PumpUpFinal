@@ -74,11 +74,11 @@ MERGE INTO exercise KEY (id) VALUES
   (1, 'Armrotation', 'Eine tolle Übung, um die Schultern vor oder nach den intensiveren Übungen aufzuwärmen oder abzukühlen.
   Armrotationen sind besonders dann geeignet, wenn man nach einer Verletzung oder im Alter gerade wieder mit dem Training beginnt
   Stellen Sie sich aufrecht hin, strecken Sie die Arme seitlich aus und machen Sie kleine oder große Kreise.
-  Zuerst kreisen Sie zehnmal in die eine, dann in die andere Richtung.', 0.02, 'armrotation.mp4', NULL, FALSE),
+  Zuerst kreisen Sie zehnmal in die eine, dann in die andere Richtung.', 0.3, 'armrotation.mp4', NULL, FALSE),
   (2, 'Daumen hoch', 'Nehmen Sie die Bauchlage ein. Ihre Füße sind hüftbreit geöffnet, die Fußspitzen aufgestellt.
   Strecken Sie die Arme seitlich aus und ballen Sie Ihre Hände zu Fäusten, die Daumen zeigen nach oben.
   Heben Sie nun die Schultern und den Kopf vom Boden an und ziehen Sie die gestreckten Arme so weit wie möglich nach oben.
-  Dabei nähern sich Ihre Schulterblätter an.', 0.01, 'armup.mp4', NULL, FALSE),
+  Dabei nähern sich Ihre Schulterblätter an.', 0.3, 'armup.mp4', NULL, FALSE),
   (3, 'Kniebeuge', 'Wichtig. Die Knie beim Hochgehen nicht ganz durch-strecken sondern etwas tief bleiben.', 0.75, 'kniebeugen.mp4', NULL, FALSE),
   (4, 'Crunch it UP', 'Legen Sie sich auf den Rücken. Stellen Sie die Beine angewinkelt hüftbreit auf
  und haken Sie die Füße unter einem Gegenstand (Bett, Sofa, Stuhl, Regal, Couchtisch etc.) ein.
@@ -111,25 +111,25 @@ MERGE INTO exercise KEY (id) VALUES
   Halten Sie diese Position.', 0.2, NULL, NULL, FALSE),
   (10, 'Seilspringen', 'Versuchen Sie eine geringe Sprunghöhe um Kraft zu schonen und versuchen Sie es auch einmal rückwärts', 0.25, NULL, NULL, FALSE),
   (11, 'BOXEN-Schläge',
-   'Stellen Sie sich schulterbreit vor den Box/Sandsack und schlagen führen Sie gezielte Schläge aus', 0.2, NULL, NULL,
+   'Stellen Sie sich schulterbreit vor den Box/Sandsack und schlagen führen Sie gezielte Schläge aus', 0.3, NULL, NULL,
    FALSE),
   (12, 'BOXEN-Tritte', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und treten sie mit dem Schienbein gegen den Sandsack.
   Dehnen Sie sich vorher ausreichend', 0.5, NULL, NULL, FALSE),
   (13, 'Armstrecken mit Kurzhantel', '', 0.4, NULL, NULL, FALSE),
   (14, 'Bizeps mit Langhantel', '', 0.3, NULL, NULL, FALSE),
   (15, 'Kniebeugen mit Langhantel', '', 0.5, NULL, NULL, FALSE),
-  (16, 'Bauchmuskeln Mit Roller', '', 0.2, NULL, NULL, FALSE),
-  (17, 'Beinheben mit Yogaball', '', 0.2, NULL, NULL, FALSE),
-  (18, 'Crunches mit Yogaball', '', 0.1, NULL, NULL, FALSE),
-  (19, 'Superman', '', 0.1, 'superman.mp4', NULL, FALSE),
-  (20, 'Brust dehnen', '', 0.2, NULL, NULL, FALSE),
-  (21, 'Schultern dehnen', '', 0.2, NULL, NULL, FALSE),
-  (22, 'Rücken (oben) dehnen', '', 0.2, NULL, NULL, FALSE),
-  (23, 'Rücken (Mitte) dehnen', '', 0.2, NULL, NULL, FALSE),
-  (24, 'Rücken (unten) dehnen', '', 0.2, NULL, NULL, FALSE),
-  (25, 'Quadrizeps dehnen', '', 0.2, NULL, NULL, FALSE),
-  (26, 'Gesäßmuskulatur dehnen', '', 0.2, NULL, NULL, FALSE),
-  (27, 'Kniesehne dehnen', '', 0.2, '', NULL, FALSE);
+  (16, 'Bauchmuskeln Mit Roller', '', 0.3, NULL, NULL, FALSE),
+  (17, 'Beinheben mit Yogaball', '', 0.3, NULL, NULL, FALSE),
+  (18, 'Crunches mit Yogaball', '', 0.3, NULL, NULL, FALSE),
+  (19, 'Superman', '', 0.3, 'superman.mp4', NULL, FALSE),
+  (20, 'Brust dehnen', '', 0.3, NULL, NULL, FALSE),
+  (21, 'Schultern dehnen', '', 0.3, NULL, NULL, FALSE),
+  (22, 'Rücken (oben) dehnen', '', 0.3, NULL, NULL, FALSE),
+  (23, 'Rücken (Mitte) dehnen', '', 0.3, NULL, NULL, FALSE),
+  (24, 'Rücken (unten) dehnen', '', 0.3, NULL, NULL, FALSE),
+  (25, 'Quadrizeps dehnen', '', 0.3, NULL, NULL, FALSE),
+  (26, 'Gesäßmuskulatur dehnen', '', 0.3, NULL, NULL, FALSE),
+  (27, 'Kniesehne dehnen', '', 0.3, '', NULL, FALSE);
 
 
 MERGE INTO exercise_category KEY (exerciseid, categoryid) VALUES

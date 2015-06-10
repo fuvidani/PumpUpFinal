@@ -1,10 +1,5 @@
 package sepm.ss15.grp16.gui.controller.workoutPlans;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.Version;
-import com.restfb.types.FacebookType;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -13,14 +8,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -90,13 +81,13 @@ public class GeneratedWorkoutPlanResultController extends Controller{
 
 
                             final Text leftText = new Text(title);
-                            leftText.setFont(Font.font("Verdana", 16));
+                            leftText.setFont(Font.font("Palatino Linotype", 20));
 
                             leftText.setTextOrigin(VPos.CENTER);
                             leftText.relocate(80, 0);
 
                             final Text middleText = new Text(value);
-                            middleText.setFont(Font.font("Verdana", 14));
+                            middleText.setFont(Font.font("Palatino Linotype", 16));
                             middleText.setTextOrigin(VPos.TOP);
                             final double em = leftText.getLayoutBounds().getHeight();
                             middleText.relocate(0, 2 * em);
@@ -214,18 +205,6 @@ public class GeneratedWorkoutPlanResultController extends Controller{
         listView.setItems(data);
 
         LOGGER.info("Generated workout successfully displayed!");
-    }
-
-    @FXML
-    public void shareFacebookClicked() throws Exception{
-        WebView webView = new WebView();
-        final WebEngine webEngine = webView.getEngine();
-        webEngine.setJavaScriptEnabled(true);
-        webEngine.load("https://www.facebook.com/dialog/feed?app_id=428485184010923&display=popup&name=PumpUp!&description=Share%20your%20workout%20results%20with%20PumpUp!&caption=Do%20you%20want%20to%20get%20in%20shape?&link=https%3A%2F%2Ffacebook.com%2FPumpUpTUVienna%2F&redirect_uri=https%3A%2F%2Ffacebook.com%2F");
-        Stage stage = new Stage();
-        stage.initOwner(this.stage);
-        stage.setScene(new Scene(webView, 500, 300));
-        stage.show();
     }
 
     /**
