@@ -1,5 +1,6 @@
 package sepm.ss15.grp16.gui.controller.exercises;
 
+import com.restfb.types.Video;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -33,7 +34,7 @@ public class VideoController extends Controller {
 
     @Override
     public void initController() {
-        exercise = ((ExercisesController) this.getParentController()).getExercise();
+        exercise = ((VideoPlayable) this.getParentController()).getExercise();
         this.showVideo();
     }
 
@@ -85,6 +86,11 @@ public class VideoController extends Controller {
             player.play();
             isPlaying = true;
         }
+    }
+
+    @FXML
+    private void close(){
+            mainFrame.close();
     }
 
 }

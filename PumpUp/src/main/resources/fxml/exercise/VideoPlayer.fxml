@@ -17,4 +17,15 @@
          </BorderPane.margin>
       </VBox>
    </center>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#close" prefHeight="63.0" prefWidth="113.0" text="Schließen">
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

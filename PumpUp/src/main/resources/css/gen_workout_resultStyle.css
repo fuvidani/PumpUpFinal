@@ -14,6 +14,10 @@
     -fx-background-size: 100%;
 }
 
+.button:hover{
+    -fx-background-size: 90%;
+}
+
 .title{
 	-fx-color:#000000;
 	-fx-font-family: 'Palatino Linotype','Book Antiqua', Palatino, serif;
