@@ -165,8 +165,8 @@ public class MainController extends Controller {
             else
             {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Keine �bung zur Ausf�hrung!");
-                alert.setContentText("Keine �bung zur Ausf�hrung!");
+                alert.setTitle("Keine \u00dcbung zur Ausf\u00fchrung!");
+                alert.setContentText("Keine \u00dcbung zur Ausf\u00fchrung!");
                 ButtonType ok = new ButtonType("OK");
                 alert.getButtonTypes().setAll(ok);
                 alert.showAndWait().get();
@@ -253,7 +253,7 @@ public class MainController extends Controller {
             LineChart.Series<String, Number> bodyFatSeries = new LineChart.Series<String, Number>();
             List<WeightHistory> weightHistoryList = weightHistoryService.searchByUserID(loggedInUserID);
             List<BodyfatHistory> bodyfatHistoryList = bodyfatHistoryService.searchByUserID(loggedInUserID);
-    int i = 0;
+            int i = 0;
             for (WeightHistory w : weightHistoryList) {
                 LineChart.Data data = new LineChart.Data<>("" + w.getDate(), w.getWeight());
                 data.setNode(
@@ -289,8 +289,6 @@ public class MainController extends Controller {
 
 
 
-
-
     /** a node which displays a value on hover, but is otherwise empty */
     class HoveredThresholdNode extends StackPane {
         HoveredThresholdNode(int value) {
@@ -313,27 +311,11 @@ public class MainController extends Controller {
         private Label createDataThresholdLabel(int value) {
             final Label label = new Label(value + " kg");
             label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
-            label.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
-
-
-                label.setTextFill(Color.BLACK);
-label.relocate(5, 15);
-
+            label.setTextFill(Color.BLACK);
             label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
             return label;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     public void refreshCalendar() {

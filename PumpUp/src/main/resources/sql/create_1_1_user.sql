@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS picturehistory (
   FOREIGN KEY (user_id) REFERENCES user
 );
 
-MERGE INTO user VALUES (0, 'lukas', TRUE, 22, 178, 'loc.kathrein@gmail.com', NULL, FALSE);
+MERGE INTO user VALUES (0, 'DONT MESS WITH THE MASTA', TRUE, 22, 178, 'thisIStheLONGESTfuckingEmailOneCouldPossibleThinkOFbut@iDontGiveAdamN.Com', NULL, FALSE);
 MERGE INTO user VALUES (1, 'frank medrano', TRUE, 35, 160, 'thefrankmedrano@gmail.com', NULL, FALSE);
 MERGE INTO bodyfathistory VALUES (0, 0, 10, '2015-05-23'), (1, 0, 11, '2015-05-24'), (2, 0, 12, '2015-05-25');
 MERGE INTO bodyfathistory VALUES (3, 1, 4, '2015-05-23');
