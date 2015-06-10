@@ -67,19 +67,19 @@
                                                         </font>
                                                     </Label>
                                                       <Label fx:id="ageTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                    <Label text="Größe:" GridPane.rowIndex="2">
+                                                    <Label text="Größe in cm:" GridPane.rowIndex="2">
                                                         <font>
                                                             <Font size="17.0" />
                                                         </font>
                                                     </Label>
                                                       <Label fx:id="heightTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                    <Label text="Gewicht:" GridPane.rowIndex="3">
+                                                    <Label text="Gewicht in kg:" GridPane.rowIndex="3">
                                                         <font>
                                                             <Font size="17.0" />
                                                         </font>
                                                     </Label>
                                                       <Label fx:id="weightTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                    <Label text="Körperfett:" GridPane.rowIndex="4">
+                                                    <Label minWidth="150.0" prefWidth="150.0" text="Körperfett: in %" GridPane.rowIndex="4">
                                                         <font>
                                                             <Font size="17.0" />
                                                         </font>
@@ -136,7 +136,7 @@
             <children>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <children>
-                        <Button contentDisplay="LEFT" maxHeight="64.0" maxWidth="1.7976931348623157E308" minHeight="64.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0" prefWidth="120.0" styleClass="trainingBtn" text="Training">
+                        <Button contentDisplay="LEFT" maxHeight="128.0" maxWidth="1.7976931348623157E308" minHeight="128.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="128.0" prefWidth="300.0" styleClass="trainingBtn" text="Training">
                             <font>
                                 <Font size="24.0" />
                             </font>
@@ -144,7 +144,7 @@
                                 <Insets />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="trainingPicBtn" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0" styleClass="trainginPic" text=" " />
+                        <Button fx:id="trainingPicBtn" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="128.0" styleClass="trainginPic" text=" " />
                     </children>
                     <HBox.margin>
                         <Insets left="600.0" />

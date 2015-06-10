@@ -216,6 +216,10 @@ public class FrameWindow extends BorderPane {
         setTop(null);
     }
 
+    public void close(){
+        stage.close();
+    }
+
     private void addItemToMenu(Menu menu, String titel, EventHandler<ActionEvent> eventHandler)
     {
         MenuItem item = new MenuItem(titel);

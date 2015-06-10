@@ -32,7 +32,7 @@ import java.net.URISyntaxException;
 /**
  * Created by lukas on 09.06.2015.
  */
-public class DisplayExerciseCotroller extends Controller {
+public class DisplayExerciseCotroller extends Controller implements VideoPlayable {
     @FXML
     private TextArea description;
 
@@ -76,6 +76,11 @@ public class DisplayExerciseCotroller extends Controller {
 
     public void setCategoryService(CategoryService categoryService){
         this.categoryService=categoryService;
+    }
+
+    @Override
+    public Exercise getExercise() {
+        return exercise;
     }
 
     @Override
@@ -189,7 +194,6 @@ public class DisplayExerciseCotroller extends Controller {
         } catch (URISyntaxException e) {
             e.printStackTrace();
             LOGGER.error(e);
-
         }
     }
 
@@ -209,7 +213,11 @@ public class DisplayExerciseCotroller extends Controller {
 
     @FXML
     private void showVideo() {
-       mainFrame.openDialog(PageEnum.VideoPlayer);
+        mainFrame.openDialog(PageEnum.VideoPlayer);
     }
 
+    @FXML
+    private void  getBack(){
+        mainFrame.navigateToParent();
+    }
 }

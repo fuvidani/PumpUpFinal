@@ -40,9 +40,6 @@
     -fx-background-size: 100%;
 }
 
-.btnRight:hover {
-    -fx-background-color: cyan;
-}
 
 .btnLeft {
     -fx-background-image: url('../icons/back.png');
@@ -52,9 +49,6 @@
     -fx-background-size: 100%;
 }
 
-.btnLeft:hover {
-    -fx-background-color: cyan;
-}
 
 .btnShow {
     -fx-background-image: url('../icons/search.png');
@@ -64,9 +58,6 @@
     -fx-background-size: 100%;
 }
 
-.btnShow:hover {
-    -fx-background-color: cyan;
-}
 
 .btnEdit {
     -fx-background-image: url('../icons/edit.png');
@@ -74,10 +65,6 @@
     -fx-background-position: center;
     -fx-background-color: transparent;
     -fx-background-size: 100%;
-}
-
-.btnEdit:hover {
-    -fx-background-color: cyan;
 }
 
 .btnDelete {
@@ -88,9 +75,7 @@
     -fx-background-size: 100%;
 }
 
-.btnDelete:hover {
-    -fx-background-color: cyan;
-}
+
 
 .btnAdd {
     -fx-background-image: url('../icons/add.png');
@@ -100,9 +85,7 @@
     -fx-background-size: 100%;
 }
 
-.btnAdd:hover {
-    -fx-background-color: cyan;
-}
+
 
 .btnCopy {
     -fx-background-image: url('../icons/copy.png');
@@ -112,9 +95,6 @@
     -fx-background-size: 100%;
 }
 
-.btnCopy:hover {
-    -fx-background-color: cyan;
-}
 
 .btnMusic_Play {
     -fx-background-image: url('../icons/music_play.png');
@@ -124,9 +104,6 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Play:hover {
-    -fx-background-color: cyan;
-}
 
 .btnMusic_Pause {
     -fx-background-image: url('../icons/music_pause.png');
@@ -136,9 +113,7 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Pause:hover {
-    -fx-background-color: cyan;
-}
+
 
 .btnMusic_Shuffle {
     -fx-background-image: url('../icons/music_shuffle.png');
@@ -148,9 +123,6 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Shuffle:hover {
-    -fx-background-color: cyan;
-}
 
 .btnMusic_Skip {
     -fx-background-image: url('../icons/music_skip.png');
@@ -160,9 +132,7 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Skip:hover {
-    -fx-background-color: cyan;
-}
+
 
 .btnMusic_Last {
     -fx-background-image: url('../icons/music_last.png');
@@ -172,9 +142,7 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Last:hover {
-    -fx-background-color: cyan;
-}
+
 
 .btnMusic_Shuffle {
     -fx-background-image: url('../icons/music_shuffle.png');
@@ -184,12 +152,10 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Shuffle:hover {
-    -fx-background-color: cyan;
-}
+
 
 .btnMusic_Shuffle:selected {
-    -fx-background-color: cyan;
+    -fx-background-size: 90%;
 }
 
 .btnMusic_Volume {
@@ -200,10 +166,11 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Volume:hover {
-    -fx-background-color: cyan;
-}
 
 .btnMusic_Volume:selected {
     -fx-background-image: url('../icons/music_mute.png');
+}
+
+.button:hover{
+    -fx-background-size: 90%;
 }

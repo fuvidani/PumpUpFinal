@@ -40,7 +40,7 @@ import java.util.Optional;
  * Created by Daniel Fuevesi on 07.05.15.
  * Controller of the "Übungen" stage.
  */
-public class ExercisesController extends Controller {
+public class ExercisesController extends Controller implements VideoPlayable{
 
 
     private static Exercise exercise;

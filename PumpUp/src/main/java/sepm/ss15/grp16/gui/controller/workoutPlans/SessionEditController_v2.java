@@ -22,6 +22,7 @@ import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.exercises.VideoPlayable;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl;
@@ -34,7 +35,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class SessionEditController_v2 extends Controller {
+public class SessionEditController_v2 extends Controller{
     private static final Logger LOGGER = LogManager.getLogger(SessionEditController_v2.class);
 
     private TrainingsSession session_interClassCommunication;
