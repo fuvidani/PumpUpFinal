@@ -1,8 +1,10 @@
-.root, .mainBox {
+.root, .mainBox, .label, .button {
     -fx-background-color: white;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 15pt;
+    -fx-background-color: transparent;
 }
+
 
 .trainingBtn {
     -fx-background-color: transparent;
@@ -135,12 +137,6 @@
     -fx-border-color: transparent black transparent transparent;
 }
 
-.userInfo {
-
-    -fx-border-color: black black black black;
-    -fx-background-color: transparent;
-
-}
 
 .aboutGrid .label {
     -fx-background-color: white;

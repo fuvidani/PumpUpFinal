@@ -20,8 +20,8 @@ import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.gui.controller.exercises.ShowExerciseController;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl;
@@ -246,9 +246,16 @@ public class SessionEditController_v2 extends Controller {
         }
     }
 
+    public Exercise getExercise() {
+        return selection_exercise;
+    }
+
     @FXML
     void onClickShow(ActionEvent event) {
-        ShowExerciseController.exercise_interClassCommunication = selection_exercise;
+        LOGGER.debug("exercise to display: " + selection_exercise);
+
+        mainFrame.navigateToChild(PageEnum.DisplayExercise);
+
         //transitionLoader.openWaitStage("fxml/exercise/ShowExercise.fxml", (Stage) tblvExercises.getScene().getWindow(), selection_exercise.getName(), 500, 500, true);
     }
 
