@@ -21,92 +21,29 @@
                         <Insets left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox prefHeight="300.0">
+                  <HBox>
                      <children>
-                        <VBox />
-                        <TextArea fx:id="descriptionTextArea" editable="false" maxHeight="113.0" maxWidth="1053.0" prefHeight="99.0" prefWidth="500.0" styleClass="descriptionArea" text="Textuelle Beschreibung." wrapText="true">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </TextArea>
-                        <VBox prefHeight="672.0" prefWidth="520.0">
+                        <VBox>
                            <children>
-                              <Label alignment="CENTER" prefWidth="401.0" text="Kategorien">
+                              <TextArea fx:id="descriptionTextArea" editable="false" prefHeight="252.0" prefWidth="449.0" styleClass="descriptionArea" text="Textuelle Beschreibung." wrapText="true">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font size="18.0" />
                                  </font>
-                              </Label>
-                              <HBox>
-                                 <children>
-                                    <VBox>
-                                       <children>
-                                          <HBox prefHeight="17.0">
-                                             <children>
-                                                <Label prefWidth="100.0" styleClass="categoryHeader" text="Art">
-                                                   <font>
-                                                      <Font size="16.0" />
-                                                   </font>
-                                                   <HBox.margin>
-                                                      <Insets left="70.0" />
-                                                   </HBox.margin>
-                                                </Label>
-                                                <Label prefWidth="80.0" styleClass="categoryHeader" text="Geräte">
-                                                   <font>
-                                                      <Font size="16.0" />
-                                                   </font>
-                                                   <HBox.margin>
-                                                      <Insets left="40.0" />
-                                                   </HBox.margin>
-                                                </Label>
-                                                <Label prefWidth="150.0" styleClass="categoryHeader" text="Muskelgruppe">
-                                                   <font>
-                                                      <Font size="16.0" />
-                                                   </font>
-                                                   <HBox.margin>
-                                                      <Insets left="50.0" />
-                                                   </HBox.margin>
-                                                </Label>
-                                             </children>
-                                             <VBox.margin>
-                                                <Insets />
-                                             </VBox.margin>
-                                          </HBox>
-                                          <HBox>
-                                             <children>
-                                                <VBox fx:id="vboxType" prefWidth="100.0" spacing="5.0">
-                                                   <HBox.margin>
-                                                      <Insets left="70.0" />
-                                                   </HBox.margin>
-                                                </VBox>
-                                                <VBox fx:id="vboxEquipment" prefWidth="100.0" spacing="5.0">
-                                                   <HBox.margin>
-                                                      <Insets left="45.0" />
-                                                   </HBox.margin>
-                                                </VBox>
-                                                <VBox fx:id="vboxMuscle" prefWidth="160.0">
-                                                   <HBox.margin>
-                                                      <Insets left="25.0" />
-                                                   </HBox.margin>
-                                                </VBox>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                 </children>
+                              </TextArea>
+                              <Button fx:id="playVideoBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#showVideo" text="zum Video">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
                                  <VBox.margin>
-                                    <Insets top="30.0" />
+                                    <Insets bottom="10.0" top="20.0" />
                                  </VBox.margin>
-                              </HBox>
-                           </children>
-                        </VBox>
+                              </Button>
+                           </children></VBox>
                      </children>
                   </HBox>
-                  <HBox prefHeight="500.0">
+                  <HBox>
                      <children>
-                        <VBox prefHeight="200.0">
+                        <VBox>
                            <children>
                               <ImageView fx:id="leftArrow" fitHeight="32.0" fitWidth="32.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" styleClass="back">
                                  <image>
@@ -118,12 +55,12 @@
                               </ImageView>
                            </children>
                         </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox>
                            <children>
                               <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" />
                            </children>
                         </VBox>
-                        <VBox maxWidth="400.0" prefHeight="400.0">
+                        <VBox>
                            <children>
                               <ImageView fx:id="rightArrow" fitHeight="32.0" fitWidth="32.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" styleClass="forward">
                                  <image>
@@ -135,23 +72,77 @@
                               </ImageView>
                            </children>
                         </VBox>
-                        <HBox prefHeight="37.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Button fx:id="playVideoBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#showVideo" text="zum Video">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets left="100.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
-                        </HBox>
                      </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <Label alignment="CENTER" prefWidth="401.0" text="Kategorien">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <HBox>
+                     <children>
+                        <VBox>
+                           <children>
+                              <HBox prefHeight="17.0">
+                                 <children>
+                                    <Label prefWidth="100.0" styleClass="categoryHeader" text="Art">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="70.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label prefWidth="80.0" styleClass="categoryHeader" text="Geräte">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="40.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label prefWidth="150.0" styleClass="categoryHeader" text="Muskelgruppe">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="50.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <VBox fx:id="vboxType" prefWidth="100.0" spacing="5.0">
+                                       <HBox.margin>
+                                          <Insets left="70.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox fx:id="vboxEquipment" prefWidth="100.0" spacing="5.0">
+                                       <HBox.margin>
+                                          <Insets left="45.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox fx:id="vboxMuscle" prefWidth="160.0">
+                                       <HBox.margin>
+                                          <Insets left="25.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
                   </HBox>
                </children>
             </VBox>

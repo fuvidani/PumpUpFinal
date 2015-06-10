@@ -2,6 +2,7 @@ package sepm.ss15.grp16.gui;
 
 import com.github.sarxos.webcam.Webcam;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,7 +28,7 @@ public class NewMain extends Application {
         LOGGER.info("starting application");
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
 
-        FrameWindow mainFrame = new FrameWindow(context, primaryStage, PageEnum.Exercises);
+        FrameWindow mainFrame = new FrameWindow(context, primaryStage, PageEnum.Login);
 
         primaryStage.setOnCloseRequest(e -> {
             context.close();
