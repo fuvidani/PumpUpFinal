@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.gui.controller.exercises;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -21,6 +22,8 @@ public class VideoController extends Controller {
 
     @FXML
     private VBox videoBox;
+    @FXML
+    private Button playBtn;
     private Media media;
     private MediaPlayer player = null;
     private boolean isPlaying = false;
@@ -71,16 +74,17 @@ public class VideoController extends Controller {
             player = new MediaPlayer(media);
             smallMediaView.setMediaPlayer(null);
             smallMediaView.setMediaPlayer(player);
+            playBtn.setText("Video abspielen");
         }
         if (isPlaying) {
+            playBtn.setText("Video abspielen");
             player.pause();
             isPlaying = false;
         } else {
+            playBtn.setText("Video pausieren");
             player.play();
             isPlaying = true;
         }
-
-
     }
 
 }
