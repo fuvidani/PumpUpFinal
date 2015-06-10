@@ -147,6 +147,8 @@
     <bean id="displayExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.DisplayExerciseCotroller" scope="prototype">
         <property name="categoryService" ref="categoryService"/>
     </bean>
+
+    <bean id="videoController" class="sepm.ss15.grp16.gui.controller.exercises.VideoController" scope="prototype"/>
     <!-- ###### Calendar beans ###### -->
 
     <bean id="calendarDAO" class="sepm.ss15.grp16.persistence.dao.calendar.impl.H2CalendarDAOImpl"

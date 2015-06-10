@@ -7,7 +7,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.exercises.DisplayExerciseCotroller">
    <top>
       <Label fx:id="header" text="Übung" BorderPane.alignment="CENTER">
@@ -71,7 +70,7 @@
             </HBox>
             <VBox prefHeight="167.0" prefWidth="365.0">
                <children>
-                  <Button fx:id="playVideoBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#playVideo" text="Video abspielen">
+                  <Button fx:id="playVideoBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#showVideo" text="zum Video">
                      <font>
                         <Font size="14.0" />
                      </font>

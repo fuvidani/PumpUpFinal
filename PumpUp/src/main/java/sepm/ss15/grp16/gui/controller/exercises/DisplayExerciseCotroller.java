@@ -19,6 +19,7 @@ import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
 import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -111,7 +112,7 @@ public class DisplayExerciseCotroller extends Controller {
         } else {
             playVideoBtn.setDisable(false);
         }
-        showVideo();
+
 
         if (exercise.getGifLinks().size() > 0) {
             imageView.setVisible(true);
@@ -207,54 +208,8 @@ public class DisplayExerciseCotroller extends Controller {
     }
 
     @FXML
-    public void playVideo() {
-        LOGGER.debug("play video button clicked");
-        Duration totalDuration = player.getCycleDuration();
-        Duration currentDuration = player.getCurrentTime();
-        if (currentDuration.compareTo(totalDuration) == 0) {
-            isPlaying = false;
-            player = new MediaPlayer(media);
-            smallMediaView.setMediaPlayer(null);
-            smallMediaView.setVisible(true);
-            smallMediaView.setMediaPlayer(player);
-
-        }
-        if (isPlaying) {
-            player.pause();
-            isPlaying = false;
-        } else {
-            player.play();
-            isPlaying = true;
-        }
-
-
-    }
-
-
     private void showVideo() {
-        try {
-            if (exercise.getVideolink() != null) {
-                String pathToResource = getClass().getClassLoader().getResource("video").toURI().toString();
-                String filePath = pathToResource.concat("/" + exercise.getVideolink());
-                LOGGER.debug("filepath: " + filePath);
-                LOGGER.debug("videolink: " + exercise.getVideolink());
-                media = new Media(filePath);
-                player = new MediaPlayer(media);
-                player.setAutoPlay(false);
-
-                smallMediaView.setMediaPlayer(player);
-                smallMediaView.setVisible(true);
-                smallMediaView.setFitHeight(300);
-                videoBox.getChildren().add(smallMediaView);
-            } else {
-                smallMediaView.setMediaPlayer(null);
-                smallMediaView.setVisible(false);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
+       mainFrame.openDialog(PageEnum.VideoPlayer);
     }
 
 }

@@ -218,12 +218,11 @@
                                             <children>
                                                 <VBox prefHeight="200.0" prefWidth="100.0">
                                                     <children>
-                                                        <Button fx:id="playVideoBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#playVideo" text="Video abspielen">
+                                                        <Button fx:id="playVideoBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#showVideo" text="zum Video">
                                                             <font>
                                                                 <Font size="14.0" />
                                                             </font>
                                                         </Button>
-                                                        <VBox fx:id="videoBox" prefHeight="200.0" prefWidth="100.0" />
                                                     </children>
                                                     <HBox.margin>
                                                         <Insets left="100.0" />
