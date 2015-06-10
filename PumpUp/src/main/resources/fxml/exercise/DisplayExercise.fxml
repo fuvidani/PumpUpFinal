@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../../css/exerciseStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.exercises.DisplayExerciseCotroller">
+   <top>
+      <Label fx:id="header" text="Übung" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="45.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="50.0" top="20.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <left>
+      <VBox prefHeight="464.0" prefWidth="206.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Beschreibung" />
+            <TextArea fx:id="description" prefHeight="200.0" prefWidth="220.0" wrapText="true" />
+         </children>
+         <BorderPane.margin>
+            <Insets left="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <right>
+      <VBox prefHeight="464.0" prefWidth="329.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0">
+                     <children>
+                        <ImageView fx:id="leftArrow" fitHeight="32.0" fitWidth="32.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" styleClass="back">
+                           <image>
+                              <Image url="@../../icons/back.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets top="85.0" />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ImageView fx:id="imageView" fitHeight="221.0" fitWidth="281.0" pickOnBounds="true" preserveRatio="true" styleClass="imageView" />
+                     </children>
+                  </VBox>
+                  <VBox maxWidth="400.0" prefHeight="400.0">
+                     <children>
+                        <ImageView fx:id="rightArrow" fitHeight="32.0" fitWidth="32.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" styleClass="forward">
+                           <image>
+                              <Image url="@../../icons/forward.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets top="85.0" />
+                           </VBox.margin>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </HBox>
+            <VBox prefHeight="167.0" prefWidth="365.0">
+               <children>
+                  <Button fx:id="playVideoBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#showVideo" text="zum Video">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <VBox fx:id="videoBox" prefHeight="200.0" prefWidth="100.0" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </right>
+   <center>
+      <VBox prefHeight="609.0" prefWidth="502.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="52.0" prefWidth="474.0" spacing="10.0">
+               <children>
+                  <Label text="Kalorien pro Einheit" />
+                  <Label fx:id="calories" text="Label" />
+               </children>
+            </VBox>
+            <HBox spacing="70.0">
+               <children>
+                  <VBox fx:id="vboxType" spacing="5.0">
+                     <children>
+                        <Label text="Art" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vboxEquipment" spacing="5.0">
+                     <children>
+                        <Label text="Geräte" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vboxMuscle">
+                     <children>
+                        <Label text="Muskelgruppe" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#getBack" prefHeight="63.0" prefWidth="108.0" text="Zurück">
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

@@ -184,7 +184,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
     public void increaseDifficulty(Trainingsplan plan) {
         for (TrainingsSession session : plan.getTrainingsSessions()) {
             for (ExerciseSet set : session.getExerciseSets()) {
-                set.setRepeat((int) (set.getRepeat() * 1.25));
+               set.setRepeat(set.getRepeat() + 15);
             }
         }
     }
@@ -193,7 +193,11 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
     public void decreaseDifficulty(Trainingsplan plan) {
         for (TrainingsSession session : plan.getTrainingsSessions()) {
             for (ExerciseSet set : session.getExerciseSets()) {
-                set.setRepeat((int) (set.getRepeat() * 0.75));
+               if(set.getRepeat() >= 15){
+                   set.setRepeat(set.getRepeat() - 15);
+               }else{
+                   set.setRepeat(0);
+               }
             }
         }
     }
