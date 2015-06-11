@@ -217,10 +217,10 @@ public class WebcamController extends Controller {
     }
 
     @FXML
-    public void takePicture() {
-        if (toggleTimer.isSelected()) {
+    public void takePicture(){
+        if(toggleTimer.isSelected()){
             takePictureWithCountDown();
-        } else {
+        }else{
             takePictureWithoutTimer();
         }
     }
