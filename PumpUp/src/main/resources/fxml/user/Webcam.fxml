@@ -14,6 +14,7 @@
     <bottom>
         <FlowPane fx:id="webCamFooterFlowPane" alignment="CENTER" columnHalignment="CENTER" hgap="50.0" prefHeight="80.0" prefWidth="200.0" styleClass="footer">
             <children>
+            <ToggleButton fx:id="toggleBodyOutline" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="btnShowBodyOutline" />
                 <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#takePicture" prefHeight="50.0" prefWidth="50.0" styleClass="btnTakePicture" stylesheets="@../../css/webcamStyle.css">
                     <font>
                         <Font name="Segoe UI" size="18.0" fx:id="x1" />
@@ -22,21 +23,23 @@
                         <Tooltip text="Foto schießen" />
                     </tooltip>
                 </Button>
-                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#takePictureWithCountDown" prefHeight="50.0" prefWidth="50.0" styleClass="btnTakePictureDelay" stylesheets="@../../css/webcamStyle.css">
-                    <font>
-                        <Font name="Segoe UI" size="18.0" fx:id="x11" />
-                    </font>
-                    <tooltip>
-                        <Tooltip text="Foto schießen (5s)" />
-                    </tooltip>
-                </Button>
+            <ToggleButton fx:id="toggleTimer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" styleClass="btnTakePictureDelay" />
             </children>
         </FlowPane>
     </bottom>
     <center>
         <BorderPane fx:id="webCamBorderPane" prefHeight="200.0" prefWidth="200.0">
             <center>
-                <ImageView fx:id="webCamImageView" fitHeight="480.0" fitWidth="640.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+            <StackPane>
+               <children>
+                      <ImageView fx:id="webCamImageView" fitHeight="480.0" fitWidth="640.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                  <ImageView fx:id="bodyOutlineImageView" fitHeight="480.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/body_outline.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
             </center>
          <bottom>
             <Label fx:id="countDownLabel" BorderPane.alignment="CENTER">
