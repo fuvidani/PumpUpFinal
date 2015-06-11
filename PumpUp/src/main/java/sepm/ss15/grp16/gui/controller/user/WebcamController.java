@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -44,15 +45,21 @@ public class WebcamController extends Controller {
     private static final Dimension RESOLUTION = new Dimension(640, 480);
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
+    ImageView webCamImageView;
+    @FXML
+    ImageView bodyOutlineImageView;
+    @FXML
     private Label countDownLabel;
+    @FXML
+    private ToggleButton toggleBodyOutline;
+    @FXML
+    private ToggleButton toggleTimer;
     @FXML
     private ComboBox<WebCamDetails> cameraComboBox;
     @FXML
     private BorderPane webCamBorderPane;
     @FXML
     private FlowPane webCamFooterFlowPane;
-    @FXML
-    ImageView webCamImageView;
     private BufferedImage takenImage;
     private Webcam selectedWebcam = null;
     private boolean stopWebcam = false;
@@ -65,9 +72,17 @@ public class WebcamController extends Controller {
     @Override
     public void initController() {
 
+        bodyOutlineImageView.setVisible(false);
         countDownLabel.setVisible(false);
         countDownLabel.textProperty().bind(countDownProperty.asString());
         webCamBorderPane.getScene().getWindow().setOnCloseRequest(e -> WebcamController.this.onCloseAction());
+        toggleBodyOutline.setOnAction(event -> {
+            if (bodyOutlineImageView.isVisible()) {
+                bodyOutlineImageView.setVisible(false);
+            } else {
+                bodyOutlineImageView.setVisible(true);
+            }
+        });
 
         webCamFooterFlowPane.setDisable(true);
         ObservableList<WebCamDetails> webCamOptions = FXCollections.observableArrayList();
@@ -151,8 +166,8 @@ public class WebcamController extends Controller {
         webCamImageView.imageProperty().bind(imageProperty);
     }
 
-    @FXML
-    public void takePicture() {
+
+    private void takePictureWithoutTimer() {
         LOGGER.info("Taking image with webcam...");
         stopWebcam = true;
         webCamFooterFlowPane.setDisable(true);
@@ -185,8 +200,7 @@ public class WebcamController extends Controller {
         LOGGER.info("Image successfully taken");
     }
 
-    @FXML
-    public void takePictureWithCountDown() {
+    private void takePictureWithCountDown() {
         LOGGER.info("Taking image with webcam after 5s countdown...");
         webCamFooterFlowPane.setDisable(true);
         countDownLabel.setVisible(true);
@@ -196,10 +210,19 @@ public class WebcamController extends Controller {
         timeline = new Timeline(new KeyFrame(
                 Duration.millis(1000),
                 ae -> countDownProperty.set(countDownValue--)));
-        timeline.setOnFinished(event -> takePicture());
+        timeline.setOnFinished(event -> takePictureWithoutTimer());
         timeline.setCycleCount(6);
         timeline.playFromStart();
         LOGGER.info("Image successfully taken after 5s");
+    }
+
+    @FXML
+    public void takePicture() {
+        if (toggleTimer.isSelected()) {
+            takePictureWithCountDown();
+        } else {
+            takePictureWithoutTimer();
+        }
     }
 
     private void closeWebCam() {
@@ -235,7 +258,7 @@ public class WebcamController extends Controller {
     }
 
     private void onCloseAction() {
-        if(timeline != null) {
+        if (timeline != null) {
             timeline.stop();
         }
         destroySelectedWebCam();
