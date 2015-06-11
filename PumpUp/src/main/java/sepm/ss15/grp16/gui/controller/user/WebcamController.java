@@ -13,8 +13,10 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -34,7 +36,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
 
 /**
@@ -213,7 +214,7 @@ public class WebcamController extends Controller {
             }
         } catch (IOException e) {
             LOGGER.error("Saving image from webcam failed");
-        } catch (ServiceException e){
+        } catch (ServiceException e) {
             LOGGER.error("Saving image from webcam in db failed");
         }
         webCamFooterFlowPane.setDisable(false);
@@ -240,10 +241,10 @@ public class WebcamController extends Controller {
     }
 
     @FXML
-    public void takePicture(){
-        if(toggleTimer.isSelected()){
+    public void takePicture() {
+        if (toggleTimer.isSelected()) {
             takePictureWithCountDown();
-        }else{
+        } else {
             takePictureWithoutTimer();
         }
     }

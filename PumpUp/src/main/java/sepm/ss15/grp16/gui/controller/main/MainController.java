@@ -19,6 +19,7 @@ import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.WeightHistory;
+import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.workout.WorkoutstartController;
@@ -230,21 +231,17 @@ public class MainController extends Controller {
     }
 
     public void updateImage(){
+        LOGGER.info("Updating image in Main");
         try {
             PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(userService.getLoggedInUser().getUser_id());
 
             if (actualPictureHistory != null) {
-                String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-                LOGGER.debug("Loading from resources: " + pathToResource);
-                String pathOfNewImage = pathToResource + actualPictureHistory.getLocation();
-                LOGGER.debug("Loading image with path: " + pathOfNewImage);
-                File picture = new File(pathOfNewImage);
-                userImgView.setImage(new Image(picture.toURI().toString()));
+                userImgView.setImage(ImageLoader.loadImage(this.getClass(), actualPictureHistory.getLocation()));
             }
         }catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
     }
 
