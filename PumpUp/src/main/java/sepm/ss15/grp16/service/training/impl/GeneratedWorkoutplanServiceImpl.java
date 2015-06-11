@@ -192,7 +192,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
             TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
             sessions.add(session);
         }
-        result = new Trainingsplan(user, "Generierter Trainingsplan für Ausdauer", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Ausdauer zu entwickeln.", false, 4, sessions);
+        result = new Trainingsplan(user, "Generierter Trainingsplan f\u00fcr Ausdauer", "In diesem generierten Trainingsplan haben Sie unteschiedliche \u00dcbungen um Ihre Ausdauer zu trainieren.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
         return result;
     }
@@ -321,7 +321,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
             TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
             sessions.add(session);
         }
-        result = new Trainingsplan(user, "Generierter Trainingsplan für Kraft", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Kraft zu entwickeln.", false, 4, sessions);
+        result = new Trainingsplan(user, "Generierter Trainingsplan f\u00dcr Kraft", "In diesem generierten Trainingsplan haben Sie unteschiedliche \u00fcbungen um Ihre Kraft zu trainieren.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
         return result;
     }
@@ -448,7 +448,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
             TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
             sessions.add(session);
         }
-        result = new Trainingsplan(user, "Generierter Trainingsplan für Balance", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Balance zu entwickeln.", false, 4, sessions);
+        result = new Trainingsplan(user, "Generierter Trainingsplan f\u00fcr Balance", "In diesem generierten Trainingsplan haben Sie unteschiedliche \u00dcbungen um Ihre Balance zu trainieren.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
         return result;
     }
@@ -576,7 +576,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
             TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
             sessions.add(session);
         }
-        result = new Trainingsplan(user, "Generierter Trainingsplan für Flexibilität", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Flexibilität zu entwickeln.", false, 4, sessions);
+        result = new Trainingsplan(user, "Generierter Trainingsplan f\u00fcr Flexibilit\u00e4t", "In diesem generierten Trainingsplan haben Sie unteschiedliche \u00dcbungen um Ihre Flexibilit\u00e4t zu trainieren.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
         return result;
     }
@@ -586,15 +586,15 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
     public void validate(Gen_WorkoutplanPreferences dto) throws ValidationException {
         LOGGER.info("Entering validation in service.");
         if (dto == null) {
-            throw new ValidationException("Es wurden leere Parameter übergeben!");
+            throw new ValidationException("Es wurden leere Parameter \u00fcbergeben!");
         }
         TrainingsCategory goal = dto.getGoal();
         if (goal == null) {
-            throw new ValidationException("Bitte wählen Sie eines von den 4 Trainingszielen aus!");
+            throw new ValidationException("Bitte w\u00e4hlen Sie eines von den 4 Trainingszielen aus!");
         }
         List<EquipmentCategory> equipment = dto.getEquipment();
         if (equipment == null) {
-            throw new ValidationException("Ein Problem tritt auf während der Ausführung...");
+            throw new ValidationException("Ein Problem tritt auf w\u00e4hrend der Ausf\u00fchrung...");
         }
     }
 

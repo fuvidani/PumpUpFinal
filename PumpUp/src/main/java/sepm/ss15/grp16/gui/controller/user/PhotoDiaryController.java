@@ -83,8 +83,8 @@ public class PhotoDiaryController extends Controller {
             LOGGER.error("Couldn't go forward in picturehistory");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
-            alert.setHeaderText("Fehler beim durchblättern der Fotos");
-            alert.setContentText("Das nächste Foto konnte nicht geladen werden.");
+            alert.setHeaderText("Fehler beim durchbl\u00e4ttern der Fotos");
+            alert.setContentText("Das n\u00e4chste Foto konnte nicht geladen werden.");
             alert.showAndWait();
         }
     }
@@ -103,7 +103,7 @@ public class PhotoDiaryController extends Controller {
             LOGGER.error("Couldn't go backward in picturehistory");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
-            alert.setHeaderText("Fehler beim durchblättern der Fotos");
+            alert.setHeaderText("Fehler beim durchbl\u00e4ttern der Fotos");
             alert.setContentText("Das vorherige Foto konnte nicht geladen werden.");
             alert.showAndWait();
         }
@@ -120,14 +120,14 @@ public class PhotoDiaryController extends Controller {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText("Foto-Information");
-                alert.setContentText("Das Foto wurde erfolgreich zu ihrem Tagebuch hinzugefügt.");
+                alert.setContentText("Das Foto wurde erfolgreich zu ihrem Tagebuch hinzugef\u00fcgt.");
                 alert.showAndWait();
             } else {
                 LOGGER.error("Couldn't create picturehistory");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Fehler");
                 alert.setHeaderText("Fehlerhafte Angaben");
-                alert.setContentText("Es wurde kein Bild ausgewählt.");
+                alert.setContentText("Es wurde kein Bild ausgew\u00e4hlt.");
                 alert.showAndWait();
             }
         } catch (ValidationException e) {
@@ -157,7 +157,7 @@ public class PhotoDiaryController extends Controller {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText("Foto-Information");
-                alert.setContentText("Das Foto wurde erfolgreich aus ihrem Tagebuch gelöscht.");
+                alert.setContentText("Das Foto wurde erfolgreich aus ihrem Tagebuch gel\u00f6scht.");
                 alert.showAndWait();
             }
         } catch (ValidationException e) {
@@ -186,7 +186,7 @@ public class PhotoDiaryController extends Controller {
         FileChooser filechooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg");
         filechooser.getExtensionFilters().add(extFilterJPG);
-        filechooser.setTitle("Bild auswählen: ");
+        filechooser.setTitle("Bild ausw\u00e4hlen: ");
         File selectedFile = filechooser.showOpenDialog(null);
 
         if (selectedFile != null) {

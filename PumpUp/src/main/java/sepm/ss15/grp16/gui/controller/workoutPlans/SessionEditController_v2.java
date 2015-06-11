@@ -214,8 +214,8 @@ public class SessionEditController_v2 extends Controller{
     @FXML
     void onClickDelete(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Löschen bestätigen");
-        alert.setHeaderText("Wollen Sie die Übung wirklich aus der Session löschen?");
+        alert.setTitle("L\u00f6schen best\u00e4tigen");
+        alert.setHeaderText("Wollen Sie die \u00dcbung wirklich aus der Session l\u00f6schen?");
         ButtonType yes = new ButtonType("Ja");
         ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(yes, cancel);
@@ -374,7 +374,7 @@ public class SessionEditController_v2 extends Controller{
         // Create the custom dialog.
         Dialog<Pair<String, Pair<String, ExerciseSet.SetType>>> dialog = new Dialog<>();
 
-        String header = "Übung '" + (add ? (set.getExercise().getName() + "' hinzufügen") : (set.getExercise().getName() + "' bearbeiten"));
+        String header = "\u00dcbung '" + (add ? (set.getExercise().getName() + "' hinzf\u00fcgen") : (set.getExercise().getName() + "' bearbeiten"));
         dialog.setHeaderText(header);
 
         // Set the button types.
@@ -408,7 +408,7 @@ public class SessionEditController_v2 extends Controller{
         box.getChildren().addAll(repeat, minutes);
 
         if (add) {
-            grid.add(new Label("Sätze:"), 1, 0);
+            grid.add(new Label("S\u00e4tze:"), 1, 0);
             grid.add(count, 0, 0);
         }
         grid.add(repeat_count, 0, 1);

@@ -163,7 +163,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ansicht verlassen.");
             alert.setHeaderText("Wenn Sie abbrechen, wir der angezeigte Trainingsplan nicht gespeichert und verworfen.");
-            alert.setContentText("Möchten Sie die Ansicht verlassen?");
+            alert.setContentText("M\u00f6chten Sie die Ansicht verlassen?");
             ButtonType yes = new ButtonType("Ja");
             ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(yes, cancel);

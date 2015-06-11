@@ -65,7 +65,7 @@ public class WebcamController extends Controller {
         }
 
         cameraComboBox.setItems(webCamOptions);
-        cameraComboBox.setPromptText("Kamera auswählen:");
+        cameraComboBox.setPromptText("Kamera ausw\u00e4hlen:");
         cameraComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 initializeWebCam(newValue.getWebCamIndex());

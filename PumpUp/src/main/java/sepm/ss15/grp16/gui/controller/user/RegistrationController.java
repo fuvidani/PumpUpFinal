@@ -109,29 +109,29 @@ public class RegistrationController extends Controller {
         try {
             age = Integer.parseInt(age_textField.getText());
         } catch (NumberFormatException e) {
-            error += "Das Alter muss eine gültige Zahl größer 0 sein.\n";
+            error += "Das Alter muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         try {
             weight = Integer.parseInt(weight_textField.getText());
         } catch (NumberFormatException e) {
-            error += "Das Gewicht muss eine gültige Zahl größer 0 sein.\n";
+            error += "Das Gewicht muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         try {
             height = Integer.parseInt(height_textField.getText());
         } catch (NumberFormatException e) {
-            error += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
+            error += "Die Gr\u00f6\u00dfe muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         if (!bodyfat_textField.getText().isEmpty()) {
             try {
                 bodyfat = Integer.parseInt(bodyfat_textField.getText());
                 if (bodyfat < 0 || bodyfat > 100) {
-                    error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
+                    error += "Der K\u00f6rperfettanteil muss eine g\u00fcltige Zahl zwischen 0 und 100 sein.\n";
                 }
             } catch (NumberFormatException e) {
-                error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
+                error += "Der K\u00f6rperfettanteil muss eine g\u00fcltige Zahl zwischen 0 und 100 sein.\n";
             }
         }
 
@@ -146,7 +146,7 @@ public class RegistrationController extends Controller {
         }
 
         String genderString = ((RadioButton) group.getSelectedToggle()).getText();
-        gender = genderString.equals("Männlich");
+        gender = genderString.equals("M\u00e4nnlich");
 
         User user = new User(null, username, gender, age, height, email, null, false);
 
@@ -199,7 +199,7 @@ public class RegistrationController extends Controller {
         FileChooser filechooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg");
         filechooser.getExtensionFilters().add(extFilterJPG);
-        filechooser.setTitle("Bild auswählen: ");
+        filechooser.setTitle("Bild ausw\u00e4hlen: ");
         File selectedFile = filechooser.showOpenDialog(null);
 
         if (selectedFile != null) {

@@ -117,7 +117,7 @@ public class TrainingsSession implements DTOHelper {
 
     }
 
-    public boolean equalLists(List<ExerciseSet> one, List<ExerciseSet> two) {
+    private boolean equalLists(List<ExerciseSet> one, List<ExerciseSet> two) {
         if (one == null && two == null) {
             return true;
         }

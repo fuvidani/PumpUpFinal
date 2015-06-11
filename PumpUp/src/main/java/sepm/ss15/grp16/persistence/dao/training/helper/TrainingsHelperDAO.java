@@ -10,7 +10,7 @@ import java.util.List;
  * Author: Lukas
  * Date: 12.05.2015
  */
-public interface HelperDAO<T extends DTOHelper> {
+public interface TrainingsHelperDAO<T extends DTOHelper> {
 
     /**
      * creating a new DTOHelper from the generic type T

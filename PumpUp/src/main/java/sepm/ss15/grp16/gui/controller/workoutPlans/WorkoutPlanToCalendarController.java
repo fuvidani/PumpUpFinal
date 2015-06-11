@@ -183,7 +183,7 @@ public class WorkoutPlanToCalendarController extends Controller {
 
         if (dayOfWeeks.length < 1) {
             error = true;
-            errormessage = "Bitte mindestens einen Wochentag wählen!";
+            errormessage = "Bitte mindestens einen Wochentag w\u00e4hlen!";
         }
 
         LocalDate localDate = dateField.getValue();
@@ -194,7 +194,7 @@ public class WorkoutPlanToCalendarController extends Controller {
             date = Date.from(instant);
         } else {
             error = true;
-            errormessage = "Bitte ein Startdatum wählen!";
+            errormessage = "Bitte ein Startdatum w\u00e4hlen!";
         }
 
         if (error) {

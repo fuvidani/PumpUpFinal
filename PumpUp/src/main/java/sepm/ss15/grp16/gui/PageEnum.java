@@ -22,7 +22,7 @@ public enum PageEnum {
     WorkoutResult("fxml/workout/WorkoutResult.fxml", "Workout Resultate", 1300, 750),
     Playlist("fxml/workout/Playlist.fxml", "Playlist", 300, 500),
     Workoutstart("fxml/workout/Workoutstart.fxml", "Mit Training beginnen", 800, 600),
-    About("fxml/main/About.fxml", "Über", 600, 400),
+    About("fxml/main/About.fxml", "\u00dcber", 600, 400),
     Fotos("fxml/user/BodyPhotos.fxml", "Fotos", 1000, 750),
     Exercises("fxml/exercise/Exercises.fxml", "\u00dcbungen", 1300, 600),
     Manage_exercises("fxml/exercise/ManageExercise.fxml", "\u00dcbungen verwalten", 1300, 750),

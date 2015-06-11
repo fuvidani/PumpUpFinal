@@ -124,10 +124,13 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                         btnDecreaseDif.setDisable(false);
                     }
                 });
-        btnIncreaseDif.setTooltip(new Tooltip("Schwierigkeit erhöhen"));
+        btnIncreaseDif.setTooltip(new Tooltip("Schwierigkeit erh\u00f6hen"));
         btnDecreaseDif.setTooltip(new Tooltip("Schwierigkeit reduzieren"));
     }
 
+    /**
+     * updates the information panel
+     */
     private void updateInformations() {
 
         List<TrainingsSession> sessions = listViewSessions.getItems();
@@ -187,6 +190,12 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         }
     }
 
+    /**
+     * Reads the input datas. If they are valid, the TrainingsPlanService is called and the Trainingsplan
+     * will be created or updated. Otherwise an error is thrown with an alert dialog
+     *
+     * @param event
+     */
     @FXML
     public void saveWorkoutClicked(ActionEvent event) {
 
@@ -336,6 +345,10 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         });
     }
 
+    /**
+     * Ask for confirmation and close the window at confirmation
+     * @param event
+     */
     @FXML
     public void cancelClicked(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -355,9 +368,12 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         }
     }
 
+    /**
+     * opens the sessionEdit Window
+     * @param event
+     */
     @FXML
     public void addSession(ActionEvent event) {
-        //transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf\u00fcgen", 600, 400, false);
         mainFrame.openDialog(PageEnum.SessionEdit);
         if (session_interClassCommunication != null) {
             listViewSessions.getItems().add(session_interClassCommunication);
@@ -367,6 +383,10 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         }
     }
 
+    /**
+     * opens the sessionEdit Window
+     * @param event
+     */
     @FXML
     public void editSession(ActionEvent event) {
         if (selection != null) {
@@ -386,11 +406,12 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         }
     }
 
+
     @FXML
     public void deleteSession(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("L�schen best�tigen");
-        alert.setHeaderText("Wollen Sie die �bung wirklich aus der Session l�schen?");
+        alert.setTitle("L\u00f6schen best\u00e4tigen");
+        alert.setHeaderText("Wollen Sie die \u00dcbung wirklich aus der Session l\u00f6schen?");
         ButtonType yes = new ButtonType("Ja");
         ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(yes, cancel);

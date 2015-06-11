@@ -81,13 +81,13 @@ public class FrameWindow extends BorderPane {
     private void initMenu()
     {
         Menu user = new Menu("Benutzer");
-        addNavigationDialogItemToMenu(user, "Körperdaten ändern", PageEnum.UserEdit);
+        addNavigationDialogItemToMenu(user, "K\u00f6rperdaten \u00e4ndern", PageEnum.UserEdit);
         addNavigationDialogItemToMenu(user, "Eigene Fotos verwalten", PageEnum.PhotoDiary);
         addItemToMenu(user, "Abmelden", event -> navigateToParent());
         Menu view = new Menu("Ansicht");
         addNavigationItemToMenu(view, "Trainingskalender", PageEnum.Calendar);
-        addNavigationItemToMenu(view, "Trainingspläne", PageEnum.Workoutplan);
-        addNavigationItemToMenu(view, "Übungen", PageEnum.Exercises);
+        addNavigationItemToMenu(view, "Trainingspl\u00e4ne", PageEnum.Workoutplan);
+        addNavigationItemToMenu(view, "\u00dcbungen", PageEnum.Exercises);
 
         personalMenu = new Menu();
 
