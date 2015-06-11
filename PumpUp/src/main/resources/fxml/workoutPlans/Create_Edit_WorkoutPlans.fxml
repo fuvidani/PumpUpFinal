@@ -267,8 +267,8 @@
                                                 <Insets />
                                             </VBox.margin>
                                         </Button>
-                                        <Button fx:id="btnIncreaseDif" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickIncreaseDif" prefHeight="50.0" text="+" />
-                                        <Button fx:id="btnDecreaseDif" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnClickDecreaseDif" prefHeight="50.0" text="-" />
+                                        <Button fx:id="btnIncreaseDif" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickIncreaseDif" prefHeight="50.0" styleClass="btnIncr" />
+                                        <Button fx:id="btnDecreaseDif" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnClickDecreaseDif" prefHeight="50.0" styleClass="btnDecr" />
                                     </children>
                                     <HBox.margin>
                                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />

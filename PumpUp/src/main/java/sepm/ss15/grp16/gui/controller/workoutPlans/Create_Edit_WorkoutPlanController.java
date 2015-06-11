@@ -124,6 +124,13 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                         btnDecreaseDif.setDisable(false);
                     }
                 });
+
+        listViewSessions.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                this.editSession(null);
+            }
+        });
+
         btnIncreaseDif.setTooltip(new Tooltip("Schwierigkeit erh\u00f6hen"));
         btnDecreaseDif.setTooltip(new Tooltip("Schwierigkeit reduzieren"));
     }
@@ -363,7 +370,6 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         if (result.get() == yes) {
             plan_interClassCommunication = null;
             session_interClassCommunication = null;
-            //this.stage.close();
             mainFrame.navigateToParent();
         }
     }
@@ -390,16 +396,12 @@ public class Create_Edit_WorkoutPlanController extends Controller {
     @FXML
     public void editSession(ActionEvent event) {
         if (selection != null) {
-            //SessionEditController_v2.session_interClassCommunication = selection;
             session_interClassCommunication = selection;
         }
-
-        //transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session bearbeiten", 600, 400, false);
         mainFrame.openDialog(PageEnum.SessionEdit);
 
         if (session_interClassCommunication != null) {
-            listViewSessions.getItems().remove(selection);
-            listViewSessions.getItems().add(session_interClassCommunication);
+            listViewSessions.getItems().set(listViewSessions.getItems().indexOf(selection),session_interClassCommunication);
             session_interClassCommunication = null;
             setUpListView();
             updateInformations();

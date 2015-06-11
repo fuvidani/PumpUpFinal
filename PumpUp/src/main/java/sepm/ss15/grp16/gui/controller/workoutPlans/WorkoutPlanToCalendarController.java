@@ -36,6 +36,7 @@ public class WorkoutPlanToCalendarController extends Controller {
     private TrainingsplanService trainingsplanService;
     private UserService userService;
 
+    private boolean finished = false;
 
     @FXML
     private CheckBox thursdayCheck;
@@ -123,6 +124,7 @@ public class WorkoutPlanToCalendarController extends Controller {
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
+            finished = true;
             mainFrame.navigateToParent();
             plan_interClassCommunication = null;
 
@@ -216,6 +218,10 @@ public class WorkoutPlanToCalendarController extends Controller {
 
     public void setCalendarService(CalendarService calendarService) {
         this.calendarService = calendarService;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 }
 

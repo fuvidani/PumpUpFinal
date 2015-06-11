@@ -22,10 +22,10 @@ import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.gui.controller.exercises.VideoPlayable;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl;
+import sepm.ss15.grp16.service.training.TrainingsplanService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.impl.UserServiceImpl;
 
@@ -35,13 +35,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class SessionEditController_v2 extends Controller{
+public class SessionEditController_v2 extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(SessionEditController_v2.class);
 
     private TrainingsSession session_interClassCommunication;
 
     private ExerciseService exerciseService;
     private UserService userService;
+    private TrainingsplanService trainingsplanService;
 
     private ObservableList<Exercise> masterdata;
 
@@ -85,7 +86,13 @@ public class SessionEditController_v2 extends Controller{
     private Button btnAdd;
 
     @FXML
-    private TableView<ExerciseSet> tblvExerciseTable;
+    private Button btnIncr;
+
+    @FXML
+    private Button btnDecr;
+
+    @FXML
+    private TableView<ExerciseSet> tblvSetTable;
 
     @FXML
     private TableColumn<ExerciseSet, Integer> tblcOrder;
@@ -97,7 +104,7 @@ public class SessionEditController_v2 extends Controller{
     private TableColumn<ExerciseSet, String> tblcExercise;
 
     @FXML
-    void OnClickCancel(ActionEvent event) {
+    public void OnClickCancel(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("\u00c4nderungen verwerfen");
         alert.setHeaderText("Wollen Sie wirklich abbrechen?");
@@ -114,7 +121,7 @@ public class SessionEditController_v2 extends Controller{
     }
 
     @FXML
-    void onClickFinish(ActionEvent event) {
+    public void onClickFinish(ActionEvent event) {
         TrainingsSession session = createValidSession();
         if (session != null) {
             // Create_Edit_WorkoutPlanController.session_interClassCommunication = session;
@@ -138,7 +145,7 @@ public class SessionEditController_v2 extends Controller{
             errormessage = "Name ist leer!";
         }
 
-        List<ExerciseSet> data = tblvExerciseTable.getItems();
+        List<ExerciseSet> data = tblvSetTable.getItems();
 
         if (data == null || data.isEmpty()) {
             error = true;
@@ -160,11 +167,11 @@ public class SessionEditController_v2 extends Controller{
     }
 
     @FXML
-    private void onClickUp(ActionEvent event) {
+    public void onClickUp(ActionEvent event) {
 
         ObservableList<ExerciseSet> sets =
                 FXCollections.observableArrayList(
-                        tblvExerciseTable.getItems()
+                        tblvSetTable.getItems()
                 );
 
         sets.remove(selection_set);
@@ -174,17 +181,17 @@ public class SessionEditController_v2 extends Controller{
         });
         sets.add(selection_set);
 
-        tblvExerciseTable.getItems().clear();
-        tblvExerciseTable.setItems(sets);
-        tblvExerciseTable.sort();
+        tblvSetTable.getItems().clear();
+        tblvSetTable.setItems(sets);
+        tblvSetTable.sort();
         clearSelection();
     }
 
     @FXML
-    private void onClickDown(ActionEvent event) {
+    public void onClickDown(ActionEvent event) {
         ObservableList<ExerciseSet> sets =
                 FXCollections.observableArrayList(
-                        tblvExerciseTable.getItems()
+                        tblvSetTable.getItems()
                 );
 
         sets.remove(selection_set);
@@ -194,25 +201,47 @@ public class SessionEditController_v2 extends Controller{
         });
         sets.add(selection_set);
 
-        tblvExerciseTable.getItems().clear();
-        tblvExerciseTable.setItems(sets);
-        tblvExerciseTable.sort();
+        tblvSetTable.getItems().clear();
+        tblvSetTable.setItems(sets);
+        tblvSetTable.sort();
         clearSelection();
     }
 
     @FXML
-    void onClickEdit(ActionEvent event) {
+    public void onClickDecrease(ActionEvent event) {
+        ObservableList<ExerciseSet> sets =
+                FXCollections.observableArrayList(
+                        tblvSetTable.getItems()
+                );
+        trainingsplanService.decreaseDifficulty(new TrainingsSession(null,null,null,sets));
+        tblvSetTable.getItems().clear();
+        tblvSetTable.setItems(sets);
+    }
+
+    @FXML
+    public void onClickIncrease(ActionEvent event) {
+        ObservableList<ExerciseSet> sets =
+                FXCollections.observableArrayList(
+                        tblvSetTable.getItems()
+                );
+        trainingsplanService.increaseDifficulty(new TrainingsSession(null, null, null, sets));
+        tblvSetTable.getItems().clear();
+        tblvSetTable.setItems(sets);
+    }
+
+    @FXML
+    public void onClickEdit(ActionEvent event) {
         List<ExerciseSet> sets = launchDialog(selection_set, false);
         if (sets != null) {
-            tblvExerciseTable.getItems().remove(selection_set);
-            tblvExerciseTable.getItems().addAll(sets);
+            tblvSetTable.getItems().remove(selection_set);
+            tblvSetTable.getItems().addAll(sets);
             clearSelection();
-            tblvExerciseTable.sort();
+            tblvSetTable.sort();
         }
     }
 
     @FXML
-    void onClickDelete(ActionEvent event) {
+    public void onClickDelete(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("L\u00f6schen best\u00e4tigen");
         alert.setHeaderText("Wollen Sie die \u00dcbung wirklich aus der Session l\u00f6schen?");
@@ -222,9 +251,9 @@ public class SessionEditController_v2 extends Controller{
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
-            tblvExerciseTable.getItems().remove(selection_set);
+            tblvSetTable.getItems().remove(selection_set);
 
-            List<ExerciseSet> sets = tblvExerciseTable.getItems();
+            List<ExerciseSet> sets = tblvSetTable.getItems();
             if (sets != null) {
                 for (int i = 0; i < sets.size(); i++) {
                     ExerciseSet set = sets.get(i);
@@ -237,12 +266,12 @@ public class SessionEditController_v2 extends Controller{
     }
 
     @FXML
-    void OnClickAdd(ActionEvent event) {
+    public void OnClickAdd(ActionEvent event) {
         ExerciseSet set = new ExerciseSet();
         set.setExercise(selection_exercise);
         List<ExerciseSet> sets = launchDialog(set, true);
         if (sets != null) {
-            tblvExerciseTable.getItems().addAll(sets);
+            tblvSetTable.getItems().addAll(sets);
             clearSelection();
         }
     }
@@ -252,7 +281,7 @@ public class SessionEditController_v2 extends Controller{
     }
 
     @FXML
-    void onClickShow(ActionEvent event) {
+    public void onClickShow(ActionEvent event) {
         LOGGER.debug("exercise to display: " + selection_exercise);
 
         mainFrame.navigateToChild(PageEnum.DisplayExercise);
@@ -267,7 +296,7 @@ public class SessionEditController_v2 extends Controller{
             tblcType.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getRepeat() +
                     ((p.getValue().getType() == ExerciseSet.SetType.repeat) ? " x" : " sek")));
 
-            tblvExerciseTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            tblvSetTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
                 if (newValue != null) {
                     selection_set = new ExerciseSet(newValue);
                     btnDelete.setDisable(false);
@@ -284,12 +313,12 @@ public class SessionEditController_v2 extends Controller{
                                 session_interClassCommunication.getExerciseSets()
                         );
 
-                tblvExerciseTable.setItems(data);
+                tblvSetTable.setItems(data);
 
             }
-            tblvExerciseTable.sortPolicyProperty().set(t -> {
+            tblvSetTable.sortPolicyProperty().set(t -> {
                 Comparator<ExerciseSet> comparator = (r1, r2) -> r1.getOrder_nr() < r2.getOrder_nr() ? -1 : 1;
-                FXCollections.sort(tblvExerciseTable.getItems(), comparator);
+                FXCollections.sort(tblvSetTable.getItems(), comparator);
                 return true;
             });
 
@@ -333,6 +362,22 @@ public class SessionEditController_v2 extends Controller{
             txtFilter.textProperty().addListener((observable, oldValue, newValue) -> {
                 updateFilteredData();
             });
+
+            btnIncr.setTooltip(new Tooltip("Schwierigkeit aller Sets erh\u00f6hen"));
+            btnDecr.setTooltip(new Tooltip("Schwierigkeit aller Sets reduzieren"));
+
+            tblvSetTable.setOnMousePressed(event -> {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                    this.onClickEdit(null);
+                }
+            });
+
+            tblvExercises.setOnMousePressed(event -> {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                   this.OnClickAdd(null);
+                }
+            });
+
         } catch (ServiceException e) {
             LOGGER.error("Error opening SetStage, Errormessage: " + e);
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -366,7 +411,7 @@ public class SessionEditController_v2 extends Controller{
         btnUp.setDisable(true);
         btnDown.setDisable(true);
 
-        tblvExerciseTable.getSelectionModel().clearSelection();
+        tblvSetTable.getSelectionModel().clearSelection();
 
     }
 
@@ -511,7 +556,7 @@ public class SessionEditController_v2 extends Controller{
             if (set.getOrder_nr() != null) {
                 order_nr = set.getOrder_nr();
             } else {
-                order_nr = tblvExerciseTable.getItems().size() + 1;
+                order_nr = tblvSetTable.getItems().size() + 1;
             }
             return new ExerciseSet(null, set.getExercise(), userService.getLoggedInUser(),
                     repeat_int, setType, order_nr, false);
@@ -525,6 +570,10 @@ public class SessionEditController_v2 extends Controller{
 
     public void setUserService(UserServiceImpl userService) {
         this.userService = userService;
+    }
+
+    public void setTrainingsplanService(sepm.ss15.grp16.service.training.impl.TrainingsPlanServiceImpl trainingsplanService) {
+        this.trainingsplanService = trainingsplanService;
     }
 }
 

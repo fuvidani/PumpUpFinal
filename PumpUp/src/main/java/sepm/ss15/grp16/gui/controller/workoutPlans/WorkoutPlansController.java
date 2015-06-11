@@ -128,6 +128,16 @@ public class WorkoutPlansController extends Controller {
             setUpListView();
             workoutPlansListView.setItems(data);
 
+            workoutPlansListView.setOnMousePressed(event -> {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                    if(workoutPlansListView.getSelectionModel().getSelectedItem().getUser()!=null){
+                        this.editWorkoutPlanClicked(null);
+                    } else {
+                        this.copyWorkoutPlanClicked(null);
+                    }
+                }
+            });
+
             listViewSessions.setMouseTransparent(true);
             listViewSessions.setFocusTraversable(false);
 
@@ -467,9 +477,9 @@ public class WorkoutPlansController extends Controller {
     @FXML
     public void embedInCalenderClicked(ActionEvent event) {
         plan_interClassCommunication = selection;
-        //transitionLoader.openWaitStage("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", (Stage) listViewSessions.getScene().getWindow(), "Trainingsplan in Kalender exportieren", 800, 600, false);
         mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
-        mainFrame.navigateToChild(PageEnum.Calendar);
+        if (((WorkoutPlanToCalendarController) this.getChildController()).isFinished())
+            mainFrame.navigateToChild(PageEnum.Calendar);
     }
 
     @FXML
