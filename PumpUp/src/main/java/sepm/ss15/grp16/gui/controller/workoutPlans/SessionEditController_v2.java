@@ -109,7 +109,7 @@ public class SessionEditController_v2 extends Controller{
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
             session_interClassCommunication = null;
-            this.stage.close();
+            mainFrame.navigateToParent();
         }
     }
 
@@ -256,8 +256,6 @@ public class SessionEditController_v2 extends Controller{
         LOGGER.debug("exercise to display: " + selection_exercise);
 
         mainFrame.navigateToChild(PageEnum.DisplayExercise);
-
-        //transitionLoader.openWaitStage("fxml/exercise/ShowExercise.fxml", (Stage) tblvExercises.getScene().getWindow(), selection_exercise.getName(), 500, 500, true);
     }
 
     @Override
@@ -342,7 +340,6 @@ public class SessionEditController_v2 extends Controller{
             alert.setHeaderText("Fehler beim \u00f6ffnen des Fensters!");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-            e.printStackTrace();
         }
     }
 

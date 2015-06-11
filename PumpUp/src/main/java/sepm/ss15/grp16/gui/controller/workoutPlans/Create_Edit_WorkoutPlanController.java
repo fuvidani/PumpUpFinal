@@ -52,10 +52,10 @@ public class Create_Edit_WorkoutPlanController extends Controller {
     private TextArea txtDescr;
 
     @FXML
-    private Text txtCal_sum;
+    private Label txtCal_sum;
 
     @FXML
-    private Text txtCal_mean;
+    private Label txtCal_mean;
 
     @FXML
     private Label txtTraining;
@@ -155,6 +155,10 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                     }
                 }
             }
+            int calories_mean = calories_sum / plan_interClassCommunication.getTrainingsSessions().size();
+            txtCal_sum.setText(String.valueOf(calories_sum));
+            txtCal_mean.setText(String.valueOf(calories_mean));
+
             String value_training = "";
             String value_equip = "";
             String value_muscle = "";

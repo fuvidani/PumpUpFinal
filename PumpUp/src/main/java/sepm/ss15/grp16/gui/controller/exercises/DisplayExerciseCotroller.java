@@ -88,22 +88,14 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
         LOGGER.debug("stranded in DisplayExerciseController");
         exercise = ((SessionEditController_v2) this.getParentController()).getExercise();
 
-        leftArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                prevPicButtonClicked();
-                event.consume();
-            }
+        leftArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            prevPicButtonClicked();
+            event.consume();
         });
 
-        rightArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                nexPicButtonClicked();
-                event.consume();
-            }
+        rightArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            nexPicButtonClicked();
+            event.consume();
         });
 
         this.setContent();

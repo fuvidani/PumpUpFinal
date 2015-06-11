@@ -58,13 +58,13 @@ public class WorkoutPlansController extends Controller {
     private TextArea trainingDescr;
 
     @FXML
-    private Text txtDuration;
+    private Label txtDuration;
 
     @FXML
-    private Text txtCal_sum;
+    private Label txtCal_sum;
 
     @FXML
-    private Text txtCal_mean;
+    private Label txtCal_mean;
 
     @FXML
     private Label txtTraining;
@@ -127,6 +127,9 @@ public class WorkoutPlansController extends Controller {
 
             setUpListView();
             workoutPlansListView.setItems(data);
+
+            listViewSessions.setMouseTransparent(true);
+            listViewSessions.setFocusTraversable(false);
 
         } catch (ServiceException e) {
             e.printStackTrace();
@@ -371,7 +374,7 @@ public class WorkoutPlansController extends Controller {
     public void generateWorkoutPlanClicked(ActionEvent event) {
         mainFrame.openDialog(PageEnum.Workoutplan_generate);
         GenerateWorkoutPlanController controller = (GenerateWorkoutPlanController) this.getChildController();
-        if(controller.getFlag()) {
+        if (controller.getFlag()) {
             this.generatedWorkoutPlan = controller.getGeneratedWorkoutPlan();
             this.selectedGoal = controller.getSelectedGoal();
             mainFrame.navigateToChild(PageEnum.Workoutplan_generate_result);
@@ -383,17 +386,19 @@ public class WorkoutPlansController extends Controller {
 
     /**
      * Will be called by the GeneratedWorkoutPlanResultController to get the DTO.
+     *
      * @return the generated workout plan by the service
      */
-    public Trainingsplan getGeneratedWorkoutPlan(){
+    public Trainingsplan getGeneratedWorkoutPlan() {
         return this.generatedWorkoutPlan;
     }
 
     /**
      * Children controllers will call this method to know which goal the user picked.
+     *
      * @return the goal as a string
      */
-    public String getSelectedGoal(){
+    public String getSelectedGoal() {
         return this.selectedGoal;
     }
 

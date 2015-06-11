@@ -26,8 +26,8 @@ public enum PageEnum {
     Fotos("fxml/user/BodyPhotos.fxml", "Fotos", 1000, 750),
     Exercises("fxml/exercise/Exercises.fxml", "\u00dcbungen", 1300, 600),
     Manage_exercises("fxml/exercise/ManageExercise.fxml", "\u00dcbungen verwalten", 1300, 750),
-    DisplayExercise("fxml/exercise/DisplayExercise.fxml","\u00dcbunge anzeigen", 1000, 600 ),
-    VideoPlayer("fxml/exercise/VideoPlayer.fxml","\u00dcbunge anzeigen", 300, 600);
+    DisplayExercise("fxml/exercise/DisplayExercise.fxml","\u00dcbung anzeigen", 1000, 600 ),
+    VideoPlayer("fxml/exercise/VideoPlayer.fxml","\u00dcbung anzeigen", 300, 600);
 
     private final String fxml;
     private final String title;

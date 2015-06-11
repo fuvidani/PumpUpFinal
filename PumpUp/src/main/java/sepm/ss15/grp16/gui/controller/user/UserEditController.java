@@ -183,8 +183,7 @@ public class UserEditController extends Controller {
             alert.setHeaderText("Update-Information");
             alert.setContentText("Sie haben ihre Daten erfolgreich aktualisiert.");
             alert.showAndWait();
-            Stage stage = (Stage) userEditPane.getScene().getWindow();
-            stage.close();
+            mainFrame.navigateToParent();
         } catch (ValidationException e) {
             LOGGER.error("Couldn't update user");
             Alert alert = new Alert(Alert.AlertType.ERROR);

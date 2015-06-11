@@ -1,9 +1,17 @@
 .workoutPlanBox {
-    -fx-font-size: 12pt;
+    -fx-font-size: 11pt;
+}
+
+.workoutPlanBox .label {
+    -fx-font-size: 11pt;
+}
+
+.workoutPlanBox .button {
+    -fx-font-size: 11pt;
 }
 
 #trainings-table-view .column-header .label {
-    -fx-font-size: 12pt;
+    -fx-font-size: 10pt;
     -fx-font-weight: bold;
 
 }
