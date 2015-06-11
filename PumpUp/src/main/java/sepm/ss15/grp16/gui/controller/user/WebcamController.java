@@ -207,7 +207,7 @@ public class WebcamController extends Controller {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information");
                     alert.setHeaderText("Foto-Information");
-                    alert.setContentText("Das Foto wurde erfolgreich gespeichert.");
+                    alert.setContentText("Das Foto wurde erfolgreich gespeichert und ihrem Fototagebuch hinzugefuegt.");
                     alert.showAndWait();
                 }
             }
