@@ -13,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
@@ -199,17 +198,9 @@ public class WebcamController extends Controller {
                 File file = filechooser.showSaveDialog(null);
                 if (file != null) {
                     ImageIO.write(image, "JPG", file);
-                    LOGGER.info("Picture saved in: " + file.getAbsolutePath());
-
                     PictureHistory pictureHistory = new PictureHistory(null, userService.getLoggedInUser().getUser_id(), file.getAbsolutePath(), null);
                     pictureHistoryService.create(pictureHistory);
                     photoDiaryController.reloadImages();
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information");
-                    alert.setHeaderText("Foto-Information");
-                    alert.setContentText("Das Foto wurde erfolgreich gespeichert und ihrem Fototagebuch hinzugefuegt.");
-                    alert.showAndWait();
                 }
             }
         } catch (IOException e) {
