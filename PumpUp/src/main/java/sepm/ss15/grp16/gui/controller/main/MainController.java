@@ -198,20 +198,9 @@ public class MainController extends Controller {
                 bodyfat = actualBodyfathistory.getBodyfat();
             }
 
-            PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(user_id);
-
-            if (actualPictureHistory != null) {
-                String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-                LOGGER.debug("Loading from resources: " + pathToResource);
-                String pathOfNewImage = pathToResource + actualPictureHistory.getLocation();
-                LOGGER.debug("Loading image with path: " + pathOfNewImage);
-                File picture = new File(pathOfNewImage);
-                userImgView.setImage(new Image(picture.toURI().toString()));
-            }
+            updateImage();
 
         } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
@@ -238,6 +227,25 @@ public class MainController extends Controller {
             emailTextField.setText(email);
         }
         makeUserChart();
+    }
+
+    public void updateImage(){
+        try {
+            PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(userService.getLoggedInUser().getUser_id());
+
+            if (actualPictureHistory != null) {
+                String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+                LOGGER.debug("Loading from resources: " + pathToResource);
+                String pathOfNewImage = pathToResource + actualPictureHistory.getLocation();
+                LOGGER.debug("Loading image with path: " + pathOfNewImage);
+                File picture = new File(pathOfNewImage);
+                userImgView.setImage(new Image(picture.toURI().toString()));
+            }
+        }catch (ServiceException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     private void makeUserChart() {

@@ -105,6 +105,8 @@
 
     <bean id="webcamController" class="sepm.ss15.grp16.gui.controller.user.WebcamController"
           scope="prototype">
+        <property name="userService" ref="userService"/>
+        <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
     <!-- ###### Exercise beans ###### -->

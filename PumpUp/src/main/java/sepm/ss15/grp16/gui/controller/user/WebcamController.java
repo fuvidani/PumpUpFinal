@@ -13,10 +13,8 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -25,13 +23,18 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.user.PictureHistoryService;
+import sepm.ss15.grp16.service.user.UserService;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 
 /**
@@ -67,10 +70,22 @@ public class WebcamController extends Controller {
     private IntegerProperty countDownProperty = new SimpleIntegerProperty();
     private int countDownValue;
     private Timeline timeline;
+    private UserService userService;
+    private PictureHistoryService pictureHistoryService;
+    private PhotoDiaryController photoDiaryController;
 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void setPictureHistoryService(PictureHistoryService pictureHistoryService) {
+        this.pictureHistoryService = pictureHistoryService;
+    }
 
     @Override
     public void initController() {
+
+        photoDiaryController = (PhotoDiaryController) parentController;
 
         bodyOutlineImageView.setVisible(false);
         countDownLabel.setVisible(false);
@@ -183,6 +198,12 @@ public class WebcamController extends Controller {
                 File file = filechooser.showSaveDialog(null);
                 if (file != null) {
                     ImageIO.write(image, "JPG", file);
+                    LOGGER.info("Picture saved in: " + file.getAbsolutePath());
+
+                    PictureHistory pictureHistory = new PictureHistory(null, userService.getLoggedInUser().getUser_id(), file.getAbsolutePath(), null);
+                    pictureHistoryService.create(pictureHistory);
+                    photoDiaryController.reloadImages();
+
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information");
                     alert.setHeaderText("Foto-Information");
@@ -192,6 +213,8 @@ public class WebcamController extends Controller {
             }
         } catch (IOException e) {
             LOGGER.error("Saving image from webcam failed");
+        } catch (ServiceException e){
+            LOGGER.error("Saving image from webcam in db failed");
         }
         webCamFooterFlowPane.setDisable(false);
         stopWebcam = false;

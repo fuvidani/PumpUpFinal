@@ -14,6 +14,7 @@ import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.user.PictureHistoryService;
@@ -42,6 +43,7 @@ public class PhotoDiaryController extends Controller {
     private List<PictureHistory> pictureHistoryList;
     private int indexOfCurrentPicture;
     private String selectedPicturePath;
+    private MainController mainController;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -54,6 +56,7 @@ public class PhotoDiaryController extends Controller {
     @Override
     public void initController() {
 
+        mainController = (MainController) parentController;
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
@@ -208,7 +211,8 @@ public class PhotoDiaryController extends Controller {
         }
     }
 
-    private void reloadImages() {
+    public void reloadImages() {
+        mainController.updateImage();
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
