@@ -105,6 +105,8 @@
 
     <bean id="webcamController" class="sepm.ss15.grp16.gui.controller.user.WebcamController"
           scope="prototype">
+        <property name="userService" ref="userService"/>
+        <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
     <!-- ###### Exercise beans ###### -->
@@ -236,6 +238,7 @@
     <bean id="sessionEditController_v2" class="sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2">
         <property name="exerciseService" ref="exerciseService"/>
         <property name="userService" ref="userService"/>
+        <property name="trainingsplanService" ref="trainingsplanService"/>
     </bean>
 
     <bean id="generatedWorkoutplanService"

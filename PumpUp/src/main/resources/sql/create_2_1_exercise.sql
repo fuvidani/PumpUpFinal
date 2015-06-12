@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS gif (
 
 
 CREATE SEQUENCE IF NOT EXISTS exercise_seq START WITH 28 INCREMENT BY 1;
-CREATE SEQUENCE IF NOT EXISTS gif_seq START WITH 38 INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS gif_seq START WITH 50 INCREMENT BY 1;
 CREATE SEQUENCE IF NOT EXISTS category_seq START WITH 22 INCREMENT BY 1;
 CREATE SEQUENCE IF NOT EXISTS categoryName_seq START WITH 3 INCREMENT BY 1;
 
@@ -89,7 +89,7 @@ MERGE INTO exercise KEY (id) VALUES
   (5, 'Strandschere', 'Legen Sie sich mit gestreckten Beinen auf die linke Seite und stützen Sie den Kopf mit dem linken Arm ab.
   Die andere Hand stützen Sie vor Ihrer Brust auf. Heben Sie dann Ihr rechtes Bein so hoch wie möglich an und halten Sie es gestreckt für
   drei Sekunden in der', 0.2, 'strandschere.mp4', NULL, FALSE),
-  (6, 'Auf der Stelle Laufen', 'laufen Sie auf der Stelle', 0.3, NULL, NULL, FALSE),
+  (6, 'Auf der Stelle Laufen', 'laufen Sie auf der Stelle', 0.3, 'auf_der_stelle_laufen.mp4', NULL, FALSE),
   (7, 'Einbeinige Kniebeuge', 'Kraft, Koordination, Balance und Ausdauer. Und mit ein bisschen Kreativität können Sie die Übung endlos
   variieren. Stellen Sie sich auf den rechten Fuß und heben Sie Ihr linkes Bein gestreckt nach vorn an.
   Halten Sie sich mit der linken Hand an einer Stuhllehne oder einem anderen, etwa hüfthohen Gegenstand fest,
@@ -106,15 +106,15 @@ MERGE INTO exercise KEY (id) VALUES
   Beide Knie sollten am tiefsten Punkt im rechten Winkel gebeugt sein. Das vordere Knie befindet sich direkt über der Ferse,
   schieben Sie es nicht über die Zehen hinaus. Nun stoßen Sie sich mit dem linken Bein wieder ab und kommen zurück in die Ausgangsposition.
   Drücken Sie die Knie nicht ganz durch und achten Sie während des Bewegungsablaufs darauf, den Kopf in Verlängerung der Halswirbelsäule
-  und den Rücken gerade zu halten. Wechseln Sie nun die Seite.', 0.8, NULL, NULL, FALSE),
-  (9, 'PLANK', 'Setzen sie die Unterarme schulterbreit auf dem Boden auf und bilden Sie mit dem Rücken eine gerade Linie.
-  Halten Sie diese Position.', 0.2, NULL, NULL, FALSE),
-  (10, 'Seilspringen', 'Versuchen Sie eine geringe Sprunghöhe um Kraft zu schonen und versuchen Sie es auch einmal rückwärts', 0.25, NULL, NULL, FALSE),
+  und den Rücken gerade zu halten. Wechseln Sie nun die Seite.', 0.8, 'ausfallschritte.mp4', NULL, FALSE),
+  (9, 'Plank', 'Setzen sie die Unterarme schulterbreit auf dem Boden auf und bilden Sie mit dem Rücken eine gerade Linie.
+  Halten Sie diese Position.', 0.4, NULL, NULL, FALSE),
+  (10, 'Seilspringen', 'Versuchen Sie eine geringe Sprunghöhe um Kraft zu schonen und versuchen Sie es auch einmal rückwärts', 0.25, 'schnurspringen.mp4', NULL, FALSE),
   (11, 'BOXEN-Schläge',
-   'Stellen Sie sich schulterbreit vor den Box/Sandsack und schlagen führen Sie gezielte Schläge aus', 0.3, NULL, NULL,
+   'Stellen Sie sich schulterbreit vor den Box/Sandsack und schlagen führen Sie gezielte Schläge aus', 0.3, 'boxen_schlaege.mp4', NULL,
    FALSE),
   (12, 'BOXEN-Tritte', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und treten sie mit dem Schienbein gegen den Sandsack.
-  Dehnen Sie sich vorher ausreichend', 0.5, NULL, NULL, FALSE),
+  Dehnen Sie sich vorher ausreichend', 0.5, 'boxen_tritte.mp4', NULL, FALSE),
   (13, 'Armstrecken mit Kurzhantel', '', 0.4, NULL, NULL, FALSE),
   (14, 'Bizeps mit Langhantel', '', 0.3, NULL, NULL, FALSE),
   (15, 'Kniebeugen mit Langhantel', '', 0.5, NULL, NULL, FALSE),
@@ -129,7 +129,17 @@ MERGE INTO exercise KEY (id) VALUES
   (24, 'Rücken (unten) dehnen', '', 0.3, NULL, NULL, FALSE),
   (25, 'Quadrizeps dehnen', '', 0.3, NULL, NULL, FALSE),
   (26, 'Gesäßmuskulatur dehnen', '', 0.3, NULL, NULL, FALSE),
-  (27, 'Kniesehne dehnen', '', 0.3, '', NULL, FALSE);
+  (27, 'Kniesehne dehnen', '', 0.3, NULL, NULL, FALSE),
+  (28, 'Burpees', '', 0.2, 'burpees.mp4', NULL, False),
+  (29, 'Captain Morgan', '', 0.2, 'captain_morgan.mp4', NULL, False),
+  (30, 'Diamond Liegestütz', '', 1.0, 'diamond_pushup.mp4', NULL, False),
+  (31, 'Handstand Liegestütz', '', 1.5, 'handstand_pushup.mp4', NULL, False),
+  (32, 'Heel To Toe Walk', '', 0.2, 'heel_to_toe_walk.mp4', NULL, False),
+  (33, 'Ice Skater', '', 0.2, 'ice_skate.mp4', NULL, False),
+  (34, 'Jumping Jack', '', 0.2, 'jumping_jack.mp4', NULL, False),
+  (35, 'Klimmzüge', '', 1.5, 'klimmzuege.mp4', NULL, False),
+  (36, 'Mountain Climber', '', 0.5, 'mountain_climber.mp4', NULL, False),
+  (37, 'Push-Up Knee Cross-over', '', 0.3, 'pushup_knee_crossover.mp4', NULL, False);
 
 
 MERGE INTO exercise_category KEY (exerciseid, categoryid) VALUES
@@ -188,7 +198,28 @@ MERGE INTO exercise_category KEY (exerciseid, categoryid) VALUES
   --Gesäßmuskulatur dehnen, Flexibilität, Oberschenkel
   (26, 3), (26, 10),
   --Kniesehne dehnen, Flexibilität, Oberschenkel
-  (27, 3), (27, 10);
+  (27, 3), (27, 10),
+  --Burpees, Ausdauer, Bauchmuskeln, Rücken
+  (28, 0), (28, 6), (28, 8),
+  --Captain Morgan, Balance, Bauchmuskeln, Rücken
+  (29, 2), (29, 6), (29, 8),
+  --Diamond push-up, Kraft, Ausdauer, Trizeps, Schultern, Brust, Bauchmuskeln
+  (30, 0), (30, 1), (30, 5), (30, 6), (30, 7), (30, 9),
+  --Handstand push-up, Kraft, Trizeps, Schultern, Rücken, Bauchmuskeln
+  (31, 0), (31, 5), (31, 6), (31, 7), (31, 8),
+  --Heel to toe walk, Balance
+  (32, 2),
+  --Ice Skater, Balance, Bauchmuskeln, Rücken
+  (33, 2), (33, 6), (33, 8),
+  --Jumping Jack, Ausdauer
+  (34, 0),
+  --Klimmzüge, Ausdauer, Kraft, Bizeps, Schultern, Rücken
+  (35, 0), (35, 1), (35, 4), (35, 7), (35, 8), (35, 14),
+  --Mountain Climber, Ausdauer, Kraft, Bauchmuskeln
+  (36, 0), (36, 1), (36, 6),
+  --Push-up knee cross-over, Ausdauer, Bauchmuskeln
+  (37, 0), (37, 6);
+
 
 
 MERGE INTO gif KEY (id) VALUES
@@ -213,12 +244,12 @@ MERGE INTO gif KEY (id) VALUES
   (13, 7, 'img_ex_einb_kniebeugen1.jpg'),
   (14, 7, 'img_ex_einb_kniebeugen2.jpg'),
   --ausfallschritt
-  (15, 8, 'img_ex_ausfallschritt.jpg'),
+  (15, 8, 'img_ex_ausfallschritt_links.jpg'),
   --plank
   (16, 9, 'img_ex_plank.jpg'),
   --boxen schlaege
-  (18, 11, 'img_ex_boxenschlag1.jpg'),
-  (19, 11, 'img_ex_boxenschlag2.jpg'),
+  (18, 11, 'img_ex_boxen_schlaege_1.jpg'),
+  (19, 11, 'img_ex_boxen_schlaege_2.jpg'),
   --superman
   (29, 19, 'img_ex_superman1.jpg'),
   (30, 19, 'img_ex_superman2.jpg'),
@@ -237,7 +268,54 @@ MERGE INTO gif KEY (id) VALUES
   --Gesäßmuskulatur dehnen, Flexibilität, Oberschenkel
   (39, 26, 'img_ex_glutes_stretch1.JPG'),
   --Kniesehne dehnen, Flexibilität, Oberschenkel
-  (40, 27, 'img_ex_hamstring_stretch1.JPG');
+  (40, 27, 'img_ex_hamstring_stretch1.JPG'),
+  --Burpees
+  (41, 28, 'img_ex_burpees_1.JPG'),
+  (42, 28, 'img_ex_burpees_2.JPG'),
+  (43, 28, 'img_ex_burpees_3.JPG'),
+  (44, 28, 'img_ex_burpees_4.JPG'),
+  (45, 28, 'img_ex_burpees_5.JPG'),
+  --Captain Morgan
+  (46, 29, 'img_ex_captain_morgan_1.JPG'),
+  (47, 29, 'img_ex_captain_morgan_2.JPG'),
+  --Diamond push-up
+  (48, 30, 'img_ex_diamond_pushup_1.JPG'),
+  (49, 30, 'img_ex_diamond_pushup_2.JPG'),
+  --Handstand push-up
+  (50, 31, 'img_ex_handstand_pushup_UP.JPG'),
+  (51, 31, 'img_ex_handstand_pushup_DOWN.JPG'),
+  --Heel to toe walk
+  (53, 32, 'img_ex_heel_to_toe_walk_1.JPG'),
+  (54, 32, 'img_ex_heel_to_toe_walk_2.JPG'),
+  --Ice Skater
+  (55, 33, 'img_ex_ice_skate_1.JPG'),
+  (56, 33, 'img_ex_ice_skate_2.JPG'),
+  (57, 33, 'img_ex_ice_skate_3.JPG'),
+  --Jumping Jack
+  (58, 34, 'img_ex_jumping_jack_1.JPG'),
+  (59, 34, 'img_ex_jumping_jack_2.JPG'),
+  --Klimmzüge
+  (60, 35, 'img_ex_klimmzug_down.JPG'),
+  (61, 35, 'img_ex_klimmzug_up.JPG'),
+  --Mountain Climber
+  (62, 36, 'img_ex_mountain_climber_links.JPG'),
+  (63, 36, 'img_ex_mountain_climber_rechts.JPG'),
+  --Push-Up Knee Cross-over
+  (64, 37, 'img_ex_pushup_knee_crossover_2.JPG'),
+  (65, 37, 'img_ex_pushup_knee_crossover_1.JPG'),
+  (66, 37, 'img_ex_pushup_knee_crossover_3.JPG'),
+  (67, 37, 'img_ex_pushup_knee_crossover_1.JPG'),
+  --Auf der Stelle laufen
+  (68, 6, 'img_ex_lauf_am_stand_rechts.JPG'),
+  (69, 6, 'img_ex_lauf_am_stand_links.JPG'),
+  --Seilspringen
+  (70, 10, 'img_ex_schnurspringen_opt_hoehe.JPG'),
+  --Boxen-tritte
+  (71, 12, 'img_ex_boxen_tritte.JPG'),
+  --Ausfallschritt (2. Bild)
+  (72, 8, 'img_ex_ausfallschritt_rechts.jpg');
+
+
 
 
 

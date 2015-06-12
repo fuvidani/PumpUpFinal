@@ -1,8 +1,8 @@
 .root, .mainBox, .label, .button {
-    -fx-background-color: white;
+    /*-fx-background-color: white;*/
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 15pt;
-    -fx-background-color: transparent;
+    /*-fx-background-color: transparent;*/
 }
 
 

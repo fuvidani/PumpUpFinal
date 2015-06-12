@@ -119,9 +119,9 @@ public class ExercisesController extends Controller implements VideoPlayable{
     @Override
     public void initController() {
 
-        addBtn.setTooltip(new Tooltip("Neue Übung anlegen"));
-        deleteBtn.setTooltip(new Tooltip("Übung löschen"));
-        editBtn.setTooltip(new Tooltip("Übung bearbeiten"));
+        addBtn.setTooltip(new Tooltip("Neue \u00dcbung anlegen"));
+        deleteBtn.setTooltip(new Tooltip("\u00dcbung l\u00f6schen"));
+        editBtn.setTooltip(new Tooltip("\u00dcbung bearbeiten"));
         
 
         leftArrow.setVisible(false);

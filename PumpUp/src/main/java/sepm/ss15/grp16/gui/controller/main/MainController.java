@@ -24,6 +24,7 @@ import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.WeightHistory;
+import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.workout.WorkoutstartController;
@@ -203,36 +204,25 @@ public class MainController extends Controller {
                 bodyfat = actualBodyfathistory.getBodyfat();
             }
 
-            PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(user_id);
-
-            if (actualPictureHistory != null) {
-                String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-                LOGGER.debug("Loading from resources: " + pathToResource);
-                String pathOfNewImage = pathToResource + actualPictureHistory.getLocation();
-                LOGGER.debug("Loading image with path: " + pathOfNewImage);
-                File picture = new File(pathOfNewImage);
-                userImgView.setImage(new Image(picture.toURI().toString()));
-            }
+            updateImage();
 
         } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
         usernameLabel.setText("Willkommen, " + username + "!");
         ageTextField.setText(Integer.toString(age));
-        heightTextField.setText(Integer.toString(height));
+        heightTextField.setText(Integer.toString(height) + " cm");
         genderTextField.setText(gender ? "M\u00e4nnlich" : "Weiblich");
 
         if (weight != null) {
-            weightTextField.setText(Integer.toString(weight));
+            weightTextField.setText(Integer.toString(weight) + " kg");
         } else {
             weightTextField.setText("Keine Angabe");
         }
 
         if (bodyfat != null) {
-            bodyfatTextField.setText(Integer.toString(bodyfat));
+            bodyfatTextField.setText(Integer.toString(bodyfat) + " %");
         } else {
             bodyfatTextField.setText("Keine Angabe");
         }
@@ -243,6 +233,21 @@ public class MainController extends Controller {
             emailTextField.setText(email);
         }
         makeUserChart();
+    }
+
+    public void updateImage(){
+        LOGGER.info("Updating image in Main");
+        try {
+            PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(userService.getLoggedInUser().getUser_id());
+
+            if (actualPictureHistory != null) {
+                userImgView.setImage(ImageLoader.loadImage(this.getClass(), actualPictureHistory.getLocation()));
+            }
+        }catch (ServiceException e) {
+            LOGGER.error(e.getMessage());
+        } catch (URISyntaxException e) {
+            LOGGER.error(e.getMessage());
+        }
     }
 
     private void makeUserChart() {

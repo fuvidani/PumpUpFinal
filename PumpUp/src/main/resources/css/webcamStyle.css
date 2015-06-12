@@ -16,8 +16,25 @@
     -fx-background-position: center;
     -fx-background-color: transparent;
     -fx-background-size: 100%;
+    -fx-border-radius: 10;
+    -fx-border-color: red;
 }
 
-.btnTakePicture:hover, .btnTakePictureDelay:hover {
+.btnShowBodyOutline {
+    -fx-background-image: url('../icons/body_icon.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+    -fx-border-radius: 10;
+    -fx-border-color: red;
+}
+
+.btnTakePicture:hover, .btnTakePictureDelay:hover, .btnShowBodyOutline:hover{
     -fx-background-size: 90%;
+}
+
+.btnShowBodyOutline:selected, .btnTakePictureDelay:selected{
+    -fx-border-radius: 10;
+    -fx-border-color: green;
 }

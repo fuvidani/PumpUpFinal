@@ -82,4 +82,32 @@ public interface TrainingsplanService extends Service<Trainingsplan> {
      * @param plan to decrease
      */
     void decreaseDifficulty(Trainingsplan plan);
+
+    /**
+     * increase the difficulty of the given session by the factor of 0.25
+     *
+     * @param plan to increase
+     */
+    void increaseDifficulty(TrainingsSession session);
+
+    /**
+     * decrease the difficulty of the given session by the factor of 0.25
+     *
+     * @param plan to decrease
+     */
+    void decreaseDifficulty(TrainingsSession session);
+
+    /**
+     * increase the difficulty of the given set by the factor of 0.25
+     *
+     * @param plan to increase
+     */
+    void increaseDifficulty(ExerciseSet set);
+
+    /**
+     * decrease the difficulty of the given set by the factor of 0.25
+     *
+     * @param plan to decrease
+     */
+    void decreaseDifficulty(ExerciseSet set);
 }

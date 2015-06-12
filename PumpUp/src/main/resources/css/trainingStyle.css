@@ -1,9 +1,17 @@
 .workoutPlanBox {
-    -fx-font-size: 12pt;
+    -fx-font-size: 11pt;
+}
+
+.workoutPlanBox .label {
+    -fx-font-size: 11pt;
+}
+
+.workoutPlanBox .button {
+    -fx-font-size: 11pt;
 }
 
 #trainings-table-view .column-header .label {
-    -fx-font-size: 12pt;
+    -fx-font-size: 10pt;
     -fx-font-weight: bold;
 
 }
@@ -40,7 +48,6 @@
     -fx-background-size: 100%;
 }
 
-
 .btnLeft {
     -fx-background-image: url('../icons/back.png');
     -fx-background-repeat: no-repeat;
@@ -49,7 +56,6 @@
     -fx-background-size: 100%;
 }
 
-
 .btnShow {
     -fx-background-image: url('../icons/search.png');
     -fx-background-repeat: no-repeat;
@@ -57,7 +63,6 @@
     -fx-background-color: transparent;
     -fx-background-size: 100%;
 }
-
 
 .btnEdit {
     -fx-background-image: url('../icons/edit.png');
@@ -75,8 +80,6 @@
     -fx-background-size: 100%;
 }
 
-
-
 .btnAdd {
     -fx-background-image: url('../icons/add.png');
     -fx-background-repeat: no-repeat;
@@ -84,8 +87,6 @@
     -fx-background-color: transparent;
     -fx-background-size: 100%;
 }
-
-
 
 .btnCopy {
     -fx-background-image: url('../icons/copy.png');
@@ -95,6 +96,21 @@
     -fx-background-size: 100%;
 }
 
+.btnIncr{
+    -fx-background-image: url('../icons/increase.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnDecr{
+    -fx-background-image: url('../icons/decrease.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
 
 .btnMusic_Play {
     -fx-background-image: url('../icons/music_play.png');
@@ -104,7 +120,6 @@
     -fx-background-size: 100%;
 }
 
-
 .btnMusic_Pause {
     -fx-background-image: url('../icons/music_pause.png');
     -fx-background-repeat: no-repeat;
@@ -113,8 +128,6 @@
     -fx-background-size: 100%;
 }
 
-
-
 .btnMusic_Shuffle {
     -fx-background-image: url('../icons/music_shuffle.png');
     -fx-background-repeat: no-repeat;
@@ -122,7 +135,6 @@
     -fx-background-color: transparent;
     -fx-background-size: 100%;
 }
-
 
 .btnMusic_Skip {
     -fx-background-image: url('../icons/music_skip.png');
@@ -132,8 +144,6 @@
     -fx-background-size: 100%;
 }
 
-
-
 .btnMusic_Last {
     -fx-background-image: url('../icons/music_last.png');
     -fx-background-repeat: no-repeat;
@@ -142,8 +152,6 @@
     -fx-background-size: 100%;
 }
 
-
-
 .btnMusic_Shuffle {
     -fx-background-image: url('../icons/music_shuffle.png');
     -fx-background-repeat: no-repeat;
@@ -151,8 +159,6 @@
     -fx-background-color: transparent;
     -fx-background-size: 100%;
 }
-
-
 
 .btnMusic_Shuffle:selected {
     -fx-background-size: 90%;
@@ -166,12 +172,11 @@
     -fx-background-size: 100%;
 }
 
-
 .btnMusic_Volume:selected {
     -fx-background-image: url('../icons/music_mute.png');
 }
 
-.button:hover{
+.button:hover {
     -fx-background-size: 90%;
 }
 

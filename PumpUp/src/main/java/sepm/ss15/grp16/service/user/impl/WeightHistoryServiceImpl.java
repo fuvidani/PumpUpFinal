@@ -86,11 +86,11 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
         Integer weight = weightHistory.getWeight();
 
         if (user_id == null) {
-            errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
+            errorMsg += "Die UserID muss angegeben werden und eine g\u00fcltige Zahl sein.\n";
         }
 
         if (weight == null || weight < 0) {
-            errorMsg += "Das Gewicht muss eine gültige Zahl größer 0 sein.";
+            errorMsg += "Das Gewicht muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.";
         }
 
         if (!errorMsg.isEmpty()) {
