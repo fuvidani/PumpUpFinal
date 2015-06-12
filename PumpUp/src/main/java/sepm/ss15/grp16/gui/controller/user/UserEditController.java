@@ -82,7 +82,7 @@ public class UserEditController extends Controller {
                 bodyfat = actualBodyfathistory.getBodyfat();
             }
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         ageTextField.setText(Integer.toString(age));

@@ -43,7 +43,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             this.searchByIDStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE picturehistory_id = ?");
             this.deleteStatement = con.prepareStatement("UPDATE picturehistory SET isDeleted = ? WHERE picturehistory_id = ?");
             this.getActualPictureStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND " +
-                    "picturehistory_id = (SELECT max(picturehistory_id) from picturehistory WHERE user_id = ?) AND isDeleted = false;");
+                    "picturehistory_id = (SELECT max(picturehistory_id) from picturehistory WHERE user_id = ? AND isDeleted = false) AND isDeleted = false;");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
