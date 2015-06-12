@@ -6,6 +6,7 @@ import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.service.AbstractServiceTest;
 import sepm.ss15.grp16.service.Service;
+import sepm.ss15.grp16.service.exception.ValidationException;
 
 import java.io.File;
 import java.util.Date;
@@ -39,6 +40,27 @@ public abstract class AbstractPictureHistoryServiceTest extends AbstractServiceT
         if (savedImage.exists()) {
             savedImage.delete();
         }
+    }
+
+    @Test(expected = ValidationException.class)
+    public void validateWithNoneValidPictureHistory() throws Exception{
+        PictureHistory pictureHistory  = null;
+        pictureHistoryService.validate(pictureHistory);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void validateWithNoneValidUserID() throws Exception{
+        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+        String testImagePath = pathToResource + "/testbild.jpg";
+
+        PictureHistory testPictureHistory = new PictureHistory(null, null, testImagePath, new Date());
+        pictureHistoryService.validate(testPictureHistory);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void validateWithNoneValidImagePath() throws Exception{
+        PictureHistory testPictureHistory = new PictureHistory(null, createUserForTest().getUser_id(), "", new Date());
+        pictureHistoryService.validate(testPictureHistory);
     }
 
     private User createUserForTest() throws Exception {

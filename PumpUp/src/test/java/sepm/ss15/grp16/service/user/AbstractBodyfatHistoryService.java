@@ -3,8 +3,10 @@ package sepm.ss15.grp16.service.user;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.User;
+import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.service.AbstractServiceTest;
 import sepm.ss15.grp16.service.Service;
+import sepm.ss15.grp16.service.exception.ValidationException;
 
 import java.util.Date;
 
@@ -25,6 +27,30 @@ public abstract class AbstractBodyfatHistoryService extends AbstractServiceTest<
     public void createWithValidBodyfatHistory() throws Exception{
         BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, createUserForTest().getUser_id(), 23, new Date());
         createTest(testBodyfatHistory);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void validateWithNoneValidBodyfatHistory() throws Exception{
+        BodyfatHistory bodyfatHistory = null;
+        bodyfatHistoryService.validate(bodyfatHistory);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void validateWithToHightBodyfat() throws Exception{
+        BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, createUserForTest().getUser_id(), 101, new Date());
+        bodyfatHistoryService.validate(testBodyfatHistory);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void validateWithToLowBodyfat() throws Exception{
+        BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, createUserForTest().getUser_id(), -101, new Date());
+        bodyfatHistoryService.validate(testBodyfatHistory);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void validateWithNoneValidUserID() throws Exception{
+        BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, null, 23, new Date());
+        bodyfatHistoryService.validate(testBodyfatHistory);
     }
 
     private User createUserForTest() throws Exception {
