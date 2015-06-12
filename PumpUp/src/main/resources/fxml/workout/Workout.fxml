@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Arc?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutController">
     <center>
         <VBox spacing="20.0" BorderPane.alignment="CENTER">
             <children>
@@ -29,8 +29,7 @@
                 <Separator prefWidth="200.0" />
                 <HBox VBox.vgrow="ALWAYS">
                     <children>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <VBox HBox.hgrow="ALWAYS">
+                        <VBox HBox.hgrow="SOMETIMES">
                             <children>
                         <Pane fx:id="pictureFitPane" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                            <children>
@@ -41,10 +40,9 @@
                                       </ImageView>
                            </children>
                         </Pane>
-                                <Label fx:id="discriptionLabel" wrapText="true" />
                             </children>
                         </VBox>
-                        <Region HBox.hgrow="ALWAYS" />
+                  <Region HBox.hgrow="SOMETIMES" />
                         <VBox maxWidth="400.0" minWidth="400.0" prefWidth="400.0" spacing="20.0" HBox.hgrow="NEVER">
                             <children>
                                 <StackPane maxHeight="370.0" minHeight="370.0" prefHeight="370.0" VBox.vgrow="NEVER">
@@ -64,12 +62,11 @@
                                         <Insets />
                                     </VBox.margin>
                                 </StackPane>
-                                <Label fx:id="instructionLabel" VBox.vgrow="NEVER" />
                             </children>
                         </VBox>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <VBox minWidth="200.0" prefWidth="200.0" spacing="20.0">
+                        <Region HBox.hgrow="SOMETIMES" />
+                        <Separator orientation="VERTICAL" prefHeight="200.0" HBox.hgrow="NEVER" />
+                        <VBox minWidth="200.0" prefWidth="200.0" spacing="20.0" HBox.hgrow="NEVER">
                             <children>
                                   <Label prefHeight="30.0" text="Letze Übung:" />
                                   <Label fx:id="lastExerciseLable" style="-fx-font-weight: bold;" styleClass="asdf" />
@@ -89,10 +86,9 @@
                                 </HBox>
                             </children>
                         </VBox>
-                        <Region HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
-                <HBox VBox.vgrow="ALWAYS">
+                <HBox prefHeight="50.0" VBox.vgrow="NEVER">
                     <children>
                         <Region minWidth="50.0" HBox.hgrow="NEVER" />
                         <Button fx:id="pauseButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onPause" prefHeight="50.0" text="Pause" HBox.hgrow="ALWAYS" />
@@ -101,20 +97,30 @@
                 </HBox>
             </children>
             <BorderPane.margin>
-                <Insets bottom="20.0" top="20.0" />
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </BorderPane.margin>
         </VBox>
     </center>
     <bottom>
         <fx:include fx:id="musicPlayer" source="Workout_MusicPlayer.fxml" />
     </bottom>
-    <top>
-        <FlowPane fx:id="exerciseFlow" hgap="10.0" maxHeight="100.0" prefHeight="100.0" prefWrapLength="1.0E13" BorderPane.alignment="CENTER" />
-    </top>
     <padding>
-        <Insets left="20.0" right="20.0" top="10.0" />
+        <Insets top="10.0" />
     </padding>
     <opaqueInsets>
         <Insets />
     </opaqueInsets>
+   <top>
+      <ScrollPane hbarPolicy="ALWAYS" style="-fx-border-color: transparent; -fx-background-color: transparent;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+         <content>
+            <HBox fx:id="exerciseFlow" spacing="10.0" />
+         </content>
+      </ScrollPane>
+   </top>
 </BorderPane>

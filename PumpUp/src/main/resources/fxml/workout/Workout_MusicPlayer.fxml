@@ -13,7 +13,7 @@
     <center>
         <VBox fx:id="mainPane" layoutX="77.0" layoutY="89.0" spacing="10.0">
             <children>
-                <MediaView fx:id="musicPlayerSlide" fitHeight="50.0" fitWidth="1400.0" />
+                <MediaView fx:id="musicPlayerSlide" fitWidth="1400.0" />
             <VBox fx:id="vBoxProg" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
                   <ProgressBar fx:id="progress" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" progress="0.0">

@@ -40,9 +40,6 @@ public class WorkoutstartController extends Controller {
     @FXML
     private Label trainingTypeLabel;
 
-    @FXML
-    private Button startButton;
-
     public boolean started = false;
 
     public WorkoutstartController(UserService userService) {

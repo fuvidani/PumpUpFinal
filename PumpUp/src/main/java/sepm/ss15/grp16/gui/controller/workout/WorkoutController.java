@@ -17,10 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Arc;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -62,9 +59,6 @@ public class WorkoutController extends Controller {
     private Label lastExerciseLable;
 
     @FXML
-    private Label instructionLabel;
-
-    @FXML
     private Button pauseButton;
 
     @FXML
@@ -80,22 +74,17 @@ public class WorkoutController extends Controller {
     private TextField durationField;
 
     @FXML
-    private FlowPane exerciseFlow;
+    private HBox exerciseFlow;
 
     @FXML
     private Label counterLable;
 
     @FXML
-    private Label discriptionLabel;
-
-    @FXML
     private Pane pictureFitPane;
 
     @FXML
-    private Node WorkoutMusicPlayer;
-
-    @FXML
     private WorkoutMusicPlayerController musicPlayerController;
+
     private MotivatonModul motivationModul;
 
     private Timeline counterTimeline;
@@ -213,8 +202,20 @@ public class WorkoutController extends Controller {
 
     private void switchToNextExercise() {
         if (activeExercisePosition >= 0) {
-            exerciseFlow.getChildren().remove(exerciseViews.removeFirst());
-            exerciseViews.getFirst().avtivate();
+            //Animate remove
+            ExerciseView last = exerciseViews.removeFirst();
+            ExerciseView next = exerciseViews.getFirst();
+
+            last.setMinWidth(last.getWidth());
+            last.getChildren().clear();
+            Timeline flowAnimation = new Timeline(new KeyFrame(Duration.millis(700), event -> {
+                exerciseFlow.getChildren().remove(last);
+            }, new KeyValue(last.minWidthProperty(), 0)));
+            Timeline removeAnimation = new Timeline(new KeyFrame(Duration.millis(300), event -> {
+                flowAnimation.playFromStart();
+            }, new KeyValue(last.opacityProperty(), 0)));
+            removeAnimation.playFromStart();
+            next.avtivate();
         }
         activeExercisePosition++;
     }
@@ -263,7 +264,6 @@ public class WorkoutController extends Controller {
             imageTimeline.stop();
             pauseButton.setText("Trainingsresultate");
             exerciseLabel.setText("training beendet!");
-            discriptionLabel.setText(activeExercise().getExercise().getDescription());
             exerciseImageView.setImage(null);
         } else {
             switchToNextExercise();
@@ -272,7 +272,6 @@ public class WorkoutController extends Controller {
             pauseButton.setText("Start");
             counterTimeline.getKeyFrames().clear();
             exerciseLabel.setText(activeExercise().getExercise().getName());
-            discriptionLabel.setText(activeExercise().getExercise().getDescription());
 
 
             try {
@@ -330,6 +329,7 @@ public class WorkoutController extends Controller {
             super();
 
             setMinHeight(90);
+            setPadding(new Insets(3, 3, 3, 3));
 
             ImageView imageView = new ImageView(images.get(exerciseSet).get(0));
             imageView.setFitHeight(90);
@@ -340,16 +340,14 @@ public class WorkoutController extends Controller {
             label.setStyle("-fx-font-weight: bold");
             borderPane.setBottom(label);
             getChildren().add(borderPane);
-            setStyle("-fx-padding: 10;" +
-                    "-fx-background-color: rgba(222, 222, 222, 1);" +
+            setStyle("-fx-background-color: rgba(222, 222, 222, 1);" +
                     "-fx-background-radius: 5");
         }
 
 
         public void avtivate() {
-            setStyle("-fx-padding: 10;" +
-                    "-fx-background-color: firebrick;" +
-                    "-fx-background-radius: 5");
+            setStyle("-fx-background-color: firebrick;" +
+                    "-fx-background-radius: 3");
         }
     }
 
