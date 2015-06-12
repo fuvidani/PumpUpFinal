@@ -114,13 +114,6 @@ public class GenerateWorkoutPlanController extends Controller {
 
     @Override
     public void initController() {
-        /*displayClosed.addListener(new ChangeListener<Boolean>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                //mainFrame.navigateToParent();
-            }
-        });*/
         toggleGroup = new ToggleGroup();
         boxes = new LinkedList<>();
         equipment = new ArrayList<>();
@@ -243,12 +236,11 @@ public class GenerateWorkoutPlanController extends Controller {
      */
     @FXML
     void generateButtonClicked() {
-        // TODO: remove the following block after inserting enough exercises
-       /* for (CheckBox box : boxes) {
+        for (CheckBox box : boxes) {
             if(!box.isSelected()) {
                 equipment.add(new EquipmentCategory(Integer.parseInt(box.getId()), box.getText()));
             }
-        }*/
+        }
         RadioButton button = (RadioButton) toggleGroup.getSelectedToggle();
         TrainingsCategory goal = button != null ? new TrainingsCategory(Integer.parseInt(button.getId()), button.getText()) : null;
         Gen_WorkoutplanPreferences preferences = new Gen_WorkoutplanPreferences(1, goal, equipment);

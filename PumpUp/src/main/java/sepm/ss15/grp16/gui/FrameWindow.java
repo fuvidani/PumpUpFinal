@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -15,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import sepm.ss15.grp16.gui.controller.Controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Stack;
 
 /**
@@ -49,7 +51,13 @@ public class FrameWindow extends BorderPane {
 
         stage.setScene(new Scene(this));
         stage.setTitle(mainPage.getTitle());
+        try {
+            String pathToResource = getClass().getClassLoader().getResource("icons").toURI().toString();
+            this.stage.getIcons().add(new Image(pathToResource.concat("/logo.png")));
 
+        }catch (URISyntaxException e){
+            e.printStackTrace();
+        }
         Scene scene = stage.getScene();
         try {
             scene.getStylesheets().add(getClass().getClassLoader().getResource("css").toURI().toString().concat("/mainStyle.css"));
@@ -72,19 +80,19 @@ public class FrameWindow extends BorderPane {
 
     private void initMenu()
     {
-        Menu user = new Menu("User");
-        addNavigationDialogItemToMenu(user, "Körperdaten ändern", PageEnum.UserEdit);
+        Menu user = new Menu("Benutzer");
+        addNavigationDialogItemToMenu(user, "K\u00f6rperdaten \u00e4ndern", PageEnum.UserEdit);
         addNavigationDialogItemToMenu(user, "Eigene Fotos verwalten", PageEnum.PhotoDiary);
         addItemToMenu(user, "Abmelden", event -> navigateToParent());
-        Menu view = new Menu("View");
+        Menu view = new Menu("Ansicht");
         addNavigationItemToMenu(view, "Trainingskalender", PageEnum.Calendar);
-        addNavigationItemToMenu(view, "Trainingspläne", PageEnum.Workoutplan);
-        addNavigationItemToMenu(view, "Übungen", PageEnum.Exercises);
+        addNavigationItemToMenu(view, "Trainingspl\u00e4ne", PageEnum.Workoutplan);
+        addNavigationItemToMenu(view, "\u00dcbungen", PageEnum.Exercises);
 
         personalMenu = new Menu();
 
-        Menu help = new Menu("Help");
-        addNavigationDialogItemToMenu(help, "About", PageEnum.About);
+        Menu help = new Menu("Hilfe");
+        addNavigationDialogItemToMenu(help, "Impressum", PageEnum.About);
 
         menuBar = new MenuBar(user, view, help);
     }
@@ -206,6 +214,10 @@ public class FrameWindow extends BorderPane {
     private void deactiveteMenuBar()
     {
         setTop(null);
+    }
+
+    public void close(){
+        stage.close();
     }
 
     private void addItemToMenu(Menu menu, String titel, EventHandler<ActionEvent> eventHandler)

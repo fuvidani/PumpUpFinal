@@ -124,29 +124,29 @@ public class UserEditController extends Controller {
         try {
             age = Integer.parseInt(ageTextField.getText());
         } catch (NumberFormatException e) {
-            error += "Das Alter muss eine gültige Zahl größer 0 sein.\n";
+            error += "Das Alter muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         try {
             weight = Integer.parseInt(weightTextField.getText());
         } catch (NumberFormatException e) {
-            error += "Das Gewicht muss eine gültige Zahl größer 0 sein.\n";
+            error += "Das Gewicht muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         try {
             height = Integer.parseInt(heightTextField.getText());
         } catch (NumberFormatException e) {
-            error += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
+            error += "Die Gr\u00f6\u00dfe muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         if (!bodyfatTextField.getText().isEmpty()) {
             try {
                 bodyfat = Integer.parseInt(bodyfatTextField.getText());
                 if (bodyfat < 0 || bodyfat > 100) {
-                    error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
+                    error += "Der K\u00f6rperfettanteil muss eine g\u00fcltige Zahl zwischen 0 und 100 sein.\n";
                 }
             } catch (NumberFormatException e) {
-                error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
+                error += "Der K\u00f6rperfettanteil muss eine g\u00fctige Zahl zwischen 0 und 100 sein.\n";
             }
         }
 
@@ -183,8 +183,7 @@ public class UserEditController extends Controller {
             alert.setHeaderText("Update-Information");
             alert.setContentText("Sie haben ihre Daten erfolgreich aktualisiert.");
             alert.showAndWait();
-            Stage stage = (Stage) userEditPane.getScene().getWindow();
-            stage.close();
+            mainFrame.navigateToParent();
         } catch (ValidationException e) {
             LOGGER.error("Couldn't update user");
             Alert alert = new Alert(Alert.AlertType.ERROR);

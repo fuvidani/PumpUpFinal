@@ -40,7 +40,7 @@ import java.util.Optional;
  * Created by Daniel Fuevesi on 07.05.15.
  * Controller of the "Übungen" stage.
  */
-public class ExercisesController extends Controller {
+public class ExercisesController extends Controller implements VideoPlayable{
 
 
     private static Exercise exercise;
@@ -49,15 +49,7 @@ public class ExercisesController extends Controller {
     @FXML
     private Label exerciseNameLabel;
     @FXML
-    private Label trainingDeviceLabel1;
-    @FXML
-    private Label trainingDeviceLabel2;
-    @FXML
-    private Label trainingDeviceLabel3;
-    @FXML
     private TextArea descriptionTextArea;
-    @FXML
-    private MediaView smallMediaView = new MediaView();
     @FXML
     private Label categoryTypeLabel;
     @FXML
@@ -67,10 +59,6 @@ public class ExercisesController extends Controller {
     @FXML
     private ImageView imageView;
     @FXML
-    private Button nexPic;
-    @FXML
-    private Button prevPic;
-    @FXML
     private TextField tf_search;
     @FXML
     private CheckBox customExercisesCheckbox;
@@ -78,8 +66,6 @@ public class ExercisesController extends Controller {
     private CheckBox defaultExercisesCheckbox;
     @FXML
     private VBox vboxCategory;
-    @FXML
-    private WebView webViewVideo;
     @FXML
     private ImageView leftArrow = new ImageView();
     @FXML
@@ -91,8 +77,7 @@ public class ExercisesController extends Controller {
     private ImageView deleteImg = new ImageView();
     @FXML
     private ImageView newImg = new ImageView();
-    @FXML
-    private VBox videoBox;
+
     @FXML
     private Button addBtn = new Button();
     @FXML
@@ -113,9 +98,7 @@ public class ExercisesController extends Controller {
     private Integer picIndex = 0;
     private ObservableList<Exercise> masterdata = FXCollections.observableArrayList();
     private ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
-    private Media media;
-    private MediaPlayer player = null;
-    private boolean isPlaying = false;
+
 
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -136,9 +119,9 @@ public class ExercisesController extends Controller {
     @Override
     public void initController() {
 
-        addBtn.setTooltip(new Tooltip("Neue Übung anlegen"));
-        deleteBtn.setTooltip(new Tooltip("Übung löschen"));
-        editBtn.setTooltip(new Tooltip("Übung bearbeiten"));
+        addBtn.setTooltip(new Tooltip("Neue \u00dcbung anlegen"));
+        deleteBtn.setTooltip(new Tooltip("\u00dcbung l\u00f6schen"));
+        editBtn.setTooltip(new Tooltip("\u00dcbung bearbeiten"));
         
 
         leftArrow.setVisible(false);
@@ -183,56 +166,12 @@ public class ExercisesController extends Controller {
     }
 
 
-    @FXML
-    private void playVideo() {
-        Duration totalDuration = player.getCycleDuration();
-        Duration currentDuration = player.getCurrentTime();
-        if (currentDuration.compareTo(totalDuration) == 0) {
-            isPlaying = false;
-            player = new MediaPlayer(media);
-            smallMediaView.setMediaPlayer(null);
-            smallMediaView.setMediaPlayer(player);
-        }
-        if (isPlaying) {
-            player.pause();
-            isPlaying = false;
-        } else {
-            player.play();
-            isPlaying = true;
-        }
-
-
-    }
-
-
+   @FXML
     private void showVideo() {
-        try {
-
-
-            if (exercise.getVideolink() != null) {
-                String pathToResource = getClass().getClassLoader().getResource("video").toURI().toString();
-                String filePath = pathToResource.concat("/" + exercise.getVideolink());
-                LOGGER.debug("filepath: " + filePath);
-                LOGGER.debug("videolink: " + exercise.getVideolink());
-                media = new Media(filePath);
-                player = new MediaPlayer(media);
-
-                player.setAutoPlay(false);
-
-                smallMediaView.setMediaPlayer(player);
-                smallMediaView.setVisible(true);
-                smallMediaView.setFitHeight(300);
-                videoBox.getChildren().add(smallMediaView);
-            } else {
-                smallMediaView.setMediaPlayer(null);
-
-                smallMediaView.setVisible(false);
-            }
-        } catch (Exception e) {
-        }
-
-
+            mainFrame.openDialog(PageEnum.VideoPlayer);
     }
+
+
 
     private void updateFilteredData() {
         ObservableList<Exercise> temp = FXCollections.observableArrayList();
@@ -295,8 +234,6 @@ public class ExercisesController extends Controller {
             } else {
                 playVideoBtn.setDisable(false);
             }
-            showVideo();
-
             if (exercise.getGifLinks().size() > 0) {
                 imageView.setVisible(true);
                 showPicture(0);

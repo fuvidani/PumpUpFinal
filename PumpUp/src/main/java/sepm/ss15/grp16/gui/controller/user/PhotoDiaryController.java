@@ -88,7 +88,7 @@ public class PhotoDiaryController extends Controller {
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go forward in picturehistory");
-            showAlert("Fehler", "Fehler beim durchblättern der Fotos", "Das nächste Foto konnte nicht geladen werden.", AlertType.ERROR);
+            showAlert("Fehler", "Fehler beim durchbl\u00e4ttern der Fotos", "Das n\u00e4chste Foto konnte nicht geladen werden.", AlertType.ERROR);
         }
     }
 
@@ -105,7 +105,7 @@ public class PhotoDiaryController extends Controller {
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go backward in picturehistory");
-            showAlert("Fehler", "Fehler beim durchblättern der Fotos", "Das vorherige Foto konnte nicht geladen werden.", AlertType.ERROR);
+            showAlert("Fehler", "Fehler beim durchbl\u00e4ttern der Fotos", "Das vorherige Foto konnte nicht geladen werden.", AlertType.ERROR);
         }
     }
 
@@ -117,10 +117,10 @@ public class PhotoDiaryController extends Controller {
                 pictureHistoryService.create(pictureHistory);
                 reloadImages();
                 selectedPicturePath = null;
-                showAlert("Information", "Foto-Information", "Das Foto wurde erfolgreich zu ihrem Tagebuch hinzugefügt.", AlertType.INFORMATION);
+                showAlert("Information", "Foto-Information", "Das Foto wurde erfolgreich zu ihrem Tagebuch hinzugef\u00fcgt.", AlertType.INFORMATION);
             } else {
                 LOGGER.error("Couldn't create picturehistory");
-                showAlert("Fehler", "Fehlerhafte Angaben", "Es wurde kein Bild ausgewählt.", AlertType.ERROR);
+                showAlert("Fehler", "Fehlerhafte Angaben", "Es wurde kein Bild ausgew\u00e4hlt.", AlertType.ERROR);
             }
         } catch (ValidationException e) {
             LOGGER.error("Couldn't create picturehistory");
@@ -141,7 +141,7 @@ public class PhotoDiaryController extends Controller {
                 if (!pictureHistoryList.isEmpty()) {
                     pictureHistoryService.delete(pictureHistoryList.get(indexOfCurrentPicture));
                     reloadImages();
-                    showAlert("Information", "Foto-Information", "Das Foto wurde erfolgreich aus ihrem Tagebuch gelöscht.", AlertType.INFORMATION);
+                    showAlert("Information", "Foto-Information", "Das Foto wurde erfolgreich aus ihrem Tagebuch gel\u00f6scht.", AlertType.INFORMATION);
                 } else {
                     showAlert("Fehler", "Fehlerhafte Angaben", "Es wurde kein Bild ausgewählt.", AlertType.ERROR);
                 }
@@ -164,7 +164,7 @@ public class PhotoDiaryController extends Controller {
         FileChooser filechooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg");
         filechooser.getExtensionFilters().add(extFilterJPG);
-        filechooser.setTitle("Bild auswählen: ");
+        filechooser.setTitle("Bild ausw\u00e4hlen: ");
         File selectedFile = filechooser.showOpenDialog(null);
 
         if (selectedFile != null) {

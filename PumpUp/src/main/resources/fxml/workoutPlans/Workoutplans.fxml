@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0"
-            prefWidth="1300.0" styleClass="workoutPlanBox" stylesheets="@../../css/trainingStyle.css"
-            xmlns="http://javafx.com/javafx/8"
-            fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.WorkoutPlansController">
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="workoutPlanBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.WorkoutPlansController">
     <bottom>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
             <children>
@@ -15,49 +15,43 @@
                     <children>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                             <children>
-                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                        mnemonicParsing="false" onAction="#getBackClicked" text="Zurück">
+                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#getBackClicked" text="Zurück">
                                     <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </HBox.margin>
                                 </Button>
                             </children>
                             <HBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                             </HBox.margin>
                         </HBox>
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </HBox.margin>
                 </VBox>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <HBox alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308"
-                              maxWidth="1.7976931348623157E308">
+                        <HBox alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                             <HBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                             </HBox.margin>
                             <children>
-                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                        mnemonicParsing="false" onAction="#generateWorkoutPlanClicked"
-                                        text="Plan generieren">
+                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#generateWorkoutPlanClicked" text="Plan generieren">
                                     <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </HBox.margin>
                                 </Button>
-                                <Button fx:id="calenderBtn" disable="true" maxHeight="1.7976931348623157E308"
-                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#embedInCalenderClicked" text="In Kalender einfügen">
+                                <Button fx:id="calenderBtn" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#embedInCalenderClicked" text="In Kalender einfügen">
                                     <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </HBox.margin>
                                 </Button>
                             </children>
                         </HBox>
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </HBox.margin>
                 </VBox>
             </children>
@@ -70,366 +64,273 @@
                     <children>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                             <children>
-                                <ListView fx:id="workoutPlansListView" maxHeight="1.7976931348623157E308"
-                                          maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                <ListView fx:id="workoutPlansListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                     <VBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </VBox.margin>
                                     <HBox.margin>
-                                        <Insets top="8.0"/>
+                                        <Insets top="8.0" />
                                     </HBox.margin>
                                 </ListView>
-                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
-                                      maxWidth="1.7976931348623157E308" prefWidth="40.0" spacing="10.0"
-                                      HBox.hgrow="ALWAYS">
+                                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="40.0" spacing="10.0" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <Button fx:id="newBtn" maxHeight="1.7976931348623157E308"
-                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                onAction="#newWorkoutPlanClicked" prefHeight="50.0"
-                                                styleClass="btnAdd"/>
-                                        <Button fx:id="editBtn" disable="true" maxHeight="1.7976931348623157E308"
-                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                onAction="#editWorkoutPlanClicked" prefHeight="50.0"
-                                                styleClass="btnEdit"/>
-                                        <Button fx:id="copyBtn" disable="true" maxHeight="1.7976931348623157E308"
-                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                onAction="#copyWorkoutPlanClicked" prefHeight="50.0"
-                                                styleClass="btnCopy"/>
-                                        <Button fx:id="deleteBtn" disable="true" maxHeight="1.7976931348623157E308"
-                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                onAction="#deleteWorkoutPlanClicked" prefHeight="50.0"
-                                                styleClass="btnDelete"/>
+                                        <Button fx:id="newBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#newWorkoutPlanClicked" prefHeight="50.0" styleClass="btnAdd" />
+                                        <Button fx:id="editBtn" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#editWorkoutPlanClicked" prefHeight="50.0" styleClass="btnEdit" />
+                                        <Button fx:id="copyBtn" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#copyWorkoutPlanClicked" prefHeight="50.0" styleClass="btnCopy" />
+                                        <Button fx:id="deleteBtn" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteWorkoutPlanClicked" prefHeight="50.0" styleClass="btnDelete" />
                                     </children>
                                     <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </HBox.margin>
                                 </VBox>
                             </children>
                             <VBox.margin>
-                                <Insets/>
+                                <Insets />
                             </VBox.margin>
                         </HBox>
                         <VBox>
                             <children>
-                                <CheckBox fx:id="customWorkoutPlansCheck" maxHeight="1.7976931348623157E308"
-                                          maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                          onAction="#filterUserPlans" text="Eigene Pläne">
+                                <CheckBox fx:id="customWorkoutPlansCheck" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#filterUserPlans" text="Eigene Pläne">
                                     <VBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </VBox.margin>
                                 </CheckBox>
-                                <CheckBox fx:id="defaultWorkoutPlansCheck" mnemonicParsing="false"
-                                          onAction="#filterDefPlans" text="Vorgefertigte Pläne">
+                                <CheckBox fx:id="defaultWorkoutPlansCheck" mnemonicParsing="false" onAction="#filterDefPlans" text="Vorgefertigte Pläne">
                                     <VBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </VBox.margin>
                                 </CheckBox>
                             </children>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                             </VBox.margin>
                         </VBox>
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </HBox.margin>
                 </VBox>
                 <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL">
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </HBox.margin>
                 </Separator>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                            <center>
-                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                      BorderPane.alignment="CENTER">
-                                    <children>
-                                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                                            <children>
-                                                <VBox maxHeight="1.7976931348623157E308"
-                                                      maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                                                    <children>
-                                                        <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
-                                                              maxWidth="1.7976931348623157E308">
-                                                            <children>
-                                                                <VBox fillWidth="false"
-                                                                      maxHeight="1.7976931348623157E308"
-                                                                      maxWidth="1.7976931348623157E308"
-                                                                      HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <Label fx:id="trainingNameLabel"
-                                                                               maxHeight="1.7976931348623157E308"
-                                                                               maxWidth="1.7976931348623157E308"
-                                                                               text="Name">
-                                                                            <font>
-                                                                                <Font size="18.0"/>
-                                                                            </font>
-                                                                            <VBox.margin>
-                                                                                <Insets bottom="8.0" left="8.0"
-                                                                                        right="8.0" top="8.0"/>
-                                                                            </VBox.margin>
-                                                                        </Label>
-                                                                    </children>
-                                                                </VBox>
-                                                                <VBox alignment="CENTER_RIGHT"
-                                                                      maxHeight="1.7976931348623157E308"
-                                                                      maxWidth="1.7976931348623157E308"
-                                                                      HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <HBox alignment="CENTER_LEFT"
-                                                                              maxHeight="1.7976931348623157E308"
-                                                                              maxWidth="1.7976931348623157E308">
-                                                                            <children>
-                                                                                <Text fx:id="txtDuration"
-                                                                                      strokeType="OUTSIDE"
-                                                                                      strokeWidth="0.0">
-                                                                                    <font>
-                                                                                        <Font size="18.0"/>
-                                                                                    </font>
-                                                                                    <HBox.margin>
-                                                                                        <Insets bottom="8.0" left="8.0"
-                                                                                                top="8.0"/>
-                                                                                    </HBox.margin>
-                                                                                </Text>
-                                                                                <Label maxHeight="1.7976931348623157E308"
-                                                                                       maxWidth="1.7976931348623157E308"
-                                                                                       text="Wiederholungen">
-                                                                                    <font>
-                                                                                        <Font size="18.0"/>
-                                                                                    </font>
-                                                                                    <HBox.margin>
-                                                                                        <Insets bottom="8.0" left="8.0"
-                                                                                                right="8.0" top="8.0"/>
-                                                                                    </HBox.margin>
-                                                                                </Label>
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </children>
-                                                                    <HBox.margin>
-                                                                        <Insets/>
-                                                                    </HBox.margin>
-                                                                </VBox>
-                                                            </children>
-                                                        </HBox>
-                                                        <TextArea fx:id="trainingDescr" editable="false"
-                                                                  maxHeight="1.7976931348623157E308"
-                                                                  maxWidth="1.7976931348623157E308" wrapText="true">
-                                                            <VBox.margin>
-                                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                                            </VBox.margin>
-                                                        </TextArea>
-                                                    </children>
-                                                </VBox>
-                                                <HBox maxHeight="1.7976931348623157E308"
-                                                      maxWidth="1.7976931348623157E308">
-                                                    <children>
-                                                        <Separator maxHeight="1.7976931348623157E308"
-                                                                   maxWidth="1.7976931348623157E308"
-                                                                   orientation="VERTICAL">
-                                                            <HBox.margin>
-                                                                <Insets left="8.0" right="8.0"/>
-                                                            </HBox.margin>
-                                                            <VBox.margin>
-                                                                <Insets left="8.0" right="8.0"/>
-                                                            </VBox.margin>
-                                                        </Separator>
-                                                    </children>
-                                                </HBox>
-                                                <VBox maxHeight="1.7976931348623157E308"
-                                                      maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                                                    <children>
-                                                        <Label maxHeight="1.7976931348623157E308"
-                                                               maxWidth="1.7976931348623157E308" text="Informationen">
-                                                            <font>
-                                                                <Font size="18.0"/>
-                                                            </font>
-                                                            <VBox.margin>
-                                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                                            </VBox.margin>
-                                                        </Label>
-                                                        <HBox maxHeight="1.7976931348623157E308"
-                                                              maxWidth="1.7976931348623157E308">
-                                                            <children>
-                                                                <VBox maxHeight="1.7976931348623157E308"
-                                                                      maxWidth="1.7976931348623157E308"
-                                                                      HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <HBox alignment="CENTER_LEFT"
-                                                                              maxHeight="1.7976931348623157E308"
-                                                                              maxWidth="1.7976931348623157E308">
-                                                                            <children>
-                                                                                <Label maxHeight="1.7976931348623157E308"
-                                                                                       maxWidth="1.7976931348623157E308"
-                                                                                       text="Kalorien insgesamt:">
-                                                                                    <font>
-                                                                                        <Font size="14.0"/>
-                                                                                    </font>
-                                                                                    <HBox.margin>
-                                                                                        <Insets bottom="8.0" left="8.0"
-                                                                                                right="8.0" top="8.0"/>
-                                                                                    </HBox.margin>
-                                                                                </Label>
-                                                                                <Text fx:id="txtCal_sum"
-                                                                                      strokeType="OUTSIDE"
-                                                                                      strokeWidth="0.0">
-                                                                                    <HBox.margin>
-                                                                                        <Insets bottom="8.0" left="8.0"
-                                                                                                right="8.0" top="8.0"/>
-                                                                                    </HBox.margin>
-                                                                                </Text>
-                                                                            </children>
-                                                                        </HBox>
-                                                                        <HBox alignment="CENTER_LEFT"
-                                                                              maxHeight="1.7976931348623157E308"
-                                                                              maxWidth="1.7976931348623157E308">
-                                                                            <children>
-                                                                                <Label maxHeight="1.7976931348623157E308"
-                                                                                       maxWidth="1.7976931348623157E308"
-                                                                                       text="Kalorien insgesamt:">
-                                                                                    <font>
-                                                                                        <Font size="14.0"/>
-                                                                                    </font>
-                                                                                    <HBox.margin>
-                                                                                        <Insets bottom="8.0" left="8.0"
-                                                                                                right="8.0" top="8.0"/>
-                                                                                    </HBox.margin>
-                                                                                </Label>
-                                                                                <Text fx:id="txtCal_mean"
-                                                                                      strokeType="OUTSIDE"
-                                                                                      strokeWidth="0.0">
-                                                                                    <HBox.margin>
-                                                                                        <Insets bottom="8.0" left="8.0"
-                                                                                                right="8.0" top="8.0"/>
-                                                                                    </HBox.margin>
-                                                                                </Text>
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </VBox>
-                                                                <VBox maxHeight="1.7976931348623157E308"
-                                                                      maxWidth="1.7976931348623157E308"
-                                                                      HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <Label maxHeight="1.7976931348623157E308"
-                                                                               maxWidth="1.7976931348623157E308"
-                                                                               text="Kategorien:">
-                                                                            <font>
-                                                                                <Font size="14.0"/>
-                                                                            </font>
-                                                                            <VBox.margin>
-                                                                                <Insets bottom="8.0" left="8.0"
-                                                                                        right="8.0" top="8.0"/>
-                                                                            </VBox.margin>
-                                                                        </Label>
-                                                                        <HBox maxHeight="1.7976931348623157E308"
-                                                                              maxWidth="1.7976931348623157E308"
-                                                                              spacing="8.0">
-                                                                            <children>
-                                                                                <Label fx:id="txtTraining"
-                                                                                       alignment="TOP_LEFT"
-                                                                                       maxHeight="1.7976931348623157E308"
-                                                                                       maxWidth="1.7976931348623157E308"
-                                                                                       HBox.hgrow="ALWAYS">
-                                                                                    <HBox.margin>
-                                                                                        <Insets/>
-                                                                                    </HBox.margin>
-                                                                                </Label>
-                                                                                <Label fx:id="txtEquip"
-                                                                                       alignment="TOP_LEFT"
-                                                                                       maxHeight="1.7976931348623157E308"
-                                                                                       maxWidth="1.7976931348623157E308"
-                                                                                       HBox.hgrow="ALWAYS">
-                                                                                    <HBox.margin>
-                                                                                        <Insets/>
-                                                                                    </HBox.margin>
-                                                                                </Label>
-                                                                                <Label fx:id="txtMuscle"
-                                                                                       alignment="TOP_LEFT"
-                                                                                       maxHeight="1.7976931348623157E308"
-                                                                                       maxWidth="1.7976931348623157E308"
-                                                                                       HBox.hgrow="ALWAYS">
-                                                                                    <HBox.margin>
-                                                                                        <Insets/>
-                                                                                    </HBox.margin>
-                                                                                </Label>
-                                                                            </children>
-                                                                            <VBox.margin>
-                                                                                <Insets bottom="8.0" left="8.0"
-                                                                                        right="8.0" top="8.0"/>
-                                                                            </VBox.margin>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </VBox>
-                                                            </children>
-                                                        </HBox>
-                                                    </children>
-                                                    <HBox.margin>
-                                                        <Insets/>
-                                                    </HBox.margin>
-                                                </VBox>
-                                            </children>
-                                        </HBox>
-                                        <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                                            <VBox.margin>
-                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                            </VBox.margin>
-                                        </Separator>
-                                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
-                                              maxWidth="1.7976931348623157E308">
-                                            <children>
-                                                <Label maxHeight="1.7976931348623157E308"
-                                                       maxWidth="1.7976931348623157E308" text="Sessions">
-                                                    <font>
-                                                        <Font size="18.0"/>
-                                                    </font>
-                                                    <VBox.margin>
-                                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                                    </VBox.margin>
+                            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                <children>
+                                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                <children>
+                                                    <VBox fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                        <children>
+                                                            <Label fx:id="trainingNameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Name">
+                                                                <font>
+                                                                    <Font size="18.0" />
+                                                                </font>
+                                                                <VBox.margin>
+                                                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                                </VBox.margin>
+                                                            </Label>
+                                                        </children>
+                                                    </VBox>
+                                                    <VBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                        <children>
+                                                            <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                                <children>
+                                                                    <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Wiederholungen">
+                                                                        <font>
+                                                                            <Font size="18.0" />
+                                                                        </font>
+                                                                        <HBox.margin>
+                                                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                                        </HBox.margin>
+                                                                    </Label>
+                                                <Label fx:id="txtDuration" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                   <HBox.margin>
+                                                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                   </HBox.margin>
                                                 </Label>
-                                                <HBox maxHeight="1.7976931348623157E308"
-                                                      maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                                                    <children>
-                                                        <VBox maxHeight="1.7976931348623157E308"
-                                                              maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-                                                            <children>
-                                                                <ListView fx:id="listViewSessions"
-                                                                          maxHeight="1.7976931348623157E308"
-                                                                          maxWidth="1.7976931348623157E308"
-                                                                          orientation="HORIZONTAL">
-                                                                    <HBox.margin>
-                                                                        <Insets bottom="8.0" left="8.0" right="8.0"
-                                                                                top="8.0"/>
-                                                                    </HBox.margin>
-                                                                </ListView>
-                                                            </children>
-                                                        </VBox>
-                                                        <VBox maxHeight="1.7976931348623157E308"
-                                                              maxWidth="1.7976931348623157E308">
-                                                            <HBox.margin>
-                                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                                            </HBox.margin>
-                                                        </VBox>
-                                                    </children>
-                                                    <VBox.margin>
-                                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                                    </VBox.margin>
-                                                </HBox>
-                                            </children>
-                                        </VBox>
-                                    </children>
-                                    <BorderPane.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                    </BorderPane.margin>
-                                </VBox>
-                            </center>
-                        </BorderPane>
+                                                                </children>
+                                                            </HBox>
+                                                        </children>
+                                                        <HBox.margin>
+                                                            <Insets />
+                                                        </HBox.margin>
+                                                    </VBox>
+                                                </children>
+                                            </HBox>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                 <children>
+                                                  <TextArea fx:id="trainingDescr" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="500.0" wrapText="true">
+                                                      <VBox.margin>
+                                                          <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                      </VBox.margin>
+                                                  </TextArea>
+                                                      <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                          <children>
+                                                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Kalorien insgesamt:">
+                                                                  <font>
+                                                                      <Font size="14.0" />
+                                                                  </font>
+                                                                  <HBox.margin>
+                                                                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                                  </HBox.margin>
+                                                              </Label>
+                                          <Label fx:id="txtCal_sum" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                                          </children>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                          <children>
+                                                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Kalorien duchschn.:">
+                                                                  <font>
+                                                                      <Font size="14.0" />
+                                                                  </font>
+                                                                  <HBox.margin>
+                                                                      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                                  </HBox.margin>
+                                                              </Label>
+                                          <Label fx:id="txtCal_mean" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                                          </children>
+                                                      </HBox>
+                                 </children>
+                              </VBox>
+                                        </children>
+                                    </VBox>
+                                    <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                        <children>
+                                            <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL">
+                                                <HBox.margin>
+                                                    <Insets left="8.0" right="8.0" />
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets left="8.0" right="8.0" />
+                                                </VBox.margin>
+                                            </Separator>
+                                        </children>
+                                    </HBox>
+                                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Informationen">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                                <VBox.margin>
+                                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                </VBox.margin>
+                                            </Label>
+                                            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                <children>
+                                                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                        <children>
+                                                            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Kategorien:">
+                                                                <font>
+                                                                    <Font size="14.0" />
+                                                                </font>
+                                                                <VBox.margin>
+                                                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                                </VBox.margin>
+                                                            </Label>
+                                                            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0">
+                                                                <children>
+                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                                          <Label fx:id="txtTraining" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Art:" HBox.hgrow="ALWAYS">
+                                                                              <HBox.margin>
+                                                                                  <Insets />
+                                                                              </HBox.margin>
+                                                                          </Label>
+                                                      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                                          <Label fx:id="txtEquip" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Geräte:" HBox.hgrow="ALWAYS">
+                                                                              <HBox.margin>
+                                                                                  <Insets />
+                                                                              </HBox.margin>
+                                                                          </Label>
+                                                      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                                          <Label fx:id="txtMuscle" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Muskeln:" HBox.hgrow="ALWAYS">
+                                                                              <HBox.margin>
+                                                                                  <Insets />
+                                                                              </HBox.margin>
+                                                                          </Label>
+                                                      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                                                   </children>
+                                                </VBox>
+                                                                </children>
+                                                                <VBox.margin>
+                                                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                                </VBox.margin>
+                                                            </HBox>
+                                                        </children>
+                                                    </VBox>
+                                                </children>
+                                            </HBox>
+                                        </children>
+                                        <HBox.margin>
+                                            <Insets />
+                                        </HBox.margin>
+                                    </VBox>
+                                </children>
+                            </HBox>
+                            <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                <VBox.margin>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                </VBox.margin>
+                            </Separator>
+                            <VBox alignment="BASELINE_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                <children>
+                                    <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sessions">
+                                        <font>
+                                            <Font size="18.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                        <children>
+                                            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                                <children>
+                                                    <ListView fx:id="listViewSessions" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" prefHeight="250.0">
+                                                        <HBox.margin>
+                                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                        </HBox.margin>
+                                                    </ListView>
+                                                </children>
+                                            </VBox>
+                                            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                <HBox.margin>
+                                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                                </HBox.margin>
+                                            </VBox>
+                                        </children>
+                                        <VBox.margin>
+                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                        </VBox.margin>
+                                    </HBox>
+                                </children>
+                            </VBox>
                     </children>
                 </VBox>
             </children>
             <BorderPane.margin>
-                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
             </BorderPane.margin>
         </HBox>
     </center>
@@ -438,29 +339,32 @@
             <children>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                               text="Trainingspläne">
+                        <Label fx:id="header" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Trainingspläne">
                             <font>
-                                <Font size="24.0"/>
+                                <Font size="24.0" />
                             </font>
                             <HBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                             </HBox.margin>
                         </Label>
                     </children>
                     <VBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </VBox.margin>
                 </HBox>
                 <Separator prefWidth="200.0">
                     <VBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </VBox.margin>
                 </Separator>
             </children>
             <BorderPane.margin>
-                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
             </BorderPane.margin>
         </VBox>
     </top>
+   <stylesheets>
+      <URL value="@../../css/trainingStyle.css" />
+      <URL value="@../../css/mainStyle.css" />
+   </stylesheets>
 </BorderPane>

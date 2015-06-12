@@ -1,10 +1,5 @@
 package sepm.ss15.grp16.gui.controller.workoutPlans;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.Version;
-import com.restfb.types.FacebookType;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -13,14 +8,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -172,7 +163,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ansicht verlassen.");
             alert.setHeaderText("Wenn Sie abbrechen, wir der angezeigte Trainingsplan nicht gespeichert und verworfen.");
-            alert.setContentText("Möchten Sie die Ansicht verlassen?");
+            alert.setContentText("M\u00f6chten Sie die Ansicht verlassen?");
             ButtonType yes = new ButtonType("Ja");
             ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(yes, cancel);

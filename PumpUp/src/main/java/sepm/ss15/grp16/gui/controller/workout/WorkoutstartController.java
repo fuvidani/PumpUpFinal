@@ -120,8 +120,8 @@ public class WorkoutstartController extends Controller {
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Keine Musik gewählt");
-            alert.setHeaderText("Sie haben keine Musik gewählt");
+            alert.setTitle("Keine Musik gew\u00e4hlt");
+            alert.setHeaderText("Sie haben keine Musik gew\u00e4hlt");
             alert.setContentText("Wollen Sie ohne Musik trainieren?");
             ButtonType yes = new ButtonType("Ja");
             ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.NO);

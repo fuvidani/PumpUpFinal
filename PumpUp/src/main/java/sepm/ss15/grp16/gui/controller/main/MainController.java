@@ -5,11 +5,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
@@ -161,8 +166,8 @@ public class MainController extends Controller {
             else
             {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Keine �bung zur Ausf�hrung!");
-                alert.setContentText("Keine �bung zur Ausf�hrung!");
+                alert.setTitle("Keine \u00dcbung zur Ausf\u00fchrung!");
+                alert.setContentText("Keine \u00dcbung zur Ausf\u00fchrung!");
                 ButtonType ok = new ButtonType("OK");
                 alert.getButtonTypes().setAll(ok);
                 alert.showAndWait().get();
@@ -253,17 +258,29 @@ public class MainController extends Controller {
             LineChart.Series<String, Number> bodyFatSeries = new LineChart.Series<String, Number>();
             List<WeightHistory> weightHistoryList = weightHistoryService.searchByUserID(loggedInUserID);
             List<BodyfatHistory> bodyfatHistoryList = bodyfatHistoryService.searchByUserID(loggedInUserID);
-
+            int i = 0;
             for (WeightHistory w : weightHistoryList) {
-                weightSeries.getData().add(new LineChart.Data<>("" + w.getDate(), w.getWeight()));
+                LineChart.Data data = new LineChart.Data<>("" + w.getDate(), w.getWeight());
+                data.setNode(
+                        new HoveredThresholdNode(w.getWeight())
+                );
+
+                weightSeries.getData().add(data);
+                i++;
             }
 
-            int counter = 0;
+            i = 0;
 
             for (BodyfatHistory b : bodyfatHistoryList) {
-                int bodyFatTOKG = weightHistoryList.get(counter).getWeight() * b.getBodyfat() / 100;
-                bodyFatSeries.getData().add(new LineChart.Data("" + b.getDate(), bodyFatTOKG));
-                counter++;
+                int bodyFatTOKG = weightHistoryList.get(i).getWeight() * b.getBodyfat() / 100;
+                LineChart.Data data = new LineChart.Data<>("" + b.getDate(), bodyFatTOKG);
+
+                data.setNode(
+                        new HoveredThresholdNode(bodyFatTOKG)
+
+                );
+                i++;
+                bodyFatSeries.getData().add(data);
             }
             weightSeries.setName("K\u00f6rpergewicht");
             bodyFatSeries.setName("K\u00f6rperfettanteil");
@@ -272,6 +289,36 @@ public class MainController extends Controller {
         } catch (ServiceException e) {
             e.printStackTrace();
             LOGGER.error(e);
+        }
+    }
+
+
+
+    /** a node which displays a value on hover, but is otherwise empty */
+    class HoveredThresholdNode extends StackPane {
+        HoveredThresholdNode(int value) {
+            setPrefSize(8, 8);
+            final Label label = createDataThresholdLabel(value);
+            setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent mouseEvent) {
+                    getChildren().setAll(label);
+                    setCursor(Cursor.NONE);
+                    toFront();
+                }
+            });
+            setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent mouseEvent) {
+                    getChildren().clear();
+                    setCursor(Cursor.CROSSHAIR);
+                }
+            });
+        }
+        private Label createDataThresholdLabel(int value) {
+            final Label label = new Label(value + " kg");
+            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+            label.setTextFill(Color.BLACK);
+            label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+            return label;
         }
     }
 

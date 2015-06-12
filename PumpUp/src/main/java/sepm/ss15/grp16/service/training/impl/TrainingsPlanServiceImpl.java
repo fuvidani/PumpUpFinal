@@ -182,19 +182,35 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
 
     @Override
     public void increaseDifficulty(Trainingsplan plan) {
-        for (TrainingsSession session : plan.getTrainingsSessions()) {
-            for (ExerciseSet set : session.getExerciseSets()) {
-                set.setRepeat((int) (set.getRepeat() * 1.25));
-            }
-        }
+        plan.getTrainingsSessions().forEach(this::increaseDifficulty);
     }
 
     @Override
     public void decreaseDifficulty(Trainingsplan plan) {
-        for (TrainingsSession session : plan.getTrainingsSessions()) {
-            for (ExerciseSet set : session.getExerciseSets()) {
-                set.setRepeat((int) (set.getRepeat() * 0.75));
-            }
+        plan.getTrainingsSessions().forEach(this::decreaseDifficulty);
+    }
+
+    @Override
+    public void increaseDifficulty(TrainingsSession session) {
+        session.getExerciseSets().forEach(this::increaseDifficulty);
+    }
+
+    @Override
+    public void decreaseDifficulty(TrainingsSession session) {
+        session.getExerciseSets().forEach(this::decreaseDifficulty);
+    }
+
+    @Override
+    public void increaseDifficulty(ExerciseSet set) {
+        set.setRepeat(set.getRepeat() + 15);
+    }
+
+    @Override
+    public void decreaseDifficulty(ExerciseSet set) {
+        if (set.getRepeat() >= 15) {
+            set.setRepeat(set.getRepeat() - 15);
+        } else {
+            set.setRepeat(0);
         }
     }
 

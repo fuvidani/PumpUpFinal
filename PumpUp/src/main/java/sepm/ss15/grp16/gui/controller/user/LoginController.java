@@ -86,7 +86,7 @@ public class LoginController extends Controller {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehler beim Anmelden");
-            alert.setContentText("Es wurde kein user ausgewählt!");
+            alert.setContentText("Es wurde kein user ausgew\u00e4hlt!");
             alert.showAndWait();
             return;
         }

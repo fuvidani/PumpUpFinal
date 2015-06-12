@@ -146,7 +146,7 @@ public class Trainingsplan implements DTO {
         return result;
     }
 
-    public boolean equalLists(List<TrainingsSession> one, List<TrainingsSession> two) {
+    private boolean equalLists(List<TrainingsSession> one, List<TrainingsSession> two) {
         if (one == null && two == null) {
             return true;
         }

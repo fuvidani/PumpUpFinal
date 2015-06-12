@@ -38,16 +38,10 @@ import java.util.Optional;
 public class ManageExerciseController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    @FXML
-    private AnchorPane pane;
-    @FXML
-    private CheckBox punchBagCheck;
+
     @FXML
     private ImageView imageView;
-    @FXML
-    private CheckBox chestCheck;
-    @FXML
-    private TextField videoLinkField;
+
     @FXML
     private TextArea descriptionArea;
     @FXML
@@ -105,8 +99,6 @@ public class ManageExerciseController extends Controller {
     @FXML
     private VBox vboxEquipment;
     @FXML
-    private WebView webViewVideo;
-    @FXML
     private Button deleteBtn = new Button();
     @FXML
     private Button addBtn = new Button();
@@ -146,8 +138,8 @@ public class ManageExerciseController extends Controller {
 
         //dynamisches laden von checkboxen
         try {
-            exercise = ((ExercisesController) this.getParentController()).getExercise();
-            webViewVideo.setVisible(false);
+//            exercise = ((ExercisesController) this.getParentController()).getExercise();
+            exercise = null;
             for (TrainingsCategory t : categoryService.getAllTrainingstype()) {
                 CheckBox box = new CheckBox(t.getName());
                 box.setId("" + t.getId());
@@ -229,10 +221,6 @@ public class ManageExerciseController extends Controller {
 
     }
 
-    @FXML
-    private void playVideo() {
-        webViewVideo.getEngine().load(videoLinkField.getText());
-    }
 
     private void showPic(String oldValue, String newValue) {
         try {
