@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Arc?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="800.0" stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyReleased="#onKeyPressed" prefHeight="800.0" stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutController">
     <center>
         <VBox spacing="20.0" BorderPane.alignment="CENTER">
             <children>
@@ -88,10 +88,13 @@
                         </VBox>
                     </children>
                 </HBox>
-                <HBox prefHeight="50.0" VBox.vgrow="NEVER">
+                <HBox prefHeight="50.0" VBox.vgrow="SOMETIMES">
                     <children>
                         <Region minWidth="50.0" HBox.hgrow="NEVER" />
-                        <Button fx:id="pauseButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onPause" prefHeight="50.0" text="Pause" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="pauseButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onActionButtonClicked" prefHeight="100.0" text="Pause" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></Button>
                         <Region minWidth="50.0" HBox.hgrow="NEVER" />
                     </children>
                 </HBox>

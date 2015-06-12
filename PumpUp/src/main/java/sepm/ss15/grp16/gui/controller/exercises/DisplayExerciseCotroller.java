@@ -21,6 +21,7 @@ import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.workout.WorkoutController;
 import sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
@@ -86,7 +87,18 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
     @Override
     public void initController() {
         LOGGER.debug("stranded in DisplayExerciseController");
-        exercise = ((SessionEditController_v2) this.getParentController()).getExercise();
+        if(this.getParentController() instanceof  SessionEditController_v2) {
+            exercise = ((SessionEditController_v2) this.getParentController()).getExercise();
+        }
+        else if(this.getParentController() instanceof  WorkoutController)
+        {
+            exercise = ((WorkoutController) this.getParentController()).getExercise();
+        }
+        else
+        {
+            throw new IllegalArgumentException("DisplayExercise called from wrong Controller!");
+        }
+
 
         leftArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 

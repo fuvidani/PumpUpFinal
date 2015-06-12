@@ -5,27 +5,25 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Arc;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import sepm.ss15.grp16.entity.calendar.Appointment;
+import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.WorkoutResult;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
@@ -34,7 +32,7 @@ import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
+
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -110,12 +108,12 @@ public class WorkoutController extends Controller {
         workoutResult = new WorkoutResult(appointment);
         session = appointment.getSession();
 
-        mainFrame.addPageManeItem("Open Fullscreen", event1 -> {
-            mainFrame.openFullScreenMode();
-        });
-        mainFrame.addPageManeItem("Training abbrechen", event1 -> {
-            mainFrame.navigateToParent();
-        });
+        mainFrame.addPageManeItem("Übungsdetails anzeien", event1 -> onDetailedExerciseClicked());
+        mainFrame.addPageManeItem("Open Fullscreen", event1 -> mainFrame.openFullScreenMode());
+        mainFrame.addPageManeItem("Training abbrechen", event1 -> mainFrame.navigateToParent());
+
+        exerciseImageView.setOnMouseClicked(event1 -> onDetailedExerciseClicked());
+        exerciseImageView.setOnTouchReleased(event1 -> onDetailedExerciseClicked());
 
         exerciseImageView.setPreserveRatio(true);
         exerciseImageView.fitWidthProperty().bind(pictureFitPane.widthProperty());
@@ -235,6 +233,8 @@ public class WorkoutController extends Controller {
     private void runExercise() {
         status = Status.RUNNUNG;
         pauseButton.setText("Stop");
+        pauseButton.getStyleClass().clear();
+        pauseButton.getStyleClass().add("finishBtn");
         counterTimeline.playFromStart();
         if (activeExercisePosition > 0) {
             workoutResult.setExecution(exerciseList.get(activeExercisePosition - 1),
@@ -262,14 +262,18 @@ public class WorkoutController extends Controller {
         if (allExercisesDone()) {
             status = Status.FINISHED;
             imageTimeline.stop();
-            pauseButton.setText("Trainingsresultate");
-            exerciseLabel.setText("training beendet!");
             exerciseImageView.setImage(null);
+            pauseButton.setText("Trainingsresultate");
+            pauseButton.getStyleClass().clear();
+            pauseButton.getStyleClass().add("finishBtn");
+            exerciseLabel.setText("Training beendet!");
         } else {
             switchToNextExercise();
 
             status = Status.PAUSED;
             pauseButton.setText("Start");
+            pauseButton.getStyleClass().clear();
+            pauseButton.getStyleClass().add("startBtn");
             counterTimeline.getKeyFrames().clear();
             exerciseLabel.setText(activeExercise().getExercise().getName());
 
@@ -295,19 +299,41 @@ public class WorkoutController extends Controller {
         }
     }
 
+    public void finish(){
+        workoutResult.setExecution(activeExercise(),
+                repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
+                durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
+        mainFrame.openDialog(PageEnum.WorkoutResult);
+        mainFrame.navigateToParent();
+    }
+
     @FXML
-    private void onPause(ActionEvent event) {
+    private void onActionButtonClicked(ActionEvent event) {
         if (status == Status.PAUSED) {
             runExercise();
         } else if (status == Status.RUNNUNG) {
             counterTimeline.stop();
             pause();
         } else {
-            workoutResult.setExecution(activeExercise(),
-                    repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
-                    durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
-            mainFrame.openDialog(PageEnum.WorkoutResult);
-            mainFrame.navigateToParent();
+            finish();
+        }
+    }
+
+    @FXML
+    private void onDetailedExerciseClicked()
+    {
+        if(status == Status.PAUSED)
+        {
+            launchDialog(PageEnum.DisplayExercise);
+        }
+    }
+
+    @FXML
+    private void onKeyPressed(KeyEvent event)
+    {
+        if(event.getCode() == KeyCode.ENTER)
+        {
+            onActionButtonClicked(null);
         }
     }
 
@@ -340,15 +366,20 @@ public class WorkoutController extends Controller {
             label.setStyle("-fx-font-weight: bold");
             borderPane.setBottom(label);
             getChildren().add(borderPane);
-            setStyle("-fx-background-color: rgba(222, 222, 222, 1);" +
-                    "-fx-background-radius: 5");
+            getStyleClass().clear();
+            getStyleClass().add("inactiveBarElement");
         }
 
 
         public void avtivate() {
-            setStyle("-fx-background-color: firebrick;" +
-                    "-fx-background-radius: 3");
+            getStyleClass().clear();
+            getStyleClass().add("activeBarElement");
         }
+    }
+
+    public Exercise getExercise()
+    {
+        return activeExercise().getExercise();
     }
 
     public WorkoutResult getWorkoutResult()
