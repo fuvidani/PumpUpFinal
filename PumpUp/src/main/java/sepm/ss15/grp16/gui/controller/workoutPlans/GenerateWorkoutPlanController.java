@@ -3,8 +3,6 @@ package sepm.ss15.grp16.gui.controller.workoutPlans;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
@@ -16,11 +14,9 @@ import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.entity.training.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
-import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
-import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -39,7 +35,6 @@ public class GenerateWorkoutPlanController extends Controller {
     private ToggleGroup toggleGroup;
     private List<EquipmentCategory> equipment;
     private List<CheckBox> boxes;
-    private CategoryService categoryService;
     private BooleanProperty displayClosed = new SimpleBooleanProperty();
     private Trainingsplan generatedWorkoutPlan;
 
@@ -103,14 +98,6 @@ public class GenerateWorkoutPlanController extends Controller {
 
     }
 
-    /**
-     * Sets the service. Will be injected by Spring.
-     *
-     * @param categoryService service for the categories
-     */
-    public void setCategoryService(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
     @Override
     public void initController() {
@@ -143,87 +130,21 @@ public class GenerateWorkoutPlanController extends Controller {
         boxes.add(absRollerCheck);
         boxes.add(jumpingRopeCheck);
         boxes.add(punchbagCheck);
-        selectAllCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (new_val) {
-                    for (CheckBox box : boxes) {
-                        box.setSelected(true);
-                    }
+        selectAllCheck.setOnAction(event -> {
+            if(selectAllCheck.isSelected()){
+                for (CheckBox box : boxes) {
+                    box.setSelected(true);
                 }
             }
         });
 
-        barbellCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (!new_val) {
+        for(CheckBox box:boxes){
+            box.setOnAction(event -> {
+                if(!box.isSelected()){
                     selectAllCheck.setSelected(false);
                 }
-            }
-        });
-
-        yogaBallCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (!new_val) {
-                    selectAllCheck.setSelected(false);
-                }
-            }
-        });
-
-        dumbbellCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (!new_val) {
-                    selectAllCheck.setSelected(false);
-                }
-            }
-        });
-
-        chinupBarCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (!new_val) {
-                    selectAllCheck.setSelected(false);
-                }
-            }
-        });
-
-        expanderCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (!new_val) {
-                    selectAllCheck.setSelected(false);
-                }
-            }
-        });
-
-        medicineBallCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (!new_val) {
-                    selectAllCheck.setSelected(false);
-                }
-            }
-        });
-
-        absRollerCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (!new_val) {
-                    selectAllCheck.setSelected(false);
-                }
-            }
-        });
-
-        jumpingRopeCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (!new_val) {
-                    selectAllCheck.setSelected(false);
-                }
-            }
-        });
-
-        punchbagCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
-                if (!new_val) {
-                    selectAllCheck.setSelected(false);
-                }
-            }
-        });
+            });
+        }
         this.displayClosed.set(false);
         LOGGER.info("Controller successfully initialized!");
     }
