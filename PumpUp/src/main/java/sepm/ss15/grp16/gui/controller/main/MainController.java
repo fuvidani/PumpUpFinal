@@ -222,17 +222,17 @@ public class MainController extends Controller {
 
         usernameLabel.setText("Willkommen, " + username + "!");
         ageTextField.setText(Integer.toString(age));
-        heightTextField.setText(Integer.toString(height));
+        heightTextField.setText(Integer.toString(height) + " cm");
         genderTextField.setText(gender ? "M\u00e4nnlich" : "Weiblich");
 
         if (weight != null) {
-            weightTextField.setText(Integer.toString(weight));
+            weightTextField.setText(Integer.toString(weight) + " kg");
         } else {
             weightTextField.setText("Keine Angabe");
         }
 
         if (bodyfat != null) {
-            bodyfatTextField.setText(Integer.toString(bodyfat));
+            bodyfatTextField.setText(Integer.toString(bodyfat) + " %");
         } else {
             bodyfatTextField.setText("Keine Angabe");
         }
