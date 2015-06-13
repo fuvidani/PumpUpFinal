@@ -87,6 +87,16 @@ public abstract class AbstractBodyfatHistoryDaoTest extends AbstractDAOTest<Body
 
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void updateNotSupported() throws Exception {
+        bodyfatHistoryDAO.update(null);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void deleteNotSupported() throws Exception {
+        bodyfatHistoryDAO.delete(null);
+    }
+
     private User createUserForTest() throws Exception {
         User testUser = new User(null, "maxmustermann", true, 20, 194, "max.mustermann@gmail.com", "/path/playlist/", false);
         return userDAO.create(testUser);
