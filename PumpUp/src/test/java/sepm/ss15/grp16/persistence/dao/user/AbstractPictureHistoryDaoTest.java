@@ -165,7 +165,7 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
     }
 
     @Test
-    public void getActualWeightWithValidId() throws Exception {
+    public void getActualPictureWithValidId() throws Exception {
         String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
         String testImagePath = pathToResource + "/testbild.jpg";
 

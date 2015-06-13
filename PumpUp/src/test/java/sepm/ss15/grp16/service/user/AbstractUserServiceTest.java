@@ -6,6 +6,7 @@ import sepm.ss15.grp16.service.AbstractServiceTest;
 import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.user.impl.UserServiceImpl;
 
 /**
  * This class provides methods for testing UserServices
@@ -20,6 +21,11 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest<User> 
     @Override
     public Service<User> getService() {
         return userService;
+    }
+
+    @Test(expected = ServiceException.class)
+    public void newUserServiceWithNull() throws Exception{
+        new UserServiceImpl(null);
     }
 
     @Test
