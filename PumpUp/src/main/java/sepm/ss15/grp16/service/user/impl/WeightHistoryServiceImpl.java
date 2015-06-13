@@ -52,7 +52,6 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 
     @Override
     public void delete(WeightHistory weightHistory) throws ServiceException {
-        //TODO: Implement me
         throw new UnsupportedOperationException();
     }
 
