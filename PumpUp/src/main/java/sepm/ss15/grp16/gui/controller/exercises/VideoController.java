@@ -1,6 +1,5 @@
 package sepm.ss15.grp16.gui.controller.exercises;
 
-import com.restfb.types.Video;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -11,11 +10,11 @@ import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.Exercise;
-import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 
 /**
  * Created by lukas on 10.06.2015.
+ * a controller with the purpose of playing a video
  */
 public class VideoController extends Controller {
     private final Logger LOGGER = LogManager.getLogger();
@@ -38,6 +37,11 @@ public class VideoController extends Controller {
         this.showVideo();
     }
 
+    /**
+     * method for the show video button
+     * redirects to an extra dialogue where the video gets displayed and
+     * can be watched
+     */
     private void showVideo() {
         try {
 
@@ -65,6 +69,11 @@ public class VideoController extends Controller {
         } catch (Exception e) {
         }
     }
+
+    /**
+     * method to play the video and paus the video
+     * if the video has finished it starts after a klick again
+     */
     @FXML
     private void playVideo() {
 
@@ -89,6 +98,9 @@ public class VideoController extends Controller {
         }
     }
 
+    /**
+     * closing the stage and getting back to the called stage
+     */
     @FXML
     private void close(){
             mainFrame.close();

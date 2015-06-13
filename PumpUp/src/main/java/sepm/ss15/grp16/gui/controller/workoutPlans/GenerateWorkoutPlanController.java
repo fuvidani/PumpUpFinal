@@ -18,6 +18,7 @@ import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

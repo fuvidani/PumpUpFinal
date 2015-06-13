@@ -1,6 +1,5 @@
 package sepm.ss15.grp16.gui;
 
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

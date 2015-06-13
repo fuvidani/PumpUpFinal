@@ -1,10 +1,7 @@
 package sepm.ss15.grp16.gui.controller.exercises;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
@@ -28,9 +24,12 @@ import sepm.ss15.grp16.service.exercise.CategoryService;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Optional;
 
 /**
  * Created by lukas on 09.06.2015.
+ * one controller for the solely purpose of displaying an exercise
+ * without controlls of editing or creating
  */
 public class DisplayExerciseCotroller extends Controller implements VideoPlayable {
     @FXML
@@ -83,6 +82,9 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
         return exercise;
     }
 
+    /**
+     * initializing the controller with all needed services
+     */
     @Override
     public void initController() {
         LOGGER.debug("stranded in DisplayExerciseController");
@@ -161,7 +163,13 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
         }
     }
 
-
+    /**
+     * showing one picture out of the picture list the
+     * current exercise has, defined by the given index
+     * to load from the list of pictures
+     * @param index which picture is to display
+     *
+     */
     private void showPicture(Integer index) {
         try {
             if (exercise.getGifLinks().isEmpty())
@@ -189,6 +197,9 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
         }
     }
 
+    /**
+     * changing to the next picture if there is one
+     */
     @FXML
     private void nexPicButtonClicked() {
         if (exercise.getGifLinks().size() > 0) {
@@ -196,6 +207,9 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
         }
     }
 
+    /**
+     * changing to the previous picture if there is one
+     */
     @FXML
     private void prevPicButtonClicked() {
         if (exercise.getGifLinks().size() > 0) {
@@ -203,13 +217,32 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
         }
     }
 
+    /**
+     * method for the show video button
+     * redirects to an extra dialogue where the video gets displayed and
+     * can be watched
+     */
     @FXML
     private void showVideo() {
         mainFrame.openDialog(PageEnum.VideoPlayer);
     }
 
+    /**
+     * getting back to the main stage
+     */
     @FXML
     private void  getBack(){
-        mainFrame.navigateToParent();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("\u00dcbungen verlassen");
+        alert.setHeaderText("Das \u00dcbungsfenster schlie\u00dfen.");
+        alert.setContentText("M\u00f6chten Sie die \u00dcbungsuebersicht wirklich beenden?");
+        ButtonType yes = new ButtonType("Ja");
+        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yes, cancel);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == yes) {
+            mainFrame.navigateToParent();
+        }
     }
 }

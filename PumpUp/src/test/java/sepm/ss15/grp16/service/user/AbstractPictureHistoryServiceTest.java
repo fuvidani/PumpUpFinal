@@ -1,7 +1,6 @@
 package sepm.ss15.grp16.service.user;
 
 import org.junit.Test;
-import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.service.AbstractServiceTest;
