@@ -30,7 +30,6 @@ import java.util.Random;
 public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanService {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private TrainingsplanService trainingsplanService;
     private ExerciseService exerciseService;
     private UserService userService;
     private WeightHistoryService weightHistoryService;
@@ -38,13 +37,11 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
     /**
      * Public constructor to be injected by Spring.
      *
-     * @param trainingsplanService service for the workout plans
      * @param exerciseService      service for the specific exercises
      * @param userService          service for the current logged in user
      * @param weightHistoryService service for the weight history of the user
      */
-    public GeneratedWorkoutplanServiceImpl(TrainingsplanService trainingsplanService, ExerciseService exerciseService, UserService userService, WeightHistoryService weightHistoryService) {
-        this.trainingsplanService = trainingsplanService;
+    public GeneratedWorkoutplanServiceImpl(ExerciseService exerciseService, UserService userService, WeightHistoryService weightHistoryService) {
         this.exerciseService = exerciseService;
         this.userService = userService;
         this.weightHistoryService = weightHistoryService;

@@ -30,7 +30,7 @@
                   <Font size="24.0" />
                </font>
                <HBox.margin>
-                  <Insets left="15.0" />
+                  <Insets left="8.0" />
                </HBox.margin>
             </Label>
             <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
@@ -41,7 +41,7 @@
       </HBox>
     </top>
     <bottom>
-        <HBox maxHeight="24.0" maxWidth="1.7976931348623157E308" minHeight="24.0" prefHeight="24.0" BorderPane.alignment="CENTER">
+        <HBox maxHeight="24.0" maxWidth="1.7976931348623157E308" minHeight="24.0" prefHeight="24.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
                   <Button maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="32.0" prefWidth="32.0" styleClass="backBtn" stylesheets="@../../css/gen_workout_resultStyle.css" HBox.hgrow="ALWAYS">
                       <font>
@@ -100,7 +100,7 @@
                 <HBox VBox.vgrow="ALWAYS">
                     <children>
                         <Region layoutX="970.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" prefHeight="571.0" prefWidth="870.0" stylesheets="@./" HBox.hgrow="ALWAYS" />
+                        <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" prefHeight="571.0" prefWidth="870.0" stylesheets="@../../css/gen_workout_resultStyle.css" HBox.hgrow="ALWAYS" />
                         <Region layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>

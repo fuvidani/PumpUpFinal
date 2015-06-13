@@ -2,7 +2,6 @@ package sepm.ss15.grp16.gui;
 
 import com.github.sarxos.webcam.Webcam;
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

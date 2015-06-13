@@ -51,7 +51,7 @@ public class VideoController extends Controller {
                 player = new MediaPlayer(media);
 
                 player.setAutoPlay(false);
-
+                player.setMute(true);
                 smallMediaView.setMediaPlayer(player);
                 smallMediaView.setVisible(true);
                 smallMediaView.setFitHeight(300);
@@ -73,6 +73,7 @@ public class VideoController extends Controller {
         if (currentDuration.compareTo(totalDuration) == 0) {
             isPlaying = false;
             player = new MediaPlayer(media);
+            player.setMute(true);
             smallMediaView.setMediaPlayer(null);
             smallMediaView.setMediaPlayer(player);
             playBtn.setText("Video abspielen");
