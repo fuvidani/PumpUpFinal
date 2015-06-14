@@ -13,6 +13,7 @@ import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.dao.calendar.AbstractCalendarDAOTest;
 import sepm.ss15.grp16.persistence.dao.calendar.CalendarDAO;
+import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.dao.user.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
@@ -40,6 +41,9 @@ public class H2CalendarDAOTestImpl extends AbstractCalendarDAOTest {
     private UserDAO userDAO;
 
     @Autowired
+    private ExerciseDAO exerciseDAO;
+
+    @Autowired
     private TrainingsplanDAO trainingsplanDAO;
 
     @Before
@@ -60,6 +64,11 @@ public class H2CalendarDAOTestImpl extends AbstractCalendarDAOTest {
     @Override
     protected UserDAO getUserDAO() {
         return userDAO;
+    }
+
+    @Override
+    protected ExerciseDAO getExerciseDAO() {
+        return exerciseDAO;
     }
 
     @Override
