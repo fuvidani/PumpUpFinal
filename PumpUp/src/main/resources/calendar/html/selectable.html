@@ -28,7 +28,7 @@
                 firstDay: 1,
 
                 eventDrop: function (event, delta, revertFunc) {
-                    var date = new Date(event.date);
+                    var date = new Date(event.start);
                     date.setHours(0,0,0,0);
                     var today = new Date();
                     today.setHours(0,0,0,0);
