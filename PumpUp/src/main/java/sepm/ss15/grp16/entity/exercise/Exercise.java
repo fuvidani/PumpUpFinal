@@ -1,6 +1,7 @@
 package sepm.ss15.grp16.entity.exercise;
 
 import sepm.ss15.grp16.entity.DTO;
+import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.user.User;
 
 import java.util.ArrayList;
@@ -43,6 +44,18 @@ public class Exercise implements DTO {
         this.isDeleted = isDeleted;
         this.user = user;
         this.categories = categories;
+    }
+
+    public Exercise(Exercise exercise){
+        this.id = exercise.id;
+        this.name = exercise.name;
+        this.description = exercise.description;
+        this.calories = exercise.calories;
+        this.videolink = exercise.videolink;
+        this.gifLinks = exercise.gifLinks;
+        this.isDeleted = exercise.isDeleted;
+        this.user = exercise.user;
+        this.categories = exercise.categories;
     }
 
     public Integer getId() {
@@ -124,20 +137,56 @@ public class Exercise implements DTO {
 
         Exercise exercise = (Exercise) o;
 
-        if (this.getId() == null) {
-            return false;
+        return !(id != null ? !id.equals(exercise.id) : exercise.id != null)
+                && !(name != null ? !name.equals(exercise.name) : exercise.name != null)
+                && !(description != null ? !description.equals(exercise.description) : exercise.description != null)
+                && !(calories != null ? !calories.equals(exercise.calories) : exercise.calories != null)
+                && !(videolink != null ? !videolink.equals(exercise.videolink) : exercise.videolink != null)
+                && equalListsString(gifLinks, exercise.gifLinks)
+                && !(isDeleted != null ? !isDeleted.equals(exercise.isDeleted) : exercise.isDeleted != null)
+                && !(user != null ? !user.equals(exercise.user) : exercise.user != null)
+                && equalListsCat(categories,exercise.categories);
+
+    }
+
+    private boolean equalListsString(List<String> one, List<String> two) {
+        if (one == null && two == null) {
+            return true;
         }
 
-        if (this.getId() == ((Exercise) o).getId())
+        if ((one == null && two != null)
+                || one != null && two == null
+                || one.size() != two.size()) {
+            return false;
+        }
+        return one.containsAll(two);
+    }
+
+    private boolean equalListsCat(List<AbsractCategory> one, List<AbsractCategory> two) {
+        if (one == null && two == null) {
             return true;
+        }
 
-        return !(getId() != null ? !getId().equals(exercise.getId()) : exercise.getId() != null);
-
+        if ((one == null && two != null)
+                || one != null && two == null
+                || one.size() != two.size()) {
+            return false;
+        }
+        return one.containsAll(two);
     }
 
     @Override
     public int hashCode() {
-        return getId() != null ? getId().hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (calories != null ? calories.hashCode() : 0);
+        result = 31 * result + (videolink != null ? videolink.hashCode() : 0);
+        result = 31 * result + (gifLinks != null ? gifLinks.hashCode() : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        return result;
     }
 
     @Override

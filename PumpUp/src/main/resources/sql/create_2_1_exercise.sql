@@ -50,8 +50,8 @@ CREATE TABLE IF NOT EXISTS gif (
 );
 
 
-CREATE SEQUENCE IF NOT EXISTS exercise_seq START WITH 28 INCREMENT BY 1;
-CREATE SEQUENCE IF NOT EXISTS gif_seq START WITH 50 INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS exercise_seq START WITH 38 INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS gif_seq START WITH 73 INCREMENT BY 1;
 CREATE SEQUENCE IF NOT EXISTS category_seq START WITH 22 INCREMENT BY 1;
 CREATE SEQUENCE IF NOT EXISTS categoryName_seq START WITH 3 INCREMENT BY 1;
 
@@ -130,16 +130,16 @@ MERGE INTO exercise KEY (id) VALUES
   (25, 'Quadrizeps dehnen', '', 0.3, NULL, NULL, FALSE),
   (26, 'Gesäßmuskulatur dehnen', '', 0.3, NULL, NULL, FALSE),
   (27, 'Kniesehne dehnen', '', 0.3, NULL, NULL, FALSE),
-  (28, 'Burpees', '', 0.2, 'burpees.mp4', NULL, False),
-  (29, 'Captain Morgan', '', 0.2, 'captain_morgan.mp4', NULL, False),
-  (30, 'Diamond Liegestütz', '', 1.0, 'diamond_pushup.mp4', NULL, False),
-  (31, 'Handstand Liegestütz', '', 1.5, 'handstand_pushup.mp4', NULL, False),
-  (32, 'Heel To Toe Walk', '', 0.2, 'heel_to_toe_walk.mp4', NULL, False),
-  (33, 'Ice Skater', '', 0.2, 'ice_skate.mp4', NULL, False),
-  (34, 'Jumping Jack', '', 0.2, 'jumping_jack.mp4', NULL, False),
-  (35, 'Klimmzüge', '', 1.5, 'klimmzuege.mp4', NULL, False),
-  (36, 'Mountain Climber', '', 0.5, 'mountain_climber.mp4', NULL, False),
-  (37, 'Push-Up Knee Cross-over', '', 0.3, 'pushup_knee_crossover.mp4', NULL, False);
+  (28, 'Burpees', '', 0.2, 'burpees.mp4', NULL, FALSE),
+  (29, 'Captain Morgan', '', 0.2, 'captain_morgan.mp4', NULL, FALSE),
+  (30, 'Diamond Liegestütz', '', 1.0, 'diamond_pushup.mp4', NULL, FALSE),
+  (31, 'Handstand Liegestütz', '', 1.5, 'handstand_pushup.mp4', NULL, FALSE),
+  (32, 'Heel To Toe Walk', '', 0.2, 'heel_to_toe_walk.mp4', NULL, FALSE),
+  (33, 'Ice Skater', '', 0.2, 'ice_skate.mp4', NULL, FALSE),
+  (34, 'Jumping Jack', '', 0.2, 'jumping_jack.mp4', NULL, FALSE),
+  (35, 'Klimmzüge', '', 1.5, 'klimmzuege.mp4', NULL, FALSE),
+  (36, 'Mountain Climber', '', 0.5, 'mountain_climber.mp4', NULL, FALSE),
+  (37, 'Push-Up Knee Cross-over', '', 0.3, 'pushup_knee_crossover.mp4', NULL, FALSE);
 
 
 MERGE INTO exercise_category KEY (exerciseid, categoryid) VALUES
@@ -219,7 +219,6 @@ MERGE INTO exercise_category KEY (exerciseid, categoryid) VALUES
   (36, 0), (36, 1), (36, 6),
   --Push-up knee cross-over, Ausdauer, Bauchmuskeln
   (37, 0), (37, 6);
-
 
 
 MERGE INTO gif KEY (id) VALUES
