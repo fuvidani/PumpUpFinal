@@ -97,7 +97,6 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
             original = new ArrayList<>(players);
 
             if (!players.isEmpty()) {
-                System.out.println("success!");
                 musicPlayerSlide = new MediaView(players.get(0));
 
                 // play each audio file in turn.

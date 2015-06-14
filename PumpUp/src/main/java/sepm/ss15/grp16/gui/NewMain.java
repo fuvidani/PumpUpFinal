@@ -29,7 +29,7 @@ public class NewMain extends Application {
         LOGGER.info("starting application");
        context = new ClassPathXmlApplicationContext("spring-config.xml");
 
-        FrameWindow mainFrame = new FrameWindow(context, primaryStage, PageEnum.Login);
+        FrameWindow mainFrame = new FrameWindow(context, primaryStage, PageEnum.Exercises);
 
         primaryStage.setOnCloseRequest(e -> {
             context.close();

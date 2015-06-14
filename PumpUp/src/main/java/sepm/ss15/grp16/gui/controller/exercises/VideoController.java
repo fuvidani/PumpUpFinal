@@ -2,6 +2,8 @@ package sepm.ss15.grp16.gui.controller.exercises;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -11,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.gui.controller.Controller;
+
+import java.net.URISyntaxException;
 
 /**
  * Created by lukas on 10.06.2015.
@@ -32,9 +36,12 @@ public class VideoController extends Controller {
 
 
     @Override
-    public void initController() {
-        exercise = ((VideoPlayable) this.getParentController()).getExercise();
-        this.showVideo();
+    public void initController(){
+
+            exercise = ((VideoPlayable) this.getParentController()).getExercise();
+
+            this.showVideo();
+
     }
 
     /**
@@ -59,8 +66,8 @@ public class VideoController extends Controller {
                 smallMediaView.setMediaPlayer(player);
                 smallMediaView.setVisible(true);
                 smallMediaView.setFitHeight(300);
-
                 videoBox.getChildren().add(smallMediaView);
+
             } else {
                 smallMediaView.setMediaPlayer(null);
 
@@ -76,26 +83,32 @@ public class VideoController extends Controller {
      */
     @FXML
     private void playVideo() {
+            Duration totalDuration = player.getCycleDuration();
+            Duration currentDuration = player.getCurrentTime();
+            if (currentDuration.compareTo(totalDuration) == 0) {
+                isPlaying = false;
+                player = new MediaPlayer(media);
+                player.setMute(true);
+                smallMediaView.setMediaPlayer(null);
+                smallMediaView.setMediaPlayer(player);
 
-        Duration totalDuration = player.getCycleDuration();
-        Duration currentDuration = player.getCurrentTime();
-        if (currentDuration.compareTo(totalDuration) == 0) {
-            isPlaying = false;
-            player = new MediaPlayer(media);
-            player.setMute(true);
-            smallMediaView.setMediaPlayer(null);
-            smallMediaView.setMediaPlayer(player);
-            playBtn.setText("Video abspielen");
-        }
-        if (isPlaying) {
-            playBtn.setText("Video abspielen");
-            player.pause();
-            isPlaying = false;
-        } else {
-            playBtn.setText("Video pausieren");
-            player.play();
-            isPlaying = true;
-        }
+            }
+
+            if (isPlaying) {
+                player.pause();
+                isPlaying = false;
+                playBtn.setBackground(null);
+                playBtn.getStyleClass().remove("btnMusic_Pause");
+                playBtn.getStyleClass().add("btnPlay");
+            } else {
+                player.play();
+                isPlaying = true;
+                playBtn.setBackground(null);
+                playBtn.getStyleClass().remove("btnPlay");
+                playBtn.getStyleClass().add("btnMusic_Pause");
+
+            }
+
     }
 
     /**
