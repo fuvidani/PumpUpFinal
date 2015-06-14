@@ -26,6 +26,7 @@ import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.calendar.helper.EventScriptRunner;
 import sepm.ss15.grp16.gui.controller.workout.WorkoutstartController;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -101,7 +102,7 @@ public class MainController extends Controller {
         this.updateUserData();
 
         /**
-         * #######      CALENDAR - don't touch this      #######
+         * #######      CALENDAR      #######
          */
         engine = webView.getEngine();
         try {
@@ -109,7 +110,7 @@ public class MainController extends Controller {
             engine.load("file:///" + path);
         } catch (URISyntaxException e) {
             LOGGER.error(e);
-            e.printStackTrace(); //TODO
+            e.printStackTrace();
         }
 
         engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
@@ -119,30 +120,10 @@ public class MainController extends Controller {
                 JSObject script = (JSObject) engine.executeScript("window");
                 script.setMember("drag", calendarService);
 
-                LOGGER.debug("Execute javascript: addEvent..");
-                // Java to JS, function to create single event
-                engine.executeScript("function addEvent(id, title, start, sets) {\n" +
-                        "var eventData = {\n" +
-                        "   id: id,\n" +
-                        "   title: title,\n" +
-                        "   start: start,\n" +
-                        "   allDay: true,\n" +
-                        "   url: sets\n" +
-                        "};\n" +
-                        "$('#calendar').fullCalendar('renderEvent', eventData, true);\n" +
-                        "}");
+                EventScriptRunner scripts = new EventScriptRunner(engine);
+                scripts.runScripts();
             }
-
-            LOGGER.debug("Execute javascript addListEvents..");
-            // Java to JS, send JSON list
-            engine.executeScript("function addListEvents(result) {\n" +
-                    "for(var i=0; i<result.length; i++){\n" +
-                    "   addEvent(result[i].appointment_id, result[i].sessionName, result[i].datum, result[i].setNames);" +
-                    "};\n" +
-                    "}");
-
             refreshCalendar();
-
         });
         /**
          * #######      END CALENDAR      #######
