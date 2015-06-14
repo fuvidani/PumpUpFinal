@@ -337,7 +337,9 @@ public class CalendarServiceImpl implements CalendarService {
         //search for next appointment
         for (Appointment appointment : allAppointment) {
             if (currentAppointment == null || appointment.getDatum().before(currentAppointment.getDatum())) {
-                currentAppointment = appointment;
+                if (!appointment.getIsTrained()){
+                    currentAppointment = appointment;
+                }
             }
         }
 
@@ -393,6 +395,17 @@ public class CalendarServiceImpl implements CalendarService {
             throw new ServiceException(e);
         }
 
+    }
+
+    @Override
+    public void setAppointmentAsTrained(int appointment_id) throws ServiceException {
+        try {
+            Appointment appointment = calendarDAO.searchByID(appointment_id);
+            appointment.setIsTrained(true);
+            calendarDAO.update(appointment);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
     }
 
 

@@ -42,7 +42,7 @@ public class EventScriptRunner {
                 "   dateString.replace(/,/g,'');\n" +
                 "   var date = new Date(dateString);\n" +
                 "   date.setHours(0,0,0,0);\n" +
-                "   if (date.getTime() < today.getTime()){\n" +
+                "   if (date.getTime() < today.getTime() || result[i].isTrained == true){\n" +
                 "      color = \"#C5DEEB\";\n" +
                 "   } else {color = \"#3A87AD\"}\n" +
                 "   addEvent(result[i].appointment_id, result[i].sessionName, result[i].datum, result[i].setNames, color);" +
