@@ -87,6 +87,16 @@ public abstract class AbstractWeightHistoryDaoTest extends AbstractDAOTest<Weigh
 
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void updateNotSupported() throws Exception {
+        weightHistoryDAO.update(null);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void deleteNotSupported() throws Exception {
+        weightHistoryDAO.delete(null);
+    }
+
     private User createUserForTest() throws Exception {
         User testUser = new User(null, "maxmustermann", true, 20, 194, "max.mustermann@gmail.com", "/path/playlist/", false);
         return userDAO.create(testUser);
