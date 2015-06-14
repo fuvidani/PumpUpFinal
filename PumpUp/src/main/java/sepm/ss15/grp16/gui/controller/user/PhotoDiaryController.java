@@ -2,6 +2,7 @@ package sepm.ss15.grp16.gui.controller.user;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.user.PictureHistoryService;
@@ -42,6 +44,8 @@ public class PhotoDiaryController extends Controller {
     private List<PictureHistory> pictureHistoryList;
     private int indexOfCurrentPicture;
     private String selectedPicturePath;
+    private MainController mainController;
+    private boolean notADiaryPictureInImageView = false;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -54,6 +58,7 @@ public class PhotoDiaryController extends Controller {
     @Override
     public void initController() {
 
+        mainController = (MainController) parentController;
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
@@ -61,6 +66,7 @@ public class PhotoDiaryController extends Controller {
             if (!pictureHistoryList.isEmpty()) {
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
+                notADiaryPictureInImageView = false;
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
@@ -77,15 +83,12 @@ public class PhotoDiaryController extends Controller {
                 indexOfCurrentPicture++;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
+                notADiaryPictureInImageView = false;
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go forward in picturehistory");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fehler");
-            alert.setHeaderText("Fehler beim durchblättern der Fotos");
-            alert.setContentText("Das nächste Foto konnte nicht geladen werden.");
-            alert.showAndWait();
+            showAlert("Fehler", "Fehler beim durchbl\u00e4ttern der Fotos", "Das n\u00e4chste Foto konnte nicht geladen werden.", AlertType.ERROR);
         }
     }
 
@@ -97,53 +100,34 @@ public class PhotoDiaryController extends Controller {
                 indexOfCurrentPicture--;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
+                notADiaryPictureInImageView = false;
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go backward in picturehistory");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fehler");
-            alert.setHeaderText("Fehler beim durchblättern der Fotos");
-            alert.setContentText("Das vorherige Foto konnte nicht geladen werden.");
-            alert.showAndWait();
+            showAlert("Fehler", "Fehler beim durchbl\u00e4ttern der Fotos", "Das vorherige Foto konnte nicht geladen werden.", AlertType.ERROR);
         }
     }
 
     @FXML
     public void addButtonClicked() {
         try {
-            if (selectedPicturePath != null) {
+            if (selectedPicturePath != null && notADiaryPictureInImageView) {
                 PictureHistory pictureHistory = new PictureHistory(null, userService.getLoggedInUser().getUser_id(), selectedPicturePath, null);
                 pictureHistoryService.create(pictureHistory);
                 reloadImages();
                 selectedPicturePath = null;
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information");
-                alert.setHeaderText("Foto-Information");
-                alert.setContentText("Das Foto wurde erfolgreich zu ihrem Tagebuch hinzugefügt.");
-                alert.showAndWait();
+                showAlert("Information", "Foto-Information", "Das Foto wurde erfolgreich zu ihrem Tagebuch hinzugef\u00fcgt.", AlertType.INFORMATION);
             } else {
                 LOGGER.error("Couldn't create picturehistory");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Fehler");
-                alert.setHeaderText("Fehlerhafte Angaben");
-                alert.setContentText("Es wurde kein Bild ausgewählt.");
-                alert.showAndWait();
+                showAlert("Fehler", "Fehlerhafte Angaben", "Es wurde kein Bild ausgew\u00e4hlt.", AlertType.ERROR);
             }
         } catch (ValidationException e) {
             LOGGER.error("Couldn't create picturehistory");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fehler");
-            alert.setHeaderText("Fehlerhafte Angaben");
-            alert.setContentText(e.getValidationMessage());
-            alert.showAndWait();
+            showAlert("Fehler", "Fehlerhafte Angaben", e.getValidationMessage(), AlertType.ERROR);
         } catch (ServiceException e) {
             LOGGER.error("Couldn't create picturehistory");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fehler");
-            alert.setHeaderText("Fehlerhafte Angaben");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlert("Fehler", "Fehlerhafte Angaben", e.getMessage(), AlertType.ERROR);
         }
     }
 
@@ -151,29 +135,23 @@ public class PhotoDiaryController extends Controller {
     public void deleteButtonClicked() {
         LOGGER.info("Deleting current picture from diary...");
         try {
-            if (!pictureHistoryList.isEmpty()) {
-                pictureHistoryService.delete(pictureHistoryList.get(indexOfCurrentPicture));
-                reloadImages();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information");
-                alert.setHeaderText("Foto-Information");
-                alert.setContentText("Das Foto wurde erfolgreich aus ihrem Tagebuch gelöscht.");
-                alert.showAndWait();
+            if (notADiaryPictureInImageView) {
+                showAlert("Fehler", "Fehlerhafte Angaben", "Es wurde kein Bild aus ihrem Fototagebuch ausgewählt", AlertType.ERROR);
+            } else {
+                if (!pictureHistoryList.isEmpty()) {
+                    pictureHistoryService.delete(pictureHistoryList.get(indexOfCurrentPicture));
+                    reloadImages();
+                    showAlert("Information", "Foto-Information", "Das Foto wurde erfolgreich aus ihrem Tagebuch gel\u00f6scht.", AlertType.INFORMATION);
+                } else {
+                    showAlert("Fehler", "Fehlerhafte Angaben", "Es wurde kein Bild ausgewählt.", AlertType.ERROR);
+                }
             }
         } catch (ValidationException e) {
             LOGGER.error("Couldn't delete picturehistory");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fehler");
-            alert.setHeaderText("Fehlerhafte Angaben");
-            alert.setContentText(e.getValidationMessage());
-            alert.showAndWait();
+            showAlert("Fehler", "Fehlerhafte Angaben", e.getValidationMessage(), AlertType.ERROR);
         } catch (ServiceException e) {
             LOGGER.error("Couldn't delete picturehistory");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fehler");
-            alert.setHeaderText("Fehlerhafte Angaben");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlert("Fehler", "Fehlerhafte Angaben", e.getMessage(), AlertType.ERROR);
         }
         LOGGER.info("Deleted current picture from diary");
     }
@@ -186,13 +164,14 @@ public class PhotoDiaryController extends Controller {
         FileChooser filechooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg");
         filechooser.getExtensionFilters().add(extFilterJPG);
-        filechooser.setTitle("Bild auswählen: ");
+        filechooser.setTitle("Bild ausw\u00e4hlen: ");
         File selectedFile = filechooser.showOpenDialog(null);
 
         if (selectedFile != null) {
             selectedPicturePath = selectedFile.getPath();
             Image image = new Image(selectedFile.toURI().toString());
             imageView.setImage(image);
+            notADiaryPictureInImageView = true;
         }
         selectPictureButton.setDisable(false);
     }
@@ -203,12 +182,14 @@ public class PhotoDiaryController extends Controller {
         try {
             mainFrame.openDialog(PageEnum.Webcam);
         } catch (Exception e) {
-            LOGGER.error("Couldn't open useredit-window");
-            e.printStackTrace();
+            LOGGER.error("Couldn't open webcam-window");
+            showAlert("Fehler", "Fehlerhafter Dialog", "Webcam-Dialog konnte nicht geoeffnet werden", AlertType.ERROR);
         }
     }
 
-    private void reloadImages() {
+    public void reloadImages() {
+        LOGGER.info("Reloading images in photodiary");
+        mainController.updateImage();
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
@@ -218,8 +199,17 @@ public class PhotoDiaryController extends Controller {
                 imageView.setImage(image);
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
+            notADiaryPictureInImageView = false;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
+    }
+
+    private void showAlert(String title, String headerText, String contentText, AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.showAndWait();
     }
 }

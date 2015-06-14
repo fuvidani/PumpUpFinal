@@ -36,6 +36,7 @@ public class WorkoutPlanToCalendarController extends Controller {
     private TrainingsplanService trainingsplanService;
     private UserService userService;
 
+    private boolean finished = false;
 
     @FXML
     private CheckBox thursdayCheck;
@@ -123,6 +124,7 @@ public class WorkoutPlanToCalendarController extends Controller {
             } catch (ServiceException e) {
                 e.printStackTrace();
             }
+            finished = true;
             mainFrame.navigateToParent();
             plan_interClassCommunication = null;
 
@@ -183,7 +185,7 @@ public class WorkoutPlanToCalendarController extends Controller {
 
         if (dayOfWeeks.length < 1) {
             error = true;
-            errormessage = "Bitte mindestens einen Wochentag wählen!";
+            errormessage = "Bitte mindestens einen Wochentag w\u00e4hlen!";
         }
 
         LocalDate localDate = dateField.getValue();
@@ -194,7 +196,7 @@ public class WorkoutPlanToCalendarController extends Controller {
             date = Date.from(instant);
         } else {
             error = true;
-            errormessage = "Bitte ein Startdatum wählen!";
+            errormessage = "Bitte ein Startdatum w\u00e4hlen!";
         }
 
         if (error) {
@@ -216,6 +218,10 @@ public class WorkoutPlanToCalendarController extends Controller {
 
     public void setCalendarService(CalendarService calendarService) {
         this.calendarService = calendarService;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 }
 

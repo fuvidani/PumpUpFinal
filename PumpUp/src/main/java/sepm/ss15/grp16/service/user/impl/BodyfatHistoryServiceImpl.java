@@ -85,11 +85,11 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
         Integer bodyfat = bodyfatHistory.getBodyfat();
 
         if (user_id == null) {
-            errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
+            errorMsg += "Die UserID muss angegeben werden und eine g\u00fcltige Zahl sein.\n";
         }
 
         if (bodyfat == null || bodyfat < 0 || bodyfat > 100) {
-            errorMsg += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.";
+            errorMsg += "Der K\u00f6rperfettanteil muss eine g\u00fcltige Zahl zwischen 0 und 100 sein.";
         }
 
         if (!errorMsg.isEmpty()) {

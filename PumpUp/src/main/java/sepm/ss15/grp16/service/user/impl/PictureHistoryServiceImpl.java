@@ -95,11 +95,11 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
         String picturePath = pictureHistory.getLocation();
 
         if (user_id == null || user_id < 0) {
-            errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
+            errorMsg += "Die UserID muss angegeben werden und eine g\u00fcltige Zahl sein.\n";
         }
 
         if (picturePath == null || picturePath.isEmpty()) {
-            errorMsg += "Es muss ein Bild ausgewählt worden sein.";
+            errorMsg += "Es muss ein Bild ausgew\u00e4hlt worden sein.";
         }
 
         if (!errorMsg.isEmpty()) {

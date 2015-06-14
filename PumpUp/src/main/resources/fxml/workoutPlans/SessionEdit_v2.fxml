@@ -1,155 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.net.URL?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0"
-            prefWidth="800.0" styleClass="workoutPlanBox" xmlns="http://javafx.com/javafx/8"
-            fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2">
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1000.0" styleClass="workoutPlanBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2">
     <center>
         <HBox>
             <children>
-                <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                      prefWidth="40.0">
+                <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="40.0">
                     <children>
-                        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                              spacing="10.0" VBox.vgrow="ALWAYS">
+                  <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="btnIncr" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickIncrease" prefHeight="50.0" styleClass="btnIncr">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnDecr" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickDecrease" prefHeight="50.0" styleClass="btnDecr">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+                        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" VBox.vgrow="ALWAYS">
                             <children>
-                                <Button fx:id="btnUp" disable="true" maxHeight="1.7976931348623157E308"
-                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickUp"
-                                        prefHeight="50.0" styleClass="btnUp">
+                                <Button fx:id="btnUp" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickUp" prefHeight="50.0" styleClass="btnUp">
                                     <font>
-                                        <Font size="14.0"/>
+                                        <Font size="14.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </VBox.margin>
                                 </Button>
-                                <Button id="btnDown" fx:id="btnDown" disable="true" maxHeight="1.7976931348623157E308"
-                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#onClickDown" prefHeight="50.0" styleClass="btnDown">
+                                <Button id="btnDown" fx:id="btnDown" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickDown" prefHeight="50.0" styleClass="btnDown">
                                     <font>
-                                        <Font size="14.0"/>
+                                        <Font size="14.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </VBox.margin>
                                 </Button>
                             </children>
                         </VBox>
-                        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                              spacing="10.0" VBox.vgrow="ALWAYS">
+                        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" VBox.vgrow="ALWAYS">
                             <children>
-                                <Button id="btnShow" fx:id="btnEdit" disable="true" maxHeight="1.7976931348623157E308"
-                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#onClickEdit" prefHeight="50.0" styleClass="btnEdit">
+                                <Button id="btnShow" fx:id="btnEdit" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickEdit" prefHeight="50.0" styleClass="btnEdit">
                                     <font>
-                                        <Font size="14.0"/>
+                                        <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <Button id="btnNew" fx:id="btnDelete" disable="true" maxHeight="1.7976931348623157E308"
-                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#onClickDelete" prefHeight="50.0" styleClass="btnDelete">
+                                <Button id="btnNew" fx:id="btnDelete" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickDelete" prefHeight="50.0" styleClass="btnDelete">
                                     <font>
-                                        <Font size="14.0"/>
+                                        <Font size="14.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets/>
+                                        <Insets />
                                     </VBox.margin>
                                 </Button>
                             </children>
                         </VBox>
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </HBox.margin>
                 </VBox>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <TableView id="trainings-table-view" fx:id="tblvExerciseTable" editable="true"
-                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                   VBox.vgrow="ALWAYS">
+                        <TableView id="trainings-table-view" fx:id="tblvSetTable" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="tblcOrder" maxWidth="1.7976931348623157E308" minWidth="-1.0"
-                                             prefWidth="30.0" text="Nr."/>
-                                <TableColumn fx:id="tblcExercise" maxWidth="1.7976931348623157E308" minWidth="-1.0"
-                                             prefWidth="200.0" sortable="false" text="Übung"/>
-                                <TableColumn fx:id="tblcType" maxWidth="1.7976931348623157E308" minWidth="-1.0"
-                                             prefWidth="70.0" sortable="false"/>
+                                <TableColumn fx:id="tblcOrder" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="30.0" text="Nr." />
+                                <TableColumn fx:id="tblcExercise" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" sortable="false" text="Übung" />
+                                <TableColumn fx:id="tblcType" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="70.0" sortable="false" />
                             </columns>
                         </TableView>
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" top="8.0"/>
+                        <Insets bottom="8.0" top="8.0" />
                     </HBox.margin>
                 </VBox>
-                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                      prefWidth="40.0" spacing="10.0">
+                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="40.0" spacing="10.0">
                     <children>
-                        <Button fx:id="btnAdd" disable="true" maxHeight="1.7976931348623157E308"
-                                maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnClickAdd"
-                                prefHeight="40.0" styleClass="btnLeft"/>
+                        <Button fx:id="btnAdd" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnClickAdd" prefHeight="40.0" styleClass="btnLeft" />
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </HBox.margin>
                 </VBox>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308"
-                              maxWidth="1.7976931348623157E308">
+                        <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                             <children>
-                                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                       text="Suchen nach:">
+                                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Suchen nach:">
                                     <font>
-                                        <Font size="14.0"/>
+                                        <Font size="14.0" />
                                     </font>
                                     <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </HBox.margin>
                                 </Label>
-                                <TextField fx:id="txtFilter" maxHeight="1.7976931348623157E308"
-                                           maxWidth="1.7976931348623157E308" promptText="Liegestütz">
+                                <TextField fx:id="txtFilter" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Liegestütz">
                                     <font>
-                                        <Font size="14.0"/>
+                                        <Font size="14.0" />
                                     </font>
                                     <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </HBox.margin>
                                 </TextField>
                             </children>
                         </HBox>
-                        <TableView id="trainings-table-view" fx:id="tblvExercises" editable="true"
-                                   maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                   VBox.vgrow="ALWAYS">
+                        <TableView id="trainings-table-view" fx:id="tblvExercises" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="tblcName" maxWidth="1.7976931348623157E308" minWidth="-1.0"
-                                             prefWidth="180.0" text="Name"/>
-                                <TableColumn fx:id="tblcCat" maxWidth="1.7976931348623157E308" minWidth="-1.0"
-                                             prefWidth="100.0" text="Kategorie"/>
-                                <TableColumn fx:id="tblcCalo" maxWidth="1.7976931348623157E308" minWidth="-1.0"
-                                             prefWidth="60.0" text="Calorien"/>
+                                <TableColumn fx:id="tblcName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="180.0" text="Name" />
+                                <TableColumn fx:id="tblcCat" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="Kategorie" />
+                                <TableColumn fx:id="tblcCalo" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="60.0" text="Calorien" />
                             </columns>
                             <VBox.margin>
-                                <Insets/>
+                                <Insets />
                             </VBox.margin>
                         </TableView>
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" top="8.0"/>
+                        <Insets bottom="8.0" top="8.0" />
                     </HBox.margin>
                 </VBox>
-                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                      prefWidth="40.0">
+                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="40.0">
                     <children>
-                        <Button fx:id="btnShow" disable="true" maxHeight="1.7976931348623157E308"
-                                maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickShow"
-                                prefHeight="40.0" styleClass="btnShow"/>
+                        <Button fx:id="btnShow" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickShow" prefHeight="40.0" styleClass="btnShow" />
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </HBox.margin>
                 </VBox>
             </children>
@@ -162,29 +147,28 @@
                     <children>
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sessionname">
                             <font>
-                                <Font size="18.0"/>
+                                <Font size="18.0" />
                             </font>
                             <HBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                             </HBox.margin>
                         </Label>
-                        <TextField fx:id="txtName" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                   promptText="Session 1">
+                        <TextField fx:id="txtName" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Session 1">
                             <font>
-                                <Font size="13.0"/>
+                                <Font size="13.0" />
                             </font>
                             <HBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                             </HBox.margin>
                         </TextField>
                     </children>
                     <VBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </VBox.margin>
                 </HBox>
                 <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <VBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </VBox.margin>
                 </Separator>
             </children>
@@ -197,28 +181,24 @@
                     <children>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <children>
-                                <Button cancelButton="true" mnemonicParsing="false" onAction="#OnClickCancel"
-                                        text="Abbrechen">
+                                <Button cancelButton="true" mnemonicParsing="false" onAction="#OnClickCancel" text="Abbrechen">
                                     <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </HBox.margin>
                                     <font>
-                                        <Font size="14.0"/>
+                                        <Font size="14.0" />
                                     </font>
                                 </Button>
                             </children>
                         </HBox>
-                        <HBox alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                              HBox.hgrow="ALWAYS">
+                        <HBox alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <children>
-                                <Button defaultButton="true" maxHeight="1.7976931348623157E308"
-                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                        onAction="#onClickFinish" text="Fertig">
+                                <Button defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickFinish" text="Fertig">
                                     <HBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                     </HBox.margin>
                                     <font>
-                                        <Font size="14.0"/>
+                                        <Font size="14.0" />
                                     </font>
                                 </Button>
                             </children>
@@ -229,7 +209,7 @@
         </VBox>
     </bottom>
     <stylesheets>
-        <URL value="@../../css/trainingStyle.css"/>
-        <URL value="@../../css/mainStyle.css"/>
+        <URL value="@../../css/trainingStyle.css" />
+        <URL value="@../../css/mainStyle.css" />
     </stylesheets>
 </BorderPane>

@@ -58,7 +58,7 @@ public class LoginController extends Controller {
                 }
             });
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
         login_button.setTooltip(new Tooltip("anmelden"));
         registrieren_button.setTooltip(new Tooltip("registrieren"));
@@ -71,7 +71,6 @@ public class LoginController extends Controller {
             mainFrame.openDialog(PageEnum.Registration);
         } catch (Exception e) {
             LOGGER.error("Couldn't open main-window");
-            e.printStackTrace();
         }
     }
 
@@ -87,7 +86,7 @@ public class LoginController extends Controller {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehler beim Anmelden");
-            alert.setContentText("Es wurde kein user ausgewählt!");
+            alert.setContentText("Es wurde kein user ausgew\u00e4hlt!");
             alert.showAndWait();
             return;
         }

@@ -10,7 +10,7 @@ import java.util.List;
  * Author: Lukas
  * Date: 12.05.2015
  */
-public interface TrainingsSessionHelperDAO extends HelperDAO<TrainingsSession> {
+public interface TrainingsSessionHelperDAO extends TrainingsHelperDAO<TrainingsSession> {
 
     /**
      * find all trainingssession of a corresponding plan_interClassCommunication

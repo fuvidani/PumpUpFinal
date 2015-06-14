@@ -105,6 +105,8 @@
 
     <bean id="webcamController" class="sepm.ss15.grp16.gui.controller.user.WebcamController"
           scope="prototype">
+        <property name="userService" ref="userService"/>
+        <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
     <!-- ###### Exercise beans ###### -->
@@ -144,14 +146,11 @@
         <property name="userService" ref="userService"/>
     </bean>
 
-    <bean id="showExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.ShowExerciseController"
-          scope="prototype">
-        <property name="exerciseController" ref="exerciseController"/>
-        <property name="exerciseService" ref="exerciseService"/>
+    <bean id="displayExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.DisplayExerciseCotroller" scope="prototype">
         <property name="categoryService" ref="categoryService"/>
-        <property name="userService" ref="userService"/>
     </bean>
 
+    <bean id="videoController" class="sepm.ss15.grp16.gui.controller.exercises.VideoController" scope="prototype"/>
     <!-- ###### Calendar beans ###### -->
 
     <bean id="calendarDAO" class="sepm.ss15.grp16.persistence.dao.calendar.impl.H2CalendarDAOImpl"
@@ -214,7 +213,6 @@
     <bean id="generateWorkoutPlanController"
           class="sepm.ss15.grp16.gui.controller.workoutPlans.GenerateWorkoutPlanController" scope="singleton">
         <property name="generatedWorkoutplanService" ref="generatedWorkoutplanService"/>
-        <property name="categoryService" ref="categoryService"/>
     </bean>
 
     <bean id="workoutPlanToCalendarController"
@@ -239,11 +237,11 @@
     <bean id="sessionEditController_v2" class="sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2">
         <property name="exerciseService" ref="exerciseService"/>
         <property name="userService" ref="userService"/>
+        <property name="trainingsplanService" ref="trainingsplanService"/>
     </bean>
 
     <bean id="generatedWorkoutplanService"
           class="sepm.ss15.grp16.service.training.impl.GeneratedWorkoutplanServiceImpl">
-        <constructor-arg name="trainingsplanService" ref="trainingsplanService"/>
         <constructor-arg name="exerciseService" ref="exerciseService"/>
         <constructor-arg name="userService" ref="userService"/>
         <constructor-arg name="weightHistoryService" ref="weightHistoryService"/>

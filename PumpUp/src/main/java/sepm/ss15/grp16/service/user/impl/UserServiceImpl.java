@@ -83,11 +83,11 @@ public class UserServiceImpl implements UserService {
         }
 
         if (age == null || age < 0) {
-            errorMsg += "Das Alter muss eine gültige Zahl größer 0 sein.\n";
+            errorMsg += "Das Alter muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         if (height == null || height < 0) {
-            errorMsg += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
+            errorMsg += "Die Gr\u00f6\u00dfe muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         if (email != null) {
