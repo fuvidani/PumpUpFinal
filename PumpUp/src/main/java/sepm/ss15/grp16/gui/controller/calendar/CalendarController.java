@@ -14,6 +14,7 @@ import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,10 +39,14 @@ public class CalendarController extends Controller implements Initializable {
         LOGGER.info("Initialising CalendarController..");
 
         engine = webView.getEngine();
-        String path = System.getProperty("user.dir");
-        path.replace("\\\\", "/");
-        path += "/src/main/java/sepm/ss15/grp16/gui/controller/Calendar/html/selectable.html";
-        engine.load("file:///" + path);
+        try {
+            String path = getClass().getClassLoader().getResource("calendar/html/selectable.html").toURI().getPath();
+            engine.load("file:///" + path);
+        } catch (URISyntaxException e) {
+            LOGGER.error(e);
+            e.printStackTrace(); //TODO
+        }
+
 
         engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
@@ -85,7 +90,11 @@ public class CalendarController extends Controller implements Initializable {
 
     @FXML
     public void exportToGoogleClicked() {
-        calendarService.exportToGoogle();
+        try {
+            calendarService.exportToGoogle();
+        } catch (ServiceException e) {
+            e.printStackTrace(); //TODO change
+        }
     }
 
     @FXML

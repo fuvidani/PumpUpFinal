@@ -95,5 +95,5 @@ public interface CalendarService extends Service<Appointment> {
     /**
      * exports all appointments to google calendar
      */
-    void exportToGoogle();
+    void exportToGoogle() throws ServiceException;
 }

@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -35,7 +34,6 @@ import sepm.ss15.grp16.service.user.PictureHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
 
-import java.io.File;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -106,10 +104,13 @@ public class MainController extends Controller {
          * #######      CALENDAR - don't touch this      #######
          */
         engine = webView.getEngine();
-        String path = System.getProperty("user.dir");
-        path = path.replace("\\", "/");
-        path += "/src/main/java/sepm/ss15/grp16/gui/controller/Calendar/html/maincalendar.html";
-        engine.load("file:///" + path);
+        try {
+            String path = getClass().getClassLoader().getResource("calendar/html/maincalendar.html").toURI().getPath();
+            engine.load("file:///" + path);
+        } catch (URISyntaxException e) {
+            LOGGER.error(e);
+            e.printStackTrace(); //TODO
+        }
 
         engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {

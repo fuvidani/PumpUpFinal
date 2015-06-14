@@ -14,17 +14,19 @@ public class Appointment implements DTO {
     private Date datum;
     private Integer session_id;
     private Integer user_id;
+    private Boolean isTrained;
     private Boolean isDeleted;
 
     private String sessionName;
     private String setNames;
     private TrainingsSession session;
 
-    public Appointment(Integer appointment_id, Date datum, Integer session_id, Integer user_id, Boolean isDeleted) {
+    public Appointment(Integer appointment_id, Date datum, Integer session_id, Integer user_id, Boolean isTrained, Boolean isDeleted) {
         this.appointment_id = appointment_id;
         this.datum = datum;
         this.session_id = session_id;
         this.user_id = user_id;
+        this.isTrained = isTrained;
         this.isDeleted = isDeleted;
     }
 
@@ -60,6 +62,14 @@ public class Appointment implements DTO {
 
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
+    }
+
+    public Boolean getIsTrained() {
+        return isTrained;
+    }
+
+    public void setIsTrained(Boolean isTrained) {
+        this.isTrained = isTrained;
     }
 
     @Override
@@ -108,6 +118,7 @@ public class Appointment implements DTO {
         if (datum != null ? !datum.equals(that.datum) : that.datum != null) return false;
         if (session_id != null ? !session_id.equals(that.session_id) : that.session_id != null) return false;
         if (user_id != null ? !user_id.equals(that.user_id) : that.user_id != null) return false;
+        if (isTrained != null ? !isTrained.equals(that.isTrained) : that.isTrained != null) return false;
         return !(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null);
 
     }
@@ -119,6 +130,7 @@ public class Appointment implements DTO {
                 ", datum=" + datum +
                 ", session_id=" + session_id +
                 ", user_id=" + user_id +
+                ", isTrained=" + isTrained +
                 ", isDeleted=" + isDeleted +
                 '}';
     }
