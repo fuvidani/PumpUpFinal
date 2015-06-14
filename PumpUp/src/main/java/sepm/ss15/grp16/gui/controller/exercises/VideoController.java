@@ -40,6 +40,7 @@ public class VideoController extends Controller {
 
             exercise = ((VideoPlayable) this.getParentController()).getExercise();
 
+
             this.showVideo();
 
     }
@@ -63,6 +64,7 @@ public class VideoController extends Controller {
 
                 player.setAutoPlay(false);
                 player.setMute(true);
+
                 smallMediaView.setMediaPlayer(player);
                 smallMediaView.setVisible(true);
                 smallMediaView.setFitHeight(300);
@@ -93,7 +95,10 @@ public class VideoController extends Controller {
                 smallMediaView.setMediaPlayer(player);
 
             }
-
+        player.setOnEndOfMedia(() -> {
+            playBtn.getStyleClass().add("btnPlay");
+            playBtn.getStyleClass().remove("btnMusic_Pause");
+        });
             if (isPlaying) {
                 player.pause();
                 isPlaying = false;
