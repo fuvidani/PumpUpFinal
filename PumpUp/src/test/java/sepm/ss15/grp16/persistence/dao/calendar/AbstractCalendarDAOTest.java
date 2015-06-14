@@ -37,6 +37,18 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
         getDAO().create(null);
     }
 
+    @Test (expected = PersistenceException.class)
+    public void updateWithNullShouldThrowException() throws PersistenceException {
+        LOGGER.info("updateWithNullShouldThrowException");
+        getDAO().create(null);
+    }
+
+    @Test (expected = PersistenceException.class)
+    public void deleteWithNullShouldThrowException() throws PersistenceException {
+        LOGGER.info("deleteWithNullShouldThrowException");
+        getDAO().create(null);
+    }
+    
 
 
     private User dummyUser() throws PersistenceException {
