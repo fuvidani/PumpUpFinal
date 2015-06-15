@@ -11,9 +11,11 @@ import netscape.javascript.JSObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.calendar.helper.EventScriptRunner;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,10 +40,14 @@ public class CalendarController extends Controller implements Initializable {
         LOGGER.info("Initialising CalendarController..");
 
         engine = webView.getEngine();
-        String path = System.getProperty("user.dir");
-        path.replace("\\\\", "/");
-        path += "/src/main/java/sepm/ss15/grp16/gui/controller/Calendar/html/selectable.html";
-        engine.load("file:///" + path);
+        try {
+            String path = getClass().getClassLoader().getResource("calendar/html/selectable.html").toURI().getPath();
+            engine.load("file:///" + path);
+        } catch (URISyntaxException e) {
+            LOGGER.error(e);
+            e.printStackTrace(); //TODO
+        }
+
 
         engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
@@ -50,30 +56,11 @@ public class CalendarController extends Controller implements Initializable {
                 JSObject script = (JSObject) engine.executeScript("window");
                 script.setMember("drag", calendarService);
 
-                LOGGER.debug("Execute javascript: addEvent..");
-                // Java to JS, function to create single event
-                engine.executeScript("function addEvent(id, title, start, sets) {\n" +
-                        "var eventData = {\n" +
-                        "   id: id,\n" +
-                        "   title: title,\n" +
-                        "   start: start,\n" +
-                        "   allDay: true,\n" +
-                        "   url: sets\n" +
-                        "};\n" +
-                        "$('#calendar').fullCalendar('renderEvent', eventData, true);\n" +
-                        "}");
+                EventScriptRunner scripts = new EventScriptRunner(engine);
+                scripts.runScripts();
             }
 
-            LOGGER.debug("Execute javascript addListEvents..");
-            // Java to JS, send JSON list
-            engine.executeScript("function addListEvents(result) {\n" +
-                    "for(var i=0; i<result.length; i++){\n" +
-                    "   addEvent(result[i].appointment_id, result[i].sessionName, result[i].datum, result[i].setNames);" +
-                    "};\n" +
-                    "}");
-
             refreshCalendar();
-
         });
 
     }
@@ -85,7 +72,11 @@ public class CalendarController extends Controller implements Initializable {
 
     @FXML
     public void exportToGoogleClicked() {
-        calendarService.exportToGoogle();
+        try {
+            calendarService.exportToGoogle();
+        } catch (ServiceException e) {
+            e.printStackTrace(); //TODO change
+        }
     }
 
     @FXML
@@ -116,7 +107,7 @@ public class CalendarController extends Controller implements Initializable {
             e.printStackTrace(); //TODO change
         }
 
-        LOGGER.debug(json);
+        LOGGER.debug("JSON: " + json);
         engine.executeScript("addListEvents(" + json + ");");
 
     }
