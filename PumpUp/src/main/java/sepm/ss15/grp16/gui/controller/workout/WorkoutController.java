@@ -5,12 +5,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,10 +18,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Arc;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import sepm.ss15.grp16.entity.calendar.Appointment;
@@ -37,7 +29,6 @@ import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -320,6 +311,10 @@ public class WorkoutController extends Controller {
         return musicPlayerController;
     }
 
+    public WorkoutResult getWorkoutResult() {
+        return workoutResult;
+    }
+
     private enum Status {
         RUNNUNG, PAUSED, FINISHED;
     }
@@ -351,10 +346,5 @@ public class WorkoutController extends Controller {
                     "-fx-background-color: firebrick;" +
                     "-fx-background-radius: 5");
         }
-    }
-
-    public WorkoutResult getWorkoutResult()
-    {
-        return workoutResult;
     }
 }

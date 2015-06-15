@@ -1,37 +1,37 @@
 <html>
 <head>
-<title>
-Share on Facebook
-</title>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.js">
-</script>
-<script src="https://connect.facebook.net/en_US/all.js">
-</script>
-<script type="text/javascript">
- $(document).ready(function () {
- $('#shareonfacebook').click(function (e) {
- FB.ui(
- {
- appId: '428485184010923',
-      display: "popup",
-      method: "feed",
-      name: "",
-      link:"",
-      caption:"",
-      description: "",
- });
- });
- });
-</script>
+    <title>
+        Share on Facebook
+    </title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.js">
+    </script>
+    <script src="https://connect.facebook.net/en_US/all.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#shareonfacebook').click(function (e) {
+                FB.ui(
+                        {
+                            appId: '428485184010923',
+                            display: "popup",
+                            method: "feed",
+                            name: "",
+                            link: "",
+                            caption: "",
+                            description: "",
+                        });
+            });
+        });
+    </script>
 </head>
 <body>
-	<div id="fb-root"></div>
-<button id="shareonfacebook" >Share</button>
- 
+<div id="fb-root"></div>
+<button id="shareonfacebook">Share</button>
+
 <script>
-FB.init({
-appId : '428485184010923'
-});
+    FB.init({
+        appId: '428485184010923'
+    });
 </script>
 </body>
 </html>

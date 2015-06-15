@@ -20,7 +20,7 @@ public interface UserService extends Service<User> {
      * The ID is set to the new generated one.
      *
      * @param user which shall be sent to the persistence.
-     *            must not be null, id must be null
+     *             must not be null, id must be null
      * @return the given user for further usage
      * @throws ValidationException if the given user can't be validated
      * @throws ServiceException    if there are complications in the service or persistence-layer
@@ -41,7 +41,7 @@ public interface UserService extends Service<User> {
      * Validates a user and sends it to the persistence-layer for updating.
      *
      * @param user which shall be updated
-     *            must not be null, id must not be null and must not be changed
+     *             must not be null, id must not be null and must not be changed
      * @return given user with updated values
      * @throws ValidationException if the given user can't be validated
      * @throws ServiceException    if there are complications in the service or persistence-layer
@@ -53,7 +53,7 @@ public interface UserService extends Service<User> {
      * Sends a given user to the persistence-layer for deleting.
      *
      * @param user which shall be deleted,
-     *            must not be null, id must not be null and must not be changed
+     *             must not be null, id must not be null and must not be changed
      * @throws ValidationException if the given user can't be validated
      * @throws ServiceException    if there are complications in the service or persistence-layer
      */
@@ -71,12 +71,14 @@ public interface UserService extends Service<User> {
 
     /**
      * Gets the currently User, which is logged in
+     *
      * @return the user, which is currently logged in
      */
     User getLoggedInUser();
 
     /**
      * Sets the user on login
+     *
      * @param loggedInUser the user which wants to log in
      */
     void setLoggedInUser(User loggedInUser);

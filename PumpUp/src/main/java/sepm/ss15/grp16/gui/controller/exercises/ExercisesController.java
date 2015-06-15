@@ -13,11 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
-import javafx.scene.web.WebView;
-import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
@@ -26,9 +21,9 @@ import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
+import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.user.UserService;
 
 import java.io.FileInputStream;
@@ -40,18 +35,17 @@ import java.util.Optional;
  * Created by Daniel Fuevesi on 07.05.15.
  * Controller of the "Übungen" stage.
  */
-public class ExercisesController extends Controller implements VideoPlayable{
+public class ExercisesController extends Controller implements VideoPlayable {
 
 
     private static Exercise exercise;
     private final Logger LOGGER = LogManager.getLogger();
-    private Service<Exercise> exerciseService;
+    private ExerciseService exerciseService;
     @FXML
     private Label exerciseNameLabel;
     @FXML
     private TextArea descriptionTextArea;
-    @FXML
-    private Label categoryTypeLabel;
+
     @FXML
     private TableColumn<Exercise, String> uebungColumn;
     @FXML
@@ -64,19 +58,11 @@ public class ExercisesController extends Controller implements VideoPlayable{
     private CheckBox customExercisesCheckbox;
     @FXML
     private CheckBox defaultExercisesCheckbox;
-    @FXML
-    private VBox vboxCategory;
+
     @FXML
     private ImageView leftArrow = new ImageView();
     @FXML
     private ImageView rightArrow = new ImageView();
-
-    @FXML
-    private ImageView editImg = new ImageView();
-    @FXML
-    private ImageView deleteImg = new ImageView();
-    @FXML
-    private ImageView newImg = new ImageView();
 
     @FXML
     private Button addBtn = new Button();
@@ -104,7 +90,7 @@ public class ExercisesController extends Controller implements VideoPlayable{
         this.categoryService = categoryService;
     }
 
-    public void setExerciseService(Service<Exercise> exerciseService) {
+    public void setExerciseService(ExerciseService exerciseService) {
         this.exerciseService = exerciseService;
     }
 
@@ -116,13 +102,16 @@ public class ExercisesController extends Controller implements VideoPlayable{
         return exercise;
     }
 
+    /**
+     * initializing the controller with all services and layout properties needed
+     */
     @Override
     public void initController() {
 
         addBtn.setTooltip(new Tooltip("Neue \u00dcbung anlegen"));
         deleteBtn.setTooltip(new Tooltip("\u00dcbung l\u00f6schen"));
         editBtn.setTooltip(new Tooltip("\u00dcbung bearbeiten"));
-        
+
 
         leftArrow.setVisible(false);
         rightArrow.setVisible(false);
@@ -166,13 +155,21 @@ public class ExercisesController extends Controller implements VideoPlayable{
     }
 
 
-   @FXML
+    /**
+     * method for the show video button
+     * redirects to an extra dialogue where the video gets displayed and
+     * can be watched
+     */
+    @FXML
     private void showVideo() {
-            mainFrame.openDialog(PageEnum.VideoPlayer);
+        mainFrame.openDialog(PageEnum.VideoPlayer);
     }
 
 
-
+    /**
+     * method to filter after the the inputtext in the
+     * search textfield
+     */
     private void updateFilteredData() {
         ObservableList<Exercise> temp = FXCollections.observableArrayList();
         if (!customExercisesCheckbox.isSelected() && !defaultExercisesCheckbox.isSelected()) {
@@ -187,6 +184,14 @@ public class ExercisesController extends Controller implements VideoPlayable{
         uebungsTableView.setItems(temp);
     }
 
+    /**
+     * mathing method which checks all names of the  exercises displayed
+     * against the text in the textbox
+     *
+     * @param e exercise to check against
+     * @return true if textfield is empty, or matches text
+     * false if exercise name does not macht
+     */
     private boolean matchesFilter(Exercise e) {
         String filter = tf_search.getText();
         if (filter == null || filter.isEmpty())
@@ -199,7 +204,9 @@ public class ExercisesController extends Controller implements VideoPlayable{
         return false;
     }
 
-
+    /**
+     * setting the contnet for the page
+     */
     public void setContent() {
         try {
             masterdata.removeAll(exerciseService.findAll());
@@ -216,6 +223,12 @@ public class ExercisesController extends Controller implements VideoPlayable{
         }
     }
 
+    /**
+     * displaying one exercise with all the details the exercise contains
+     *
+     * @param old         the exercise displayed before this one
+     * @param newExercise the current clicked exercise
+     */
     private void showExercise(Exercise old, Exercise newExercise) {
         if (newExercise != null && old == null) {
             LOGGER.debug("first click");
@@ -273,6 +286,7 @@ public class ExercisesController extends Controller implements VideoPlayable{
             }
             vboxMuscle.getChildren().clear();
 
+
             for (TrainingsCategory t : categoryService.getAllTrainingstype()) {
                 if (exercise.getCategories().contains(t))
                     vboxType.getChildren().add(new Label(t.getName()));
@@ -292,6 +306,13 @@ public class ExercisesController extends Controller implements VideoPlayable{
         }
     }
 
+    /**
+     * showing one picture out of the picture list the
+     * current exercise has, defined by the given index
+     * to load from the list of pictures
+     *
+     * @param index which picture is to display
+     */
     private void showPicture(Integer index) {
         try {
             if (exercise.getGifLinks().isEmpty())
@@ -320,6 +341,9 @@ public class ExercisesController extends Controller implements VideoPlayable{
         }
     }
 
+    /**
+     * changing to the next picture if there is one
+     */
     @FXML
     private void nexPicButtonClicked() {
         if (exercise.getGifLinks().size() > 0) {
@@ -327,6 +351,9 @@ public class ExercisesController extends Controller implements VideoPlayable{
         }
     }
 
+    /**
+     * changing to the previous picture if there is one
+     */
     @FXML
     private void prevPicButtonClicked() {
         if (exercise.getGifLinks().size() > 0) {
@@ -334,6 +361,13 @@ public class ExercisesController extends Controller implements VideoPlayable{
         }
     }
 
+    /**
+     * handling the event of a new exercise:
+     * creating a backup of the actual chosen exercise
+     * then changing the stage where the user can create the new exercise
+     *
+     * @param event
+     */
     @FXML
     void newExerciseButtonClicked(ActionEvent event) {
         Exercise backup = null;
@@ -353,6 +387,12 @@ public class ExercisesController extends Controller implements VideoPlayable{
     }
 
 
+    /**
+     * editing an exercise if the user has privilege to do so
+     * only own exercises can be modifyed
+     *
+     * @param event
+     */
     @FXML
     void editExerciseButtonClicked(ActionEvent event) {
 
@@ -374,6 +414,12 @@ public class ExercisesController extends Controller implements VideoPlayable{
     }
 
 
+    /**
+     * deleting an exercise if the user has privilege to do so
+     * only own exercises can be modifyed
+     *
+     * @param event
+     */
     @FXML
     void deleteExerciseButtonClicked(ActionEvent event) {
         try {
@@ -406,6 +452,11 @@ public class ExercisesController extends Controller implements VideoPlayable{
         }
     }
 
+    /**
+     * getting back to the main stage
+     *
+     * @param event
+     */
     @FXML
     void getBackButtonClicked(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -422,6 +473,12 @@ public class ExercisesController extends Controller implements VideoPlayable{
     }
 
 
+    /**
+     * filtering exercises after the clicked checkboxes like:
+     * system/default exercises and
+     * own exercises
+     * also combinations are possible with the textsearch field
+     */
     @FXML
     private void filterCheckboxes() {
         if (defaultExercisesCheckbox.isSelected() && customExercisesCheckbox.isSelected()) {

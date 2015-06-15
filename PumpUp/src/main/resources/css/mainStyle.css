@@ -5,7 +5,6 @@
     /*-fx-background-color: transparent;*/
 }
 
-
 .trainingBtn {
     -fx-background-color: transparent;
 }
@@ -136,7 +135,6 @@
 .axis:left {
     -fx-border-color: transparent black transparent transparent;
 }
-
 
 .aboutGrid .label {
     -fx-background-color: white;

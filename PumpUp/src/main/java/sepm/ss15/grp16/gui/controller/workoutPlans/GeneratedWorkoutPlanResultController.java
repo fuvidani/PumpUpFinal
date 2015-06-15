@@ -17,6 +17,7 @@ import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ import java.util.Optional;
  * When the generated workout plan has arrived it is instantly displayed and the user can
  * save the plan, dismiss it or export it to the own calendar.
  */
-public class GeneratedWorkoutPlanResultController extends Controller{
+public class GeneratedWorkoutPlanResultController extends Controller {
 
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -89,7 +90,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
                 };
             }
         });
-        WorkoutPlansController controller = (WorkoutPlansController)this.getParentController();
+        WorkoutPlansController controller = (WorkoutPlansController) this.getParentController();
         this.generatedWorkoutPlan = controller.getGeneratedWorkoutPlan();
         goalLabel.setText(controller.getSelectedGoal());
         displayWorkoutPlan();
@@ -167,7 +168,6 @@ public class GeneratedWorkoutPlanResultController extends Controller{
     }
 
 
-
     /**
      * This method is automatically called at the initialization of the controller.
      * It simply displays the workout routine with all its sessions and exercises.
@@ -190,7 +190,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
      * Increases the difficulty of the given plan by the factor of 0.25
      */
     @FXML
-    public void increaseDifficultyClicked(){
+    public void increaseDifficultyClicked() {
         trainingsplanService.increaseDifficulty(generatedWorkoutPlan);
         displayWorkoutPlan();
     }
@@ -199,7 +199,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
      * Decreases the difficulty of the given plan by the factor of 0.25
      */
     @FXML
-    public void decreaseDifficultyClicked(){
+    public void decreaseDifficultyClicked() {
         trainingsplanService.decreaseDifficulty(generatedWorkoutPlan);
         displayWorkoutPlan();
     }

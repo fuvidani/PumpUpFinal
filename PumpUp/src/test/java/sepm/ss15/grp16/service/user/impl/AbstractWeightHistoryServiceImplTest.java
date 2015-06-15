@@ -11,7 +11,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.service.user.AbstractWeightHistoryServiceTest;
-import sepm.ss15.grp16.service.user.BodyfatHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
 
@@ -22,7 +21,7 @@ import sepm.ss15.grp16.service.user.WeightHistoryService;
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class AbstractWeightHistoryServiceImplTest extends AbstractWeightHistoryServiceTest{
+public class AbstractWeightHistoryServiceImplTest extends AbstractWeightHistoryServiceTest {
 
     @Autowired
     private DBHandler dbConnector;

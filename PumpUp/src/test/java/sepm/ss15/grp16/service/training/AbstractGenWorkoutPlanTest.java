@@ -77,40 +77,44 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Tests the unsupported method CREATE of this service.
      * Should throw an UnsupportedOperationException
+     *
      * @throws ServiceException
      */
     @Test(expected = UnsupportedOperationException.class)
-    public void callUnsupportedCreateShouldThrowException() throws ServiceException{
+    public void callUnsupportedCreateShouldThrowException() throws ServiceException {
         workoutplanService.create(null);
     }
 
     /**
      * Tests the unsupported method FINDALL of this service.
      * Should throw an UnsupportedOperationException
+     *
      * @throws ServiceException
      */
     @Test(expected = UnsupportedOperationException.class)
-    public void callUnsupportedFindAllShouldThrowException() throws ServiceException{
+    public void callUnsupportedFindAllShouldThrowException() throws ServiceException {
         workoutplanService.create(null);
     }
 
     /**
      * Tests the unsupported method UPDATE of this service.
      * Should throw an UnsupportedOperationException
+     *
      * @throws ServiceException
      */
     @Test(expected = UnsupportedOperationException.class)
-    public void callUnsupportedUpdateShouldThrowException() throws ServiceException{
+    public void callUnsupportedUpdateShouldThrowException() throws ServiceException {
         workoutplanService.create(null);
     }
 
     /**
      * Tests the unsupported method DELETE of this service.
      * Should throw an UnsupportedOperationException
+     *
      * @throws ServiceException
      */
     @Test(expected = UnsupportedOperationException.class)
-    public void callUnsupportedDeleteShouldThrowException() throws ServiceException{
+    public void callUnsupportedDeleteShouldThrowException() throws ServiceException {
         workoutplanService.create(null);
     }
 
@@ -124,104 +128,104 @@ public abstract class AbstractGenWorkoutPlanTest {
     public void callWithValidPreferences() throws ServiceException {
         // Dummy user 1 block start
         dummyUser1();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
         // Dummy user 1 block end
 
         // Dummy user 2 block start
         dummyUser2();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
         // Dummy user 2 block end
 
         // Dummy user 3 block start
         dummyUser3();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
         // Dummy user 3 block end
 
         /**************************************************************************************************************************************/
 
         // Dummy user 4 block start
         dummyUser4();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
         // Dummy user 4 block end
 
         // Dummy user 5 block start
         dummyUser5();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
         // Dummy user 5 block end
 
         // Dummy user 6 block start
         dummyUser6();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
         // Dummy user 6 block end
 
         /**************************************************************************************************************************************/
 
         // Dummy user 7 block start
         dummyUser7();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 4);
         // Dummy user 7 block end
 
         // Dummy user 8 block start
         dummyUser8();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
         // Dummy user 8 block end
 
         // Dummy user 9 block start
         dummyUser9();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
         // Dummy user 9 block end
 
         /**************************************************************************************************************************************/
 
         // Dummy user 10 block start
         dummyUser10();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
         // Dummy user 10 block end
 
         // Dummy user 11 block start
         dummyUser11();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
         // Dummy user 11 block end
 
         // Dummy user 12 block start
         dummyUser12();
-        assert(workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
-        assert(workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesEndurance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesStrength()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesBalance()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
+        assert (workoutplanService.generate(dummyPreferencesFlexibility()).getTrainingsSessions().get(0).getExerciseSets().size() == 3);
         // Dummy user 12 block end
 
     }
@@ -269,6 +273,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Normal weight user.
+     *
      * @throws ServiceException
      */
     private void dummyUser1() throws ServiceException {
@@ -281,6 +286,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Overweight user.
+     *
      * @throws ServiceException
      */
     private void dummyUser2() throws ServiceException {
@@ -293,6 +299,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Obese user.
+     *
      * @throws ServiceException
      */
     private void dummyUser3() throws ServiceException {
@@ -313,6 +320,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Normal weight user.
+     *
      * @throws ServiceException
      */
     private void dummyUser4() throws ServiceException {
@@ -325,6 +333,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Overweight user.
+     *
      * @throws ServiceException
      */
     private void dummyUser5() throws ServiceException {
@@ -337,6 +346,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Obese user.
+     *
      * @throws ServiceException
      */
     private void dummyUser6() throws ServiceException {
@@ -358,6 +368,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Normal weight user.
+     *
      * @throws ServiceException
      */
     private void dummyUser7() throws ServiceException {
@@ -370,6 +381,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Overweight user.
+     *
      * @throws ServiceException
      */
     private void dummyUser8() throws ServiceException {
@@ -382,6 +394,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Obese user.
+     *
      * @throws ServiceException
      */
     private void dummyUser9() throws ServiceException {
@@ -402,6 +415,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Normal weight user.
+     *
      * @throws ServiceException
      */
     private void dummyUser10() throws ServiceException {
@@ -414,6 +428,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Overweight user.
+     *
      * @throws ServiceException
      */
     private void dummyUser11() throws ServiceException {
@@ -426,6 +441,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Creates a dummy user that is used by the main test.
      * Obese user.
+     *
      * @throws ServiceException
      */
     private void dummyUser12() throws ServiceException {

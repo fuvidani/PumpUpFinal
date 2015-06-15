@@ -146,7 +146,8 @@
         <property name="userService" ref="userService"/>
     </bean>
 
-    <bean id="displayExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.DisplayExerciseCotroller" scope="prototype">
+    <bean id="displayExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.DisplayExerciseCotroller"
+          scope="prototype">
         <property name="categoryService" ref="categoryService"/>
     </bean>
 

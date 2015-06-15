@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0"
+<GridPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+          prefHeight="600.0"
           prefWidth="600.0" vgap="30.0" xmlns="http://javafx.com/javafx/8"
           fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutstartController">
     <columnConstraints>

@@ -40,6 +40,7 @@ public abstract class AbsractCategory implements DTO {
 
     }
 
+
     @Override
     public String toString() {
         return "AbsractCategory{" +

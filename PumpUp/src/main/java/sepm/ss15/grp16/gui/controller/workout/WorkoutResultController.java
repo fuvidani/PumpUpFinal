@@ -1,31 +1,24 @@
 package sepm.ss15.grp16.gui.controller.workout;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.training.WorkoutResult;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * Created by Daniel Fuevesi on 08.05.15.
@@ -55,13 +48,12 @@ public class WorkoutResultController extends Controller {
 
     @Override
     public void initController() {
-        WorkoutController workoutController =(WorkoutController) getParentController();
+        WorkoutController workoutController = (WorkoutController) getParentController();
 
         WorkoutResult workoutResult = workoutController.getWorkoutResult();
 
         double calorin = 0;
-        for(ExerciseSet set : workoutResult.getAppointment().getSession().getExerciseSets())
-        {
+        for (ExerciseSet set : workoutResult.getAppointment().getSession().getExerciseSets()) {
             calorin += set.getExercise().getCalories() * workoutResult.getList().get(set).getDuration();
         }
         burnedCaloriesLabel.setText(calorin + "");

@@ -1,4 +1,4 @@
-package sepm.ss15.grp16.persistence.dao.exercise.impl;
+package sepm.ss15.grp16.persistence.dao.calendar.impl;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,10 +9,12 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import sepm.ss15.grp16.entity.exercise.Exercise;
+import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.persistence.dao.DAO;
-import sepm.ss15.grp16.persistence.dao.exercise.AbstractExerciseDaoTest;
+import sepm.ss15.grp16.persistence.dao.calendar.AbstractCalendarDAOTest;
+import sepm.ss15.grp16.persistence.dao.calendar.CalendarDAO;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
+import sepm.ss15.grp16.persistence.dao.training.TrainingsplanDAO;
 import sepm.ss15.grp16.persistence.dao.user.UserDAO;
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
@@ -20,14 +22,17 @@ import sepm.ss15.grp16.persistence.exception.DBException;
 import java.sql.SQLException;
 
 /**
- * Created by lukas on 30.04.2015.
+ * Created by David on 2015.06.14..
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class H2ExerciseDAOImplTest extends AbstractExerciseDaoTest {
+public class H2CalendarDAOTestImpl extends AbstractCalendarDAOTest {
+
+    @Autowired
+    private CalendarDAO calendarDAO;
 
     @Autowired
     private DBHandler dbConnector;
@@ -38,31 +43,37 @@ public class H2ExerciseDAOImplTest extends AbstractExerciseDaoTest {
     @Autowired
     private ExerciseDAO exerciseDAO;
 
+    @Autowired
+    private TrainingsplanDAO trainingsplanDAO;
+
     @Before
     public void setUp() throws DBException, SQLException {
-        try {
-            dbConnector.getConnection().setAutoCommit(true);
-        } catch (DBException | SQLException e) {
-            e.printStackTrace();
-        }
+        dbConnector.activateTestMode();
     }
 
     @After
     public void tearDown() throws DBException, SQLException {
-        try {
-            dbConnector.getConnection().rollback();
-        } catch (DBException | SQLException e) {
-            e.printStackTrace();
-        }
+        dbConnector.deactivateTestMode();
     }
 
     @Override
-    public DAO<Exercise> getDAO() {
+    public DAO<Appointment> getDAO() {
+        return calendarDAO;
+    }
+
+    @Override
+    protected UserDAO getUserDAO() {
+        return userDAO;
+    }
+
+    @Override
+    protected ExerciseDAO getExerciseDAO() {
         return exerciseDAO;
     }
 
     @Override
-    public UserDAO getUserDAO() {
-        return userDAO;
+    protected TrainingsplanDAO getTrainingsplanDAO() {
+        return trainingsplanDAO;
     }
 }
+

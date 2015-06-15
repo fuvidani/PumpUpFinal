@@ -14,7 +14,7 @@ public enum PageEnum {
     Workoutplan("fxml/workoutPlans/Workoutplans.fxml", "Traininspläne", 1000, 620),
     Workoutplan_create_edit("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", "Traininsplan bearbeiten/erstellen", 1000, 620),
     Workoutplan_generate("fxml/workoutPlans/GenerateWorkoutPlan.fxml", "Trainingsplan generieren", 1000, 620),
-    Workoutplan_generate_result("fxml/workoutPlans/GeneratedWorkoutPlanResult.fxml","Generierter Trainingsplan",300,300),
+    Workoutplan_generate_result("fxml/workoutPlans/GeneratedWorkoutPlanResult.fxml", "Generierter Trainingsplan", 300, 300),
     Workoutplan_calender_dialog("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", "Trainingsplan in Kalender exportieren", 800, 600),
     SessionEdit("fxml/workoutPlans/SessionEdit_v2.fxml", "Session hinzuf\u00fcgen", 1000, 400),
     Calendar("fxml/calendar/Calendar.fxml", "Trainingskalender", 1000, 620),
@@ -26,8 +26,8 @@ public enum PageEnum {
     Fotos("fxml/user/BodyPhotos.fxml", "Fotos", 1000, 750),
     Exercises("fxml/exercise/Exercises.fxml", "\u00dcbungen", 1300, 600),
     Manage_exercises("fxml/exercise/ManageExercise.fxml", "\u00dcbungen verwalten", 1300, 750),
-    DisplayExercise("fxml/exercise/DisplayExercise.fxml","\u00dcbung anzeigen", 1000, 600 ),
-    VideoPlayer("fxml/exercise/VideoPlayer.fxml","\u00dcbung anzeigen", 300, 600);
+    DisplayExercise("fxml/exercise/DisplayExercise.fxml", "\u00dcbung anzeigen", 1000, 600),
+    VideoPlayer("fxml/exercise/VideoPlayer.fxml", "\u00dcbung anzeigen", 300, 600);
 
     private final String fxml;
     private final String title;

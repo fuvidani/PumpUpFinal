@@ -36,6 +36,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     /**
      * creating a new exercise and returning it for further usage
+     *
      * @param exercise which shall be inserted into the underlying persistance layer
      *                 must not be null, id must not be null
      * @return the reference to the exercise with an id
@@ -57,6 +58,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     /**
      * finding all exercises and filtering the exercises
      * after the current/logged in user
+     *
      * @return a list of all exercises which are from the system or the current user
      * @throws ServiceException
      */
@@ -79,6 +81,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     /**
      * searching after exactely one exercise with the given id
+     *
      * @param id exercise to search for, is unique
      * @return one exercise or null
      * @throws ServiceException
@@ -94,6 +97,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     /**
      * updating a given exercise to updated values
+     *
      * @param exercise which shall be updated
      *                 must not be null, id must not be null
      * @return the reference to the updated exercise
@@ -114,6 +118,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     /**
      * deleting an exercise which must not be null
+     *
      * @param exercise which shall be deleted from the underlying persitance implementation layer
      * @throws ServiceException
      */

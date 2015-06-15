@@ -213,7 +213,7 @@ public class SessionEditController_v2 extends Controller {
                 FXCollections.observableArrayList(
                         tblvSetTable.getItems()
                 );
-        trainingsplanService.decreaseDifficulty(new TrainingsSession(null,null,null,sets));
+        trainingsplanService.decreaseDifficulty(new TrainingsSession(null, null, null, sets));
         tblvSetTable.getItems().clear();
         tblvSetTable.setItems(sets);
     }
@@ -374,7 +374,7 @@ public class SessionEditController_v2 extends Controller {
 
             tblvExercises.setOnMousePressed(event -> {
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                   this.OnClickAdd(null);
+                    this.OnClickAdd(null);
                 }
             });
 

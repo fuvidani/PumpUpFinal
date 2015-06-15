@@ -6,7 +6,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
             prefHeight="600.0" prefWidth="700.0" stylesheets="@../../css/photoDiaryStyle.css"
             xmlns="http://javafx.com/javafx/8"
             fx:controller="sepm.ss15.grp16.gui.controller.user.PhotoDiaryController">
