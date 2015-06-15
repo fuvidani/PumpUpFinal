@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * Created by David on 2015.05.15..
+ *
+ * Implementation of CalendarDAO. CRUD methods for accessing H2 database.
  */
 public class H2CalendarDAOImpl implements CalendarDAO {
 
@@ -221,6 +223,10 @@ public class H2CalendarDAOImpl implements CalendarDAO {
         LOGGER.info("Appointment successfully deleted in appointment table.");
     }
 
+    /**
+     * Sets the trainingsessionDAO object for accessing the sets.
+     * @param trainingsSessionDAO
+     */
     public void setSessionDAO(TrainingsSessionDAO trainingsSessionDAO) {
         this.trainingsSessionDAO = trainingsSessionDAO;
     }

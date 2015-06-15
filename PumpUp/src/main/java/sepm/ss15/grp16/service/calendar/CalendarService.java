@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * Created by David on 2015.05.16..
+ *
+ * Calendar service interface, that provides several methods for editing the user calendar.
  */
 public interface CalendarService extends Service<Appointment> {
     /**
@@ -75,27 +77,33 @@ public interface CalendarService extends Service<Appointment> {
     void exportToCalendar(WorkoutplanExport workoutplanExport) throws ServiceException;
 
     /**
-     * chatches an event from JS calendar
+     * Catches an event from JS calendar and executes the update in the DAO layer
      */
     void updateEvent(int appointmentID, String newDate) throws ServiceException;
 
     /**
-     * removes all appointments in service
+     * Removes all appointments in service layer.
      */
     void deleteAllAppointments() throws ServiceException;
 
     /**
-     * Returns the current appointment
+     * Returns the current appointment.
      *
-     * @return current Appointment. if calendar is empty or there is no appointment after today returns null.
+     * @return current Appointment. if calendar is empty or there is no appointment after today or
+     * all appointments after today are already trained, returns null
      * @throws ServiceException
      */
     Appointment getCurrentAppointment() throws ServiceException;
 
     /**
-     * exports all appointments to google calendar
+     * Exports all appointments to google calendar.
      */
     void exportToGoogle() throws ServiceException;
 
+    /**
+     * Sets an appointment with id as trained.
+     * @param appointment_id to be set as trained
+     * @throws ServiceException
+     */
     void setAppointmentAsTrained(int appointment_id) throws ServiceException;
 }

@@ -109,17 +109,17 @@ public class MainController extends Controller {
             String path = getClass().getClassLoader().getResource("calendar/html/maincalendar.html").toURI().getPath();
             engine.load("file:///" + path);
         } catch (URISyntaxException e) {
-            LOGGER.error(e);
-            e.printStackTrace();
+            LOGGER.error("Exception in MainController while initializing calendar. - " + e.getMessage());
         }
 
         engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
 
-                // JS to Java
+                // JS to Java listener
                 JSObject script = (JSObject) engine.executeScript("window");
                 script.setMember("drag", calendarService);
 
+                //executes JS functions, that can be used in order to add new events.
                 EventScriptRunner scripts = new EventScriptRunner(engine);
                 scripts.runScripts();
             }
@@ -305,6 +305,10 @@ public class MainController extends Controller {
     }
 
 
+    /**
+     * Removes the events from the calendar and renders it again.
+     * This method will be called after opening the calendar frame.
+     */
     public void refreshCalendar() {
         engine.executeScript("$('#calendar').fullCalendar('removeEvents');");
 
@@ -312,15 +316,19 @@ public class MainController extends Controller {
         String json = null;
         try {
             json = gson.toJson(calendarService.findAll());
+            LOGGER.debug("JSON object successfully created.");
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("Exception in CalendarController while refreshCalendar(). - " + e.getMessage());
         }
 
-        LOGGER.debug(json);
         engine.executeScript("addListEvents(" + json + ");");
-
+        LOGGER.info("Calendar successfully refreshed.");
     }
 
+    /**
+     * Initialises the local calendar service.
+     * @param calendarService the new service.
+     */
     public void setCalendarService(CalendarService calendarService) {
         this.calendarService = calendarService;
     }
