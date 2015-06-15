@@ -19,6 +19,12 @@ public abstract class AbstractDAOTest<T extends DTO> {
 
     public abstract DAO<T> getDAO();
 
+    /**
+     * create the dto
+     * checks first, if the find dto dont exists before and exist after the create methode
+     * @param dto
+     * @throws PersistenceException
+     */
     public void createValid(T dto) throws PersistenceException {
         LOGGER.info("createValid: " + dto);
         debugglist = getDAO().findAll();
@@ -28,6 +34,13 @@ public abstract class AbstractDAOTest<T extends DTO> {
         Assert.assertTrue(getDAO().findAll().contains(dto));
     }
 
+    /**
+     * creates the dto_old, and set the id to the dto_new
+     * then calls the DAO update method and checks, if the dto_old no longer exists, but the dto_new
+     * @param dto_old
+     * @param dto_new
+     * @throws PersistenceException
+     */
     public void updateValid(T dto_old, T dto_new) throws PersistenceException {
         LOGGER.info("updateValid: " + dto_old + "to " + dto_new);
         debugglist = getDAO().findAll();
@@ -46,6 +59,12 @@ public abstract class AbstractDAOTest<T extends DTO> {
         Assert.assertTrue(getDAO().findAll().contains(dto_new));
     }
 
+    /**
+     * create the dto and the deletes it
+     * checks, if the dto first exists not, the exists and the exists no longer
+     * @param dto
+     * @throws PersistenceException
+     */
     public void deleteValid(T dto) throws PersistenceException {
         LOGGER.info("deleteValid: " + dto);
         debugglist = getDAO().findAll();
@@ -59,6 +78,11 @@ public abstract class AbstractDAOTest<T extends DTO> {
         Assert.assertFalse(getDAO().findAll().contains(dto));
     }
 
+    /**
+     * creates the dto and the search for it
+     * @param dto
+     * @throws PersistenceException
+     */
     public void searchByIDValid(T dto) throws PersistenceException {
         LOGGER.info("deleteValid: " + dto);
         debugglist = getDAO().findAll();
