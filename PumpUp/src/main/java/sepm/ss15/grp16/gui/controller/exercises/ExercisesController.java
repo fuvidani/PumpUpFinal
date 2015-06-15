@@ -208,9 +208,8 @@ public class ExercisesController extends Controller implements VideoPlayable{
                 }
             }
         } else if (customExercisesCheckbox.isSelected()) {
-
+            temp.clear();
             for (Exercise e : masterdata) {
-                temp.clear();
 
                 if (e.getUser() != null && e.getUser().equals(userService.getLoggedInUser())) {
                     temp.add(e);
