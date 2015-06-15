@@ -327,4 +327,9 @@ public class MainController extends Controller {
             return label;
         }
     }
+
+    @FXML
+    public void bodyfatHelpClicked(){
+        mainFrame.openDialog(PageEnum.BodyfatHelp);
+    }
 }

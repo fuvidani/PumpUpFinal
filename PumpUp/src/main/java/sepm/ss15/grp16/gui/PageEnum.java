@@ -27,7 +27,8 @@ public enum PageEnum {
     Exercises("fxml/exercise/Exercises.fxml", "\u00dcbungen", 1300, 600),
     Manage_exercises("fxml/exercise/ManageExercise.fxml", "\u00dcbungen verwalten", 1300, 750),
     DisplayExercise("fxml/exercise/DisplayExercise.fxml", "\u00dcbung anzeigen", 1000, 600),
-    VideoPlayer("fxml/exercise/VideoPlayer.fxml", "\u00dcbung anzeigen", 300, 600);
+    VideoPlayer("fxml/exercise/VideoPlayer.fxml", "\u00dcbung anzeigen", 300, 600),
+    BodyfatHelp("fxml/main/BodyfatHelp.fxml", "Hilfe", 800, 600);
 
     private final String fxml;
     private final String title;

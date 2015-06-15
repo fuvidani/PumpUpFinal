@@ -143,11 +143,5 @@
             <artifactId>webcam-capture</artifactId>
             <version>${webcam.version}</version>
         </dependency>
-        <!-- Facebook -->
-        <dependency>
-            <groupId>com.restfb</groupId>
-            <artifactId>restfb</artifactId>
-            <version>1.11.0</version>
-        </dependency>
     </dependencies>
 </project>

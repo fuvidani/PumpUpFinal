@@ -66,8 +66,15 @@ public class WorkoutResultController extends Controller {
 
     }
 
+    /**
+     * This method is called whenever the user hits the "Auf Facebook teilen" button at the
+     * results window. It opens up a WebView with a URL pointing to a feed dialog.
+     * If there is available internet connection and the user is successfully authenticated, the user is able
+     * to publish a message on his or her wall with our application link underneath the message. After publishing the user is
+     * automatically redirected to the Facebook page. The user must close the WebView personally.
+     */
     @FXML
-    void shareFacebookClicked(ActionEvent event) {
+    void shareFacebookClicked() {
         WebView webView = new WebView();
         final WebEngine webEngine = webView.getEngine();
         webEngine.setJavaScriptEnabled(true);
