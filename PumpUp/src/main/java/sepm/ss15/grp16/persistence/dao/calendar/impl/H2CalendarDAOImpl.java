@@ -105,9 +105,15 @@ public class H2CalendarDAOImpl implements CalendarDAO {
 
                 appointment.setSessionName(trainingsSessionDAO.searchByID(appointment.getSession_id()).getName());
                 String setNames = "";
-                for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()) {
-                    setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
+
+                if (trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets() != null){
+                    for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()) {
+                        setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
+                    }
                 }
+
+
+
                 appointment.setSetNames(setNames);
 
                 appointment.setSession(trainingsSessionDAO.searchByID(appointment.getSession_id()));

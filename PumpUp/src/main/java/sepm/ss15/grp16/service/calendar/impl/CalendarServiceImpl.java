@@ -102,7 +102,7 @@ public class CalendarServiceImpl implements CalendarService {
             credential = new AuthorizationCodeInstalledApp(
                     flow, new LocalServerReceiver()).authorize("user");
         } catch (Exception e) {
-            LOGGER.error("Failed on authorizing. - " + e.getMessage());
+            LOGGER.error("Failed on authorizing. - " + e.getClass());
             throw new ServiceException("Failed on authorizing.");
         }
 
@@ -409,7 +409,7 @@ public class CalendarServiceImpl implements CalendarService {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                LOGGER.info("Event created: %s\n", event.getHtmlLink());
+                LOGGER.info("Event created: " + event.getHtmlLink());
             }
         } catch (ServiceException e) {
             throw new ServiceException(e);
