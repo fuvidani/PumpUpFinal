@@ -3,6 +3,8 @@ package sepm.ss15.grp16.entity.training.helper;
 import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.user.User;
 
+import java.util.List;
+
 /**
  * Author: Lukas
  * Date: 08.05.2015
@@ -124,13 +126,12 @@ public class ExerciseSet implements DTOHelper {
 
         ExerciseSet set = (ExerciseSet) o;
 
-        return !(id != null ? !id.equals(set.id) : set.id != null) &&
-                !(repeat != null ? !repeat.equals(set.repeat) : set.repeat != null) &&
-                !(order_nr != null ? !order_nr.equals(set.order_nr) : set.order_nr != null) &&
-                !(isDeleted != null ? !isDeleted.equals(set.isDeleted) : set.isDeleted != null) &&
-                !(type != null ? !type.equals(set.type) : set.type != null) &&
-                !(user != null ? !user.equals(set.user) : set.user != null) &&
-                !(exercise != null ? !exercise.equals(set.exercise) : set.exercise != null);
+        return !(id != null ? !id.equals(set.id) : set.id != null)
+                && !(repeat != null ? !repeat.equals(set.repeat) : set.repeat != null)
+                && !(order_nr != null ? !order_nr.equals(set.order_nr) : set.order_nr != null)
+                && !(isDeleted != null ? !isDeleted.equals(set.isDeleted) : set.isDeleted != null)
+                && type == set.type && !(user != null ? !user.equals(set.user) : set.user != null)
+                && !(exercise != null ? !exercise.equals(set.exercise) : set.exercise != null);
 
     }
 
