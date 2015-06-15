@@ -48,13 +48,12 @@ public class WorkoutResultController extends Controller {
 
     @Override
     public void initController() {
-        WorkoutController workoutController =(WorkoutController) getParentController();
+        WorkoutController workoutController = (WorkoutController) getParentController();
 
         WorkoutResult workoutResult = workoutController.getWorkoutResult();
 
         double calorin = 0;
-        for(ExerciseSet set : workoutResult.getAppointment().getSession().getExerciseSets())
-        {
+        for (ExerciseSet set : workoutResult.getAppointment().getSession().getExerciseSets()) {
             calorin += set.getExercise().getCalories() * workoutResult.getList().get(set).getDuration();
         }
         burnedCaloriesLabel.setText(calorin + "");

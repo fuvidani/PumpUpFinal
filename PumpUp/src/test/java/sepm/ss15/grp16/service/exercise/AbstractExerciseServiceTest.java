@@ -1,10 +1,10 @@
 package sepm.ss15.grp16.service.exercise;
 
-import org.junit.Assert;
 import org.junit.Test;
-import sepm.ss15.grp16.entity.exercise.*;
-import sepm.ss15.grp16.entity.user.User;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.entity.exercise.AbsractCategory;
+import sepm.ss15.grp16.entity.exercise.Exercise;
+import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
+import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.service.AbstractServiceTest;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;

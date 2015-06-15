@@ -108,7 +108,7 @@ public abstract class AbstractTrainingsServiceTest extends AbstractServiceTest<T
         List<AbsractCategory> categoryList = new ArrayList<>();
         categoryList.add(new MusclegroupCategory(5, "Trizeps"));
         categoryList.add(new TrainingsCategory(2, "Balance"));
-        Exercise exercise =  new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, categoryList);
+        Exercise exercise = new Exercise(null, "liegestuetz", "eine der besten uebungen ueberhaupt", 9.0, "", gifList, false, null, categoryList);
         return getExerciseService().create(exercise);
     }
 

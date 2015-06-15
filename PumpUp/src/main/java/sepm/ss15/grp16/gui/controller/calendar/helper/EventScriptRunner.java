@@ -12,11 +12,11 @@ public class EventScriptRunner {
 
     private WebEngine engine;
 
-    public EventScriptRunner(WebEngine engine){
+    public EventScriptRunner(WebEngine engine) {
         this.engine = engine;
     }
 
-    public void runScripts(){
+    public void runScripts() {
         LOGGER.debug("Execute javascript: addEvent..");
         // Java to JS, function to create single event
         engine.executeScript("function addEvent(id, title, start, sets, color) {\n" +

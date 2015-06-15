@@ -3,8 +3,6 @@ package sepm.ss15.grp16.entity.training.helper;
 import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.user.User;
 
-import java.util.List;
-
 /**
  * Author: Lukas
  * Date: 08.05.2015

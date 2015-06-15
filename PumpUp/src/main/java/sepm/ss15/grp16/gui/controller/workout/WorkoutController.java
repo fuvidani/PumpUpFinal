@@ -311,6 +311,10 @@ public class WorkoutController extends Controller {
         return musicPlayerController;
     }
 
+    public WorkoutResult getWorkoutResult() {
+        return workoutResult;
+    }
+
     private enum Status {
         RUNNUNG, PAUSED, FINISHED;
     }
@@ -342,10 +346,5 @@ public class WorkoutController extends Controller {
                     "-fx-background-color: firebrick;" +
                     "-fx-background-radius: 5");
         }
-    }
-
-    public WorkoutResult getWorkoutResult()
-    {
-        return workoutResult;
     }
 }

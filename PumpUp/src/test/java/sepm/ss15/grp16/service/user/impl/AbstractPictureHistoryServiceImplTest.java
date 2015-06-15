@@ -21,7 +21,7 @@ import sepm.ss15.grp16.service.user.UserService;
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class AbstractPictureHistoryServiceImplTest extends AbstractPictureHistoryServiceTest{
+public class AbstractPictureHistoryServiceImplTest extends AbstractPictureHistoryServiceTest {
 
     @Autowired
     private DBHandler dbConnector;

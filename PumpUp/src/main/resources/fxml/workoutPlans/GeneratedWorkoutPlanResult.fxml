@@ -4,85 +4,97 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.GeneratedWorkoutPlanResultController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0"
+            prefWidth="1200.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.GeneratedWorkoutPlanResultController">
     <top>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-         <children>
-            <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Ihr generierter Trainingsplan für">
-                  <font>
-                      <Font size="24.0" />
-                  </font>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-              </Label>
-            <Label fx:id="goalLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="some text">
-               <font>
-                  <Font size="24.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="8.0" />
-               </HBox.margin>
-            </Label>
-            <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-         </children>
-         <BorderPane.margin>
-            <Insets top="10.0" />
-         </BorderPane.margin>
-      </HBox>
-    </top>
-    <bottom>
-        <HBox maxHeight="24.0" maxWidth="1.7976931348623157E308" minHeight="24.0" prefHeight="24.0" spacing="20.0" BorderPane.alignment="CENTER">
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <children>
-                  <Button maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="32.0" prefWidth="32.0" styleClass="backBtn" stylesheets="@../../css/gen_workout_resultStyle.css" HBox.hgrow="ALWAYS">
-                      <font>
-                          <Font size="18.0" />
-                      </font>
-               <tooltip>
-                  <Tooltip text="Zurück">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Tooltip>
-               </tooltip>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-                  </Button>
-                  <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#increaseDifficultyClicked" text="Plan schwieriger machen">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decreaseDifficultyClicked" text="Plan leichter machen">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="saveButton" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#saveWorkoutPlanClicked" prefHeight="32.0" prefWidth="32.0" styleClass="savePlanBtn" stylesheets="@../../css/gen_workout_resultStyle.css" text=" " HBox.hgrow="ALWAYS">
-                      <font>
-                          <Font size="1.0" />
-                      </font>
-               <tooltip>
-                  <Tooltip text="Empty Tooltip" />
-               </tooltip>
-               <tooltip>
-                  <Tooltip text="Trainingsplan speichern">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Tooltip>
-               </tooltip>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-                  </Button>
+                <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
+                       maxWidth="1.7976931348623157E308" text="Ihr generierter Trainingsplan für">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Label>
+                <Label fx:id="goalLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="some text">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets left="8.0"/>
+                    </HBox.margin>
+                </Label>
+                <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
             </children>
             <BorderPane.margin>
-                <Insets bottom="40.0" left="40.0" right="40.0" />
+                <Insets top="10.0"/>
+            </BorderPane.margin>
+        </HBox>
+    </top>
+    <bottom>
+        <HBox maxHeight="24.0" maxWidth="1.7976931348623157E308" minHeight="24.0" prefHeight="24.0" spacing="20.0"
+              BorderPane.alignment="CENTER">
+            <children>
+                <Button maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false"
+                        onAction="#cancelClicked" prefHeight="32.0" prefWidth="32.0" styleClass="backBtn"
+                        stylesheets="@../../css/gen_workout_resultStyle.css" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                    <tooltip>
+                        <Tooltip text="Zurück">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Tooltip>
+                    </tooltip>
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Button>
+                <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#increaseDifficultyClicked" text="Plan schwieriger machen">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Button>
+                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#decreaseDifficultyClicked" text="Plan leichter machen">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Button>
+                <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+                <Button fx:id="saveButton" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0"
+                        mnemonicParsing="false" onAction="#saveWorkoutPlanClicked" prefHeight="32.0" prefWidth="32.0"
+                        styleClass="savePlanBtn" stylesheets="@../../css/gen_workout_resultStyle.css" text=" "
+                        HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="1.0"/>
+                    </font>
+                    <tooltip>
+                        <Tooltip text="Empty Tooltip"/>
+                    </tooltip>
+                    <tooltip>
+                        <Tooltip text="Trainingsplan speichern">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Tooltip>
+                    </tooltip>
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Button>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="40.0" left="40.0" right="40.0"/>
             </BorderPane.margin>
         </HBox>
     </bottom>
@@ -91,14 +103,18 @@
             <children>
                 <HBox VBox.vgrow="ALWAYS">
                     <children>
-                        <Region layoutX="970.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                        <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" prefHeight="571.0" prefWidth="870.0" stylesheets="@../../css/gen_workout_resultStyle.css" HBox.hgrow="ALWAYS" />
-                        <Region layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                        <Region layoutX="970.0" layoutY="10.0" maxHeight="1.7976931348623157E308"
+                                maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
+                        <ListView fx:id="listView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                  orientation="HORIZONTAL" prefHeight="571.0" prefWidth="870.0"
+                                  stylesheets="@../../css/gen_workout_resultStyle.css" HBox.hgrow="ALWAYS"/>
+                        <Region layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308"
+                                maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
                     </children>
                 </HBox>
             </children>
             <BorderPane.margin>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
             </BorderPane.margin>
         </VBox>
     </center>

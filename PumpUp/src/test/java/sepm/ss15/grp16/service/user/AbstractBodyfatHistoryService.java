@@ -23,31 +23,31 @@ public abstract class AbstractBodyfatHistoryService extends AbstractServiceTest<
     }
 
     @Test
-    public void createWithValidBodyfatHistory() throws Exception{
+    public void createWithValidBodyfatHistory() throws Exception {
         BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, createUserForTest().getUser_id(), 23, new Date());
         createTest(testBodyfatHistory);
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithNoneValidBodyfatHistory() throws Exception{
+    public void validateWithNoneValidBodyfatHistory() throws Exception {
         BodyfatHistory bodyfatHistory = null;
         bodyfatHistoryService.validate(bodyfatHistory);
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithToHightBodyfat() throws Exception{
+    public void validateWithToHightBodyfat() throws Exception {
         BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, createUserForTest().getUser_id(), 101, new Date());
         bodyfatHistoryService.validate(testBodyfatHistory);
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithToLowBodyfat() throws Exception{
+    public void validateWithToLowBodyfat() throws Exception {
         BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, createUserForTest().getUser_id(), -101, new Date());
         bodyfatHistoryService.validate(testBodyfatHistory);
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithNoneValidUserID() throws Exception{
+    public void validateWithNoneValidUserID() throws Exception {
         BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, null, 23, new Date());
         bodyfatHistoryService.validate(testBodyfatHistory);
     }

@@ -337,7 +337,7 @@ public class CalendarServiceImpl implements CalendarService {
         //search for next appointment
         for (Appointment appointment : allAppointment) {
             if (currentAppointment == null || appointment.getDatum().before(currentAppointment.getDatum())) {
-                if (!appointment.getIsTrained()){
+                if (!appointment.getIsTrained()) {
                     currentAppointment = appointment;
                 }
             }

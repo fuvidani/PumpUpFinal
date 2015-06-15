@@ -71,6 +71,7 @@ public interface BodyfatHistoryService extends Service<BodyfatHistory> {
 
     /**
      * Sends a given userID to the persistence-layer to search for the bodyfatHistories of this user
+     *
      * @param user_id of the user, of which we search the bodyfatHistories
      * @return a list of all bodyfatHistories, which are associated with the user wth the given id
      * @throws ServiceException if there are complications in the service or persistence-layer
@@ -79,6 +80,7 @@ public interface BodyfatHistoryService extends Service<BodyfatHistory> {
 
     /**
      * Sends a given userID to the persistence-layer to search for the latest bodyfatHistory
+     *
      * @param user_id of the user, of which we search the latest bodyfatHistory
      * @return the last bodyfatHistory, associated with the user with the given id, or null if there is no entry
      * @throws ServiceException if there are complications in the service or persistence-layer

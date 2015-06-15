@@ -30,11 +30,11 @@
     -fx-border-color: red;
 }
 
-.btnTakePicture:hover, .btnTakePictureDelay:hover, .btnShowBodyOutline:hover{
+.btnTakePicture:hover, .btnTakePictureDelay:hover, .btnShowBodyOutline:hover {
     -fx-background-size: 90%;
 }
 
-.btnShowBodyOutline:selected, .btnTakePictureDelay:selected{
+.btnShowBodyOutline:selected, .btnTakePictureDelay:selected {
     -fx-border-radius: 10;
     -fx-border-color: green;
 }

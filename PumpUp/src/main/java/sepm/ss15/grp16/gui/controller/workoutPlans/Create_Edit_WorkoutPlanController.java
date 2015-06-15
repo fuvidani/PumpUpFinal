@@ -354,6 +354,7 @@ public class Create_Edit_WorkoutPlanController extends Controller {
 
     /**
      * Ask for confirmation and close the window at confirmation
+     *
      * @param event
      */
     @FXML
@@ -376,6 +377,7 @@ public class Create_Edit_WorkoutPlanController extends Controller {
 
     /**
      * opens the sessionEdit Window
+     *
      * @param event
      */
     @FXML
@@ -391,6 +393,7 @@ public class Create_Edit_WorkoutPlanController extends Controller {
 
     /**
      * opens the sessionEdit Window
+     *
      * @param event
      */
     @FXML
@@ -401,7 +404,7 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         mainFrame.openDialog(PageEnum.SessionEdit);
 
         if (session_interClassCommunication != null) {
-            listViewSessions.getItems().set(listViewSessions.getItems().indexOf(selection),session_interClassCommunication);
+            listViewSessions.getItems().set(listViewSessions.getItems().indexOf(selection), session_interClassCommunication);
             session_interClassCommunication = null;
             setUpListView();
             updateInformations();
