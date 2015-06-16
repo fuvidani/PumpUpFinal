@@ -5,15 +5,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.web.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.web.WebView?>
 
 <BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="mainRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
     <center>
@@ -93,10 +87,13 @@
                                                       <Insets top="11.0" />
                                                    </padding>
                                                 </Label>
-                                                <Button fx:id="btnBodyfatHelp" mnemonicParsing="false" onAction="#bodyfatHelpClicked" styleClass="btnBodyfatHelp" stylesheets="@../../css/mainStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                <Button fx:id="btnBodyfatHelp" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#bodyfatHelpClicked" prefHeight="35.0" prefWidth="20.0" styleClass="btnBodyfatHelp" stylesheets="@../../css/mainStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                                    <tooltip>
                                                       <Tooltip text="Wie eigenen Körperfettanteil messen?" />
                                                    </tooltip>
+                                                   <HBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </HBox.margin>
                                                 </Button>
                                              </children>
                                           </HBox>
@@ -151,9 +148,11 @@
     <bottom>
         <HBox prefHeight="64.0" prefWidth="1299.0" styleClass="footer" BorderPane.alignment="CENTER">
             <children>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <Button contentDisplay="LEFT" maxHeight="128.0" maxWidth="1.7976931348623157E308" minHeight="128.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="128.0" prefWidth="300.0" styleClass="trainingBtn" text="Training">
+                  <Region layoutX="640.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                  <Region layoutX="1017.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                        <Button contentDisplay="LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#trainingClicked" styleClass="trainingBtn" text="Zum Training" HBox.hgrow="ALWAYS">
                             <font>
                                 <Font size="24.0" />
                             </font>
@@ -161,10 +160,11 @@
                                 <Insets />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="trainingPicBtn" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="128.0" styleClass="trainginPic" text=" " />
+                  <Region layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                  <Region layoutX="11.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                     </children>
                     <HBox.margin>
-                        <Insets left="600.0" />
+                        <Insets />
                     </HBox.margin>
                 </HBox>
             </children>

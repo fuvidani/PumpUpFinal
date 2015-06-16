@@ -36,6 +36,8 @@ import java.util.*;
 
 /**
  * Created by David on 2015.05.16..
+ *
+ * Implementation of CalenderService interface. It provides methods of business layer.
  */
 public class CalendarServiceImpl implements CalendarService {
 
@@ -76,6 +78,11 @@ public class CalendarServiceImpl implements CalendarService {
         this.calendarDAO = calendarDAO;
     }
 
+    /**
+     * Authorizes the user with his google account in the browser.
+     * @return Credential Object with access token
+     * @throws Exception
+     */
     public static Credential authorize() throws Exception {
         // Load client secrets.
         InputStream in =
@@ -95,8 +102,8 @@ public class CalendarServiceImpl implements CalendarService {
             credential = new AuthorizationCodeInstalledApp(
                     flow, new LocalServerReceiver()).authorize("user");
         } catch (Exception e) {
-            LOGGER.error("Failed on authorizing. - " + e.getMessage());
-            throw new ServiceException("Failed on authorizing. - ", e);
+            LOGGER.error("Failed on authorizing. - " + e.getClass());
+            throw new ServiceException("Failed on authorizing.");
         }
 
         return credential;
@@ -270,7 +277,7 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     /**
-     * chatches an event from JS calendar
+     * Catches an event from JS calendar and executes the update in the DAO layer.
      */
     @Override
     public void updateEvent(int appointmentID, String newDate) throws ServiceException {
@@ -295,6 +302,9 @@ public class CalendarServiceImpl implements CalendarService {
         }
     }
 
+    /**
+     * Removes all appointments in service layer.
+     */
     @Override
     public void deleteAllAppointments() throws ServiceException {
         try {
@@ -306,6 +316,13 @@ public class CalendarServiceImpl implements CalendarService {
         }
     }
 
+    /**
+     * Returns the current appointment.
+     *
+     * @return current Appointment. if calendar is empty or there is no appointment after today or
+     * all appointments after today are already trained, returns null
+     * @throws ServiceException
+     */
     @Override
     public Appointment getCurrentAppointment() throws ServiceException {
         List<Appointment> allAppointment = this.findAll();
@@ -346,6 +363,9 @@ public class CalendarServiceImpl implements CalendarService {
         return currentAppointment;
     }
 
+    /**
+     * Exports all appointments to google calendar.
+     */
     @Override
     public void exportToGoogle() throws ServiceException {
         // Build a new authorized API client service.
@@ -389,7 +409,7 @@ public class CalendarServiceImpl implements CalendarService {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                System.out.printf("Event created: %s\n", event.getHtmlLink());
+                LOGGER.info("Event created: " + event.getHtmlLink());
             }
         } catch (ServiceException e) {
             throw new ServiceException(e);
@@ -397,6 +417,11 @@ public class CalendarServiceImpl implements CalendarService {
 
     }
 
+    /**
+     * Sets an appointment with id as trained.
+     * @param appointment_id to be set as trained
+     * @throws ServiceException
+     */
     @Override
     public void setAppointmentAsTrained(int appointment_id) throws ServiceException {
         try {
