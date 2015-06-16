@@ -117,7 +117,6 @@ public class Appointment implements DTO {
 
         if (appointment_id != null ? !appointment_id.equals(that.appointment_id) : that.appointment_id != null)
             return false;
-        if (datum != null ? !datum.equals(that.datum) : that.datum != null) return false;
         if (session_id != null ? !session_id.equals(that.session_id) : that.session_id != null) return false;
         if (user_id != null ? !user_id.equals(that.user_id) : that.user_id != null) return false;
         if (isTrained != null ? !isTrained.equals(that.isTrained) : that.isTrained != null) return false;
