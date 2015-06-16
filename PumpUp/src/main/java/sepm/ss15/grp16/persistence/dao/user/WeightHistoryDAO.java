@@ -16,6 +16,7 @@ public interface WeightHistoryDAO extends DAO<WeightHistory> {
 
     /**
      * Creates a new weightHistory
+     *
      * @param weightHistory which shall be inserted into the underlying persistence layer.
      *                      must not be null, id must be null
      * @return the given weightHistory assigned with an id
@@ -26,6 +27,7 @@ public interface WeightHistoryDAO extends DAO<WeightHistory> {
 
     /**
      * Find all persistent weightHistories
+     *
      * @return a list of all persistent weightHistories
      * @throws PersistenceException, if an error in the persistence-layer occurs
      */
@@ -34,6 +36,7 @@ public interface WeightHistoryDAO extends DAO<WeightHistory> {
 
     /**
      * Searches for a persistent weightHistory with the given id
+     *
      * @param id of the weightHistory, we search for
      * @return the persistent weightHistory with the given id or null if there's no weightHistory with this id
      * @throws PersistenceException, if an error in the persistence-layer occurs
@@ -43,6 +46,7 @@ public interface WeightHistoryDAO extends DAO<WeightHistory> {
 
     /**
      * Updates a persistent weightHistory. It's not possible to change the id.
+     *
      * @param weightHistory which should be updated, must not be null, id must not be null and must not be changed
      * @return the updated weightHistory
      * @throws PersistenceException, if an error in the persistence-layer occurs
@@ -52,6 +56,7 @@ public interface WeightHistoryDAO extends DAO<WeightHistory> {
 
     /**
      * Deletes a persistent weightHistory
+     *
      * @param weightHistory which should be deleted, must not be null, id must not be null and must not be changed
      * @throws PersistenceException, if an error in the persistence-layer occurs
      */
@@ -60,6 +65,7 @@ public interface WeightHistoryDAO extends DAO<WeightHistory> {
 
     /**
      * Searches for all weightHistories associated with the user with the given id
+     *
      * @param user_id of the user, of which we search the weightHistories
      * @return a list of all weightHistories, which are associated with the user wth the given id
      * @throws PersistenceException, if an error in the persistence-layer occurs
@@ -68,6 +74,7 @@ public interface WeightHistoryDAO extends DAO<WeightHistory> {
 
     /**
      * Gets the last weightHistory, associated with the user with the given id
+     *
      * @param user_id of the user, of which we search the last weightHistory
      * @return the last weightHistory, associated with the user with the given id, or null if there is no entry
      * @throws PersistenceException, if an error in the persistence-layer occurs

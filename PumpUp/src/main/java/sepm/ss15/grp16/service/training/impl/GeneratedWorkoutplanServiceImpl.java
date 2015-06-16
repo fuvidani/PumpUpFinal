@@ -15,7 +15,6 @@ import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
-import sepm.ss15.grp16.service.training.TrainingsplanService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
 
@@ -181,7 +180,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 int rand = random.nextInt(internExercises.size());
                 Exercise nextExercise = internExercises.get(rand);
                 int duration = (int) Math.round((caloriesPerExercise / nextExercise.getCalories()) * multiplier);
-                duration  = Math.round(duration/5)*5;
+                duration = Math.round(duration / 5) * 5;
                 ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.time, j, false);
                 sets.add(set);
                 internExercises.remove(rand);
@@ -310,7 +309,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 int rand = random.nextInt(internExercises.size());
                 Exercise nextExercise = internExercises.get(rand);
                 int duration = (int) Math.round((caloriesPerExercise / nextExercise.getCalories()) * multiplier);
-                duration  = Math.round(duration/5)*5;
+                duration = Math.round(duration / 5) * 5;
                 ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.repeat, j, false);
                 sets.add(set);
                 internExercises.remove(rand);
@@ -437,7 +436,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 int rand = random.nextInt(internExercises.size());
                 Exercise nextExercise = internExercises.get(rand);
                 int duration = (int) Math.round((caloriesPerExercise / nextExercise.getCalories()) * multiplier);
-                duration  = Math.round(duration/5)*5;
+                duration = Math.round(duration / 5) * 5;
                 ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.time, j, false);
                 sets.add(set);
                 internExercises.remove(rand);
@@ -565,7 +564,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 int rand = random.nextInt(internExercises.size());
                 Exercise nextExercise = internExercises.get(rand);
                 int duration = (int) Math.round((caloriesPerExercise / nextExercise.getCalories()) * multiplier);
-                duration  = Math.round(duration/5)*5;
+                duration = Math.round(duration / 5) * 5;
                 ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.time, j, false);
                 sets.add(set);
                 internExercises.remove(rand);

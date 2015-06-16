@@ -71,6 +71,7 @@ public interface WeightHistoryService extends Service<WeightHistory> {
 
     /**
      * Sends a given userID to the persistence-layer to search for the weightHistories of this user
+     *
      * @param user_id of the user, of which we search the weightHistories
      * @return a list of all weightHistories, which are associated with the user wth the given id
      * @throws ServiceException if there are complications in the service or persistence-layer
@@ -79,6 +80,7 @@ public interface WeightHistoryService extends Service<WeightHistory> {
 
     /**
      * Sends a given userID to the persistence-layer to search for the latest weightHistory
+     *
      * @param user_id of the user, of which we search the latest weightHistory
      * @return the last weightHistory, associated with the user with the given id, or null if there is no entry
      * @throws ServiceException if there are complications in the service or persistence-layer

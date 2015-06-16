@@ -210,7 +210,7 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
         if (set.getRepeat() >= 15) {
             set.setRepeat(set.getRepeat() - 15);
         } else {
-            set.setRepeat(0);
+            set.setRepeat(1);
         }
     }
 

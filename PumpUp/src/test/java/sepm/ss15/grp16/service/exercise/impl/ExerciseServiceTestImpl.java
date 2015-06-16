@@ -22,6 +22,7 @@ import java.sql.SQLException;
 /**
  * Created by lukas on 17.05.2015.
  */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
@@ -36,12 +37,20 @@ public class ExerciseServiceTestImpl extends AbstractExerciseServiceTest {
 
     @Before
     public void setUp() throws DBException, SQLException {
-        dbConnector.activateTestMode();
+        try {
+            dbConnector.getConnection().setAutoCommit(true);
+        } catch (DBException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @After
     public void tearDown() throws DBException, SQLException {
-        dbConnector.deactivateTestMode();
+        try {
+            dbConnector.getConnection().rollback();
+        } catch (DBException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

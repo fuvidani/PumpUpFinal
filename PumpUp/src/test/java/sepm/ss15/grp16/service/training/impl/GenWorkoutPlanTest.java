@@ -47,6 +47,7 @@ public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
 
     /**
      * Sets upt the testing environment.
+     *
      * @throws DBException
      * @throws SQLException
      */
@@ -62,6 +63,7 @@ public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
     /**
      * This method is executed after each test.
      * Runs a rollback on the data source and closes it.
+     *
      * @throws DBException
      * @throws SQLException
      */

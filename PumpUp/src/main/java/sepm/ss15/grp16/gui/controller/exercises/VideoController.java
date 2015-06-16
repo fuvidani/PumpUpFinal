@@ -1,6 +1,5 @@
 package sepm.ss15.grp16.gui.controller.exercises;
 
-import com.restfb.types.Video;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -11,11 +10,11 @@ import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.Exercise;
-import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 
 /**
  * Created by lukas on 10.06.2015.
+ * a controller with the purpose of playing a video
  */
 public class VideoController extends Controller {
     private final Logger LOGGER = LogManager.getLogger();
@@ -29,15 +28,24 @@ public class VideoController extends Controller {
     private MediaPlayer player = null;
     private boolean isPlaying = false;
     private MediaView smallMediaView = new MediaView();
-    private  Exercise exercise;
+    private Exercise exercise;
 
 
     @Override
     public void initController() {
+
         exercise = ((VideoPlayable) this.getParentController()).getExercise();
+
+
         this.showVideo();
+
     }
 
+    /**
+     * method for the show video button
+     * redirects to an extra dialogue where the video gets displayed and
+     * can be watched
+     */
     private void showVideo() {
         try {
 
@@ -52,11 +60,12 @@ public class VideoController extends Controller {
 
                 player.setAutoPlay(false);
                 player.setMute(true);
+
                 smallMediaView.setMediaPlayer(player);
                 smallMediaView.setVisible(true);
                 smallMediaView.setFitHeight(300);
-
                 videoBox.getChildren().add(smallMediaView);
+
             } else {
                 smallMediaView.setMediaPlayer(null);
 
@@ -65,9 +74,13 @@ public class VideoController extends Controller {
         } catch (Exception e) {
         }
     }
+
+    /**
+     * method to play the video and paus the video
+     * if the video has finished it starts after a klick again
+     */
     @FXML
     private void playVideo() {
-
         Duration totalDuration = player.getCycleDuration();
         Duration currentDuration = player.getCurrentTime();
         if (currentDuration.compareTo(totalDuration) == 0) {
@@ -76,22 +89,35 @@ public class VideoController extends Controller {
             player.setMute(true);
             smallMediaView.setMediaPlayer(null);
             smallMediaView.setMediaPlayer(player);
-            playBtn.setText("Video abspielen");
+
         }
+        player.setOnEndOfMedia(() -> {
+            playBtn.getStyleClass().add("btnPlay");
+            playBtn.getStyleClass().remove("btnMusic_Pause");
+        });
         if (isPlaying) {
-            playBtn.setText("Video abspielen");
             player.pause();
             isPlaying = false;
+            playBtn.setBackground(null);
+            playBtn.getStyleClass().remove("btnMusic_Pause");
+            playBtn.getStyleClass().add("btnPlay");
         } else {
-            playBtn.setText("Video pausieren");
             player.play();
             isPlaying = true;
+            playBtn.setBackground(null);
+            playBtn.getStyleClass().remove("btnPlay");
+            playBtn.getStyleClass().add("btnMusic_Pause");
+
         }
+
     }
 
+    /**
+     * closing the stage and getting back to the called stage
+     */
     @FXML
-    private void close(){
-            mainFrame.close();
+    private void close() {
+        mainFrame.close();
     }
 
 }
