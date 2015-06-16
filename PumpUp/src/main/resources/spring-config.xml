@@ -34,6 +34,8 @@
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
+    <!--<bean id="fxmlLoader" class="sepm.ss15.grp16.gui.FXMLLoaderImpl" init-method="init"/>-->
+
     <bean id="aboutController" class="sepm.ss15.grp16.gui.controller.main.AboutController" scope="prototype"/>
 
     <!-- ###### User beans ###### -->
