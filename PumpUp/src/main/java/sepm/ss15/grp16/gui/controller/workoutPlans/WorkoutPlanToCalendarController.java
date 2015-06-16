@@ -22,7 +22,9 @@ import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.chrono.Chronology;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -92,6 +94,7 @@ public class WorkoutPlanToCalendarController extends Controller {
             }
         };
         dateField.setDayCellFactory(dayCellFactory);
+        dateField.setChronology(Chronology.ofLocale(Locale.GERMAN));
 
         if (plan_interClassCommunication != null) {
             txtName.setText(plan_interClassCommunication.getName());
