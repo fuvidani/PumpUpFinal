@@ -29,7 +29,7 @@ public abstract class AbstractPictureHistoryServiceTest extends AbstractServiceT
     }
 
     @Test
-    public void createWithValidPictureHistory() throws Exception{
+    public void createWithValidPictureHistory() throws Exception {
         String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
         String testImagePath = pathToResource + "/testbild.jpg";
 
@@ -121,13 +121,13 @@ public abstract class AbstractPictureHistoryServiceTest extends AbstractServiceT
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithNoneValidPictureHistory() throws Exception{
-        PictureHistory pictureHistory  = null;
+    public void validateWithNoneValidPictureHistory() throws Exception {
+        PictureHistory pictureHistory = null;
         pictureHistoryService.validate(pictureHistory);
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithNoneValidUserID() throws Exception{
+    public void validateWithNoneValidUserID() throws Exception {
         String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
         String testImagePath = pathToResource + "/testbild.jpg";
 
@@ -136,7 +136,7 @@ public abstract class AbstractPictureHistoryServiceTest extends AbstractServiceT
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithNoneValidImagePath() throws Exception{
+    public void validateWithNoneValidImagePath() throws Exception {
         PictureHistory testPictureHistory = new PictureHistory(null, createUserForTest().getUser_id(), "", new Date());
         pictureHistoryService.validate(testPictureHistory);
     }

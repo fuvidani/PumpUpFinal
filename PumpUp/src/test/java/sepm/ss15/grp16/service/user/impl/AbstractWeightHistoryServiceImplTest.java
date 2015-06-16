@@ -21,7 +21,7 @@ import sepm.ss15.grp16.service.user.WeightHistoryService;
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class AbstractWeightHistoryServiceImplTest extends AbstractWeightHistoryServiceTest{
+public class AbstractWeightHistoryServiceImplTest extends AbstractWeightHistoryServiceTest {
 
     @Autowired
     private DBHandler dbConnector;

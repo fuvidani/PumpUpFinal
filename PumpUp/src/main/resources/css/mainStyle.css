@@ -5,7 +5,6 @@
     /*-fx-background-color: transparent;*/
 }
 
-
 .trainingBtn {
     -fx-background-color: transparent;
 }
@@ -137,7 +136,6 @@
     -fx-border-color: transparent black transparent transparent;
 }
 
-
 .aboutGrid .label {
     -fx-background-color: white;
     -fx-font-family: "Segoe UI Light";
@@ -148,4 +146,12 @@
     -fx-background-color: white;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 14pt;
+}
+
+.btnBodyfatHelp {
+    -fx-background-image: url('../icons/question_mark.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
 }

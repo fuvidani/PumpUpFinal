@@ -22,6 +22,7 @@ public abstract class AbstractDAOTest<T extends DTO> {
     /**
      * create the dto
      * checks first, if the find dto dont exists before and exist after the create methode
+     *
      * @param dto
      * @throws PersistenceException
      */
@@ -37,6 +38,7 @@ public abstract class AbstractDAOTest<T extends DTO> {
     /**
      * creates the dto_old, and set the id to the dto_new
      * then calls the DAO update method and checks, if the dto_old no longer exists, but the dto_new
+     *
      * @param dto_old
      * @param dto_new
      * @throws PersistenceException
@@ -62,6 +64,7 @@ public abstract class AbstractDAOTest<T extends DTO> {
     /**
      * create the dto and the deletes it
      * checks, if the dto first exists not, the exists and the exists no longer
+     *
      * @param dto
      * @throws PersistenceException
      */
@@ -80,6 +83,7 @@ public abstract class AbstractDAOTest<T extends DTO> {
 
     /**
      * creates the dto and the search for it
+     *
      * @param dto
      * @throws PersistenceException
      */

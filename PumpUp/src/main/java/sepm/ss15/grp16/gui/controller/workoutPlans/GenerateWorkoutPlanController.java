@@ -132,16 +132,16 @@ public class GenerateWorkoutPlanController extends Controller {
         boxes.add(jumpingRopeCheck);
         boxes.add(punchbagCheck);
         selectAllCheck.setOnAction(event -> {
-            if(selectAllCheck.isSelected()){
+            if (selectAllCheck.isSelected()) {
                 for (CheckBox box : boxes) {
                     box.setSelected(true);
                 }
             }
         });
 
-        for(CheckBox box:boxes){
+        for (CheckBox box : boxes) {
             box.setOnAction(event -> {
-                if(!box.isSelected()){
+                if (!box.isSelected()) {
                     selectAllCheck.setSelected(false);
                 }
             });
@@ -159,7 +159,7 @@ public class GenerateWorkoutPlanController extends Controller {
     @FXML
     void generateButtonClicked() {
         for (CheckBox box : boxes) {
-            if(!box.isSelected()) {
+            if (!box.isSelected()) {
                 equipment.add(new EquipmentCategory(Integer.parseInt(box.getId()), box.getText()));
             }
         }
@@ -190,26 +190,29 @@ public class GenerateWorkoutPlanController extends Controller {
 
     /**
      * Children controllers will call this method to get DTO
+     *
      * @return the generated workout routine iff the corresponding method has been called
      */
-    public Trainingsplan getGeneratedWorkoutPlan(){
+    public Trainingsplan getGeneratedWorkoutPlan() {
         return this.generatedWorkoutPlan;
     }
 
     /**
      * Children controllers will call this method to know which goal the user picked.
+     *
      * @return the goal as a string
      */
-    public String getSelectedGoal(){
+    public String getSelectedGoal() {
         return (toggleGroup.getSelectedToggle()) != null ? ((RadioButton) toggleGroup.getSelectedToggle()).getText() : null;
     }
 
     /**
      * This method will be called by the parent controller to determine
      * whether the "Generate" button has been hit or not.
+     *
      * @return true if user decided to generate a workout plan, otherwise false
      */
-    public boolean getFlag(){
+    public boolean getFlag() {
         return this.displayClosed.get();
     }
 }

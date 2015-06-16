@@ -5,8 +5,6 @@ import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.AbstractDAOTest;
 import sepm.ss15.grp16.persistence.dao.DAO;
-import sepm.ss15.grp16.persistence.dao.user.impl.H2PictureHistoryDAOImpl;
-import sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.io.File;
@@ -161,7 +159,7 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
 
     @Test(expected = PersistenceException.class)
     public void updateWithNullShouldFail() throws Exception {
-        updateValid(null,null);
+        updateValid(null, null);
     }
 
     @Test

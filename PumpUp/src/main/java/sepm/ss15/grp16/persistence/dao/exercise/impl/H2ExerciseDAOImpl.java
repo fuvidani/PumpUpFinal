@@ -304,9 +304,9 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
      * @throws PersistenceException if there are any problems with the extraction from the resultset
      */
     private Exercise extractExcercise(ResultSet rs) throws PersistenceException {
-        LOGGER.debug("extracting an exercise from a given resultset in dao layer");
         try {
             Integer id = rs.getInt(1);
+            LOGGER.debug("extracting an exercise from a given resultset in dao layer with id " + id);
             String name = rs.getString(2);
             String description = rs.getString(3);
             Double calories = rs.getDouble(4);

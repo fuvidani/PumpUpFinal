@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 /**
  * Concrete db-handler for h2 database, implementing the singelton pattern for the connection, to ensure a single connection
- * <p/>
+ * <p>
  * Author: Lukas Baronyai (lb)
  * Adapted: Lukas Kathrein (lk)
  */

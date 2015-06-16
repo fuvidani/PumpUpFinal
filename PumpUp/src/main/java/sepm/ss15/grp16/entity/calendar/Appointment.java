@@ -7,6 +7,8 @@ import java.util.Date;
 
 /**
  * Created by David on 2015.05.15..
+ *
+ * This entity represents an appointment and encapsulates all information about it.
  */
 public class Appointment implements DTO {
 

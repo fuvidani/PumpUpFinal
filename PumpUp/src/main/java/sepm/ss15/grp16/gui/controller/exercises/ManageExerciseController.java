@@ -144,6 +144,7 @@ public class ManageExerciseController extends Controller {
 
         setContent();
     }
+
     /**
      * setting the contnet for the page
      */
@@ -183,8 +184,8 @@ public class ManageExerciseController extends Controller {
      * showing one picture out of the picture list the
      * current exercise has, defined by the given index
      * to load from the list of pictures
-     * @param index which picture is to display
      *
+     * @param index which picture is to display
      */
     private void showPic(String oldValue, String newValue) {
         try {
@@ -227,6 +228,7 @@ public class ManageExerciseController extends Controller {
     /**
      * handling the cancel button
      * with an alert box
+     *
      * @param event
      */
     @FXML
@@ -251,6 +253,7 @@ public class ManageExerciseController extends Controller {
      * handling the save button event
      * extracting an exercise DTO object out of all given values
      * and then passing the object to the service layer
+     *
      * @param event
      */
     @FXML
@@ -273,6 +276,7 @@ public class ManageExerciseController extends Controller {
 
     /**
      * method to browse the filesystem after jpg and png files
+     *
      * @param event
      */
     @FXML
@@ -370,6 +374,7 @@ public class ManageExerciseController extends Controller {
     /**
      * extracting an exercise object out of all the given information the
      * user has provided
+     *
      * @return a new exercise DTO object
      */
     private Exercise extractExercise() {

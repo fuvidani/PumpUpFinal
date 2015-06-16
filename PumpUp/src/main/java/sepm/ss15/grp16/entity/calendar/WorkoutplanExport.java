@@ -7,6 +7,8 @@ import java.util.Date;
 
 /**
  * Created by David on 2015.05.17..
+ *
+ * DTO for exchanging data between traingsplan manager and calendar.
  */
 public class WorkoutplanExport {
 

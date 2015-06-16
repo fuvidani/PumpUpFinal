@@ -130,7 +130,7 @@ public class WorkoutPlansController extends Controller {
 
             workoutPlansListView.setOnMousePressed(event -> {
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                    if(workoutPlansListView.getSelectionModel().getSelectedItem().getUser()!=null){
+                    if (workoutPlansListView.getSelectionModel().getSelectedItem().getUser() != null) {
                         this.editWorkoutPlanClicked(null);
                     } else {
                         this.copyWorkoutPlanClicked(null);

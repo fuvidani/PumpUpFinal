@@ -1,7 +1,6 @@
 package sepm.ss15.grp16.entity.exercise;
 
 import sepm.ss15.grp16.entity.DTO;
-import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.user.User;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class Exercise implements DTO {
         this.categories = categories;
     }
 
-    public Exercise(Exercise exercise){
+    public Exercise(Exercise exercise) {
         this.id = exercise.id;
         this.name = exercise.name;
         this.description = exercise.description;
@@ -145,7 +144,7 @@ public class Exercise implements DTO {
                 && equalListsString(gifLinks, exercise.gifLinks)
                 && !(isDeleted != null ? !isDeleted.equals(exercise.isDeleted) : exercise.isDeleted != null)
                 && !(user != null ? !user.equals(exercise.user) : exercise.user != null)
-                && equalListsCat(categories,exercise.categories);
+                && equalListsCat(categories, exercise.categories);
 
     }
 

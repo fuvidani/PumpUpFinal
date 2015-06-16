@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * Created by David on 2015.05.15..
+ *
+ * Implementation of CalendarDAO. CRUD methods for accessing H2 database.
  */
 public class H2CalendarDAOImpl implements CalendarDAO {
 
@@ -103,9 +105,15 @@ public class H2CalendarDAOImpl implements CalendarDAO {
 
                 appointment.setSessionName(trainingsSessionDAO.searchByID(appointment.getSession_id()).getName());
                 String setNames = "";
-                for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()) {
-                    setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
+
+                if (trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets() != null){
+                    for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()) {
+                        setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
+                    }
                 }
+
+
+
                 appointment.setSetNames(setNames);
 
                 appointment.setSession(trainingsSessionDAO.searchByID(appointment.getSession_id()));
@@ -221,6 +229,10 @@ public class H2CalendarDAOImpl implements CalendarDAO {
         LOGGER.info("Appointment successfully deleted in appointment table.");
     }
 
+    /**
+     * Sets the trainingsessionDAO object for accessing the sets.
+     * @param trainingsSessionDAO
+     */
     public void setSessionDAO(TrainingsSessionDAO trainingsSessionDAO) {
         this.trainingsSessionDAO = trainingsSessionDAO;
     }

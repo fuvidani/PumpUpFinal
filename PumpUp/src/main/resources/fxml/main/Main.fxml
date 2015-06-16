@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.web.WebView?>
+
 <BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="mainRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
     <center>
         <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
@@ -25,69 +23,86 @@
                                 </Label>
                                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="280.0">
                                     <children>
-                                          <ImageView fx:id="userImgView" fitHeight="280.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true">
-                                              <image>
-                                                  <Image url="@../../icons/fat_to_muscle.png" />
-                                              </image>
-                                              <viewport>
-                                                  <Rectangle2D />
-                                              </viewport>
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                                          </ImageView>
-                              <GridPane>
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" />
-                                  <ColumnConstraints hgrow="SOMETIMES" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                                    <Label minWidth="130.0" prefWidth="130.0" text="Geschlecht:">
-                                                        <font>
-                                                            <Font size="17.0" />
-                                                        </font>
-                                                    </Label>
-                                                      <Label fx:id="genderTextField" text="Label" GridPane.columnIndex="1" />
-                                                    <Label text="Alter:" GridPane.rowIndex="1">
-                                                        <font>
-                                                            <Font size="17.0" />
-                                                        </font>
-                                                    </Label>
-                                                      <Label fx:id="ageTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                    <Label text="Größe:" GridPane.rowIndex="2">
-                                                        <font>
-                                                            <Font size="17.0" />
-                                                        </font>
-                                                    </Label>
-                                                      <Label fx:id="heightTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                    <Label text="Gewicht:" GridPane.rowIndex="3">
-                                                        <font>
-                                                            <Font size="17.0" />
-                                                        </font>
-                                                    </Label>
-                                                      <Label fx:id="weightTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                    <Label minWidth="150.0" prefWidth="150.0" text="Körperfett:" GridPane.rowIndex="4">
-                                                        <font>
-                                                            <Font size="17.0" />
-                                                        </font>
-                                                    </Label>
-                                                      <Label fx:id="bodyfatTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                    <Label text="E-Mail:" GridPane.rowIndex="5">
-                                                        <font>
-                                                            <Font size="17.0" />
-                                                        </font>
-                                                    </Label>
-                                                      <Label fx:id="emailTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                 </children>
-                              </GridPane>
+                                        <ImageView fx:id="userImgView" fitHeight="280.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../../icons/fat_to_muscle.png" />
+                                            </image>
+                                            <viewport>
+                                                <Rectangle2D />
+                                            </viewport>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </ImageView>
+                                        <GridPane>
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" />
+                                                <ColumnConstraints hgrow="SOMETIMES" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label minWidth="130.0" prefWidth="130.0" text="Geschlecht:">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="genderTextField" text="Label" GridPane.columnIndex="1" />
+                                                <Label text="Alter:" GridPane.rowIndex="1">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="ageTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label text="Größe:" GridPane.rowIndex="2">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="heightTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label text="Gewicht:" GridPane.rowIndex="3">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="weightTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label minWidth="150.0" prefWidth="150.0" text="Körperfett:" GridPane.rowIndex="4">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                    <VBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <children>
+                                          <HBox spacing="15.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                             <children>
+                                                            <Label fx:id="bodyfatTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <padding>
+                                                      <Insets top="11.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Button fx:id="btnBodyfatHelp" mnemonicParsing="false" onAction="#bodyfatHelpClicked" styleClass="btnBodyfatHelp" stylesheets="@../../css/mainStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <tooltip>
+                                                      <Tooltip text="Wie eigenen Körperfettanteil messen?" />
+                                                   </tooltip>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                                <Label text="E-Mail:" GridPane.rowIndex="5">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="emailTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                            </children>
+                                        </GridPane>
                                     </children>
                                 </HBox>
                             </children>

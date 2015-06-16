@@ -35,7 +35,7 @@ import java.util.Optional;
  * Created by Daniel Fuevesi on 07.05.15.
  * Controller of the "Übungen" stage.
  */
-public class ExercisesController extends Controller implements VideoPlayable{
+public class ExercisesController extends Controller implements VideoPlayable {
 
 
     private static Exercise exercise;
@@ -232,9 +232,10 @@ public class ExercisesController extends Controller implements VideoPlayable{
     /**
      * mathing method which checks all names of the  exercises displayed
      * against the text in the textbox
+     *
      * @param e exercise to check against
      * @return true if textfield is empty, or matches text
-     *          false if exercise name does not macht
+     * false if exercise name does not macht
      */
     private boolean matchesFilter(Exercise e) {
         String filter = tf_search.getText();
@@ -269,7 +270,8 @@ public class ExercisesController extends Controller implements VideoPlayable{
 
     /**
      * displaying one exercise with all the details the exercise contains
-     * @param old the exercise displayed before this one
+     *
+     * @param old         the exercise displayed before this one
      * @param newExercise the current clicked exercise
      */
     private void showExercise(Exercise old, Exercise newExercise) {
@@ -353,8 +355,8 @@ public class ExercisesController extends Controller implements VideoPlayable{
      * showing one picture out of the picture list the
      * current exercise has, defined by the given index
      * to load from the list of pictures
-     * @param index which picture is to display
      *
+     * @param index which picture is to display
      */
     private void showPicture(Integer index) {
         try {
@@ -408,6 +410,7 @@ public class ExercisesController extends Controller implements VideoPlayable{
      * handling the event of a new exercise:
      * creating a backup of the actual chosen exercise
      * then changing the stage where the user can create the new exercise
+     *
      * @param event
      */
     @FXML
@@ -432,6 +435,7 @@ public class ExercisesController extends Controller implements VideoPlayable{
     /**
      * editing an exercise if the user has privilege to do so
      * only own exercises can be modifyed
+     *
      * @param event
      */
     @FXML
@@ -458,6 +462,7 @@ public class ExercisesController extends Controller implements VideoPlayable{
     /**
      * deleting an exercise if the user has privilege to do so
      * only own exercises can be modifyed
+     *
      * @param event
      */
     @FXML
@@ -494,6 +499,7 @@ public class ExercisesController extends Controller implements VideoPlayable{
 
     /**
      * getting back to the main stage
+     *
      * @param event
      */
     @FXML

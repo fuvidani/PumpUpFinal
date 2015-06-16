@@ -32,37 +32,27 @@ import java.util.Optional;
  * without controlls of editing or creating
  */
 public class DisplayExerciseCotroller extends Controller implements VideoPlayable {
+    private static final Logger LOGGER = LogManager.getLogger();
     @FXML
     private TextArea description;
-
     @FXML
     private ImageView imageView;
-
     @FXML
     private Label header;
-
     @FXML
     private Label calories;
-
-
-
     @FXML
     private ImageView leftArrow;
     @FXML
     private ImageView rightArrow;
-
     @FXML
     private Button playVideoBtn;
-
     @FXML
     private VBox vboxType;
     @FXML
     private VBox vboxEquipment;
     @FXML
     private VBox vboxMuscle;
-
-    private static final Logger LOGGER = LogManager.getLogger();
-
     private Exercise exercise = null;
     private Integer picIndex = 0;
     private boolean isPlaying = false;
@@ -73,8 +63,8 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
     private VBox videoBox;
     private CategoryService categoryService = null;
 
-    public void setCategoryService(CategoryService categoryService){
-        this.categoryService=categoryService;
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -157,7 +147,7 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
                 if (exercise.getCategories().contains(t))
                     vboxMuscle.getChildren().add(new Label(t.getName()));
             }
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             LOGGER.error(e);
             e.printStackTrace();
         }
@@ -167,8 +157,8 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
      * showing one picture out of the picture list the
      * current exercise has, defined by the given index
      * to load from the list of pictures
-     * @param index which picture is to display
      *
+     * @param index which picture is to display
      */
     private void showPicture(Integer index) {
         try {
@@ -231,7 +221,7 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
      * getting back to the main stage
      */
     @FXML
-    private void  getBack(){
+    private void getBack() {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("\u00dcbungen verlassen");

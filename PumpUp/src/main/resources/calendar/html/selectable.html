@@ -23,18 +23,19 @@
                 defaultDate: new Date(),
                 selectable: false,
                 selectHelper: true,
+                eventDurationEditable: false,
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
                 firstDay: 1,
 
                 eventDrop: function (event, delta, revertFunc) {
                     var date = new Date(event.start);
-                    date.setHours(0,0,0,0);
+                    date.setHours(0, 0, 0, 0);
                     var today = new Date();
-                    today.setHours(0,0,0,0);
-                    if (date.getTime() < today.getTime()){
+                    today.setHours(0, 0, 0, 0);
+                    if (date.getTime() < today.getTime()) {
                         event.color = "#C5DEEB";
-                    } else{
+                    } else {
                         event.color = "#3A87AD";
                     }
                     drag.updateEvent(event.id, event.start.format());
@@ -49,8 +50,6 @@
             });
 
         });
-
-
 
 
     </script>

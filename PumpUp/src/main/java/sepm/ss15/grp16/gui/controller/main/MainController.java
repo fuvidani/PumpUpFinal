@@ -78,7 +78,7 @@ public class MainController extends Controller {
     @FXML
     private Button trainingPicBtn = new Button();
 
-    private  Appointment executionAppointment;
+    private Appointment executionAppointment;
 
 
     public void setUserService(UserService userService) {
@@ -137,16 +137,14 @@ public class MainController extends Controller {
         try {
             executionAppointment = calendarService.getCurrentAppointment();
 
-            if(executionAppointment != null) {
+            if (executionAppointment != null) {
                 mainFrame.openDialog(PageEnum.Workoutstart);
                 WorkoutstartController workoutstartController = (WorkoutstartController) getChildController();
 
-                if(workoutstartController.started()) {
+                if (workoutstartController.started()) {
                     mainFrame.navigateToChild(PageEnum.LiveMode);
                 }
-            }
-            else
-            {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Keine \u00dcbung zur Ausf\u00fchrung!");
                 alert.setContentText("Keine \u00dcbung zur Ausf\u00fchrung!");
@@ -159,9 +157,8 @@ public class MainController extends Controller {
         }
     }
 
-    public Appointment getExecutionAppointment()
-    {
-        return  executionAppointment;
+    public Appointment getExecutionAppointment() {
+        return executionAppointment;
     }
 
     public void updateUserData() {
@@ -217,7 +214,7 @@ public class MainController extends Controller {
         makeUserChart();
     }
 
-    public void updateImage(){
+    public void updateImage() {
         LOGGER.info("Updating image in Main");
         try {
             PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(userService.getLoggedInUser().getUser_id());
@@ -225,7 +222,7 @@ public class MainController extends Controller {
             if (actualPictureHistory != null) {
                 userImgView.setImage(ImageLoader.loadImage(this.getClass(), actualPictureHistory.getLocation()));
             }
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOGGER.error(e.getMessage());
         } catch (URISyntaxException e) {
             LOGGER.error(e.getMessage());
@@ -274,37 +271,6 @@ public class MainController extends Controller {
         }
     }
 
-
-
-    /** a node which displays a value on hover, but is otherwise empty */
-    class HoveredThresholdNode extends StackPane {
-        HoveredThresholdNode(int value) {
-            setPrefSize(8, 8);
-            final Label label = createDataThresholdLabel(value);
-            setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent mouseEvent) {
-                    getChildren().setAll(label);
-                    setCursor(Cursor.NONE);
-                    toFront();
-                }
-            });
-            setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent mouseEvent) {
-                    getChildren().clear();
-                    setCursor(Cursor.CROSSHAIR);
-                }
-            });
-        }
-        private Label createDataThresholdLabel(int value) {
-            final Label label = new Label(value + " kg");
-            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
-            label.setTextFill(Color.BLACK);
-            label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-            return label;
-        }
-    }
-
-
     public void refreshCalendar() {
         engine.executeScript("$('#calendar').fullCalendar('removeEvents');");
 
@@ -327,5 +293,43 @@ public class MainController extends Controller {
 
     public void addAppointmentList(Appointment appointment) {
         this.appointmentList.add(appointment);
+    }
+
+    /**
+     * a node which displays a value on hover, but is otherwise empty
+     */
+    class HoveredThresholdNode extends StackPane {
+        HoveredThresholdNode(int value) {
+            setPrefSize(8, 8);
+            final Label label = createDataThresholdLabel(value);
+            setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().setAll(label);
+                    setCursor(Cursor.NONE);
+                    toFront();
+                }
+            });
+            setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().clear();
+                    setCursor(Cursor.CROSSHAIR);
+                }
+            });
+        }
+
+        private Label createDataThresholdLabel(int value) {
+            final Label label = new Label(value + " kg");
+            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+            label.setTextFill(Color.BLACK);
+            label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+            return label;
+        }
+    }
+
+    @FXML
+    public void bodyfatHelpClicked(){
+        mainFrame.openDialog(PageEnum.BodyfatHelp);
     }
 }

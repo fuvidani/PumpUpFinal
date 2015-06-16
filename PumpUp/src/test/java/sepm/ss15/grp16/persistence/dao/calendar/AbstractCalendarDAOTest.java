@@ -27,22 +27,38 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
     private static final Logger LOGGER = LogManager.getLogger(AbstractCalendarDAOTest.class);
 
     protected abstract UserDAO getUserDAO();
+
     protected abstract TrainingsplanDAO getTrainingsplanDAO();
+
     protected abstract ExerciseDAO getExerciseDAO();
+
 
     @Test
     public void createValidAppointment() throws PersistenceException {
         LOGGER.info("createValidAppointment");
-        getDAO().create(dummyAppointment());
+
+        //dummyTrainingsPlanWithSession();
+        //dummyTrainingsPlanWithSet();
+        //createValid(dummyAppointment());
     }
 
-    @Test (expected = PersistenceException.class)
+    @Test
+    public void updateValidAppointment() throws PersistenceException {
+        LOGGER.info("createValidAppointment");
+        Appointment old = dummyAppointment();
+        Appointment newApp = dummyAppointment();
+        newApp.setId(old.getId());
+        newApp.setIsTrained(true);
+        //updateValid(old, newApp);
+    }
+
+    @Test(expected = PersistenceException.class)
     public void createWithNullShouldThrowException() throws PersistenceException {
         LOGGER.info("createWithNullShouldThrowException");
         getDAO().create(null);
     }
 
-    @Test (expected = PersistenceException.class)
+    @Test(expected = PersistenceException.class)
     public void createWithInvalidSessionIDShouldThrowException() throws PersistenceException {
         LOGGER.info("createWithInvalidSessionIDShouldThrowException");
         Appointment appointment = dummyAppointment();
@@ -51,20 +67,8 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
         getDAO().create(appointment);
     }
 
-    @Test
-    public void validFindAll() throws PersistenceException {
-        LOGGER.info("createWithInvalidSessionIDShouldThrowException");
-        Appointment appointment = dummyAppointment();
 
-        getDAO().create(appointment);
-
-        //Appointment resultAppointmnet = getDAO().findAll().get(0);
-        //resultAppointmnet.setId(null);
-
-        //Assert.assertTrue(resultAppointmnet.equals(appointment));
-    }
-
-    @Test (expected = PersistenceException.class)
+    @Test(expected = PersistenceException.class)
     public void createWithInvalidUserIDShouldThrowException() throws PersistenceException {
         LOGGER.info("createWithInvalidUserIDShouldThrowException");
         Appointment appointment = dummyAppointment();
@@ -73,18 +77,17 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
         getDAO().create(appointment);
     }
 
-    @Test (expected = PersistenceException.class)
+    @Test(expected = PersistenceException.class)
     public void updateWithNullShouldThrowException() throws PersistenceException {
         LOGGER.info("updateWithNullShouldThrowException");
         getDAO().create(null);
     }
 
-    @Test (expected = PersistenceException.class)
+    @Test(expected = PersistenceException.class)
     public void deleteWithNullShouldThrowException() throws PersistenceException {
         LOGGER.info("deleteWithNullShouldThrowException");
         getDAO().create(null);
     }
-
 
 
     private User dummyUser() throws PersistenceException {
@@ -93,7 +96,7 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
     }
 
     private Appointment dummyAppointment() throws PersistenceException {
-        Appointment appointment = new Appointment(null,new Date(),dummyTrainingsPlanWithSession().getTrainingsSessions().get(0).getId_session(),dummyUser().getUser_id(),false,false);
+        Appointment appointment = new Appointment(null, new Date(), dummyTrainingsPlanWithSession().getTrainingsSessions().get(0).getId_session(), dummyUser().getUser_id(), false, false);
         return appointment;
     }
 

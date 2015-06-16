@@ -25,24 +25,17 @@ import java.io.File;
  */
 public class WorkoutstartController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutstartController.class);
-
+    public boolean started = false;
     private File dir_selection;
-
     private UserService userService;
-
     @FXML
     private ListView<ExerciseSet> toDoListView;
-
     @FXML
     private Label musicPathLabel;
-
     @FXML
     private Label trainingTypeLabel;
-
     @FXML
     private Button startButton;
-
-    public boolean started = false;
 
     public WorkoutstartController(UserService userService) {
         this.userService = userService;
@@ -63,12 +56,12 @@ public class WorkoutstartController extends Controller {
         Appointment appointment = mainController.getExecutionAppointment();
 
         ObservableList<ExerciseSet> sessions = FXCollections.observableList(appointment.getSession().getExerciseSets());
-        toDoListView.setCellFactory(new Callback<ListView<ExerciseSet>, ListCell<ExerciseSet>>(){
+        toDoListView.setCellFactory(new Callback<ListView<ExerciseSet>, ListCell<ExerciseSet>>() {
 
             @Override
             public ListCell<ExerciseSet> call(ListView<ExerciseSet> p) {
 
-                ListCell<ExerciseSet> cell = new ListCell<ExerciseSet>(){
+                ListCell<ExerciseSet> cell = new ListCell<ExerciseSet>() {
 
                     @Override
                     protected void updateItem(ExerciseSet t, boolean bln) {
@@ -132,8 +125,7 @@ public class WorkoutstartController extends Controller {
         }
     }
 
-    public boolean started()
-    {
+    public boolean started() {
         return started;
     }
 }

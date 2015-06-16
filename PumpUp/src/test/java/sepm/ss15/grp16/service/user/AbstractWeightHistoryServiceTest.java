@@ -29,30 +29,30 @@ public abstract class AbstractWeightHistoryServiceTest extends AbstractServiceTe
     }
 
     @Test(expected = ServiceException.class)
-    public void newUserServiceWithNull() throws Exception{
+    public void newUserServiceWithNull() throws Exception {
         new WeightHistoryServiceImpl(null);
     }
 
     @Test
-    public void createWithValidWeightHistory() throws Exception{
+    public void createWithValidWeightHistory() throws Exception {
         WeightHistory testWeightHistory = new WeightHistory(null, createUserForTest().getUser_id(), 85, new Date());
         createTest(testWeightHistory);
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithNoneValidWeightHistory() throws Exception{
+    public void validateWithNoneValidWeightHistory() throws Exception {
         WeightHistory weightHistory = null;
         weightHistoryService.validate(weightHistory);
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithNoneValidWeight() throws Exception{
+    public void validateWithNoneValidWeight() throws Exception {
         WeightHistory testWeightHistory = new WeightHistory(null, createUserForTest().getUser_id(), -85, new Date());
         weightHistoryService.validate(testWeightHistory);
     }
 
     @Test(expected = ValidationException.class)
-    public void validateWithNoneValidUserID() throws Exception{
+    public void validateWithNoneValidUserID() throws Exception {
         WeightHistory testWeightHistory = new WeightHistory(null, null, -85, new Date());
         weightHistoryService.validate(testWeightHistory);
     }
@@ -95,12 +95,12 @@ public abstract class AbstractWeightHistoryServiceTest extends AbstractServiceTe
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void deleteNotSupported() throws Exception{
+    public void deleteNotSupported() throws Exception {
         weightHistoryService.delete(null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void updateNotSupported() throws Exception{
+    public void updateNotSupported() throws Exception {
         weightHistoryService.update(null);
     }
 

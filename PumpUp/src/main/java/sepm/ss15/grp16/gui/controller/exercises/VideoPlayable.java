@@ -12,6 +12,7 @@ public interface VideoPlayable {
     /**
      * getting an exercise DTO object which contains
      * the link to a video
+     *
      * @return an exercise DTO object
      */
     Exercise getExercise();

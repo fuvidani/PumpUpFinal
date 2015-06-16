@@ -71,6 +71,7 @@ public interface PictureHistoryService extends Service<PictureHistory> {
 
     /**
      * Sends a given userID to the persistence-layer to search for the pictureHistories of this user
+     *
      * @param user_id of the user, of which we search the pictureHistories
      * @return a list of all pictureHistories, which are associated with the user wth the given id
      * @throws ServiceException if there are complications in the service or persistence-layer
@@ -79,6 +80,7 @@ public interface PictureHistoryService extends Service<PictureHistory> {
 
     /**
      * Sends a given userID to the persistence-layer to search for the latest pictureHistory
+     *
      * @param user_id of the user, of which we search the latest pictureHistory
      * @return the last pictureHistory, associated with the user with the given id, or null if there is no entry
      * @throws ServiceException if there are complications in the service or persistence-layer

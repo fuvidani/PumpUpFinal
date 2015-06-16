@@ -5,18 +5,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Created by David on 2015.06.14..
+ * Created by david molnar on 2015.06.14..
+ *
+ * This class executes the JS Scripts, that are needed to render events in the calendar frame.
  */
 public class EventScriptRunner {
     private final Logger LOGGER = LogManager.getLogger(EventScriptRunner.class);
 
     private WebEngine engine;
 
-    public EventScriptRunner(WebEngine engine){
+    public EventScriptRunner(WebEngine engine) {
         this.engine = engine;
     }
 
-    public void runScripts(){
+    public void runScripts() {
         LOGGER.debug("Execute javascript: addEvent..");
         // Java to JS, function to create single event
         engine.executeScript("function addEvent(id, title, start, sets, color) {\n" +
