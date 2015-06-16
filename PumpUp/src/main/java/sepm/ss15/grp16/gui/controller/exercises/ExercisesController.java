@@ -83,7 +83,7 @@ public class ExercisesController extends Controller implements VideoPlayable {
     private UserService userService;
     private Integer picIndex = 0;
     private ObservableList<Exercise> masterdata = FXCollections.observableArrayList();
-    private ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
+    private ObservableList<Exercise> temp = FXCollections.observableArrayList();
 
 
     public void setCategoryService(CategoryService categoryService) {
@@ -171,17 +171,62 @@ public class ExercisesController extends Controller implements VideoPlayable {
      * search textfield
      */
     private void updateFilteredData() {
-        ObservableList<Exercise> temp = FXCollections.observableArrayList();
-        if (!customExercisesCheckbox.isSelected() && !defaultExercisesCheckbox.isSelected()) {
-            filteredData = masterdata;
-        }
+        ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
 
-        for (Exercise e : filteredData) {
-            if (matchesFilter(e))
+        if(temp.size()==0){
+            for(Exercise e : masterdata){
                 temp.add(e);
+            }
         }
 
-        uebungsTableView.setItems(temp);
+        for(Exercise e : temp){
+            if(matchesFilter(e))
+                filteredData.add(e);
+        }
+
+        uebungsTableView.setItems(filteredData);
+
+    }
+
+
+    @FXML
+    private void filter(){
+        //keine checkbox
+        //beide checkboxen
+        //--> textfeld ist kriterium
+        temp.clear();
+        if ((!customExercisesCheckbox.isSelected() && !defaultExercisesCheckbox.isSelected())||
+                (customExercisesCheckbox.isSelected() && defaultExercisesCheckbox.isSelected())) {
+            for(Exercise e : masterdata){
+                temp.add(e);
+            }
+        } else if (defaultExercisesCheckbox.isSelected() ) {
+            temp.clear();
+            for (Exercise e : masterdata) {
+                if (e.getUser() == null) {
+                    temp.add(e);
+                }
+            }
+        } else if (customExercisesCheckbox.isSelected()) {
+            temp.clear();
+            for (Exercise e : masterdata) {
+
+                if (e.getUser() != null && e.getUser().equals(userService.getLoggedInUser())) {
+                    temp.add(e);
+                }
+            }
+
+        } else {
+
+        }
+
+        ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
+
+        for(Exercise e : temp){
+            filteredData.add(e);
+        }
+
+        uebungsTableView.setItems(filteredData);
     }
 
     /**
@@ -481,36 +526,36 @@ public class ExercisesController extends Controller implements VideoPlayable {
      */
     @FXML
     private void filterCheckboxes() {
-        if (defaultExercisesCheckbox.isSelected() && customExercisesCheckbox.isSelected()) {
-            filteredData.clear();
-            filteredData.addAll(masterdata);
-            uebungsTableView.setItems(filteredData);
-            return;
-        } else if (defaultExercisesCheckbox.isSelected()) {
-
-            filteredData.clear();
-            for (Exercise e : masterdata) {
-                if (e.getUser() == null) {
-                    filteredData.add(e);
-                }
-            }
-            uebungsTableView.setItems(null);
-            uebungsTableView.setItems(filteredData);
-            return;
-        } else if (customExercisesCheckbox.isSelected()) {
-            filteredData.clear();
-            for (Exercise e : masterdata) {
-                if (e.getUser() != null && e.getUser().equals(userService.getLoggedInUser())) {
-                    filteredData.add(e);
-                }
-            }
-            uebungsTableView.setItems(null);
-
-            uebungsTableView.setItems(filteredData);
-            return;
-        } else {
-            uebungsTableView.setItems(masterdata);
-        }
+//        if (defaultExercisesCheckbox.isSelected() && customExercisesCheckbox.isSelected()) {
+//            filteredData.clear();
+//            filteredData.addAll(masterdata);
+//            uebungsTableView.setItems(filteredData);
+//            return;
+//        } else if (defaultExercisesCheckbox.isSelected()) {
+//
+//            filteredData.clear();
+//            for (Exercise e : masterdata) {
+//                if (e.getUser() == null) {
+//                    filteredData.add(e);
+//                }
+//            }
+//            uebungsTableView.setItems(null);
+//            uebungsTableView.setItems(filteredData);
+//            return;
+//        } else if (customExercisesCheckbox.isSelected()) {
+//            filteredData.clear();
+//            for (Exercise e : masterdata) {
+//                if (e.getUser() != null && e.getUser().equals(userService.getLoggedInUser())) {
+//                    filteredData.add(e);
+//                }
+//            }
+//            uebungsTableView.setItems(null);
+//
+//            uebungsTableView.setItems(filteredData);
+//            return;
+//        } else {
+//            uebungsTableView.setItems(masterdata);
+//        }
 
     }
 
