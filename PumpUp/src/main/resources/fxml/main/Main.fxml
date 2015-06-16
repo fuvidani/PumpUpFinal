@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.web.*?>
@@ -146,7 +147,7 @@
             <children>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                     <children>
-                        <Button contentDisplay="LEFT" maxHeight="128.0" maxWidth="1.7976931348623157E308" minHeight="128.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="128.0" prefWidth="300.0" styleClass="trainingBtn" text="Training">
+                        <Button contentDisplay="LEFT" maxHeight="128.0" maxWidth="1.7976931348623157E308" minHeight="128.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="128.0" prefWidth="300.0" styleClass="trainingBtn" text="zum Training">
                             <font>
                                 <Font size="24.0" />
                             </font>
@@ -154,7 +155,6 @@
                                 <Insets />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="trainingPicBtn" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="128.0" styleClass="trainginPic" text=" " />
                     </children>
                     <HBox.margin>
                         <Insets left="600.0" />
