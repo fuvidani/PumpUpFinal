@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.calendar.WorkoutplanExport;
@@ -72,6 +73,25 @@ public class WorkoutPlanToCalendarController extends Controller {
     public void initController() {
         setUpListView();
         plan_interClassCommunication = ((WorkoutPlansController) this.getParentController()).getPlan_interClassCommunication();
+
+        dateField.setValue(LocalDate.now());
+        dateField.setShowWeekNumbers(false);
+
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isBefore(LocalDate.now())) {
+                            setDisable(true);
+                        }
+                    }
+                };
+            }
+        };
+        dateField.setDayCellFactory(dayCellFactory);
 
         if (plan_interClassCommunication != null) {
             txtName.setText(plan_interClassCommunication.getName());
