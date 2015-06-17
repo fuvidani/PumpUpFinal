@@ -5,27 +5,21 @@
 
     <!-- ###### Database beans ###### -->
 
-
-    <bean id="h2Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start"
-          destroy-method="stop" depends-on="h2WebServer" scope="singleton">
-        <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092"/>
-    </bean>
-    <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start"
-          destroy-method="stop" scope="singleton">
-        <constructor-arg value="-web,-webAllowOthers,-webPort,8082"/>
-    </bean>
-
     <bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"
-          scope="singleton" init-method="openConnection" destroy-method="closeConnection" depends-on="h2Server">
-        <!--<bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"-->
-        <!--scope="singleton" init-method="openConnection" destroy-method="closeConnection">-->
-        <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"/>
+          scope="singleton" init-method="openConnection" destroy-method="closeConnection">
+        <constructor-arg name="path" value="jdbc:h2:mem:pumpup"/>
         <constructor-arg name="user" value="sa"/>
         <constructor-arg name="password" value=""/>
     </bean>
 
 
     <!--  ###### User beans ###### -->
+
+    <bean id="userDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2UserDAOImpl"
+          scope="singleton">
+        <constructor-arg name="handler" ref="dbConnector"/>
+    </bean>
+
     <bean id="mockedUserDAO" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="sepm.ss15.grp16.persistence.dao.user.impl.H2UserDAOImpl" />
     </bean>
@@ -33,6 +27,11 @@
     <bean id="userService" class="sepm.ss15.grp16.service.user.impl.UserServiceImpl"
           scope="singleton">
         <constructor-arg name="userDAO" ref="mockedUserDAO"/>
+    </bean>
+
+    <bean id="weightHistoryDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2WeightHistoryDAOImpl"
+          scope="singleton">
+        <constructor-arg name="handler" ref="dbConnector"/>
     </bean>
 
     <bean id="mockedWeightHistoryDAO" class="org.mockito.Mockito" factory-method="mock">
@@ -44,6 +43,11 @@
         <constructor-arg name="weightHistoryDAO" ref="mockedWeightHistoryDAO"/>
     </bean>
 
+    <bean id="bodyfatHistoryDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2BodyfatHistoryDAOImpl"
+          scope="singleton">
+        <constructor-arg name="handler" ref="dbConnector"/>
+    </bean>
+
     <bean id="mockedBodyfatHistoryDAO" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="sepm.ss15.grp16.persistence.dao.user.impl.H2BodyfatHistoryDAOImpl" />
     </bean>
@@ -51,6 +55,11 @@
     <bean id="bodyfatHistoryService" class="sepm.ss15.grp16.service.user.impl.BodyfatHistoryServiceImpl"
           scope="singleton">
         <constructor-arg name="bodyfatHistoryDAO" ref="mockedBodyfatHistoryDAO"/>
+    </bean>
+
+    <bean id="pictureHistoryDAO" class="sepm.ss15.grp16.persistence.dao.user.impl.H2PictureHistoryDAOImpl"
+          scope="singleton">
+        <constructor-arg name="handler" ref="dbConnector"/>
     </bean>
 
     <bean id="mockedPictureHistoryDAO" class="org.mockito.Mockito" factory-method="mock">
