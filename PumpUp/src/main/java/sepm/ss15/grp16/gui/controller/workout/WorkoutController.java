@@ -139,6 +139,8 @@ public class WorkoutController extends Controller {
                 }, new KeyValue[0]));
 
         timeSeconds = new SimpleIntegerProperty();
+        timeSeconds.addListener((observable1, oldValue1, newValue1) -> motivationModul.play(newValue1.intValue(), activeExercise().getType())
+        );
         counterLable.textProperty().bind(timeSeconds.asString());
 
         counterTimeline = new Timeline();
@@ -230,6 +232,7 @@ public class WorkoutController extends Controller {
         imageTimeline.play();
     }
 
+
     private void runExercise() {
         status = Status.RUNNUNG;
         pauseButton.setText("Stop");
@@ -274,9 +277,9 @@ public class WorkoutController extends Controller {
             pauseButton.setText("Start");
             pauseButton.getStyleClass().clear();
             pauseButton.getStyleClass().add("startBtn");
-            counterTimeline.getKeyFrames().clear();
-            exerciseLabel.setText(activeExercise().getExercise().getName());
+            exerciseLabel.setText(activeExercise().getRepresentationText());
 
+            counterTimeline.getKeyFrames().clear();
 
             try {
                 reloadImages();
@@ -290,6 +293,7 @@ public class WorkoutController extends Controller {
                 counterTimeline.getKeyFrames().add(
                         new KeyFrame(Duration.seconds(activeExercise().getRepeat() + 1),
                                 new KeyValue(timeSeconds, 0), new KeyValue(circleCounter.lengthProperty(), 0)));
+
             } else {
                 timeSeconds.set(0);
                 counterTimeline.getKeyFrames().add(

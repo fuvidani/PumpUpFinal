@@ -2,6 +2,7 @@ package sepm.ss15.grp16.gui.controller.workout;
 
 import javafx.scene.media.MediaPlayer;
 import sepm.ss15.grp16.entity.music.Playlist;
+import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.music.MusicService;
 
@@ -46,5 +47,10 @@ public class MotivatonModul {
             //wait
         }
         MusicPlayerController.raiseVol();
+    }
+
+    public void play(int i, ExerciseSet.SetType setType)
+    {
+        System.out.println(i + " " + setType);
     }
 }
