@@ -35,4 +35,31 @@
         <constructor-arg name="userDAO" ref="mockedUserDAO"/>
     </bean>
 
+    <bean id="mockedWeightHistoryDAO" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="sepm.ss15.grp16.persistence.dao.user.impl.H2WeightHistoryDAOImpl" />
+    </bean>
+
+    <bean id="weightHistoryService" class="sepm.ss15.grp16.service.user.impl.WeightHistoryServiceImpl"
+          scope="singleton">
+        <constructor-arg name="weightHistoryDAO" ref="mockedWeightHistoryDAO"/>
+    </bean>
+
+    <bean id="mockedBodyfatHistoryDAO" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="sepm.ss15.grp16.persistence.dao.user.impl.H2BodyfatHistoryDAOImpl" />
+    </bean>
+
+    <bean id="bodyfatHistoryService" class="sepm.ss15.grp16.service.user.impl.BodyfatHistoryServiceImpl"
+          scope="singleton">
+        <constructor-arg name="bodyfatHistoryDAO" ref="mockedBodyfatHistoryDAO"/>
+    </bean>
+
+    <bean id="mockedPictureHistoryDAO" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="sepm.ss15.grp16.persistence.dao.user.impl.H2PictureHistoryDAOImpl" />
+    </bean>
+
+    <bean id="pictureHistoryService" class="sepm.ss15.grp16.service.user.impl.PictureHistoryServiceImpl"
+          scope="singleton">
+        <constructor-arg name="pictureHistoryDAO" ref="mockedPictureHistoryDAO"/>
+    </bean>
+
 </beans>

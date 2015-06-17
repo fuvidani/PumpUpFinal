@@ -37,7 +37,7 @@ public abstract class AbstractServiceTestMockito<T extends DTO> {
         getService().create(dto);
     }
 
-    public void updateTest(T dto) throws Exception {
+    protected void updateTest(T dto) throws Exception {
         LOGGER.info("updateValid: " + dto);
         when(getMockedDAO().update(dto)).thenReturn(dto);
         assertEquals(getService().update(dto), dto);
@@ -62,11 +62,13 @@ public abstract class AbstractServiceTestMockito<T extends DTO> {
     }
 
     protected void findAllTest(List<T> dtoList) throws Exception {
+        LOGGER.info("findAll: " + dtoList);
         when(getMockedDAO().findAll()).thenReturn(dtoList);
         assertEquals(getService().findAll(), dtoList);
     }
 
     protected void findAllTestFail() throws Exception {
+        LOGGER.info("findAllWithException");
         when(getMockedDAO().findAll()).thenThrow(PersistenceException.class);
         getService().findAll();
     }

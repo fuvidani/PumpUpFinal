@@ -14,7 +14,10 @@ import sepm.ss15.grp16.service.user.AbstractUserServiceTest;
 import sepm.ss15.grp16.service.user.UserService;
 
 /**
- * Created by michaelsober on 05.05.15.
+ * This class is used to test the UserServiceImpl
+ *
+ * @author Michael Sober
+ * @version 1.0
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring-config-test.xml")
