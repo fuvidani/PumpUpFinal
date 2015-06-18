@@ -57,7 +57,6 @@ public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
         setService(categoryService);
         setService(userService);
         setService(weightHistoryService);
-        dbConnector.activateTestMode();
     }
 
     /**
@@ -69,7 +68,6 @@ public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
      */
     @After
     public void tearDown() throws DBException, SQLException {
-        dbConnector.deactivateTestMode();
     }
 
 

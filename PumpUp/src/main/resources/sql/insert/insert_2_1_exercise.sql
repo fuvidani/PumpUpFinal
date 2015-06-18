@@ -1,61 +1,3 @@
-DROP TABLE IF EXISTS categoryName;
-DROP TABLE IF EXISTS gif;
-DROP TABLE IF EXISTS exercise_category;
-DROP TABLE IF EXISTS exercise;
-DROP TABLE IF EXISTS category;
-DROP SEQUENCE IF EXISTS exercise_seq;
-DROP SEQUENCE IF EXISTS category_seq;
-DROP SEQUENCE IF EXISTS categoryName_seq;
-DROP SEQUENCE IF EXISTS gif_seq;
-
-
-CREATE TABLE IF NOT EXISTS categoryName (
-  id   INTEGER NOT NULL,
-  name VARCHAR,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS category (
-  id   INTEGER NOT NULL,
-  name VARCHAR NOT NULL,
-  type INTEGER REFERENCES categoryName (id), --0 for categories, 1 muscle group, 2 equipment
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS exercise (
-  id         INTEGER NOT NULL,
-  name       VARCHAR NOT NULL,
-  descripion VARCHAR,
-  calories   DOUBLE,
-  videolink  VARCHAR,
-  userid     INTEGER,
-  isdeleted  BOOLEAN NOT NULL,
-  FOREIGN KEY (userid) REFERENCES user (user_id),
-  PRIMARY KEY (id)
-);
-
-
-CREATE TABLE IF NOT EXISTS exercise_category (
-  exerciseid INT NOT NULL REFERENCES exercise (id),
-  categoryid INT NOT NULL REFERENCES category (id),
-  PRIMARY KEY (exerciseid, categoryid)
-);
-
-CREATE TABLE IF NOT EXISTS gif (
-  id         INTEGER NOT NULL,
-  exerciseid INTEGER NOT NULL,
-  location   VARCHAR NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (exerciseid) REFERENCES exercise (id)
-);
-
-
-CREATE SEQUENCE IF NOT EXISTS exercise_seq START WITH 40 INCREMENT BY 1;
-CREATE SEQUENCE IF NOT EXISTS gif_seq START WITH 75 INCREMENT BY 1;
-CREATE SEQUENCE IF NOT EXISTS category_seq START WITH 22 INCREMENT BY 1;
-CREATE SEQUENCE IF NOT EXISTS categoryName_seq START WITH 3 INCREMENT BY 1;
-
-
 MERGE INTO categoryname VALUES (0, 'Kategorie'), (1, 'Muskelgruppe'), (2, 'Geräte');
 
 MERGE INTO category VALUES (0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0), (3, 'Flexibilität', 0),
@@ -79,13 +21,13 @@ MERGE INTO exercise KEY (id) VALUES
   Strecken Sie die Arme seitlich aus und ballen Sie Ihre Hände zu Fäusten, die Daumen zeigen nach oben.
   Heben Sie nun die Schultern und den Kopf vom Boden an und ziehen Sie die gestreckten Arme so weit wie möglich nach oben.
   Dabei nähern sich Ihre Schulterblätter an.', 0.3, 'armup.mp4', NULL, FALSE),
-  (3, 'Kniebeuge', 'Wichtig. Die Knie beim Hochgehen nicht ganz durch-strecken sondern etwas tief bleiben.', 0.75, 'kniebeugen.mp4', NULL, FALSE),
+  (3, 'Kniebeuge', 'Wichtig. Die Knie beim Hochgehen nicht ganz durchstrecken sondern etwas tief bleiben.', 0.75, 'kniebeugen.mp4', NULL, FALSE),
   (4, 'Crunch it UP', 'Legen Sie sich auf den Rücken. Stellen Sie die Beine angewinkelt hüftbreit auf
  und haken Sie die Füße unter einem Gegenstand (Bett, Sofa, Stuhl, Regal, Couchtisch etc.) ein.
  Verschränken Sie die Arme vor der Brust und halten Sie sie fest an den Körper gepresst. Jetzt spannen Sie die Bauchmuskeln fest an,
  lösen Kopf und Schultern vom Boden und kommen schließlich langsam mit dem gesamten Oberkörper nach oben, bis die Ellbogen die Oberschenkel
  nahe der Hüften berühren. Senken Sie sich anschließend wieder langsam ab, bis die Schulterblätter den Boden berühren.
- Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauch-muskeln angespannt.', 0.5, 'crunch.mp4', NULL, FALSE),
+ Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauchmuskeln angespannt.', 0.5, 'crunch.mp4', NULL, FALSE),
   (5, 'Strandschere', 'Legen Sie sich mit gestreckten Beinen auf die linke Seite und stützen Sie den Kopf mit dem linken Arm ab.
   Die andere Hand stützen Sie vor Ihrer Brust auf. Heben Sie dann Ihr rechtes Bein so hoch wie möglich an und halten Sie es gestreckt für
   drei Sekunden in der', 0.2, 'strandschere.mp4', NULL, FALSE),
@@ -313,9 +255,3 @@ MERGE INTO gif KEY (id) VALUES
   (71, 12, 'img_ex_boxen_tritte.JPG'),
   --Ausfallschritt (2. Bild)
   (72, 8, 'img_ex_ausfallschritt_rechts.jpg');
-
-
-
-
-
-

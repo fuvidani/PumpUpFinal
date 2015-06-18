@@ -15,7 +15,7 @@ public interface DBHandler {
      *
      * @throws PersistenceException rising from the communication process with the database (SQLException, FileBotFoundException e.g.)
      */
-    public void openConnection() throws DBException;
+    void openConnection() throws DBException;
 
     /**
      * returns the regular connection of the db-handler
@@ -23,28 +23,14 @@ public interface DBHandler {
      *
      * @return the connection, if opened, otherwise NULL
      */
-    public Connection getConnection() throws DBException;
+    Connection getConnection() throws DBException;
 
     /**
      * closes the regular connection, should be called after openConnection and before program end
      *
      * @throws PersistenceException rising from the communication process with the database (SQLException, FileBotFoundException e.g.)
      */
-    public void closeConnection() throws DBException;
-
-    /**
-     * activate the testmode for testing pupose (e.g. with testing data or no autocommit)
-     *
-     * @throws PersistenceException rising from the communication process with the database (SQLException, FileBotFoundException e.g.)
-     */
-    public void activateTestMode() throws DBException;
-
-    /**
-     * deactivate the testmode for testing pupose (e.g. with rollback)
-     *
-     * @throws PersistenceException rising from the communication process with the database (SQLException, FileBotFoundException e.g.)
-     */
-    public void deactivateTestMode() throws DBException;
+    void closeConnection() throws DBException;
 
 
 }

@@ -48,12 +48,10 @@ public class H2CalendarDAOTestImpl extends AbstractCalendarDAOTest {
 
     @Before
     public void setUp() throws DBException, SQLException {
-        dbConnector.activateTestMode();
     }
 
     @After
     public void tearDown() throws DBException, SQLException {
-        dbConnector.deactivateTestMode();
     }
 
     @Override
