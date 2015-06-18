@@ -1,9 +1,5 @@
 package sepm.ss15.grp16.gui.controller.workoutPlans;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,6 +17,7 @@ import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +27,12 @@ import java.util.Optional;
  * When the generated workout plan has arrived it is instantly displayed and the user can
  * save the plan, dismiss it or export it to the own calendar.
  */
-public class GeneratedWorkoutPlanResultController extends Controller{
+public class GeneratedWorkoutPlanResultController extends Controller {
 
 
     private static final Logger LOGGER = LogManager.getLogger();
     private Trainingsplan generatedWorkoutPlan;
     private TrainingsplanService trainingsplanService;
-    private BooleanProperty DTOArrived = new SimpleBooleanProperty();
     private boolean saved;
 
     @FXML
@@ -51,13 +47,6 @@ public class GeneratedWorkoutPlanResultController extends Controller{
     @Override
     public void initController() {
         saved = false;
-        DTOArrived.addListener(new ChangeListener<Boolean>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                displayWorkoutPlan();
-            }
-        });
         listView.setCellFactory(new Callback<ListView<TrainingsSession>, ListCell<TrainingsSession>>() {
             @Override
             public ListCell<TrainingsSession> call(ListView<TrainingsSession> p) {
@@ -101,10 +90,10 @@ public class GeneratedWorkoutPlanResultController extends Controller{
                 };
             }
         });
-        WorkoutPlansController controller = (WorkoutPlansController)this.getParentController();
+        WorkoutPlansController controller = (WorkoutPlansController) this.getParentController();
         this.generatedWorkoutPlan = controller.getGeneratedWorkoutPlan();
         goalLabel.setText(controller.getSelectedGoal());
-        this.setFlag(true);
+        displayWorkoutPlan();
         LOGGER.info("GeneratedWorkoutPlanResult successfully initialized!");
 
     }
@@ -133,7 +122,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
             LOGGER.error("Service threw exception, catched in GUI. Real reason: " + e.toString());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
-            alert.setHeaderText("Fehler beim Generieren");
+            alert.setHeaderText("Fehler beim Speichern.");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
             return;
@@ -178,20 +167,10 @@ public class GeneratedWorkoutPlanResultController extends Controller{
         }
     }
 
-    /**
-     * Sets the boolean property which signals that the DTO has
-     * successfully arrived.
-     *
-     * @param val a boolean variable to trigger the listener
-     */
-    public void setFlag(boolean val) {
-        DTOArrived.set(val);
-    }
-
 
     /**
-     * This method is automatically called by the listener when the generated workout routine
-     * has arrived. It simply displays the workout routine with all its sessions and exercises.
+     * This method is automatically called at the initialization of the controller.
+     * It simply displays the workout routine with all its sessions and exercises.
      */
     private void displayWorkoutPlan() {
         List<TrainingsSession> sessions = generatedWorkoutPlan.getTrainingsSessions();
@@ -208,19 +187,19 @@ public class GeneratedWorkoutPlanResultController extends Controller{
     }
 
     /**
-     * increase the difficulty of the given plan by the factor of 0.25
+     * Increases the difficulty of the given plan by the factor of 0.25
      */
     @FXML
-    public void increaseDifficultyClicked(){
+    public void increaseDifficultyClicked() {
         trainingsplanService.increaseDifficulty(generatedWorkoutPlan);
         displayWorkoutPlan();
     }
 
     /**
-     * decrease the difficulty of the given plan by the factor of 0.25
+     * Decreases the difficulty of the given plan by the factor of 0.25
      */
     @FXML
-    public void decreaseDifficultyClicked(){
+    public void decreaseDifficultyClicked() {
         trainingsplanService.decreaseDifficulty(generatedWorkoutPlan);
         displayWorkoutPlan();
     }

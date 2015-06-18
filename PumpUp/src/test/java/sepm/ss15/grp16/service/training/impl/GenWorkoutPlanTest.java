@@ -45,6 +45,12 @@ public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
     @Autowired
     private DBHandler dbConnector;
 
+    /**
+     * Sets upt the testing environment.
+     *
+     * @throws DBException
+     * @throws SQLException
+     */
     @Before
     public void setUp() throws DBException, SQLException {
         setService(workoutplanService);
@@ -54,6 +60,13 @@ public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
         dbConnector.activateTestMode();
     }
 
+    /**
+     * This method is executed after each test.
+     * Runs a rollback on the data source and closes it.
+     *
+     * @throws DBException
+     * @throws SQLException
+     */
     @After
     public void tearDown() throws DBException, SQLException {
         dbConnector.deactivateTestMode();

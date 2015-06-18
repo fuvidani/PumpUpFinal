@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import sepm.ss15.grp16.persistence.database.DBHandler;
-import sepm.ss15.grp16.service.user.AbstractBodyfatHistoryService;
+import sepm.ss15.grp16.service.user.AbstractBodyfatHistoryServiceTest;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 
@@ -21,7 +21,7 @@ import sepm.ss15.grp16.service.user.UserService;
 @ContextConfiguration("classpath:spring-config.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
-public class AbstractBodyfatHistoryServiceImplTest extends AbstractBodyfatHistoryService {
+public class AbstractBodyfatHistoryServiceImplTest extends AbstractBodyfatHistoryServiceTest {
 
     @Autowired
     private DBHandler dbConnector;

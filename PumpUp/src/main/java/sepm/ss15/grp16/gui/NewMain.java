@@ -2,7 +2,6 @@ package sepm.ss15.grp16.gui;
 
 import com.github.sarxos.webcam.Webcam;
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +12,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class NewMain extends Application {
     private static final Logger LOGGER = LogManager.getLogger(NewMain.class);
-    private  static ClassPathXmlApplicationContext context = null;
+    private static ClassPathXmlApplicationContext context = null;
+
     public static void main(String[] args) {
         try {
             Webcam.getDefault();
@@ -28,7 +28,7 @@ public class NewMain extends Application {
 
     public void start(final Stage primaryStage) throws Exception {
         LOGGER.info("starting application");
-       context = new ClassPathXmlApplicationContext("spring-config.xml");
+        context = new ClassPathXmlApplicationContext("spring-config.xml");
 
         FrameWindow mainFrame = new FrameWindow(context, primaryStage, PageEnum.Login);
 

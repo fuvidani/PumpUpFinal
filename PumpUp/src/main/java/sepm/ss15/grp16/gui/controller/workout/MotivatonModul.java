@@ -18,6 +18,7 @@ public class MotivatonModul {
     private MusicService musicService;
 
     private Playlist playlist;
+    private Random random = new Random();
 
     public MotivatonModul(MusicService musicService) {
         this.musicService = musicService;
@@ -35,7 +36,6 @@ public class MotivatonModul {
     }
 
     public void play() {
-        Random random = new Random();
         List<MediaPlayer> players = playlist.getPlayers();
         int randomNum = random.nextInt(players.size());
         MediaPlayer player = players.get(randomNum);
@@ -51,6 +51,13 @@ public class MotivatonModul {
 
     public void play(int i, ExerciseSet.SetType setType)
     {
-        System.out.println(i + " " + setType);
+        if(setType == ExerciseSet.SetType.repeat && i > 0 && i % 10 == 0)
+        {
+            play();
+        }
+        else if(setType == ExerciseSet.SetType.repeat && i > 5 && i % 10 == 0)
+        {
+            play();
+        }
     }
 }

@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * Created by David on 2015.05.15..
+ * <p>
+ * Implementation of CalendarDAO. CRUD methods for accessing H2 database.
  */
 public class H2CalendarDAOImpl implements CalendarDAO {
 
@@ -32,11 +34,11 @@ public class H2CalendarDAOImpl implements CalendarDAO {
 
         try {
             this.connection = handler.getConnection();
-
-            this.createStm = connection.prepareStatement("INSERT INTO appointment VALUES (?,?,?,?,?)");
+            
+            this.createStm = connection.prepareStatement("INSERT INTO appointment VALUES (?,?,?,?,?,?)");
             this.findAllStm = connection.prepareStatement("SELECT * FROM appointment WHERE isDeleted = FALSE");
             this.searchByIDStm = connection.prepareStatement("SELECT * FROM appointment WHERE appointment_id = ?");
-            this.updateStm = connection.prepareStatement("UPDATE appointment SET datum = ?, session_id = ?, user_id = ?, isDeleted = ? WHERE appointment_id = ?");
+            this.updateStm = connection.prepareStatement("UPDATE appointment SET datum = ?, session_id = ?, user_id = ?, isTrained = ?, isDeleted = ? WHERE appointment_id = ?");
             this.deleteStm = connection.prepareStatement("UPDATE appointment SET isDeleted = TRUE WHERE appointment_id = ?");
 
         } catch (SQLException e) {
@@ -72,7 +74,8 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             createStm.setDate(2, new java.sql.Date(appointment.getDatum().getTime()));
             createStm.setInt(3, appointment.getSession_id());
             createStm.setInt(4, appointment.getUser_id());
-            createStm.setBoolean(5, appointment.getIsDeleted());
+            createStm.setBoolean(5, appointment.getIsTrained());
+            createStm.setBoolean(6, appointment.getIsDeleted());
 
             createStm.execute();
         } catch (SQLException e) {
@@ -98,13 +101,18 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             List<Appointment> result = new ArrayList<>();
 
             while (rs_findAll.next()) {
-                Appointment appointment = new Appointment(rs_findAll.getInt(1), rs_findAll.getDate(2), rs_findAll.getInt(3), rs_findAll.getInt(4), rs_findAll.getBoolean(5));
+                Appointment appointment = new Appointment(rs_findAll.getInt(1), rs_findAll.getDate(2), rs_findAll.getInt(3), rs_findAll.getInt(4), rs_findAll.getBoolean(5), rs_findAll.getBoolean(6));
 
                 appointment.setSessionName(trainingsSessionDAO.searchByID(appointment.getSession_id()).getName());
                 String setNames = "";
-                for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()) {
-                    setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
+
+                if (trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets() != null) {
+                    for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()) {
+                        setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
+                    }
                 }
+
+
                 appointment.setSetNames(setNames);
 
                 appointment.setSession(trainingsSessionDAO.searchByID(appointment.getSession_id()));
@@ -137,7 +145,7 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             rs_searchByID.next();
 
             Appointment foundAppointment = null;
-            foundAppointment = new Appointment(rs_searchByID.getInt(1), rs_searchByID.getDate(2), rs_searchByID.getInt(3), rs_searchByID.getInt(4), rs_searchByID.getBoolean(5));
+            foundAppointment = new Appointment(rs_searchByID.getInt(1), rs_searchByID.getDate(2), rs_searchByID.getInt(3), rs_searchByID.getInt(4), rs_searchByID.getBoolean(5), rs_searchByID.getBoolean(6));
 
             if (foundAppointment != null) {
                 foundAppointment.setSessionName(trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getName());
@@ -179,8 +187,9 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             updateStm.setDate(1, new java.sql.Date(appointment.getDatum().getTime()));
             updateStm.setInt(2, appointment.getSession_id());
             updateStm.setInt(3, appointment.getUser_id());
-            updateStm.setBoolean(4, appointment.getIsDeleted());
-            updateStm.setInt(5, appointment.getId());
+            updateStm.setBoolean(4, appointment.getIsTrained());
+            updateStm.setBoolean(5, appointment.getIsDeleted());
+            updateStm.setInt(6, appointment.getId());
 
             updateStm.executeUpdate();
 
@@ -219,6 +228,11 @@ public class H2CalendarDAOImpl implements CalendarDAO {
         LOGGER.info("Appointment successfully deleted in appointment table.");
     }
 
+    /**
+     * Sets the trainingsessionDAO object for accessing the sets.
+     *
+     * @param trainingsSessionDAO
+     */
     public void setSessionDAO(TrainingsSessionDAO trainingsSessionDAO) {
         this.trainingsSessionDAO = trainingsSessionDAO;
     }

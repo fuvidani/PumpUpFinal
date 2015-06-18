@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS appointment (
   datum          DATE    NOT NULL,
   session_id     INTEGER NOT NULL REFERENCES TrainingsSession (ID_Session),
   user_id        INTEGER NOT NULL REFERENCES user (user_id),
+  isTrained      BOOLEAN DEFAULT FALSE,
   isDeleted      BOOLEAN DEFAULT FALSE
 )

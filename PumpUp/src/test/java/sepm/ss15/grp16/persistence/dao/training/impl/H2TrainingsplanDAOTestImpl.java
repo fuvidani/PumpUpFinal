@@ -45,12 +45,20 @@ public class H2TrainingsplanDAOTestImpl extends AbstractTrainingsPlanDAOTest {
 
     @Before
     public void setUp() throws DBException, SQLException {
-        dbConnector.activateTestMode();
+        try {
+            dbConnector.getConnection().setAutoCommit(true);
+        } catch (DBException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @After
     public void tearDown() throws DBException, SQLException {
-        dbConnector.deactivateTestMode();
+        try {
+            dbConnector.getConnection().rollback();
+        } catch (DBException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

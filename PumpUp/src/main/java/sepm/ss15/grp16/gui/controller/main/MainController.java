@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -27,6 +26,7 @@ import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.ImageLoader;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.calendar.helper.EventScriptRunner;
 import sepm.ss15.grp16.gui.controller.workout.WorkoutstartController;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -35,7 +35,6 @@ import sepm.ss15.grp16.service.user.PictureHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
 
-import java.io.File;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -79,7 +78,7 @@ public class MainController extends Controller {
     @FXML
     private Button trainingPicBtn = new Button();
 
-    private  Appointment executionAppointment;
+    private Appointment executionAppointment;
 
 
     public void setUserService(UserService userService) {
@@ -103,13 +102,16 @@ public class MainController extends Controller {
         this.updateUserData();
 
         /**
-         * #######      CALENDAR - don't touch this      #######
+         * #######      CALENDAR      #######
          */
         engine = webView.getEngine();
-        String path = System.getProperty("user.dir");
-        path = path.replace("\\", "/");
-        path += "/src/main/java/sepm/ss15/grp16/gui/controller/Calendar/html/maincalendar.html";
-        engine.load("file:///" + path);
+        try {
+            String path = getClass().getClassLoader().getResource("calendar/html/maincalendar.html").toURI().getPath();
+            engine.load("file:///" + path);
+        } catch (URISyntaxException e) {
+            LOGGER.error(e);
+            e.printStackTrace();
+        }
 
         engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
@@ -118,30 +120,10 @@ public class MainController extends Controller {
                 JSObject script = (JSObject) engine.executeScript("window");
                 script.setMember("drag", calendarService);
 
-                LOGGER.debug("Execute javascript: addEvent..");
-                // Java to JS, function to create single event
-                engine.executeScript("function addEvent(id, title, start, sets) {\n" +
-                        "var eventData = {\n" +
-                        "   id: id,\n" +
-                        "   title: title,\n" +
-                        "   start: start,\n" +
-                        "   allDay: true,\n" +
-                        "   url: sets\n" +
-                        "};\n" +
-                        "$('#calendar').fullCalendar('renderEvent', eventData, true);\n" +
-                        "}");
+                EventScriptRunner scripts = new EventScriptRunner(engine);
+                scripts.runScripts();
             }
-
-            LOGGER.debug("Execute javascript addListEvents..");
-            // Java to JS, send JSON list
-            engine.executeScript("function addListEvents(result) {\n" +
-                    "for(var i=0; i<result.length; i++){\n" +
-                    "   addEvent(result[i].appointment_id, result[i].sessionName, result[i].datum, result[i].setNames);" +
-                    "};\n" +
-                    "}");
-
             refreshCalendar();
-
         });
         /**
          * #######      END CALENDAR      #######
@@ -155,16 +137,14 @@ public class MainController extends Controller {
         try {
             executionAppointment = calendarService.getCurrentAppointment();
 
-            if(executionAppointment != null) {
+            if (executionAppointment != null) {
                 mainFrame.openDialog(PageEnum.Workoutstart);
                 WorkoutstartController workoutstartController = (WorkoutstartController) getChildController();
 
-                if(workoutstartController.started()) {
+                if (workoutstartController.started()) {
                     mainFrame.navigateToChild(PageEnum.LiveMode);
                 }
-            }
-            else
-            {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Keine \u00dcbung zur Ausf\u00fchrung!");
                 alert.setContentText("Keine \u00dcbung zur Ausf\u00fchrung!");
@@ -177,9 +157,8 @@ public class MainController extends Controller {
         }
     }
 
-    public Appointment getExecutionAppointment()
-    {
-        return  executionAppointment;
+    public Appointment getExecutionAppointment() {
+        return executionAppointment;
     }
 
     public void updateUserData() {
@@ -235,7 +214,7 @@ public class MainController extends Controller {
         makeUserChart();
     }
 
-    public void updateImage(){
+    public void updateImage() {
         LOGGER.info("Updating image in Main");
         try {
             PictureHistory actualPictureHistory = pictureHistoryService.getActualPicture(userService.getLoggedInUser().getUser_id());
@@ -243,7 +222,7 @@ public class MainController extends Controller {
             if (actualPictureHistory != null) {
                 userImgView.setImage(ImageLoader.loadImage(this.getClass(), actualPictureHistory.getLocation()));
             }
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             LOGGER.error(e.getMessage());
         } catch (URISyntaxException e) {
             LOGGER.error(e.getMessage());
@@ -292,37 +271,6 @@ public class MainController extends Controller {
         }
     }
 
-
-
-    /** a node which displays a value on hover, but is otherwise empty */
-    class HoveredThresholdNode extends StackPane {
-        HoveredThresholdNode(int value) {
-            setPrefSize(8, 8);
-            final Label label = createDataThresholdLabel(value);
-            setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent mouseEvent) {
-                    getChildren().setAll(label);
-                    setCursor(Cursor.NONE);
-                    toFront();
-                }
-            });
-            setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent mouseEvent) {
-                    getChildren().clear();
-                    setCursor(Cursor.CROSSHAIR);
-                }
-            });
-        }
-        private Label createDataThresholdLabel(int value) {
-            final Label label = new Label(value + " kg");
-            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
-            label.setTextFill(Color.BLACK);
-            label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-            return label;
-        }
-    }
-
-
     public void refreshCalendar() {
         engine.executeScript("$('#calendar').fullCalendar('removeEvents');");
 
@@ -345,5 +293,43 @@ public class MainController extends Controller {
 
     public void addAppointmentList(Appointment appointment) {
         this.appointmentList.add(appointment);
+    }
+
+    /**
+     * a node which displays a value on hover, but is otherwise empty
+     */
+    class HoveredThresholdNode extends StackPane {
+        HoveredThresholdNode(int value) {
+            setPrefSize(8, 8);
+            final Label label = createDataThresholdLabel(value);
+            setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().setAll(label);
+                    setCursor(Cursor.NONE);
+                    toFront();
+                }
+            });
+            setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().clear();
+                    setCursor(Cursor.CROSSHAIR);
+                }
+            });
+        }
+
+        private Label createDataThresholdLabel(int value) {
+            final Label label = new Label(value + " kg");
+            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+            label.setTextFill(Color.BLACK);
+            label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+            return label;
+        }
+    }
+
+    @FXML
+    public void bodyfatHelpClicked(){
+        mainFrame.openDialog(PageEnum.BodyfatHelp);
     }
 }
