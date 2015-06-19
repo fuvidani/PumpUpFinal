@@ -18,8 +18,10 @@ import sepm.ss15.grp16.gui.controller.calendar.helper.EventScriptRunner;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -103,12 +105,16 @@ public class CalendarController extends Controller implements Initializable {
                 alert.showAndWait();
             }else {
 
+                URL url = new URL("http://www.google.com");
+                URLConnection connection = url.openConnection();
+                connection.connect();
+
                 calendarService.exportToGoogle();
-                //Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                //alert.setTitle("Information");
-                //alert.setHeaderText("Termine exportiert.");
-                //alert.setContentText("Die Termine sind erfolgreich ins Google Calendar exportiert.");
-                //alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText("Termine exportiert.");
+                alert.setContentText("Die Termine sind erfolgreich ins Google Calendar exportiert.");
+                alert.showAndWait();
                 LOGGER.info("Events successfully exported to Google.");
 
             }
@@ -118,6 +124,13 @@ public class CalendarController extends Controller implements Initializable {
             alert.setTitle("Fehler");
             alert.setHeaderText("Internal Fehler.");
             alert.setContentText("Es ist leider ein Fehler aufgetreten.");
+            alert.showAndWait();
+        } catch (IOException e) {
+            LOGGER.info("Failed to open a connection, reason: " + e.getMessage());;
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehler beim Öffnen des Browsers");
+            alert.setContentText("Es konnte keine Internetverbindung hergestellt werden, somit können Sie leider derzeit Facebook nicht erreichen.");
             alert.showAndWait();
         }
     }
