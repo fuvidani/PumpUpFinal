@@ -113,7 +113,7 @@ public class CalendarController extends Controller implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText("Termine exportiert.");
-                alert.setContentText("Die Termine sind erfolgreich ins Google Calendar exportiert.");
+                alert.setContentText("Die Termine sind erfolgreich in Google Calendar exportiert.");
                 alert.showAndWait();
                 LOGGER.info("Events successfully exported to Google.");
 
@@ -130,7 +130,7 @@ public class CalendarController extends Controller implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehler beim Öffnen des Browsers");
-            alert.setContentText("Es konnte keine Internetverbindung hergestellt werden, somit können Sie leider derzeit Facebook nicht erreichen.");
+            alert.setContentText("Es konnte keine Internetverbindung hergestellt werden, somit können Sie leider derzeit Google Calendar nicht erreichen.");
             alert.showAndWait();
         }
     }
