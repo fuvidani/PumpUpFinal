@@ -1,0 +1,35 @@
+.backBtn {
+    -fx-background-color: #c3c4c4,
+    linear-gradient(#d6d6d6 50%, white 100%),
+    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+.backBtn:pressed {
+    -fx-background-color: rgba(135,186,215,0.7);
+    -fx-text-fill: white;
+}
+
+
+.deleteBtn {
+    -fx-background-image: url('../icons/delete_bin.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.googleBtn {
+    -fx-background-image: url('../icons/calendar.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.button:hover{
+    -fx-background-size: 90%;
+}
