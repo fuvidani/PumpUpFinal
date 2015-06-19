@@ -65,7 +65,7 @@
                             </VBox.margin>
                         </HBox>
                         <CheckBox fx:id="customExercisesCheckbox" maxHeight="1.7976931348623157E308"
-                                  maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#filterCheckboxes"
+                                  maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#filter"
                                   text="Eigene Übungen">
                             <font>
                                 <Font size="14.0"/>
@@ -75,7 +75,7 @@
                             </VBox.margin>
                         </CheckBox>
                         <CheckBox fx:id="defaultExercisesCheckbox" maxHeight="1.7976931348623157E308"
-                                  maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#filterCheckboxes"
+                                  maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#filter"
                                   text="Vorgegebene Übungen">
                             <font>
                                 <Font size="14.0"/>

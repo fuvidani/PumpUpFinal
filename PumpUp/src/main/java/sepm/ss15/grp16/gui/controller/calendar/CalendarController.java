@@ -93,7 +93,7 @@ public class CalendarController extends Controller implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Fehler");
                 alert.setHeaderText("Google Export nicht möglich.");
-                alert.setContentText("Google Export wird auf mac nicht unterstützt.");
+                alert.setContentText("Google Export ist unter MAC OSX nicht unterstützt.");
                 alert.showAndWait();
             }else if (calendarService.findAll().isEmpty()){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

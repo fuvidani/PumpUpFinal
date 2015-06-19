@@ -26,7 +26,7 @@ import java.sql.SQLException;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config.xml")
+@ContextConfiguration("classpath:spring-config-test.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2CalendarDAOTestImpl extends AbstractCalendarDAOTest {
@@ -48,12 +48,10 @@ public class H2CalendarDAOTestImpl extends AbstractCalendarDAOTest {
 
     @Before
     public void setUp() throws DBException, SQLException {
-        dbConnector.activateTestMode();
     }
 
     @After
     public void tearDown() throws DBException, SQLException {
-        dbConnector.deactivateTestMode();
     }
 
     @Override

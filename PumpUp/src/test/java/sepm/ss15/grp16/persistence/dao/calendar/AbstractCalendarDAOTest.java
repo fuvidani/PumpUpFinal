@@ -39,7 +39,7 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
 
         //dummyTrainingsPlanWithSession();
         //dummyTrainingsPlanWithSet();
-        //createValid(dummyAppointment());
+        createValid(dummyAppointment());
     }
 
     @Test
@@ -96,6 +96,7 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
     }
 
     private Appointment dummyAppointment() throws PersistenceException {
+
         Appointment appointment = new Appointment(null, new Date(), dummyTrainingsPlanWithSession().getTrainingsSessions().get(0).getId_session(), dummyUser().getUser_id(), false, false);
         return appointment;
     }
