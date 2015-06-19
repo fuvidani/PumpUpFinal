@@ -25,8 +25,8 @@
                 selectable: false,
                 selectHelper: true,
                 eventDurationEditable: false,
+                contentHeight: 200,
                 editable: true,
-                contentHeight: 'auto',
                 eventLimit: true, // allow "more" link when too many events
                 firstDay: 1,
 
@@ -41,7 +41,6 @@
                         event.color = "#3A87AD";
                     }
                     drag.updateEvent(event.id, event.start.format());
-
                 },
 
                 eventRender: function (event, element) {
@@ -49,7 +48,9 @@
                 }
 
             });
+
         });
+
 
     </script>
     <style>
@@ -62,7 +63,7 @@
         }
 
         #calendar {
-            max-width: 1300px;
+            width: 100%;
             margin: 0 auto;
         }
 
