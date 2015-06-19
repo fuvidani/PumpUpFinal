@@ -9,6 +9,7 @@ import sepm.ss15.grp16.entity.training.Gen_WorkoutplanPreferences;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.service.exception.ServiceException;
+import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.user.UserService;
@@ -64,7 +65,7 @@ public abstract class AbstractGenWorkoutPlanTest {
      */
     @Test(expected = UnsupportedOperationException.class)
     public void callUnsupportedFindAllShouldThrowException() throws ServiceException {
-        workoutplanService.create(null);
+        workoutplanService.findAll();
     }
 
     /**
@@ -75,7 +76,7 @@ public abstract class AbstractGenWorkoutPlanTest {
      */
     @Test(expected = UnsupportedOperationException.class)
     public void callUnsupportedUpdateShouldThrowException() throws ServiceException {
-        workoutplanService.create(null);
+        workoutplanService.update(null);
     }
 
     /**
@@ -86,7 +87,27 @@ public abstract class AbstractGenWorkoutPlanTest {
      */
     @Test(expected = UnsupportedOperationException.class)
     public void callUnsupportedDeleteShouldThrowException() throws ServiceException {
-        workoutplanService.create(null);
+        workoutplanService.delete(null);
+    }
+
+    /**
+     * Tests the validation method of the service.
+     * Should throw a ValidationException, because no goal is provided.
+     * @throws ValidationException
+     */
+    @Test(expected = ValidationException.class)
+    public void validateWithInvalidGoal() throws ValidationException{
+        workoutplanService.validate(new Gen_WorkoutplanPreferences(1, null, new ArrayList<>()));
+    }
+
+    /**
+     * Tests the validation method of the service.
+     * Should throw a ValidationException, because no equipment is provided.
+     * @throws ValidationException
+     */
+    @Test(expected = ValidationException.class)
+    public void validateWithInvalidEquipment() throws ValidationException{
+        workoutplanService.validate(new Gen_WorkoutplanPreferences(1, new TrainingsCategory(0, "Ausdauer"), null));
     }
 
     /**
