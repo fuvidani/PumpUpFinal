@@ -57,7 +57,7 @@ public class VideoController extends Controller {
                 player = new MediaPlayer(media);
 
                 player.setAutoPlay(false);
-                player.setMute(false);
+                player.setMute(true);
 
                 smallMediaView.setMediaPlayer(player);
                 smallMediaView.setVisible(true);
