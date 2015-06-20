@@ -140,7 +140,6 @@ public class WorkoutPlansController extends Controller {
 
             listViewSessions.setMouseTransparent(true);
             listViewSessions.setFocusTraversable(false);
-
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -394,6 +393,7 @@ public class WorkoutPlansController extends Controller {
         }
     }
 
+
     /**
      * Will be called by the GeneratedWorkoutPlanResultController to get the DTO.
      *
@@ -476,10 +476,9 @@ public class WorkoutPlansController extends Controller {
 
     @FXML
     public void embedInCalenderClicked(ActionEvent event) {
-        plan_interClassCommunication = selection;
-        mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
-        if (((WorkoutPlanToCalendarController) this.getChildController()).isFinished())
-            mainFrame.navigateToChild(PageEnum.Calendar);
+            mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
+            if (((WorkoutPlanToCalendarController) this.getChildController()).isFinished())
+                mainFrame.navigateToChild(PageEnum.Calendar);
     }
 
     @FXML
