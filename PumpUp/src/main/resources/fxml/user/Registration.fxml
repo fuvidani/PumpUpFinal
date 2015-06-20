@@ -1,103 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="registrationPane" xmlns="http://javafx.com/javafx/8"
-            fx:controller="sepm.ss15.grp16.gui.controller.user.RegistrationController">
+
+<AnchorPane fx:id="registrationPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.user.RegistrationController">
     <children>
         <HBox>
             <children>
-                <VBox layoutX="1.0" layoutY="4.0" prefHeight="415.0" prefWidth="228.0" spacing="15.0"
-                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0"
-                      AnchorPane.topAnchor="0.0">
+                <VBox layoutX="1.0" layoutY="4.0" prefHeight="415.0" prefWidth="228.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="0.0">
                     <children>
                         <VBox spacing="5.0">
                             <children>
-                                <Label text="Username*:"/>
-                                <TextField fx:id="username_textField" prefHeight="26.0" prefWidth="200.0"
-                                           promptText="MaxMustermann"/>
+                                <Label text="Username*:" />
+                                <TextField fx:id="username_textField" prefHeight="26.0" prefWidth="200.0" promptText="MaxMustermann" />
                             </children>
                         </VBox>
                         <VBox spacing="5.0">
                             <children>
-                                <Label text="Alter*:"/>
-                                <TextField fx:id="age_textField" prefHeight="26.0" prefWidth="200.0" promptText="42"/>
+                                <Label text="Alter*:" />
+                                <TextField fx:id="age_textField" prefHeight="26.0" prefWidth="200.0" promptText="42" />
                             </children>
                         </VBox>
                         <HBox prefHeight="0.0" prefWidth="218.0" spacing="20.0">
                             <children>
-                                <RadioButton fx:id="male_radioButton" mnemonicParsing="false" selected="true"
-                                             text="Männlich">
+                                <RadioButton fx:id="male_radioButton" mnemonicParsing="false" selected="true" text="Männlich">
                                     <toggleGroup>
-                                        <ToggleGroup fx:id="group"/>
+                                        <ToggleGroup fx:id="group" />
                                     </toggleGroup>
                                 </RadioButton>
-                                <RadioButton fx:id="female_radioButton" mnemonicParsing="false" text="Weiblich"
-                                             toggleGroup="$group"/>
+                                <RadioButton fx:id="female_radioButton" mnemonicParsing="false" text="Weiblich" toggleGroup="$group" />
                             </children>
                         </HBox>
                         <VBox spacing="5.0">
                             <children>
-                                <Label text="Größe* (in cm):"/>
-                                <TextField fx:id="height_textField" prefHeight="26.0" prefWidth="200.0"
-                                           promptText="186"/>
+                                <Label text="Größe* (in cm):" />
+                                <TextField fx:id="height_textField" prefHeight="26.0" prefWidth="200.0" promptText="186" />
                             </children>
                         </VBox>
                         <VBox spacing="5.0">
                             <children>
-                                <Label text="Gewicht* (in kg):"/>
-                                <TextField fx:id="weight_textField" prefHeight="26.0" prefWidth="200.0"
-                                           promptText="82"/>
+                                <Label text="Gewicht* (in kg):" />
+                                <TextField fx:id="weight_textField" prefHeight="26.0" prefWidth="200.0" promptText="82" />
                             </children>
                         </VBox>
                         <VBox spacing="5.0">
                             <children>
-                                <Label text="Körperfettanteil (in %):"/>
-                                <TextField fx:id="bodyfat_textField" prefHeight="26.0" prefWidth="200.0"
-                                           promptText="18"/>
+                                <Label text="Körperfettanteil (in %):" />
+                                <TextField fx:id="bodyfat_textField" prefHeight="26.0" prefWidth="200.0" promptText="18" />
                             </children>
                         </VBox>
                         <VBox spacing="5.0">
                             <children>
-                                <Label text="E-Mail-Adresse:"/>
-                                <TextField fx:id="email_textField" prefHeight="26.0" prefWidth="200.0"
-                                           promptText="max.mustermann@gmail.com"/>
+                                <Label text="E-Mail-Adresse:" />
+                                <TextField fx:id="email_textField" prefHeight="26.0" prefWidth="200.0" promptText="max.mustermann@gmail.com" />
                             </children>
                         </VBox>
-                        <Button fx:id="registrieren_Button" mnemonicParsing="false" onAction="#registerClicked"
-                                prefHeight="26.0" prefWidth="224.0" text="Registrieren">
+                        <Button fx:id="registrieren_Button" mnemonicParsing="false" onAction="#registerClicked" prefHeight="26.0" prefWidth="224.0" styleClass="backBtn" stylesheets="@../../css/gen_workout_resultStyle.css" text="Registrieren">
                             <VBox.margin>
-                                <Insets/>
+                                <Insets />
                             </VBox.margin>
                         </Button>
                     </children>
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
                 </VBox>
                 <VBox alignment="TOP_RIGHT" layoutX="234.0" layoutY="30.0" spacing="15.0">
                     <children>
-                        <ImageView fx:id="picture_imageView" fitHeight="267.0" fitWidth="221.0" layoutX="234.0"
-                                   layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="picture_imageView" fitHeight="267.0" fitWidth="221.0" layoutX="234.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../img/fett-zu-muskeln.jpg"/>
+                                <Image url="@../../img/fett-zu-muskeln.jpg" />
                             </image>
                             <VBox.margin>
-                                <Insets top="20.0"/>
+                                <Insets top="20.0" />
                             </VBox.margin>
                         </ImageView>
-                        <Button fx:id="picture_Button" layoutX="335.0" layoutY="313.0" mnemonicParsing="false"
-                                onAction="#choosePictureClicked" text="Bild auswählen...">
+                        <Button fx:id="picture_Button" layoutX="335.0" layoutY="313.0" mnemonicParsing="false" onAction="#choosePictureClicked" styleClass="backBtn" stylesheets="@../../css/gen_workout_resultStyle.css" text="Bild auswählen...">
                             <VBox.margin>
-                                <Insets/>
+                                <Insets />
                             </VBox.margin>
                         </Button>
                     </children>
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
                 </VBox>
             </children>

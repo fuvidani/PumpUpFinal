@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Created by David on 2015.05.15..
- *
+ * <p>
  * Implementation of CalendarDAO. CRUD methods for accessing H2 database.
  */
 public class H2CalendarDAOImpl implements CalendarDAO {
@@ -34,7 +34,7 @@ public class H2CalendarDAOImpl implements CalendarDAO {
 
         try {
             this.connection = handler.getConnection();
-
+            
             this.createStm = connection.prepareStatement("INSERT INTO appointment VALUES (?,?,?,?,?,?)");
             this.findAllStm = connection.prepareStatement("SELECT * FROM appointment WHERE isDeleted = FALSE");
             this.searchByIDStm = connection.prepareStatement("SELECT * FROM appointment WHERE appointment_id = ?");
@@ -106,12 +106,11 @@ public class H2CalendarDAOImpl implements CalendarDAO {
                 appointment.setSessionName(trainingsSessionDAO.searchByID(appointment.getSession_id()).getName());
                 String setNames = "";
 
-                if (trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets() != null){
+                if (trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets() != null) {
                     for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(appointment.getSession_id()).getExerciseSets()) {
                         setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
                     }
                 }
-
 
 
                 appointment.setSetNames(setNames);
@@ -151,8 +150,10 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             if (foundAppointment != null) {
                 foundAppointment.setSessionName(trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getName());
                 String setNames = "";
-                for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getExerciseSets()) {
-                    setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
+                if (trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getExerciseSets() != null){
+                    for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getExerciseSets()) {
+                        setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
+                    }
                 }
                 foundAppointment.setSetNames(setNames);
 
@@ -231,6 +232,7 @@ public class H2CalendarDAOImpl implements CalendarDAO {
 
     /**
      * Sets the trainingsessionDAO object for accessing the sets.
+     *
      * @param trainingsSessionDAO
      */
     public void setSessionDAO(TrainingsSessionDAO trainingsSessionDAO) {

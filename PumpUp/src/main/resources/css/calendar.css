@@ -1,20 +1,4 @@
-.table-view:disabled {
-    -fx-opacity: 100;
-    -fx-font-size: 10pt;
-    -fx-border-color: black black black black;
-}
-
-.table-view:disabled > .column-header-background:disabled > .nested-column-header:disabled > .table-column:disabled > .label:disabled {
-    -fx-opacity: 100;
-    -fx-font-size: 12pt;
-}
-
-.table-row-cell:disabled:selected {
-    -fx-opacity: 100;
-    -fx-font-weight: bold;
-}
-
-.btnReady {
+.backBtn {
     -fx-background-color: #c3c4c4,
     linear-gradient(#d6d6d6 50%, white 100%),
     radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
@@ -24,19 +8,28 @@
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
 
-.button:pressed{
+.backBtn:pressed {
     -fx-background-color: rgba(135,186,215,0.7);
     -fx-text-fill: white;
 }
 
-.facebook {
-    -fx-background-image: url('../icons/facebook.png');
+
+.deleteBtn {
+    -fx-background-image: url('../icons/delete_bin.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-color: transparent;
     -fx-background-size: 100%;
 }
 
-.facebook:hover{
+.googleBtn {
+    -fx-background-image: url('../icons/calendar.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.button:hover{
     -fx-background-size: 90%;
 }
