@@ -35,7 +35,7 @@ public class VideoController extends Controller {
     public void initController() {
 
         exercise = ((VideoPlayable) this.getParentController()).getExercise();
-
+        videoBox.getChildren().clear();
 
         this.showVideo();
 
@@ -48,8 +48,6 @@ public class VideoController extends Controller {
      */
     private void showVideo() {
         try {
-
-
             if (exercise.getVideolink() != null) {
                 String pathToResource = getClass().getClassLoader().getResource("video").toURI().toString();
                 String filePath = pathToResource.concat("/" + exercise.getVideolink());
@@ -59,7 +57,7 @@ public class VideoController extends Controller {
                 player = new MediaPlayer(media);
 
                 player.setAutoPlay(false);
-                player.setMute(true);
+                player.setMute(false);
 
                 smallMediaView.setMediaPlayer(player);
                 smallMediaView.setVisible(true);
@@ -117,6 +115,10 @@ public class VideoController extends Controller {
      */
     @FXML
     private void close() {
+        videoBox.getChildren().clear();
+        player=null;
+        media=null;
+        smallMediaView=null;
         mainFrame.close();
     }
 
