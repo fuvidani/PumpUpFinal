@@ -236,6 +236,30 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     /**
+     * Checks if date is in the future
+     * @param date to check
+     * @throws ServiceException
+     */
+    public void validateDateForExport(Date date) throws ServiceException{
+        Date planDatum = date;
+        Calendar planDatumCal = Calendar.getInstance();
+        planDatumCal.setTime(planDatum);
+        planDatumCal.set(Calendar.HOUR_OF_DAY, 0);
+        planDatumCal.set(Calendar.MINUTE, 0);
+        planDatumCal.set(Calendar.SECOND, 0);
+        planDatumCal.set(Calendar.MILLISECOND, 0);
+        Date todayDate = new Date();
+        Calendar todayDateCal = Calendar.getInstance();
+        todayDateCal.setTime(todayDate);
+        todayDateCal.set(Calendar.HOUR_OF_DAY, 0);
+        todayDateCal.set(Calendar.MINUTE, 0);
+        todayDateCal.set(Calendar.SECOND, 0);
+        todayDateCal.set(Calendar.MILLISECOND, 0);
+        if (planDatumCal.before(todayDateCal)) throw new ServiceException("Das Datum kann nicht in der Vergangenheit liegen.");
+
+    }
+
+    /**
      * Exports the sessions from given trainingsplan into the calendar
      *
      * @param workoutplanExport dto, that contains the trainingsplan, allowed days, and start date.
@@ -246,6 +270,9 @@ public class CalendarServiceImpl implements CalendarService {
         Date date = workoutplanExport.getDatum();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
+
+        //Date validation
+        validateDateForExport(workoutplanExport.getDatum());
 
         for (int i = 0; i < workoutplanExport.getTrainingsplan().getDuration(); i++) {
             for (TrainingsSession session : workoutplanExport.getTrainingsplan().getTrainingsSessions()) {
