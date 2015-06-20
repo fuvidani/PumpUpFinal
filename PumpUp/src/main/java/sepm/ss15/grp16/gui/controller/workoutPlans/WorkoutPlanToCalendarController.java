@@ -74,8 +74,11 @@ public class WorkoutPlanToCalendarController extends Controller {
     @Override
     public void initController() {
         setUpListView();
-        plan_interClassCommunication = ((WorkoutPlansController) this.getParentController()).getPlan_interClassCommunication();
-
+        try{
+            plan_interClassCommunication = ((WorkoutPlansController) this.getParentController()).getPlan_interClassCommunication();
+        }catch (ClassCastException e){
+            plan_interClassCommunication = ((GeneratedWorkoutPlanResultController) this.getParentController()).getGeneratedWorkoutPlan();
+        }
         dateField.setValue(LocalDate.now());
         dateField.setShowWeekNumbers(false);
 
