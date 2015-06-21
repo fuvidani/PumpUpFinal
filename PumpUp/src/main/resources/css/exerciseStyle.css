@@ -77,6 +77,9 @@
     -fx-background-color: black;
 }
 
+
+
+
 .searchField, .descriptionArea {
     -fx-border-color: black black black black;
 }

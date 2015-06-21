@@ -12,6 +12,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
@@ -241,21 +243,19 @@ public class MainController extends Controller {
             for (WeightHistory w : weightHistoryList) {
                 LineChart.Data data = new LineChart.Data<>("" + w.getDate(), w.getWeight());
                 data.setNode(
-                        new HoveredThresholdNode(w.getWeight())
+                        new HoveredThresholdNode(w.getWeight(),0) //0 is for a red border
                 );
 
                 weightSeries.getData().add(data);
                 i++;
             }
-
             i = 0;
-
             for (BodyfatHistory b : bodyfatHistoryList) {
                 int bodyFatTOKG = weightHistoryList.get(i).getWeight() * b.getBodyfat() / 100;
                 LineChart.Data data = new LineChart.Data<>("" + b.getDate(), bodyFatTOKG);
 
                 data.setNode(
-                        new HoveredThresholdNode(bodyFatTOKG)
+                        new HoveredThresholdNode(bodyFatTOKG, 1)//1 is for a yellow border
 
                 );
                 i++;
@@ -299,9 +299,9 @@ public class MainController extends Controller {
      * a node which displays a value on hover, but is otherwise empty
      */
     class HoveredThresholdNode extends StackPane {
-        HoveredThresholdNode(int value) {
+        HoveredThresholdNode(int value, int seriesNr) {
             setPrefSize(8, 8);
-            final Label label = createDataThresholdLabel(value);
+            final Label label = createDataThresholdLabel(value, seriesNr);
             setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -319,10 +319,11 @@ public class MainController extends Controller {
             });
         }
 
-        private Label createDataThresholdLabel(int value) {
+        private Label createDataThresholdLabel(int value, int seriesNr) {
             final Label label = new Label(value + " kg");
-            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+            label.getStyleClass().addAll("default-color"+seriesNr, "chart-line-symbol", "chart-series-line");
             label.setTextFill(Color.BLACK);
+
             label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
             return label;
         }
