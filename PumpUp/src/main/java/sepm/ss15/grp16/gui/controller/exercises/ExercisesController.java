@@ -149,6 +149,11 @@ public class ExercisesController extends Controller implements VideoPlayable {
             }
         });
 
+        uebungsTableView.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                this.editExerciseButtonClicked(null);
+            }
+        });
 
         this.setContent();
 
