@@ -140,7 +140,6 @@ public class WorkoutPlansController extends Controller {
 
             listViewSessions.setMouseTransparent(true);
             listViewSessions.setFocusTraversable(false);
-
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -393,6 +392,7 @@ public class WorkoutPlansController extends Controller {
             clearSelection();
         }
     }
+
 
     /**
      * Will be called by the GeneratedWorkoutPlanResultController to get the DTO.
