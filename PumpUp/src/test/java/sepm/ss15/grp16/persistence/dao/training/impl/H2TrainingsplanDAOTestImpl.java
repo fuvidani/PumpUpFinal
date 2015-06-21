@@ -35,31 +35,10 @@ public class H2TrainingsplanDAOTestImpl extends AbstractTrainingsPlanDAOTest {
     private TrainingsplanDAO trainingsplanDAO;
 
     @Autowired
-    private DBHandler dbConnector;
-
-    @Autowired
     private UserDAO userDAO;
 
     @Autowired
     private ExerciseDAO exerciseDAO;
-
-    @Before
-    public void setUp() throws DBException, SQLException {
-        try {
-            dbConnector.getConnection().setAutoCommit(true);
-        } catch (DBException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @After
-    public void tearDown() throws DBException, SQLException {
-        try {
-            dbConnector.getConnection().rollback();
-        } catch (DBException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public DAO<Trainingsplan> getDAO() {

@@ -32,8 +32,6 @@ public class H2SessionHelperDAOTestImpl extends AbstractSessionHelperDAOTest {
     TrainingsplanDAO trainingsplanDAO;
     @Autowired
     TrainingsSessionHelperDAO trainingsSessionHelperDAO;
-    @Autowired
-    private DBHandler dbConnector;
 
     @Override
     public TrainingsplanDAO getTrainingsplanDAO() {
@@ -43,13 +41,5 @@ public class H2SessionHelperDAOTestImpl extends AbstractSessionHelperDAOTest {
     @Override
     public TrainingsSessionHelperDAO getDAO() {
         return trainingsSessionHelperDAO;
-    }
-
-    @Before
-    public void setUp() throws DBException, SQLException {
-    }
-
-    @After
-    public void tearDown() throws DBException, SQLException {
     }
 }
