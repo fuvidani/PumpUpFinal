@@ -476,9 +476,10 @@ public class WorkoutPlansController extends Controller {
 
     @FXML
     public void embedInCalenderClicked(ActionEvent event) {
-            mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
-            if (((WorkoutPlanToCalendarController) this.getChildController()).isFinished())
-                mainFrame.navigateToChild(PageEnum.Calendar);
+        plan_interClassCommunication = selection;
+        mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
+        if (((WorkoutPlanToCalendarController) this.getChildController()).isFinished())
+            mainFrame.navigateToChild(PageEnum.Calendar);
     }
 
     @FXML

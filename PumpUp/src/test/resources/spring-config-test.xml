@@ -90,6 +90,10 @@
         <property name="userDAO" ref="userDAO"/>
     </bean>
 
+    <bean id="mockedTrainingsplanDAO" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="sepm.ss15.grp16.persistence.dao.training.impl.H2TrainingsplanDAOImpl" />
+    </bean>
+
     <bean id="trainingsSessionHelperDAO"
           class="sepm.ss15.grp16.persistence.dao.training.helper.impl.H2TrainingssessionHelperDAOImpl" scope="singleton"
           lazy-init="true">
@@ -104,6 +108,10 @@
         <property name="trainingsSessionHelperDAO" ref="trainingsSessionHelperDAO"/>
     </bean>
 
+    <bean id="mockedTrainingsSessionDAO" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="sepm.ss15.grp16.persistence.dao.training.impl.H2TrainingssessionDAOImpl" />
+    </bean>
+
     <bean id="exerciseSetHelperDAO"
           class="sepm.ss15.grp16.persistence.dao.training.helper.impl.H2ExerciseSetHelperDAOImpl" scope="singleton"
           lazy-init="true">
@@ -111,6 +119,13 @@
         <property name="exerciseDAO" ref="exerciseDAO"/>
         <property name="trainingsSessionHelperDAO" ref="trainingsSessionHelperDAO"/>
         <property name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <bean id="trainingsplanService" class="sepm.ss15.grp16.service.training.impl.TrainingsPlanServiceImpl">
+        <constructor-arg name="trainingsplanDAO" ref="mockedTrainingsplanDAO"/>
+        <constructor-arg name="trainingsSessionDAO" ref="mockedTrainingsSessionDAO"/>
+        <constructor-arg name="exerciseService" ref="mockedExerciseService"/>
+        <constructor-arg name="userService" ref="mockedUserService"/>
     </bean>
 
     <bean id="generatedWorkoutplanService"
@@ -130,6 +145,10 @@
         <constructor-arg name="userDAO" ref="userDAO"/>
     </bean>
 
+    <bean id="mockedExerciseDAO" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl" />
+    </bean>
+
     <bean id="categoryDAO" class="sepm.ss15.grp16.persistence.dao.exercise.impl.H2CategoryDAOImpl">
         <constructor-arg name="handler" ref="dbConnector"/>
     </bean>
@@ -142,10 +161,23 @@
         <constructor-arg value="sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl" />
     </bean>
 
+    <bean id="exerciseService" class="sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl"
+          scope="singleton">
+        <constructor-arg name="exerciseDAO" ref="mockedExerciseDAO"/>
+        <constructor-arg name="userService" ref="mockedUserService"/>
+    </bean>
+
     <!-- ###### Music ###### -->
 
     <bean id="musicDAO" class="sepm.ss15.grp16.persistence.dao.music.impl.MusicDAOImpl" scope="singleton"/>
 
+    <bean id="mockedMusicDAO" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="sepm.ss15.grp16.persistence.dao.music.impl.MusicDAOImpl" />
+    </bean>
+
+    <bean id="musicService" class="sepm.ss15.grp16.service.music.impl.MusicServiceImpl" scope="prototype">
+        <constructor-arg ref="mockedMusicDAO"/>
+    </bean>
     <!-- ###### Calendar ###### -->
 
     <bean id="calendarDAO" class="sepm.ss15.grp16.persistence.dao.calendar.impl.H2CalendarDAOImpl"

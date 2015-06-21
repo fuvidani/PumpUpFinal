@@ -10,8 +10,7 @@ MERGE INTO category VALUES (0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0
 
 MERGE INTO exercise KEY (id) VALUES
   (0, 'Liegestütz', 'Legen Sie sich auf den Bauch, strecken Sie die Beine, schließen Sie die Füße und stellen Sie die Zehenspitzen auf.
-  Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie
-  bilden, von den Fersen bis zum Nacken.', 1.0, 'pushup.mp4',
+ Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie bilden, von den Fersen bis zum Nacken.', 1.0, 'pushup.mp4',
    NULL, FALSE),
   (1, 'Armrotation', 'Eine tolle Übung, um die Schultern vor oder nach den intensiveren Übungen aufzuwärmen oder abzukühlen.
   Armrotationen sind besonders dann geeignet, wenn man nach einer Verletzung oder im Alter gerade wieder mit dem Training beginnt
@@ -57,14 +56,14 @@ MERGE INTO exercise KEY (id) VALUES
    FALSE),
   (12, 'BOXEN-Tritte', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und treten sie mit dem Schienbein gegen den Sandsack.
   Dehnen Sie sich vorher ausreichend', 0.5, 'boxen_tritte.mp4', NULL, FALSE),
-  (13, 'Armstrecken mit Kurzhantel', '', 0.4, NULL, NULL, FALSE),
-  (14, 'Bizeps mit Langhantel', '', 0.3, NULL, NULL, FALSE),
-  (15, 'Kniebeugen mit Langhantel', '', 0.5, NULL, NULL, FALSE),
-  (16, 'Bauchmuskeln Mit Roller', '', 0.3, NULL, NULL, FALSE),
-  (17, 'Beinheben mit Yogaball', '', 0.3, NULL, NULL, FALSE),
-  (18, 'Crunches mit Yogaball', '', 0.3, NULL, NULL, FALSE),
+--   (13, 'Armstrecken mit Kurzhantel', '', 0.4, NULL, NULL, FALSE),
+--   (14, 'Bizeps mit Langhantel', '', 0.3, NULL, NULL, FALSE),
+--   (15, 'Kniebeugen mit Langhantel', '', 0.5, NULL, NULL, FALSE),
+--   (16, 'Bauchmuskeln Mit Roller', '', 0.3, NULL, NULL, FALSE),
+--   (17, 'Beinheben mit Yogaball', '', 0.3, NULL, NULL, FALSE),
+--   (18, 'Crunches mit Yogaball', '', 0.3, NULL, NULL, FALSE),
   (19, 'Superman', '', 0.3, 'superman.mp4', NULL, FALSE),
-  (20, 'Brust dehnen', '', 0.3, NULL, NULL, FALSE),
+--   (20, 'Brust dehnen', '', 0.3, NULL, NULL, FALSE),
   (21, 'Schultern dehnen', '', 0.3, NULL, NULL, FALSE),
   (22, 'Rücken (oben) dehnen', '', 0.3, NULL, NULL, FALSE),
   (23, 'Rücken (Mitte) dehnen', '', 0.3, NULL, NULL, FALSE),
@@ -112,21 +111,21 @@ MERGE INTO exercise_category KEY (exerciseid, categoryid) VALUES
   --boxen tritte, kraft, sandsack
   (12, 1), (12, 18),
   --armstrecken mit kurzhantel, kraft, brust, schulter, bizeps, trizeps kurzhantel
-  (13, 1), (13, 9), (13, 7), (13, 4), (13, 5), (13, 15),
-  --bizeps mit langhantel, kraft, bizeps, langhantel
-  (14, 1), (14, 4), (14, 16),
-  --kniebeugen mit langhantel, kraft, oberschenkel, r�cken, langhantel
-  (15, 1), (15, 10), (15, 8), (15, 16),
-  --bauchmuskteln mit roller, kraft, bauchmuskeln, bauchmuskelroller
-  (16, 1), (16, 6), (16, 20),
-  --beinheben mit yogaball, balance, flexibilitaet, oberschenkel, ruecken, yogaball
-  (17, 2), (17, 3), (17, 10), (17, 8), (17, 21),
-  --crunches mit yogaball, balance, bauchmuskeln, yogaball
-  (18, 2), (18, 6), (18, 21),
+--   (13, 1), (13, 9), (13, 7), (13, 4), (13, 5), (13, 15),
+--   --bizeps mit langhantel, kraft, bizeps, langhantel
+--   (14, 1), (14, 4), (14, 16),
+--   --kniebeugen mit langhantel, kraft, oberschenkel, r�cken, langhantel
+--   (15, 1), (15, 10), (15, 8), (15, 16),
+--   --bauchmuskteln mit roller, kraft, bauchmuskeln, bauchmuskelroller
+--   (16, 1), (16, 6), (16, 20),
+--   --beinheben mit yogaball, balance, flexibilitaet, oberschenkel, ruecken, yogaball
+--   (17, 2), (17, 3), (17, 10), (17, 8), (17, 21),
+--   --crunches mit yogaball, balance, bauchmuskeln, yogaball
+--   (18, 2), (18, 6), (18, 21),
   --superman, kraft, ruecken, bauchmuskeln
   (19, 1), (19, 8), (19, 6),
   --Brust dehnen, Flexibilität, Brust
-  (20, 3), (20, 9),
+--   (20, 3), (20, 9),
   --Schultern dehnen, Flexibilität, Schultern
   (21, 3), (21, 7),
   --Rücken (oben) dehnen, Flexibilität, Rücken

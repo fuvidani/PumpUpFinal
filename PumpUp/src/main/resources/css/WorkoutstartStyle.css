@@ -1,0 +1,28 @@
+.list-view {
+
+    -fx-base: white;
+    /*for the inner layout of the table view*/
+    -fx-control-inner-background: white;
+    /*outer root element*/
+    -fx-background-color: white;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+    -fx-border-color: black black black black;
+    -fx-font-size: 15pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: black;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.list-view:focused .list-cell:filled:focused:selected {
+    -fx-background-color: black;
+}
+
+.label{
+    -fx-background-color: white;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 20pt;
+    -fx-background-color: transparent;
+}
