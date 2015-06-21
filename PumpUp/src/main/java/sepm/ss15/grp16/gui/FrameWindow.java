@@ -148,7 +148,7 @@ public class FrameWindow extends BorderPane {
         }
     }
 
-    private void navigateToMain() {
+    public void navigateToMain() {
         while (fxmlStack.size() > 1) {
             navigateToParent();
         }
