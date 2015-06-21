@@ -30,31 +30,10 @@ import java.sql.SQLException;
 public class H2ExerciseDAOImplTest extends AbstractExerciseDaoTest {
 
     @Autowired
-    private DBHandler dbConnector;
-
-    @Autowired
     private UserDAO userDAO;
 
     @Autowired
     private ExerciseDAO exerciseDAO;
-
-    @Before
-    public void setUp() throws DBException, SQLException {
-        try {
-            dbConnector.getConnection().setAutoCommit(true);
-        } catch (DBException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @After
-    public void tearDown() throws DBException, SQLException {
-        try {
-            dbConnector.getConnection().rollback();
-        } catch (DBException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public DAO<Exercise> getDAO() {

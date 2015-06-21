@@ -3,7 +3,6 @@ package sepm.ss15.grp16.gui.controller.calendar;
 import com.google.gson.Gson;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -23,15 +22,14 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * Created by david molnar on 08.05.15.
- *
+ * <p/>
  * This class represents a controller for calendar.fxml frame.
  * Its task is to handle the interactions with the user and notify the service layer about the user requests.
  */
-public class CalendarController extends Controller implements Initializable {
+public class CalendarController extends Controller {
 
     private final Logger LOGGER = LogManager.getLogger(CalendarController.class);
     private CalendarService calendarService;
@@ -41,9 +39,8 @@ public class CalendarController extends Controller implements Initializable {
     @FXML
     private WebEngine engine;
 
-
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initController() {
         LOGGER.info("Initialising CalendarController..");
 
         engine = webView.getEngine();
@@ -74,6 +71,7 @@ public class CalendarController extends Controller implements Initializable {
 
     /**
      * Initialises the local service.
+     *
      * @param calendarService the new service.
      */
     public void setCalendarService(CalendarService calendarService) {
@@ -97,13 +95,13 @@ public class CalendarController extends Controller implements Initializable {
                 alert.setHeaderText("Google Export nicht möglich.");
                 alert.setContentText("Google Export ist unter MAC OSX nicht unterstützt.");
                 alert.showAndWait();
-            }else if (calendarService.findAll().isEmpty()){
+            } else if (calendarService.findAll().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText("Keine Termine zu exportieren.");
                 alert.setContentText("Es sind keine Events im Kalendar.");
                 alert.showAndWait();
-            }else {
+            } else {
 
                 URL url = new URL("http://www.google.com");
                 URLConnection connection = url.openConnection();
@@ -126,7 +124,8 @@ public class CalendarController extends Controller implements Initializable {
             alert.setContentText("Es ist leider ein Fehler aufgetreten.");
             alert.showAndWait();
         } catch (IOException e) {
-            LOGGER.info("Failed to open a connection, reason: " + e.getMessage());;
+            LOGGER.info("Failed to open a connection, reason: " + e.getMessage());
+            ;
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehler beim Öffnen des Browsers");
@@ -142,7 +141,7 @@ public class CalendarController extends Controller implements Initializable {
     @FXML
     public void zuruckClicked() {
         LOGGER.info("Back to previous frame from calendar.");
-        mainFrame.navigateToParent();
+        mainFrame.navigateToMain();
     }
 
     /**
@@ -153,13 +152,13 @@ public class CalendarController extends Controller implements Initializable {
     public void deleteAllAppointmentsClicked() {
         try {
 
-            if (calendarService.findAll().isEmpty()){ //nothing to delete
+            if (calendarService.findAll().isEmpty()) { //nothing to delete
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText("Keine Termine vorhanden.");
                 alert.setContentText("Sie haben keine Termine im Kalendar.");
                 alert.showAndWait();
-            } else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Termine löschen.");
                 alert.setHeaderText("Wollen Sie wirklich die Termine löschen?");
@@ -193,9 +192,10 @@ public class CalendarController extends Controller implements Initializable {
      * This method will be called after opening the calendar frame.
      */
     public void refreshCalendar() {
-        try{
+        try {
             engine.executeScript("$('#calendar').fullCalendar('removeEvents');");
-        } catch (JSException e){}
+        } catch (JSException e) {
+        }
 
 
         Gson gson = new Gson();
@@ -207,9 +207,10 @@ public class CalendarController extends Controller implements Initializable {
             LOGGER.error("Exception in CalendarController while refreshCalendar(). - " + e.getMessage());
         }
 
-        try{
+        try {
             engine.executeScript("addListEvents(" + json + ");");
-        } catch (JSException e){}
+        } catch (JSException e) {
+        }
 
         LOGGER.info("Calendar successfully refreshed.");
     }

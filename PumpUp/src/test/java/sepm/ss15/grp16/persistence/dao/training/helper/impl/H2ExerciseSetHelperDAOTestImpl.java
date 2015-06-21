@@ -30,9 +30,6 @@ import java.sql.SQLException;
 public class H2ExerciseSetHelperDAOTestImpl extends AbstractExerciseSetDAOTest {
 
     @Autowired
-    private DBHandler dbConnector;
-
-    @Autowired
     private ExerciseDAO exerciseDAO;
 
     @Autowired
@@ -60,13 +57,5 @@ public class H2ExerciseSetHelperDAOTestImpl extends AbstractExerciseSetDAOTest {
     @Override
     public ExerciseSetHelperDAO getDAO() {
         return exerciseSetHelperDAO;
-    }
-
-    @Before
-    public void setUp() throws DBException, SQLException {
-    }
-
-    @After
-    public void tearDown() throws DBException, SQLException {
     }
 }
