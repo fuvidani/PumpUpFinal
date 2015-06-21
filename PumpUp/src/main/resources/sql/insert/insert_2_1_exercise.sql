@@ -10,8 +10,7 @@ MERGE INTO category VALUES (0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0
 
 MERGE INTO exercise KEY (id) VALUES
   (0, 'Liegestütz', 'Legen Sie sich auf den Bauch, strecken Sie die Beine, schließen Sie die Füße und stellen Sie die Zehenspitzen auf.
-  Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie
-  bilden, von den Fersen bis zum Nacken.', 1.0, 'pushup.mp4',
+ Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie bilden, von den Fersen bis zum Nacken.', 1.0, 'pushup.mp4',
    NULL, FALSE),
   (1, 'Armrotation', 'Eine tolle Übung, um die Schultern vor oder nach den intensiveren Übungen aufzuwärmen oder abzukühlen.
   Armrotationen sind besonders dann geeignet, wenn man nach einer Verletzung oder im Alter gerade wieder mit dem Training beginnt

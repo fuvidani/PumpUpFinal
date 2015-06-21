@@ -45,14 +45,14 @@
                         </HBox>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                             <children>
-                                <VBox fx:id="vboxType" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                <VBox fx:id="vboxType" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="typeBox" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Art" />
+                                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="categoryHeader" stylesheets="@../../css/exerciseStyle.css" text="Art" />
                                     </children>
                                 </VBox>
                                 <VBox fx:id="vboxEquipment" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <Label text="Geräte" />
+                                        <Label styleClass="categoryHeader" text="Geräte" />
                                     </children>
                                     <HBox.margin>
                                         <Insets />
@@ -60,7 +60,7 @@
                                 </VBox>
                                 <VBox fx:id="vboxMuscle" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <Label text="Muskelgruppe" />
+                                        <Label styleClass="categoryHeader" text="Muskelgruppe" />
                                     </children>
                                 </VBox>
                             </children>
