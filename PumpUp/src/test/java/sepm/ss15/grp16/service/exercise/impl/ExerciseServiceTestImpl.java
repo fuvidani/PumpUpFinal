@@ -34,26 +34,18 @@ public class ExerciseServiceTestImpl extends AbstractExerciseServiceTest {
     @Before
     public void setUp() throws DBException, SQLException {
         Mockito.reset(mockedExerciseDAO);
-        Mockito.reset(mockedUserService);
-        Mockito.reset(mockedExerciseService);
     }
 
 
    @Autowired
-   public void setMockedExerciseDAO(ExerciseDAO mockedExerciseDAO){
+   public void exerciseService(ExerciseDAO mockedExerciseDAO){
        this.mockedExerciseDAO=mockedExerciseDAO;
    }
 
     @Autowired
-    public void setMockedExerciseService(ExerciseService mockedExerciseService){
-        this.mockedExerciseService=mockedExerciseService;
+    public void setExerciseService(ExerciseService exerciseService){
+        this.exerciseService=exerciseService;
     }
-
-    @Autowired
-    public void setMockedUserService(UserService mockedUserService) {
-        this.mockedUserService = mockedUserService;
-    }
-
 
 
 }

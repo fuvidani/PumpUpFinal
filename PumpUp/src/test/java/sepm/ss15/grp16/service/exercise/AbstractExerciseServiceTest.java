@@ -26,21 +26,18 @@ import static org.mockito.Mockito.when;
 public abstract class AbstractExerciseServiceTest extends AbstractServiceTestMockito<Exercise> {
 
 
-    protected ExerciseService mockedExerciseService;
+    protected ExerciseService exerciseService;
     protected ExerciseDAO mockedExerciseDAO;
-    protected UserService mockedUserService;
 
     @Override
     public Service<Exercise> getService() {
-        return mockedExerciseService;
+        return exerciseService;
     }
 
     @Override
     public DAO<Exercise> getMockedDAO() {
         return mockedExerciseDAO;
     }
-
-
 
     @Test
     public void createValid() throws Exception {
@@ -57,28 +54,28 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTestMoc
     }
 
 
-//    @Test
+    @Test
     public void updateCaloriesValid() throws Exception {
         Exercise exercise1 = getDummyExercise();
         exercise1.setId(1000);
         updateTest(exercise1);
     }
 
-//    @Test
+    @Test
     public void updateNameValid() throws Exception {
         Exercise exercise1 = getDummyExercise();
         exercise1.setId(1000);
         updateTest(exercise1);
     }
 
-//    @Test
+    @Test
     public void updateDescrValid() throws Exception {
         Exercise exercise1 = getDummyExercise();
         exercise1.setId(1000);
         updateTest(exercise1);
     }
 
-//    @Test
+    @Test
     public void updateCatValid() throws Exception {
         Exercise exercise1 = getDummyExercise();
         exercise1.setId(1000);
@@ -87,7 +84,9 @@ public abstract class AbstractExerciseServiceTest extends AbstractServiceTestMoc
 
     @Test
     public void deleteValid() throws Exception {
-        deleteTest(getDummyExercise());
+        Exercise toDelte =getDummyExercise();
+        toDelte.setId(1000);
+        deleteTest(toDelte);
     }
 
     @Test(expected = ValidationException.class)

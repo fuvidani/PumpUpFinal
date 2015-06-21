@@ -146,6 +146,12 @@
         <constructor-arg value="sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl" />
     </bean>
 
+    <bean id="exerciseService" class="sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl"
+          scope="singleton">
+        <constructor-arg name="exerciseDAO" ref="mockedExerciseDAO"/>
+        <constructor-arg name="userService" ref="mockedUserService"/>
+    </bean>
+
 
     <!-- ###### Music ###### -->
 
