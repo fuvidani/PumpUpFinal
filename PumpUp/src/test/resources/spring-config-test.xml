@@ -142,6 +142,11 @@
         <constructor-arg value="sepm.ss15.grp16.service.exercise.impl.ExerciseServiceImpl" />
     </bean>
 
+    <bean id="mockedExerciseDAO" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="sepm.ss15.grp16.persistence.dao.exercise.impl.H2ExerciseDAOImpl" />
+    </bean>
+
+
     <!-- ###### Music ###### -->
 
     <bean id="musicDAO" class="sepm.ss15.grp16.persistence.dao.music.impl.MusicDAOImpl" scope="singleton"/>
