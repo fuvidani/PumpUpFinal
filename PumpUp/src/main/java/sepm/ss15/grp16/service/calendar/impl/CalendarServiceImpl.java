@@ -166,7 +166,7 @@ public class CalendarServiceImpl implements CalendarService {
             List<Appointment> filteredAppointments = new ArrayList<>();
 
             for (Appointment appointment : calendarDAO.findAll()) {
-                if (appointment.getUser_id().equals(userService.getLoggedInUser().getId()) || appointment.getUser_id() == null) {
+                if (appointment.getUser_id() == null || appointment.getUser_id().equals(userService.getLoggedInUser().getId())) {
                     filteredAppointments.add(appointment);
                 }
             }
