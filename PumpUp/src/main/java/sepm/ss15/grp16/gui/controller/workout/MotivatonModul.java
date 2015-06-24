@@ -22,7 +22,8 @@ public class MotivatonModul {
         this.musicService = musicService;
 
         try {
-            playlist = musicService.getMotivations();
+            //playlist =
+            musicService.getMotivations();
         } catch (ServiceException e) {
             e.printStackTrace();
         }
