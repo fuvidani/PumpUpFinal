@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.gui.controller.user;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -8,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.user.PictureHistory;
@@ -22,9 +25,6 @@ import sepm.ss15.grp16.service.user.PictureHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -42,6 +42,10 @@ public class PhotoDiaryController extends Controller {
     private Label dateLabel;
     @FXML
     private Button selectPictureButton;
+    @FXML
+    private Button forwardButton;
+    @FXML
+    private Button backButton;
     private UserService userService;
     private PictureHistoryService pictureHistoryService;
     private List<PictureHistory> pictureHistoryList;
@@ -79,20 +83,26 @@ public class PhotoDiaryController extends Controller {
     @FXML
     public void forwardButtonClicked() {
         LOGGER.info("Going forward in diary");
+        forwardButton.setDisable(true);
         try {
             if (indexOfCurrentPicture < pictureHistoryList.size() - 1) {
                 indexOfCurrentPicture++;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
-                imageView.setImage(image);
+                final SequentialTransition sequentialTransition = createTransition(imageView, image);
+                sequentialTransition.play();
+                sequentialTransition.setOnFinished(arg0 -> forwardButton.setDisable(false));
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             } else {
                 indexOfCurrentPicture = 0;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
-                imageView.setImage(image);
+                final SequentialTransition sequentialTransition = createTransition(imageView, image);
+                sequentialTransition.play();
+                sequentialTransition.setOnFinished(arg0 -> forwardButton.setDisable(false));
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go forward in picturehistory");
+            forwardButton.setDisable(false);
             showAlert("Fehler", "Fehler beim durchbl\u00e4ttern der Fotos", "Das n\u00e4chste Foto konnte nicht geladen werden.", AlertType.ERROR);
         }
     }
@@ -100,20 +110,26 @@ public class PhotoDiaryController extends Controller {
     @FXML
     public void backwardButtonClicked() {
         LOGGER.info("Going backwards in diary");
+        backButton.setDisable(true);
         try {
             if (indexOfCurrentPicture > 0) {
                 indexOfCurrentPicture--;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
-                imageView.setImage(image);
+                final SequentialTransition sequentialTransition = createTransition(imageView, image);
+                sequentialTransition.play();
+                sequentialTransition.setOnFinished(arg0 -> backButton.setDisable(false));
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             } else {
                 indexOfCurrentPicture = pictureHistoryList.size() - 1;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
-                imageView.setImage(image);
+                final SequentialTransition sequentialTransition = createTransition(imageView, image);
+                sequentialTransition.play();
+                sequentialTransition.setOnFinished(arg0 -> backButton.setDisable(false));
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go backward in picturehistory");
+            backButton.setDisable(false);
             showAlert("Fehler", "Fehler beim durchbl\u00e4ttern der Fotos", "Das vorherige Foto konnte nicht geladen werden.", AlertType.ERROR);
         }
     }
@@ -203,7 +219,7 @@ public class PhotoDiaryController extends Controller {
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
-            }else{
+            } else {
                 Image standardImage = ImageLoader.loadImage(this.getClass(), "fat_to_muscle.png");
                 imageView.setImage(standardImage);
             }
@@ -218,5 +234,20 @@ public class PhotoDiaryController extends Controller {
         alert.setHeaderText(headerText);
         alert.setContentText(contentText);
         alert.showAndWait();
+    }
+
+    private SequentialTransition createTransition(final ImageView iv, final Image img) {
+        FadeTransition fadeOutTransition = new FadeTransition(Duration.seconds(1), iv);
+        fadeOutTransition.setFromValue(1.0);
+        fadeOutTransition.setToValue(0.0);
+        fadeOutTransition.setOnFinished(arg0 -> iv.setImage(img));
+
+        FadeTransition fadeInTransition = new FadeTransition(Duration.seconds(1), iv);
+        fadeInTransition.setFromValue(0.0);
+        fadeInTransition.setToValue(1.0);
+        SequentialTransition sequentialTransition = new SequentialTransition();
+        sequentialTransition.getChildren().addAll(fadeOutTransition, fadeInTransition);
+
+        return sequentialTransition;
     }
 }
