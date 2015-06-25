@@ -22,6 +22,9 @@ import sepm.ss15.grp16.service.user.PictureHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -46,6 +49,7 @@ public class PhotoDiaryController extends Controller {
     private String selectedPicturePath;
     private MainController mainController;
     private boolean notADiaryPictureInImageView = false;
+    private Integer picIndex = 0;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -62,10 +66,9 @@ public class PhotoDiaryController extends Controller {
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
-            indexOfCurrentPicture = 0;
+            indexOfCurrentPicture = pictureHistoryList.size();
             if (!pictureHistoryList.isEmpty()) {
-                Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
-                imageView.setImage(image);
+               showPicture(indexOfCurrentPicture-1);
                 notADiaryPictureInImageView = false;
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
@@ -106,6 +109,51 @@ public class PhotoDiaryController extends Controller {
         } catch (Exception e) {
             LOGGER.error("Couldn't go backward in picturehistory");
             showAlert("Fehler", "Fehler beim durchbl\u00e4ttern der Fotos", "Das vorherige Foto konnte nicht geladen werden.", AlertType.ERROR);
+        }
+    }
+
+
+    private void showPicture(Integer index) {
+        try {
+            if (pictureHistoryList.isEmpty())
+                return;
+
+            String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+            LOGGER.debug("show details method path: " + pathToResource);
+            FileInputStream reading = new FileInputStream(pathToResource + "/" + pictureHistoryList.get(index).getLocation());
+
+            Image image = new Image(reading);
+            imageView.setImage(image);
+            if (pictureHistoryList.size() > 1) {
+//                leftArrow.setVisible(true);
+//                rightArrow.setVisible(true);
+            } else {
+//                leftArrow.setVisible(false);
+//                rightArrow.setVisible(false);
+            }
+
+        } catch (IOException e) {
+            LOGGER.error(e);
+        } catch (URISyntaxException e) {
+            LOGGER.error(e);
+        }
+    }
+
+
+    @FXML
+    private void nexPicButtonClicked() {
+        if (pictureHistoryList.size() > 0) {
+            showPicture(Math.abs(++picIndex) % (pictureHistoryList.size()));
+        }
+    }
+
+    /**
+     * changing to the previous picture if there is one
+     */
+    @FXML
+    private void prevPicButtonClicked() {
+        if (pictureHistoryList.size() > 0) {
+            showPicture(Math.abs(--picIndex) % (pictureHistoryList.size()));
         }
     }
 

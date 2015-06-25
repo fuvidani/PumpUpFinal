@@ -131,12 +131,10 @@ public class ManageExerciseController extends Controller {
 
         } catch (ServiceException e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
         imagesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-
                 showPic(oldValue, newValue);
             }
         });
@@ -185,7 +183,6 @@ public class ManageExerciseController extends Controller {
      * current exercise has, defined by the given index
      * to load from the list of pictures
      *
-     * @param index which picture is to display
      */
     private void showPic(String oldValue, String newValue) {
         try {
@@ -219,7 +216,6 @@ public class ManageExerciseController extends Controller {
             inputStream.close();
         } catch (Exception e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
 
     }
@@ -269,7 +265,6 @@ public class ManageExerciseController extends Controller {
             mainFrame.navigateToParent();
         } catch (Exception e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
 
     }
@@ -335,7 +330,6 @@ public class ManageExerciseController extends Controller {
             deleteBtn.setDisable(false);
         } catch (IOException e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
 
     }
