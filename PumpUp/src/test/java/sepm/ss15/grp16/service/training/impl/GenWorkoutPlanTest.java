@@ -3,6 +3,7 @@ package sepm.ss15.grp16.service.training.impl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -12,6 +13,7 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
+import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.training.AbstractGenWorkoutPlanTest;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
 import sepm.ss15.grp16.service.user.UserService;
@@ -24,26 +26,35 @@ import java.sql.SQLException;
  * Runs the corresponding tests.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config.xml")
+@ContextConfiguration("classpath:spring-config-test.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
 
+    @Autowired
+    public void setWorkoutplanService(GeneratedWorkoutplanService workoutplanService) {
+        this.workoutplanService = workoutplanService;
+    }
 
     @Autowired
-    GeneratedWorkoutplanService workoutplanService;
+    public void setMockedCategoryService(CategoryService mockedCategoryService) {
+        this.mockedCategoryService = mockedCategoryService;
+    }
 
     @Autowired
-    CategoryService categoryService;
+    public void setMockedUserService(UserService mockedUserService) {
+        this.mockedUserService = mockedUserService;
+    }
 
     @Autowired
-    UserService userService;
+    public void setMockedWeightHistoryService(WeightHistoryService mockedWeightHistoryService) {
+        this.mockedWeightHistoryService = mockedWeightHistoryService;
+    }
 
     @Autowired
-    WeightHistoryService weightHistoryService;
-
-    @Autowired
-    private DBHandler dbConnector;
+    public void setMockedExerciseService(ExerciseService mockedExerciseService){
+        this.mockedExerciseService = mockedExerciseService;
+    }
 
     /**
      * Sets upt the testing environment.
@@ -53,11 +64,10 @@ public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
      */
     @Before
     public void setUp() throws DBException, SQLException {
-        setService(workoutplanService);
-        setService(categoryService);
-        setService(userService);
-        setService(weightHistoryService);
-        dbConnector.activateTestMode();
+        Mockito.reset(mockedCategoryService);
+        Mockito.reset(mockedUserService);
+        Mockito.reset(mockedWeightHistoryService);
+        Mockito.reset(mockedExerciseService);
     }
 
     /**
@@ -69,7 +79,6 @@ public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
      */
     @After
     public void tearDown() throws DBException, SQLException {
-        dbConnector.deactivateTestMode();
     }
 
 

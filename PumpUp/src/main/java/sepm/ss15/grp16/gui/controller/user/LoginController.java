@@ -90,8 +90,16 @@ public class LoginController extends Controller {
             alert.showAndWait();
             return;
         }
+        try
+        {
+            mainFrame.openMainWindowFrame();
+        }
+        catch (ClassCastException | IllegalArgumentException e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace());
+        }
 
-        mainFrame.openMainWindowFrame();
     }
 
     public void insertUserInTable(User newUser) {

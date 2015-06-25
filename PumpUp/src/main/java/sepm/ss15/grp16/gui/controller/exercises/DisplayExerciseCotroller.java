@@ -17,6 +17,7 @@ import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.workout.WorkoutController;
 import sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
@@ -78,7 +79,18 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
     @Override
     public void initController() {
         LOGGER.debug("stranded in DisplayExerciseController");
-        exercise = ((SessionEditController_v2) this.getParentController()).getExercise();
+        if(this.getParentController() instanceof  SessionEditController_v2) {
+            exercise = ((SessionEditController_v2) this.getParentController()).getExercise();
+        }
+        else if(this.getParentController() instanceof  WorkoutController)
+        {
+            exercise = ((WorkoutController) this.getParentController()).getExercise();
+        }
+        else
+        {
+            throw new IllegalArgumentException("DisplayExercise called from wrong Controller!");
+        }
+
 
         leftArrow.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             prevPicButtonClicked();
@@ -96,6 +108,7 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
     public void setContent() {
         header.setText(exercise.getName());
         description.setText(exercise.getDescription());
+        calories.setText(""+exercise.getCalories());
         if (exercise.getVideolink() == null) {
             playVideoBtn.setDisable(true);
         } else {
@@ -149,7 +162,6 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
             }
         } catch (ServiceException e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
     }
 
@@ -182,7 +194,6 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
             e.printStackTrace();
             LOGGER.error(e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
             LOGGER.error(e);
         }
     }
@@ -222,17 +233,6 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
      */
     @FXML
     private void getBack() {
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("\u00dcbungen verlassen");
-        alert.setHeaderText("Das \u00dcbungsfenster schlie\u00dfen.");
-        alert.setContentText("M\u00f6chten Sie die \u00dcbungsuebersicht wirklich beenden?");
-        ButtonType yes = new ButtonType("Ja");
-        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(yes, cancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == yes) {
-            mainFrame.navigateToParent();
-        }
+        mainFrame.navigateToParent();
     }
 }

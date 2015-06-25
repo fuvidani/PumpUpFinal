@@ -13,7 +13,6 @@
 #trainings-table-view .column-header .label {
     -fx-font-size: 10pt;
     -fx-font-weight: bold;
-
 }
 
 .btnUp {
@@ -178,4 +177,75 @@
 
 .button:hover {
     -fx-background-size: 90%;
+}
+
+.exerciseLabel{
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+}
+
+.stopBtn {
+    /*-fx-background-color: transparent;*/
+    -fx-background-color:
+    #c3c4c4,
+    linear-gradient(#d6d6d6 50%, white 100%),
+    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+.stopBtn:pressed{
+    -fx-background-color: rgba(135,186,215,0.7);
+    -fx-text-fill: white;
+}
+
+/*. {
+    -fx-background-image: url('../icons/relax.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.startBtn {
+    -fx-background-image: url('../icons/dumbbell.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.finishBtn {
+    -fx-background-image: url('../icons/checkered.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}*/
+
+.activeBarElement {
+    -fx-background-color: firebrick;
+    -fx-background-radius: 3;
+}
+
+.inactiveBarElement {
+    -fx-background-color: rgba(222, 222, 222, 1);
+    -fx-background-radius: 3;
+}
+
+.btnBack, .btnGenerate, .btnCalendar {
+    -fx-background-color: #c3c4c4,
+    linear-gradient(#d6d6d6 50%, white 100%),
+    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+.button:pressed{
+    -fx-background-color: rgba(135,186,215,0.7);
+    -fx-text-fill: white;
 }

@@ -73,7 +73,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @return a goal-driven, auto-generated workout plan
      */
     private Trainingsplan generateForEndurance(List<EquipmentCategory> equipment, User user) throws ServiceException {
-        LOGGER.info("Entering the generating algorithms for an endurance workout plan.");
+        LOGGER.info("Entering the generating algorithm for an endurance workout plan.");
 
         double height = user.getHeight() / 100.0;
         WeightHistory history = weightHistoryService.getActualWeight(user.getUser_id());
@@ -201,7 +201,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @return a goal-driven, auto-generated workout plan
      */
     private Trainingsplan generateForStrength(List<EquipmentCategory> equipment, User user) throws ServiceException {
-        LOGGER.info("Entering the generating algorithms for an strength workout plan.");
+        LOGGER.info("Entering the generating algorithm for an strength workout plan.");
 
         double height = user.getHeight() / 100.0;
         WeightHistory history = weightHistoryService.getActualWeight(user.getUser_id());
@@ -330,7 +330,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @return a goal-driven, auto-generated workout plan
      */
     private Trainingsplan generateForBalance(List<EquipmentCategory> equipment, User user) throws ServiceException {
-        LOGGER.info("Entering the generating algorithms for an balance workout plan.");
+        LOGGER.info("Entering the generating algorithm for an balance workout plan.");
         double height = user.getHeight() / 100.0;
         WeightHistory history = weightHistoryService.getActualWeight(user.getUser_id());
         double weight = history.getWeight();
@@ -457,7 +457,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @return a goal-driven, auto-generated workout plan
      */
     private Trainingsplan generateForFlexibility(List<EquipmentCategory> equipment, User user) throws ServiceException {
-        LOGGER.info("Entering the generating algorithms for an balance workout plan.");
+        LOGGER.info("Entering the generating algorithm for an balance workout plan.");
 
         double height = user.getHeight() / 100.0;
         WeightHistory history = weightHistoryService.getActualWeight(user.getUser_id());

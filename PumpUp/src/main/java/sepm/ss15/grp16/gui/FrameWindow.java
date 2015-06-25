@@ -78,7 +78,10 @@ public class FrameWindow extends BorderPane {
         Menu user = new Menu("Benutzer");
         addNavigationDialogItemToMenu(user, "K\u00f6rperdaten \u00e4ndern", PageEnum.UserEdit);
         addNavigationDialogItemToMenu(user, "Eigene Fotos verwalten", PageEnum.PhotoDiary);
-        addItemToMenu(user, "Abmelden", event -> navigateToParent());
+        addItemToMenu(user, "Abmelden", event -> {
+            navigateToMain();
+            stage.close();
+        });
         Menu view = new Menu("Ansicht");
         addNavigationItemToMenu(view, "Trainingskalender", PageEnum.Calendar);
         addNavigationItemToMenu(view, "Trainingspl\u00e4ne", PageEnum.Workoutplan);
@@ -148,7 +151,7 @@ public class FrameWindow extends BorderPane {
         }
     }
 
-    private void navigateToMain() {
+    public void navigateToMain() {
         while (fxmlStack.size() > 1) {
             navigateToParent();
         }

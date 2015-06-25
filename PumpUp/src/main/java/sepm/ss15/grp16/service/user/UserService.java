@@ -32,7 +32,7 @@ public interface UserService extends Service<User> {
      * Asks the persistence for all users, deleted users are ignored.
      *
      * @return List of all users returned form the persistence-layer
-     * @throws ServiceException if there are complications in the service or persistence-layer
+     * @throws ServiceException if      there are complications in the service or persistence-layer
      */
     @Override
     List<User> findAll() throws ServiceException;

@@ -22,6 +22,9 @@ import sepm.ss15.grp16.service.user.PictureHistoryService;
 import sepm.ss15.grp16.service.user.UserService;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -61,7 +64,7 @@ public class PhotoDiaryController extends Controller {
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
-            indexOfCurrentPicture = 0;
+            indexOfCurrentPicture = pictureHistoryList.size();
             if (!pictureHistoryList.isEmpty()) {
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);

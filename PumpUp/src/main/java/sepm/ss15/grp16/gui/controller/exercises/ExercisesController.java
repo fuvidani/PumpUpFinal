@@ -149,6 +149,11 @@ public class ExercisesController extends Controller implements VideoPlayable {
             }
         });
 
+        uebungsTableView.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                this.editExerciseButtonClicked(null);
+            }
+        });
 
         this.setContent();
 
@@ -263,7 +268,6 @@ public class ExercisesController extends Controller implements VideoPlayable {
             editBtn.setDisable(true);
             deleteBtn.setDisable(true);
         } catch (ServiceException e) {
-            e.printStackTrace();
             LOGGER.error(e);
         }
     }
@@ -347,7 +351,6 @@ public class ExercisesController extends Controller implements VideoPlayable {
             }
         } catch (ServiceException e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
     }
 
@@ -377,12 +380,9 @@ public class ExercisesController extends Controller implements VideoPlayable {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
             LOGGER.error(e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
             LOGGER.error(e);
-
         }
     }
 
@@ -493,7 +493,6 @@ public class ExercisesController extends Controller implements VideoPlayable {
 
         } catch (ServiceException e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
     }
 
@@ -504,17 +503,7 @@ public class ExercisesController extends Controller implements VideoPlayable {
      */
     @FXML
     void getBackButtonClicked(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("\u00dcbungen verlassen");
-        alert.setHeaderText("Das \u00dcbungsfenster schlie\u00dfen.");
-        alert.setContentText("M\u00f6chten Sie die \u00dcbungsuebersicht wirklich beenden?");
-        ButtonType yes = new ButtonType("Ja");
-        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(yes, cancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == yes) {
             mainFrame.navigateToParent();
-        }
     }
 
 

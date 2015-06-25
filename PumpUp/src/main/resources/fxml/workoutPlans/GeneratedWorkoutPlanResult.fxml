@@ -37,7 +37,7 @@
     <bottom>
         <HBox maxHeight="24.0" maxWidth="1.7976931348623157E308" minHeight="24.0" prefHeight="24.0" spacing="20.0" BorderPane.alignment="CENTER">
             <children>
-                <Button maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="32.0" prefWidth="32.0" styleClass="backBtn" stylesheets="@../../css/gen_workout_resultStyle.css" HBox.hgrow="ALWAYS">
+                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelClicked" styleClass="backBtn" stylesheets="@../../css/gen_workout_resultStyle.css" text="Zurück" HBox.hgrow="ALWAYS">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -53,16 +53,21 @@
                     </HBox.margin>
                 </Button>
                 <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#increaseDifficultyClicked" text="Plan schwieriger machen">
+                <Button fx:id="increaseDiffButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#increaseDifficultyClicked" styleClass="btnIncrease" stylesheets="@../../css/gen_workout_resultStyle.css" text="Plan schwieriger machen">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Button>
-                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decreaseDifficultyClicked" text="Plan leichter machen">
+                <Button fx:id="decreaseDiffButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#decreaseDifficultyClicked" styleClass="btnDecrease" stylesheets="@../../css/gen_workout_resultStyle.css" text="Plan leichter machen">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Button>
+            <Button mnemonicParsing="false" onAction="#exportToCalendarClicked" styleClass="backBtn" stylesheets="@../../css/gen_workout_resultStyle.css" text="In Kalender einfügen">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
                 <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                 <Button fx:id="saveButton" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#saveWorkoutPlanClicked" prefHeight="32.0" prefWidth="32.0" styleClass="savePlanBtn" stylesheets="@../../css/gen_workout_resultStyle.css" text=" " HBox.hgrow="ALWAYS">
                     <font>

@@ -17,6 +17,11 @@
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
 
+.trainingBtn:pressed{
+    -fx-background-color: rgba(135,186,215,0.7);
+    -fx-text-fill: white;
+}
+
 .trainginPic {
     -fx-background-image: url('../icons/training.png');
     -fx-background-repeat: no-repeat;
@@ -90,9 +95,9 @@
     -fx-background-color: black;
 }
 
-.menu, .topMenu, .menu-bar, .footer, .mainRoot {
-    -fx-background-color: lightgray;
-}
+/*.menu, .topMenu, .menu-bar, .footer, .mainRoot {
+    -fx-background-color: white;
+}*/
 
 .menu:hover {
     -fx-background-color: black;

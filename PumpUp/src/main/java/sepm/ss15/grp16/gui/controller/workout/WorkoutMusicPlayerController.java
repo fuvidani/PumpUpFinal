@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.music.Playlist;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.gui.PageEnum;
@@ -32,6 +34,7 @@ import java.util.ResourceBundle;
  * This controller controls the lower section of the training's stage.
  */
 public class WorkoutMusicPlayerController extends Controller implements Initializable {
+    private static final Logger LOGGER = LogManager.getLogger(WorkoutMusicPlayerController.class);
 
     private Playlist playlist;
     private MusicService musicService;
@@ -87,7 +90,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         try {
             playlist = musicService.create(new Playlist(user, user.getPlaylist(), null));
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
         if (playlist == null) {
             mainPane.setVisible(false);

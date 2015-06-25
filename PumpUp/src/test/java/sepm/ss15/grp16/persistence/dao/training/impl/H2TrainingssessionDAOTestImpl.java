@@ -38,9 +38,6 @@ public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTe
     private TrainingsplanDAO trainingsplanDAO;
 
     @Autowired
-    private DBHandler dbConnector;
-
-    @Autowired
     private UserDAO userDAO;
 
     @Override
@@ -56,16 +53,6 @@ public class H2TrainingssessionDAOTestImpl extends AbstractTrainingssessionDAOTe
     @Override
     public UserDAO getUserDAO() {
         return userDAO;
-    }
-
-    @Before
-    public void setUp() throws DBException, SQLException {
-        dbConnector.activateTestMode();
-    }
-
-    @After
-    public void tearDown() throws DBException, SQLException {
-        dbConnector.deactivateTestMode();
     }
 
     @Override
