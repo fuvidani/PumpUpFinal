@@ -13,6 +13,7 @@ import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.workout.MotivatonModul;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
@@ -61,6 +62,7 @@ public class RegistrationController extends Controller {
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
     private String filePath;
+    private MotivatonModul motivationModul;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -166,6 +168,8 @@ public class RegistrationController extends Controller {
                 PictureHistory pictureHistory = new PictureHistory(null, user.getUser_id(), filePath, null);
                 pictureHistoryService.create(pictureHistory);
             }
+            
+            motivationModul.welcome();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information");
@@ -208,5 +212,9 @@ public class RegistrationController extends Controller {
             picture_imageView.setImage(image);
         }
         picture_Button.setDisable(false);
+    }
+
+    public void setMotivationModul(MotivatonModul motivationModul) {
+        this.motivationModul = motivationModul;
     }
 }

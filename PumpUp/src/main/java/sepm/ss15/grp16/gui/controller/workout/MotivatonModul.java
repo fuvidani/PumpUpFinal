@@ -68,4 +68,11 @@ public class MotivatonModul {
             }
         }
     }
+
+    public void welcome(){
+        List<MediaPlayer> players =  motivations.get("welcome").getPlayers();
+        int randomNum = random.nextInt(players.size());
+        MediaPlayer player = players.get(randomNum);
+        player.play();
+    }
 }
