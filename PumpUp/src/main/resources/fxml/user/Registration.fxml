@@ -74,7 +74,7 @@
                     <children>
                         <ImageView fx:id="picture_imageView" fitHeight="267.0" fitWidth="221.0" layoutX="234.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../img/fett-zu-muskeln.jpg" />
+                                <Image url="@../../icons/fat_to_muscle.png" />
                             </image>
                             <VBox.margin>
                                 <Insets top="20.0" />
