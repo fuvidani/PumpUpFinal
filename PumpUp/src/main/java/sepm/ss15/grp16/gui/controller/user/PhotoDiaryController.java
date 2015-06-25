@@ -64,7 +64,7 @@ public class PhotoDiaryController extends Controller {
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
-            indexOfCurrentPicture = pictureHistoryList.size();
+            indexOfCurrentPicture = 0;
             if (!pictureHistoryList.isEmpty()) {
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
@@ -87,6 +87,9 @@ public class PhotoDiaryController extends Controller {
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             } else {
                 indexOfCurrentPicture = 0;
+                Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
+                imageView.setImage(image);
+                dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go forward in picturehistory");
@@ -105,6 +108,9 @@ public class PhotoDiaryController extends Controller {
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             } else {
                 indexOfCurrentPicture = pictureHistoryList.size() - 1;
+                Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
+                imageView.setImage(image);
+                dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go backward in picturehistory");
