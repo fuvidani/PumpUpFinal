@@ -21,14 +21,15 @@ public class EventScriptRunner {
     public void runScripts() {
         LOGGER.debug("Execute javascript: addEvent..");
         // Java to JS, function to create single event
-        engine.executeScript("function addEvent(id, title, start, sets, color) {\n" +
+        engine.executeScript("function addEvent(id, title, start, sets, color, isTrained) {\n" +
                 "var eventData = {\n" +
                 "   id: id,\n" +
                 "   title: title,\n" +
                 "   start: start,\n" +
                 "   allDay: true,\n" +
                 "   url: sets,\n" +
-                "   color: color\n" +
+                "   color: color,\n" +
+                "   isTrained: isTrained\n" +
                 "};\n" +
                 "$('#calendar').fullCalendar('renderEvent', eventData, true);\n" +
                 "}");
@@ -47,7 +48,7 @@ public class EventScriptRunner {
                 "   if (date.getTime() < today.getTime() || result[i].isTrained == true){\n" +
                 "      color = \"#C5DEEB\";\n" +
                 "   } else {color = \"#3A87AD\"}\n" +
-                "   addEvent(result[i].appointment_id, result[i].sessionName, result[i].datum, result[i].setNames, color);" +
+                "   addEvent(result[i].appointment_id, result[i].sessionName, result[i].datum, result[i].setNames, color, result[i].isTrained);" +
                 "};\n" +
                 "}");
     }

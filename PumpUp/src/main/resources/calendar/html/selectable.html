@@ -33,7 +33,7 @@
                     date.setHours(0, 0, 0, 0);
                     var today = new Date();
                     today.setHours(0, 0, 0, 0);
-                    if (date.getTime() < today.getTime()) {
+                    if (date.getTime() < today.getTime() || event.isTrained == true) {
                         event.color = "#C5DEEB";
                     } else {
                         event.color = "#3A87AD";
