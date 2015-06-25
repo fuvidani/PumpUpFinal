@@ -35,7 +35,7 @@
                     <columns>
                         <TableColumn fx:id="titleColumn" maxWidth="200.0" minWidth="-1.0" prefWidth="-1.0" text="Titel" />
                         <TableColumn fx:id="artistColumn" maxWidth="200.0" minWidth="-1.0" prefWidth="-1.0" text="Interpret" />
-                        <TableColumn fx:id="lengthColumn" maxWidth="70.0" minWidth="-1.0" prefWidth="-1.0" text="Zeit" />
+                        <TableColumn fx:id="lengthColumn" maxWidth="90.0" minWidth="-1.0" prefWidth="-1.0" text="Zeit" />
                     </columns>
                 </TableView>
             </children>

@@ -18,7 +18,7 @@ public enum PageEnum {
     Workoutplan_calender_dialog("fxml/workoutPlans/WorkoutPlanIntoCalendar.fxml", "Trainingsplan in Kalender exportieren", 800, 600),
     SessionEdit("fxml/workoutPlans/SessionEdit_v2.fxml", "Session hinzuf\u00fcgen", 1000, 400),
     Calendar("fxml/calendar/Calendar.fxml", "Trainingskalender", 1000, 600),
-    LiveMode("fxml/workout/Workout.fxml", "Workout", 1300, 750),
+    LiveMode("fxml/workout/Workout.fxml", "Workout", 1300, 600),
     WorkoutResult("fxml/workout/WorkoutResult.fxml", "Workout Resultate", 1300, 750),
     Playlist("fxml/workout/Playlist.fxml", "Playlist", 300, 500),
     Workoutstart("fxml/workout/Workoutstart.fxml", "Mit Training beginnen", 800, 600),

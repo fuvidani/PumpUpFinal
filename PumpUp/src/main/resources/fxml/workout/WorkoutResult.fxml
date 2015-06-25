@@ -55,7 +55,7 @@
                     <children>
                         <HBox alignment="CENTER">
                             <children>
-                                <Label text="Mit diesem Training hast du ca.">
+                                <Label text="Mit diesem Training haben Sie ca.">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
@@ -92,7 +92,7 @@
                 </VBox>
                 <HBox prefHeight="70.0" prefWidth="1240.0" spacing="970.0">
                     <children>
-                        <Button layoutX="10.0" layoutY="653.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#shareFacebookClicked" prefHeight="60.0" prefWidth="53.0" styleClass="facebook" stylesheets="@../../css/playlistStyle.css">
+                        <Button layoutX="10.0" layoutY="653.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#shareFacebookClicked" prefHeight="76.0" prefWidth="62.0" styleClass="facebook" stylesheets="@../../css/playlistStyle.css">
                      <tooltip>
                         <Tooltip text="Auf Facebook teilen">
                            <font>
@@ -100,7 +100,7 @@
                            </font>
                         </Tooltip>
                      </tooltip></Button>
-                        <Button mnemonicParsing="false" onAction="#endWorkoutClicked" styleClass="btnReady" stylesheets="@../../css/playlistStyle.css" text="Beenden">
+                        <Button mnemonicParsing="false" onAction="#endWorkoutClicked" prefHeight="45.0" prefWidth="127.0" styleClass="btnReady" stylesheets="@../../css/playlistStyle.css" text="Beenden">
                             <font>
                                 <Font size="18.0" />
                             </font>
