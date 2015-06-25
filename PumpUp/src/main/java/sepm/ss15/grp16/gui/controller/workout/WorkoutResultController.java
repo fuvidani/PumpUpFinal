@@ -19,11 +19,15 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.training.WorkoutResult;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.service.calendar.CalendarService;
+import sepm.ss15.grp16.service.exception.ServiceException;
 
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -56,24 +60,38 @@ public class WorkoutResultController extends Controller {
 
     private ObservableList<HashMap.Entry<ExerciseSet, WorkoutResult.ExecutionTimePair>> masterData;
 
+    private CalendarService calendarService;
+
+    public WorkoutResultController(CalendarService calendarService)
+    {
+        this.calendarService = calendarService;
+    }
+
     @Override
     public void initController() {
         WorkoutController workoutController = (WorkoutController) getParentController();
 
         WorkoutResult workoutResult = workoutController.getWorkoutResult();
 
+        try {
+            calendarService.setAppointmentAsTrained(workoutResult.getAppointment().getId());
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+
         double calorin = 0;
         for (ExerciseSet set : workoutResult.getAppointment().getSession().getExerciseSets()) {
-            calorin += set.getExercise().getCalories() * workoutResult.getList().get(set).getDuration();
+            calorin += set.getExercise().getCalories() * ((workoutResult.getList().get(set).getDuration() == null) ? 0 : workoutResult.getList().get(set).getDuration());
         }
-        burnedCaloriesLabel.setText(calorin + "");
+        BigDecimal decimal = new BigDecimal(calorin);
+        decimal.setScale(2, BigDecimal.ROUND_HALF_UP);
+        burnedCaloriesLabel.setText(decimal.doubleValue() + "");
 
         masterData = FXCollections.observableList(new LinkedList<>(workoutResult.getList().entrySet()));
         exercise.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey().getExercise().getName()));
         duration.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().getDuration() + ""));
-        repete.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().getRepetion() + ""));
+        repete.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().getRepetion() == null ? "" : p.getValue().getValue().getRepetion() + ""));
         exercisesTable.setItems(masterData);
-
     }
 
     /**

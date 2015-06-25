@@ -13,6 +13,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -147,7 +148,7 @@ public class WorkoutController extends Controller {
         timeSeconds = new SimpleIntegerProperty();
         timeSeconds.addListener((observable1, oldValue1, newValue1) -> motivationModul.play(newValue1.intValue(), activeExercise().getType())
         );
-        /*time.bindBidirectional(timeSeconds, new StringConverter<Number>() {
+        time.bindBidirectional(timeSeconds, new StringConverter<Number>() {
             @Override
             public String toString(Number object) {
                 return fillUp(object.intValue() / 60) + ":" + fillUp(object.intValue() % 60);
@@ -168,7 +169,7 @@ public class WorkoutController extends Controller {
             public Number fromString(String string) {
                 return 0;
             }
-        });*/
+        });
         counterLable.textProperty().bind(time);
 
         counterTimeline = new Timeline();
@@ -281,7 +282,7 @@ public class WorkoutController extends Controller {
         if (activeExercisePosition >= 0) {
             lastExerciseLable.setText(activeExercise().getExercise().getName());
             if (activeExercise().getType() == ExerciseSet.SetType.repeat) {
-                durationField.setText(counterLable.getText());
+                durationField.setText(timeSeconds.getValue() + "");
                 repetionField.setText(activeExercise().getRepeat() + "");
             } else {
                 durationField.setText((activeExercise().getRepeat() - timeSeconds.getValue()) + "");
@@ -335,6 +336,7 @@ public class WorkoutController extends Controller {
         workoutResult.setExecution(activeExercise(),
                 repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
                 durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
+        musicPlayerController.stopMusic();
         mainFrame.openDialog(PageEnum.WorkoutResult);
         mainFrame.navigateToParent();
     }
@@ -389,13 +391,17 @@ public class WorkoutController extends Controller {
             setMinHeight(90);
             setPadding(new Insets(3, 3, 3, 3));
 
+            setPrefWidth(0);
             ImageView imageView = new ImageView(images.get(exerciseSet).get(0));
             imageView.setFitHeight(90);
             imageView.setPreserveRatio(true);
+            imageView.fitWidthProperty().bind(widthProperty());//??
+            Tooltip tooltip = new Tooltip(exerciseSet.getRepresentationText());
             getChildren().add(imageView);
             BorderPane borderPane = new BorderPane();
             Label label = new Label(exerciseSet.getRepresentationText());
             label.setStyle("-fx-font-weight: bold");
+            label.setTooltip(tooltip);
             borderPane.setBottom(label);
             getChildren().add(borderPane);
             getStyleClass().clear();

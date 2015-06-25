@@ -7,6 +7,7 @@ import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.music.MusicService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -17,15 +18,14 @@ public class MotivatonModul {
     private WorkoutMusicPlayerController MusicPlayerController;
     private MusicService musicService;
 
-    private Playlist playlist;
+    private Map<String, Playlist> motivations;
     private Random random = new Random();
 
     public MotivatonModul(MusicService musicService) {
         this.musicService = musicService;
 
         try {
-            //playlist =
-            musicService.getMotivations();
+            motivations = musicService.getMotivations();
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -36,8 +36,8 @@ public class MotivatonModul {
 
     }
 
-    public void play() {
-        List<MediaPlayer> players = playlist.getPlayers();
+    public void play(Playlist myPlaylist) {
+        List<MediaPlayer> players = myPlaylist.getPlayers();
         int randomNum = random.nextInt(players.size());
         MediaPlayer player = players.get(randomNum);
 
@@ -52,13 +52,13 @@ public class MotivatonModul {
 
     public void play(int i, ExerciseSet.SetType setType)
     {
-        if(setType == ExerciseSet.SetType.repeat && i > 0 && i % 10 == 0)
+        if(setType == ExerciseSet.SetType.repeat && i != 0 && i % 20 == 0)
         {
-            play();
+            play(motivations.get("random"));
         }
-        else if(setType == ExerciseSet.SetType.repeat && i > 5 && i % 10 == 0)
+        else if(setType == ExerciseSet.SetType.time)
         {
-            play();
+            play(motivations.get(i + ""));
         }
     }
 }

@@ -70,7 +70,7 @@
                             <children>
                                   <Label prefHeight="30.0" text="Letze Übung:" />
                                   <Label fx:id="lastExerciseLable" style="-fx-font-weight: bold;" styleClass="asdf" />
-                                <HBox>
+                                <HBox VBox.vgrow="NEVER">
                                     <children>
                                         <Label text="Dauer" />
                                         <Region HBox.hgrow="ALWAYS" />

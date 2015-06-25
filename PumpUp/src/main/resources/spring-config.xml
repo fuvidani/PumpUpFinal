@@ -274,7 +274,7 @@
 
     <bean id="workoutResultController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutResultController"
           scope="prototype">
-
+        <constructor-arg name="calendarService" ref="calendarService"/>
     </bean>
 
     <bean id="musicDAO" class="sepm.ss15.grp16.persistence.dao.music.impl.MusicDAOImpl" scope="singleton">
