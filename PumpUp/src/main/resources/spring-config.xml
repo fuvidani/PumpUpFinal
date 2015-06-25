@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config />
+
+    <!-- ###### Meta beans ###### -->
 
     <!-- ###### Database beans ###### -->
 
@@ -22,7 +29,7 @@
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
-    <!--<bean id="fxmlLoader" class="sepm.ss15.grp16.gui.FXMLLoaderImpl" init-method="init"/>-->
+    <bean id="fxmlLoader" class="sepm.ss15.grp16.gui.FXMLLoaderImpl" init-method="init"/>
 
     <bean id="aboutController" class="sepm.ss15.grp16.gui.controller.main.AboutController" scope="prototype"/>
 
@@ -267,7 +274,7 @@
 
     <bean id="workoutResultController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutResultController"
           scope="prototype">
-
+        <constructor-arg name="calendarService" ref="calendarService"/>
     </bean>
 
     <bean id="musicDAO" class="sepm.ss15.grp16.persistence.dao.music.impl.MusicDAOImpl" scope="singleton">

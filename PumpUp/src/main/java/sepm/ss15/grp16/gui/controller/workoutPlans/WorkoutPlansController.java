@@ -141,7 +141,7 @@ public class WorkoutPlansController extends Controller {
             listViewSessions.setMouseTransparent(true);
             listViewSessions.setFocusTraversable(false);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
     }
 
@@ -233,7 +233,7 @@ public class WorkoutPlansController extends Controller {
 
             clearSelection();
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
     }
 
@@ -252,7 +252,7 @@ public class WorkoutPlansController extends Controller {
 
             clearSelection();
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
     }
 
@@ -443,7 +443,8 @@ public class WorkoutPlansController extends Controller {
             alert.setHeaderText("Fehler beim \u00f6ffnen des Fensters!");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-            e.printStackTrace();
+
+            LOGGER.error("+e");
         }
     }
 
@@ -470,7 +471,7 @@ public class WorkoutPlansController extends Controller {
                     );
             workoutPlansListView.setItems(data);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
     }
 

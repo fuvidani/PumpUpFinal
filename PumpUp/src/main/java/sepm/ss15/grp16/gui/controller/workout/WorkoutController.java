@@ -5,22 +5,29 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Arc;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 import org.apache.logging.log4j.LogManager;
 import sepm.ss15.grp16.entity.calendar.Appointment;
+import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.WorkoutResult;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
@@ -30,7 +37,9 @@ import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 
+
 import java.net.URISyntaxException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -53,9 +62,6 @@ public class WorkoutController extends Controller {
     private Label lastExerciseLable;
 
     @FXML
-    private Label instructionLabel;
-
-    @FXML
     private Button pauseButton;
 
     @FXML
@@ -71,26 +77,22 @@ public class WorkoutController extends Controller {
     private TextField durationField;
 
     @FXML
-    private FlowPane exerciseFlow;
+    private HBox exerciseFlow;
 
     @FXML
     private Label counterLable;
 
     @FXML
-    private Label discriptionLabel;
-
-    @FXML
     private Pane pictureFitPane;
 
     @FXML
-    private Node WorkoutMusicPlayer;
-
-    @FXML
     private WorkoutMusicPlayerController musicPlayerController;
+
     private MotivatonModul motivationModul;
 
     private Timeline counterTimeline;
     private IntegerProperty timeSeconds;
+    private StringProperty time;
     private ArrayList<ExerciseSet> exerciseList;
     private int activeExercisePosition;
     private ArrayList<Image> imageList;
@@ -112,12 +114,12 @@ public class WorkoutController extends Controller {
         workoutResult = new WorkoutResult(appointment);
         session = appointment.getSession();
 
-        mainFrame.addPageManeItem("Open Fullscreen", event1 -> {
-            mainFrame.openFullScreenMode();
-        });
-        mainFrame.addPageManeItem("Training abbrechen", event1 -> {
-            mainFrame.navigateToParent();
-        });
+        mainFrame.addPageManeItem("Übungsdetails anzeien", event1 -> onDetailedExerciseClicked());
+        mainFrame.addPageManeItem("Open Fullscreen", event1 -> mainFrame.openFullScreenMode());
+        mainFrame.addPageManeItem("Training abbrechen", event1 -> mainFrame.navigateToParent());
+
+        exerciseImageView.setOnMouseClicked(event1 -> onDetailedExerciseClicked());
+        exerciseImageView.setOnTouchReleased(event1 -> onDetailedExerciseClicked());
 
         exerciseImageView.setPreserveRatio(true);
         exerciseImageView.fitWidthProperty().bind(pictureFitPane.widthProperty());
@@ -142,8 +144,37 @@ public class WorkoutController extends Controller {
                     exerciseImageView.setImage(imageList.get(activeImagePosition));
                 }, new KeyValue[0]));
 
+        time = new SimpleStringProperty();
         timeSeconds = new SimpleIntegerProperty();
-        counterLable.textProperty().bind(timeSeconds.asString());
+        timeSeconds.addListener((observable1, oldValue1, newValue1) -> {
+                    if (status == Status.RUNNUNG) {
+                        motivationModul.play(newValue1.intValue(), activeExercise().getType());
+                    }
+                }
+        );
+        time.bindBidirectional(timeSeconds, new StringConverter<Number>() {
+            @Override
+            public String toString(Number object) {
+                return fillUp(object.intValue() / 60) + ":" + fillUp(object.intValue() % 60);
+            }
+
+            private String fillUp(int num)
+            {
+                if(num < 10)
+                {
+                    return "0" + num;
+                }
+                else {
+                    return num + "";
+                }
+            }
+
+            @Override
+            public Number fromString(String string) {
+                return 0;
+            }
+        });
+        counterLable.textProperty().bind(time);
 
         counterTimeline = new Timeline();
         counterTimeline.setOnFinished(event -> pause());
@@ -204,8 +235,20 @@ public class WorkoutController extends Controller {
 
     private void switchToNextExercise() {
         if (activeExercisePosition >= 0) {
-            exerciseFlow.getChildren().remove(exerciseViews.removeFirst());
-            exerciseViews.getFirst().avtivate();
+            //Animate remove
+            ExerciseView last = exerciseViews.removeFirst();
+            ExerciseView next = exerciseViews.getFirst();
+
+            last.setMinWidth(last.getWidth());
+            last.getChildren().clear();
+            Timeline flowAnimation = new Timeline(new KeyFrame(Duration.millis(700), event -> {
+                exerciseFlow.getChildren().remove(last);
+            }, new KeyValue(last.minWidthProperty(), 0)));
+            Timeline removeAnimation = new Timeline(new KeyFrame(Duration.millis(300), event -> {
+                flowAnimation.playFromStart();
+            }, new KeyValue(last.opacityProperty(), 0)));
+            removeAnimation.playFromStart();
+            next.avtivate();
         }
         activeExercisePosition++;
     }
@@ -221,6 +264,7 @@ public class WorkoutController extends Controller {
         activeImagePosition = 0;
         imageTimeline.play();
     }
+
 
     private void runExercise() {
         status = Status.RUNNUNG;
@@ -240,7 +284,7 @@ public class WorkoutController extends Controller {
         if (activeExercisePosition >= 0) {
             lastExerciseLable.setText(activeExercise().getExercise().getName());
             if (activeExercise().getType() == ExerciseSet.SetType.repeat) {
-                durationField.setText(counterLable.getText());
+                durationField.setText(timeSeconds.getValue() + "");
                 repetionField.setText(activeExercise().getRepeat() + "");
             } else {
                 durationField.setText((activeExercise().getRepeat() - timeSeconds.getValue()) + "");
@@ -252,19 +296,17 @@ public class WorkoutController extends Controller {
         if (allExercisesDone()) {
             status = Status.FINISHED;
             imageTimeline.stop();
-            pauseButton.setText("Trainingsresultate");
-            exerciseLabel.setText("training beendet!");
-            discriptionLabel.setText(activeExercise().getExercise().getDescription());
             exerciseImageView.setImage(null);
+            pauseButton.setText("Trainingsresultate");
+            exerciseLabel.setText("Training beendet!");
         } else {
             switchToNextExercise();
 
             status = Status.PAUSED;
             pauseButton.setText("Start");
-            counterTimeline.getKeyFrames().clear();
-            exerciseLabel.setText(activeExercise().getExercise().getName());
-            discriptionLabel.setText(activeExercise().getExercise().getDescription());
+            exerciseLabel.setText(activeExercise().getRepresentationText());
 
+            counterTimeline.getKeyFrames().clear();
 
             try {
                 reloadImages();
@@ -278,6 +320,7 @@ public class WorkoutController extends Controller {
                 counterTimeline.getKeyFrames().add(
                         new KeyFrame(Duration.seconds(activeExercise().getRepeat() + 1),
                                 new KeyValue(timeSeconds, 0), new KeyValue(circleCounter.lengthProperty(), 0)));
+
             } else {
                 timeSeconds.set(0);
                 counterTimeline.getKeyFrames().add(
@@ -287,19 +330,42 @@ public class WorkoutController extends Controller {
         }
     }
 
+    public void finish(){
+        workoutResult.setExecution(activeExercise(),
+                repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
+                durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
+        musicPlayerController.stopMusic();
+        mainFrame.openDialog(PageEnum.WorkoutResult);
+        mainFrame.navigateToParent();
+    }
+
     @FXML
-    private void onPause(ActionEvent event) {
+    private void onActionButtonClicked(ActionEvent event) {
         if (status == Status.PAUSED) {
             runExercise();
         } else if (status == Status.RUNNUNG) {
             counterTimeline.stop();
             pause();
         } else {
-            workoutResult.setExecution(activeExercise(),
-                    repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
-                    durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
-            mainFrame.openDialog(PageEnum.WorkoutResult);
-            mainFrame.navigateToParent();
+            finish();
+        }
+    }
+
+    @FXML
+    private void onDetailedExerciseClicked()
+    {
+        if(status == Status.PAUSED)
+        {
+            launchDialog(PageEnum.DisplayExercise);
+        }
+    }
+
+    @FXML
+    private void onKeyPressed(KeyEvent event)
+    {
+        if(event.getCode() == KeyCode.ENTER)
+        {
+            onActionButtonClicked(null);
         }
     }
 
@@ -309,10 +375,6 @@ public class WorkoutController extends Controller {
 
     public WorkoutMusicPlayerController getMusicPlayerController() {
         return musicPlayerController;
-    }
-
-    public WorkoutResult getWorkoutResult() {
-        return workoutResult;
     }
 
     private enum Status {
@@ -325,26 +387,39 @@ public class WorkoutController extends Controller {
             super();
 
             setMinHeight(90);
+            setPadding(new Insets(3, 3, 3, 3));
 
+            setPrefWidth(0);
             ImageView imageView = new ImageView(images.get(exerciseSet).get(0));
             imageView.setFitHeight(90);
             imageView.setPreserveRatio(true);
+            imageView.fitWidthProperty().bind(widthProperty());//??
+            Tooltip tooltip = new Tooltip(exerciseSet.getRepresentationText());
             getChildren().add(imageView);
             BorderPane borderPane = new BorderPane();
             Label label = new Label(exerciseSet.getRepresentationText());
             label.setStyle("-fx-font-weight: bold");
+            label.setTooltip(tooltip);
             borderPane.setBottom(label);
             getChildren().add(borderPane);
-            setStyle("-fx-padding: 10;" +
-                    "-fx-background-color: rgba(222, 222, 222, 1);" +
-                    "-fx-background-radius: 5");
+            getStyleClass().clear();
+            getStyleClass().add("inactiveBarElement");
         }
 
 
         public void avtivate() {
-            setStyle("-fx-padding: 10;" +
-                    "-fx-background-color: firebrick;" +
-                    "-fx-background-radius: 5");
+            getStyleClass().clear();
+            getStyleClass().add("activeBarElement");
         }
+    }
+
+    public Exercise getExercise()
+    {
+        return activeExercise().getExercise();
+    }
+
+    public WorkoutResult getWorkoutResult()
+    {
+        return workoutResult;
     }
 }

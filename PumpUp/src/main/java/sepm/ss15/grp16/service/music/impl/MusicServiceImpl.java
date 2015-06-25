@@ -12,6 +12,7 @@ import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.music.MusicService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Lukas
@@ -86,12 +87,12 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public Playlist getMotivations() throws ServiceException {
+    public Map<String, Playlist> getMotivations() throws ServiceException {
         try {
             LOGGER.info("Service try to load Motivation-Playlist");
-            Playlist playlist = musicDAO.getMotivations();
+            Map<String, Playlist> playlists = musicDAO.getMotivations();
             LOGGER.info("Service loading Motivation-Playlist successful");
-            return playlist;
+            return playlists;
         } catch (PersistenceException e) {
             LOGGER.error("" + e);
             throw new ServiceException("Fehler beim Laden der Motivation-Playlist");

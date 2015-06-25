@@ -95,9 +95,9 @@
     -fx-background-color: black;
 }
 
-.menu, .topMenu, .menu-bar, .footer, .mainRoot {
-    -fx-background-color: lightgray;
-}
+/*.menu, .topMenu, .menu-bar, .footer, .mainRoot {
+    -fx-background-color: white;
+}*/
 
 .menu:hover {
     -fx-background-color: black;
