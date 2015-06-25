@@ -2,122 +2,133 @@ package sepm.ss15.grp16.service.user;
 
 import org.junit.Test;
 import sepm.ss15.grp16.entity.user.PictureHistory;
-import sepm.ss15.grp16.entity.user.User;
-import sepm.ss15.grp16.service.AbstractServiceTest;
+import sepm.ss15.grp16.persistence.dao.DAO;
+import sepm.ss15.grp16.persistence.dao.user.PictureHistoryDAO;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.service.AbstractServiceTestMockito;
 import sepm.ss15.grp16.service.Service;
+import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
+import sepm.ss15.grp16.service.user.impl.PictureHistoryServiceImpl;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 /**
- * Created by michaelsober on 12.06.15.
+ * This class provides methods for testing PictureHistoryServices
+ *
+ * @author Michael Sober
+ * @version 1.0
  */
-public abstract class AbstractPictureHistoryServiceTest extends AbstractServiceTest<PictureHistory> {
+public abstract class AbstractPictureHistoryServiceTest extends AbstractServiceTestMockito<PictureHistory> {
 
     protected PictureHistoryService pictureHistoryService;
-    protected UserService userService;
+    protected PictureHistoryDAO mockedPictureHistoryDAO;
 
     @Override
     public Service<PictureHistory> getService() {
         return pictureHistoryService;
     }
 
+    @Override
+    public DAO<PictureHistory> getMockedDAO() {
+        return mockedPictureHistoryDAO;
+    }
+
+    @Test(expected = ServiceException.class)
+    public void newPictureHistoryServiceWithNull() throws Exception {
+        new PictureHistoryServiceImpl(null);
+    }
+
     @Test
     public void createWithValidPictureHistory() throws Exception {
-        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-        String testImagePath = pathToResource + "/testbild.jpg";
-
-        PictureHistory testPictureHistory = new PictureHistory(null, createUserForTest().getUser_id(), testImagePath, new Date());
+        PictureHistory testPictureHistory = new PictureHistory(null, 1, "/testbild.jpg", new Date());
         createTest(testPictureHistory);
+    }
 
-        String savedImagePath = pathToResource + testPictureHistory.getLocation();
-        File savedImage = new File(savedImagePath);
-        assertTrue(savedImage.exists());
-        if (savedImage.exists()) {
-            savedImage.delete();
-        }
+    @Test(expected = ServiceException.class)
+    public void createWithPersistenceException() throws Exception {
+        PictureHistory testPictureHistory = new PictureHistory(null, 1, "/testbild.jpg", new Date());
+        createTestFail(testPictureHistory);
     }
 
     @Test
-    public void updateWithValidPictureHistoryShouldPersist() throws Exception {
-        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-        String testImagePath = pathToResource + "/testbild.jpg";
-        String testImagePath2 = pathToResource + "/testbild.jpg";
+    public void updateWithValidPictureHistory() throws Exception {
+        PictureHistory testPictureHistory = new PictureHistory(null, 1, "/testbild.jpg", new Date());
+        updateTest(testPictureHistory);
+    }
 
-        PictureHistory testPictureHistoryBefore = new PictureHistory(null, createUserForTest().getUser_id(), testImagePath, new Date());
-        PictureHistory testPictureHistoryAfter = new PictureHistory(null, createUserForTest().getUser_id(), testImagePath2, new Date());
-        updateTest(testPictureHistoryBefore, testPictureHistoryAfter);
-
-        String savedImagePath = pathToResource + testPictureHistoryBefore.getLocation();
-        String savedImagePath2 = pathToResource + testPictureHistoryAfter.getLocation();
-        File savedImage = new File(savedImagePath);
-        File savedImage2 = new File(savedImagePath2);
-        assertTrue(savedImage.exists());
-        assert (savedImage2.exists());
-
-        if (savedImage.exists()) {
-            savedImage.delete();
-        }
-        if (savedImage2.exists()) {
-            savedImage2.delete();
-        }
-
+    @Test(expected = ServiceException.class)
+    public void updateWithPersistenceException() throws Exception {
+        PictureHistory testPictureHistory = new PictureHistory(null, 1, "/testbild.jpg", new Date());
+        updateTestFail(testPictureHistory);
     }
 
     @Test
-    public void deleteWithValidPictureHistoryShouldPersist() throws Exception {
-        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-        String testImagePath = pathToResource + "/testbild.jpg";
-
-        User testUser = createUserForTest();
-
-        PictureHistory testPictureHistory = new PictureHistory(null, testUser.getUser_id(), testImagePath, new Date());
+    public void deleteWithValidPictureHistory() throws Exception {
+        PictureHistory testPictureHistory = new PictureHistory(null, 1, "/testbild.jpg", new Date());
         deleteTest(testPictureHistory);
+    }
 
-        String savedImagePath = pathToResource + testPictureHistory.getLocation();
-        File savedImage = new File(savedImagePath);
-        assertTrue(savedImage.exists());
-        if (savedImage.exists()) {
-            savedImage.delete();
-        }
+    @Test(expected = ServiceException.class)
+    public void deleteWithPersistenceException() throws Exception {
+        PictureHistory testPictureHistory = new PictureHistory(null, 1, "/testbild.jpg", new Date());
+        deleteTestFail(testPictureHistory);
     }
 
     @Test
     public void getActualPictureWithValidId() throws Exception {
-        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
-        String testImagePath = pathToResource + "/testbild.jpg";
+        PictureHistory testPictureHistory = new PictureHistory(null, 1, "/testbild.jpg", new Date());
 
-        User testUser1 = createUserForTest();
-        User testUser2 = createUserForTest();
-        PictureHistory pictureHistory1 = new PictureHistory(null, testUser1.getUser_id(), testImagePath, new Date());
-        PictureHistory pictureHistory2 = new PictureHistory(null, testUser1.getUser_id(), testImagePath, new Date());
-        PictureHistory pictureHistory3 = new PictureHistory(null, testUser1.getUser_id(), testImagePath, new Date());
-        PictureHistory pictureHistory4 = new PictureHistory(null, testUser2.getUser_id(), testImagePath, new Date());
+        when(mockedPictureHistoryDAO.getActualPicture(1)).thenReturn(testPictureHistory);
+        assertEquals(pictureHistoryService.getActualPicture(1), testPictureHistory);
+    }
 
+    @Test(expected = ServiceException.class)
+    public void getActualPictureWithPersistenceException() throws Exception {
+        when(mockedPictureHistoryDAO.getActualPicture(1)).thenThrow(PersistenceException.class);
+        pictureHistoryService.getActualPicture(1);
+    }
+
+    @Test
+    public void findAllShouldReturnAllPictureHistories() throws Exception {
+        PictureHistory testPictureHistory1 = new PictureHistory(1, 1, "/testbild.jpg", new Date());
+        PictureHistory testPictureHistory2 = new PictureHistory(2, 1, "/testbild.jpg", new Date());
+        PictureHistory testPictureHistory3 = new PictureHistory(3, 1, "/testbild.jpg", new Date());
         List<PictureHistory> pictureHistoryList = new ArrayList<>();
-        pictureHistoryList.add(pictureHistoryService.create(pictureHistory1));
-        pictureHistoryList.add(pictureHistoryService.create(pictureHistory2));
-        pictureHistoryList.add(pictureHistoryService.create(pictureHistory3));
-        pictureHistoryList.add(pictureHistoryService.create(pictureHistory4));
+        pictureHistoryList.add(testPictureHistory1);
+        pictureHistoryList.add(testPictureHistory2);
+        pictureHistoryList.add(testPictureHistory3);
+        findAllTest(pictureHistoryList);
+    }
 
-        PictureHistory pictureHistoryActual = pictureHistoryService.getActualPicture(testUser1.getUser_id());
-        assertEquals(pictureHistoryActual, pictureHistory3);
+    @Test(expected = ServiceException.class)
+    public void findAllWithPersistenceException() throws Exception {
+        findAllTestFail();
+    }
 
-        for (int i = 0; i < pictureHistoryList.size(); i++) {
-            String savedImagePath = pathToResource + pictureHistoryList.get(i).getLocation();
-            File savedImage = new File(savedImagePath);
-            assertTrue(savedImage.exists());
-            if (savedImage.exists()) {
-                savedImage.delete();
-            }
-        }
+    @Test
+    public void searchWithValidUserID() throws Exception {
+        PictureHistory testPictureHistory1 = new PictureHistory(1, 1, "/testbild.jpg", new Date());
+        PictureHistory testPictureHistory2 = new PictureHistory(2, 1, "/testbild.jpg", new Date());
+        PictureHistory testPictureHistory3 = new PictureHistory(3, 1, "/testbild.jpg", new Date());
+        List<PictureHistory> pictureHistoryList = new ArrayList<>();
+        pictureHistoryList.add(testPictureHistory1);
+        pictureHistoryList.add(testPictureHistory2);
+        pictureHistoryList.add(testPictureHistory3);
 
+        when(mockedPictureHistoryDAO.searchByUserID(1)).thenReturn(pictureHistoryList);
+        assertEquals(pictureHistoryService.searchByUserID(1), pictureHistoryList);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void searchByUserIDWithException() throws Exception {
+        when(mockedPictureHistoryDAO.searchByUserID(1)).thenThrow(PersistenceException.class);
+        pictureHistoryService.searchByUserID(1);
     }
 
     @Test(expected = ValidationException.class)
@@ -137,12 +148,8 @@ public abstract class AbstractPictureHistoryServiceTest extends AbstractServiceT
 
     @Test(expected = ValidationException.class)
     public void validateWithNoneValidImagePath() throws Exception {
-        PictureHistory testPictureHistory = new PictureHistory(null, createUserForTest().getUser_id(), "", new Date());
+        PictureHistory testPictureHistory = new PictureHistory(null, 1, "", new Date());
         pictureHistoryService.validate(testPictureHistory);
     }
 
-    private User createUserForTest() throws Exception {
-        User testUser = new User(null, "maxmustermann", true, 20, 194, "max.mustermann@gmail.com", "/path/playlist/", false);
-        return userService.create(testUser);
-    }
 }

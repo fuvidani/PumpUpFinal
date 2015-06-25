@@ -91,7 +91,7 @@
                 <HBox prefHeight="50.0" VBox.vgrow="SOMETIMES">
                     <children>
                         <Region minWidth="50.0" HBox.hgrow="NEVER" />
-                        <Button fx:id="pauseButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onActionButtonClicked" prefHeight="100.0" text="Pause" HBox.hgrow="ALWAYS">
+                        <Button id="stopBtn" fx:id="pauseButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onActionButtonClicked" prefHeight="100.0" styleClass="stopBtn" text="Pause" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin></Button>

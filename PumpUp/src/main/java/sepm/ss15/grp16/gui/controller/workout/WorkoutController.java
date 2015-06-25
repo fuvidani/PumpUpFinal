@@ -5,6 +5,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -21,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Arc;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 import org.apache.logging.log4j.LogManager;
 import sepm.ss15.grp16.entity.calendar.Appointment;
 import sepm.ss15.grp16.entity.exercise.Exercise;
@@ -35,6 +38,7 @@ import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 
 
 import java.net.URISyntaxException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -87,6 +91,7 @@ public class WorkoutController extends Controller {
 
     private Timeline counterTimeline;
     private IntegerProperty timeSeconds;
+    private StringProperty time;
     private ArrayList<ExerciseSet> exerciseList;
     private int activeExercisePosition;
     private ArrayList<Image> imageList;
@@ -138,10 +143,33 @@ public class WorkoutController extends Controller {
                     exerciseImageView.setImage(imageList.get(activeImagePosition));
                 }, new KeyValue[0]));
 
+        time = new SimpleStringProperty();
         timeSeconds = new SimpleIntegerProperty();
         timeSeconds.addListener((observable1, oldValue1, newValue1) -> motivationModul.play(newValue1.intValue(), activeExercise().getType())
         );
-        counterLable.textProperty().bind(timeSeconds.asString());
+        /*time.bindBidirectional(timeSeconds, new StringConverter<Number>() {
+            @Override
+            public String toString(Number object) {
+                return fillUp(object.intValue() / 60) + ":" + fillUp(object.intValue() % 60);
+            }
+
+            private String fillUp(int num)
+            {
+                if(num < 10)
+                {
+                    return "0" + num;
+                }
+                else {
+                    return num + "";
+                }
+            }
+
+            @Override
+            public Number fromString(String string) {
+                return 0;
+            }
+        });*/
+        counterLable.textProperty().bind(time);
 
         counterTimeline = new Timeline();
         counterTimeline.setOnFinished(event -> pause());

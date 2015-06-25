@@ -26,7 +26,7 @@ import java.sql.SQLException;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config.xml")
+@ContextConfiguration("classpath:spring-config-test.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2TrainingsplanDAOTestImpl extends AbstractTrainingsPlanDAOTest {
@@ -35,31 +35,10 @@ public class H2TrainingsplanDAOTestImpl extends AbstractTrainingsPlanDAOTest {
     private TrainingsplanDAO trainingsplanDAO;
 
     @Autowired
-    private DBHandler dbConnector;
-
-    @Autowired
     private UserDAO userDAO;
 
     @Autowired
     private ExerciseDAO exerciseDAO;
-
-    @Before
-    public void setUp() throws DBException, SQLException {
-        try {
-            dbConnector.getConnection().setAutoCommit(true);
-        } catch (DBException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @After
-    public void tearDown() throws DBException, SQLException {
-        try {
-            dbConnector.getConnection().rollback();
-        } catch (DBException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public DAO<Trainingsplan> getDAO() {

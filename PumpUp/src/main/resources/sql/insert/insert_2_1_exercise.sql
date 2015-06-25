@@ -1,61 +1,3 @@
-DROP TABLE IF EXISTS categoryName;
-DROP TABLE IF EXISTS gif;
-DROP TABLE IF EXISTS exercise_category;
-DROP TABLE IF EXISTS exercise;
-DROP TABLE IF EXISTS category;
-DROP SEQUENCE IF EXISTS exercise_seq;
-DROP SEQUENCE IF EXISTS category_seq;
-DROP SEQUENCE IF EXISTS categoryName_seq;
-DROP SEQUENCE IF EXISTS gif_seq;
-
-
-CREATE TABLE IF NOT EXISTS categoryName (
-  id   INTEGER NOT NULL,
-  name VARCHAR,
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS category (
-  id   INTEGER NOT NULL,
-  name VARCHAR NOT NULL,
-  type INTEGER REFERENCES categoryName (id), --0 for categories, 1 muscle group, 2 equipment
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS exercise (
-  id         INTEGER NOT NULL,
-  name       VARCHAR NOT NULL,
-  descripion VARCHAR,
-  calories   DOUBLE,
-  videolink  VARCHAR,
-  userid     INTEGER,
-  isdeleted  BOOLEAN NOT NULL,
-  FOREIGN KEY (userid) REFERENCES user (user_id),
-  PRIMARY KEY (id)
-);
-
-
-CREATE TABLE IF NOT EXISTS exercise_category (
-  exerciseid INT NOT NULL REFERENCES exercise (id),
-  categoryid INT NOT NULL REFERENCES category (id),
-  PRIMARY KEY (exerciseid, categoryid)
-);
-
-CREATE TABLE IF NOT EXISTS gif (
-  id         INTEGER NOT NULL,
-  exerciseid INTEGER NOT NULL,
-  location   VARCHAR NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (exerciseid) REFERENCES exercise (id)
-);
-
-
-CREATE SEQUENCE IF NOT EXISTS exercise_seq START WITH 40 INCREMENT BY 1;
-CREATE SEQUENCE IF NOT EXISTS gif_seq START WITH 75 INCREMENT BY 1;
-CREATE SEQUENCE IF NOT EXISTS category_seq START WITH 22 INCREMENT BY 1;
-CREATE SEQUENCE IF NOT EXISTS categoryName_seq START WITH 3 INCREMENT BY 1;
-
-
 MERGE INTO categoryname VALUES (0, 'Kategorie'), (1, 'Muskelgruppe'), (2, 'Geräte');
 
 MERGE INTO category VALUES (0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0), (3, 'Flexibilität', 0),
@@ -68,8 +10,7 @@ MERGE INTO category VALUES (0, 'Ausdauer', 0), (1, 'Kraft', 0), (2, 'Balance', 0
 
 MERGE INTO exercise KEY (id) VALUES
   (0, 'Liegestütz', 'Legen Sie sich auf den Bauch, strecken Sie die Beine, schließen Sie die Füße und stellen Sie die Zehenspitzen auf.
-  Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie
-  bilden, von den Fersen bis zum Nacken.', 1.0, 'pushup.mp4',
+ Die Hände sind direkt unter den Schultern. Stemmen Sie sich nun vom Boden hoch. Ihr Körper sollte während der Bewegung eine gerade Linie bilden, von den Fersen bis zum Nacken.', 1.0, 'pushup.mp4',
    NULL, FALSE),
   (1, 'Armrotation', 'Eine tolle Übung, um die Schultern vor oder nach den intensiveren Übungen aufzuwärmen oder abzukühlen.
   Armrotationen sind besonders dann geeignet, wenn man nach einer Verletzung oder im Alter gerade wieder mit dem Training beginnt
@@ -79,13 +20,13 @@ MERGE INTO exercise KEY (id) VALUES
   Strecken Sie die Arme seitlich aus und ballen Sie Ihre Hände zu Fäusten, die Daumen zeigen nach oben.
   Heben Sie nun die Schultern und den Kopf vom Boden an und ziehen Sie die gestreckten Arme so weit wie möglich nach oben.
   Dabei nähern sich Ihre Schulterblätter an.', 0.3, 'armup.mp4', NULL, FALSE),
-  (3, 'Kniebeuge', 'Wichtig. Die Knie beim Hochgehen nicht ganz durch-strecken sondern etwas tief bleiben.', 0.75, 'kniebeugen.mp4', NULL, FALSE),
+  (3, 'Kniebeuge', 'Wichtig. Die Knie beim Hochgehen nicht ganz durchstrecken sondern etwas tief bleiben.', 0.75, 'kniebeugen.mp4', NULL, FALSE),
   (4, 'Crunch it UP', 'Legen Sie sich auf den Rücken. Stellen Sie die Beine angewinkelt hüftbreit auf
  und haken Sie die Füße unter einem Gegenstand (Bett, Sofa, Stuhl, Regal, Couchtisch etc.) ein.
  Verschränken Sie die Arme vor der Brust und halten Sie sie fest an den Körper gepresst. Jetzt spannen Sie die Bauchmuskeln fest an,
  lösen Kopf und Schultern vom Boden und kommen schließlich langsam mit dem gesamten Oberkörper nach oben, bis die Ellbogen die Oberschenkel
  nahe der Hüften berühren. Senken Sie sich anschließend wieder langsam ab, bis die Schulterblätter den Boden berühren.
- Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauch-muskeln angespannt.', 0.5, 'crunch.mp4', NULL, FALSE),
+ Legen Sie Kopf und Schultern nicht ab und halten Sie die Bauchmuskeln angespannt.', 0.5, 'crunch.mp4', NULL, FALSE),
   (5, 'Strandschere', 'Legen Sie sich mit gestreckten Beinen auf die linke Seite und stützen Sie den Kopf mit dem linken Arm ab.
   Die andere Hand stützen Sie vor Ihrer Brust auf. Heben Sie dann Ihr rechtes Bein so hoch wie möglich an und halten Sie es gestreckt für
   drei Sekunden in der', 0.2, 'strandschere.mp4', NULL, FALSE),
@@ -115,14 +56,14 @@ MERGE INTO exercise KEY (id) VALUES
    FALSE),
   (12, 'BOXEN-Tritte', 'Stellen Sie sich schulterbreit vor den Box/Sandsack und treten sie mit dem Schienbein gegen den Sandsack.
   Dehnen Sie sich vorher ausreichend', 0.5, 'boxen_tritte.mp4', NULL, FALSE),
-  (13, 'Armstrecken mit Kurzhantel', '', 0.4, NULL, NULL, FALSE),
-  (14, 'Bizeps mit Langhantel', '', 0.3, NULL, NULL, FALSE),
-  (15, 'Kniebeugen mit Langhantel', '', 0.5, NULL, NULL, FALSE),
-  (16, 'Bauchmuskeln Mit Roller', '', 0.3, NULL, NULL, FALSE),
-  (17, 'Beinheben mit Yogaball', '', 0.3, NULL, NULL, FALSE),
-  (18, 'Crunches mit Yogaball', '', 0.3, NULL, NULL, FALSE),
+--   (13, 'Armstrecken mit Kurzhantel', '', 0.4, NULL, NULL, FALSE),
+--   (14, 'Bizeps mit Langhantel', '', 0.3, NULL, NULL, FALSE),
+--   (15, 'Kniebeugen mit Langhantel', '', 0.5, NULL, NULL, FALSE),
+--   (16, 'Bauchmuskeln Mit Roller', '', 0.3, NULL, NULL, FALSE),
+--   (17, 'Beinheben mit Yogaball', '', 0.3, NULL, NULL, FALSE),
+--   (18, 'Crunches mit Yogaball', '', 0.3, NULL, NULL, FALSE),
   (19, 'Superman', '', 0.3, 'superman.mp4', NULL, FALSE),
-  (20, 'Brust dehnen', '', 0.3, NULL, NULL, FALSE),
+--   (20, 'Brust dehnen', '', 0.3, NULL, NULL, FALSE),
   (21, 'Schultern dehnen', '', 0.3, NULL, NULL, FALSE),
   (22, 'Rücken (oben) dehnen', '', 0.3, NULL, NULL, FALSE),
   (23, 'Rücken (Mitte) dehnen', '', 0.3, NULL, NULL, FALSE),
@@ -170,21 +111,21 @@ MERGE INTO exercise_category KEY (exerciseid, categoryid) VALUES
   --boxen tritte, kraft, sandsack
   (12, 1), (12, 18),
   --armstrecken mit kurzhantel, kraft, brust, schulter, bizeps, trizeps kurzhantel
-  (13, 1), (13, 9), (13, 7), (13, 4), (13, 5), (13, 15),
-  --bizeps mit langhantel, kraft, bizeps, langhantel
-  (14, 1), (14, 4), (14, 16),
-  --kniebeugen mit langhantel, kraft, oberschenkel, r�cken, langhantel
-  (15, 1), (15, 10), (15, 8), (15, 16),
-  --bauchmuskteln mit roller, kraft, bauchmuskeln, bauchmuskelroller
-  (16, 1), (16, 6), (16, 20),
-  --beinheben mit yogaball, balance, flexibilitaet, oberschenkel, ruecken, yogaball
-  (17, 2), (17, 3), (17, 10), (17, 8), (17, 21),
-  --crunches mit yogaball, balance, bauchmuskeln, yogaball
-  (18, 2), (18, 6), (18, 21),
+--   (13, 1), (13, 9), (13, 7), (13, 4), (13, 5), (13, 15),
+--   --bizeps mit langhantel, kraft, bizeps, langhantel
+--   (14, 1), (14, 4), (14, 16),
+--   --kniebeugen mit langhantel, kraft, oberschenkel, r�cken, langhantel
+--   (15, 1), (15, 10), (15, 8), (15, 16),
+--   --bauchmuskteln mit roller, kraft, bauchmuskeln, bauchmuskelroller
+--   (16, 1), (16, 6), (16, 20),
+--   --beinheben mit yogaball, balance, flexibilitaet, oberschenkel, ruecken, yogaball
+--   (17, 2), (17, 3), (17, 10), (17, 8), (17, 21),
+--   --crunches mit yogaball, balance, bauchmuskeln, yogaball
+--   (18, 2), (18, 6), (18, 21),
   --superman, kraft, ruecken, bauchmuskeln
   (19, 1), (19, 8), (19, 6),
   --Brust dehnen, Flexibilität, Brust
-  (20, 3), (20, 9),
+--   (20, 3), (20, 9),
   --Schultern dehnen, Flexibilität, Schultern
   (21, 3), (21, 7),
   --Rücken (oben) dehnen, Flexibilität, Rücken
@@ -313,9 +254,3 @@ MERGE INTO gif KEY (id) VALUES
   (71, 12, 'img_ex_boxen_tritte.JPG'),
   --Ausfallschritt (2. Bild)
   (72, 8, 'img_ex_ausfallschritt_rechts.jpg');
-
-
-
-
-
-

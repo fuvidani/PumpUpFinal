@@ -12,6 +12,7 @@ import sepm.ss15.grp16.persistence.dao.DAO;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
 
 /**
  * Author: Lukas
@@ -55,6 +56,12 @@ public abstract class AbstractMusicDAOTest extends AbstractDAOTest<Playlist> {
     public void testDelete() throws Exception {
         LOGGER.info("testDelete");
         createValid(getDummyPlaylist());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void motivationTest()throws Exception{
+        LOGGER.info("motivationTest");
+        Map<String,Playlist> playlistMap= ((MusicDAO)getDAO()).getMotivations();
     }
 
     public Playlist getDummyPlaylist() throws URISyntaxException {

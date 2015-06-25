@@ -150,10 +150,10 @@ public class ExerciseServiceImpl implements ExerciseService {
         if (exercise == null)
             throw new ValidationException("validation not passed. exercise is null");
 
-        if (exercise.getName().equals("") || exercise.getName() == null || exercise.getName().isEmpty())
+        if (exercise.getName() == null || exercise.getName().equals("") || exercise.getName().isEmpty())
             throw new ValidationException("name can not be null");
 
-        if (exercise.getCalories() <= 0)
+        if (exercise.getCalories() == null || exercise.getCalories() <= 0)
             throw new ValidationException("validation not passed. calories can not be lower or equal to 0");
     }
 

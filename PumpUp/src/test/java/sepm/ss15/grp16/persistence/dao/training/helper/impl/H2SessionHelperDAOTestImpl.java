@@ -23,7 +23,7 @@ import java.sql.SQLException;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config.xml")
+@ContextConfiguration("classpath:spring-config-test.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2SessionHelperDAOTestImpl extends AbstractSessionHelperDAOTest {
@@ -32,8 +32,6 @@ public class H2SessionHelperDAOTestImpl extends AbstractSessionHelperDAOTest {
     TrainingsplanDAO trainingsplanDAO;
     @Autowired
     TrainingsSessionHelperDAO trainingsSessionHelperDAO;
-    @Autowired
-    private DBHandler dbConnector;
 
     @Override
     public TrainingsplanDAO getTrainingsplanDAO() {
@@ -43,15 +41,5 @@ public class H2SessionHelperDAOTestImpl extends AbstractSessionHelperDAOTest {
     @Override
     public TrainingsSessionHelperDAO getDAO() {
         return trainingsSessionHelperDAO;
-    }
-
-    @Before
-    public void setUp() throws DBException, SQLException {
-        dbConnector.activateTestMode();
-    }
-
-    @After
-    public void tearDown() throws DBException, SQLException {
-        dbConnector.deactivateTestMode();
     }
 }

@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
@@ -43,6 +44,12 @@ public class GeneratedWorkoutPlanResultController extends Controller {
 
     @FXML
     private Label goalLabel;
+
+    @FXML
+    private Button increaseDiffButton;
+
+    @FXML
+    private Button decreaseDiffButton;
 
     @Override
     public void initController() {
@@ -95,7 +102,6 @@ public class GeneratedWorkoutPlanResultController extends Controller {
         goalLabel.setText(controller.getSelectedGoal());
         displayWorkoutPlan();
         LOGGER.info("GeneratedWorkoutPlanResult successfully initialized!");
-
     }
 
     /**
@@ -202,6 +208,41 @@ public class GeneratedWorkoutPlanResultController extends Controller {
     public void decreaseDifficultyClicked() {
         trainingsplanService.decreaseDifficulty(generatedWorkoutPlan);
         displayWorkoutPlan();
+    }
+
+    /**
+     * This method is called when the user hits the "In Kalender einfuegen" button.
+     * Opens up the calendar dialog where the user has to choose the days for training.
+     * After that the Calendar will be opened.
+     */
+    @FXML
+    public void exportToCalendarClicked(){
+        try {
+            if (!saved) {
+                trainingsplanService.create(generatedWorkoutPlan);
+                saved = true;
+            }
+            mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
+            if (((WorkoutPlanToCalendarController) this.getChildController()).isFinished())
+                mainFrame.navigateToChild(PageEnum.Calendar);
+        }catch (ServiceException e){
+            LOGGER.error("Service threw exception, catched in GUI. Real reason: " + e.toString());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehler beim Speichern.");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+
+    }
+
+    /**
+     * This method is called by WorkoutPlanToCalendarController in order to obtain the generated
+     * DTO.
+     * @return the generated workout routine
+     */
+    public Trainingsplan getGeneratedWorkoutPlan(){
+        return this.generatedWorkoutPlan;
     }
 
 }

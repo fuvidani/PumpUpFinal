@@ -1,42 +1,120 @@
 package sepm.ss15.grp16.service.user;
 
 import org.junit.Test;
-import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
-import sepm.ss15.grp16.service.AbstractServiceTest;
+import sepm.ss15.grp16.persistence.dao.DAO;
+import sepm.ss15.grp16.persistence.dao.user.WeightHistoryDAO;
+import sepm.ss15.grp16.persistence.exception.PersistenceException;
+import sepm.ss15.grp16.service.AbstractServiceTestMockito;
 import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.user.impl.WeightHistoryServiceImpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 /**
- * Created by michaelsober on 12.06.15.
+ * This class provides methods for testing WeightHistoryServices
+ *
+ * @author Michael Sober
+ * @version 1.0
  */
-public abstract class AbstractWeightHistoryServiceTest extends AbstractServiceTest<WeightHistory> {
+public abstract class AbstractWeightHistoryServiceTest extends AbstractServiceTestMockito<WeightHistory> {
 
     protected WeightHistoryService weightHistoryService;
-    protected UserService userService;
+    protected WeightHistoryDAO mockedWeightHistoryDAO;
 
     @Override
     public Service<WeightHistory> getService() {
         return weightHistoryService;
     }
 
+    @Override
+    public DAO<WeightHistory> getMockedDAO() {
+        return mockedWeightHistoryDAO;
+    }
+
     @Test(expected = ServiceException.class)
-    public void newUserServiceWithNull() throws Exception {
+    public void newWeightHistoryServiceWithNull() throws Exception {
         new WeightHistoryServiceImpl(null);
     }
 
     @Test
     public void createWithValidWeightHistory() throws Exception {
-        WeightHistory testWeightHistory = new WeightHistory(null, createUserForTest().getUser_id(), 85, new Date());
+        WeightHistory testWeightHistory = new WeightHistory(null, 1, 85, new Date());
         createTest(testWeightHistory);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void createWithPersistenceException() throws Exception {
+        WeightHistory testWeightHistory = new WeightHistory(null, 1, 85, new Date());
+        createTestFail(testWeightHistory);
+    }
+
+    @Test
+    public void findAllShouldReturnAllWeightHistories() throws Exception {
+        WeightHistory testWeightHistory1 = new WeightHistory(1, 1, 85, new Date());
+        WeightHistory testWeightHistory2 = new WeightHistory(2, 2, 85, new Date());
+        WeightHistory testWeightHistory3 = new WeightHistory(3, 3, 85, new Date());
+        List<WeightHistory> weightHistoryList = new ArrayList<>();
+        weightHistoryList.add(testWeightHistory1);
+        weightHistoryList.add(testWeightHistory2);
+        weightHistoryList.add(testWeightHistory3);
+        findAllTest(weightHistoryList);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void findAllWithPersistenceException() throws Exception {
+        findAllTestFail();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void updateNotSupported() throws Exception {
+        weightHistoryService.update(null);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void deleteNotSupported() throws Exception {
+        weightHistoryService.delete(null);
+    }
+
+    @Test
+    public void searchWithValidUserID() throws Exception {
+        WeightHistory testWeightHistory1 = new WeightHistory(1, 1, 85, new Date());
+        WeightHistory testWeightHistory2 = new WeightHistory(2, 1, 85, new Date());
+        WeightHistory testWeightHistory3 = new WeightHistory(3, 1, 85, new Date());
+        List<WeightHistory> weightHistoryList = new ArrayList<>();
+        weightHistoryList.add(testWeightHistory1);
+        weightHistoryList.add(testWeightHistory2);
+        weightHistoryList.add(testWeightHistory3);
+
+        when(mockedWeightHistoryDAO.searchByUserID(1)).thenReturn(weightHistoryList);
+        assertEquals(weightHistoryService.searchByUserID(1), weightHistoryList);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void searchByUserIDWithException() throws Exception {
+        when(mockedWeightHistoryDAO.searchByUserID(1)).thenThrow(PersistenceException.class);
+        weightHistoryService.searchByUserID(1);
+    }
+
+    @Test
+    public void getActualWeightWithValidId() throws Exception {
+        WeightHistory testWeightHistory = new WeightHistory(1, 1, 85, new Date());
+
+        when(mockedWeightHistoryDAO.getActualWeight(1)).thenReturn(testWeightHistory);
+        assertEquals(weightHistoryService.getActualWeight(1), testWeightHistory);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void getActualWeightWithPersistenceException() throws Exception {
+        when(mockedWeightHistoryDAO.getActualWeight(1)).thenThrow(PersistenceException.class);
+        weightHistoryService.getActualWeight(1);
     }
 
     @Test(expected = ValidationException.class)
@@ -47,7 +125,7 @@ public abstract class AbstractWeightHistoryServiceTest extends AbstractServiceTe
 
     @Test(expected = ValidationException.class)
     public void validateWithNoneValidWeight() throws Exception {
-        WeightHistory testWeightHistory = new WeightHistory(null, createUserForTest().getUser_id(), -85, new Date());
+        WeightHistory testWeightHistory = new WeightHistory(null, 1, -85, new Date());
         weightHistoryService.validate(testWeightHistory);
     }
 
@@ -57,55 +135,4 @@ public abstract class AbstractWeightHistoryServiceTest extends AbstractServiceTe
         weightHistoryService.validate(testWeightHistory);
     }
 
-    @Test
-    public void searchWithValidUserID() throws Exception {
-
-        User testUser = createUserForTest();
-
-        WeightHistory testWeightHistory1 = new WeightHistory(null, testUser.getUser_id(), 25, new Date());
-        WeightHistory testWeightHistory2 = new WeightHistory(null, testUser.getUser_id(), 21, new Date());
-        WeightHistory testWeightHistory3 = new WeightHistory(null, testUser.getUser_id(), 30, new Date());
-
-        weightHistoryService.create(testWeightHistory1);
-        weightHistoryService.create(testWeightHistory2);
-        weightHistoryService.create(testWeightHistory3);
-
-        List<WeightHistory> weightHistoryList = weightHistoryService.searchByUserID(testUser.getUser_id());
-
-        assertTrue(weightHistoryList.contains(testWeightHistory1));
-        assertTrue(weightHistoryList.contains(testWeightHistory2));
-        assertTrue(weightHistoryList.contains(testWeightHistory3));
-
-    }
-
-    @Test
-    public void getActualWeightWithValidId() throws Exception {
-        User testUser = createUserForTest();
-        WeightHistory testWeightHistory = new WeightHistory(null, testUser.getUser_id(), 93, new Date());
-        WeightHistory testWeightHistory1 = new WeightHistory(null, testUser.getUser_id(), 96, new Date());
-        WeightHistory testWeightHistory2 = new WeightHistory(null, testUser.getUser_id(), 88, new Date());
-        WeightHistory testWeightHistory3 = new WeightHistory(null, testUser.getUser_id(), 89, new Date());
-        weightHistoryService.create(testWeightHistory);
-        weightHistoryService.create(testWeightHistory1);
-        weightHistoryService.create(testWeightHistory2);
-        weightHistoryService.create(testWeightHistory3);
-
-        WeightHistory actualWeightHistory = weightHistoryService.getActualWeight(testUser.getUser_id());
-        assertEquals(testWeightHistory3, actualWeightHistory);
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void deleteNotSupported() throws Exception {
-        weightHistoryService.delete(null);
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void updateNotSupported() throws Exception {
-        weightHistoryService.update(null);
-    }
-
-    private User createUserForTest() throws Exception {
-        User testUser = new User(null, "maxmustermann", true, 20, 194, "max.mustermann@gmail.com", "/path/playlist/", false);
-        return userService.create(testUser);
-    }
 }

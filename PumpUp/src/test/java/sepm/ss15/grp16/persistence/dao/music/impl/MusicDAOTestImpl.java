@@ -17,7 +17,7 @@ import sepm.ss15.grp16.persistence.dao.music.MusicDAO;
  * Date: 04.06.2015
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config.xml")
+@ContextConfiguration("classpath:spring-config-test.xml")
 @TestExecutionListeners(inheritListeners = false, listeners =
         {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class MusicDAOTestImpl extends AbstractMusicDAOTest {

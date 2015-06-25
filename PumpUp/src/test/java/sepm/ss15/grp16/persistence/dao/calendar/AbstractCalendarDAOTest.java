@@ -34,28 +34,15 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
 
 
     @Test
-    public void createValidAppointment() throws PersistenceException {
+    public void createValidAppointmentShouldPersist() throws PersistenceException {
         LOGGER.info("createValidAppointment");
-
-        //dummyTrainingsPlanWithSession();
-        //dummyTrainingsPlanWithSet();
         createValid(dummyAppointment());
-    }
-
-    @Test
-    public void updateValidAppointment() throws PersistenceException {
-        LOGGER.info("createValidAppointment");
-        Appointment old = dummyAppointment();
-        Appointment newApp = dummyAppointment();
-        newApp.setId(old.getId());
-        newApp.setIsTrained(true);
-        //updateValid(old, newApp);
     }
 
     @Test(expected = PersistenceException.class)
     public void createWithNullShouldThrowException() throws PersistenceException {
         LOGGER.info("createWithNullShouldThrowException");
-        getDAO().create(null);
+        createValid(null);
     }
 
     @Test(expected = PersistenceException.class)
@@ -64,9 +51,8 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
         Appointment appointment = dummyAppointment();
         appointment.setSession_id(123);
 
-        getDAO().create(appointment);
+        createValid(appointment);
     }
-
 
     @Test(expected = PersistenceException.class)
     public void createWithInvalidUserIDShouldThrowException() throws PersistenceException {
@@ -74,21 +60,52 @@ public abstract class AbstractCalendarDAOTest extends AbstractDAOTest<Appointmen
         Appointment appointment = dummyAppointment();
         appointment.setUser_id(123);
 
-        getDAO().create(appointment);
+        createValid(appointment);
+    }
+
+    @Test
+    public void updateValidAppointmentShouldPersist() throws PersistenceException {
+        LOGGER.info("updateValidAppointmentShouldPersist");
+        Appointment old = dummyAppointment();
+        Appointment newApp = dummyAppointment();
+        newApp.setId(old.getId());
+        newApp.setIsTrained(true);
+        updateValid(old, newApp);
     }
 
     @Test(expected = PersistenceException.class)
     public void updateWithNullShouldThrowException() throws PersistenceException {
         LOGGER.info("updateWithNullShouldThrowException");
-        getDAO().create(null);
+        createValid(null);
+    }
+
+    @Test
+    public void deleteValidAppointmentShouldPersist() throws PersistenceException {
+        LOGGER.info("deleteValidAppointmentShouldPersist");
+        deleteValid(dummyAppointment());
     }
 
     @Test(expected = PersistenceException.class)
     public void deleteWithNullShouldThrowException() throws PersistenceException {
         LOGGER.info("deleteWithNullShouldThrowException");
-        getDAO().create(null);
+        createValid(null);
     }
 
+    @Test
+    public void searchByIdValidAppointmentShouldPersist() throws PersistenceException {
+        LOGGER.info("searchByIdValidAppointmentShouldPersist");
+        searchByIDValid(dummyAppointment());
+    }
+
+    @Test(expected = PersistenceException.class)
+    public void searchByIdWithNullShouldThrowException() throws PersistenceException {
+        LOGGER.info("searchByIdWithNullShouldThrowException");
+        searchByIDValid(null);
+    }
+
+    /**
+     * HELPER METHODS
+     */
 
     private User dummyUser() throws PersistenceException {
         User testUser = new User(null, "lukas", true, 22, 178, false);
