@@ -221,6 +221,8 @@ public class MainController extends Controller {
 
             if (actualPictureHistory != null) {
                 userImgView.setImage(ImageLoader.loadImage(this.getClass(), actualPictureHistory.getLocation()));
+            } else {
+                userImgView.setImage(ImageLoader.loadImage(this.getClass(), "fat_to_muscle.png"));
             }
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage());
@@ -295,6 +297,11 @@ public class MainController extends Controller {
         this.appointmentList.add(appointment);
     }
 
+    @FXML
+    public void bodyfatHelpClicked() {
+        mainFrame.openDialog(PageEnum.BodyfatHelp);
+    }
+
     /**
      * a node which displays a value on hover, but is otherwise empty
      */
@@ -326,10 +333,5 @@ public class MainController extends Controller {
             label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
             return label;
         }
-    }
-
-    @FXML
-    public void bodyfatHelpClicked(){
-        mainFrame.openDialog(PageEnum.BodyfatHelp);
     }
 }
