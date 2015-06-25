@@ -440,7 +440,7 @@ public class SessionEditController_v2 extends Controller {
         if (set.getRepeat() != null) repeat_count.setText(String.valueOf(set.getRepeat()));
         HBox box = new HBox();
         RadioButton repeat = new RadioButton("Wiederholungen");
-        RadioButton minutes = new RadioButton("Minuten");
+        RadioButton minutes = new RadioButton("Sekunden");
 
         if (set.getType() != null) {
             if (set.getType() == ExerciseSet.SetType.repeat) repeat.setSelected(true);
