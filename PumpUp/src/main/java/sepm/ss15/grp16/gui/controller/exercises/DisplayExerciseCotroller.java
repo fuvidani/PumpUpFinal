@@ -108,6 +108,7 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
     public void setContent() {
         header.setText(exercise.getName());
         description.setText(exercise.getDescription());
+        calories.setText(""+exercise.getCalories());
         if (exercise.getVideolink() == null) {
             playVideoBtn.setDisable(true);
         } else {
@@ -161,7 +162,6 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
             }
         } catch (ServiceException e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
     }
 
@@ -194,7 +194,6 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
             e.printStackTrace();
             LOGGER.error(e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
             LOGGER.error(e);
         }
     }
@@ -234,17 +233,6 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
      */
     @FXML
     private void getBack() {
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("\u00dcbungen verlassen");
-        alert.setHeaderText("Das \u00dcbungsfenster schlie\u00dfen.");
-        alert.setContentText("M\u00f6chten Sie die \u00dcbungsuebersicht wirklich beenden?");
-        ButtonType yes = new ButtonType("Ja");
-        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(yes, cancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == yes) {
-            mainFrame.navigateToParent();
-        }
+        mainFrame.navigateToParent();
     }
 }
