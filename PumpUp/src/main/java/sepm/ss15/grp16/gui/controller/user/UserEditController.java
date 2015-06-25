@@ -128,6 +128,9 @@ public class UserEditController extends Controller {
 
         try {
             weight = Integer.parseInt(weightTextField.getText());
+            if(weight < 30 || weight > 200){
+                error += "Bei so einem Gewicht suchen Sie sich bitte rasch \u00E4rztliche Hilfe!\n";
+            }
         } catch (NumberFormatException e) {
             error += "Das Gewicht muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
@@ -141,8 +144,8 @@ public class UserEditController extends Controller {
         if (!bodyfatTextField.getText().isEmpty()) {
             try {
                 bodyfat = Integer.parseInt(bodyfatTextField.getText());
-                if (bodyfat < 0 || bodyfat > 100) {
-                    error += "Der K\u00f6rperfettanteil muss eine g\u00fcltige Zahl zwischen 0 und 100 sein.\n";
+                if (bodyfat < 1 || bodyfat > 100) {
+                    error += "Der K\u00f6rperfettanteil muss eine g\u00fcltige Zahl zwischen 1 und 100 sein.\n";
                 }
             } catch (NumberFormatException e) {
                 error += "Der K\u00f6rperfettanteil muss eine g\u00fctige Zahl zwischen 0 und 100 sein.\n";

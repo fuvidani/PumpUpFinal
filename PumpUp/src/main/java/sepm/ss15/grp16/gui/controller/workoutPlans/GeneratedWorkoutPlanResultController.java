@@ -45,12 +45,6 @@ public class GeneratedWorkoutPlanResultController extends Controller {
     @FXML
     private Label goalLabel;
 
-    @FXML
-    private Button increaseDiffButton;
-
-    @FXML
-    private Button decreaseDiffButton;
-
     @Override
     public void initController() {
         saved = false;
