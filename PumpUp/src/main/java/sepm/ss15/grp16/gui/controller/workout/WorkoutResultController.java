@@ -85,7 +85,7 @@ public class WorkoutResultController extends Controller {
         }
         BigDecimal decimal = new BigDecimal(calorin);
         decimal.setScale(2, BigDecimal.ROUND_HALF_UP);
-        burnedCaloriesLabel.setText(decimal.doubleValue() + "");
+        burnedCaloriesLabel.setText(decimal.toString());
 
         masterData = FXCollections.observableList(new LinkedList<>(workoutResult.getList().entrySet()));
         exercise.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey().getExercise().getName()));

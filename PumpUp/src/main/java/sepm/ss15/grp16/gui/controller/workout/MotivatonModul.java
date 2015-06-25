@@ -58,7 +58,10 @@ public class MotivatonModul {
         }
         else if(setType == ExerciseSet.SetType.time)
         {
-            play(motivations.get(i + ""));
+            Playlist p = motivations.get(i + "");
+            if(p != null) {
+                play(p);
+            }
         }
     }
 }

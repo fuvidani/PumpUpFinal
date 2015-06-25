@@ -146,7 +146,11 @@ public class WorkoutController extends Controller {
 
         time = new SimpleStringProperty();
         timeSeconds = new SimpleIntegerProperty();
-        timeSeconds.addListener((observable1, oldValue1, newValue1) -> motivationModul.play(newValue1.intValue(), activeExercise().getType())
+        timeSeconds.addListener((observable1, oldValue1, newValue1) -> {
+                    if (status == Status.RUNNUNG) {
+                        motivationModul.play(newValue1.intValue(), activeExercise().getType());
+                    }
+                }
         );
         time.bindBidirectional(timeSeconds, new StringConverter<Number>() {
             @Override
@@ -265,8 +269,6 @@ public class WorkoutController extends Controller {
     private void runExercise() {
         status = Status.RUNNUNG;
         pauseButton.setText("Stop");
-        pauseButton.getStyleClass().clear();
-        pauseButton.getStyleClass().add("finishBtn");
         counterTimeline.playFromStart();
         if (activeExercisePosition > 0) {
             workoutResult.setExecution(exerciseList.get(activeExercisePosition - 1),
@@ -296,16 +298,12 @@ public class WorkoutController extends Controller {
             imageTimeline.stop();
             exerciseImageView.setImage(null);
             pauseButton.setText("Trainingsresultate");
-            pauseButton.getStyleClass().clear();
-            pauseButton.getStyleClass().add("finishBtn");
             exerciseLabel.setText("Training beendet!");
         } else {
             switchToNextExercise();
 
             status = Status.PAUSED;
             pauseButton.setText("Start");
-            pauseButton.getStyleClass().clear();
-            pauseButton.getStyleClass().add("startBtn");
             exerciseLabel.setText(activeExercise().getRepresentationText());
 
             counterTimeline.getKeyFrames().clear();
