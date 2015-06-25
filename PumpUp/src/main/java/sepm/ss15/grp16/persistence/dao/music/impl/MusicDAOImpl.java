@@ -2,6 +2,8 @@ package sepm.ss15.grp16.persistence.dao.music.impl;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.music.Playlist;
 import sepm.ss15.grp16.persistence.dao.music.MusicDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
@@ -20,6 +22,8 @@ import java.util.Map;
  * Date: 04.06.2015
  */
 public class MusicDAOImpl implements MusicDAO {
+    private static final Logger LOGGER = LogManager.getLogger(MusicDAOImpl.class);
+
     @Override
     public Playlist create(Playlist dto) throws PersistenceException {
 
@@ -125,13 +129,13 @@ public class MusicDAOImpl implements MusicDAO {
                                 }
                                 playlist.setPlayers(songList);
                             }
-                            dto.put(dir.getName(),playlist);
+                            dto.put(dir.getName(), playlist);
                         }
                     }
                 }
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
         return dto;
     }

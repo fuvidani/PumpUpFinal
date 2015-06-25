@@ -1,6 +1,8 @@
 package sepm.ss15.grp16.gui.controller.workout;
 
 import javafx.scene.media.MediaPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.music.Playlist;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.service.exception.ServiceException;
@@ -15,6 +17,8 @@ import java.util.Random;
  * Date: 06.06.2015
  */
 public class MotivatonModul {
+    private static final Logger LOGGER = LogManager.getLogger(MotivatonModul.class);
+
     private WorkoutMusicPlayerController MusicPlayerController;
     private MusicService musicService;
 
@@ -27,7 +31,7 @@ public class MotivatonModul {
         try {
             motivations = musicService.getMotivations();
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("" + e);
         }
     }
 
