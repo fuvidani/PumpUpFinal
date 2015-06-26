@@ -36,6 +36,9 @@ import java.util.ResourceBundle;
 public class WorkoutMusicPlayerController extends Controller implements Initializable {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutMusicPlayerController.class);
 
+    private static final double VOLUME_ACTIVE = 0.3;
+    private static final double VOLUME_INACTIVE = 0.1;
+
     private Playlist playlist;
     private MusicService musicService;
     private UserService userService;
@@ -112,6 +115,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
                         player.stop();
                         musicPlayerSlide.setMediaPlayer(nextPlayer);
                         playlist.setActivePlayer(nextPlayer);
+                        nextPlayer.setVolume(player.getVolume());
                         nextPlayer.play();
                     });
                 }
@@ -255,40 +259,52 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
             players = shuffledList;
             shuffled = true;
         }
-
     }
 
     public void play() {
         if (musicPlayerSlide != null) {
+            musicPlayerSlide.getMediaPlayer().setVolume(VOLUME_ACTIVE);
+
+/*            musicPlayerSlide.getMediaPlayer().setOnReady(() -> {
+                musicPlayerSlide.getMediaPlayer().play();
+                new Transition() {{setCycleDuration(Duration.millis(10));}
+                    @Override
+                    protected void interpolate(double frac) {
+                        System.out.println("interpolate");
+                        musicPlayerSlide.getMediaPlayer().setVolume(frac);
+                    }
+                }.play();
+            });*/
+
             musicPlayerSlide.getMediaPlayer().play();
             playing = true;
         }
     }
 
-    public void reduceVol(Integer percent) {
+    public void reduceVol(Double reduce) {
         if (musicPlayerSlide != null) {
-            Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
-            Double new_vol = vol + (vol * (percent / 100));
-            new_vol = new_vol > 1 ? 1 : new_vol;
-            this.musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+            reduce = reduce > 1 ? 1 : reduce;
+            reduce = reduce < 0 ? 0 : reduce;
+            musicPlayerSlide.getMediaPlayer().setVolume(reduce);
         }
     }
 
     public void reduceVol() {
-        reduceVol(50);
+        reduceVol(VOLUME_INACTIVE);
     }
 
-    public void raiseVol(Integer percent) {
+    public void raiseVol(Double raise) {
         if (musicPlayerSlide != null) {
-            Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
-            Double new_vol = vol - (vol * (percent / 100));
-            new_vol = new_vol < 0 ? 0 : new_vol;
-            musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+            System.out.println("current: " + musicPlayerSlide.getMediaPlayer().getVolume());
+            System.out.println("new: " + raise);
+            raise = raise > 1 ? 1 : raise;
+            raise = raise < 0 ? 0 : raise;
+            musicPlayerSlide.getMediaPlayer().setVolume(raise);
         }
     }
 
     public void raiseVol() {
-        raiseVol(50);
+        raiseVol(VOLUME_ACTIVE);
     }
 
     public void stopMusic() {

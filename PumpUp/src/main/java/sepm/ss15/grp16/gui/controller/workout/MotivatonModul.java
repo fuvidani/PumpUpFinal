@@ -37,42 +37,40 @@ public class MotivatonModul {
 
     public void setMusicPlayerController(WorkoutMusicPlayerController musicPlayerController) {
         MusicPlayerController = musicPlayerController;
-
     }
 
     public void play(Playlist myPlaylist) {
         List<MediaPlayer> players = myPlaylist.getPlayers();
         int randomNum = random.nextInt(players.size());
         MediaPlayer player = players.get(randomNum);
+        LOGGER.info("playing: " + myPlaylist.getDir());
 
         MusicPlayerController.reduceVol();
+        player.setOnEndOfMedia(() -> {
+            player.stop();
+            MusicPlayerController.raiseVol();
+        });
+        player.setVolume(1.0);
         player.play();
-
-        while (player.getStatus() == MediaPlayer.Status.PLAYING) {
-            //wait
-        }
-        MusicPlayerController.raiseVol();
     }
 
-    public void play(int i, ExerciseSet.SetType setType)
-    {
-        if(setType == ExerciseSet.SetType.repeat && i != 0 && i % 20 == 0)
-        {
+    public void play(int i, ExerciseSet.SetType setType) {
+        if (setType == ExerciseSet.SetType.repeat && i != 0 && i % 20 == 0) {
             play(motivations.get("random"));
-        }
-        else if(setType == ExerciseSet.SetType.time)
-        {
+        } else if (setType == ExerciseSet.SetType.time) {
             Playlist p = motivations.get(i + "");
-            if(p != null) {
+            if (p != null) {
                 play(p);
             }
         }
     }
 
-    public void welcome(){
-        List<MediaPlayer> players =  motivations.get("welcome").getPlayers();
+    public void welcome() {
+        List<MediaPlayer> players = motivations.get("welcome").getPlayers();
         int randomNum = random.nextInt(players.size());
         MediaPlayer player = players.get(randomNum);
+        player.setVolume(1);
         player.play();
+        player.setOnEndOfMedia(player::stop);
     }
 }
