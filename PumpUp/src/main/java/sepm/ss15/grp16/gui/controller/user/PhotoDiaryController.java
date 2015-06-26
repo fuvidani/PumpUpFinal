@@ -68,7 +68,7 @@ public class PhotoDiaryController extends Controller {
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
-            indexOfCurrentPicture = 0;
+            indexOfCurrentPicture = pictureHistoryList.size()-1;
             if (!pictureHistoryList.isEmpty()) {
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
@@ -214,7 +214,7 @@ public class PhotoDiaryController extends Controller {
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
-            indexOfCurrentPicture = 0;
+            indexOfCurrentPicture = pictureHistoryList.size()-1;
             if (!pictureHistoryList.isEmpty()) {
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
