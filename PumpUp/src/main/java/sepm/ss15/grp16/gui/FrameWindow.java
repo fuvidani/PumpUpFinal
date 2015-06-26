@@ -47,6 +47,7 @@ public class FrameWindow extends BorderPane {
         this.context = context;
         this.stage = stage;
 
+
         stage.setScene(new Scene(this));
         stage.setTitle(mainPage.getTitle());
         try {

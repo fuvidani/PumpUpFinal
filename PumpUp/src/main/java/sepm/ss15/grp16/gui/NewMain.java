@@ -38,8 +38,13 @@ public class NewMain extends Application {
             primaryStage.close();
         });
 
-        LOGGER.info("configuration successful");
 
+        LOGGER.info("configuration successful");
         primaryStage.show();
+
+
     }
+
+
+
 }

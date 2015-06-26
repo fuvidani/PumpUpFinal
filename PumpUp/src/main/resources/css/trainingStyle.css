@@ -1,7 +1,6 @@
 .workoutPlanBox {
     -fx-font-size: 11pt;
-    /* Will be set after end of poll */
-    /*-fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #CCCCCC, #999999); */
+    -fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #CCCCCC, #999999);
     /*-fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #CCCCCC, #B3B3B3 100% ); */
     /*-fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #D9D9D9, #CBCBCB, #BCBCBC); */
    /* -fx-background-color: linear-gradient(to bottom, #E6B3E6, #CC99CC, #B380B3, #804D80, #4D1A4D);; */

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.shape.Arc?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyReleased="#onKeyPressed" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../../css/trainingStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyReleased="#onKeyPressed" prefHeight="600.0" prefWidth="1200.0" styleClass="mainRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutController">
     <center>
         <VBox spacing="20.0" BorderPane.alignment="CENTER">
             <children>
@@ -126,4 +127,8 @@
          </content>
       </ScrollPane>
    </top>
+   <stylesheets>
+      <URL value="@../../css/trainingStyle.css" />
+      <URL value="@../../css/mainStyle.css" />
+   </stylesheets>
 </BorderPane>
