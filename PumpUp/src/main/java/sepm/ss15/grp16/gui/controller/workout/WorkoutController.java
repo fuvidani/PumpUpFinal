@@ -114,7 +114,10 @@ public class WorkoutController extends Controller {
 
         mainFrame.addPageManeItem("Übungsdetails anzeien", event1 -> onDetailedExerciseClicked());
         mainFrame.addPageManeItem("Open Fullscreen", event1 -> mainFrame.openFullScreenMode());
-        mainFrame.addPageManeItem("Training abbrechen", event1 -> mainFrame.navigateToParent());
+        mainFrame.addPageManeItem("Training abbrechen", event1 -> {
+            musicPlayerController.stopMusic();
+            mainFrame.navigateToParent();
+        });
 
         exerciseImageView.setOnMouseClicked(event1 -> onDetailedExerciseClicked());
         exerciseImageView.setOnTouchReleased(event1 -> onDetailedExerciseClicked());
@@ -281,6 +284,7 @@ public class WorkoutController extends Controller {
                 durationField.setText((activeExercise().getRepeat() - timeSeconds.getValue()) + "");
                 repetionField.setText("");
                 repetionField.setDisable(false);
+                repetionField.requestFocus();
             }
         }
 
@@ -387,7 +391,7 @@ public class WorkoutController extends Controller {
             getChildren().add(imageView);
             BorderPane borderPane = new BorderPane();
             Label label = new Label(exerciseSet.getRepresentationText());
-            label.setStyle("-fx-font-weight: bold");
+            label.setStyle("-fx-font-family: Segoe UI Light;");
             label.setTooltip(tooltip);
             borderPane.setBottom(label);
             getChildren().add(borderPane);

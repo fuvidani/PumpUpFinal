@@ -80,9 +80,8 @@ public class WorkoutResultController extends Controller {
         for (ExerciseSet set : workoutResult.getAppointment().getSession().getExerciseSets()) {
             calorin += set.getExercise().getCalories() * ((workoutResult.getList().get(set).getDuration() == null) ? 0 : workoutResult.getList().get(set).getDuration());
         }
-        BigDecimal decimal = new BigDecimal(calorin);
-        decimal.setScale(2, BigDecimal.ROUND_HALF_UP);
-        burnedCaloriesLabel.setText(decimal.toString());
+        calorin = (double)Math.round(calorin * 100) / 100;
+        burnedCaloriesLabel.setText(calorin + "");
 
         masterData = FXCollections.observableList(new LinkedList<>(workoutResult.getList().entrySet()));
         exercise.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey().getExercise().getName()));

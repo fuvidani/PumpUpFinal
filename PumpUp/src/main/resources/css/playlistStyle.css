@@ -11,7 +11,7 @@
 
 .table-row-cell:disabled:selected {
     -fx-opacity: 100;
-    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI Bold";
 }
 
 .btnReady {
