@@ -133,6 +133,10 @@ public class Create_Edit_WorkoutPlanController extends Controller {
 
         btnIncreaseDif.setTooltip(new Tooltip("Schwierigkeit erh\u00f6hen"));
         btnDecreaseDif.setTooltip(new Tooltip("Schwierigkeit reduzieren"));
+
+        btnAddSession.setTooltip(new Tooltip("Neue Session hinzuf\u00FDgen"));
+        btnEditSession.setTooltip(new Tooltip("Session bearbeiten"));
+        btnDeleteSession.setTooltip(new Tooltip("Session l\u00F6schen"));
     }
 
     /**

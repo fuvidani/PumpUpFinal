@@ -93,6 +93,9 @@ public class WorkoutPlansController extends Controller {
     @FXML
     private Button copyBtn;
 
+    @FXML
+    private Button newBtn;
+
     @Override
     public void initController() {
 
@@ -140,6 +143,11 @@ public class WorkoutPlansController extends Controller {
 
             listViewSessions.setMouseTransparent(true);
             listViewSessions.setFocusTraversable(false);
+
+            newBtn.setTooltip(new Tooltip("Neuen Trainingsplan erstellen"));
+            editBtn.setTooltip(new Tooltip("Trainingsplan bearbeiten"));
+            copyBtn.setTooltip(new Tooltip("Trainingsplan kopieren & bearbeiten"));
+            deleteBtn.setTooltip(new Tooltip("Trainingsplan l\u00F6schen"));
         } catch (ServiceException e) {
             LOGGER.error("+e");
         }

@@ -105,7 +105,7 @@
                                                                 <Insets />
                                                             </HBox.margin>
                                                         </Label>
-                                                        <Label fx:id="txtCal_sum" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label">
+                                                        <Label fx:id="txtCal_sum" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                             <HBox.margin>
                                                                 <Insets />
                                                             </HBox.margin>
@@ -122,7 +122,7 @@
                                                                 <Insets />
                                                             </HBox.margin>
                                                         </Label>
-                                                        <Label fx:id="txtCal_mean" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" />
+                                                        <Label fx:id="txtCal_mean" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                                                     </children>
                                                     <VBox.margin>
                                                         <Insets />

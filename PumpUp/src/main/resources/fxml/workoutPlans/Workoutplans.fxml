@@ -140,7 +140,7 @@
                                                     <children>
                                                         <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                             <children>
-                                                                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Wiederholungen">
+                                                                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Durchläufe">
                                                                     <font>
                                                                         <Font size="18.0" />
                                                                     </font>
