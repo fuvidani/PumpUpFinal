@@ -10,6 +10,7 @@ import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.calendar.Appointment;
+import sepm.ss15.grp16.entity.music.Playlist;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.gui.controller.Controller;
@@ -24,16 +25,17 @@ import java.io.File;
  * This controller controls the little pop-up window before the actual training starts.
  */
 public class WorkoutstartController extends Controller {
-    private static final Logger LOGGER = LogManager.getLogger(WorkoutstartController.class);
-    public boolean started = false;
-    private File dir_selection;
-    private UserService userService;
+    private static final Logger  LOGGER  = LogManager.getLogger(WorkoutstartController.class);
+    public               boolean started = false;
+
+    private File                  dir_selection;
+    private UserService           userService;
     @FXML
     private ListView<ExerciseSet> toDoListView;
     @FXML
-    private Label musicPathLabel;
+    private Label                 musicPathLabel;
     @FXML
-    private Label trainingTypeLabel;
+    private Label                 trainingTypeLabel;
 
     public WorkoutstartController(UserService userService) {
         this.userService = userService;
@@ -79,22 +81,21 @@ public class WorkoutstartController extends Controller {
             DirectoryChooser directoryChooser = new DirectoryChooser();
             directoryChooser.setTitle("Musik suchen");
             File file = directoryChooser.showDialog(stage);
-            if (file != null) {
-                if (file.isDirectory() && file.length() > 0) {
-                    dir_selection = file;
-                    musicPathLabel.setText(file.getAbsolutePath());
-                    success = true;
-                }
+            if (file != null && file.isDirectory() && checkSupportedFormat(file.list())) {
+                dir_selection = file;
+                musicPathLabel.setText(file.getAbsolutePath());
+                success = true;
             } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Ordner leer");
                 alert.setHeaderText("Der ausgewählte Ordner ist leer!");
-                alert.setContentText("Wollen Sie einen anderen Ornder wählen?");
-                alert.showAndWait();
+                alert.setContentText("Wollen Sie einen anderen Ordner wählen?");
                 ButtonType yes = new ButtonType("Ja");
-                ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.NO);
-                alert.getButtonTypes().setAll(yes, cancel);
-                if (alert.showAndWait().get() == cancel) {
+                ButtonType no = new ButtonType("Nein", ButtonBar.ButtonData.NO);
+                alert.getButtonTypes().setAll(yes, no);
+                if (alert.showAndWait().get() == no) {
+                    dir_selection = null;
+                    musicPathLabel.setText("");
                     success = true;
                 }
             }
@@ -136,5 +137,27 @@ public class WorkoutstartController extends Controller {
 
     public boolean started() {
         return started;
+    }
+
+    private String getExtension(String path) {
+        String extension = "";
+
+        int i = path.lastIndexOf('.');
+        if (i > 0) {
+            extension = path.substring(i + 1);
+        }
+        return extension;
+    }
+
+    private boolean checkSupportedFormat(String[] list) {
+        for (String filepath : list) {
+            String extension = getExtension(filepath);
+            for (Playlist.SupportedFormat format : Playlist.SupportedFormat.values()) {
+                if (format.name().equals(extension)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -364,7 +364,7 @@ public class SessionEditController_v2 extends Controller {
     public void onClickShow(ActionEvent event) {
         LOGGER.debug("exercise to display: " + selection_exercise);
 
-        mainFrame.navigateToChild(PageEnum.DisplayExercise);
+        mainFrame.openDialog(PageEnum.DisplayExercise);
     }
 
     private void updateFilteredData() {

@@ -387,7 +387,6 @@ public class WorkoutPlansController extends Controller {
         }
     }
 
-
     /**
      * Will be called by the GeneratedWorkoutPlanResultController to get the DTO.
      *
