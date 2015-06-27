@@ -29,8 +29,8 @@ import java.util.Random;
 public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanService {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private ExerciseService exerciseService;
-    private UserService userService;
+    private ExerciseService      exerciseService;
+    private UserService          userService;
     private WeightHistoryService weightHistoryService;
 
     /**
@@ -577,23 +577,6 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
         return result;
     }
 
-
-    @Override
-    public void validate(Gen_WorkoutplanPreferences dto) throws ValidationException {
-        LOGGER.info("Entering validation in service.");
-        if (dto == null) {
-            throw new ValidationException("Es wurden leere Parameter \u00fcbergeben!");
-        }
-        TrainingsCategory goal = dto.getGoal();
-        if (goal == null) {
-            throw new ValidationException("Bitte w\u00e4hlen Sie eines von den 4 Trainingszielen aus!");
-        }
-        List<EquipmentCategory> equipment = dto.getEquipment();
-        if (equipment == null) {
-            throw new ValidationException("Ein Problem tritt auf w\u00e4hrend der Ausf\u00fchrung...");
-        }
-    }
-
     /**
      * ***************************************************************************************************************************************
      * *                                                                                                                                   * *
@@ -620,5 +603,21 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
     @Override
     public void delete(Gen_WorkoutplanPreferences dto) throws ServiceException {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void validate(Gen_WorkoutplanPreferences dto) throws ValidationException {
+        LOGGER.info("Entering validation in service.");
+        if (dto == null) {
+            throw new ValidationException("Es wurden leere Parameter \u00fcbergeben!");
+        }
+        TrainingsCategory goal = dto.getGoal();
+        if (goal == null) {
+            throw new ValidationException("Bitte w\u00e4hlen Sie eines von den 4 Trainingszielen aus!");
+        }
+        List<EquipmentCategory> equipment = dto.getEquipment();
+        if (equipment == null) {
+            throw new ValidationException("Ein Problem tritt auf w\u00e4hrend der Ausf\u00fchrung...");
+        }
     }
 }

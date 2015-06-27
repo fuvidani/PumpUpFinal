@@ -118,22 +118,6 @@ public class ExerciseSet implements DTOHelper {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ExerciseSet)) return false;
-
-        ExerciseSet set = (ExerciseSet) o;
-
-        return !(id != null ? !id.equals(set.id) : set.id != null)
-                && !(repeat != null ? !repeat.equals(set.repeat) : set.repeat != null)
-                && !(order_nr != null ? !order_nr.equals(set.order_nr) : set.order_nr != null)
-                && !(isDeleted != null ? !isDeleted.equals(set.isDeleted) : set.isDeleted != null)
-                && type == set.type && !(user != null ? !user.equals(set.user) : set.user != null)
-                && !(exercise != null ? !exercise.equals(set.exercise) : set.exercise != null);
-
-    }
-
-    @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (repeat != null ? repeat.hashCode() : 0);
@@ -143,6 +127,17 @@ public class ExerciseSet implements DTOHelper {
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (exercise != null ? exercise.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ExerciseSet)) return false;
+
+        ExerciseSet set = (ExerciseSet) o;
+
+        return !(id != null ? !id.equals(set.id) : set.id != null) && !(repeat != null ? !repeat.equals(set.repeat) : set.repeat != null) && !(order_nr != null ? !order_nr.equals(set.order_nr) : set.order_nr != null) && !(isDeleted != null ? !isDeleted.equals(set.isDeleted) : set.isDeleted != null) && type == set.type && !(user != null ? !user.equals(set.user) : set.user != null) && !(exercise != null ? !exercise.equals(set.exercise) : set.exercise != null);
+
     }
 
     @Override

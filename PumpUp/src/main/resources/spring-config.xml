@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:annotation-config />
+    <context:annotation-config/>
 
     <!-- ###### Meta beans ###### -->
 
@@ -85,6 +85,7 @@
         <property name="weightHistoryService" ref="weightHistoryService"/>
         <property name="bodyfatHistoryService" ref="bodyfatHistoryService"/>
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
+        <property name="motivationModul" ref="motivationModul"/>
     </bean>
 
     <bean id="userEditController" class="sepm.ss15.grp16.gui.controller.user.UserEditController"

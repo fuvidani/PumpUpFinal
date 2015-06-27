@@ -11,8 +11,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Created by Maximilian on 22.05.2015.
  */
 public class NewMain extends Application {
-    private static final Logger LOGGER = LogManager.getLogger(NewMain.class);
-    private static ClassPathXmlApplicationContext context = null;
+    private static final Logger                         LOGGER  = LogManager.getLogger(NewMain.class);
+    private static       ClassPathXmlApplicationContext context = null;
 
     public static void main(String[] args) {
         try {
@@ -30,6 +30,7 @@ public class NewMain extends Application {
         LOGGER.info("starting application");
         context = new ClassPathXmlApplicationContext("spring-config.xml");
 
+
         FrameWindow mainFrame = new FrameWindow(context, primaryStage, PageEnum.Login);
 
         primaryStage.setOnCloseRequest(e -> {
@@ -37,8 +38,12 @@ public class NewMain extends Application {
             primaryStage.close();
         });
 
-        LOGGER.info("configuration successful");
 
+        LOGGER.info("configuration successful");
         primaryStage.show();
+
+
     }
+
+
 }

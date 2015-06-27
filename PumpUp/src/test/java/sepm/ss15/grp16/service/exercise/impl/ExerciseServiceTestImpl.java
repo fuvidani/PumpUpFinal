@@ -20,14 +20,12 @@ import sepm.ss15.grp16.service.exercise.ExerciseService;
  * Created by lukas on 17.05.2015.
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config-test.xml")
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("classpath:spring-config-test.xml")
+@TestExecutionListeners(inheritListeners = false, listeners = {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class ExerciseServiceTestImpl extends AbstractExerciseServiceTest {
 
     @Autowired
-    ExerciseDAO mockedExerciseDAO;
+    ExerciseDAO     mockedExerciseDAO;
     @Autowired
     ExerciseService exerciseService;
 

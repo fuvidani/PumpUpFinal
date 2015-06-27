@@ -21,24 +21,22 @@ import sepm.ss15.grp16.service.user.UserService;
  * Created by David on 2015.06.22..
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config-test.xml")
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("classpath:spring-config-test.xml")
+@TestExecutionListeners(inheritListeners = false, listeners = {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class CalendarServiceTestImpl extends AbstractCalendarServiceTest {
 
     @Autowired
-    public void setMockedCalendarDAO(CalendarDAO mockedCalendarDAO){
+    public void setMockedCalendarDAO(CalendarDAO mockedCalendarDAO) {
         this.mockedCalendarDAO = mockedCalendarDAO;
     }
 
     @Autowired
-    public void setMockedUserService(UserService mockedUserService){
+    public void setMockedUserService(UserService mockedUserService) {
         this.mockedUserService = mockedUserService;
     }
 
     @Autowired
-    public void setCalendarService(CalendarService calendarService){
+    public void setCalendarService(CalendarService calendarService) {
         this.calendarService = calendarService;
     }
 

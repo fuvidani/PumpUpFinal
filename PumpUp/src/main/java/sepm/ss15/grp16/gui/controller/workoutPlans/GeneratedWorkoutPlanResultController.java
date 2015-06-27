@@ -32,9 +32,9 @@ public class GeneratedWorkoutPlanResultController extends Controller {
 
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private Trainingsplan generatedWorkoutPlan;
+    private Trainingsplan        generatedWorkoutPlan;
     private TrainingsplanService trainingsplanService;
-    private boolean saved;
+    private boolean              saved;
 
     @FXML
     private ListView<TrainingsSession> listView;
@@ -44,12 +44,6 @@ public class GeneratedWorkoutPlanResultController extends Controller {
 
     @FXML
     private Label goalLabel;
-
-    @FXML
-    private Button increaseDiffButton;
-
-    @FXML
-    private Button decreaseDiffButton;
 
     @Override
     public void initController() {
@@ -216,7 +210,7 @@ public class GeneratedWorkoutPlanResultController extends Controller {
      * After that the Calendar will be opened.
      */
     @FXML
-    public void exportToCalendarClicked(){
+    public void exportToCalendarClicked() {
         try {
             if (!saved) {
                 trainingsplanService.create(generatedWorkoutPlan);
@@ -225,7 +219,7 @@ public class GeneratedWorkoutPlanResultController extends Controller {
             mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
             if (((WorkoutPlanToCalendarController) this.getChildController()).isFinished())
                 mainFrame.navigateToChild(PageEnum.Calendar);
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             LOGGER.error("Service threw exception, catched in GUI. Real reason: " + e.toString());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
@@ -239,9 +233,10 @@ public class GeneratedWorkoutPlanResultController extends Controller {
     /**
      * This method is called by WorkoutPlanToCalendarController in order to obtain the generated
      * DTO.
+     *
      * @return the generated workout routine
      */
-    public Trainingsplan getGeneratedWorkoutPlan(){
+    public Trainingsplan getGeneratedWorkoutPlan() {
         return this.generatedWorkoutPlan;
     }
 

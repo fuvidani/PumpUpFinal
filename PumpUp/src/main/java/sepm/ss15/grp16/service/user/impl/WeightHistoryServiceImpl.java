@@ -56,24 +56,6 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
     }
 
     @Override
-    public List<WeightHistory> searchByUserID(int user_id) throws ServiceException {
-        try {
-            return weightHistoryDAO.searchByUserID(user_id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public WeightHistory getActualWeight(int user_id) throws ServiceException {
-        try {
-            return weightHistoryDAO.getActualWeight(user_id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public void validate(WeightHistory weightHistory) throws ValidationException {
 
         if (weightHistory == null) {
@@ -96,5 +78,23 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
             throw new ValidationException(errorMsg);
         }
 
+    }
+
+    @Override
+    public List<WeightHistory> searchByUserID(int user_id) throws ServiceException {
+        try {
+            return weightHistoryDAO.searchByUserID(user_id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public WeightHistory getActualWeight(int user_id) throws ServiceException {
+        try {
+            return weightHistoryDAO.getActualWeight(user_id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
     }
 }

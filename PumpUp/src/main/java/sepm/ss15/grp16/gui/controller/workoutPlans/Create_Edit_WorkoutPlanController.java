@@ -32,12 +32,12 @@ import java.util.*;
 public class Create_Edit_WorkoutPlanController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(Create_Edit_WorkoutPlanController.class);
 
-    private Trainingsplan plan_interClassCommunication;
+    private Trainingsplan    plan_interClassCommunication;
     private TrainingsSession session_interClassCommunication;
 
     private TrainingsplanService trainingsplanService;
-    private UserService userService;
-    private TrainingsSession selection;
+    private UserService          userService;
+    private TrainingsSession     selection;
 
     @FXML
     private Button btnEditSession;
@@ -105,25 +105,21 @@ public class Create_Edit_WorkoutPlanController extends Controller {
 
             if (plan_interClassCommunication.getTrainingsSessions() != null) {
 
-                ObservableList<TrainingsSession> data =
-                        FXCollections.observableArrayList(
-                                plan_interClassCommunication.getTrainingsSessions()
-                        );
+                ObservableList<TrainingsSession> data = FXCollections.observableArrayList(plan_interClassCommunication.getTrainingsSessions());
                 listViewSessions.setItems(data);
                 updateInformations();
             }
         }
 
-        listViewSessions.getSelectionModel().selectedItemProperty().addListener(
-                (ov, old_val, new_val) -> {
-                    if (listViewSessions.getSelectionModel().getSelectedItems() != null && new_val != null) {
-                        selection = new TrainingsSession(new_val);
-                        btnDeleteSession.setDisable(false);
-                        btnEditSession.setDisable(false);
-                        btnIncreaseDif.setDisable(false);
-                        btnDecreaseDif.setDisable(false);
-                    }
-                });
+        listViewSessions.getSelectionModel().selectedItemProperty().addListener((ov, old_val, new_val) -> {
+                                                                                    if (listViewSessions.getSelectionModel().getSelectedItems() != null && new_val != null) {
+                                                                                        selection = new TrainingsSession(new_val);
+                                                                                        btnDeleteSession.setDisable(false);
+                                                                                        btnEditSession.setDisable(false);
+                                                                                        btnIncreaseDif.setDisable(false);
+                                                                                        btnDecreaseDif.setDisable(false);
+                                                                                    }
+                                                                                });
 
         listViewSessions.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
@@ -133,6 +129,10 @@ public class Create_Edit_WorkoutPlanController extends Controller {
 
         btnIncreaseDif.setTooltip(new Tooltip("Schwierigkeit erh\u00f6hen"));
         btnDecreaseDif.setTooltip(new Tooltip("Schwierigkeit reduzieren"));
+
+        btnAddSession.setTooltip(new Tooltip("Neue Session hinzuf\u00FDgen"));
+        btnEditSession.setTooltip(new Tooltip("Session bearbeiten"));
+        btnDeleteSession.setTooltip(new Tooltip("Session l\u00F6schen"));
     }
 
     /**
@@ -323,10 +323,7 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                             }
 
                             for (Map.Entry<Integer, Pair<Integer, ExerciseSet>> entry : setMap.entrySet()) {
-                                value += entry.getValue().getKey() + "x "
-                                        + entry.getValue().getValue().getRepeat()
-                                        + (entry.getValue().getValue().getType() == ExerciseSet.SetType.time ? "s " : " ")
-                                        + entry.getValue().getValue().getExercise().getName() + "\n";
+                                value += entry.getValue().getKey() + "x " + entry.getValue().getValue().getRepeat() + (entry.getValue().getValue().getType() == ExerciseSet.SetType.time ? "s " : " ") + entry.getValue().getValue().getExercise().getName() + "\n";
                             }
 
                             final Text leftText = new Text(title);

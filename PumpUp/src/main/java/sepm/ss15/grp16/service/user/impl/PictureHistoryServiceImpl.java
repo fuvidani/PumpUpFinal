@@ -66,24 +66,6 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
     }
 
     @Override
-    public List<PictureHistory> searchByUserID(int user_id) throws ServiceException {
-        try {
-            return pictureHistoryDAO.searchByUserID(user_id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public PictureHistory getActualPicture(int user_id) throws ServiceException {
-        try {
-            return pictureHistoryDAO.getActualPicture(user_id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public void validate(PictureHistory pictureHistory) throws ValidationException {
 
         if (pictureHistory == null) {
@@ -106,5 +88,23 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
             throw new ValidationException(errorMsg);
         }
 
+    }
+
+    @Override
+    public List<PictureHistory> searchByUserID(int user_id) throws ServiceException {
+        try {
+            return pictureHistoryDAO.searchByUserID(user_id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public PictureHistory getActualPicture(int user_id) throws ServiceException {
+        try {
+            return pictureHistoryDAO.getActualPicture(user_id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
     }
 }

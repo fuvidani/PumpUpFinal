@@ -29,22 +29,22 @@ import java.util.List;
 public class H2ExerciseDAOImpl implements ExerciseDAO {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static Connection connection;
-    private static CategoryDAO categoryDAO;
-    private static UserDAO userDAO;
-    private PreparedStatement createStatement;
-    private PreparedStatement createCategoryStatement;
-    private PreparedStatement readStatement;
-    private PreparedStatement getCategoryIDStatement;
-    private PreparedStatement updateStatement;
-    private PreparedStatement insertGifStatement;
-    private PreparedStatement nextvalExercise;
-    private PreparedStatement nextvalGif;
-    private PreparedStatement readGifStatement;
-    private PreparedStatement searchByIDStatement;
-    private PreparedStatement deleteCategoryStatement;
-    private PreparedStatement deleteGifStatement;
-    private PreparedStatement getExerciseWithCategoryStatement;
+    private static Connection        connection;
+    private static CategoryDAO       categoryDAO;
+    private static UserDAO           userDAO;
+    private        PreparedStatement createStatement;
+    private        PreparedStatement createCategoryStatement;
+    private        PreparedStatement readStatement;
+    private        PreparedStatement getCategoryIDStatement;
+    private        PreparedStatement updateStatement;
+    private        PreparedStatement insertGifStatement;
+    private        PreparedStatement nextvalExercise;
+    private        PreparedStatement nextvalGif;
+    private        PreparedStatement readGifStatement;
+    private        PreparedStatement searchByIDStatement;
+    private        PreparedStatement deleteCategoryStatement;
+    private        PreparedStatement deleteGifStatement;
+    private        PreparedStatement getExerciseWithCategoryStatement;
 
 
     /**
@@ -104,8 +104,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
         try {
 
             LOGGER.info("crating a new exercise" + exercise);
-            if (exercise == null)
-                throw new PersistenceException("exercise must not be null");
+            if (exercise == null) throw new PersistenceException("exercise must not be null");
 
             ResultSet rs = nextvalExercise.executeQuery();
             rs.next();
@@ -192,8 +191,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     public Exercise searchByID(int id) throws PersistenceException {
         LOGGER.info("searching after an exercise in dao layer with exerciseID: " + id);
         try {
-            if (id < 0)
-                throw new PersistenceException("exerciseID must not be lower 0!");
+            if (id < 0) throw new PersistenceException("exerciseID must not be lower 0!");
 
             searchByIDStatement.setInt(1, id);
             ResultSet rs = searchByIDStatement.executeQuery();
@@ -215,11 +213,9 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
     @Override
     public Exercise update(Exercise exercise) throws PersistenceException {
         LOGGER.debug("updating a given exercise in dao layer" + exercise);
-        if (exercise == null)
-            throw new PersistenceException("exercise to update must not be null");
+        if (exercise == null) throw new PersistenceException("exercise to update must not be null");
 
-        if (exercise.getId() == null)
-            throw new PersistenceException("exercise exerciseID to update must not be null");
+        if (exercise.getId() == null) throw new PersistenceException("exercise exerciseID to update must not be null");
 
         try {
             Exercise oldExercise = searchByID(exercise.getId());
@@ -284,16 +280,115 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
 
 
         LOGGER.debug("deleting an exercise in dao layer" + exercise);
-        if (exercise == null)
-            throw new PersistenceException("exercise must not be null!");
+        if (exercise == null) throw new PersistenceException("exercise must not be null!");
 
-        if (exercise.getId() == null)
-            throw new PersistenceException("exercise ID must not be null for deletion!");
+        if (exercise.getId() == null) throw new PersistenceException("exercise ID must not be null for deletion!");
 
         exercise.setIsDeleted(true);
         update(exercise); //DTO boolean  isdeleted = true
     }
 
+    /**
+     * get all exercises which train only endurance
+     *
+     * @return a list of all exercises with endurance purposes
+     * @throws PersistenceException
+     */
+    public List<Exercise> getAllEnduranceExercises() throws PersistenceException {
+        try {
+            getExerciseWithCategoryStatement.setInt(1, 0);
+            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
+            List<Exercise> exercises = new ArrayList<>();
+            while (rs.next()) {
+                exercises.add(this.extractExcercise(rs));
+            }
+            return exercises;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    /**
+     * get all exercises which train only strength
+     *
+     * @return a list of all exercises with strength purposes
+     * @throws PersistenceException
+     */
+    public List<Exercise> getAllStrengthExercises() throws PersistenceException {
+        try {
+            getExerciseWithCategoryStatement.setInt(1, 1);
+            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
+            List<Exercise> exercises = new ArrayList<>();
+            while (rs.next()) {
+                exercises.add(this.extractExcercise(rs));
+            }
+            return exercises;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    /**
+     * get all exercises which train only balance
+     *
+     * @return a list of all exercises with balance purposes
+     * @throws PersistenceException
+     */
+    public List<Exercise> getAllBalanceExercises() throws PersistenceException {
+        try {
+            getExerciseWithCategoryStatement.setInt(1, 2);
+            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
+            List<Exercise> exercises = new ArrayList<>();
+            while (rs.next()) {
+                exercises.add(this.extractExcercise(rs));
+            }
+            return exercises;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    /**
+     * get all exercises which train only flexibility
+     *
+     * @return a list of all exercises with flexibility purposes
+     * @throws PersistenceException
+     */
+    public List<Exercise> getAllFlexibilityExercises() throws PersistenceException {
+        try {
+            getExerciseWithCategoryStatement.setInt(1, 3);
+            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
+            List<Exercise> exercises = new ArrayList<>();
+            while (rs.next()) {
+                exercises.add(this.extractExcercise(rs));
+            }
+            return exercises;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
+
+    /**
+     * getting all exercises which have the given category specified
+     * by the categoryID
+     *
+     * @param categoryID the id of the category specifying for the exercies
+     * @return a list of all exercises which are qulifyed by the categoryID
+     * @throws PersistenceException
+     */
+    public List<Exercise> getAllExercisesWithCategoryID(Integer categoryID) throws PersistenceException {
+        try {
+            getExerciseWithCategoryStatement.setInt(1, categoryID);
+            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
+            List<Exercise> exercises = new ArrayList<>();
+            while (rs.next()) {
+                exercises.add(this.extractExcercise(rs));
+            }
+            return exercises;
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
+    }
 
     /**
      * extracting an exercise out of one line from the given resultset
@@ -329,8 +424,7 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
                 categoryList.add(absractCategory);
             }
             User user = null;
-            if (userid != null)
-                user = userDAO.searchByID(userid);
+            if (userid != null) user = userDAO.searchByID(userid);
 
 
             return new Exercise(id, name, description, calories, videoLink, gifLinks, isDeleted, user, categoryList);
@@ -385,109 +479,5 @@ public class H2ExerciseDAOImpl implements ExerciseDAO {
             throw new PersistenceException(e);
         }
 
-    }
-
-    /**
-     * get all exercises which train only endurance
-     *
-     * @return a list of all exercises with endurance purposes
-     * @throws PersistenceException
-     */
-    public List<Exercise> getAllEnduranceExercises() throws PersistenceException {
-        try {
-            getExerciseWithCategoryStatement.setInt(1, 0);
-            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
-            List<Exercise> exercises = new ArrayList<>();
-            while (rs.next()) {
-                exercises.add(this.extractExcercise(rs));
-            }
-            return exercises;
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
-    }
-
-    /**
-     * get all exercises which train only strength
-     *
-     * @return a list of all exercises with strength purposes
-     * @throws PersistenceException
-     */
-    public List<Exercise> getAllStrengthExercises() throws PersistenceException {
-        try {
-            getExerciseWithCategoryStatement.setInt(1, 1);
-            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
-            List<Exercise> exercises = new ArrayList<>();
-            while (rs.next()) {
-                exercises.add(this.extractExcercise(rs));
-            }
-            return exercises;
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
-    }
-
-
-    /**
-     * get all exercises which train only balance
-     *
-     * @return a list of all exercises with balance purposes
-     * @throws PersistenceException
-     */
-    public List<Exercise> getAllBalanceExercises() throws PersistenceException {
-        try {
-            getExerciseWithCategoryStatement.setInt(1, 2);
-            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
-            List<Exercise> exercises = new ArrayList<>();
-            while (rs.next()) {
-                exercises.add(this.extractExcercise(rs));
-            }
-            return exercises;
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
-    }
-
-    /**
-     * get all exercises which train only flexibility
-     *
-     * @return a list of all exercises with flexibility purposes
-     * @throws PersistenceException
-     */
-    public List<Exercise> getAllFlexibilityExercises() throws PersistenceException {
-        try {
-            getExerciseWithCategoryStatement.setInt(1, 3);
-            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
-            List<Exercise> exercises = new ArrayList<>();
-            while (rs.next()) {
-                exercises.add(this.extractExcercise(rs));
-            }
-            return exercises;
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
-    }
-
-
-    /**
-     * getting all exercises which have the given category specified
-     * by the categoryID
-     *
-     * @param categoryID the id of the category specifying for the exercies
-     * @return a list of all exercises which are qulifyed by the categoryID
-     * @throws PersistenceException
-     */
-    public List<Exercise> getAllExercisesWithCategoryID(Integer categoryID) throws PersistenceException {
-        try {
-            getExerciseWithCategoryStatement.setInt(1, categoryID);
-            ResultSet rs = getExerciseWithCategoryStatement.executeQuery();
-            List<Exercise> exercises = new ArrayList<>();
-            while (rs.next()) {
-                exercises.add(this.extractExcercise(rs));
-            }
-            return exercises;
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
     }
 }

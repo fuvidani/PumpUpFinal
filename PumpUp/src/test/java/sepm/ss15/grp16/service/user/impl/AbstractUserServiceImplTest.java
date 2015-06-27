@@ -19,10 +19,8 @@ import sepm.ss15.grp16.service.user.UserService;
  * @author Michael Sober
  * @version 1.0
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config-test.xml")
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("classpath:spring-config-test.xml")
+@TestExecutionListeners(inheritListeners = false, listeners = {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class AbstractUserServiceImplTest extends AbstractUserServiceTest {
 
     @Autowired

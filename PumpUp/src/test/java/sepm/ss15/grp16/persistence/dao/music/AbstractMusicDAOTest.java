@@ -59,9 +59,9 @@ public abstract class AbstractMusicDAOTest extends AbstractDAOTest<Playlist> {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void motivationTest()throws Exception{
+    public void motivationTest() throws Exception {
         LOGGER.info("motivationTest");
-        Map<String,Playlist> playlistMap= ((MusicDAO)getDAO()).getMotivations();
+        Map<String, Playlist> playlistMap = ((MusicDAO) getDAO()).getMotivations();
     }
 
     public Playlist getDummyPlaylist() throws URISyntaxException {

@@ -31,6 +31,11 @@ public class WorkoutResult {
     }
 
     @Override
+    public int hashCode() {
+        int result = appointment != null ? appointment.hashCode() : 0;
+        result = 31 * result + (list != null ? list.hashCode() : 0);
+        return result;
+    }    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -40,21 +45,6 @@ public class WorkoutResult {
         if (appointment != null ? !appointment.equals(that.appointment) : that.appointment != null) return false;
         return !(list != null ? !list.equals(that.list) : that.list != null);
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = appointment != null ? appointment.hashCode() : 0;
-        result = 31 * result + (list != null ? list.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "WorkoutResult{" +
-                "appointment=" + appointment +
-                ", list=" + list +
-                '}';
     }
 
     public class ExecutionTimePair {
@@ -101,4 +91,14 @@ public class WorkoutResult {
                     '}';
         }
     }
+
+    @Override
+    public String toString() {
+        return "WorkoutResult{" +
+                "appointment=" + appointment +
+                ", list=" + list +
+                '}';
+    }
+
+
 }

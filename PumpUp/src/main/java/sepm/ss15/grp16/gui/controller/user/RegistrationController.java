@@ -13,6 +13,7 @@ import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
 import sepm.ss15.grp16.gui.controller.Controller;
+import sepm.ss15.grp16.gui.controller.workout.MotivatonModul;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.user.BodyfatHistoryService;
@@ -32,35 +33,36 @@ public class RegistrationController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    Pane registrationPane;
+    Pane        registrationPane;
     @FXML
-    Button picture_Button;
+    Button      picture_Button;
     @FXML
-    TextField username_textField;
+    TextField   username_textField;
     @FXML
-    TextField age_textField;
+    TextField   age_textField;
     @FXML
-    TextField height_textField;
+    TextField   height_textField;
     @FXML
-    TextField weight_textField;
+    TextField   weight_textField;
     @FXML
-    TextField bodyfat_textField;
+    TextField   bodyfat_textField;
     @FXML
-    TextField email_textField;
+    TextField   email_textField;
     @FXML
     RadioButton male_radioButton;
     @FXML
     RadioButton female_radioButton;
     @FXML
-    ImageView picture_imageView;
+    ImageView   picture_imageView;
     @FXML
-    private ToggleGroup group;
-    private UserService userService;
-    private LoginController loginController;
-    private WeightHistoryService weightHistoryService;
+    private ToggleGroup           group;
+    private UserService           userService;
+    private LoginController       loginController;
+    private WeightHistoryService  weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
-    private String filePath;
+    private String                filePath;
+    private MotivatonModul        motivationModul;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -167,6 +169,8 @@ public class RegistrationController extends Controller {
                 pictureHistoryService.create(pictureHistory);
             }
 
+            motivationModul.welcome();
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information");
             alert.setHeaderText("Registration-Information");
@@ -208,5 +212,9 @@ public class RegistrationController extends Controller {
             picture_imageView.setImage(image);
         }
         picture_Button.setDisable(false);
+    }
+
+    public void setMotivationModul(MotivatonModul motivationModul) {
+        this.motivationModul = motivationModul;
     }
 }

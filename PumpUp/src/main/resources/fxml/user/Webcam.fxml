@@ -6,9 +6,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="690.0" prefWidth="900.0"
-            stylesheets="@../../css/webcamStyle.css" xmlns="http://javafx.com/javafx/8"
-            fx:controller="sepm.ss15.grp16.gui.controller.user.WebcamController">
+<?import java.net.URL?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="690.0" prefWidth="900.0" styleClass="mainRoot"
+            xmlns="http://javafx.com/javafx/8" fx:controller="sepm.ss15.grp16.gui.controller.user.WebcamController">
     <bottom>
         <FlowPane fx:id="webCamFooterFlowPane" alignment="CENTER" columnHalignment="CENTER" hgap="50.0"
                   prefHeight="80.0" prefWidth="200.0" styleClass="footer">
@@ -85,4 +85,8 @@
             </children>
         </GridPane>
     </top>
+    <stylesheets>
+        <URL value="@../../css/webcamStyle.css"/>
+        <URL value="@../../css/mainStyle.css"/>
+    </stylesheets>
 </BorderPane>

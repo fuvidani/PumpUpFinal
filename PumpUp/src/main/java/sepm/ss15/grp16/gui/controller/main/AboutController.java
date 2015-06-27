@@ -2,11 +2,7 @@ package sepm.ss15.grp16.gui.controller.main;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.gui.controller.Controller;
@@ -38,25 +34,22 @@ public class AboutController extends Controller implements Initializable {
      * If there is no internet connection, an error dialog is displayed.
      */
     @FXML
-    public void likeFacebookClicked(){
+    public void likeFacebookClicked() {
         try {
             URL url = new URL("http://www.google.com");
             URLConnection connection = url.openConnection();
             connection.connect();
-            if(Desktop.isDesktopSupported())
-            {
+            if (Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().browse(new URI("https://www.facebook.com/PumpUpTUVienna"));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehler beim Öffnen des Browsers");
             alert.setContentText("Es konnte keine Internetverbindung hergestellt werden, somit können Sie leider derzeit Facebook nicht erreichen.");
             alert.showAndWait();
-        }
-        catch (URISyntaxException ex){
-            LOGGER.info("Error in URI: " +  ex.getMessage());
+        } catch (URISyntaxException ex) {
+            LOGGER.info("Error in URI: " + ex.getMessage());
         }
     }
 }

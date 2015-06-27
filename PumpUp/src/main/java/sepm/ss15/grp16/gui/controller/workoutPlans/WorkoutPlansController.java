@@ -37,11 +37,11 @@ import java.util.*;
 public class WorkoutPlansController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutPlansController.class);
 
-    private Trainingsplan plan_interClassCommunication;
-    private Trainingsplan generatedWorkoutPlan;
-    private String selectedGoal;
+    private Trainingsplan        plan_interClassCommunication;
+    private Trainingsplan        generatedWorkoutPlan;
+    private String               selectedGoal;
     private TrainingsplanService trainingsplanService;
-    private UserService userService;
+    private UserService          userService;
 
     private Trainingsplan selection;
 
@@ -93,37 +93,36 @@ public class WorkoutPlansController extends Controller {
     @FXML
     private Button copyBtn;
 
+    @FXML
+    private Button newBtn;
+
     @Override
     public void initController() {
 
         try {
-            ObservableList<Trainingsplan> data =
-                    FXCollections.observableArrayList(
-                            trainingsplanService.findAll()
-                    );
+            ObservableList<Trainingsplan> data = FXCollections.observableArrayList(trainingsplanService.findAll());
 
-            workoutPlansListView.getSelectionModel().selectedItemProperty().addListener(
-                    (ov, old_val, new_val) -> {
-                        if (workoutPlansListView.getSelectionModel().getSelectedItems() != null && new_val != null) {
-                            updateSessionList(new_val.getTrainingsSessions());
-                            selection = new Trainingsplan(new_val);
-                            txtDuration.setText(String.valueOf(new_val.getDuration()));
-                            trainingDescr.setText(new_val.getDescr());
-                            trainingNameLabel.setText(new_val.getName());
+            workoutPlansListView.getSelectionModel().selectedItemProperty().addListener((ov, old_val, new_val) -> {
+                if (workoutPlansListView.getSelectionModel().getSelectedItems() != null && new_val != null) {
+                    updateSessionList(new_val.getTrainingsSessions());
+                    selection = new Trainingsplan(new_val);
+                    txtDuration.setText(String.valueOf(new_val.getDuration()));
+                    trainingDescr.setText(new_val.getDescr());
+                    trainingNameLabel.setText(new_val.getName());
 
-                            if (selection.getUser() != null) {
-                                deleteBtn.setDisable(false);
-                                editBtn.setDisable(false);
-                            } else {
-                                deleteBtn.setDisable(true);
-                                editBtn.setDisable(true);
-                            }
-                            copyBtn.setDisable(false);
-                            calenderBtn.setDisable(false);
-                            updateInformations(new_val);
+                    if (selection.getUser() != null) {
+                        deleteBtn.setDisable(false);
+                        editBtn.setDisable(false);
+                    } else {
+                        deleteBtn.setDisable(true);
+                        editBtn.setDisable(true);
+                    }
+                    copyBtn.setDisable(false);
+                    calenderBtn.setDisable(false);
+                    updateInformations(new_val);
 
-                        }
-                    });
+                }
+            });
 
             setUpListView();
             workoutPlansListView.setItems(data);
@@ -140,8 +139,13 @@ public class WorkoutPlansController extends Controller {
 
             listViewSessions.setMouseTransparent(true);
             listViewSessions.setFocusTraversable(false);
+
+            newBtn.setTooltip(new Tooltip("Neuen Trainingsplan erstellen"));
+            editBtn.setTooltip(new Tooltip("Trainingsplan bearbeiten"));
+            copyBtn.setTooltip(new Tooltip("Trainingsplan kopieren & bearbeiten"));
+            deleteBtn.setTooltip(new Tooltip("Trainingsplan l\u00F6schen"));
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
     }
 
@@ -233,7 +237,7 @@ public class WorkoutPlansController extends Controller {
 
             clearSelection();
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
     }
 
@@ -252,7 +256,7 @@ public class WorkoutPlansController extends Controller {
 
             clearSelection();
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
     }
 
@@ -322,10 +326,7 @@ public class WorkoutPlansController extends Controller {
                             }
 
                             for (Map.Entry<Integer, Pair<Integer, ExerciseSet>> entry : setMap.entrySet()) {
-                                value += entry.getValue().getKey() + "x "
-                                        + entry.getValue().getValue().getRepeat()
-                                        + (entry.getValue().getValue().getType() == ExerciseSet.SetType.time ? "s " : " ")
-                                        + entry.getValue().getValue().getExercise().getName() + "\n";
+                                value += entry.getValue().getKey() + "x " + entry.getValue().getValue().getRepeat() + (entry.getValue().getValue().getType() == ExerciseSet.SetType.time ? "s " : " ") + entry.getValue().getValue().getExercise().getName() + "\n";
                             }
 
 
@@ -353,11 +354,7 @@ public class WorkoutPlansController extends Controller {
 
     @FXML
     public void newWorkoutPlanClicked(ActionEvent event) {
-        //Create_Edit_WorkoutPlanController.plan_interClassCommunication = null;
         plan_interClassCommunication = null;
-
-        //transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
-        //      "Trainingsplan erstellen", 1000, 620, true);
         mainFrame.navigateToChild(PageEnum.Workoutplan_create_edit);
 
         updateTable();
@@ -369,10 +366,7 @@ public class WorkoutPlansController extends Controller {
     public void copyWorkoutPlanClicked(ActionEvent event) {
         Trainingsplan toCopy = new Trainingsplan(selection);
         toCopy.setId(null);
-        //Create_Edit_WorkoutPlanController.plan_interClassCommunication = toCopy;
         plan_interClassCommunication = toCopy;
-        //transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
-        //      "Trainingsplan " + selection.getName() + " kopieren", 1000, 620, true);
         mainFrame.navigateToChild(PageEnum.Workoutplan_create_edit);
         updateTable();
         setUpListView();
@@ -443,18 +437,16 @@ public class WorkoutPlansController extends Controller {
             alert.setHeaderText("Fehler beim \u00f6ffnen des Fensters!");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-            e.printStackTrace();
+
+            LOGGER.error("+e");
         }
     }
 
     @FXML
     public void editWorkoutPlanClicked(ActionEvent event) {
         Stage thiststage = (Stage) listViewSessions.getScene().getWindow();
-        //Create_Edit_WorkoutPlanController.plan_interClassCommunication = selection;
         plan_interClassCommunication = selection;
 
-        // transitionLoader.openWaitStage("fxml/workoutPlans/Create_Edit_WorkoutPlans.fxml", (Stage) listViewSessions.getScene().getWindow(),
-        //         "Trainingsplan " + selection.getName() + " bearbeiten", 1000, 620, true);
         mainFrame.navigateToChild(PageEnum.Workoutplan_create_edit);
 
         updateTable();
@@ -464,13 +456,10 @@ public class WorkoutPlansController extends Controller {
 
     public void updateTable() {
         try {
-            ObservableList<Trainingsplan> data =
-                    FXCollections.observableArrayList(
-                            trainingsplanService.findAll()
-                    );
+            ObservableList<Trainingsplan> data = FXCollections.observableArrayList(trainingsplanService.findAll());
             workoutPlansListView.setItems(data);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
     }
 

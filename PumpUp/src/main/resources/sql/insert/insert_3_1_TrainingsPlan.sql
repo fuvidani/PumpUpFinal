@@ -24,16 +24,16 @@ MERGE INTO ExerciseSet VALUES
   (9, 12, NULL, 12, 'repeat', 9, 1, FALSE), (10, 5, NULL, 12, 'repeat', 10, 1, FALSE),
   (11, 5, NULL, 12, 'repeat', 11, 1, FALSE), (12, 5, NULL, 12, 'repeat', 12, 1, FALSE),
   (13, 19, NULL, 12, 'repeat', 13, 1, FALSE), (14, 19, NULL, 12, 'repeat', 14, 1, FALSE),
-  (15, 19, NULL, 12, 'repeat', 15, 1, FALSE), (16, 9, NULL, 1, 'time', 16, 1, FALSE),
-  (17, 9, NULL, 1, 'time', 17, 1, FALSE), (18, 9, NULL, 1, 'time', 18, 1, FALSE),
+  (15, 19, NULL, 12, 'repeat', 15, 1, FALSE), (16, 9, NULL, 10, 'time', 16, 1, FALSE),
+  (17, 9, NULL, 10, 'time', 17, 1, FALSE), (18, 9, NULL, 10, 'time', 18, 1, FALSE),
   (19, 0, NULL, 20, 'repeat', 1, 2, FALSE), (20, 0, NULL, 20, 'repeat', 2, 2, FALSE),
   (21, 0, NULL, 20, 'repeat', 3, 2, FALSE), (22, 0, NULL, 20, 'repeat', 4, 2, FALSE),
   (23, 0, NULL, 20, 'repeat', 5, 2, FALSE), (24, 8, NULL, 20, 'repeat', 6, 2, FALSE),
   (25, 8, NULL, 20, 'repeat', 7, 2, FALSE), (26, 8, NULL, 20, 'repeat', 8, 2, FALSE),
   (27, 3, NULL, 20, 'repeat', 9, 2, FALSE), (28, 3, NULL, 20, 'repeat', 10, 2, FALSE),
-  (29, 3, NULL, 20, 'repeat', 11, 2, FALSE), (30, 19, NULL, 1, 'time', 12, 2, FALSE),
-  (31, 19, NULL, 1, 'time', 13, 2, FALSE), (32, 19, NULL, 1, 'time', 14, 2, FALSE),
-  (33, 19, NULL, 1, 'time', 15, 2, FALSE), (34, 4, NULL, 20, 'repeat', 16, 2, FALSE),
+  (29, 3, NULL, 20, 'repeat', 11, 2, FALSE), (30, 19, NULL, 10, 'time', 12, 2, FALSE),
+  (31, 19, NULL, 10, 'time', 13, 2, FALSE), (32, 19, NULL, 10, 'time', 14, 2, FALSE),
+  (33, 19, NULL, 10, 'time', 15, 2, FALSE), (34, 4, NULL, 20, 'repeat', 16, 2, FALSE),
   (35, 4, NULL, 20, 'repeat', 17, 2, FALSE), (36, 4, NULL, 20, 'repeat', 18, 2, FALSE),
   (37, 0, NULL, 20, 'repeat', 1, 3, FALSE), (38, 0, NULL, 20, 'repeat', 2, 3, FALSE),
   (39, 0, NULL, 20, 'repeat', 3, 3, FALSE), (40, 12, NULL, 16, 'repeat', 4, 3, FALSE),
@@ -46,11 +46,3 @@ MERGE INTO ExerciseSet VALUES
   (53, 12, NULL, 16, 'repeat', 5, 4, FALSE), (54, 12, NULL, 20, 'repeat', 6, 4, FALSE),
   (55, 19, NULL, 20, 'repeat', 7, 4, FALSE), (56, 19, NULL, 20, 'repeat', 8, 4, FALSE),
   (57, 19, NULL, 20, 'repeat', 9, 4, FALSE);
-
-  MERGE INTO appointment VALUES
-  (1, CURRENT_DATE(), 1, 0, FALSE, FALSE);
-
-ALTER SEQUENCE appointment_seq RESTART WITH 2;
-ALTER SEQUENCE seq_TP RESTART WITH 4;
-ALTER SEQUENCE seq_TS RESTART WITH 5;
-ALTER SEQUENCE seq_ES RESTART WITH 58;

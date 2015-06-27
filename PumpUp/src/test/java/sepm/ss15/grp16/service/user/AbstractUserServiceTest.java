@@ -1,5 +1,6 @@
 package sepm.ss15.grp16.service.user;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.persistence.dao.DAO;
@@ -13,8 +14,6 @@ import sepm.ss15.grp16.service.user.impl.UserServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * This class provides methods for testing UserServices
  *
@@ -24,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 public abstract class AbstractUserServiceTest extends AbstractServiceTestMockito<User> {
 
     protected UserService userService;
-    protected UserDAO mockedUserDAO;
+    protected UserDAO     mockedUserDAO;
 
     @Override
     public Service<User> getService() {

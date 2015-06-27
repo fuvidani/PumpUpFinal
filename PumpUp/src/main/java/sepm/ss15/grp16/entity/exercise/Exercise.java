@@ -12,13 +12,13 @@ import java.util.List;
 public class Exercise implements DTO {
 
     private Integer id;
-    private String name;
-    private String description;
-    private Double calories;
-    private String videolink;
+    private String  name;
+    private String  description;
+    private Double  calories;
+    private String  videolink;
     private List<String> gifLinks = new ArrayList<>();
     private Boolean isDeleted;
-    private User user;
+    private User    user;
     private List<AbsractCategory> categories = new ArrayList<>();
 
 
@@ -65,6 +65,14 @@ public class Exercise implements DTO {
         this.id = id;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public String getName() {
         return name;
     }
@@ -105,14 +113,6 @@ public class Exercise implements DTO {
         this.gifLinks = gifLinks;
     }
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
     public User getUser() {
         return user;
     }
@@ -129,33 +129,12 @@ public class Exercise implements DTO {
         this.categories = categories;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Exercise)) return false;
-
-        Exercise exercise = (Exercise) o;
-
-        return !(id != null ? !id.equals(exercise.id) : exercise.id != null)
-                && !(name != null ? !name.equals(exercise.name) : exercise.name != null)
-                && !(description != null ? !description.equals(exercise.description) : exercise.description != null)
-                && !(calories != null ? !calories.equals(exercise.calories) : exercise.calories != null)
-                && !(videolink != null ? !videolink.equals(exercise.videolink) : exercise.videolink != null)
-                && equalListsString(gifLinks, exercise.gifLinks)
-                && !(isDeleted != null ? !isDeleted.equals(exercise.isDeleted) : exercise.isDeleted != null)
-                && !(user != null ? !user.equals(exercise.user) : exercise.user != null)
-                && equalListsCat(categories, exercise.categories);
-
-    }
-
     private boolean equalListsString(List<String> one, List<String> two) {
         if (one == null && two == null) {
             return true;
         }
 
-        if ((one == null && two != null)
-                || one != null && two == null
-                || one.size() != two.size()) {
+        if ((one == null && two != null) || one != null && two == null || one.size() != two.size()) {
             return false;
         }
         return one.containsAll(two);
@@ -166,9 +145,7 @@ public class Exercise implements DTO {
             return true;
         }
 
-        if ((one == null && two != null)
-                || one != null && two == null
-                || one.size() != two.size()) {
+        if ((one == null && two != null) || one != null && two == null || one.size() != two.size()) {
             return false;
         }
         return one.containsAll(two);
@@ -186,6 +163,17 @@ public class Exercise implements DTO {
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (categories != null ? categories.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Exercise)) return false;
+
+        Exercise exercise = (Exercise) o;
+
+        return !(id != null ? !id.equals(exercise.id) : exercise.id != null) && !(name != null ? !name.equals(exercise.name) : exercise.name != null) && !(description != null ? !description.equals(exercise.description) : exercise.description != null) && !(calories != null ? !calories.equals(exercise.calories) : exercise.calories != null) && !(videolink != null ? !videolink.equals(exercise.videolink) : exercise.videolink != null) && equalListsString(gifLinks, exercise.gifLinks) && !(isDeleted != null ? !isDeleted.equals(exercise.isDeleted) : exercise.isDeleted != null) && !(user != null ? !user.equals(exercise.user) : exercise.user != null) && equalListsCat(categories, exercise.categories);
+
     }
 
     @Override

@@ -16,25 +16,25 @@ import java.util.List;
 
 /**
  * Created by David on 2015.05.15..
- * <p>
+ * <p/>
  * Implementation of CalendarDAO. CRUD methods for accessing H2 database.
  */
 public class H2CalendarDAOImpl implements CalendarDAO {
 
     private static final Logger LOGGER = LogManager.getLogger(H2CalendarDAOImpl.class);
-    private PreparedStatement createStm;
-    private PreparedStatement findAllStm;
-    private PreparedStatement searchByIDStm;
-    private PreparedStatement updateStm;
-    private PreparedStatement deleteStm;
+    private PreparedStatement   createStm;
+    private PreparedStatement   findAllStm;
+    private PreparedStatement   searchByIDStm;
+    private PreparedStatement   updateStm;
+    private PreparedStatement   deleteStm;
     private TrainingsSessionDAO trainingsSessionDAO;
-    private Connection connection;
+    private Connection          connection;
 
     public H2CalendarDAOImpl(DBHandler handler) throws PersistenceException {
 
         try {
             this.connection = handler.getConnection();
-            
+
             this.createStm = connection.prepareStatement("INSERT INTO appointment VALUES (?,?,?,?,?,?)");
             this.findAllStm = connection.prepareStatement("SELECT * FROM appointment WHERE isDeleted = FALSE");
             this.searchByIDStm = connection.prepareStatement("SELECT * FROM appointment WHERE appointment_id = ?");
@@ -150,7 +150,7 @@ public class H2CalendarDAOImpl implements CalendarDAO {
             if (foundAppointment != null) {
                 foundAppointment.setSessionName(trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getName());
                 String setNames = "";
-                if (trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getExerciseSets() != null){
+                if (trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getExerciseSets() != null) {
                     for (ExerciseSet exerciseSet : trainingsSessionDAO.searchByID(foundAppointment.getSession_id()).getExerciseSets()) {
                         setNames += (exerciseSet.getRepeat() + " " + exerciseSet.getExercise().getName() + '\n');
                     }

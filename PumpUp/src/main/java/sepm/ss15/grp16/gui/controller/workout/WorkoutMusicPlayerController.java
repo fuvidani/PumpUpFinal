@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.music.Playlist;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.gui.PageEnum;
@@ -32,21 +34,25 @@ import java.util.ResourceBundle;
  * This controller controls the lower section of the training's stage.
  */
 public class WorkoutMusicPlayerController extends Controller implements Initializable {
+    private static final Logger LOGGER = LogManager.getLogger(WorkoutMusicPlayerController.class);
 
-    private Playlist playlist;
-    private MusicService musicService;
-    private UserService userService;
+    private static final double VOLUME_ACTIVE   = 0.3;
+    private static final double VOLUME_INACTIVE = 0.1;
+
+    private Playlist          playlist;
+    private MusicService      musicService;
+    private UserService       userService;
     private WorkoutController parent;
 
     private List<MediaPlayer> players;
     private List<MediaPlayer> original;
-    private boolean playing = false;
-    private boolean muted = false;
+    private boolean playing  = false;
+    private boolean muted    = false;
     private boolean shuffled = false;
 
     @FXML
-    private ProgressBar progress;
-    private ChangeListener<Duration> progressChangeListener;
+    private ProgressBar                       progress;
+    private ChangeListener<Duration>          progressChangeListener;
     private MapChangeListener<String, Object> metadataChangeListener;
 
     @FXML
@@ -87,7 +93,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         try {
             playlist = musicService.create(new Playlist(user, user.getPlaylist(), null));
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
         if (playlist == null) {
             mainPane.setVisible(false);
@@ -109,6 +115,7 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
                         player.stop();
                         musicPlayerSlide.setMediaPlayer(nextPlayer);
                         playlist.setActivePlayer(nextPlayer);
+                        nextPlayer.setVolume(player.getVolume());
                         nextPlayer.play();
                     });
                 }
@@ -252,40 +259,52 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
             players = shuffledList;
             shuffled = true;
         }
-
     }
 
     public void play() {
         if (musicPlayerSlide != null) {
+            musicPlayerSlide.getMediaPlayer().setVolume(VOLUME_ACTIVE);
+
+/*            musicPlayerSlide.getMediaPlayer().setOnReady(() -> {
+                musicPlayerSlide.getMediaPlayer().play();
+                new Transition() {{setCycleDuration(Duration.millis(10));}
+                    @Override
+                    protected void interpolate(double frac) {
+                        System.out.println("interpolate");
+                        musicPlayerSlide.getMediaPlayer().setVolume(frac);
+                    }
+                }.play();
+            });*/
+
             musicPlayerSlide.getMediaPlayer().play();
             playing = true;
         }
     }
 
-    public void reduceVol(Integer percent) {
+    public void reduceVol(Double reduce) {
         if (musicPlayerSlide != null) {
-            Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
-            Double new_vol = vol + (vol * (percent / 100));
-            new_vol = new_vol > 1 ? 1 : new_vol;
-            this.musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+            reduce = reduce > 1 ? 1 : reduce;
+            reduce = reduce < 0 ? 0 : reduce;
+            musicPlayerSlide.getMediaPlayer().setVolume(reduce);
         }
     }
 
     public void reduceVol() {
-        reduceVol(50);
+        reduceVol(VOLUME_INACTIVE);
     }
 
-    public void raiseVol(Integer percent) {
+    public void raiseVol(Double raise) {
         if (musicPlayerSlide != null) {
-            Double vol = musicPlayerSlide.getMediaPlayer().getVolume();
-            Double new_vol = vol - (vol * (percent / 100));
-            new_vol = new_vol < 0 ? 0 : new_vol;
-            musicPlayerSlide.getMediaPlayer().setVolume(new_vol);
+            System.out.println("current: " + musicPlayerSlide.getMediaPlayer().getVolume());
+            System.out.println("new: " + raise);
+            raise = raise > 1 ? 1 : raise;
+            raise = raise < 0 ? 0 : raise;
+            musicPlayerSlide.getMediaPlayer().setVolume(raise);
         }
     }
 
     public void raiseVol() {
-        raiseVol(50);
+        raiseVol(VOLUME_ACTIVE);
     }
 
     public void stopMusic() {

@@ -21,7 +21,7 @@ import java.util.List;
 public class H2UserDAOImpl implements UserDAO {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private Connection con;
+    private Connection        con;
     private PreparedStatement createStatement;
     private PreparedStatement updateStatement;
     private PreparedStatement searchByIDStatement;
@@ -32,8 +32,7 @@ public class H2UserDAOImpl implements UserDAO {
         try {
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO user VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
-            this.updateStatement = con.prepareStatement("UPDATE user SET username = ?, gender = ? , age = ?, height = ?," +
-                    " email = ?, playlist = ?, isDeleted = ? WHERE user_id = ?");
+            this.updateStatement = con.prepareStatement("UPDATE user SET username = ?, gender = ? , age = ?, height = ?," + " email = ?, playlist = ?, isDeleted = ? WHERE user_id = ?");
             this.searchByIDStatement = con.prepareStatement("SELECT * FROM user WHERE user_id = ?");
             this.deleteStatement = con.prepareStatement("UPDATE user SET isDeleted = ? WHERE user_id = ?");
         } catch (SQLException e) {
@@ -91,9 +90,7 @@ public class H2UserDAOImpl implements UserDAO {
             ResultSet rs_allUsers = findAllStatement.executeQuery("SELECT * FROM user WHERE isDeleted = false;");
 
             while (rs_allUsers.next()) {
-                User foundUser = new User(rs_allUsers.getInt(1), rs_allUsers.getString(2), rs_allUsers.getBoolean(3),
-                        rs_allUsers.getInt(4), rs_allUsers.getInt(5), rs_allUsers.getString(6), rs_allUsers.getString(7),
-                        rs_allUsers.getBoolean(8));
+                User foundUser = new User(rs_allUsers.getInt(1), rs_allUsers.getString(2), rs_allUsers.getBoolean(3), rs_allUsers.getInt(4), rs_allUsers.getInt(5), rs_allUsers.getString(6), rs_allUsers.getString(7), rs_allUsers.getBoolean(8));
                 userList.add(foundUser);
             }
 
@@ -104,6 +101,30 @@ public class H2UserDAOImpl implements UserDAO {
 
         LOGGER.info("Found all users successfully");
         return userList;
+    }
+
+    @Override
+    public User searchByID(int id) throws PersistenceException {
+
+        LOGGER.info("Searching user with id: " + id + "...");
+
+        User foundUser;
+        try {
+            searchByIDStatement.setInt(1, id);
+
+            ResultSet rs_user = searchByIDStatement.executeQuery();
+            rs_user.next();
+
+            foundUser = new User(rs_user.getInt(1), rs_user.getString(2), rs_user.getBoolean(3), rs_user.getInt(4), rs_user.getInt(5), rs_user.getString(6), rs_user.getString(7), rs_user.getBoolean(8));
+
+        } catch (SQLException e) {
+            LOGGER.error("Searching the user with id: " + id + " failed");
+            throw new PersistenceException("Couldn't search the user", e);
+        }
+
+        LOGGER.info("user successfully searched");
+
+        return foundUser;
     }
 
     @Override
@@ -156,31 +177,5 @@ public class H2UserDAOImpl implements UserDAO {
         }
 
         LOGGER.info("user successfully deleted");
-    }
-
-    @Override
-    public User searchByID(int id) throws PersistenceException {
-
-        LOGGER.info("Searching user with id: " + id + "...");
-
-        User foundUser;
-        try {
-            searchByIDStatement.setInt(1, id);
-
-            ResultSet rs_user = searchByIDStatement.executeQuery();
-            rs_user.next();
-
-            foundUser = new User(rs_user.getInt(1), rs_user.getString(2), rs_user.getBoolean(3),
-                    rs_user.getInt(4), rs_user.getInt(5), rs_user.getString(6), rs_user.getString(7),
-                    rs_user.getBoolean(8));
-
-        } catch (SQLException e) {
-            LOGGER.error("Searching the user with id: " + id + " failed");
-            throw new PersistenceException("Couldn't search the user", e);
-        }
-
-        LOGGER.info("user successfully searched");
-
-        return foundUser;
     }
 }

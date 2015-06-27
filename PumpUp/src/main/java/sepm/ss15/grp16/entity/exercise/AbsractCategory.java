@@ -8,7 +8,7 @@ import sepm.ss15.grp16.entity.DTO;
 public abstract class AbsractCategory implements DTO {
 
     protected Integer id;
-    protected String name;
+    protected String  name;
 
     public AbsractCategory() {
 
@@ -28,10 +28,6 @@ public abstract class AbsractCategory implements DTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Boolean getIsDeleted() {
         return false;
     }
@@ -40,13 +36,13 @@ public abstract class AbsractCategory implements DTO {
 
     }
 
+    public String getName() {
+        return name;
+    }
 
     @Override
-    public String toString() {
-        return "AbsractCategory{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
@@ -61,7 +57,10 @@ public abstract class AbsractCategory implements DTO {
     }
 
     @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+    public String toString() {
+        return "AbsractCategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

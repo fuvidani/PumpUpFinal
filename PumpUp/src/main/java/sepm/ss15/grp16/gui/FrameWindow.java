@@ -24,13 +24,13 @@ import java.util.Stack;
 public class FrameWindow extends BorderPane {
 
     private ApplicationContext context;
-    private Stage stage;
+    private Stage              stage;
 
-    private Controller activeController = null;
-    private Stack<PageEnum> fxmlStack = new Stack<>();
+    private Controller      activeController = null;
+    private Stack<PageEnum> fxmlStack        = new Stack<>();
 
     private MenuBar menuBar;
-    private Menu personalMenu;
+    private Menu    personalMenu;
 
     public FrameWindow(ApplicationContext context, Stage stage, PageEnum mainPage) {
 
@@ -46,6 +46,7 @@ public class FrameWindow extends BorderPane {
     private void init(ApplicationContext context, Stage stage, PageEnum mainPage) {
         this.context = context;
         this.stage = stage;
+
 
         stage.setScene(new Scene(this));
         stage.setTitle(mainPage.getTitle());
@@ -78,7 +79,10 @@ public class FrameWindow extends BorderPane {
         Menu user = new Menu("Benutzer");
         addNavigationDialogItemToMenu(user, "K\u00f6rperdaten \u00e4ndern", PageEnum.UserEdit);
         addNavigationDialogItemToMenu(user, "Eigene Fotos verwalten", PageEnum.PhotoDiary);
-        addItemToMenu(user, "Abmelden", event -> navigateToParent());
+        addItemToMenu(user, "Abmelden", event -> {
+            navigateToMain();
+            stage.close();
+        });
         Menu view = new Menu("Ansicht");
         addNavigationItemToMenu(view, "Trainingskalender", PageEnum.Calendar);
         addNavigationItemToMenu(view, "Trainingspl\u00e4ne", PageEnum.Workoutplan);

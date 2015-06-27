@@ -28,11 +28,6 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
     }
 
     @Override
-    public TrainingsSession searchByID(int id) throws PersistenceException {
-        return trainingsSessionHelperDAO.searchByID(id);
-    }
-
-    @Override
     public TrainingsSession update(TrainingsSession dto) {
         throw new UnsupportedOperationException();
     }
@@ -50,6 +45,11 @@ public class H2TrainingssessionDAOImpl implements TrainingsSessionDAO {
     @Override
     public List<TrainingsSession> searchByUser(User user) throws PersistenceException {
         return trainingsSessionHelperDAO.searchByUser(user);
+    }
+
+    @Override
+    public TrainingsSession searchByID(int id) throws PersistenceException {
+        return trainingsSessionHelperDAO.searchByID(id);
     }
 
     public void setTrainingsSessionHelperDAO(H2TrainingssessionHelperDAOImpl trainingsSessionHelperDAO) {

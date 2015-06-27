@@ -13,8 +13,8 @@ import java.util.List;
 public class Playlist implements DTO {
 
     MediaPlayer activePlayer;
-    private User user;
-    private String dir;
+    private User              user;
+    private String            dir;
     private List<MediaPlayer> players;
 
     public Playlist() {
@@ -86,6 +86,14 @@ public class Playlist implements DTO {
     }
 
     @Override
+    public int hashCode() {
+        int result = user != null ? user.hashCode() : 0;
+        result = 31 * result + (dir != null ? dir.hashCode() : 0);
+        result = 31 * result + (players != null ? players.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Playlist)) return false;
@@ -96,14 +104,6 @@ public class Playlist implements DTO {
         if (dir != null ? !dir.equals(playlist.dir) : playlist.dir != null) return false;
         return !(players != null ? !players.equals(playlist.players) : playlist.players != null);
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = user != null ? user.hashCode() : 0;
-        result = 31 * result + (dir != null ? dir.hashCode() : 0);
-        result = 31 * result + (players != null ? players.hashCode() : 0);
-        return result;
     }
 
     @Override

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'/>
-    <link href='fullcalendar.css' rel='stylesheet'/>
+    <link href='mainCalendar.css' rel='stylesheet'/>
     <link href='fullcalendar.print.css' rel='stylesheet' media='print'/>
     <script src='lib/moment.min.js'></script>
     <script src='lib/jquery.min.js'></script>
@@ -35,7 +35,7 @@
                     date.setHours(0, 0, 0, 0);
                     var today = new Date();
                     today.setHours(0, 0, 0, 0);
-                    if (date.getTime() < today.getTime()) {
+                    if (date.getTime() < today.getTime() || event.isTrained == true) {
                         event.color = "#C5DEEB";
                     } else {
                         event.color = "#3A87AD";
@@ -55,7 +55,20 @@
     </script>
     <style>
 
+        html{
+            height: 100%;
+        }
+
         body {
+            background: rgb(220,220,220); /* Old browsers */
+            background: -moz-linear-gradient(top, rgba(220,220,220,1) 0%, rgba(227,234,237,1) 17%, rgba(227,234,237,1) 89%, rgba(169,169,169,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(220,220,220,1)), color-stop(17%,rgba(227,234,237,1)), color-stop(89%,rgba(227,234,237,1)), color-stop(100%,rgba(169,169,169,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, rgba(220,220,220,1) 0%,rgba(227,234,237,1) 17%,rgba(227,234,237,1) 89%,rgba(169,169,169,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, rgba(220,220,220,1) 0%,rgba(227,234,237,1) 17%,rgba(227,234,237,1) 89%,rgba(169,169,169,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, rgba(220,220,220,1) 0%,rgba(227,234,237,1) 17%,rgba(227,234,237,1) 89%,rgba(169,169,169,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom, rgba(220,220,220,1) 0%,rgba(227,234,237,1) 17%,rgba(227,234,237,1) 89%,rgba(169,169,169,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dcdcdc', endColorstr='#a9a9a9',GradientType=0 );
+
             margin: 0px 10px;
             padding: 0;
             font-family: "Segoe UI Light", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;

@@ -5,8 +5,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="750.0" prefWidth="1300.0"
-            stylesheets="@../../css/exerciseStyle.css" xmlns="http://javafx.com/javafx/8"
+<?import java.net.URL?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="750.0" prefWidth="1300.0" styleClass="mainRoot"
+            xmlns="http://javafx.com/javafx/8"
             fx:controller="sepm.ss15.grp16.gui.controller.exercises.ManageExerciseController">
     <center>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
@@ -190,4 +191,8 @@
             </children>
         </HBox>
     </bottom>
+    <stylesheets>
+        <URL value="@../../css/exerciseStyle.css"/>
+        <URL value="@../../css/mainStyle.css"/>
+    </stylesheets>
 </BorderPane>

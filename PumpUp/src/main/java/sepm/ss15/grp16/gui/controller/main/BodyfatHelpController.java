@@ -7,12 +7,12 @@ import sepm.ss15.grp16.gui.controller.Controller;
  * Created by Daniel Fuevesi on 15.06.15.
  * This controller is responsisble for window which displays a helping description for how to measure the own bodyfat percentage.
  */
-public class BodyfatHelpController extends Controller{
+public class BodyfatHelpController extends Controller {
 
 
     @Override
-    public void initController(){
-       // Nothing to initialize.
+    public void initController() {
+        // Nothing to initialize.
     }
 
     /**
@@ -20,7 +20,7 @@ public class BodyfatHelpController extends Controller{
      * The dialog automatically closes and navigates back to the parent.
      */
     @FXML
-    public void doneClicked(){
+    public void doneClicked() {
         mainFrame.navigateToParent();
     }
 }

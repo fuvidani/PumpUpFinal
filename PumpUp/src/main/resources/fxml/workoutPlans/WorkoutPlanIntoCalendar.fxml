@@ -1,138 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.WorkoutPlanToCalendarController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
+            styleClass="mainRoot" stylesheets="@../../css/mainStyle.css"
+            xmlns="http://javafx.com/javafx/8"
+            fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.WorkoutPlanToCalendarController">
     <center>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
             <children>
-                <VBox fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                <VBox fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      HBox.hgrow="ALWAYS">
                     <children>
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Startdatum">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </Label>
-                        <DatePicker fx:id="dateField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                        <DatePicker fx:id="dateField" maxHeight="1.7976931348623157E308"
+                                    maxWidth="1.7976931348623157E308">
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </DatePicker>
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Wochentage">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </Label>
-                        <CheckBox fx:id="mondayCheck" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Montag">
+                        <CheckBox fx:id="mondayCheck" maxHeight="1.7976931348623157E308"
+                                  maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Montag">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="tuesdayCheck" layoutX="10.0" layoutY="316.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Dienstag">
+                        <CheckBox fx:id="tuesdayCheck" layoutX="10.0" layoutY="316.0" maxHeight="1.7976931348623157E308"
+                                  maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Dienstag">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="wednesdayCheck" layoutX="10.0" layoutY="469.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Mittwoch">
+                        <CheckBox fx:id="wednesdayCheck" layoutX="10.0" layoutY="469.0"
+                                  maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                  mnemonicParsing="false" text="Mittwoch">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="thursdayCheck" layoutX="10.0" layoutY="537.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Donnerstag">
+                        <CheckBox fx:id="thursdayCheck" layoutX="10.0" layoutY="537.0"
+                                  maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                  mnemonicParsing="false" text="Donnerstag">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="fridayCheck" layoutX="10.0" layoutY="605.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Freitag">
+                        <CheckBox fx:id="fridayCheck" layoutX="10.0" layoutY="605.0" maxHeight="1.7976931348623157E308"
+                                  maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Freitag">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="saturdayCheck" layoutX="10.0" layoutY="673.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Samstag">
+                        <CheckBox fx:id="saturdayCheck" layoutX="10.0" layoutY="673.0"
+                                  maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                  mnemonicParsing="false" text="Samstag">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="sundayCheck" layoutX="10.0" layoutY="741.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sonntag">
+                        <CheckBox fx:id="sundayCheck" layoutX="10.0" layoutY="741.0" maxHeight="1.7976931348623157E308"
+                                  maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Sonntag">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </CheckBox>
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </HBox.margin>
                 </VBox>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </HBox.margin>
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Gewählter Trainingsplan:">
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               text="Gewählter Trainingsplan:">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </Label>
                         <Text fx:id="txtName" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </Text>
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sessions:">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </Label>
-                        <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                        <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308"
+                              maxWidth="1.7976931348623157E308">
                             <children>
-                                <ListView fx:id="listviewSessions" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                <ListView fx:id="listviewSessions" maxHeight="1.7976931348623157E308"
+                                          maxWidth="1.7976931348623157E308">
                                     <VBox.margin>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                                     </VBox.margin>
                                 </ListView>
                             </children>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </VBox>
                     </children>
@@ -143,74 +160,82 @@
     <top>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER_LEFT">
             <children>
-                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Trainingsplan in Kalender exportieren">
+                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="Trainingsplan in Kalender exportieren">
                     <font>
-                        <Font size="24.0" />
+                        <Font size="24.0"/>
                     </font>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </HBox.margin>
                 </Label>
             </children>
             <BorderPane.margin>
-                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
             </BorderPane.margin>
         </HBox>
     </top>
     <bottom>
-        <HBox alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+              BorderPane.alignment="CENTER">
             <children>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </HBox.margin>
                 </VBox>
-                <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308"
+                      maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelButtonClicked" styleClass="btnBack" stylesheets="@../../css/trainingStyle.css" text="Abbrechen">
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                mnemonicParsing="false" onAction="#cancelButtonClicked" styleClass="btnBack"
+                                stylesheets="@../../css/trainingStyle.css" text="Abbrechen">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </Button>
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </HBox.margin>
                 </VBox>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </HBox.margin>
                 </VBox>
-                <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                <VBox alignment="TOP_CENTER" fillWidth="false" maxHeight="1.7976931348623157E308"
+                      maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#generateButtonClicked" styleClass="btnBack" stylesheets="@../../css/trainingStyle.css" text="Export">
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                mnemonicParsing="false" onAction="#generateButtonClicked" styleClass="btnBack"
+                                stylesheets="@../../css/trainingStyle.css" text="Export">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                             <HBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </HBox.margin>
                             <VBox.margin>
-                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                             </VBox.margin>
                         </Button>
                     </children>
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </HBox.margin>
                 </VBox>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                     </HBox.margin>
                 </VBox>
             </children>
             <BorderPane.margin>
-                <Insets />
+                <Insets/>
             </BorderPane.margin>
         </HBox>
     </bottom>

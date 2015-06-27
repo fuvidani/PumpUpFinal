@@ -35,7 +35,7 @@ public class CalendarController extends Controller {
     private CalendarService calendarService;
 
     @FXML
-    private WebView webView;
+    private WebView   webView;
     @FXML
     private WebEngine engine;
 
@@ -125,7 +125,6 @@ public class CalendarController extends Controller {
             alert.showAndWait();
         } catch (IOException e) {
             LOGGER.info("Failed to open a connection, reason: " + e.getMessage());
-            ;
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehler beim Öffnen des Browsers");

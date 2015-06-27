@@ -7,14 +7,14 @@ import java.util.Date;
 
 /**
  * Created by David on 2015.05.17..
- *
+ * <p/>
  * DTO for exchanging data between traingsplan manager and calendar.
  */
 public class WorkoutplanExport {
 
     private Trainingsplan trainingsplan;
-    private DayOfWeek[] days; //eg: days = {DayOfWeek.FRIDAY, DayOfWeek.SUNDAY};
-    private Date datum;
+    private DayOfWeek[]   days; //eg: days = {DayOfWeek.FRIDAY, DayOfWeek.SUNDAY};
+    private Date          datum;
 
     public WorkoutplanExport(Trainingsplan trainingsplan, DayOfWeek[] days, Date datum) {
         this.trainingsplan = trainingsplan;

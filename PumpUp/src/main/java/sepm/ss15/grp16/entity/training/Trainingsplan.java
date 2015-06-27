@@ -12,8 +12,8 @@ import java.util.List;
 public class Trainingsplan implements DTO {
 
     private Integer id;
-    private String name;
-    private String descr;
+    private String  name;
+    private String  descr;
     private Boolean isDeleted = false;
     private Integer duration;
 
@@ -78,19 +78,6 @@ public class Trainingsplan implements DTO {
         this.descr = descr;
     }
 
-    @Override
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    @Override
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-        if (trainingsSessions != null) {
-            for (TrainingsSession session : trainingsSessions) session.setIsDeleted(isDeleted);
-        }
-    }
-
     public Integer getDuration() {
         return duration;
     }
@@ -118,6 +105,31 @@ public class Trainingsplan implements DTO {
     }
 
     @Override
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    @Override
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+        if (trainingsSessions != null) {
+            for (TrainingsSession session : trainingsSessions) session.setIsDeleted(isDeleted);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (descr != null ? descr.hashCode() : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
+        result = 31 * result + (duration != null ? duration.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (trainingsSessions != null ? trainingsSessions.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Trainingsplan)) return false;
@@ -135,31 +147,6 @@ public class Trainingsplan implements DTO {
     }
 
     @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (descr != null ? descr.hashCode() : 0);
-        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
-        result = 31 * result + (duration != null ? duration.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (trainingsSessions != null ? trainingsSessions.hashCode() : 0);
-        return result;
-    }
-
-    private boolean equalLists(List<TrainingsSession> one, List<TrainingsSession> two) {
-        if (one == null && two == null) {
-            return true;
-        }
-
-        if ((one == null && two != null)
-                || one != null && two == null
-                || one.size() != two.size()) {
-            return false;
-        }
-        return one.containsAll(two);
-    }
-
-    @Override
     public String toString() {
         return "Trainingsplan{" +
                 "id=" + id +
@@ -170,5 +157,16 @@ public class Trainingsplan implements DTO {
                 ", user=" + user +
                 ", trainingsSessions=" + trainingsSessions +
                 '}';
+    }
+
+    private boolean equalLists(List<TrainingsSession> one, List<TrainingsSession> two) {
+        if (one == null && two == null) {
+            return true;
+        }
+
+        if ((one == null && two != null) || one != null && two == null || one.size() != two.size()) {
+            return false;
+        }
+        return one.containsAll(two);
     }
 }
