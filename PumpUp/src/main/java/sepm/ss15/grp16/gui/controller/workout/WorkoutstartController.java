@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
@@ -61,13 +60,10 @@ public class WorkoutstartController extends Controller {
         Appointment appointment = mainController.getExecutionAppointment();
 
         ObservableList<ExerciseSet> sessions = FXCollections.observableList(appointment.getSession().getExerciseSets());
-        toDoListView.setCellFactory(new Callback<ListView<ExerciseSet>, ListCell<ExerciseSet>>(){
-
+        toDoListView.setCellFactory(new Callback<ListView<ExerciseSet>, ListCell<ExerciseSet>>() {
             @Override
             public ListCell<ExerciseSet> call(ListView<ExerciseSet> p) {
-
-                ListCell<ExerciseSet> cell = new ListCell<ExerciseSet>(){
-
+                return new ListCell<ExerciseSet>() {
                     @Override
                     protected void updateItem(ExerciseSet t, boolean bln) {
                         super.updateItem(t, bln);
@@ -77,8 +73,6 @@ public class WorkoutstartController extends Controller {
                     }
 
                 };
-
-                return cell;
             }
         });
         toDoListView.setItems(sessions);
@@ -86,19 +80,35 @@ public class WorkoutstartController extends Controller {
 
     @FXML
     void browseMusicClicked(ActionEvent event) {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Musik suchen");
-        File file = directoryChooser.showDialog(stage);
-        if (file != null) {
-            dir_selection = file;
-            musicPathLabel.setText(file.getAbsolutePath());
+        boolean success = false;
+        while (!success) {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Musik suchen");
+            File file = directoryChooser.showDialog(stage);
+            if (file != null) {
+                if (file.isDirectory() && file.length() > 0) {
+                    dir_selection = file;
+                    musicPathLabel.setText(file.getAbsolutePath());
+                    success = true;
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Ordner leer");
+                alert.setHeaderText("Der ausgewählte Ordner ist leer!");
+                alert.setContentText("Wollen Sie einen anderen Ornder wählen?");
+                alert.showAndWait();
+                ButtonType yes = new ButtonType("Ja");
+                ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.NO);
+                alert.getButtonTypes().setAll(yes, cancel);
+                if (alert.showAndWait().get() == cancel) {
+                    success = true;
+                }
+            }
         }
-
     }
 
     @FXML
     void startButtonClicked(ActionEvent event) {
-        //transitionLoader.openStage("fxml/workout/Workout.fxml", (Stage) toDoListView.getScene().getWindow(), "training", 1100, 750, true);
         if (dir_selection != null) {
             try {
                 User user = userService.getLoggedInUser();
@@ -130,8 +140,7 @@ public class WorkoutstartController extends Controller {
         }
     }
 
-    public boolean started()
-    {
+    public boolean started() {
         return started;
     }
 }

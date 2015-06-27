@@ -9,8 +9,8 @@
 
 <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="600.0" styleClass="mainRoot" vgap="30.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutstartController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" />
-        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="100.0" />
+        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="491.0" prefWidth="499.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints vgrow="SOMETIMES" />
@@ -29,7 +29,7 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </padding>
                 </Button>
-                <Label fx:id="musicPathLabel" maxHeight="1.7976931348623157E308" maxWidth="255.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label fx:id="musicPathLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-font-size: 14;" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -42,7 +42,7 @@
                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
             </GridPane.margin>
         </HBox>
-        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="110.0" text="Musik:" GridPane.rowIndex="1">
+        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Musik:" GridPane.rowIndex="1">
             <font>
                 <Font size="24.0" />
             </font>
