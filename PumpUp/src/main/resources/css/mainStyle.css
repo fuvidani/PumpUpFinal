@@ -141,6 +141,10 @@
     -fx-stroke: black;
 }
 
+.chart-legend{
+    -fx-background-color: transparent;
+}
+
 .axis {
     -fx-tick-mark-visible: false;
     -fx-minor-tick-visible: false;
