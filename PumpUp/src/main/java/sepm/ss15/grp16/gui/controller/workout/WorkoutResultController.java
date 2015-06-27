@@ -22,8 +22,11 @@ import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
+import java.awt.*;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -105,20 +108,17 @@ public class WorkoutResultController extends Controller {
             URL url = new URL("http://www.google.com");
             URLConnection connection = url.openConnection();
             connection.connect();
-            WebView webView = new WebView();
-            final WebEngine webEngine = webView.getEngine();
-            webEngine.load("https://www.facebook.com/dialog/feed?app_id=428485184010923&display=popup&name=PumpUp!&description=Share%20your%20workout%20results%20with%20PumpUp!&caption=Do%20you%20want%20to%20get%20in%20shape?&link=https%3A%2F%2Ffacebook.com%2FPumpUpTUVienna%2F&redirect_uri=https%3A%2F%2Ffacebook.com%2F");
-            Stage stage = new Stage();
-            stage.initOwner(this.stage);
-            stage.setScene(new Scene(webView, 500, 300));
-            stage.show();
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().browse(new URI("https://www.facebook.com/dialog/feed?app_id=428485184010923&display=popup&name=PumpUp!&description=Share%20your%20workout%20results%20with%20PumpUp!&caption=Do%20you%20want%20to%20get%20in%20shape?&link=https%3A%2F%2Ffacebook.com%2FPumpUpTUVienna%2F&redirect_uri=https%3A%2F%2Ffacebook.com%2F"));
+            }
         } catch (IOException e) {
-            LOGGER.info("Failed to open a connection, reason: " + e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
             alert.setHeaderText("Fehler beim Öffnen des Browsers");
             alert.setContentText("Es konnte keine Internetverbindung hergestellt werden, somit können Sie leider derzeit Facebook nicht erreichen.");
             alert.showAndWait();
+        } catch (URISyntaxException ex) {
+            LOGGER.info("Error in URI: " + ex.getMessage());
         }
     }
 
