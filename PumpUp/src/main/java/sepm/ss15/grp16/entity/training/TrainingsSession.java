@@ -13,7 +13,7 @@ import java.util.List;
 public class TrainingsSession implements DTOHelper {
 
     private Integer id_session;
-    private String name;
+    private String  name;
     private Boolean isDeleted;
 
     private User user;
@@ -71,19 +71,6 @@ public class TrainingsSession implements DTOHelper {
         this.name = name;
     }
 
-    @Override
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    @Override
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-        if (exerciseSets != null) {
-            for (ExerciseSet exerciseSet : exerciseSets) exerciseSet.setIsDeleted(isDeleted);
-        }
-    }
-
     public List<ExerciseSet> getExerciseSets() {
         return exerciseSets;
     }
@@ -103,18 +90,16 @@ public class TrainingsSession implements DTOHelper {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
 
-        TrainingsSession that = (TrainingsSession) o;
-
-        return !(id_session != null ? !id_session.equals(that.id_session) : that.id_session != null) &&
-                !(user != null ? !user.equals(that.user) : that.user != null) &&
-                !(name != null ? !name.equals(that.name) : that.name != null) &&
-                !(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
-                equalLists(exerciseSets, that.exerciseSets);
-
+    @Override
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+        if (exerciseSets != null) {
+            for (ExerciseSet exerciseSet : exerciseSets) exerciseSet.setIsDeleted(isDeleted);
+        }
     }
 
     private boolean equalLists(List<ExerciseSet> one, List<ExerciseSet> two) {
@@ -122,9 +107,7 @@ public class TrainingsSession implements DTOHelper {
             return true;
         }
 
-        if ((one == null && two != null)
-                || one != null && two == null
-                || one.size() != two.size()) {
+        if ((one == null && two != null) || one != null && two == null || one.size() != two.size()) {
             return false;
         }
         return one.containsAll(two);
@@ -138,6 +121,21 @@ public class TrainingsSession implements DTOHelper {
         result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
         result = 31 * result + (exerciseSets != null ? exerciseSets.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TrainingsSession that = (TrainingsSession) o;
+
+        return !(id_session != null ? !id_session.equals(that.id_session) : that.id_session != null) &&
+                !(user != null ? !user.equals(that.user) : that.user != null) &&
+                !(name != null ? !name.equals(that.name) : that.name != null) &&
+                !(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null) &&
+                equalLists(exerciseSets, that.exerciseSets);
+
     }
 
     @Override

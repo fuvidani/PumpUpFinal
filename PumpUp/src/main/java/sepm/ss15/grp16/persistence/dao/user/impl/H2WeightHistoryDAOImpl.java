@@ -21,7 +21,7 @@ import java.util.List;
 public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private Connection con;
+    private Connection        con;
     private PreparedStatement createStatement;
     private PreparedStatement searchByUserIDStatement;
     private PreparedStatement searchByIDStatement;
@@ -34,37 +34,13 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
             this.createStatement = con.prepareStatement("INSERT INTO weighthistory VALUES(?, ?, ?, ?);");
             this.searchByUserIDStatement = con.prepareStatement("SELECT * FROM weighthistory WHERE user_id = ?");
             this.searchByIDStatement = con.prepareStatement("SELECT * FROM weighthistory WHERE weighthistory_id = ?");
-            this.getActualWeightStatement = con.prepareStatement("SELECT * FROM weighthistory WHERE user_id = ? AND " +
-                    "weighthistory_id = (SELECT max(weighthistory_id) from weighthistory WHERE user_id = ?);");
+            this.getActualWeightStatement = con.prepareStatement("SELECT * FROM weighthistory WHERE user_id = ? AND " + "weighthistory_id = (SELECT max(weighthistory_id) from weighthistory WHERE user_id = ?);");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
             throw new PersistenceException("Failed to get a connection", e);
         }
 
-    }
-
-    @Override
-    public List<WeightHistory> searchByUserID(int user_id) throws PersistenceException {
-        LOGGER.info("Searching weight from user with id: " + user_id);
-        List<WeightHistory> weightHistoryList = new ArrayList<>();
-
-        try {
-            searchByUserIDStatement.setInt(1, user_id);
-            ResultSet resultSet = searchByUserIDStatement.executeQuery();
-
-            while (resultSet.next()) {
-                WeightHistory foundWeightHistory = new WeightHistory(resultSet.getInt(1), resultSet.getInt(2),
-                        resultSet.getInt(3), resultSet.getDate(4));
-                weightHistoryList.add(foundWeightHistory);
-            }
-
-        } catch (SQLException e) {
-            throw new PersistenceException("Failed to find weight from user with id: " + user_id, e);
-        }
-
-        LOGGER.info("Searching weight from user with id: " + user_id + " was successful");
-        return weightHistoryList;
     }
 
     @Override
@@ -111,8 +87,7 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
             ResultSet rs_allWeightHistories = findAllStatement.executeQuery("SELECT * FROM weighthistory;");
 
             while (rs_allWeightHistories.next()) {
-                WeightHistory foundWeightHistory = new WeightHistory(rs_allWeightHistories.getInt(1), rs_allWeightHistories.getInt(2),
-                        rs_allWeightHistories.getInt(3), rs_allWeightHistories.getDate(4));
+                WeightHistory foundWeightHistory = new WeightHistory(rs_allWeightHistories.getInt(1), rs_allWeightHistories.getInt(2), rs_allWeightHistories.getInt(3), rs_allWeightHistories.getDate(4));
                 weightHistoryList.add(foundWeightHistory);
             }
 
@@ -135,8 +110,7 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
             ResultSet resultSet = searchByIDStatement.executeQuery();
 
             if (resultSet.next()) {
-                weightHistory = new WeightHistory(resultSet.getInt(1), resultSet.getInt(2),
-                        resultSet.getInt(3), resultSet.getDate(4));
+                weightHistory = new WeightHistory(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3), resultSet.getDate(4));
             }
 
         } catch (SQLException e) {
@@ -155,6 +129,28 @@ public class H2WeightHistoryDAOImpl implements WeightHistoryDAO {
     @Override
     public void delete(WeightHistory dto) throws PersistenceException {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<WeightHistory> searchByUserID(int user_id) throws PersistenceException {
+        LOGGER.info("Searching weight from user with id: " + user_id);
+        List<WeightHistory> weightHistoryList = new ArrayList<>();
+
+        try {
+            searchByUserIDStatement.setInt(1, user_id);
+            ResultSet resultSet = searchByUserIDStatement.executeQuery();
+
+            while (resultSet.next()) {
+                WeightHistory foundWeightHistory = new WeightHistory(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3), resultSet.getDate(4));
+                weightHistoryList.add(foundWeightHistory);
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenceException("Failed to find weight from user with id: " + user_id, e);
+        }
+
+        LOGGER.info("Searching weight from user with id: " + user_id + " was successful");
+        return weightHistoryList;
     }
 
     @Override

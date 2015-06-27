@@ -25,10 +25,8 @@ import java.sql.SQLException;
  * Created by David on 2015.06.14..
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config-test.xml")
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("classpath:spring-config-test.xml")
+@TestExecutionListeners(inheritListeners = false, listeners = {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2CalendarDAOTestImpl extends AbstractCalendarDAOTest {
 
     @Autowired
@@ -65,13 +63,13 @@ public class H2CalendarDAOTestImpl extends AbstractCalendarDAOTest {
     }
 
     @Override
-    protected ExerciseDAO getExerciseDAO() {
-        return exerciseDAO;
+    protected TrainingsplanDAO getTrainingsplanDAO() {
+        return trainingsplanDAO;
     }
 
     @Override
-    protected TrainingsplanDAO getTrainingsplanDAO() {
-        return trainingsplanDAO;
+    protected ExerciseDAO getExerciseDAO() {
+        return exerciseDAO;
     }
 }
 

@@ -26,7 +26,7 @@ public class LoginController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    Pane loginPane;
+    Pane   loginPane;
     @FXML
     Button login_button;
     @FXML
@@ -35,8 +35,8 @@ public class LoginController extends Controller {
     private TableView<User> user_tableView = new TableView<>();
     @FXML
     private TableColumn<User, String> usernameCol;
-    private UserService userService;
-    private ObservableList<User> masterData;
+    private UserService               userService;
+    private ObservableList<User>      masterData;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -90,12 +90,9 @@ public class LoginController extends Controller {
             alert.showAndWait();
             return;
         }
-        try
-        {
+        try {
             mainFrame.openMainWindowFrame();
-        }
-        catch (ClassCastException | IllegalArgumentException e)
-        {
+        } catch (ClassCastException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
             System.out.println(e.getStackTrace());
         }

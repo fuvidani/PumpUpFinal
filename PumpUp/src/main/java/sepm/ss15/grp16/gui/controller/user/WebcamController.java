@@ -46,33 +46,33 @@ import java.io.IOException;
 public class WebcamController extends Controller {
 
     private static final Dimension RESOLUTION = new Dimension(640, 480);
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger    LOGGER     = LogManager.getLogger();
     @FXML
     ImageView webCamImageView;
     @FXML
     ImageView bodyOutlineImageView;
     @FXML
-    private Label countDownLabel;
+    private Label                   countDownLabel;
     @FXML
-    private ToggleButton toggleBodyOutline;
+    private ToggleButton            toggleBodyOutline;
     @FXML
-    private ToggleButton toggleTimer;
+    private ToggleButton            toggleTimer;
     @FXML
     private ComboBox<WebCamDetails> cameraComboBox;
     @FXML
-    private BorderPane webCamBorderPane;
+    private BorderPane              webCamBorderPane;
     @FXML
-    private FlowPane webCamFooterFlowPane;
-    private BufferedImage takenImage;
-    private Webcam selectedWebcam = null;
-    private boolean stopWebcam = false;
-    private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
-    private IntegerProperty countDownProperty = new SimpleIntegerProperty();
-    private int countDownValue;
-    private Timeline timeline;
-    private UserService userService;
+    private FlowPane                webCamFooterFlowPane;
+    private BufferedImage           takenImage;
+    private Webcam                selectedWebcam    = null;
+    private boolean               stopWebcam        = false;
+    private ObjectProperty<Image> imageProperty     = new SimpleObjectProperty<>();
+    private IntegerProperty       countDownProperty = new SimpleIntegerProperty();
+    private int                   countDownValue;
+    private Timeline              timeline;
+    private UserService           userService;
     private PictureHistoryService pictureHistoryService;
-    private PhotoDiaryController photoDiaryController;
+    private PhotoDiaryController  photoDiaryController;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -222,9 +222,7 @@ public class WebcamController extends Controller {
         countDownValue = 5;
         countDownProperty.set(countDownValue);
         countDownValue--;
-        timeline = new Timeline(new KeyFrame(
-                Duration.millis(1000),
-                ae -> countDownProperty.set(countDownValue--)));
+        timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> countDownProperty.set(countDownValue--)));
         timeline.setOnFinished(event -> takePictureWithoutTimer());
         timeline.setCycleCount(6);
         timeline.playFromStart();
@@ -288,7 +286,7 @@ public class WebcamController extends Controller {
     private class WebCamDetails {
 
         private String name;
-        private int index;
+        private int    index;
 
         public WebCamDetails(String webCamName, int webCamIndex) {
             this.name = webCamName;

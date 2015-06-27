@@ -25,21 +25,15 @@ import java.io.File;
  */
 public class WorkoutstartController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutstartController.class);
-
+    public boolean started = false;
     private File dir_selection;
-
     private UserService userService;
-
     @FXML
     private ListView<ExerciseSet> toDoListView;
-
     @FXML
     private Label musicPathLabel;
-
     @FXML
     private Label trainingTypeLabel;
-
-    public boolean started = false;
 
     public WorkoutstartController(UserService userService) {
         this.userService = userService;

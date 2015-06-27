@@ -1,6 +1,5 @@
 package sepm.ss15.grp16.service.training.impl;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -24,20 +23,18 @@ import sepm.ss15.grp16.service.user.UserService;
  * Date: 13.05.2015
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config-test.xml")
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("classpath:spring-config-test.xml")
+@TestExecutionListeners(inheritListeners = false, listeners = {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class TrainingsServiceTestImpl extends AbstractTrainingsServiceTest {
 
     @Autowired
-    UserService userService;
+    UserService          userService;
     @Autowired
-    ExerciseService exerciseService;
+    ExerciseService      exerciseService;
     @Autowired
     TrainingsplanService trainingsplanService;
     @Autowired
-    TrainingsplanDAO mockedTrainingsplanDAO;
+    TrainingsplanDAO     mockedTrainingsplanDAO;
 
     @Before
     public void setUp() {

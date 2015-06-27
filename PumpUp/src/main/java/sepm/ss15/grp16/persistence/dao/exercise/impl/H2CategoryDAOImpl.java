@@ -24,12 +24,12 @@ import java.util.List;
 public class H2CategoryDAOImpl implements CategoryDAO {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static Connection connection;
-    private PreparedStatement readStatement;
-    private PreparedStatement getAllEquipment;
-    private PreparedStatement getAllMuscle;
-    private PreparedStatement getAllTrainingstype;
-    private PreparedStatement findByIDStatement;
+    private static Connection        connection;
+    private        PreparedStatement readStatement;
+    private        PreparedStatement getAllEquipment;
+    private        PreparedStatement getAllMuscle;
+    private        PreparedStatement getAllTrainingstype;
+    private        PreparedStatement findByIDStatement;
 
     private H2CategoryDAOImpl(DBHandler handler) throws PersistenceException, DBException {
         try {
@@ -68,6 +68,16 @@ public class H2CategoryDAOImpl implements CategoryDAO {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public AbsractCategory update(AbsractCategory dto) throws PersistenceException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void delete(AbsractCategory dto) throws PersistenceException {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * getting exactly one category specified by the given id
      *
@@ -85,30 +95,16 @@ public class H2CategoryDAOImpl implements CategoryDAO {
             String name = rs.getString(2);
             Integer type = rs.getInt(3);
 
-            if (type == 0)
-                return new TrainingsCategory(id, name);
+            if (type == 0) return new TrainingsCategory(id, name);
 
-            if (type == 1)
-                return new MusclegroupCategory(id, name);
+            if (type == 1) return new MusclegroupCategory(id, name);
 
-            if (type == 2)
-                return new EquipmentCategory(id, name);
+            if (type == 2) return new EquipmentCategory(id, name);
 
             return null;
         } catch (SQLException e) {
             throw new PersistenceException("unable to find category with this id: " + identificaitonNumber);
         }
-    }
-
-
-    @Override
-    public AbsractCategory update(AbsractCategory dto) throws PersistenceException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void delete(AbsractCategory dto) throws PersistenceException {
-        throw new UnsupportedOperationException();
     }
 
     /**

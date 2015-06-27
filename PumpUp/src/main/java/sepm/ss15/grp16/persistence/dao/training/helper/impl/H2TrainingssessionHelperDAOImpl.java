@@ -39,26 +39,24 @@ public class H2TrainingssessionHelperDAOImpl implements TrainingsSessionHelperDA
     private final PreparedStatement ps_find_IDPlan;
     private final PreparedStatement ps_delete;
     private final PreparedStatement ps_update;
-    private Connection con;
-    private PreparedStatement ps_seq_TS;
+    private       Connection        con;
+    private       PreparedStatement ps_seq_TS;
 
     private ExerciseSetHelperDAO exerciseSetHelperDAO;
-    private UserDAO userDAO;
-    private TrainingsplanDAO trainingsplanDAO;
+    private UserDAO              userDAO;
+    private TrainingsplanDAO     trainingsplanDAO;
 
     private H2TrainingssessionHelperDAOImpl(DBHandler handler) throws PersistenceException {
         try {
             con = handler.getConnection();
 
             /** Trainingplan **/
-            ps_create = con.prepareStatement("INSERT INTO TrainingsSession (ID_Plan, name, UID, isDeleted) " +
-                    "VALUES (?, ?, ?, ?)");
+            ps_create = con.prepareStatement("INSERT INTO TrainingsSession (ID_Plan, name, UID, isDeleted) " + "VALUES (?, ?, ?, ?)");
             ps_findAll = con.prepareStatement("SELECT * FROM TrainingsSession WHERE isDeleted = FALSE ");
 
             ps_findID = con.prepareStatement("SELECT * FROM TrainingsSession WHERE ID_Session = ? AND isDeleted = FALSE");
             ps_delete = con.prepareStatement("UPDATE TrainingsSession SET isDeleted = TRUE WHERE ID_Session = ?");
-            ps_update = con.prepareStatement("UPDATE TrainingsSession " +
-                    "SET ID_Plan = ?, name = ?, UID = ?, isDeleted = ? WHERE ID_Session = ?");
+            ps_update = con.prepareStatement("UPDATE TrainingsSession " + "SET ID_Plan = ?, name = ?, UID = ?, isDeleted = ? WHERE ID_Session = ?");
 
             ps_find_ByUID = con.prepareStatement("SELECT * FROM TrainingsSession WHERE UID = ? AND isDeleted = FALSE");
             ps_find_ByIDPlan = con.prepareStatement("SELECT * FROM TrainingsSession WHERE ID_Plan = ? AND isDeleted = FALSE");
@@ -179,11 +177,9 @@ public class H2TrainingssessionHelperDAOImpl implements TrainingsSessionHelperDA
                 List<ExerciseSet> sets_toDelete = new ArrayList<>();
                 List<ExerciseSet> sets_toCreate = new ArrayList<>();
 
-                sets_toDelete.addAll(sets.stream().filter(set ->
-                        !session.getExerciseSets().contains(set)).collect(Collectors.toList()));
+                sets_toDelete.addAll(sets.stream().filter(set -> !session.getExerciseSets().contains(set)).collect(Collectors.toList()));
 
-                sets_toCreate.addAll(session.getExerciseSets().stream().filter(set ->
-                        !sets.contains(set)).collect(Collectors.toList()));
+                sets_toCreate.addAll(session.getExerciseSets().stream().filter(set -> !sets.contains(set)).collect(Collectors.toList()));
 
                 for (ExerciseSet set : sets_toCreate) {
                     exerciseSetHelperDAO.create(set, session.getId());

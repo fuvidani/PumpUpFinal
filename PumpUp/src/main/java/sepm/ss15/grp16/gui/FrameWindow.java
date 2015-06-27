@@ -24,13 +24,13 @@ import java.util.Stack;
 public class FrameWindow extends BorderPane {
 
     private ApplicationContext context;
-    private Stage stage;
+    private Stage              stage;
 
-    private Controller activeController = null;
-    private Stack<PageEnum> fxmlStack = new Stack<>();
+    private Controller      activeController = null;
+    private Stack<PageEnum> fxmlStack        = new Stack<>();
 
     private MenuBar menuBar;
-    private Menu personalMenu;
+    private Menu    personalMenu;
 
     public FrameWindow(ApplicationContext context, Stage stage, PageEnum mainPage) {
 

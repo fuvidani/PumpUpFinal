@@ -55,25 +55,6 @@ public class MusicDAOImpl implements MusicDAO {
         return dto;
     }
 
-    private String getExtension(String path) {
-        String extension = "";
-
-        int i = path.lastIndexOf('.');
-        if (i > 0) {
-            extension = path.substring(i + 1);
-        }
-        return extension;
-    }
-
-    private boolean checkSupportedFormat(String extension) {
-        for (Playlist.SupportedFormat format : Playlist.SupportedFormat.values()) {
-            if (format.name().equals(extension)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public List<Playlist> findAll() throws PersistenceException {
         throw new UnsupportedOperationException("findAll not supported!");
@@ -92,6 +73,25 @@ public class MusicDAOImpl implements MusicDAO {
     @Override
     public void delete(Playlist dto) throws PersistenceException {
         throw new UnsupportedOperationException("delete not supported!");
+    }
+
+    private String getExtension(String path) {
+        String extension = "";
+
+        int i = path.lastIndexOf('.');
+        if (i > 0) {
+            extension = path.substring(i + 1);
+        }
+        return extension;
+    }
+
+    private boolean checkSupportedFormat(String extension) {
+        for (Playlist.SupportedFormat format : Playlist.SupportedFormat.values()) {
+            if (format.name().equals(extension)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

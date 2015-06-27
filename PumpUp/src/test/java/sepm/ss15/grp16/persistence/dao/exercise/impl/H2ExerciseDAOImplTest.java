@@ -1,7 +1,5 @@
 package sepm.ss15.grp16.persistence.dao.exercise.impl;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,19 +12,13 @@ import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.dao.exercise.AbstractExerciseDaoTest;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 import sepm.ss15.grp16.persistence.dao.user.UserDAO;
-import sepm.ss15.grp16.persistence.database.DBHandler;
-import sepm.ss15.grp16.persistence.exception.DBException;
-
-import java.sql.SQLException;
 
 /**
  * Created by lukas on 30.04.2015.
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config-test.xml")
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("classpath:spring-config-test.xml")
+@TestExecutionListeners(inheritListeners = false, listeners = {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2ExerciseDAOImplTest extends AbstractExerciseDaoTest {
 
     @Autowired

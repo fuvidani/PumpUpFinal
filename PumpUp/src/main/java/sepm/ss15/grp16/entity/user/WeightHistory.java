@@ -15,7 +15,7 @@ public class WeightHistory implements DTO {
     private Integer weightHistory_id;
     private Integer user_id;
     private Integer weight;
-    private Date date;
+    private Date    date;
 
     public WeightHistory(Integer weightHistory_id, Integer user_id, Integer weight, Date date) {
         this.weightHistory_id = weightHistory_id;
@@ -77,6 +77,14 @@ public class WeightHistory implements DTO {
     }
 
     @Override
+    public int hashCode() {
+        int result = weightHistory_id != null ? weightHistory_id.hashCode() : 0;
+        result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -89,14 +97,6 @@ public class WeightHistory implements DTO {
             return false;
 
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = weightHistory_id != null ? weightHistory_id.hashCode() : 0;
-        result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
-        result = 31 * result + (weight != null ? weight.hashCode() : 0);
-        return result;
     }
 
     @Override

@@ -7,20 +7,20 @@ import java.util.Date;
 
 /**
  * Created by David on 2015.05.15..
- *
+ * <p/>
  * This entity represents an appointment and encapsulates all information about it.
  */
 public class Appointment implements DTO {
 
     private Integer appointment_id;
-    private Date datum;
+    private Date    datum;
     private Integer session_id;
     private Integer user_id;
     private Boolean isTrained;
     private Boolean isDeleted;
 
-    private String sessionName;
-    private String setNames;
+    private String           sessionName;
+    private String           setNames;
     private TrainingsSession session;
 
     public Appointment(Integer appointment_id, Date datum, Integer session_id, Integer user_id, Boolean isTrained, Boolean isDeleted) {
@@ -40,6 +40,16 @@ public class Appointment implements DTO {
     @Override
     public void setId(Integer id) {
         this.appointment_id = id;
+    }
+
+    @Override
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    @Override
+    public void setIsDeleted(Boolean deleted) {
+        this.isDeleted = deleted;
     }
 
     public Date getDatum() {
@@ -72,16 +82,6 @@ public class Appointment implements DTO {
 
     public void setIsTrained(Boolean isTrained) {
         this.isTrained = isTrained;
-    }
-
-    @Override
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    @Override
-    public void setIsDeleted(Boolean deleted) {
-        this.isDeleted = deleted;
     }
 
     public String getSessionName() {

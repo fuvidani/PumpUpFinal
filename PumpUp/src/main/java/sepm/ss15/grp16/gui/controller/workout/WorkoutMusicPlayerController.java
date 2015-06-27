@@ -36,23 +36,23 @@ import java.util.ResourceBundle;
 public class WorkoutMusicPlayerController extends Controller implements Initializable {
     private static final Logger LOGGER = LogManager.getLogger(WorkoutMusicPlayerController.class);
 
-    private static final double VOLUME_ACTIVE = 0.3;
+    private static final double VOLUME_ACTIVE   = 0.3;
     private static final double VOLUME_INACTIVE = 0.1;
 
-    private Playlist playlist;
-    private MusicService musicService;
-    private UserService userService;
+    private Playlist          playlist;
+    private MusicService      musicService;
+    private UserService       userService;
     private WorkoutController parent;
 
     private List<MediaPlayer> players;
     private List<MediaPlayer> original;
-    private boolean playing = false;
-    private boolean muted = false;
+    private boolean playing  = false;
+    private boolean muted    = false;
     private boolean shuffled = false;
 
     @FXML
-    private ProgressBar progress;
-    private ChangeListener<Duration> progressChangeListener;
+    private ProgressBar                       progress;
+    private ChangeListener<Duration>          progressChangeListener;
     private MapChangeListener<String, Object> metadataChangeListener;
 
     @FXML

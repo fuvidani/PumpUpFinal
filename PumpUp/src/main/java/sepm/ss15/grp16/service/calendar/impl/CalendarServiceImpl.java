@@ -36,27 +36,24 @@ import java.util.*;
 
 /**
  * Created by David on 2015.05.16..
- *
+ * <p/>
  * Implementation of CalenderService interface. It provides methods of business layer.
  */
 public class CalendarServiceImpl implements CalendarService {
 
-    private static final Logger LOGGER = LogManager.getLogger(CalendarServiceImpl.class);
+    private static final Logger       LOGGER           = LogManager.getLogger(CalendarServiceImpl.class);
     /**
      * Application name.
      */
-    private static final String APPLICATION_NAME =
-            "PumpUp!";
+    private static final String       APPLICATION_NAME = "PumpUp!";
     /**
      * Global instance of the JSON factory.
      */
-    private static final JsonFactory JSON_FACTORY =
-            JacksonFactory.getDefaultInstance();
+    private static final JsonFactory  JSON_FACTORY     = JacksonFactory.getDefaultInstance();
     /**
      * Global instance of the scopes required by this quickstart.
      */
-    private static final List<String> SCOPES =
-            Arrays.asList(CalendarScopes.CALENDAR);
+    private static final List<String> SCOPES           = Arrays.asList(CalendarScopes.CALENDAR);
 
     /**
      * Global instance of the HTTP transport.
@@ -80,27 +77,21 @@ public class CalendarServiceImpl implements CalendarService {
 
     /**
      * Authorizes the user with his google account in the browser.
+     *
      * @return Credential Object with access token
      * @throws Exception
      */
     public static Credential authorize() throws Exception {
         // Load client secrets.
-        InputStream in =
-                CalendarServiceImpl.class.getClassLoader().getResourceAsStream("calendar/google_export/client_secret.json");
-        GoogleClientSecrets clientSecrets =
-                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        InputStream in = CalendarServiceImpl.class.getClassLoader().getResourceAsStream("calendar/google_export/client_secret.json");
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow =
-                new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                        .setAccessType("offline")
-                        .build();
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES).setAccessType("offline").build();
         Credential credential = null;
 
         try {
-            credential = new AuthorizationCodeInstalledApp(
-                    flow, new LocalServerReceiver()).authorize("user");
+            credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
         } catch (Exception e) {
             LOGGER.error("Failed on authorizing. - " + e.getClass());
             throw new ServiceException("Failed on authorizing.");
@@ -115,18 +106,14 @@ public class CalendarServiceImpl implements CalendarService {
      * @return an authorized Calendar client service
      * @throws IOException
      */
-    public static com.google.api.services.calendar.Calendar
-    getCalendarService() throws Exception {
+    public static com.google.api.services.calendar.Calendar getCalendarService() throws Exception {
         Credential credential = null;
         try {
             credential = authorize();
         } catch (Exception e) {
             throw new ServiceException(e.getMessage());
         }
-        return new com.google.api.services.calendar.Calendar.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+        return new com.google.api.services.calendar.Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
     }
 
     /**
@@ -232,30 +219,6 @@ public class CalendarServiceImpl implements CalendarService {
         LOGGER.info("Validating appointment values..");
 
         if (appointment == null) throw new ValidationException("Appointment is null.");
-
-    }
-
-    /**
-     * Checks if date is in the future
-     * @param date to check
-     * @throws ServiceException
-     */
-    public void validateDateForExport(Date date) throws ServiceException{
-        Date planDatum = date;
-        Calendar planDatumCal = Calendar.getInstance();
-        planDatumCal.setTime(planDatum);
-        planDatumCal.set(Calendar.HOUR_OF_DAY, 0);
-        planDatumCal.set(Calendar.MINUTE, 0);
-        planDatumCal.set(Calendar.SECOND, 0);
-        planDatumCal.set(Calendar.MILLISECOND, 0);
-        Date todayDate = new Date();
-        Calendar todayDateCal = Calendar.getInstance();
-        todayDateCal.setTime(todayDate);
-        todayDateCal.set(Calendar.HOUR_OF_DAY, 0);
-        todayDateCal.set(Calendar.MINUTE, 0);
-        todayDateCal.set(Calendar.SECOND, 0);
-        todayDateCal.set(Calendar.MILLISECOND, 0);
-        if (planDatumCal.before(todayDateCal)) throw new ServiceException("Das Datum kann nicht in der Vergangenheit liegen.");
 
     }
 
@@ -398,8 +361,7 @@ public class CalendarServiceImpl implements CalendarService {
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
-        com.google.api.services.calendar.Calendar service =
-                null;
+        com.google.api.services.calendar.Calendar service = null;
         try {
             service = getCalendarService();
         } catch (Exception e) {
@@ -408,9 +370,7 @@ public class CalendarServiceImpl implements CalendarService {
 
         try {
             for (Appointment appointment : findAll()) {
-                Event event = new Event()
-                        .setSummary(appointment.getSessionName())
-                        .setDescription(appointment.getSetNames());
+                Event event = new Event().setSummary(appointment.getSessionName()).setDescription(appointment.getSetNames());
 
                 Date startDate = appointment.getDatum();
                 Date endDate = new Date(startDate.getTime() + 86400000); // An all-day event is 1 day (or 86400000 ms) long
@@ -446,6 +406,7 @@ public class CalendarServiceImpl implements CalendarService {
 
     /**
      * Sets an appointment with id as trained.
+     *
      * @param appointment_id to be set as trained
      * @throws ServiceException
      */
@@ -460,6 +421,31 @@ public class CalendarServiceImpl implements CalendarService {
         }
     }
 
+    /**
+     * Checks if date is in the future
+     *
+     * @param date to check
+     * @throws ServiceException
+     */
+    public void validateDateForExport(Date date) throws ServiceException {
+        Date planDatum = date;
+        Calendar planDatumCal = Calendar.getInstance();
+        planDatumCal.setTime(planDatum);
+        planDatumCal.set(Calendar.HOUR_OF_DAY, 0);
+        planDatumCal.set(Calendar.MINUTE, 0);
+        planDatumCal.set(Calendar.SECOND, 0);
+        planDatumCal.set(Calendar.MILLISECOND, 0);
+        Date todayDate = new Date();
+        Calendar todayDateCal = Calendar.getInstance();
+        todayDateCal.setTime(todayDate);
+        todayDateCal.set(Calendar.HOUR_OF_DAY, 0);
+        todayDateCal.set(Calendar.MINUTE, 0);
+        todayDateCal.set(Calendar.SECOND, 0);
+        todayDateCal.set(Calendar.MILLISECOND, 0);
+        if (planDatumCal.before(todayDateCal))
+            throw new ServiceException("Das Datum kann nicht in der Vergangenheit liegen.");
+
+    }
 
     public void setUserService(UserService userService) {
         this.userService = userService;

@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.persistence.dao.user;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
@@ -12,9 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 /**
  * This class provides methods for testing PictureHistoryDAOs
  *
@@ -24,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<PictureHistory> {
 
     protected PictureHistoryDAO pictureHistoryDAO;
-    protected UserDAO userDAO;
+    protected UserDAO           userDAO;
 
     @Override
     public DAO<PictureHistory> getDAO() {

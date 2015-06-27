@@ -37,21 +37,21 @@ public class PhotoDiaryController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    private ImageView imageView;
+    private ImageView             imageView;
     @FXML
-    private Label dateLabel;
+    private Label                 dateLabel;
     @FXML
-    private Button selectPictureButton;
+    private Button                selectPictureButton;
     @FXML
-    private Button forwardButton;
+    private Button                forwardButton;
     @FXML
-    private Button backButton;
-    private UserService userService;
+    private Button                backButton;
+    private UserService           userService;
     private PictureHistoryService pictureHistoryService;
-    private List<PictureHistory> pictureHistoryList;
-    private int indexOfCurrentPicture;
-    private String selectedPicturePath;
-    private MainController mainController;
+    private List<PictureHistory>  pictureHistoryList;
+    private int                   indexOfCurrentPicture;
+    private String                selectedPicturePath;
+    private MainController        mainController;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -68,7 +68,7 @@ public class PhotoDiaryController extends Controller {
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
-            indexOfCurrentPicture = pictureHistoryList.size()-1;
+            indexOfCurrentPicture = pictureHistoryList.size() - 1;
             if (!pictureHistoryList.isEmpty()) {
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);
@@ -214,7 +214,7 @@ public class PhotoDiaryController extends Controller {
         User loggedInUser = userService.getLoggedInUser();
         try {
             pictureHistoryList = pictureHistoryService.searchByUserID(loggedInUser.getUser_id());
-            indexOfCurrentPicture = pictureHistoryList.size()-1;
+            indexOfCurrentPicture = pictureHistoryList.size() - 1;
             if (!pictureHistoryList.isEmpty()) {
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 imageView.setImage(image);

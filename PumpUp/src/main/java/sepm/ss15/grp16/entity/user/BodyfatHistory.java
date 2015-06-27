@@ -15,7 +15,7 @@ public class BodyfatHistory implements DTO {
     private Integer bodyfathistory_id;
     private Integer user_id;
     private Integer bodyfat;
-    private Date date;
+    private Date    date;
 
     public BodyfatHistory(Integer bodyfathistory_id, Integer user_id, Integer bodyfat, Date date) {
         this.bodyfathistory_id = bodyfathistory_id;
@@ -77,6 +77,14 @@ public class BodyfatHistory implements DTO {
     }
 
     @Override
+    public int hashCode() {
+        int result = bodyfathistory_id != null ? bodyfathistory_id.hashCode() : 0;
+        result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
+        result = 31 * result + (bodyfat != null ? bodyfat.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -89,14 +97,6 @@ public class BodyfatHistory implements DTO {
         if (user_id != null ? !user_id.equals(that.user_id) : that.user_id != null) return false;
 
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = bodyfathistory_id != null ? bodyfathistory_id.hashCode() : 0;
-        result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
-        result = 31 * result + (bodyfat != null ? bodyfat.hashCode() : 0);
-        return result;
     }
 
     @Override

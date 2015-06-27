@@ -3,10 +3,10 @@
     -fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #CCCCCC, #999999);
     /*-fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #CCCCCC, #B3B3B3 100% ); */
     /*-fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #D9D9D9, #CBCBCB, #BCBCBC); */
-   /* -fx-background-color: linear-gradient(to bottom, #E6B3E6, #CC99CC, #B380B3, #804D80, #4D1A4D);; */
-   /* -fx-background-color: linear-gradient(to bottom, #FFFFFF, #EAFCFC, #E1FFFF, #CCFFFF);; */
-   /* -fx-background-color: linear-gradient(to bottom, #CCFFFF, #CCE6FF, #B3CCFF, #99B3FF, #6D81D3); */
-   /* -fx-background-color: linear-gradient(to bottom, #B8DCFF, #CCE6FF, #B3CCFF, #99B3FF, #6D81D3); */
+    /* -fx-background-color: linear-gradient(to bottom, #E6B3E6, #CC99CC, #B380B3, #804D80, #4D1A4D);; */
+    /* -fx-background-color: linear-gradient(to bottom, #FFFFFF, #EAFCFC, #E1FFFF, #CCFFFF);; */
+    /* -fx-background-color: linear-gradient(to bottom, #CCFFFF, #CCE6FF, #B3CCFF, #99B3FF, #6D81D3); */
+    /* -fx-background-color: linear-gradient(to bottom, #B8DCFF, #CCE6FF, #B3CCFF, #99B3FF, #6D81D3); */
 }
 
 .workoutPlanBox .label {
@@ -186,25 +186,24 @@
     -fx-background-size: 90%;
 }
 
-.exerciseLabel{
+.exerciseLabel {
     -fx-font-size: 20pt;
     -fx-font-weight: bold;
 }
 
 .stopBtn {
     /*-fx-background-color: transparent;*/
-    -fx-background-color:
-    #c3c4c4,
+    -fx-background-color: #c3c4c4,
     linear-gradient(#d6d6d6 50%, white 100%),
-    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230, 230, 230, 0) 50%);
     -fx-background-radius: 30;
-    -fx-background-insets: 0,1,1;
+    -fx-background-insets: 0, 1, 1;
     -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
 }
 
-.stopBtn:pressed{
-    -fx-background-color: rgba(135,186,215,0.7);
+.stopBtn:pressed {
+    -fx-background-color: rgba(135, 186, 215, 0.7);
     -fx-text-fill: white;
 }
 
@@ -245,14 +244,14 @@
 .btnBack, .btnGenerate, .btnCalendar {
     -fx-background-color: #c3c4c4,
     linear-gradient(#d6d6d6 50%, white 100%),
-    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230, 230, 230, 0) 50%);
     -fx-background-radius: 30;
-    -fx-background-insets: 0,1,1;
+    -fx-background-insets: 0, 1, 1;
     -fx-text-fill: black;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
 }
 
-.button:pressed{
-    -fx-background-color: rgba(135,186,215,0.7);
+.button:pressed {
+    -fx-background-color: rgba(135, 186, 215, 0.7);
     -fx-text-fill: white;
 }

@@ -21,13 +21,13 @@ public class VideoController extends Controller {
 
 
     @FXML
-    private VBox videoBox;
+    private VBox   videoBox;
     @FXML
     private Button playBtn;
-    private Media media;
-    private MediaPlayer player = null;
-    private boolean isPlaying = false;
-    private MediaView smallMediaView = new MediaView();
+    private Media  media;
+    private MediaPlayer player         = null;
+    private boolean     isPlaying      = false;
+    private MediaView   smallMediaView = new MediaView();
     private Exercise exercise;
 
 
@@ -116,9 +116,9 @@ public class VideoController extends Controller {
     @FXML
     private void close() {
         videoBox.getChildren().clear();
-        player=null;
-        media=null;
-        smallMediaView=null;
+        player = null;
+        media = null;
+        smallMediaView = null;
         mainFrame.close();
     }
 

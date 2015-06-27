@@ -10,9 +10,9 @@ import sepm.ss15.grp16.gui.FrameWindow;
 public abstract class Controller {
 
     protected FrameWindow mainFrame;
-    protected Controller parentController;
-    protected Controller childController;
-    protected Stage stage;
+    protected Controller  parentController;
+    protected Controller  childController;
+    protected Stage       stage;
 
     public void initController() {
 

@@ -27,7 +27,7 @@ public class UserEditController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    Pane userEditPane;
+    Pane      userEditPane;
     @FXML
     TextField ageTextField;
     @FXML
@@ -38,10 +38,10 @@ public class UserEditController extends Controller {
     TextField bodyfatTextField;
     @FXML
     TextField emailTextField;
-    private UserService userService;
-    private WeightHistoryService weightHistoryService;
+    private UserService           userService;
+    private WeightHistoryService  weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
-    private MainController mainController;
+    private MainController        mainController;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -128,7 +128,7 @@ public class UserEditController extends Controller {
 
         try {
             weight = Integer.parseInt(weightTextField.getText());
-            if(weight < 30 || weight > 200){
+            if (weight < 30 || weight > 200) {
                 error += "Bei so einem Gewicht suchen Sie sich bitte rasch \u00E4rztliche Hilfe!\n";
             }
         } catch (NumberFormatException e) {

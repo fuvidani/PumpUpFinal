@@ -2,15 +2,13 @@ package sepm.ss15.grp16.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mockito.stubbing.OngoingStubbing;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 import sepm.ss15.grp16.entity.DTO;
 import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
 
 /**
  * This class provides methods for testing Services

@@ -40,14 +40,14 @@ public class SessionEditController_v2 extends Controller {
 
     private TrainingsSession session_interClassCommunication;
 
-    private ExerciseService exerciseService;
-    private UserService userService;
+    private ExerciseService      exerciseService;
+    private UserService          userService;
     private TrainingsplanService trainingsplanService;
 
     private ObservableList<Exercise> masterdata;
 
     private ExerciseSet selection_set;
-    private Exercise selection_exercise;
+    private Exercise    selection_exercise;
 
     @FXML
     private TextField txtName;
@@ -109,8 +109,7 @@ public class SessionEditController_v2 extends Controller {
         try {
             tblcOrder.setCellValueFactory(new PropertyValueFactory<>("order_nr"));
             tblcExercise.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getExercise().getName()));
-            tblcType.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getRepeat() +
-                    ((p.getValue().getType() == ExerciseSet.SetType.repeat) ? " x" : " sek")));
+            tblcType.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getRepeat() + ((p.getValue().getType() == ExerciseSet.SetType.repeat) ? " x" : " sek")));
 
             tblvSetTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
                 if (newValue != null) {
@@ -124,10 +123,7 @@ public class SessionEditController_v2 extends Controller {
 
             if (session_interClassCommunication != null) {
                 txtName.setText(session_interClassCommunication.getName());
-                ObservableList<ExerciseSet> data =
-                        FXCollections.observableArrayList(
-                                session_interClassCommunication.getExerciseSets()
-                        );
+                ObservableList<ExerciseSet> data = FXCollections.observableArrayList(session_interClassCommunication.getExerciseSets());
 
                 tblvSetTable.setItems(data);
 
@@ -144,10 +140,7 @@ public class SessionEditController_v2 extends Controller {
             tblcCalo.setCellValueFactory(new PropertyValueFactory<>("calories"));
             tblcCat.setCellValueFactory(p -> {
                 List<AbsractCategory> categories = p.getValue().getCategories();
-                List<TrainingsCategory> trainingsCategories = categories.stream()
-                        .filter(absractCategory -> absractCategory instanceof TrainingsCategory)
-                        .map(absractCategory -> (TrainingsCategory) absractCategory)
-                        .collect(Collectors.toList());
+                List<TrainingsCategory> trainingsCategories = categories.stream().filter(absractCategory -> absractCategory instanceof TrainingsCategory).map(absractCategory -> (TrainingsCategory) absractCategory).collect(Collectors.toList());
 
                 String value = "";
                 for (int i = 0; i < trainingsCategories.size(); i++) {
@@ -161,9 +154,7 @@ public class SessionEditController_v2 extends Controller {
                 return new SimpleStringProperty(value);
             });
 
-            masterdata = FXCollections.observableArrayList(
-                    exerciseService.findAll()
-            );
+            masterdata = FXCollections.observableArrayList(exerciseService.findAll());
 
             tblvExercises.setItems(masterdata);
 
@@ -231,7 +222,7 @@ public class SessionEditController_v2 extends Controller {
         if (session != null) {
             // Create_Edit_WorkoutPlanController.session_interClassCommunication = session;
             ((Create_Edit_WorkoutPlanController) this.getParentController()).setSession_interClassCommunication(session);
-//            stage.close();
+            //            stage.close();
             mainFrame.navigateToParent();
         }
     }
@@ -274,10 +265,7 @@ public class SessionEditController_v2 extends Controller {
     @FXML
     public void onClickUp(ActionEvent event) {
 
-        ObservableList<ExerciseSet> sets =
-                FXCollections.observableArrayList(
-                        tblvSetTable.getItems()
-                );
+        ObservableList<ExerciseSet> sets = FXCollections.observableArrayList(tblvSetTable.getItems());
 
         sets.remove(selection_set);
         sets.stream().filter(set -> set.getOrder_nr() + 1 == selection_set.getOrder_nr()).forEach(set -> {
@@ -294,10 +282,7 @@ public class SessionEditController_v2 extends Controller {
 
     @FXML
     public void onClickDown(ActionEvent event) {
-        ObservableList<ExerciseSet> sets =
-                FXCollections.observableArrayList(
-                        tblvSetTable.getItems()
-                );
+        ObservableList<ExerciseSet> sets = FXCollections.observableArrayList(tblvSetTable.getItems());
 
         sets.remove(selection_set);
         sets.stream().filter(set -> set.getOrder_nr() - 1 == selection_set.getOrder_nr()).forEach(set -> {
@@ -314,10 +299,7 @@ public class SessionEditController_v2 extends Controller {
 
     @FXML
     public void onClickDecrease(ActionEvent event) {
-        ObservableList<ExerciseSet> sets =
-                FXCollections.observableArrayList(
-                        tblvSetTable.getItems()
-                );
+        ObservableList<ExerciseSet> sets = FXCollections.observableArrayList(tblvSetTable.getItems());
         trainingsplanService.decreaseDifficulty(new TrainingsSession(null, null, null, sets));
         tblvSetTable.getItems().clear();
         tblvSetTable.setItems(sets);
@@ -325,10 +307,7 @@ public class SessionEditController_v2 extends Controller {
 
     @FXML
     public void onClickIncrease(ActionEvent event) {
-        ObservableList<ExerciseSet> sets =
-                FXCollections.observableArrayList(
-                        tblvSetTable.getItems()
-                );
+        ObservableList<ExerciseSet> sets = FXCollections.observableArrayList(tblvSetTable.getItems());
         trainingsplanService.increaseDifficulty(new TrainingsSession(null, null, null, sets));
         tblvSetTable.getItems().clear();
         tblvSetTable.setItems(sets);
@@ -558,8 +537,7 @@ public class SessionEditController_v2 extends Controller {
             } else {
                 order_nr = tblvSetTable.getItems().size() + 1;
             }
-            return new ExerciseSet(null, set.getExercise(), userService.getLoggedInUser(),
-                    repeat_int, setType, order_nr, false);
+            return new ExerciseSet(null, set.getExercise(), userService.getLoggedInUser(), repeat_int, setType, order_nr, false);
         }
 
     }
@@ -567,6 +545,7 @@ public class SessionEditController_v2 extends Controller {
     public Exercise getExercise() {
         return selection_exercise;
     }
+
     public void setExerciseService(ExerciseServiceImpl exerciseService) {
         this.exerciseService = exerciseService;
     }
