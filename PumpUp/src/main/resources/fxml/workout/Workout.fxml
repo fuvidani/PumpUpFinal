@@ -112,7 +112,7 @@
                   <Insets top="8.0" />
                </VBox.margin>
                 </HBox>
-                <HBox prefHeight="50.0" VBox.vgrow="NEVER">
+                <HBox alignment="CENTER" prefHeight="50.0" VBox.vgrow="NEVER">
                     <children>
                         <Region minWidth="50.0" HBox.hgrow="NEVER" />
                         <Button id="stopBtn" fx:id="pauseButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onActionButtonClicked" prefHeight="100.0" styleClass="stopBtn" text="Pause" HBox.hgrow="ALWAYS">

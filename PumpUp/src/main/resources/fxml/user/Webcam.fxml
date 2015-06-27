@@ -67,6 +67,9 @@
                     <font>
                         <Font size="36.0" />
                     </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
                 </Label>
                 <HBox alignment="CENTER" GridPane.columnIndex="1">
                     <children>
