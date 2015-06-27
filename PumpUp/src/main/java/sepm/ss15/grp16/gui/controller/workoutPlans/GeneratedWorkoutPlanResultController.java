@@ -2,9 +2,11 @@ package sepm.ss15.grp16.gui.controller.workoutPlans;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -89,6 +91,12 @@ public class GeneratedWorkoutPlanResultController extends Controller {
                     }
 
                 };
+            }
+        });
+        listView.addEventFilter(MouseEvent.ANY, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mouseEvent.consume();
             }
         });
         WorkoutPlansController controller = (WorkoutPlansController) this.getParentController();
