@@ -19,7 +19,7 @@
                 <HBox VBox.vgrow="NEVER">
                     <children>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="exerciseLabel" alignment="CENTER" styleClass="exerciseLabel" HBox.hgrow="ALWAYS">
+                        <Label id="exerciseLabel" fx:id="exerciseLabel" alignment="CENTER" style="-fx-font-size: 30pt; -fx-font-family: Segoe UI Bold;" styleClass="exerciseLabel" HBox.hgrow="ALWAYS">
                             <font>
                                 <Font size="48.0" />
                             </font>
@@ -48,7 +48,7 @@
                             <children>
                                 <StackPane maxHeight="370.0" minHeight="370.0" prefHeight="370.0" VBox.vgrow="NEVER">
                                     <children>
-                                        <Label fx:id="counterLable" wrapText="true">
+                                        <Label fx:id="counterLable" style="-fx-font-size: 30pt; -fx-font-family: Segoe UI Bold;" wrapText="true">
                                             <font>
                                                 <Font name="System Bold" size="40.0" />
                                             </font>
