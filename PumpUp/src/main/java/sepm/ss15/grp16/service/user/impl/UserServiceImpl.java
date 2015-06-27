@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
-    private static User loggedInUser;
-    private UserDAO userDAO;
+    private static User    loggedInUser;
+    private        UserDAO userDAO;
 
     public UserServiceImpl(UserDAO userDAO) throws ServiceException {
         if (userDAO == null) {

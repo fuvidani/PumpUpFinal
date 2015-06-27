@@ -41,34 +41,34 @@ public class ManageExerciseController extends Controller {
     private ImageView imageView;
 
     @FXML
-    private TextArea descriptionArea;
+    private TextArea  descriptionArea;
     @FXML
     private TextField caloriesField;
 
     @FXML
     private ListView<String> imagesListView;
     @FXML
-    private TextField exerciseNameField;
+    private TextField        exerciseNameField;
     @FXML
-    private VBox vboxType;
+    private VBox             vboxType;
     @FXML
-    private VBox vboxMuscle;
+    private VBox             vboxMuscle;
     @FXML
-    private VBox vboxEquipment;
+    private VBox             vboxEquipment;
     @FXML
     private Button deleteBtn = new Button();
     @FXML
-    private Button addBtn = new Button();
+    private Button addBtn    = new Button();
 
     private Service<Exercise> exerciseService;
-    private CategoryService categoryService;
-    private UserService userService;
-    private List<String> exerciseGifList = new ArrayList<>();
+    private CategoryService   categoryService;
+    private UserService       userService;
+    private List<String>           exerciseGifList       = new ArrayList<>();
     private ObservableList<String> observablePicListData = FXCollections.observableArrayList();
-    private Exercise exercise = null;
+    private Exercise               exercise              = null;
     private String picture;
-    private ObservableList<CheckBox> checkboxes = FXCollections.observableArrayList();
-    private List<CheckBox> allCheckboxes = new ArrayList<>();
+    private ObservableList<CheckBox> checkboxes    = FXCollections.observableArrayList();
+    private List<CheckBox>           allCheckboxes = new ArrayList<>();
 
     public void setExerciseService(Service<Exercise> exerciseService) {
         this.exerciseService = exerciseService;
@@ -182,7 +182,6 @@ public class ManageExerciseController extends Controller {
      * showing one picture out of the picture list the
      * current exercise has, defined by the given index
      * to load from the list of pictures
-     *
      */
     private void showPic(String oldValue, String newValue) {
         try {
@@ -193,11 +192,9 @@ public class ManageExerciseController extends Controller {
                 newValue = oldValue;
             }
 
-            if (newValue == null && oldValue == null)
-                return;
+            if (newValue == null && oldValue == null) return;
 
-            if (observablePicListData.isEmpty())
-                return;
+            if (observablePicListData.isEmpty()) return;
 
             String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
             if (newValue.contains("img_ex")) {
@@ -383,8 +380,7 @@ public class ManageExerciseController extends Controller {
         List<AbsractCategory> temp = new ArrayList<>();
         for (CheckBox c : allCheckboxes) {
 
-            if (c.isSelected())
-                temp.add(new TrainingsCategory(Integer.parseInt(c.getId()), c.getText()));
+            if (c.isSelected()) temp.add(new TrainingsCategory(Integer.parseInt(c.getId()), c.getText()));
         }
 
         return new Exercise(null, exerciseNameField.getText(), descriptionArea.getText(), calories, null, exerciseGifList, false, userService.getLoggedInUser(), temp);

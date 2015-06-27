@@ -80,22 +80,6 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     /**
-     * searching after exactely one exercise with the given id
-     *
-     * @param id exercise to search for, is unique
-     * @return one exercise or null
-     * @throws ServiceException
-     */
-    @Override
-    public Exercise searchByID(int id) throws ServiceException {
-        try {
-            return exerciseDAO.searchByID(id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    /**
      * updating a given exercise to updated values
      *
      * @param exercise which shall be updated
@@ -147,14 +131,29 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public void validate(Exercise exercise) throws sepm.ss15.grp16.service.exception.ValidationException {
         LOGGER.debug("validating exericse in service layer");
-        if (exercise == null)
-            throw new ValidationException("validation not passed. exercise is null");
+        if (exercise == null) throw new ValidationException("validation not passed. exercise is null");
 
         if (exercise.getName() == null || exercise.getName().equals("") || exercise.getName().isEmpty())
             throw new ValidationException("name can not be null");
 
         if (exercise.getCalories() == null || exercise.getCalories() <= 0)
             throw new ValidationException("validation not passed. calories can not be lower or equal to 0");
+    }
+
+    /**
+     * searching after exactely one exercise with the given id
+     *
+     * @param id exercise to search for, is unique
+     * @return one exercise or null
+     * @throws ServiceException
+     */
+    @Override
+    public Exercise searchByID(int id) throws ServiceException {
+        try {
+            return exerciseDAO.searchByID(id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
     }
 
     /**
@@ -169,8 +168,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         List<Exercise> allExercises = this.findAll();
         List<Exercise> userExercises = new ArrayList<>();
         for (Exercise e : allExercises) {
-            if (e.getUser() == null || e.getUser() == user)
-                userExercises.add(e);
+            if (e.getUser() == null || e.getUser() == user) userExercises.add(e);
         }
 
         return userExercises;
@@ -188,8 +186,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         List<Exercise> allExercises = this.findAll();
         List<Exercise> userExercises = new ArrayList<>();
         for (Exercise e : allExercises) {
-            if (e.getUser() == user)
-                userExercises.add(e);
+            if (e.getUser() == user) userExercises.add(e);
         }
         return userExercises;
     }
@@ -290,8 +287,7 @@ public class ExerciseServiceImpl implements ExerciseService {
                         break;
                     }
                 }
-                if (valid)
-                    exercisesWithEquipment.add(e);
+                if (valid) exercisesWithEquipment.add(e);
             }
             return exercisesWithEquipment;
         }

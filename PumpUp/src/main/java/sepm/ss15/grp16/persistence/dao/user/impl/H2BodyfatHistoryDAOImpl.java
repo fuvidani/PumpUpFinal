@@ -22,7 +22,7 @@ import java.util.List;
 public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private Connection con;
+    private Connection        con;
     private PreparedStatement createStatement;
     private PreparedStatement searchByUserIDStatement;
     private PreparedStatement searchByIDStatement;
@@ -35,37 +35,13 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
             this.createStatement = con.prepareStatement("INSERT INTO bodyfathistory VALUES(?, ?, ?, ?);");
             this.searchByUserIDStatement = con.prepareStatement("SELECT * FROM bodyfathistory WHERE user_id = ?");
             this.searchByIDStatement = con.prepareStatement("SELECT * FROM bodyfathistory WHERE bodyfathistory_id = ?");
-            this.getActualBodyfatStatement = con.prepareStatement("SELECT * FROM bodyfathistory WHERE user_id = ? AND " +
-                    "bodyfathistory_id = (SELECT max(bodyfathistory_id) from bodyfathistory WHERE user_id = ?);");
+            this.getActualBodyfatStatement = con.prepareStatement("SELECT * FROM bodyfathistory WHERE user_id = ? AND " + "bodyfathistory_id = (SELECT max(bodyfathistory_id) from bodyfathistory WHERE user_id = ?);");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
             throw new PersistenceException("Failed to get a connection", e);
         }
 
-    }
-
-    @Override
-    public List<BodyfatHistory> searchByUserID(int user_id) throws PersistenceException {
-        LOGGER.info("Searching bodyfat from user with id: " + user_id);
-        List<BodyfatHistory> bodyfatHistoryList = new ArrayList<>();
-
-        try {
-            searchByUserIDStatement.setInt(1, user_id);
-            ResultSet resultSet = searchByUserIDStatement.executeQuery();
-
-            while (resultSet.next()) {
-                BodyfatHistory foundBodyfatHistory = new BodyfatHistory(resultSet.getInt(1), resultSet.getInt(2),
-                        resultSet.getInt(3), resultSet.getDate(4));
-                bodyfatHistoryList.add(foundBodyfatHistory);
-            }
-
-        } catch (SQLException e) {
-            throw new PersistenceException("Failed to find bodyfat from user with id: " + user_id, e);
-        }
-
-        LOGGER.info("Searching bodyfat from user with id: " + user_id + " was successful");
-        return bodyfatHistoryList;
     }
 
     @Override
@@ -113,8 +89,7 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
             ResultSet rs_allBodyfatHistories = findAllStatement.executeQuery("SELECT * FROM bodyfathistory;");
 
             while (rs_allBodyfatHistories.next()) {
-                BodyfatHistory foundBodyfatHistory = new BodyfatHistory(rs_allBodyfatHistories.getInt(1), rs_allBodyfatHistories.getInt(2),
-                        rs_allBodyfatHistories.getInt(3), rs_allBodyfatHistories.getDate(4));
+                BodyfatHistory foundBodyfatHistory = new BodyfatHistory(rs_allBodyfatHistories.getInt(1), rs_allBodyfatHistories.getInt(2), rs_allBodyfatHistories.getInt(3), rs_allBodyfatHistories.getDate(4));
                 bodyfatHistoryList.add(foundBodyfatHistory);
             }
 
@@ -137,8 +112,7 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
             ResultSet resultSet = searchByIDStatement.executeQuery();
 
             if (resultSet.next()) {
-                bodyfatHistory = new BodyfatHistory(resultSet.getInt(1), resultSet.getInt(2),
-                        resultSet.getInt(3), resultSet.getDate(4));
+                bodyfatHistory = new BodyfatHistory(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3), resultSet.getDate(4));
             }
 
         } catch (SQLException e) {
@@ -157,6 +131,28 @@ public class H2BodyfatHistoryDAOImpl implements BodyfatHistoryDAO {
     @Override
     public void delete(BodyfatHistory dto) throws PersistenceException {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<BodyfatHistory> searchByUserID(int user_id) throws PersistenceException {
+        LOGGER.info("Searching bodyfat from user with id: " + user_id);
+        List<BodyfatHistory> bodyfatHistoryList = new ArrayList<>();
+
+        try {
+            searchByUserIDStatement.setInt(1, user_id);
+            ResultSet resultSet = searchByUserIDStatement.executeQuery();
+
+            while (resultSet.next()) {
+                BodyfatHistory foundBodyfatHistory = new BodyfatHistory(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3), resultSet.getDate(4));
+                bodyfatHistoryList.add(foundBodyfatHistory);
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenceException("Failed to find bodyfat from user with id: " + user_id, e);
+        }
+
+        LOGGER.info("Searching bodyfat from user with id: " + user_id + " was successful");
+        return bodyfatHistoryList;
     }
 
     @Override

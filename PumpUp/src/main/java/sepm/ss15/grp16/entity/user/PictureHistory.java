@@ -14,8 +14,8 @@ public class PictureHistory implements DTO {
 
     private Integer picturehistory_id;
     private Integer user_id;
-    private String location;
-    private Date date;
+    private String  location;
+    private Date    date;
     private Boolean isDeleted;
 
     public PictureHistory(Integer picturehistory_id, Integer user_id, String location, Date date) {
@@ -87,6 +87,15 @@ public class PictureHistory implements DTO {
     }
 
     @Override
+    public int hashCode() {
+        int result = picturehistory_id != null ? picturehistory_id.hashCode() : 0;
+        result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -99,15 +108,6 @@ public class PictureHistory implements DTO {
         if (location != null ? !location.equals(that.location) : that.location != null) return false;
         return !(isDeleted != null ? !isDeleted.equals(that.isDeleted) : that.isDeleted != null);
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = picturehistory_id != null ? picturehistory_id.hashCode() : 0;
-        result = 31 * result + (user_id != null ? user_id.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
-        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
-        return result;
     }
 
     @Override

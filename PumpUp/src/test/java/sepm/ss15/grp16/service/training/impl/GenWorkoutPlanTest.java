@@ -10,7 +10,6 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import sepm.ss15.grp16.persistence.database.DBHandler;
 import sepm.ss15.grp16.persistence.exception.DBException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
 import sepm.ss15.grp16.service.exercise.ExerciseService;
@@ -25,10 +24,8 @@ import java.sql.SQLException;
  * Created by Daniel Fuevesi on 19.05.15.
  * Runs the corresponding tests.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config-test.xml")
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("classpath:spring-config-test.xml")
+@TestExecutionListeners(inheritListeners = false, listeners = {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
 
     @Autowired
@@ -52,7 +49,7 @@ public class GenWorkoutPlanTest extends AbstractGenWorkoutPlanTest {
     }
 
     @Autowired
-    public void setMockedExerciseService(ExerciseService mockedExerciseService){
+    public void setMockedExerciseService(ExerciseService mockedExerciseService) {
         this.mockedExerciseService = mockedExerciseService;
     }
 

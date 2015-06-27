@@ -34,7 +34,7 @@
     -fx-background-size: 90%;
 }
 
-.btnShowBodyOutline:selected{
+.btnShowBodyOutline:selected {
     -fx-background-image: url('../icons/body_icon_green.png');
 }
 

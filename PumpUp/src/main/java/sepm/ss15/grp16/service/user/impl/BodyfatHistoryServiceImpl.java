@@ -56,24 +56,6 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
     }
 
     @Override
-    public List<BodyfatHistory> searchByUserID(int user_id) throws ServiceException {
-        try {
-            return bodyfatHistoryDAO.searchByUserID(user_id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public BodyfatHistory getActualBodyfat(int user_id) throws ServiceException {
-        try {
-            return bodyfatHistoryDAO.getActualBodyfat(user_id);
-        } catch (PersistenceException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public void validate(BodyfatHistory bodyfatHistory) throws ValidationException {
 
         if (bodyfatHistory == null) {
@@ -96,5 +78,23 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
             throw new ValidationException(errorMsg);
         }
 
+    }
+
+    @Override
+    public List<BodyfatHistory> searchByUserID(int user_id) throws ServiceException {
+        try {
+            return bodyfatHistoryDAO.searchByUserID(user_id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public BodyfatHistory getActualBodyfat(int user_id) throws ServiceException {
+        try {
+            return bodyfatHistoryDAO.getActualBodyfat(user_id);
+        } catch (PersistenceException e) {
+            throw new ServiceException(e);
+        }
     }
 }

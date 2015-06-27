@@ -20,7 +20,7 @@ public class MotivatonModul {
     private static final Logger LOGGER = LogManager.getLogger(MotivatonModul.class);
 
     private WorkoutMusicPlayerController MusicPlayerController;
-    private MusicService musicService;
+    private MusicService                 musicService;
 
     private Map<String, Playlist> motivations;
     private Random random = new Random();

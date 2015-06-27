@@ -13,14 +13,14 @@ import java.util.Date;
 /**
  * Created by David on 2015.06.22..
  */
-public abstract class AbstractCalendarServiceTest extends AbstractServiceTestMockito<Appointment>{
+public abstract class AbstractCalendarServiceTest extends AbstractServiceTestMockito<Appointment> {
 
     protected CalendarService calendarService;
-    protected UserService mockedUserService;
-    protected CalendarDAO mockedCalendarDAO;
+    protected UserService     mockedUserService;
+    protected CalendarDAO     mockedCalendarDAO;
 
     @Test
-    public void createValid() throws Exception{
+    public void createValid() throws Exception {
         createTest(dummyAppointment());
     }
 
@@ -53,11 +53,12 @@ public abstract class AbstractCalendarServiceTest extends AbstractServiceTestMoc
     public void findAllFail() throws Exception {
         findAllTestFail();
     }
+
     /**
      * HELPER METHODS
      */
 
-    private Appointment dummyAppointment() throws Exception{
+    private Appointment dummyAppointment() throws Exception {
 
         Appointment appointment = new Appointment(1, new Date(), 4, 3, false, false);
         return appointment;

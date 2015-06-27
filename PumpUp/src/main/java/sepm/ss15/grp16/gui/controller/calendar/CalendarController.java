@@ -35,7 +35,7 @@ public class CalendarController extends Controller {
     private CalendarService calendarService;
 
     @FXML
-    private WebView webView;
+    private WebView   webView;
     @FXML
     private WebEngine engine;
 

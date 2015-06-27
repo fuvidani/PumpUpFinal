@@ -12,8 +12,6 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
@@ -59,24 +57,24 @@ public class MainController extends Controller {
     Label bodyfatTextField;
     @FXML
     Label emailTextField;
-    private UserService userService;
-    private CalendarService calendarService;
-    private WeightHistoryService weightHistoryService;
+    private UserService           userService;
+    private CalendarService       calendarService;
+    private WeightHistoryService  weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
     private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
     @FXML
-    private Label currentTrainingTypeLabel;
+    private Label                     currentTrainingTypeLabel;
     @FXML
-    private ImageView userImgView;
+    private ImageView                 userImgView;
     @FXML
-    private Label usernameLabel;
+    private Label                     usernameLabel;
     @FXML
     private LineChart<String, Number> userChart;
     @FXML
-    private WebView webView;
+    private WebView                   webView;
     @FXML
-    private WebEngine engine;
+    private WebEngine                 engine;
     @FXML
     private Button trainingPicBtn = new Button();
 
@@ -244,8 +242,7 @@ public class MainController extends Controller {
             int i = 0;
             for (WeightHistory w : weightHistoryList) {
                 LineChart.Data data = new LineChart.Data<>("" + w.getDate(), w.getWeight());
-                data.setNode(
-                        new HoveredThresholdNode(w.getWeight(),0) //0 is for a red border
+                data.setNode(new HoveredThresholdNode(w.getWeight(), 0) //0 is for a red border
                 );
 
                 weightSeries.getData().add(data);
@@ -256,8 +253,7 @@ public class MainController extends Controller {
                 int bodyFatTOKG = weightHistoryList.get(i).getWeight() * b.getBodyfat() / 100;
                 LineChart.Data data = new LineChart.Data<>("" + b.getDate(), bodyFatTOKG);
 
-                data.setNode(
-                        new HoveredThresholdNode(bodyFatTOKG, 1)//1 is for a yellow border
+                data.setNode(new HoveredThresholdNode(bodyFatTOKG, 1)//1 is for a yellow border
 
                 );
                 i++;
@@ -328,7 +324,7 @@ public class MainController extends Controller {
 
         private Label createDataThresholdLabel(int value, int seriesNr) {
             final Label label = new Label(value + " kg");
-            label.getStyleClass().addAll("default-color"+seriesNr, "chart-line-symbol", "chart-series-line");
+            label.getStyleClass().addAll("default-color" + seriesNr, "chart-line-symbol", "chart-series-line");
             label.setTextFill(Color.BLACK);
 
             label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);

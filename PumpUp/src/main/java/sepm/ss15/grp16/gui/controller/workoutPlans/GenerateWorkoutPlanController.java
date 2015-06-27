@@ -33,9 +33,9 @@ public class GenerateWorkoutPlanController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private GeneratedWorkoutplanService generatedWorkoutplanService;
-    private ToggleGroup toggleGroup;
-    private List<EquipmentCategory> equipment;
-    private List<CheckBox> boxes;
+    private ToggleGroup                 toggleGroup;
+    private List<EquipmentCategory>     equipment;
+    private List<CheckBox>              boxes;
     private BooleanProperty displayClosed = new SimpleBooleanProperty();
     private Trainingsplan generatedWorkoutPlan;
 

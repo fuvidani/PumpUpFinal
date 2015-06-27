@@ -33,13 +33,6 @@ public interface ExerciseService extends Service<Exercise> {
     List<Exercise> findAll() throws ServiceException;
 
     /**
-     * @param id exercixe to search for
-     * @return if the exercixe exists it is returned, otherwise null is the result.
-     * @throws ServiceException if there are complications with the persitance layer
-     */
-    Exercise searchByID(int id) throws ServiceException;
-
-    /**
      * updating one given exercise with new values and returning it for further usage
      *
      * @param exercise which shall be updated
@@ -48,6 +41,29 @@ public interface ExerciseService extends Service<Exercise> {
      * @throws ServiceException if there are complications with the persitance layer
      */
     Exercise update(Exercise exercise) throws ServiceException;
+
+    /**
+     * deleting a given exercise
+     *
+     * @param exercise which shall be deleted from the underlying persitance implementation layer
+     * @throws ServiceException if there are complications with the persitance layer
+     */
+    void delete(Exercise exercise) throws ServiceException;
+
+    /**
+     * validating a given exercise
+     *
+     * @param exercise dto object to validate
+     * @throws sepm.ss15.grp16.service.exception.ValidationException
+     */
+    void validate(Exercise exercise) throws ValidationException;
+
+    /**
+     * @param id exercixe to search for
+     * @return if the exercixe exists it is returned, otherwise null is the result.
+     * @throws ServiceException if there are complications with the persitance layer
+     */
+    Exercise searchByID(int id) throws ServiceException;
 
     /**
      * returning a list of all exercises for the given user
@@ -93,7 +109,6 @@ public interface ExerciseService extends Service<Exercise> {
      */
     List<Exercise> getAllBalanceExercises() throws ServiceException;
 
-
     /**
      * get all exercises which train only flexibility
      *
@@ -101,23 +116,6 @@ public interface ExerciseService extends Service<Exercise> {
      * @throws ServiceException
      */
     List<Exercise> getAllFlexibilityExercises() throws ServiceException;
-
-
-    /**
-     * deleting a given exercise
-     *
-     * @param exercise which shall be deleted from the underlying persitance implementation layer
-     * @throws ServiceException if there are complications with the persitance layer
-     */
-    void delete(Exercise exercise) throws ServiceException;
-
-    /**
-     * validating a given exercise
-     *
-     * @param exercise dto object to validate
-     * @throws sepm.ss15.grp16.service.exception.ValidationException
-     */
-    void validate(Exercise exercise) throws ValidationException;
 
     /**
      * getting all exercises which have the given category specified

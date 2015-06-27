@@ -37,9 +37,7 @@ import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.gui.controller.main.MainController;
 import sepm.ss15.grp16.persistence.dao.exercise.ExerciseDAO;
 
-
 import java.net.URISyntaxException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -52,8 +50,8 @@ import java.util.LinkedList;
 
 public class WorkoutController extends Controller {
 
-    private static final int IMAGEDURATION = 1500;
-    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+    private static final int                             IMAGEDURATION = 1500;
+    private static final org.apache.logging.log4j.Logger LOGGER        = LogManager.getLogger();
 
     @FXML
     private Arc circleCounter;
@@ -90,19 +88,19 @@ public class WorkoutController extends Controller {
 
     private MotivatonModul motivationModul;
 
-    private Timeline counterTimeline;
-    private IntegerProperty timeSeconds;
-    private StringProperty time;
-    private ArrayList<ExerciseSet> exerciseList;
-    private int activeExercisePosition;
-    private ArrayList<Image> imageList;
-    private int activeImagePosition;
-    private Timeline imageTimeline;
+    private Timeline                               counterTimeline;
+    private IntegerProperty                        timeSeconds;
+    private StringProperty                         time;
+    private ArrayList<ExerciseSet>                 exerciseList;
+    private int                                    activeExercisePosition;
+    private ArrayList<Image>                       imageList;
+    private int                                    activeImagePosition;
+    private Timeline                               imageTimeline;
     private HashMap<ExerciseSet, ArrayList<Image>> images;
-    private LinkedList<ExerciseView> exerciseViews;
-    private Status status;
-    private TrainingsSession session;
-    private WorkoutResult workoutResult;
+    private LinkedList<ExerciseView>               exerciseViews;
+    private Status                                 status;
+    private TrainingsSession                       session;
+    private WorkoutResult                          workoutResult;
 
     public WorkoutController(ExerciseDAO exerciseDAO, MotivatonModul motivationModul) {
         this.motivationModul = motivationModul;
@@ -116,7 +114,10 @@ public class WorkoutController extends Controller {
 
         mainFrame.addPageManeItem("Übungsdetails anzeien", event1 -> onDetailedExerciseClicked());
         mainFrame.addPageManeItem("Open Fullscreen", event1 -> mainFrame.openFullScreenMode());
-        mainFrame.addPageManeItem("Training abbrechen", event1 -> mainFrame.navigateToParent());
+        mainFrame.addPageManeItem("Training abbrechen", event1 -> {
+            musicPlayerController.stopMusic();
+            mainFrame.navigateToParent();
+        });
 
         exerciseImageView.setOnMouseClicked(event1 -> onDetailedExerciseClicked());
         exerciseImageView.setOnTouchReleased(event1 -> onDetailedExerciseClicked());
@@ -138,40 +139,35 @@ public class WorkoutController extends Controller {
         imageList = new ArrayList<>();
         imageTimeline = new Timeline();
         imageTimeline.setCycleCount(Timeline.INDEFINITE);
-        imageTimeline.getKeyFrames().add(
-                new KeyFrame(Duration.millis(IMAGEDURATION), event -> {
-                    activeImagePosition = (activeImagePosition + 1) % imageList.size();
-                    exerciseImageView.setImage(imageList.get(activeImagePosition));
-                }, new KeyValue[0]));
+        imageTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(IMAGEDURATION), event -> {
+                                             activeImagePosition = (activeImagePosition + 1) % imageList.size();
+                                             exerciseImageView.setImage(imageList.get(activeImagePosition));
+                                         }, new KeyValue[0]));
 
         time = new SimpleStringProperty();
         timeSeconds = new SimpleIntegerProperty();
         timeSeconds.addListener((observable1, oldValue1, newValue1) -> {
-                    if (status == Status.RUNNUNG) {
-                        motivationModul.play(newValue1.intValue(), activeExercise().getType());
-                    }
-                }
-        );
+                                    if (status == Status.RUNNUNG) {
+                                        motivationModul.play(newValue1.intValue(), activeExercise().getType());
+                                    }
+                                });
         time.bindBidirectional(timeSeconds, new StringConverter<Number>() {
             @Override
             public String toString(Number object) {
                 return fillUp(object.intValue() / 60) + ":" + fillUp(object.intValue() % 60);
             }
 
-            private String fillUp(int num)
-            {
-                if(num < 10)
-                {
-                    return "0" + num;
-                }
-                else {
-                    return num + "";
-                }
-            }
-
             @Override
             public Number fromString(String string) {
                 return 0;
+            }
+
+            private String fillUp(int num) {
+                if (num < 10) {
+                    return "0" + num;
+                } else {
+                    return num + "";
+                }
             }
         });
         counterLable.textProperty().bind(time);
@@ -271,9 +267,7 @@ public class WorkoutController extends Controller {
         pauseButton.setText("Stop");
         counterTimeline.playFromStart();
         if (activeExercisePosition > 0) {
-            workoutResult.setExecution(exerciseList.get(activeExercisePosition - 1),
-                    repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
-                    durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
+            workoutResult.setExecution(exerciseList.get(activeExercisePosition - 1), repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()), durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
             repetionField.setDisable(true);
         }
     }
@@ -290,6 +284,7 @@ public class WorkoutController extends Controller {
                 durationField.setText((activeExercise().getRepeat() - timeSeconds.getValue()) + "");
                 repetionField.setText("");
                 repetionField.setDisable(false);
+                repetionField.requestFocus();
             }
         }
 
@@ -317,23 +312,17 @@ public class WorkoutController extends Controller {
             if (activeExercise().getType() == ExerciseSet.SetType.time) {
                 timeSeconds.set(activeExercise().getRepeat());
                 circleCounter.setLength(360);
-                counterTimeline.getKeyFrames().add(
-                        new KeyFrame(Duration.seconds(activeExercise().getRepeat() + 1),
-                                new KeyValue(timeSeconds, 0), new KeyValue(circleCounter.lengthProperty(), 0)));
+                counterTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(activeExercise().getRepeat() + 1), new KeyValue(timeSeconds, 0), new KeyValue(circleCounter.lengthProperty(), 0)));
 
             } else {
                 timeSeconds.set(0);
-                counterTimeline.getKeyFrames().add(
-                        new KeyFrame(Duration.seconds(Integer.MAX_VALUE),
-                                new KeyValue(timeSeconds, Integer.MAX_VALUE)));
+                counterTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(Integer.MAX_VALUE), new KeyValue(timeSeconds, Integer.MAX_VALUE)));
             }
         }
     }
 
-    public void finish(){
-        workoutResult.setExecution(activeExercise(),
-                repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()),
-                durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
+    public void finish() {
+        workoutResult.setExecution(activeExercise(), repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()), durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
         musicPlayerController.stopMusic();
         mainFrame.openDialog(PageEnum.WorkoutResult);
         mainFrame.navigateToParent();
@@ -352,19 +341,15 @@ public class WorkoutController extends Controller {
     }
 
     @FXML
-    private void onDetailedExerciseClicked()
-    {
-        if(status == Status.PAUSED)
-        {
+    private void onDetailedExerciseClicked() {
+        if (status == Status.PAUSED) {
             launchDialog(PageEnum.DisplayExercise);
         }
     }
 
     @FXML
-    private void onKeyPressed(KeyEvent event)
-    {
-        if(event.getCode() == KeyCode.ENTER)
-        {
+    private void onKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
             onActionButtonClicked(null);
         }
     }
@@ -375,6 +360,14 @@ public class WorkoutController extends Controller {
 
     public WorkoutMusicPlayerController getMusicPlayerController() {
         return musicPlayerController;
+    }
+
+    public Exercise getExercise() {
+        return activeExercise().getExercise();
+    }
+
+    public WorkoutResult getWorkoutResult() {
+        return workoutResult;
     }
 
     private enum Status {
@@ -398,7 +391,7 @@ public class WorkoutController extends Controller {
             getChildren().add(imageView);
             BorderPane borderPane = new BorderPane();
             Label label = new Label(exerciseSet.getRepresentationText());
-            label.setStyle("-fx-font-weight: bold");
+            label.setStyle("-fx-font-family: Segoe UI Light;");
             label.setTooltip(tooltip);
             borderPane.setBottom(label);
             getChildren().add(borderPane);
@@ -411,15 +404,5 @@ public class WorkoutController extends Controller {
             getStyleClass().clear();
             getStyleClass().add("activeBarElement");
         }
-    }
-
-    public Exercise getExercise()
-    {
-        return activeExercise().getExercise();
-    }
-
-    public WorkoutResult getWorkoutResult()
-    {
-        return workoutResult;
     }
 }

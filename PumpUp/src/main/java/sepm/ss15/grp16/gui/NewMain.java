@@ -11,8 +11,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Created by Maximilian on 22.05.2015.
  */
 public class NewMain extends Application {
-    private static final Logger LOGGER = LogManager.getLogger(NewMain.class);
-    private static ClassPathXmlApplicationContext context = null;
+    private static final Logger                         LOGGER  = LogManager.getLogger(NewMain.class);
+    private static       ClassPathXmlApplicationContext context = null;
 
     public static void main(String[] args) {
         try {
@@ -44,7 +44,6 @@ public class NewMain extends Application {
 
 
     }
-
 
 
 }

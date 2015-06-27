@@ -35,9 +35,9 @@ public class WorkoutPlanToCalendarController extends Controller {
 
     private Trainingsplan plan_interClassCommunication;
 
-    private CalendarService calendarService;
+    private CalendarService      calendarService;
     private TrainingsplanService trainingsplanService;
-    private UserService userService;
+    private UserService          userService;
 
     private boolean finished = false;
 
@@ -105,10 +105,7 @@ public class WorkoutPlanToCalendarController extends Controller {
             txtName.setText(plan_interClassCommunication.getName());
             if (plan_interClassCommunication.getTrainingsSessions() != null) {
 
-                ObservableList<TrainingsSession> data =
-                        FXCollections.observableArrayList(
-                                plan_interClassCommunication.getTrainingsSessions()
-                        );
+                ObservableList<TrainingsSession> data = FXCollections.observableArrayList(plan_interClassCommunication.getTrainingsSessions());
                 listviewSessions.setItems(data);
             }
         }

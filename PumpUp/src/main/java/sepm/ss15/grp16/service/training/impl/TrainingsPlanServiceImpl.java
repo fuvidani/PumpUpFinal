@@ -25,13 +25,12 @@ import java.util.List;
 public class TrainingsPlanServiceImpl implements TrainingsplanService {
     private static final Logger LOGGER = LogManager.getLogger(TrainingsPlanServiceImpl.class);
 
-    private final TrainingsplanDAO trainingsplanDAO;
+    private final TrainingsplanDAO    trainingsplanDAO;
     private final TrainingsSessionDAO trainingsSessionDAO;
-    private final ExerciseService exerciseService;
-    private final UserService userService;
+    private final ExerciseService     exerciseService;
+    private final UserService         userService;
 
-    TrainingsPlanServiceImpl(TrainingsplanDAO trainingsplanDAO, TrainingsSessionDAO trainingsSessionDAO,
-                             ExerciseService exerciseService, UserService userService) {
+    TrainingsPlanServiceImpl(TrainingsplanDAO trainingsplanDAO, TrainingsSessionDAO trainingsSessionDAO, ExerciseService exerciseService, UserService userService) {
         this.trainingsplanDAO = trainingsplanDAO;
         this.trainingsSessionDAO = trainingsSessionDAO;
         this.exerciseService = exerciseService;
@@ -97,6 +96,36 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
         } catch (PersistenceException e) {
             LOGGER.error("" + e);
             throw new ServiceException("Fehler beim L\u00f6schen des Trainingsplans aufgetreten");
+        }
+    }
+
+    @Override
+    public void validate(Trainingsplan plan) throws ValidationException {
+        if (plan == null) {
+            LOGGER.error("error validating " + plan);
+            throw new ValidationException("Trainingsplan darf nicht null sein!");
+        }
+
+        validate_withoutID(plan);
+
+        if (plan.getId() == null) {
+            LOGGER.error("error validating " + plan);
+            throw new ValidationException("Trainingsplan-ID darf nicht null sein!");
+        }
+
+        if (plan.getDuration() == null) {
+            LOGGER.error("error validating " + plan);
+            throw new ValidationException("Trainingsplan Dauer darf nicht null sein!");
+        }
+        if (plan.getTrainingsSessions() != null) {
+
+            List<TrainingsSession> trainingsSessions = plan.getTrainingsSessions();
+            for (TrainingsSession session : trainingsSessions) {
+                validate(session);
+            }
+        }
+        if (plan.getUser() != null) {
+            userService.validate(plan.getUser());
         }
     }
 
@@ -211,36 +240,6 @@ public class TrainingsPlanServiceImpl implements TrainingsplanService {
             set.setRepeat(set.getRepeat() - 15);
         } else {
             set.setRepeat(1);
-        }
-    }
-
-    @Override
-    public void validate(Trainingsplan plan) throws ValidationException {
-        if (plan == null) {
-            LOGGER.error("error validating " + plan);
-            throw new ValidationException("Trainingsplan darf nicht null sein!");
-        }
-
-        validate_withoutID(plan);
-
-        if (plan.getId() == null) {
-            LOGGER.error("error validating " + plan);
-            throw new ValidationException("Trainingsplan-ID darf nicht null sein!");
-        }
-
-        if (plan.getDuration() == null) {
-            LOGGER.error("error validating " + plan);
-            throw new ValidationException("Trainingsplan Dauer darf nicht null sein!");
-        }
-        if (plan.getTrainingsSessions() != null) {
-
-            List<TrainingsSession> trainingsSessions = plan.getTrainingsSessions();
-            for (TrainingsSession session : trainingsSessions) {
-                validate(session);
-            }
-        }
-        if (plan.getUser() != null) {
-            userService.validate(plan.getUser());
         }
     }
 

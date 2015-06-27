@@ -11,12 +11,12 @@ import sepm.ss15.grp16.entity.DTO;
 public class User implements DTO {
 
     private Integer user_id;
-    private String username;
+    private String  username;
     private Boolean gender; //true: male, false: female
     private Integer age;
     private Integer height;
-    private String email;
-    private String playlist;
+    private String  email;
+    private String  playlist;
     private Boolean isDeleted;
 
     public User(Integer user_id, String username, Boolean gender, Integer age, Integer height, Boolean isDeleted) {
@@ -47,6 +47,14 @@ public class User implements DTO {
     @Override
     public void setId(Integer id) {
         setUser_id(id);
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public Integer getUser_id() {
@@ -89,14 +97,6 @@ public class User implements DTO {
         this.height = height;
     }
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -111,6 +111,19 @@ public class User implements DTO {
 
     public void setPlaylist(String playlist) {
         this.playlist = playlist;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = user_id != null ? user_id.hashCode() : 0;
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (age != null ? age.hashCode() : 0);
+        result = 31 * result + (height != null ? height.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (playlist != null ? playlist.hashCode() : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -129,19 +142,6 @@ public class User implements DTO {
         if (playlist != null ? !playlist.equals(user.playlist) : user.playlist != null) return false;
         return !(isDeleted != null ? !isDeleted.equals(user.isDeleted) : user.isDeleted != null);
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = user_id != null ? user_id.hashCode() : 0;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (gender != null ? gender.hashCode() : 0);
-        result = 31 * result + (age != null ? age.hashCode() : 0);
-        result = 31 * result + (height != null ? height.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (playlist != null ? playlist.hashCode() : 0);
-        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
-        return result;
     }
 
     @Override

@@ -22,12 +22,10 @@ import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.calendar.CalendarService;
 import sepm.ss15.grp16.service.exception.ServiceException;
 
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -62,8 +60,7 @@ public class WorkoutResultController extends Controller {
 
     private CalendarService calendarService;
 
-    public WorkoutResultController(CalendarService calendarService)
-    {
+    public WorkoutResultController(CalendarService calendarService) {
         this.calendarService = calendarService;
     }
 
@@ -83,9 +80,8 @@ public class WorkoutResultController extends Controller {
         for (ExerciseSet set : workoutResult.getAppointment().getSession().getExerciseSets()) {
             calorin += set.getExercise().getCalories() * ((workoutResult.getList().get(set).getDuration() == null) ? 0 : workoutResult.getList().get(set).getDuration());
         }
-        BigDecimal decimal = new BigDecimal(calorin);
-        decimal.setScale(2, BigDecimal.ROUND_HALF_UP);
-        burnedCaloriesLabel.setText(decimal.toString());
+        calorin = (double)Math.round(calorin * 100) / 100;
+        burnedCaloriesLabel.setText(calorin + "");
 
         masterData = FXCollections.observableList(new LinkedList<>(workoutResult.getList().entrySet()));
         exercise.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey().getExercise().getName()));
@@ -116,8 +112,7 @@ public class WorkoutResultController extends Controller {
             stage.initOwner(this.stage);
             stage.setScene(new Scene(webView, 500, 300));
             stage.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.info("Failed to open a connection, reason: " + e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");

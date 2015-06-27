@@ -9,13 +9,9 @@ import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
 import sepm.ss15.grp16.entity.user.User;
-import sepm.ss15.grp16.persistence.exception.PersistenceException;
-import sepm.ss15.grp16.service.AbstractServiceTest;
 import sepm.ss15.grp16.service.AbstractServiceTestMockito;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
-import sepm.ss15.grp16.service.exercise.ExerciseService;
-import sepm.ss15.grp16.service.user.UserService;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,5 @@
 MERGE INTO user VALUES
-(0, 'Lukas', TRUE, 22, 178, 'loc.kathrein@gmail.com', NULL, FALSE);
+  (0, 'Lukas', TRUE, 22, 178, 'loc.kathrein@gmail.com', NULL, FALSE);
 
 MERGE INTO bodyfathistory VALUES
   (0, 0, 20, '2015-02-23'),

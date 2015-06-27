@@ -1,6 +1,8 @@
 package sepm.ss15.grp16.service.user;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import static org.mockito.Mockito.when;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.dao.user.BodyfatHistoryDAO;
@@ -15,9 +17,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
 /**
  * This class provides methods for testing BodyFatHistoryServices
  *
@@ -27,7 +26,7 @@ import static org.mockito.Mockito.when;
 public abstract class AbstractBodyfatHistoryServiceTest extends AbstractServiceTestMockito<BodyfatHistory> {
 
     protected BodyfatHistoryService bodyfatHistoryService;
-    protected BodyfatHistoryDAO mockedBodyfatHistoryDAO;
+    protected BodyfatHistoryDAO     mockedBodyfatHistoryDAO;
 
     @Override
     public Service<BodyfatHistory> getService() {

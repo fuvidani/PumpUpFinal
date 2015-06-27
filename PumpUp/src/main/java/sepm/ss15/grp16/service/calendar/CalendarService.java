@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Created by David on 2015.05.16..
- *
+ * <p/>
  * Calendar service interface, that provides several methods for editing the user calendar.
  */
 public interface CalendarService extends Service<Appointment> {
@@ -102,6 +102,7 @@ public interface CalendarService extends Service<Appointment> {
 
     /**
      * Sets an appointment with id as trained.
+     *
      * @param appointment_id to be set as trained
      * @throws ServiceException
      */

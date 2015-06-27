@@ -2,6 +2,7 @@ package sepm.ss15.grp16.service.training;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
 import sepm.ss15.grp16.entity.exercise.AbsractCategory;
 import sepm.ss15.grp16.entity.exercise.Exercise;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
@@ -20,8 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
-import static org.mockito.Mockito.when;
-
 /**
  * Created by Daniel Fuevesi on 19.05.15.
  * Abstract class that defines the tests for the functionality supported by GeneratedWorkoutPlanService.
@@ -30,10 +29,10 @@ public abstract class AbstractGenWorkoutPlanTest {
 
 
     protected GeneratedWorkoutplanService workoutplanService;
-    protected CategoryService mockedCategoryService;
-    protected UserService mockedUserService;
-    protected WeightHistoryService mockedWeightHistoryService;
-    protected ExerciseService mockedExerciseService;
+    protected CategoryService             mockedCategoryService;
+    protected UserService                 mockedUserService;
+    protected WeightHistoryService        mockedWeightHistoryService;
+    protected ExerciseService             mockedExerciseService;
 
     /**
      * Test of service.generate(.) with null used as parameter.
@@ -93,20 +92,22 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Tests the validation method of the service.
      * Should throw a ValidationException, because no goal is provided.
+     *
      * @throws ValidationException
      */
     @Test(expected = ValidationException.class)
-    public void validateWithInvalidGoal() throws ValidationException{
+    public void validateWithInvalidGoal() throws ValidationException {
         workoutplanService.validate(new Gen_WorkoutplanPreferences(1, null, new ArrayList<>()));
     }
 
     /**
      * Tests the validation method of the service.
      * Should throw a ValidationException, because no equipment is provided.
+     *
      * @throws ValidationException
      */
     @Test(expected = ValidationException.class)
-    public void validateWithInvalidEquipment() throws ValidationException{
+    public void validateWithInvalidEquipment() throws ValidationException {
         workoutplanService.validate(new Gen_WorkoutplanPreferences(1, new TrainingsCategory(0, "Ausdauer"), null));
     }
 
@@ -119,15 +120,15 @@ public abstract class AbstractGenWorkoutPlanTest {
     @Test
     public void callWithValidPreferences() throws ServiceException {
         ArrayList<Exercise> exercises = new ArrayList<>();
-        exercises.add(new Exercise(1,"Armrotation", "Descr.", 0.3, "armup.mp4", new LinkedList<String>(),false,new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
-        exercises.add(new Exercise(6,"Auf der Stelle laufen", "Descr.", 0.3, "armup.mp4", new LinkedList<String>(),false,new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
-        exercises.add(new Exercise(11,"Boxen", "Descr.", 0.3, "armup.mp4", new LinkedList<String>(),false,new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
-        exercises.add(new Exercise(28,"Armrotation", "Descr.", 0.2, "armup.mp4", new LinkedList<String>(),false,new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
-        exercises.add(new Exercise(30,"Armrotation", "Descr.", 1.0, "armup.mp4", new LinkedList<String>(),false,new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
-        exercises.add(new Exercise(34,"Armrotation", "Descr.", 0.2, "armup.mp4", new LinkedList<String>(),false,new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
-        exercises.add(new Exercise(35,"Armrotation", "Descr.", 1.5, "armup.mp4", new LinkedList<String>(),false,new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
-        exercises.add(new Exercise(36,"Armrotation", "Descr.", 0.5, "armup.mp4", new LinkedList<String>(),false,new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
-        exercises.add(new Exercise(37,"Armrotation", "Descr.", 0.3, "armup.mp4", new LinkedList<String>(),false,new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
+        exercises.add(new Exercise(1, "Armrotation", "Descr.", 0.3, "armup.mp4", new LinkedList<String>(), false, new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
+        exercises.add(new Exercise(6, "Auf der Stelle laufen", "Descr.", 0.3, "armup.mp4", new LinkedList<String>(), false, new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
+        exercises.add(new Exercise(11, "Boxen", "Descr.", 0.3, "armup.mp4", new LinkedList<String>(), false, new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
+        exercises.add(new Exercise(28, "Armrotation", "Descr.", 0.2, "armup.mp4", new LinkedList<String>(), false, new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
+        exercises.add(new Exercise(30, "Armrotation", "Descr.", 1.0, "armup.mp4", new LinkedList<String>(), false, new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
+        exercises.add(new Exercise(34, "Armrotation", "Descr.", 0.2, "armup.mp4", new LinkedList<String>(), false, new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
+        exercises.add(new Exercise(35, "Armrotation", "Descr.", 1.5, "armup.mp4", new LinkedList<String>(), false, new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
+        exercises.add(new Exercise(36, "Armrotation", "Descr.", 0.5, "armup.mp4", new LinkedList<String>(), false, new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
+        exercises.add(new Exercise(37, "Armrotation", "Descr.", 0.3, "armup.mp4", new LinkedList<String>(), false, new User(50, "Daniel", true, 20, 182, false), new LinkedList<AbsractCategory>()));
 
         /**
          * ***************************************************************************************************************************************
@@ -361,7 +362,7 @@ public abstract class AbstractGenWorkoutPlanTest {
     /**
      * Resets all mocked services.
      */
-    private void reSet(){
+    private void reSet() {
         Mockito.reset(mockedCategoryService);
         Mockito.reset(mockedUserService);
         Mockito.reset(mockedWeightHistoryService);

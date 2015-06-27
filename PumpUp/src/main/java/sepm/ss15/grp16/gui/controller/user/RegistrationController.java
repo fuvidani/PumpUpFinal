@@ -33,36 +33,36 @@ public class RegistrationController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    Pane registrationPane;
+    Pane        registrationPane;
     @FXML
-    Button picture_Button;
+    Button      picture_Button;
     @FXML
-    TextField username_textField;
+    TextField   username_textField;
     @FXML
-    TextField age_textField;
+    TextField   age_textField;
     @FXML
-    TextField height_textField;
+    TextField   height_textField;
     @FXML
-    TextField weight_textField;
+    TextField   weight_textField;
     @FXML
-    TextField bodyfat_textField;
+    TextField   bodyfat_textField;
     @FXML
-    TextField email_textField;
+    TextField   email_textField;
     @FXML
     RadioButton male_radioButton;
     @FXML
     RadioButton female_radioButton;
     @FXML
-    ImageView picture_imageView;
+    ImageView   picture_imageView;
     @FXML
-    private ToggleGroup group;
-    private UserService userService;
-    private LoginController loginController;
-    private WeightHistoryService weightHistoryService;
+    private ToggleGroup           group;
+    private UserService           userService;
+    private LoginController       loginController;
+    private WeightHistoryService  weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
     private PictureHistoryService pictureHistoryService;
-    private String filePath;
-    private MotivatonModul motivationModul;
+    private String                filePath;
+    private MotivatonModul        motivationModul;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -168,7 +168,7 @@ public class RegistrationController extends Controller {
                 PictureHistory pictureHistory = new PictureHistory(null, user.getUser_id(), filePath, null);
                 pictureHistoryService.create(pictureHistory);
             }
-            
+
             motivationModul.welcome();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

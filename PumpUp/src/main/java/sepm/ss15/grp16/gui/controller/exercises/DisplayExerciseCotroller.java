@@ -1,7 +1,9 @@
 package sepm.ss15.grp16.gui.controller.exercises;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -25,7 +27,6 @@ import sepm.ss15.grp16.service.exercise.CategoryService;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Optional;
 
 /**
  * Created by lukas on 09.06.2015.
@@ -35,31 +36,31 @@ import java.util.Optional;
 public class DisplayExerciseCotroller extends Controller implements VideoPlayable {
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    private TextArea description;
+    private TextArea  description;
     @FXML
     private ImageView imageView;
     @FXML
-    private Label header;
+    private Label     header;
     @FXML
-    private Label calories;
+    private Label     calories;
     @FXML
     private ImageView leftArrow;
     @FXML
     private ImageView rightArrow;
     @FXML
-    private Button playVideoBtn;
+    private Button    playVideoBtn;
     @FXML
-    private VBox vboxType;
+    private VBox      vboxType;
     @FXML
-    private VBox vboxEquipment;
+    private VBox      vboxEquipment;
     @FXML
-    private VBox vboxMuscle;
-    private Exercise exercise = null;
-    private Integer picIndex = 0;
-    private boolean isPlaying = false;
+    private VBox      vboxMuscle;
+    private Exercise exercise  = null;
+    private Integer  picIndex  = 0;
+    private boolean  isPlaying = false;
     private Media media;
-    private MediaPlayer player = null;
-    private MediaView smallMediaView = new MediaView();
+    private MediaPlayer player         = null;
+    private MediaView   smallMediaView = new MediaView();
     @FXML
     private VBox videoBox;
     private CategoryService categoryService = null;
@@ -79,15 +80,11 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
     @Override
     public void initController() {
         LOGGER.debug("stranded in DisplayExerciseController");
-        if(this.getParentController() instanceof  SessionEditController_v2) {
+        if (this.getParentController() instanceof SessionEditController_v2) {
             exercise = ((SessionEditController_v2) this.getParentController()).getExercise();
-        }
-        else if(this.getParentController() instanceof  WorkoutController)
-        {
+        } else if (this.getParentController() instanceof WorkoutController) {
             exercise = ((WorkoutController) this.getParentController()).getExercise();
-        }
-        else
-        {
+        } else {
             throw new IllegalArgumentException("DisplayExercise called from wrong Controller!");
         }
 
@@ -108,7 +105,7 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
     public void setContent() {
         header.setText(exercise.getName());
         description.setText(exercise.getDescription());
-        calories.setText(""+exercise.getCalories());
+        calories.setText("" + exercise.getCalories());
         if (exercise.getVideolink() == null) {
             playVideoBtn.setDisable(true);
         } else {
@@ -148,17 +145,14 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
             vboxMuscle.getChildren().clear();
 
             for (TrainingsCategory t : categoryService.getAllTrainingstype()) {
-                if (exercise.getCategories().contains(t))
-                    vboxType.getChildren().add(new Label(t.getName()));
+                if (exercise.getCategories().contains(t)) vboxType.getChildren().add(new Label(t.getName()));
             }
 
             for (EquipmentCategory t : categoryService.getAllEquipment()) {
-                if (exercise.getCategories().contains(t))
-                    vboxEquipment.getChildren().add(new Label(t.getName()));
+                if (exercise.getCategories().contains(t)) vboxEquipment.getChildren().add(new Label(t.getName()));
             }
             for (MusclegroupCategory t : categoryService.getAllMusclegroup()) {
-                if (exercise.getCategories().contains(t))
-                    vboxMuscle.getChildren().add(new Label(t.getName()));
+                if (exercise.getCategories().contains(t)) vboxMuscle.getChildren().add(new Label(t.getName()));
             }
         } catch (ServiceException e) {
             LOGGER.error(e);
@@ -174,8 +168,7 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
      */
     private void showPicture(Integer index) {
         try {
-            if (exercise.getGifLinks().isEmpty())
-                return;
+            if (exercise.getGifLinks().isEmpty()) return;
 
             String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
             LOGGER.debug("show details method path: " + pathToResource);
