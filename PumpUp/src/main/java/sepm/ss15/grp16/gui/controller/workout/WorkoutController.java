@@ -198,7 +198,6 @@ public class WorkoutController extends Controller {
         });
 
 
-
         Stage stage = (Stage) lastExerciseLable.getScene().getWindow();
         stage.setOnCloseRequest(e -> {
             musicPlayerController.stopMusic();
@@ -220,18 +219,19 @@ public class WorkoutController extends Controller {
         try {
             Stage dialogStage = new Stage();
             dialogStage.setWidth(300);
-            dialogStage.setHeight(300);
+            dialogStage.setHeight(200);
             ProgressBar pb = new ProgressBar(exerciseList.size());
+            pb.setMaxWidth(250);
             ProgressIndicator pi = new ProgressIndicator(exerciseList.size());
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.setTitle("Lade");
-            VBox vBox = new VBox(pb, pi);
+            VBox vBox = new VBox(new Label("Lade Live-Modus"), pb, pi);
             vBox.setFillWidth(true);
             vBox.setAlignment(Pos.CENTER);
+            vBox.setSpacing(10);
             dialogStage.setScene(new Scene(vBox));
             String pathToResource = getClass().getClassLoader().getResource("icons").toURI().toString();
             dialogStage.getIcons().add(new Image(pathToResource.concat("/logo.png")));
-
             Task<Void> task = new Task<Void>() {
                 @Override
                 public Void call() {
