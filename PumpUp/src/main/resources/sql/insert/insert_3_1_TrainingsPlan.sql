@@ -46,3 +46,7 @@ MERGE INTO ExerciseSet VALUES
   (53, 12, NULL, 16, 'repeat', 5, 4, FALSE), (54, 12, NULL, 20, 'repeat', 6, 4, FALSE),
   (55, 19, NULL, 20, 'repeat', 7, 4, FALSE), (56, 19, NULL, 20, 'repeat', 8, 4, FALSE),
   (57, 19, NULL, 20, 'repeat', 9, 4, FALSE);
+
+/*ALTER SEQUENCE seq_TP RESTART WITH 4;
+ALTER SEQUENCE seq_TS RESTART WITH 5;
+ALTER SEQUENCE seq_ES RESTART WITH 58;*/

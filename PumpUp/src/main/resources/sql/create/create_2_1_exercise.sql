@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS categoryName;
+/*DROP TABLE IF EXISTS categoryName;
 DROP TABLE IF EXISTS gif;
 DROP TABLE IF EXISTS exercise_category;
 DROP TABLE IF EXISTS exercise;
@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS category;
 DROP SEQUENCE IF EXISTS exercise_seq;
 DROP SEQUENCE IF EXISTS category_seq;
 DROP SEQUENCE IF EXISTS categoryName_seq;
-DROP SEQUENCE IF EXISTS gif_seq;
+DROP SEQUENCE IF EXISTS gif_seq;*/
 
 
 CREATE TABLE IF NOT EXISTS categoryName (
@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS exercise (
 
 
 CREATE TABLE IF NOT EXISTS exercise_category (
-  exerciseid INT NOT NULL REFERENCES exercise (id),
-  categoryid INT NOT NULL REFERENCES category (id),
+  exerciseid INTEGER NOT NULL REFERENCES exercise (id),
+  categoryid INTEGER NOT NULL REFERENCES category (id),
   PRIMARY KEY (exerciseid, categoryid)
 );
 

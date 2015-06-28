@@ -20,6 +20,6 @@ MERGE INTO weighthistory VALUES
   (6, 0, 71, '2015-06-15');
 
 
-ALTER SEQUENCE user_seq RESTART WITH 1;
+/*ALTER SEQUENCE user_seq RESTART WITH 1;
 ALTER SEQUENCE bodyfathistory_seq RESTART WITH 7;
-ALTER SEQUENCE weighthistory_seq RESTART WITH 7;
+ALTER SEQUENCE weighthistory_seq RESTART WITH 7;*/
