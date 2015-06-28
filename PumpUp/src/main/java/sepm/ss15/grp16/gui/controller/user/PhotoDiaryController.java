@@ -191,10 +191,9 @@ public class PhotoDiaryController extends Controller {
             selectedPicturePath = selectedFile.getPath();
             Image image = new Image(selectedFile.toURI().toString());
             imageView.setImage(image);
+            this.addPictureToDiary();
         }
         selectPictureButton.setDisable(false);
-
-        this.addPictureToDiary();
     }
 
     @FXML
