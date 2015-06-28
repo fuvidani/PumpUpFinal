@@ -23,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Arc;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import org.apache.logging.log4j.LogManager;
@@ -141,17 +142,17 @@ public class WorkoutController extends Controller {
         imageTimeline = new Timeline();
         imageTimeline.setCycleCount(Timeline.INDEFINITE);
         imageTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(IMAGEDURATION), event -> {
-                                             activeImagePosition = (activeImagePosition + 1) % imageList.size();
-                                             exerciseImageView.setImage(imageList.get(activeImagePosition));
-                                         }, new KeyValue[0]));
+            activeImagePosition = (activeImagePosition + 1) % imageList.size();
+            exerciseImageView.setImage(imageList.get(activeImagePosition));
+        }, new KeyValue[0]));
 
         time = new SimpleStringProperty();
         timeSeconds = new SimpleIntegerProperty();
         timeSeconds.addListener((observable1, oldValue1, newValue1) -> {
-                                    if (status == Status.RUNNUNG) {
-                                        motivationModul.play(newValue1.intValue(), activeExercise().getType());
-                                    }
-                                });
+            if (status == Status.RUNNUNG) {
+                motivationModul.play(newValue1.intValue(), activeExercise().getType());
+            }
+        });
         time.bindBidirectional(timeSeconds, new StringConverter<Number>() {
             @Override
             public String toString(Number object) {
@@ -224,6 +225,15 @@ public class WorkoutController extends Controller {
             }
             images.put(set, imageList);
         }
+
+
+        Stage stage = (Stage) lastExerciseLable.getScene().getWindow();
+        stage.setOnCloseRequest(e -> {
+            musicPlayerController.stopMusic();
+            counterTimeline.stop();
+            mainFrame.navigateToMain();
+        });
+
     }
 
     private ExerciseSet activeExercise() {
