@@ -83,26 +83,26 @@ public class PhotoDiaryController extends Controller {
     @FXML
     public void forwardButtonClicked() {
         LOGGER.info("Going forward in diary");
-        forwardButton.setDisable(true);
+        this.disableNavigationThroughDiary();
         try {
             if (indexOfCurrentPicture < pictureHistoryList.size() - 1) {
                 indexOfCurrentPicture++;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 final SequentialTransition sequentialTransition = createTransition(imageView, image);
                 sequentialTransition.play();
-                sequentialTransition.setOnFinished(arg0 -> forwardButton.setDisable(false));
+                sequentialTransition.setOnFinished(arg0 -> this.enableNavigationThroughDiary());
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             } else {
                 indexOfCurrentPicture = 0;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 final SequentialTransition sequentialTransition = createTransition(imageView, image);
                 sequentialTransition.play();
-                sequentialTransition.setOnFinished(arg0 -> forwardButton.setDisable(false));
+                sequentialTransition.setOnFinished(arg0 -> this.enableNavigationThroughDiary());
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go forward in picturehistory");
-            forwardButton.setDisable(false);
+            this.enableNavigationThroughDiary();
             showAlert("Fehler", "Fehler beim durchbl\u00e4ttern der Fotos", "Das n\u00e4chste Foto konnte nicht geladen werden.", AlertType.ERROR);
         }
     }
@@ -110,26 +110,26 @@ public class PhotoDiaryController extends Controller {
     @FXML
     public void backwardButtonClicked() {
         LOGGER.info("Going backwards in diary");
-        backButton.setDisable(true);
+        this.disableNavigationThroughDiary();
         try {
             if (indexOfCurrentPicture > 0) {
                 indexOfCurrentPicture--;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 final SequentialTransition sequentialTransition = createTransition(imageView, image);
                 sequentialTransition.play();
-                sequentialTransition.setOnFinished(arg0 -> backButton.setDisable(false));
+                sequentialTransition.setOnFinished(arg0 -> this.enableNavigationThroughDiary());
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             } else {
                 indexOfCurrentPicture = pictureHistoryList.size() - 1;
                 Image image = ImageLoader.loadImage(this.getClass(), pictureHistoryList.get(indexOfCurrentPicture).getLocation());
                 final SequentialTransition sequentialTransition = createTransition(imageView, image);
                 sequentialTransition.play();
-                sequentialTransition.setOnFinished(arg0 -> backButton.setDisable(false));
+                sequentialTransition.setOnFinished(arg0 -> this.enableNavigationThroughDiary());
                 dateLabel.setText("Foto vom " + pictureHistoryList.get(indexOfCurrentPicture).getDate().toString());
             }
         } catch (Exception e) {
             LOGGER.error("Couldn't go backward in picturehistory");
-            backButton.setDisable(false);
+            this.enableNavigationThroughDiary();
             showAlert("Fehler", "Fehler beim durchbl\u00e4ttern der Fotos", "Das vorherige Foto konnte nicht geladen werden.", AlertType.ERROR);
         }
     }
@@ -248,5 +248,15 @@ public class PhotoDiaryController extends Controller {
         sequentialTransition.getChildren().addAll(fadeOutTransition, fadeInTransition);
 
         return sequentialTransition;
+    }
+
+    private void disableNavigationThroughDiary(){
+        forwardButton.setDisable(true);
+        backButton.setDisable(true);
+    }
+
+    private void enableNavigationThroughDiary(){
+        forwardButton.setDisable(false);
+        backButton.setDisable(false);
     }
 }
