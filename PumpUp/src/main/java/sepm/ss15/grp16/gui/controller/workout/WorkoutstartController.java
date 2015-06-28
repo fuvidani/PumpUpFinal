@@ -36,6 +36,8 @@ public class WorkoutstartController extends Controller {
     private Label                 musicPathLabel;
     @FXML
     private Label                 trainingTypeLabel;
+    @FXML
+    private CheckBox fullscreenBox;
 
     public WorkoutstartController(UserService userService) {
         this.userService = userService;
@@ -159,5 +161,10 @@ public class WorkoutstartController extends Controller {
             }
         }
         return false;
+    }
+
+    public boolean isFullScreen()
+    {
+        return fullscreenBox.isSelected();
     }
 }

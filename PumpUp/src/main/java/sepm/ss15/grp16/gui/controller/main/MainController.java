@@ -143,6 +143,9 @@ public class MainController extends Controller {
 
                 if (workoutstartController.started()) {
                     mainFrame.navigateToChild(PageEnum.LiveMode);
+                    if(workoutstartController.isFullScreen()) {
+                        mainFrame.openFullScreenMode();
+                    }
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
