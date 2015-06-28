@@ -7,22 +7,20 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Arc;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
@@ -127,6 +125,9 @@ public class WorkoutController extends Controller {
         exerciseImageView.setPreserveRatio(true);
         exerciseImageView.fitWidthProperty().bind(pictureFitPane.widthProperty());
         exerciseImageView.fitHeightProperty().bind(pictureFitPane.heightProperty());
+        exerciseList = new ArrayList<>(session.getExerciseSets());
+
+        loadImages();
 
         durationField.setDisable(true);
         repetionField.setDisable(true);
@@ -134,7 +135,6 @@ public class WorkoutController extends Controller {
         musicPlayerController.setParent(this);
         motivationModul.setMusicPlayerController(musicPlayerController);
         musicPlayerController.play();
-        exerciseList = new ArrayList<>(session.getExerciseSets());
         activeExercisePosition = -1;
 
         activeImagePosition = -1;
@@ -197,7 +197,14 @@ public class WorkoutController extends Controller {
             }
         });
 
-        loadImages();
+
+
+        Stage stage = (Stage) lastExerciseLable.getScene().getWindow();
+        stage.setOnCloseRequest(e -> {
+            musicPlayerController.stopMusic();
+            counterTimeline.stop();
+            mainFrame.navigateToMain();
+        });
 
         exerciseViews = new LinkedList<>();
         for (ExerciseSet set : exerciseList) {
@@ -210,30 +217,57 @@ public class WorkoutController extends Controller {
     }
 
     private void loadImages() {
-        images = new HashMap<>();
-        for (ExerciseSet set : exerciseList) {
-            ArrayList<Image> imageList = new ArrayList<>();
-            for (String img : set.getExercise().getGifLinks()) {
-                try {
-                    imageList.add(ImageLoader.loadImage(this.getClass(), img));
-                } catch (URISyntaxException e) {
-                    LOGGER.warn("Couldn't load Image: " + img, e);
+        try {
+            Stage dialogStage = new Stage();
+            ProgressBar pb = new ProgressBar(exerciseList.size());
+            ProgressIndicator pi = new ProgressIndicator(exerciseList.size());
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.setTitle("Lade");
+            VBox vBox = new VBox(pb, pi);
+            vBox.setFillWidth(true);
+            vBox.setAlignment(Pos.CENTER);
+            dialogStage.setScene(new Scene(vBox));
+            String pathToResource = getClass().getClassLoader().getResource("icons").toURI().toString();
+            dialogStage.getIcons().add(new Image(pathToResource.concat("/logo.png")));
+
+            Task<Void> task = new Task<Void>() {
+                @Override
+                public Void call() {
+                    updateMessage("Lade Livemodus . . .");
+                    updateProgress(0, exerciseList.size());
+
+                    images = new HashMap<>();
+                    for (int i = 0; i < exerciseList.size(); i++) {
+                        ExerciseSet set = exerciseList.get(i);
+                        ArrayList<Image> imageList = new ArrayList<>();
+                        for (String img : set.getExercise().getGifLinks()) {
+                            try {
+                                imageList.add(ImageLoader.loadImage(this.getClass(), img));
+                            } catch (URISyntaxException e) {
+                                LOGGER.warn("Couldn't load Image: " + img, e);
+                            }
+                            updateProgress(i + 1, exerciseList.size());
+                        }
+                        if (imageList.isEmpty()) {
+                            imageList.add(null);
+                        }
+                        images.put(set, imageList);
+                    }
+                    return null;
                 }
-            }
-            if (imageList.isEmpty()) {
-                imageList.add(null);
-            }
-            images.put(set, imageList);
+            };
+            pb.progressProperty().bind(task.progressProperty());
+            pi.progressProperty().bind(task.progressProperty());
+            task.setOnSucceeded(event -> dialogStage.close());
+
+            Thread th = new Thread(task);
+            th.setDaemon(true);
+            th.start();
+            dialogStage.showAndWait();
+
+        } catch (URISyntaxException e) {
+            LOGGER.error(e.getMessage());
         }
-
-
-        Stage stage = (Stage) lastExerciseLable.getScene().getWindow();
-        stage.setOnCloseRequest(e -> {
-            musicPlayerController.stopMusic();
-            counterTimeline.stop();
-            mainFrame.navigateToMain();
-        });
-
     }
 
     private ExerciseSet activeExercise() {
@@ -402,8 +436,7 @@ public class WorkoutController extends Controller {
             getChildren().add(imageView);
             BorderPane borderPane = new BorderPane();
             Label label = new Label(exerciseSet.getRepresentationText());
-            label.setStyle("-fx-font-family: Segoe UI Bold;" +
-                    "-fx-text-fill: white;");
+            label.setStyle("-fx-font-family: Segoe UI Bold;" + "-fx-text-fill: white;");
             label.setTooltip(tooltip);
             borderPane.setBottom(label);
             getChildren().add(borderPane);
