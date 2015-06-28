@@ -124,6 +124,7 @@ public class WorkoutResultController extends Controller {
 
     @FXML
     void endWorkoutClicked(ActionEvent event) {
+        mainFrame.closeFullScreenMode();
         mainFrame.navigateToParent();
     }
 

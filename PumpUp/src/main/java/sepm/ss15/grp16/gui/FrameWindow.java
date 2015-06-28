@@ -200,6 +200,10 @@ public class FrameWindow extends BorderPane {
         stage.setFullScreen(true);
     }
 
+    public void closeFullScreenMode() {
+        stage.setFullScreen(false);
+    }
+
     private void activeteMenuBar() {
         setTop(menuBar);
     }
