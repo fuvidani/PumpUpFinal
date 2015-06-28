@@ -219,6 +219,8 @@ public class WorkoutController extends Controller {
     private void loadImages() {
         try {
             Stage dialogStage = new Stage();
+            dialogStage.setWidth(300);
+            dialogStage.setHeight(300);
             ProgressBar pb = new ProgressBar(exerciseList.size());
             ProgressIndicator pi = new ProgressIndicator(exerciseList.size());
             dialogStage.initModality(Modality.WINDOW_MODAL);
