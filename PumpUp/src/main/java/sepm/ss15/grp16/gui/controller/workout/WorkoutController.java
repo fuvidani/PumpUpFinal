@@ -116,6 +116,7 @@ public class WorkoutController extends Controller {
         mainFrame.addPageManeItem("Open Fullscreen", event1 -> mainFrame.openFullScreenMode());
         mainFrame.addPageManeItem("Training abbrechen", event1 -> {
             musicPlayerController.stopMusic();
+            counterTimeline.stop();
             mainFrame.navigateToParent();
         });
 
@@ -391,7 +392,8 @@ public class WorkoutController extends Controller {
             getChildren().add(imageView);
             BorderPane borderPane = new BorderPane();
             Label label = new Label(exerciseSet.getRepresentationText());
-            label.setStyle("-fx-font-family: Segoe UI Light;");
+            label.setStyle("-fx-font-family: Segoe UI Bold;" +
+                    "-fx-text-fill: white;");
             label.setTooltip(tooltip);
             borderPane.setBottom(label);
             getChildren().add(borderPane);

@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.gui.controller.workout;
 
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
@@ -146,10 +148,11 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         progress.setProgress(0);
         songSecondsCounterLabel.setText("0");
         progressChangeListener = (observableValue, oldValue, newValue) -> {
-            songTotalLengthLabel.setText(String.format("/%1$.2f", newPlayer.getTotalDuration().toMinutes()).replace(",", ":"));
+            songTotalLengthLabel.setText("/" + ((int) newPlayer.getTotalDuration().toMinutes()) + ":" + String.format("%02d", (((int) newPlayer.getTotalDuration().toSeconds()) % 60)));
             progress.setProgress(1.0 * newPlayer.getCurrentTime().toMillis() / newPlayer.getTotalDuration().toMillis());
-            songSecondsCounterLabel.setText(String.format("%1$.2f", newPlayer.getCurrentTime().toMinutes()).replace(",", ":"));
+            songSecondsCounterLabel.setText(((int) newPlayer.getCurrentTime().toMinutes()) + ":" + String.format("%02d", (((int) newPlayer.getCurrentTime().toSeconds()) % 60)));
         };
+
         newPlayer.currentTimeProperty().addListener(progressChangeListener);
 
         String source = newPlayer.getMedia().getSource();
@@ -281,31 +284,26 @@ public class WorkoutMusicPlayerController extends Controller implements Initiali
         }
     }
 
-    public void reduceVol(Double reduce) {
-        if (musicPlayerSlide != null) {
-            reduce = reduce > 1 ? 1 : reduce;
-            reduce = reduce < 0 ? 0 : reduce;
-            musicPlayerSlide.getMediaPlayer().setVolume(reduce);
-        }
+    public KeyValue reduceVolKeyValue() {
+        return volKeyValue(VOLUME_INACTIVE);
     }
 
-    public void reduceVol() {
-        reduceVol(VOLUME_INACTIVE);
+    public KeyValue raiseVolKeyValue() {
+        return volKeyValue(VOLUME_ACTIVE);
     }
 
-    public void raiseVol(Double raise) {
+    public KeyValue volKeyValue(Double raise) {
         if (musicPlayerSlide != null) {
-            System.out.println("current: " + musicPlayerSlide.getMediaPlayer().getVolume());
-            System.out.println("new: " + raise);
+            //System.out.println("current: " + musicPlayerSlide.getMediaPlayer().getVolume());
+            //System.out.println("new: " + raise);
             raise = raise > 1 ? 1 : raise;
             raise = raise < 0 ? 0 : raise;
-            musicPlayerSlide.getMediaPlayer().setVolume(raise);
+
+            return new KeyValue(musicPlayerSlide.getMediaPlayer().volumeProperty(), raise);
         }
+        return null;
     }
 
-    public void raiseVol() {
-        raiseVol(VOLUME_ACTIVE);
-    }
 
     public void stopMusic() {
         if (musicPlayerSlide != null) {
