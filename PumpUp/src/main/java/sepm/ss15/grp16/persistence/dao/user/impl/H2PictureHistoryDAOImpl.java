@@ -102,7 +102,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             LOGGER.error("Failed to create new pictureHistory. IO failed");
             throw new PersistenceException("Failed to create a new pictureHistory", e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         LOGGER.info("Created pictureHistory successfully");
@@ -204,7 +204,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             LOGGER.error("Failed to update pictureHistory. IO failed");
             throw new PersistenceException("Failed to create a new pictureHistory", e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         LOGGER.info("Updated a picturehistory successfully");

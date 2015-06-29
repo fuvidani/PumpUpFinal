@@ -110,7 +110,6 @@ public class MainController extends Controller {
             engine.load("file:///" + path);
         } catch (URISyntaxException e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
 
         engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
@@ -156,7 +155,7 @@ public class MainController extends Controller {
                 alert.showAndWait().get();
             }
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -189,7 +188,7 @@ public class MainController extends Controller {
             updateImage();
 
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         usernameLabel.setText("Willkommen, " + username + "!");
@@ -267,8 +266,7 @@ public class MainController extends Controller {
             userChart.getData().add(weightSeries);
             userChart.getData().add(bodyFatSeries);
         } catch (ServiceException e) {
-            e.printStackTrace();
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -280,7 +278,7 @@ public class MainController extends Controller {
         try {
             json = gson.toJson(calendarService.findAll());
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         LOGGER.debug(json);

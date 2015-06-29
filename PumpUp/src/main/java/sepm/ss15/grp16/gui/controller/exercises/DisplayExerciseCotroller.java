@@ -184,10 +184,9 @@ public class DisplayExerciseCotroller extends Controller implements VideoPlayabl
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage());
         } catch (URISyntaxException e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage());
         }
     }
 

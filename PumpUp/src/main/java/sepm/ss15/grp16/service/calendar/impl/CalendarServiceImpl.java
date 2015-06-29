@@ -394,7 +394,7 @@ public class CalendarServiceImpl implements CalendarService {
                 try {
                     event = service.events().insert(calendarId, event).execute();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error(e.getMessage());
                 }
                 LOGGER.info("Event created: " + event.getHtmlLink());
             }

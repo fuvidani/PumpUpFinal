@@ -116,6 +116,7 @@ public class WorkoutController extends Controller {
         mainFrame.addPageManeItem("Training abbrechen", event1 -> {
             musicPlayerController.stopMusic();
             counterTimeline.stop();
+            mainFrame.closeFullScreenMode();
             mainFrame.navigateToParent();
         });
 
@@ -202,6 +203,7 @@ public class WorkoutController extends Controller {
         stage.setOnCloseRequest(e -> {
             musicPlayerController.stopMusic();
             counterTimeline.stop();
+            mainFrame.closeFullScreenMode();
             mainFrame.navigateToMain();
         });
 
@@ -353,7 +355,7 @@ public class WorkoutController extends Controller {
             try {
                 reloadImages();
             } catch (URISyntaxException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage());
             }
 
             if (activeExercise().getType() == ExerciseSet.SetType.time) {
@@ -371,6 +373,7 @@ public class WorkoutController extends Controller {
     public void finish() {
         workoutResult.setExecution(activeExercise(), repetionField.getText().isEmpty() ? null : Integer.parseInt(repetionField.getText()), durationField.getText().isEmpty() ? null : Integer.parseInt(durationField.getText()));
         musicPlayerController.stopMusic();
+        mainFrame.closeFullScreenMode();
         mainFrame.openDialog(PageEnum.WorkoutResult);
         mainFrame.navigateToParent();
     }

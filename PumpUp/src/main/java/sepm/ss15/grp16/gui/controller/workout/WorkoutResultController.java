@@ -76,7 +76,7 @@ public class WorkoutResultController extends Controller {
         try {
             calendarService.setAppointmentAsTrained(workoutResult.getAppointment().getId());
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         double calorin = 0;

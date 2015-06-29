@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import sepm.ss15.grp16.gui.controller.Controller;
 
@@ -31,6 +33,7 @@ public class FrameWindow extends BorderPane {
 
     private MenuBar menuBar;
     private Menu    personalMenu;
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public FrameWindow(ApplicationContext context, Stage stage, PageEnum mainPage) {
 
@@ -55,13 +58,13 @@ public class FrameWindow extends BorderPane {
             this.stage.getIcons().add(new Image(pathToResource.concat("/logo.png")));
 
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
         Scene scene = stage.getScene();
         try {
             scene.getStylesheets().add(getClass().getClassLoader().getResource("css").toURI().toString().concat("/mainStyle.css"));
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
         initMenu();
         stage.fullScreenProperty().addListener((observable, oldValue, newValue) -> {
@@ -118,7 +121,7 @@ public class FrameWindow extends BorderPane {
             controller.initController();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
     }
 
@@ -147,7 +150,7 @@ public class FrameWindow extends BorderPane {
 
                 controller.initController();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage());
             }
         }
     }
