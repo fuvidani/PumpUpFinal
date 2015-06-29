@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" styleClass="mainRoot" stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.AboutController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="600.0" prefHeight="500.0" prefWidth="600.0" styleClass="mainRoot" stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.AboutController">
     <children>
-        <Label layoutX="20.0" layoutY="18.0" text="Über das Programm">
+        <Label layoutX="20.0" layoutY="14.0" text="Über das Programm">
             <font>
                 <Font size="21.0" />
             </font>
@@ -41,8 +41,8 @@
                 <Label text="Testing " GridPane.columnIndex="1" GridPane.rowIndex="5" />
             </children>
         </GridPane>
-        <Label layoutX="21.0" layoutY="60.0" prefWidth="550.0" styleClass="aboutDescription" text="Dieses Programm wurde im Rahmen der Vorlesung Softwareentwicklung und Projektmanagement im SS15 erstellt. Credits go to:" wrapText="true" />
-        <Button layoutX="239.0" layoutY="330.0" mnemonicParsing="false" onAction="#likeFacebookClicked" prefHeight="54.0" prefWidth="122.0" styleClass="likefbBtn" stylesheets="@../../css/about.css">
+        <Label layoutX="21.0" layoutY="51.0" prefWidth="550.0" styleClass="aboutDescription" text="Dieses Programm wurde im Rahmen der Vorlesung Softwareentwicklung und Projektmanagement im SS15 erstellt. Credits go to:" wrapText="true" />
+        <Button layoutX="239.0" layoutY="437.0" mnemonicParsing="false" onAction="#likeFacebookClicked" prefHeight="54.0" prefWidth="122.0" styleClass="likefbBtn" stylesheets="@../../css/about.css">
             <tooltip>
                 <Tooltip text="Unterstützen Sie unsere Applikation">
                     <font>
@@ -51,5 +51,6 @@
                 </Tooltip>
             </tooltip>
         </Button>
+      <Label layoutX="29.0" layoutY="362.0" prefHeight="70.0" prefWidth="357.0" text="Alle verwendeten Icons finden Sie unter:http://www.flaticon.com/" wrapText="true" />
     </children>
 </AnchorPane>
