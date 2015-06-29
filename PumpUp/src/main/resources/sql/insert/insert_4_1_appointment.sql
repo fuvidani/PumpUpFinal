@@ -1,4 +1,0 @@
-MERGE INTO appointment VALUES
-  (1, CURRENT_DATE(), 1, 0, FALSE, FALSE);
-
-/*ALTER SEQUENCE appointment_seq RESTART WITH 2;*/
