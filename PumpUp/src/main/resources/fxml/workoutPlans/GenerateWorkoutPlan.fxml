@@ -1,145 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.GenerateWorkoutPlanController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0"
+            prefWidth="600.0" styleClass="mainRoot" stylesheets="@../../css/mainStyle.css"
+            xmlns="http://javafx.com/javafx/8"
+            fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.GenerateWorkoutPlanController">
     <top>
         <Label text="Trainingsplan generieren" BorderPane.alignment="CENTER">
             <font>
-                <Font size="24.0" />
+                <Font size="24.0"/>
             </font>
             <BorderPane.margin>
-                <Insets top="8.0" />
+                <Insets top="8.0"/>
             </BorderPane.margin>
         </Label>
     </top>
     <center>
-        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0" BorderPane.alignment="CENTER">
+        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0"
+              BorderPane.alignment="CENTER">
             <children>
-                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
+                <VBox HBox.hgrow="ALWAYS">
                     <children>
-                        <Label text="Was ist Ihr Ziel?">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                        <RadioButton fx:id="enduranceRadio" mnemonicParsing="false" text="Ausdauer">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </RadioButton>
-                        <RadioButton fx:id="strengthRadio" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" text="Kraft">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </RadioButton>
-                        <RadioButton fx:id="balanceRadio" layoutX="10.0" layoutY="51.0" mnemonicParsing="false" text="Balance">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </RadioButton>
-                        <RadioButton fx:id="flexibilityRadio" layoutX="10.0" layoutY="69.0" mnemonicParsing="false" text="Flexibilität">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </RadioButton>
-                    </children>
-                </VBox>
-                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label text="Welche Geräte sind bei Ihnen verfügbar?">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                        <HBox spacing="20.0">
+                        <HBox VBox.vgrow="ALWAYS">
                             <children>
-                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
+                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                      spacing="10.0" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <CheckBox fx:id="medicineBallCheck" mnemonicParsing="false" text="Medizinball">
+                                        <Label text="Was ist Ihr Ziel?">
                                             <font>
-                                                <Font size="14.0" />
+                                                <Font size="18.0"/>
                                             </font>
-                                        </CheckBox>
-                                        <CheckBox fx:id="dumbbellCheck" layoutX="10.0" layoutY="44.0" mnemonicParsing="false" text="Kurzhantel">
+                                        </Label>
+                                        <RadioButton fx:id="enduranceRadio" mnemonicParsing="false" text="Ausdauer">
                                             <font>
-                                                <Font size="14.0" />
+                                                <Font size="14.0"/>
                                             </font>
-                                        </CheckBox>
-                                        <CheckBox fx:id="jumpingRopeCheck" layoutX="10.0" layoutY="80.0" mnemonicParsing="false" text="Springschnur">
+                                        </RadioButton>
+                                        <RadioButton fx:id="strengthRadio" layoutX="10.0" layoutY="33.0"
+                                                     mnemonicParsing="false" text="Kraft">
                                             <font>
-                                                <Font size="14.0" />
+                                                <Font size="14.0"/>
                                             </font>
-                                        </CheckBox>
-                                        <CheckBox fx:id="chinupBarCheck" layoutX="10.0" layoutY="26.0" mnemonicParsing="false" text="Klimmzugstange">
+                                        </RadioButton>
+                                        <RadioButton fx:id="balanceRadio" layoutX="10.0" layoutY="51.0"
+                                                     mnemonicParsing="false" text="Balance">
                                             <font>
-                                                <Font size="14.0" />
+                                                <Font size="14.0"/>
                                             </font>
-                                        </CheckBox>
-                                        <CheckBox fx:id="barbellCheck" layoutX="10.0" layoutY="62.0" mnemonicParsing="false" text="Langhantel">
+                                        </RadioButton>
+                                        <RadioButton fx:id="flexibilityRadio" layoutX="10.0" layoutY="69.0"
+                                                     mnemonicParsing="false" text="Flexibilität">
                                             <font>
-                                                <Font size="14.0" />
+                                                <Font size="14.0"/>
                                             </font>
-                                        </CheckBox>
+                                        </RadioButton>
                                     </children>
                                 </VBox>
-                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
+                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                      spacing="10.0" HBox.hgrow="ALWAYS">
                                     <children>
-                                        <CheckBox fx:id="punchbagCheck" layoutX="10.0" layoutY="98.0" mnemonicParsing="false" text="Sandsack">
+                                        <Label text="Welche Geräte sind bei Ihnen verfügbar?">
                                             <font>
-                                                <Font size="14.0" />
+                                                <Font size="18.0"/>
                                             </font>
-                                        </CheckBox>
-                                        <CheckBox fx:id="expanderCheck" layoutX="10.0" layoutY="116.0" mnemonicParsing="false" text="Expander">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </CheckBox>
-                                        <CheckBox fx:id="absRollerCheck" layoutX="10.0" layoutY="134.0" mnemonicParsing="false" text="Bauchmuskel Roller">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </CheckBox>
-                                        <CheckBox fx:id="yogaBallCheck" mnemonicParsing="false" text="Yogaball">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </CheckBox>
+                                        </Label>
+                                        <HBox spacing="20.0">
+                                            <children>
+                                                <VBox maxHeight="1.7976931348623157E308"
+                                                      maxWidth="1.7976931348623157E308" spacing="10.0"
+                                                      HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <CheckBox fx:id="medicineBallCheck" mnemonicParsing="false"
+                                                                  text="Medizinball">
+                                                            <font>
+                                                                <Font size="14.0"/>
+                                                            </font>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="dumbbellCheck" layoutX="10.0" layoutY="44.0"
+                                                                  mnemonicParsing="false" text="Kurzhantel">
+                                                            <font>
+                                                                <Font size="14.0"/>
+                                                            </font>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="jumpingRopeCheck" layoutX="10.0" layoutY="80.0"
+                                                                  mnemonicParsing="false" text="Springschnur">
+                                                            <font>
+                                                                <Font size="14.0"/>
+                                                            </font>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="chinupBarCheck" layoutX="10.0" layoutY="26.0"
+                                                                  mnemonicParsing="false" text="Klimmzugstange">
+                                                            <font>
+                                                                <Font size="14.0"/>
+                                                            </font>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="barbellCheck" layoutX="10.0" layoutY="62.0"
+                                                                  mnemonicParsing="false" text="Langhantel">
+                                                            <font>
+                                                                <Font size="14.0"/>
+                                                            </font>
+                                                        </CheckBox>
+                                                    </children>
+                                                </VBox>
+                                                <VBox maxHeight="1.7976931348623157E308"
+                                                      maxWidth="1.7976931348623157E308" spacing="10.0"
+                                                      HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <CheckBox fx:id="punchbagCheck" layoutX="10.0" layoutY="98.0"
+                                                                  mnemonicParsing="false" text="Sandsack">
+                                                            <font>
+                                                                <Font size="14.0"/>
+                                                            </font>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="expanderCheck" layoutX="10.0" layoutY="116.0"
+                                                                  mnemonicParsing="false" text="Expander">
+                                                            <font>
+                                                                <Font size="14.0"/>
+                                                            </font>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="absRollerCheck" layoutX="10.0" layoutY="134.0"
+                                                                  mnemonicParsing="false" text="Bauchmuskel Roller">
+                                                            <font>
+                                                                <Font size="14.0"/>
+                                                            </font>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="yogaBallCheck" mnemonicParsing="false"
+                                                                  text="Yogaball">
+                                                            <font>
+                                                                <Font size="14.0"/>
+                                                            </font>
+                                                        </CheckBox>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308"
+                                              maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                            <children>
+                                                <CheckBox fx:id="selectAllCheck" contentDisplay="CENTER"
+                                                          maxHeight="1.7976931348623157E308"
+                                                          maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                          text="Alles auswählen">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                </CheckBox>
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets top="15.0"/>
+                                            </VBox.margin>
+                                        </HBox>
+                                        <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                                VBox.vgrow="ALWAYS"/>
                                     </children>
                                 </VBox>
                             </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                             <children>
-                                <CheckBox fx:id="selectAllCheck" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Alles auswählen">
+                                <Button mnemonicParsing="false" onAction="#generateButtonClicked" styleClass="backBtn"
+                                        stylesheets="@../../css/gen_workout_resultStyle.css" text="Generiere!"
+                                        HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets/>
+                                    </VBox.margin>
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="24.0"/>
                                     </font>
-                                </CheckBox>
+                                </Button>
                             </children>
-                            <VBox.margin>
-                                <Insets top="15.0" />
-                            </VBox.margin>
                         </HBox>
-                        <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#generateButtonClicked" text="Generiere!" VBox.vgrow="ALWAYS">
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                        </Button>
                     </children>
                 </VBox>
             </children>
             <BorderPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="15.0" />
+                <Insets bottom="10.0" left="10.0" right="10.0" top="15.0"/>
             </BorderPane.margin>
         </HBox>
     </center>

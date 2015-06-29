@@ -5,149 +5,111 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.web.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.web.WebView?>
 
-<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="mainRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
+<BorderPane fx:id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1300.0" styleClass="mainRoot" stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.main.MainController">
     <center>
-        <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" styleClass="spliter" BorderPane.alignment="CENTER">
-            <items>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="mainBox">
+      <VBox>
+         <children>
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="mainBox" VBox.vgrow="ALWAYS">
                     <children>
-                        <VBox prefHeight="315.0" prefWidth="700.0">
+                        <VBox prefHeight="315.0">
                             <children>
-                                <Label fx:id="usernameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Willkommen, Username!">
-                                    <font>
-                                        <Font size="24.0" />
-                                    </font>
-                                </Label>
-                                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="280.0" prefWidth="1094.0">
+                                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                     <children>
-                                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0">
+                                        <ImageView fx:id="userImgView" fitHeight="280.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../../icons/fat_to_muscle.png" />
+                                            </image>
+                                            <viewport>
+                                                <Rectangle2D />
+                                            </viewport>
+                                            <HBox.margin>
+                                                <Insets right="20.0" />
+                                            </HBox.margin>
+                                        </ImageView>
+                                        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" />
+                                                <ColumnConstraints hgrow="SOMETIMES" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
                                             <children>
-                                                <ImageView fx:id="userImgView" fitHeight="280.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
-                                                    <image>
-                                                        <Image url="@../../icons/fat_to_muscle.png" />
-                                                    </image>
-                                                    <viewport>
-                                                        <Rectangle2D />
-                                                    </viewport>
-                                                </ImageView>
-                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="280.0" spacing="20.0" HBox.hgrow="ALWAYS">
-                                                    <children>
-                                                        <HBox maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
-                                                            <children>
-                                                                <Label text="Geschlecht:">
-                                                                    <font>
-                                                                        <Font size="17.0" />
-                                                                    </font>
-                                                                </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <Label fx:id="genderTextField" text="Label">
-                                                                            <HBox.margin>
-                                                                                <Insets left="130.0" />
-                                                                            </HBox.margin>
-                                                                        </Label>
-                                                                    </children>
-                                                                </HBox>
-                                                            </children>
-                                                        </HBox>
-                                                        <HBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
-                                                            <children>
-                                                                <Label text="Alter:">
-                                                                    <font>
-                                                                        <Font size="17.0" />
-                                                                    </font>
-                                                                </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <Label fx:id="ageTextField" text="Label" />
-                                                                    </children>
-                                                                </HBox>
-                                                            </children>
-                                                        </HBox>
-                                                        <HBox layoutX="10.0" layoutY="51.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
-                                                            <children>
-                                                                <Label text="Größe:">
-                                                                    <font>
-                                                                        <Font size="17.0" />
-                                                                    </font>
-                                                                </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <Label fx:id="heightTextField" text="Label" />
-                                                                    </children>
-                                                                </HBox>
-                                                            </children>
-                                                        </HBox>
-                                                        <HBox layoutX="10.0" layoutY="92.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
-                                                            <children>
-                                                                <Label text="Gewicht:">
-                                                                    <font>
-                                                                        <Font size="17.0" />
-                                                                    </font>
-                                                                </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <Label fx:id="weightTextField" text="Label" />
-                                                                    </children>
-                                                                </HBox>
-                                                            </children>
-                                                        </HBox>
-                                                        <HBox layoutX="10.0" layoutY="133.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
-                                                            <children>
-                                                                <Label text="Körperfett:">
-                                                                    <font>
-                                                                        <Font size="17.0" />
-                                                                    </font>
-                                                                </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <Label fx:id="bodyfatTextField" text="Label" />
-                                                                    </children>
-                                                                </HBox>
-                                                            </children>
-                                                        </HBox>
-                                                        <HBox layoutX="10.0" layoutY="174.0" maxHeight="1.7976931348623157E308" styleClass="userInfo" VBox.vgrow="ALWAYS">
-                                                            <children>
-                                                                <Label text="E-Mail:">
-                                                                    <font>
-                                                                        <Font size="17.0" />
-                                                                    </font>
-                                                                </Label>
-                                                                <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <Label fx:id="emailTextField" text="Label" />
-                                                                    </children>
-                                                                </HBox>
-                                                            </children>
-                                                        </HBox>
-                                                    </children>
-                                                    <HBox.margin>
-                                                        <Insets left="30.0" top="10.0" />
-                                                    </HBox.margin>
-                                                </VBox>
+                                                <Label minWidth="130.0" prefWidth="130.0" text="Geschlecht:">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="genderTextField" text="Label" GridPane.columnIndex="1" />
+                                                <Label text="Alter:" GridPane.rowIndex="1">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="ageTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label text="Größe:" GridPane.rowIndex="2">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="heightTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label text="Gewicht:" GridPane.rowIndex="3">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="weightTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Label minWidth="150.0" prefWidth="150.0" text="Körperfett:" GridPane.rowIndex="4">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <children>
+                                          <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+                                             <children>
+                                                            <Label fx:id="bodyfatTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <padding>
+                                                      <Insets top="11.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Button fx:id="btnBodyfatHelp" minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#bodyfatHelpClicked" prefHeight="35.0" prefWidth="20.0" styleClass="btnBodyfatHelp" stylesheets="@../../css/mainStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <tooltip>
+                                                      <Tooltip text="Wie eigenen Körperfettanteil messen?" />
+                                                   </tooltip>
+                                                   <HBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                                <Label text="E-Mail:" GridPane.rowIndex="5">
+                                                    <font>
+                                                        <Font size="17.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="emailTextField" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                             </children>
-                                            <padding>
-                                                <Insets top="20.0" />
-                                            </padding>
-                                        </HBox>
+                                        </GridPane>
                                     </children>
                                 </HBox>
                             </children>
                             <HBox.margin>
-                                <Insets left="25.0" top="10.0" />
+                                <Insets />
                             </HBox.margin>
                         </VBox>
-                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="290.0" HBox.hgrow="ALWAYS">
+                        <LineChart fx:id="userChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <xAxis>
                                 <CategoryAxis side="BOTTOM" />
                             </xAxis>
@@ -155,35 +117,37 @@
                                 <NumberAxis side="LEFT" />
                             </yAxis>
                             <HBox.margin>
-                                <Insets top="60.0" />
+                                <Insets />
                             </HBox.margin>
                         </LineChart>
                     </children>
                     <padding>
-                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </padding>
                 </HBox>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" styleClass="mainBox">
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" styleClass="mainBox" VBox.vgrow="ALWAYS">
                     <children>
-                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" HBox.hgrow="ALWAYS">
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" HBox.hgrow="ALWAYS">
                             <children>
-                                <WebView fx:id="webView" prefHeight="300.0" prefWidth="200.0" />
+                                <WebView fx:id="webView" minHeight="-1.0" minWidth="-1.0" prefHeight="400.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
                             </children>
                         </VBox>
                     </children>
                     <padding>
-                        <Insets top="10.0" />
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                     </padding>
                 </HBox>
-            </items>
-        </SplitPane>
+         </children>
+      </VBox>
     </center>
     <bottom>
         <HBox prefHeight="64.0" prefWidth="1299.0" styleClass="footer" BorderPane.alignment="CENTER">
             <children>
-                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
-                        <Button contentDisplay="LEFT" maxHeight="64.0" maxWidth="1.7976931348623157E308" minHeight="64.0" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0" prefWidth="120.0" styleClass="trainingBtn" text="Training">
+                  <Region layoutX="640.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                  <Region layoutX="1017.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                        <Button contentDisplay="LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#trainingClicked" styleClass="trainingBtn" text="Zum Training" HBox.hgrow="ALWAYS">
                             <font>
                                 <Font size="24.0" />
                             </font>
@@ -191,10 +155,11 @@
                                 <Insets />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="trainingPicBtn" mnemonicParsing="false" onAction="#trainingClicked" prefHeight="64.0" styleClass="trainginPic" text=" " />
+                  <Region layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                  <Region layoutX="11.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                     </children>
                     <HBox.margin>
-                        <Insets left="600.0" />
+                        <Insets />
                     </HBox.margin>
                 </HBox>
             </children>
@@ -203,4 +168,18 @@
             </BorderPane.margin>
         </HBox>
     </bottom>
+   <top>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+         <children>
+                    <Label fx:id="usernameLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Willkommen, Username!">
+                        <font>
+                            <Font size="24.0" />
+                        </font>
+                    </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </BorderPane.margin>
+      </VBox>
+   </top>
 </BorderPane>

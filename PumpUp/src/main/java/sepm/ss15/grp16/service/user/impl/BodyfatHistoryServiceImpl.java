@@ -56,6 +56,31 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
     }
 
     @Override
+    public void validate(BodyfatHistory bodyfatHistory) throws ValidationException {
+
+        if (bodyfatHistory == null) {
+            throw new ValidationException("WeightHistory is null.");
+        }
+
+        String errorMsg = "";
+        Integer user_id = bodyfatHistory.getUser_id();
+        Integer bodyfat = bodyfatHistory.getBodyfat();
+
+        if (user_id == null) {
+            errorMsg += "Die UserID muss angegeben werden und eine g\u00fcltige Zahl sein.\n";
+        }
+
+        if (bodyfat == null || bodyfat < 0 || bodyfat > 100) {
+            errorMsg += "Der K\u00f6rperfettanteil muss eine g\u00fcltige Zahl zwischen 0 und 100 sein.";
+        }
+
+        if (!errorMsg.isEmpty()) {
+            throw new ValidationException(errorMsg);
+        }
+
+    }
+
+    @Override
     public List<BodyfatHistory> searchByUserID(int user_id) throws ServiceException {
         try {
             return bodyfatHistoryDAO.searchByUserID(user_id);
@@ -71,30 +96,5 @@ public class BodyfatHistoryServiceImpl implements BodyfatHistoryService {
         } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
-    }
-
-    @Override
-    public void validate(BodyfatHistory bodyfatHistory) throws ValidationException {
-
-        if (bodyfatHistory == null) {
-            throw new ValidationException("WeightHistory is null.");
-        }
-
-        String errorMsg = "";
-        Integer user_id = bodyfatHistory.getUser_id();
-        Integer bodyfat = bodyfatHistory.getBodyfat();
-
-        if (user_id == null) {
-            errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
-        }
-
-        if (bodyfat == null || bodyfat < 0 || bodyfat > 100) {
-            errorMsg += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.";
-        }
-
-        if (!errorMsg.isEmpty()) {
-            throw new ValidationException(errorMsg);
-        }
-
     }
 }

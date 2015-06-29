@@ -66,6 +66,31 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
     }
 
     @Override
+    public void validate(PictureHistory pictureHistory) throws ValidationException {
+
+        if (pictureHistory == null) {
+            throw new ValidationException("Validation not passed. PictureHistory is null");
+        }
+
+        String errorMsg = "";
+        Integer user_id = pictureHistory.getUser_id();
+        String picturePath = pictureHistory.getLocation();
+
+        if (user_id == null || user_id < 0) {
+            errorMsg += "Die UserID muss angegeben werden und eine g\u00fcltige Zahl sein.\n";
+        }
+
+        if (picturePath == null || picturePath.isEmpty()) {
+            errorMsg += "Es muss ein Bild ausgew\u00e4hlt worden sein.";
+        }
+
+        if (!errorMsg.isEmpty()) {
+            throw new ValidationException(errorMsg);
+        }
+
+    }
+
+    @Override
     public List<PictureHistory> searchByUserID(int user_id) throws ServiceException {
         try {
             return pictureHistoryDAO.searchByUserID(user_id);
@@ -81,30 +106,5 @@ public class PictureHistoryServiceImpl implements PictureHistoryService {
         } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
-    }
-
-    @Override
-    public void validate(PictureHistory pictureHistory) throws ValidationException {
-
-        if (pictureHistory == null) {
-            throw new ValidationException("Validation not passed. PictureHistory is null");
-        }
-
-        String errorMsg = "";
-        Integer user_id = pictureHistory.getUser_id();
-        String picturePath = pictureHistory.getLocation();
-
-        if (user_id == null || user_id < 0) {
-            errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
-        }
-
-        if (picturePath == null || picturePath.isEmpty()) {
-            errorMsg += "Es muss ein Bild ausgewählt worden sein.";
-        }
-
-        if (!errorMsg.isEmpty()) {
-            throw new ValidationException(errorMsg);
-        }
-
     }
 }

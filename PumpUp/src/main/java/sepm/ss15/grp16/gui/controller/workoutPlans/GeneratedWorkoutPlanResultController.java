@@ -1,35 +1,26 @@
 package sepm.ss15.grp16.gui.controller.workoutPlans;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.Version;
-import com.restfb.types.FacebookType;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.training.TrainingsSession;
 import sepm.ss15.grp16.entity.training.Trainingsplan;
 import sepm.ss15.grp16.entity.training.helper.ExerciseSet;
+import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.training.TrainingsplanService;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -39,14 +30,13 @@ import java.util.Optional;
  * When the generated workout plan has arrived it is instantly displayed and the user can
  * save the plan, dismiss it or export it to the own calendar.
  */
-public class GeneratedWorkoutPlanResultController extends Controller{
+public class GeneratedWorkoutPlanResultController extends Controller {
 
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private Trainingsplan generatedWorkoutPlan;
+    private Trainingsplan        generatedWorkoutPlan;
     private TrainingsplanService trainingsplanService;
-    private BooleanProperty DTOArrived = new SimpleBooleanProperty();
-    private boolean saved;
+    private boolean              saved;
 
     @FXML
     private ListView<TrainingsSession> listView;
@@ -60,13 +50,6 @@ public class GeneratedWorkoutPlanResultController extends Controller{
     @Override
     public void initController() {
         saved = false;
-        DTOArrived.addListener(new ChangeListener<Boolean>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                displayWorkoutPlan();
-            }
-        });
         listView.setCellFactory(new Callback<ListView<TrainingsSession>, ListCell<TrainingsSession>>() {
             @Override
             public ListCell<TrainingsSession> call(ListView<TrainingsSession> p) {
@@ -90,13 +73,13 @@ public class GeneratedWorkoutPlanResultController extends Controller{
 
 
                             final Text leftText = new Text(title);
-                            leftText.setFont(Font.font("Verdana", 16));
+                            leftText.setFont(Font.font("Palatino Linotype", 20));
 
                             leftText.setTextOrigin(VPos.CENTER);
                             leftText.relocate(80, 0);
 
                             final Text middleText = new Text(value);
-                            middleText.setFont(Font.font("Verdana", 14));
+                            middleText.setFont(Font.font("Palatino Linotype", 16));
                             middleText.setTextOrigin(VPos.TOP);
                             final double em = leftText.getLayoutBounds().getHeight();
                             middleText.relocate(0, 2 * em);
@@ -110,12 +93,17 @@ public class GeneratedWorkoutPlanResultController extends Controller{
                 };
             }
         });
-        WorkoutPlansController controller = (WorkoutPlansController)this.getParentController();
+        listView.addEventFilter(MouseEvent.ANY, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mouseEvent.consume();
+            }
+        });
+        WorkoutPlansController controller = (WorkoutPlansController) this.getParentController();
         this.generatedWorkoutPlan = controller.getGeneratedWorkoutPlan();
         goalLabel.setText(controller.getSelectedGoal());
-        this.setFlag(true);
+        displayWorkoutPlan();
         LOGGER.info("GeneratedWorkoutPlanResult successfully initialized!");
-
     }
 
     /**
@@ -142,7 +130,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
             LOGGER.error("Service threw exception, catched in GUI. Real reason: " + e.toString());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Fehler");
-            alert.setHeaderText("Fehler beim Generieren");
+            alert.setHeaderText("Fehler beim Speichern.");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
             return;
@@ -172,7 +160,7 @@ public class GeneratedWorkoutPlanResultController extends Controller{
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ansicht verlassen.");
             alert.setHeaderText("Wenn Sie abbrechen, wir der angezeigte Trainingsplan nicht gespeichert und verworfen.");
-            alert.setContentText("Möchten Sie die Ansicht verlassen?");
+            alert.setContentText("M\u00f6chten Sie die Ansicht verlassen?");
             ButtonType yes = new ButtonType("Ja");
             ButtonType cancel = new ButtonType("Nein", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(yes, cancel);
@@ -187,20 +175,10 @@ public class GeneratedWorkoutPlanResultController extends Controller{
         }
     }
 
-    /**
-     * Sets the boolean property which signals that the DTO has
-     * successfully arrived.
-     *
-     * @param val a boolean variable to trigger the listener
-     */
-    public void setFlag(boolean val) {
-        DTOArrived.set(val);
-    }
-
 
     /**
-     * This method is automatically called by the listener when the generated workout routine
-     * has arrived. It simply displays the workout routine with all its sessions and exercises.
+     * This method is automatically called at the initialization of the controller.
+     * It simply displays the workout routine with all its sessions and exercises.
      */
     private void displayWorkoutPlan() {
         List<TrainingsSession> sessions = generatedWorkoutPlan.getTrainingsSessions();
@@ -216,34 +194,58 @@ public class GeneratedWorkoutPlanResultController extends Controller{
         LOGGER.info("Generated workout successfully displayed!");
     }
 
-    @FXML
-    public void shareFacebookClicked() throws Exception{
-        WebView webView = new WebView();
-        final WebEngine webEngine = webView.getEngine();
-        webEngine.setJavaScriptEnabled(true);
-        webEngine.load("https://www.facebook.com/dialog/feed?app_id=428485184010923&display=popup&name=PumpUp!&description=Share%20your%20workout%20results%20with%20PumpUp!&caption=Do%20you%20want%20to%20get%20in%20shape?&link=https%3A%2F%2Ffacebook.com%2FPumpUpTUVienna%2F&redirect_uri=https%3A%2F%2Ffacebook.com%2F");
-        Stage stage = new Stage();
-        stage.initOwner(this.stage);
-        stage.setScene(new Scene(webView, 500, 300));
-        stage.show();
-    }
-
     /**
-     * increase the difficulty of the given plan by the factor of 0.25
+     * Increases the difficulty of the given plan by the factor of 0.25
      */
     @FXML
-    public void increaseDifficultyClicked(){
+    public void increaseDifficultyClicked() {
         trainingsplanService.increaseDifficulty(generatedWorkoutPlan);
         displayWorkoutPlan();
     }
 
     /**
-     * decrease the difficulty of the given plan by the factor of 0.25
+     * Decreases the difficulty of the given plan by the factor of 0.25
      */
     @FXML
-    public void decreaseDifficultyClicked(){
+    public void decreaseDifficultyClicked() {
         trainingsplanService.decreaseDifficulty(generatedWorkoutPlan);
         displayWorkoutPlan();
+    }
+
+    /**
+     * This method is called when the user hits the "In Kalender einfuegen" button.
+     * Opens up the calendar dialog where the user has to choose the days for training.
+     * After that the Calendar will be opened.
+     */
+    @FXML
+    public void exportToCalendarClicked() {
+        try {
+            if (!saved) {
+                trainingsplanService.create(generatedWorkoutPlan);
+                saved = true;
+            }
+            mainFrame.openDialog(PageEnum.Workoutplan_calender_dialog);
+            if (((WorkoutPlanToCalendarController) this.getChildController()).isFinished())
+                mainFrame.navigateToChild(PageEnum.Calendar);
+        } catch (ServiceException e) {
+            LOGGER.error("Service threw exception, catched in GUI. Real reason: " + e.toString());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fehler");
+            alert.setHeaderText("Fehler beim Speichern.");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+
+    }
+
+    /**
+     * This method is called by WorkoutPlanToCalendarController in order to obtain the generated
+     * DTO.
+     *
+     * @return the generated workout routine
+     */
+    public Trainingsplan getGeneratedWorkoutPlan() {
+        return this.generatedWorkoutPlan;
     }
 
 }

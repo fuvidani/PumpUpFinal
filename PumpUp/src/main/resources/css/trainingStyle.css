@@ -1,11 +1,25 @@
 .workoutPlanBox {
-    -fx-font-size: 12pt;
+    -fx-font-size: 11pt;
+    -fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #CCCCCC, #999999);
+    /*-fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #CCCCCC, #B3B3B3 100% ); */
+    /*-fx-background-color: linear-gradient(to bottom, #F2F2F2, #E6E6E6, #D9D9D9, #CBCBCB, #BCBCBC); */
+   /* -fx-background-color: linear-gradient(to bottom, #E6B3E6, #CC99CC, #B380B3, #804D80, #4D1A4D);; */
+   /* -fx-background-color: linear-gradient(to bottom, #FFFFFF, #EAFCFC, #E1FFFF, #CCFFFF);; */
+   /* -fx-background-color: linear-gradient(to bottom, #CCFFFF, #CCE6FF, #B3CCFF, #99B3FF, #6D81D3); */
+   /* -fx-background-color: linear-gradient(to bottom, #B8DCFF, #CCE6FF, #B3CCFF, #99B3FF, #6D81D3); */
 }
 
-#trainings-table-view .column-header .label {
-    -fx-font-size: 12pt;
-    -fx-font-weight: bold;
+.workoutPlanBox .label {
+    -fx-font-size: 11pt;
+}
 
+/*.workoutPlanBox .button {
+    -fx-font-size: 11pt;
+}*/
+
+#trainings-table-view .column-header .label {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI Bold";
 }
 
 .btnUp {
@@ -16,9 +30,6 @@
     -fx-background-size: 100%;
 }
 
-.btnUp:hover {
-    -fx-background-color: cyan;
-}
 
 .btnDown {
     -fx-background-image: url('../icons/down.png');
@@ -28,9 +39,6 @@
     -fx-background-size: 100%;
 }
 
-.btnDown:hover {
-    -fx-background-color: cyan;
-}
 
 .btnRight {
     -fx-background-image: url('../icons/forward.png');
@@ -38,10 +46,6 @@
     -fx-background-position: center;
     -fx-background-color: transparent;
     -fx-background-size: 100%;
-}
-
-.btnRight:hover {
-    -fx-background-color: cyan;
 }
 
 .btnLeft {
@@ -52,20 +56,12 @@
     -fx-background-size: 100%;
 }
 
-.btnLeft:hover {
-    -fx-background-color: cyan;
-}
-
 .btnShow {
     -fx-background-image: url('../icons/search.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-color: transparent;
     -fx-background-size: 100%;
-}
-
-.btnShow:hover {
-    -fx-background-color: cyan;
 }
 
 .btnEdit {
@@ -76,20 +72,12 @@
     -fx-background-size: 100%;
 }
 
-.btnEdit:hover {
-    -fx-background-color: cyan;
-}
-
 .btnDelete {
     -fx-background-image: url('../icons/delete.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-color: transparent;
     -fx-background-size: 100%;
-}
-
-.btnDelete:hover {
-    -fx-background-color: cyan;
 }
 
 .btnAdd {
@@ -100,10 +88,6 @@
     -fx-background-size: 100%;
 }
 
-.btnAdd:hover {
-    -fx-background-color: cyan;
-}
-
 .btnCopy {
     -fx-background-image: url('../icons/copy.png');
     -fx-background-repeat: no-repeat;
@@ -112,8 +96,20 @@
     -fx-background-size: 100%;
 }
 
-.btnCopy:hover {
-    -fx-background-color: cyan;
+.btnIncr {
+    -fx-background-image: url('../icons/increase.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+}
+
+.btnDecr {
+    -fx-background-image: url('../icons/decrease.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
 }
 
 .btnMusic_Play {
@@ -124,10 +120,6 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Play:hover {
-    -fx-background-color: cyan;
-}
-
 .btnMusic_Pause {
     -fx-background-image: url('../icons/music_pause.png');
     -fx-background-repeat: no-repeat;
@@ -136,20 +128,12 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Pause:hover {
-    -fx-background-color: cyan;
-}
-
 .btnMusic_Shuffle {
     -fx-background-image: url('../icons/music_shuffle.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-color: transparent;
     -fx-background-size: 100%;
-}
-
-.btnMusic_Shuffle:hover {
-    -fx-background-color: cyan;
 }
 
 .btnMusic_Skip {
@@ -160,20 +144,12 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Skip:hover {
-    -fx-background-color: cyan;
-}
-
 .btnMusic_Last {
     -fx-background-image: url('../icons/music_last.png');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-color: transparent;
     -fx-background-size: 100%;
-}
-
-.btnMusic_Last:hover {
-    -fx-background-color: cyan;
 }
 
 .btnMusic_Shuffle {
@@ -184,12 +160,8 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Shuffle:hover {
-    -fx-background-color: cyan;
-}
-
 .btnMusic_Shuffle:selected {
-    -fx-background-color: cyan;
+    -fx-background-size: 90%;
 }
 
 .btnMusic_Volume {
@@ -200,10 +172,53 @@
     -fx-background-size: 100%;
 }
 
-.btnMusic_Volume:hover {
-    -fx-background-color: cyan;
-}
-
 .btnMusic_Volume:selected {
     -fx-background-image: url('../icons/music_mute.png');
+}
+
+.button:hover {
+    -fx-background-size: 90%;
+}
+
+.stopBtn {
+    /*-fx-background-color: transparent;*/
+    -fx-background-color:
+    #c3c4c4,
+    linear-gradient(#d6d6d6 50%, white 100%),
+    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+.stopBtn:pressed{
+    -fx-background-color: rgba(135,186,215,0.7);
+    -fx-text-fill: white;
+}
+
+
+.activeBarElement {
+    -fx-background-color: firebrick;
+    -fx-background-radius: 3;
+}
+
+.inactiveBarElement {
+    -fx-background-color: rgba(222, 222, 222, 1);
+    -fx-background-radius: 3;
+}
+
+.btnBack, .btnGenerate, .btnCalendar {
+    -fx-background-color: #c3c4c4,
+    linear-gradient(#d6d6d6 50%, white 100%),
+    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+.button:pressed{
+    -fx-background-color: rgba(135,186,215,0.7);
+    -fx-text-fill: white;
 }

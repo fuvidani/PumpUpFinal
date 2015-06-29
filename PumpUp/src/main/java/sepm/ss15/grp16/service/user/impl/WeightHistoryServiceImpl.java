@@ -52,8 +52,32 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
 
     @Override
     public void delete(WeightHistory weightHistory) throws ServiceException {
-        //TODO: Implement me
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void validate(WeightHistory weightHistory) throws ValidationException {
+
+        if (weightHistory == null) {
+            throw new ValidationException("WeightHistory is null.");
+        }
+
+        String errorMsg = "";
+        Integer user_id = weightHistory.getUser_id();
+        Integer weight = weightHistory.getWeight();
+
+        if (user_id == null) {
+            errorMsg += "Die UserID muss angegeben werden und eine g\u00fcltige Zahl sein.\n";
+        }
+
+        if (weight == null || weight < 0) {
+            errorMsg += "Das Gewicht muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.";
+        }
+
+        if (!errorMsg.isEmpty()) {
+            throw new ValidationException(errorMsg);
+        }
+
     }
 
     @Override
@@ -72,30 +96,5 @@ public class WeightHistoryServiceImpl implements WeightHistoryService {
         } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
-    }
-
-    @Override
-    public void validate(WeightHistory weightHistory) throws ValidationException {
-
-        if (weightHistory == null) {
-            throw new ValidationException("WeightHistory is null.");
-        }
-
-        String errorMsg = "";
-        Integer user_id = weightHistory.getUser_id();
-        Integer weight = weightHistory.getWeight();
-
-        if (user_id == null) {
-            errorMsg += "Die UserID muss angegeben werden und eine gültige Zahl sein.\n";
-        }
-
-        if (weight == null || weight < 0) {
-            errorMsg += "Das Gewicht muss eine gültige Zahl größer 0 sein.";
-        }
-
-        if (!errorMsg.isEmpty()) {
-            throw new ValidationException(errorMsg);
-        }
-
     }
 }

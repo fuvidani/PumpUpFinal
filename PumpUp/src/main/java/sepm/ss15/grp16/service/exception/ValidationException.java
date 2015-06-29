@@ -8,7 +8,7 @@ import sepm.ss15.grp16.entity.DTO;
 public class ValidationException extends ServiceException {
 
     private final String validationMessage;
-    private final DTO validatedDTO;
+    private final DTO    validatedDTO;
 
     /**
      * Creates a ValidationException

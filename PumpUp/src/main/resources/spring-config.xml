@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+    <!-- ###### Meta beans ###### -->
 
     <!-- ###### Database beans ###### -->
 
-
-    <bean id="h2Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start"
-          destroy-method="stop" depends-on="h2WebServer" scope="singleton">
-        <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092"/>
-    </bean>
-    <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start"
-          destroy-method="stop" scope="singleton">
-        <constructor-arg value="-web,-webAllowOthers,-webPort,8082"/>
-    </bean>
-
     <bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"
-          scope="singleton" init-method="openConnection" destroy-method="closeConnection" depends-on="h2Server">
-        <!--<bean id="dbConnector" class="sepm.ss15.grp16.persistence.database.impl.H2DBConnectorImpl"-->
-        <!--scope="singleton" init-method="openConnection" destroy-method="closeConnection">-->
-        <constructor-arg name="path" value="jdbc:h2:tcp://localhost/~/pumpup"/>
+          scope="singleton" init-method="openConnection" destroy-method="closeConnection">
+        <constructor-arg name="path" value="jdbc:h2:~/pumpup"/>
         <constructor-arg name="user" value="sa"/>
         <constructor-arg name="password" value=""/>
     </bean>
@@ -33,6 +28,8 @@
         <property name="bodyfatHistoryService" ref="bodyfatHistoryService"/>
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
+
+    <bean id="fxmlLoader" class="sepm.ss15.grp16.gui.FXMLLoaderImpl" init-method="init"/>
 
     <bean id="aboutController" class="sepm.ss15.grp16.gui.controller.main.AboutController" scope="prototype"/>
 
@@ -88,6 +85,7 @@
         <property name="weightHistoryService" ref="weightHistoryService"/>
         <property name="bodyfatHistoryService" ref="bodyfatHistoryService"/>
         <property name="pictureHistoryService" ref="pictureHistoryService"/>
+        <property name="motivationModul" ref="motivationModul"/>
     </bean>
 
     <bean id="userEditController" class="sepm.ss15.grp16.gui.controller.user.UserEditController"
@@ -105,6 +103,8 @@
 
     <bean id="webcamController" class="sepm.ss15.grp16.gui.controller.user.WebcamController"
           scope="prototype">
+        <property name="userService" ref="userService"/>
+        <property name="pictureHistoryService" ref="pictureHistoryService"/>
     </bean>
 
     <!-- ###### Exercise beans ###### -->
@@ -144,14 +144,12 @@
         <property name="userService" ref="userService"/>
     </bean>
 
-    <bean id="showExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.ShowExerciseController"
+    <bean id="displayExerciseController" class="sepm.ss15.grp16.gui.controller.exercises.DisplayExerciseCotroller"
           scope="prototype">
-        <property name="exerciseController" ref="exerciseController"/>
-        <property name="exerciseService" ref="exerciseService"/>
         <property name="categoryService" ref="categoryService"/>
-        <property name="userService" ref="userService"/>
     </bean>
 
+    <bean id="videoController" class="sepm.ss15.grp16.gui.controller.exercises.VideoController" scope="prototype"/>
     <!-- ###### Calendar beans ###### -->
 
     <bean id="calendarDAO" class="sepm.ss15.grp16.persistence.dao.calendar.impl.H2CalendarDAOImpl"
@@ -214,7 +212,6 @@
     <bean id="generateWorkoutPlanController"
           class="sepm.ss15.grp16.gui.controller.workoutPlans.GenerateWorkoutPlanController" scope="singleton">
         <property name="generatedWorkoutplanService" ref="generatedWorkoutplanService"/>
-        <property name="categoryService" ref="categoryService"/>
     </bean>
 
     <bean id="workoutPlanToCalendarController"
@@ -239,11 +236,11 @@
     <bean id="sessionEditController_v2" class="sepm.ss15.grp16.gui.controller.workoutPlans.SessionEditController_v2">
         <property name="exerciseService" ref="exerciseService"/>
         <property name="userService" ref="userService"/>
+        <property name="trainingsplanService" ref="trainingsplanService"/>
     </bean>
 
     <bean id="generatedWorkoutplanService"
           class="sepm.ss15.grp16.service.training.impl.GeneratedWorkoutplanServiceImpl">
-        <constructor-arg name="trainingsplanService" ref="trainingsplanService"/>
         <constructor-arg name="exerciseService" ref="exerciseService"/>
         <constructor-arg name="userService" ref="userService"/>
         <constructor-arg name="weightHistoryService" ref="weightHistoryService"/>
@@ -278,7 +275,7 @@
 
     <bean id="workoutResultController" class="sepm.ss15.grp16.gui.controller.workout.WorkoutResultController"
           scope="prototype">
-
+        <constructor-arg name="calendarService" ref="calendarService"/>
     </bean>
 
     <bean id="musicDAO" class="sepm.ss15.grp16.persistence.dao.music.impl.MusicDAOImpl" scope="singleton">
@@ -291,5 +288,8 @@
 
     <bean id="motivationModul" class="sepm.ss15.grp16.gui.controller.workout.MotivatonModul" scope="prototype">
         <constructor-arg ref="musicService"/>
+    </bean>
+
+    <bean id="bodyfathelp" class="sepm.ss15.grp16.gui.controller.main.BodyfatHelpController" scope="prototype">
     </bean>
 </beans>

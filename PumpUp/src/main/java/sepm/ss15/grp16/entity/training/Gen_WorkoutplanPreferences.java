@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class Gen_WorkoutplanPreferences implements DTO {
 
-    private int id;
-    private TrainingsCategory goal;
+    private int                     id;
+    private TrainingsCategory       goal;
     private List<EquipmentCategory> equipment;
 
     public Gen_WorkoutplanPreferences(int id, TrainingsCategory goal, List<EquipmentCategory> equipment) {

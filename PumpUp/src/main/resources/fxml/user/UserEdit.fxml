@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="userEditPane" xmlns="http://javafx.com/javafx/8"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="userEditPane" styleClass="mainRoot"
+            stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8"
             fx:controller="sepm.ss15.grp16.gui.controller.user.UserEditController">
     <children>
         <VBox spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
@@ -53,7 +54,8 @@
                 <VBox>
                     <children>
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                onAction="#saveChangesButtonClicked" text="Änderungen speichern">
+                                onAction="#saveChangesButtonClicked" styleClass="backBtn"
+                                stylesheets="@../../css/gen_workout_resultStyle.css" text="Änderungen speichern">
                             <VBox.margin>
                                 <Insets/>
                             </VBox.margin>

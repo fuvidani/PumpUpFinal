@@ -13,11 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
-import javafx.scene.web.WebView;
-import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.exercise.EquipmentCategory;
@@ -26,9 +21,9 @@ import sepm.ss15.grp16.entity.exercise.MusclegroupCategory;
 import sepm.ss15.grp16.entity.exercise.TrainingsCategory;
 import sepm.ss15.grp16.gui.PageEnum;
 import sepm.ss15.grp16.gui.controller.Controller;
-import sepm.ss15.grp16.service.Service;
 import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exercise.CategoryService;
+import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.user.UserService;
 
 import java.io.FileInputStream;
@@ -40,88 +35,62 @@ import java.util.Optional;
  * Created by Daniel Fuevesi on 07.05.15.
  * Controller of the "Übungen" stage.
  */
-public class ExercisesController extends Controller {
+public class ExercisesController extends Controller implements VideoPlayable {
 
 
     private static Exercise exercise;
     private final Logger LOGGER = LogManager.getLogger();
-    private Service<Exercise> exerciseService;
+    private ExerciseService exerciseService;
     @FXML
-    private Label exerciseNameLabel;
+    private Label           exerciseNameLabel;
     @FXML
-    private Label trainingDeviceLabel1;
-    @FXML
-    private Label trainingDeviceLabel2;
-    @FXML
-    private Label trainingDeviceLabel3;
-    @FXML
-    private TextArea descriptionTextArea;
-    @FXML
-    private MediaView smallMediaView = new MediaView();
-    @FXML
-    private Label categoryTypeLabel;
+    private TextArea        descriptionTextArea;
+
     @FXML
     private TableColumn<Exercise, String> uebungColumn;
     @FXML
-    private TableView<Exercise> uebungsTableView;
+    private TableView<Exercise>           uebungsTableView;
     @FXML
-    private ImageView imageView;
+    private ImageView                     imageView;
     @FXML
-    private Button nexPic;
+    private TextField                     tf_search;
     @FXML
-    private Button prevPic;
+    private CheckBox                      customExercisesCheckbox;
     @FXML
-    private TextField tf_search;
+    private CheckBox                      defaultExercisesCheckbox;
+
     @FXML
-    private CheckBox customExercisesCheckbox;
-    @FXML
-    private CheckBox defaultExercisesCheckbox;
-    @FXML
-    private VBox vboxCategory;
-    @FXML
-    private WebView webViewVideo;
-    @FXML
-    private ImageView leftArrow = new ImageView();
+    private ImageView leftArrow  = new ImageView();
     @FXML
     private ImageView rightArrow = new ImageView();
 
     @FXML
-    private ImageView editImg = new ImageView();
+    private Button addBtn        = new Button();
     @FXML
-    private ImageView deleteImg = new ImageView();
+    private Button deleteBtn     = new Button();
     @FXML
-    private ImageView newImg = new ImageView();
+    private Button editBtn       = new Button();
     @FXML
-    private VBox videoBox;
+    private VBox   vboxType      = new VBox();
     @FXML
-    private Button addBtn = new Button();
+    private VBox   vboxEquipment = new VBox();
     @FXML
-    private Button deleteBtn = new Button();
+    private VBox   vboxMuscle    = new VBox();
     @FXML
-    private Button editBtn = new Button();
-    @FXML
-    private VBox vboxType = new VBox();
-    @FXML
-    private VBox vboxEquipment = new VBox();
-    @FXML
-    private VBox vboxMuscle = new VBox();
-    @FXML
-    private Button playVideoBtn = new Button();
+    private Button playVideoBtn  = new Button();
 
     private CategoryService categoryService;
-    private UserService userService;
-    private Integer picIndex = 0;
+    private UserService     userService;
+    private Integer                  picIndex   = 0;
     private ObservableList<Exercise> masterdata = FXCollections.observableArrayList();
-    private ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
-    private Media media;
-    private MediaPlayer player = null;
-    private boolean isPlaying = false;
+    private ObservableList<Exercise> temp       = FXCollections.observableArrayList();
+
 
     public void setCategoryService(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
-    public void setExerciseService(Service<Exercise> exerciseService) {
+    public void setExerciseService(ExerciseService exerciseService) {
         this.exerciseService = exerciseService;
     }
 
@@ -133,13 +102,16 @@ public class ExercisesController extends Controller {
         return exercise;
     }
 
+    /**
+     * initializing the controller with all services and layout properties needed
+     */
     @Override
     public void initController() {
 
-        addBtn.setTooltip(new Tooltip("Neue Übung anlegen"));
-        deleteBtn.setTooltip(new Tooltip("Übung löschen"));
-        editBtn.setTooltip(new Tooltip("Übung bearbeiten"));
-        
+        addBtn.setTooltip(new Tooltip("Neue \u00dcbung anlegen"));
+        deleteBtn.setTooltip(new Tooltip("\u00dcbung l\u00f6schen"));
+        editBtn.setTooltip(new Tooltip("\u00dcbung bearbeiten"));
+
 
         leftArrow.setVisible(false);
         rightArrow.setVisible(false);
@@ -177,81 +149,100 @@ public class ExercisesController extends Controller {
             }
         });
 
+        uebungsTableView.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                this.editExerciseButtonClicked(null);
+            }
+        });
 
         this.setContent();
 
     }
 
 
+    /**
+     * method for the show video button
+     * redirects to an extra dialogue where the video gets displayed and
+     * can be watched
+     */
     @FXML
-    private void playVideo() {
-        Duration totalDuration = player.getCycleDuration();
-        Duration currentDuration = player.getCurrentTime();
-        if (currentDuration.compareTo(totalDuration) == 0) {
-            isPlaying = false;
-            player = new MediaPlayer(media);
-            smallMediaView.setMediaPlayer(null);
-            smallMediaView.setMediaPlayer(player);
-        }
-        if (isPlaying) {
-            player.pause();
-            isPlaying = false;
-        } else {
-            player.play();
-            isPlaying = true;
-        }
-
-
-    }
-
-
     private void showVideo() {
-        try {
-
-
-            if (exercise.getVideolink() != null) {
-                String pathToResource = getClass().getClassLoader().getResource("video").toURI().toString();
-                String filePath = pathToResource.concat("/" + exercise.getVideolink());
-                LOGGER.debug("filepath: " + filePath);
-                LOGGER.debug("videolink: " + exercise.getVideolink());
-                media = new Media(filePath);
-                player = new MediaPlayer(media);
-
-                player.setAutoPlay(false);
-
-                smallMediaView.setMediaPlayer(player);
-                smallMediaView.setVisible(true);
-                smallMediaView.setFitHeight(300);
-                videoBox.getChildren().add(smallMediaView);
-            } else {
-                smallMediaView.setMediaPlayer(null);
-
-                smallMediaView.setVisible(false);
-            }
-        } catch (Exception e) {
-        }
-
-
+        mainFrame.openDialog(PageEnum.VideoPlayer);
     }
 
+
+    /**
+     * method to filter after the the inputtext in the
+     * search textfield
+     */
     private void updateFilteredData() {
-        ObservableList<Exercise> temp = FXCollections.observableArrayList();
-        if (!customExercisesCheckbox.isSelected() && !defaultExercisesCheckbox.isSelected()) {
-            filteredData = masterdata;
-        }
+        ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
 
-        for (Exercise e : filteredData) {
-            if (matchesFilter(e))
+        if (temp.size() == 0) {
+            for (Exercise e : masterdata) {
                 temp.add(e);
+            }
         }
 
-        uebungsTableView.setItems(temp);
+        for (Exercise e : temp) {
+            if (matchesFilter(e)) filteredData.add(e);
+        }
+
+        uebungsTableView.setItems(filteredData);
+
     }
 
+
+    @FXML
+    private void filter() {
+        //keine checkbox
+        //beide checkboxen
+        //--> textfeld ist kriterium
+        temp.clear();
+        if ((!customExercisesCheckbox.isSelected() && !defaultExercisesCheckbox.isSelected()) || (customExercisesCheckbox.isSelected() && defaultExercisesCheckbox.isSelected())) {
+            for (Exercise e : masterdata) {
+                temp.add(e);
+            }
+        } else if (defaultExercisesCheckbox.isSelected()) {
+            temp.clear();
+            for (Exercise e : masterdata) {
+                if (e.getUser() == null) {
+                    temp.add(e);
+                }
+            }
+        } else if (customExercisesCheckbox.isSelected()) {
+            temp.clear();
+            for (Exercise e : masterdata) {
+
+                if (e.getUser() != null && e.getUser().equals(userService.getLoggedInUser())) {
+                    temp.add(e);
+                }
+            }
+
+        } else {
+
+        }
+
+        ObservableList<Exercise> filteredData = FXCollections.observableArrayList();
+
+        for (Exercise e : temp) {
+            filteredData.add(e);
+        }
+
+        uebungsTableView.setItems(filteredData);
+    }
+
+    /**
+     * mathing method which checks all names of the  exercises displayed
+     * against the text in the textbox
+     *
+     * @param e exercise to check against
+     * @return true if textfield is empty, or matches text
+     * false if exercise name does not macht
+     */
     private boolean matchesFilter(Exercise e) {
         String filter = tf_search.getText();
-        if (filter == null || filter.isEmpty())
-            return true;
+        if (filter == null || filter.isEmpty()) return true;
 
         if (e.getName().toLowerCase().indexOf(filter.toLowerCase()) != -1) {
             return true;
@@ -260,7 +251,9 @@ public class ExercisesController extends Controller {
         return false;
     }
 
-
+    /**
+     * setting the contnet for the page
+     */
     public void setContent() {
         try {
             masterdata.removeAll(exerciseService.findAll());
@@ -272,11 +265,16 @@ public class ExercisesController extends Controller {
             editBtn.setDisable(true);
             deleteBtn.setDisable(true);
         } catch (ServiceException e) {
-            e.printStackTrace();
             LOGGER.error(e);
         }
     }
 
+    /**
+     * displaying one exercise with all the details the exercise contains
+     *
+     * @param old         the exercise displayed before this one
+     * @param newExercise the current clicked exercise
+     */
     private void showExercise(Exercise old, Exercise newExercise) {
         if (newExercise != null && old == null) {
             LOGGER.debug("first click");
@@ -295,8 +293,6 @@ public class ExercisesController extends Controller {
             } else {
                 playVideoBtn.setDisable(false);
             }
-            showVideo();
-
             if (exercise.getGifLinks().size() > 0) {
                 imageView.setVisible(true);
                 showPicture(0);
@@ -336,29 +332,32 @@ public class ExercisesController extends Controller {
             }
             vboxMuscle.getChildren().clear();
 
+
             for (TrainingsCategory t : categoryService.getAllTrainingstype()) {
-                if (exercise.getCategories().contains(t))
-                    vboxType.getChildren().add(new Label(t.getName()));
+                if (exercise.getCategories().contains(t)) vboxType.getChildren().add(new Label(t.getName()));
             }
 
             for (EquipmentCategory t : categoryService.getAllEquipment()) {
-                if (exercise.getCategories().contains(t))
-                    vboxEquipment.getChildren().add(new Label(t.getName()));
+                if (exercise.getCategories().contains(t)) vboxEquipment.getChildren().add(new Label(t.getName()));
             }
             for (MusclegroupCategory t : categoryService.getAllMusclegroup()) {
-                if (exercise.getCategories().contains(t))
-                    vboxMuscle.getChildren().add(new Label(t.getName()));
+                if (exercise.getCategories().contains(t)) vboxMuscle.getChildren().add(new Label(t.getName()));
             }
         } catch (ServiceException e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
     }
 
+    /**
+     * showing one picture out of the picture list the
+     * current exercise has, defined by the given index
+     * to load from the list of pictures
+     *
+     * @param index which picture is to display
+     */
     private void showPicture(Integer index) {
         try {
-            if (exercise.getGifLinks().isEmpty())
-                return;
+            if (exercise.getGifLinks().isEmpty()) return;
 
             String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
             LOGGER.debug("show details method path: " + pathToResource);
@@ -374,15 +373,15 @@ public class ExercisesController extends Controller {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
             LOGGER.error(e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
             LOGGER.error(e);
-
         }
     }
 
+    /**
+     * changing to the next picture if there is one
+     */
     @FXML
     private void nexPicButtonClicked() {
         if (exercise.getGifLinks().size() > 0) {
@@ -390,6 +389,9 @@ public class ExercisesController extends Controller {
         }
     }
 
+    /**
+     * changing to the previous picture if there is one
+     */
     @FXML
     private void prevPicButtonClicked() {
         if (exercise.getGifLinks().size() > 0) {
@@ -397,6 +399,13 @@ public class ExercisesController extends Controller {
         }
     }
 
+    /**
+     * handling the event of a new exercise:
+     * creating a backup of the actual chosen exercise
+     * then changing the stage where the user can create the new exercise
+     *
+     * @param event
+     */
     @FXML
     void newExerciseButtonClicked(ActionEvent event) {
         Exercise backup = null;
@@ -416,6 +425,12 @@ public class ExercisesController extends Controller {
     }
 
 
+    /**
+     * editing an exercise if the user has privilege to do so
+     * only own exercises can be modifyed
+     *
+     * @param event
+     */
     @FXML
     void editExerciseButtonClicked(ActionEvent event) {
 
@@ -437,6 +452,12 @@ public class ExercisesController extends Controller {
     }
 
 
+    /**
+     * deleting an exercise if the user has privilege to do so
+     * only own exercises can be modifyed
+     *
+     * @param event
+     */
     @FXML
     void deleteExerciseButtonClicked(ActionEvent event) {
         try {
@@ -465,58 +486,58 @@ public class ExercisesController extends Controller {
 
         } catch (ServiceException e) {
             LOGGER.error(e);
-            e.printStackTrace();
         }
     }
 
+    /**
+     * getting back to the main stage
+     *
+     * @param event
+     */
     @FXML
     void getBackButtonClicked(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("\u00dcbungen verlassen");
-        alert.setHeaderText("Das \u00dcbungsfenster schlie\u00dfen.");
-        alert.setContentText("M\u00f6chten Sie die \u00dcbungsuebersicht wirklich beenden?");
-        ButtonType yes = new ButtonType("Ja");
-        ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(yes, cancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == yes) {
-            mainFrame.navigateToParent();
-        }
+        mainFrame.navigateToParent();
     }
 
 
+    /**
+     * filtering exercises after the clicked checkboxes like:
+     * system/default exercises and
+     * own exercises
+     * also combinations are possible with the textsearch field
+     */
     @FXML
     private void filterCheckboxes() {
-        if (defaultExercisesCheckbox.isSelected() && customExercisesCheckbox.isSelected()) {
-            filteredData.clear();
-            filteredData.addAll(masterdata);
-            uebungsTableView.setItems(filteredData);
-            return;
-        } else if (defaultExercisesCheckbox.isSelected()) {
-
-            filteredData.clear();
-            for (Exercise e : masterdata) {
-                if (e.getUser() == null) {
-                    filteredData.add(e);
-                }
-            }
-            uebungsTableView.setItems(null);
-            uebungsTableView.setItems(filteredData);
-            return;
-        } else if (customExercisesCheckbox.isSelected()) {
-            filteredData.clear();
-            for (Exercise e : masterdata) {
-                if (e.getUser() != null && e.getUser().equals(userService.getLoggedInUser())) {
-                    filteredData.add(e);
-                }
-            }
-            uebungsTableView.setItems(null);
-
-            uebungsTableView.setItems(filteredData);
-            return;
-        } else {
-            uebungsTableView.setItems(masterdata);
-        }
+        //        if (defaultExercisesCheckbox.isSelected() && customExercisesCheckbox.isSelected()) {
+        //            filteredData.clear();
+        //            filteredData.addAll(masterdata);
+        //            uebungsTableView.setItems(filteredData);
+        //            return;
+        //        } else if (defaultExercisesCheckbox.isSelected()) {
+        //
+        //            filteredData.clear();
+        //            for (Exercise e : masterdata) {
+        //                if (e.getUser() == null) {
+        //                    filteredData.add(e);
+        //                }
+        //            }
+        //            uebungsTableView.setItems(null);
+        //            uebungsTableView.setItems(filteredData);
+        //            return;
+        //        } else if (customExercisesCheckbox.isSelected()) {
+        //            filteredData.clear();
+        //            for (Exercise e : masterdata) {
+        //                if (e.getUser() != null && e.getUser().equals(userService.getLoggedInUser())) {
+        //                    filteredData.add(e);
+        //                }
+        //            }
+        //            uebungsTableView.setItems(null);
+        //
+        //            uebungsTableView.setItems(filteredData);
+        //            return;
+        //        } else {
+        //            uebungsTableView.setItems(masterdata);
+        //        }
 
     }
 

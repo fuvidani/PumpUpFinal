@@ -2,6 +2,8 @@ package sepm.ss15.grp16.persistence.dao.music.impl;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.music.Playlist;
 import sepm.ss15.grp16.persistence.dao.music.MusicDAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
@@ -11,13 +13,17 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Lukas
  * Date: 04.06.2015
  */
 public class MusicDAOImpl implements MusicDAO {
+    private static final Logger LOGGER = LogManager.getLogger(MusicDAOImpl.class);
+
     @Override
     public Playlist create(Playlist dto) throws PersistenceException {
 
@@ -49,25 +55,6 @@ public class MusicDAOImpl implements MusicDAO {
         return dto;
     }
 
-    private String getExtension(String path) {
-        String extension = "";
-
-        int i = path.lastIndexOf('.');
-        if (i > 0) {
-            extension = path.substring(i + 1);
-        }
-        return extension;
-    }
-
-    private boolean checkSupportedFormat(String extension) {
-        for (Playlist.SupportedFormat format : Playlist.SupportedFormat.values()) {
-            if (format.name().equals(extension)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public List<Playlist> findAll() throws PersistenceException {
         throw new UnsupportedOperationException("findAll not supported!");
@@ -88,38 +75,67 @@ public class MusicDAOImpl implements MusicDAO {
         throw new UnsupportedOperationException("delete not supported!");
     }
 
+    private String getExtension(String path) {
+        String extension = "";
+
+        int i = path.lastIndexOf('.');
+        if (i > 0) {
+            extension = path.substring(i + 1);
+        }
+        return extension;
+    }
+
+    private boolean checkSupportedFormat(String extension) {
+        for (Playlist.SupportedFormat format : Playlist.SupportedFormat.values()) {
+            if (format.name().equals(extension)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
-    public Playlist getMotivations() throws PersistenceException {
-        Playlist dto = null;
+    public Map<String, Playlist> getMotivations() throws PersistenceException {
+        Map<String, Playlist> dto = null;
         try {
-            dto = new Playlist();
+            dto = new HashMap<>();
             URL url = getClass().getClassLoader().getResource("sound/motivation");
 
             if (url != null) {
-                File dir = new File(URLDecoder.decode(url.getFile(), "UTF-8"));
+                File rootDir = new File(URLDecoder.decode(url.getFile(), "UTF-8"));
 
-                List<MediaPlayer> songList = new ArrayList<>();
-                String[] pathList = dir.list();
-                String dirpath = dir.getAbsolutePath();
+                if (rootDir.isDirectory() && rootDir.listFiles() != null) {
+                    File[] dirlist = rootDir.listFiles();
 
-                if (pathList == null) {
-                    return null;
-                }
+                    if (dirlist != null) {
+                        for (File dir : dirlist) {
+                            Playlist playlist = new Playlist();
 
-                for (String path : pathList) {
-                    path = dirpath + "\\" + path;
-                    path = path.replace("\\", "/");
-                    File file = new File(path);
-                    if (file.isFile() && checkSupportedFormat(getExtension(file.getPath()))) {
-                        Media media = new Media(file.toURI().toString());
-                        MediaPlayer player = new MediaPlayer(media);
-                        songList.add(player);
+                            List<MediaPlayer> songList = new ArrayList<>();
+                            String[] pathList = dir.list();
+                            String dirpath = dir.getAbsolutePath();
+
+                            if (pathList != null) {
+
+                                for (String path : pathList) {
+                                    path = dirpath + "\\" + path;
+                                    path = path.replace("\\", "/");
+                                    File file = new File(path);
+                                    if (file.isFile() && checkSupportedFormat(getExtension(file.getPath()))) {
+                                        Media media = new Media(file.toURI().toString());
+                                        MediaPlayer player = new MediaPlayer(media);
+                                        songList.add(player);
+                                    }
+                                }
+                                playlist.setPlayers(songList);
+                            }
+                            dto.put(dir.getName(), playlist);
+                        }
                     }
                 }
-                dto.setPlayers(songList);
             }
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOGGER.error("+e");
         }
         return dto;
     }

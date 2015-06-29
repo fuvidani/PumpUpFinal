@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.persistence.dao.user;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.user.User;
 import sepm.ss15.grp16.entity.user.WeightHistory;
@@ -10,9 +12,6 @@ import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 /**
  * This class provides methods for testing WeightHistoryDAOs
  *
@@ -22,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 public abstract class AbstractWeightHistoryDaoTest extends AbstractDAOTest<WeightHistory> {
 
     protected WeightHistoryDAO weightHistoryDAO;
-    protected UserDAO userDAO;
+    protected UserDAO          userDAO;
 
     @Override
     public DAO<WeightHistory> getDAO() {
@@ -85,6 +84,16 @@ public abstract class AbstractWeightHistoryDaoTest extends AbstractDAOTest<Weigh
         WeightHistory testWeightHistory = new WeightHistory(null, testUser.getUser_id(), 25, new Date());
         searchByIDValid(testWeightHistory);
 
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void updateNotSupported() throws Exception {
+        weightHistoryDAO.update(null);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void deleteNotSupported() throws Exception {
+        weightHistoryDAO.delete(null);
     }
 
     private User createUserForTest() throws Exception {

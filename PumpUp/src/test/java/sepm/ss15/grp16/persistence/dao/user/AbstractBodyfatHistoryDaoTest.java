@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.persistence.dao.user;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
 import sepm.ss15.grp16.entity.user.User;
@@ -10,9 +12,6 @@ import sepm.ss15.grp16.persistence.exception.PersistenceException;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 /**
  * This class provides methods for testing BodyfatHistoryDAOs
  *
@@ -22,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 public abstract class AbstractBodyfatHistoryDaoTest extends AbstractDAOTest<BodyfatHistory> {
 
     protected BodyfatHistoryDAO bodyfatHistoryDAO;
-    protected UserDAO userDAO;
+    protected UserDAO           userDAO;
 
     @Override
     public DAO<BodyfatHistory> getDAO() {
@@ -85,6 +84,16 @@ public abstract class AbstractBodyfatHistoryDaoTest extends AbstractDAOTest<Body
         BodyfatHistory testBodyfatHistory = new BodyfatHistory(null, testUser.getUser_id(), 25, new Date());
         searchByIDValid(testBodyfatHistory);
 
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void updateNotSupported() throws Exception {
+        bodyfatHistoryDAO.update(null);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void deleteNotSupported() throws Exception {
+        bodyfatHistoryDAO.delete(null);
     }
 
     private User createUserForTest() throws Exception {

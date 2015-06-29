@@ -12,13 +12,13 @@ import java.util.List;
 public class Exercise implements DTO {
 
     private Integer id;
-    private String name;
-    private String description;
-    private Double calories;
-    private String videolink;
+    private String  name;
+    private String  description;
+    private Double  calories;
+    private String  videolink;
     private List<String> gifLinks = new ArrayList<>();
     private Boolean isDeleted;
-    private User user;
+    private User    user;
     private List<AbsractCategory> categories = new ArrayList<>();
 
 
@@ -45,12 +45,32 @@ public class Exercise implements DTO {
         this.categories = categories;
     }
 
+    public Exercise(Exercise exercise) {
+        this.id = exercise.id;
+        this.name = exercise.name;
+        this.description = exercise.description;
+        this.calories = exercise.calories;
+        this.videolink = exercise.videolink;
+        this.gifLinks = exercise.gifLinks;
+        this.isDeleted = exercise.isDeleted;
+        this.user = exercise.user;
+        this.categories = exercise.categories;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getName() {
@@ -93,14 +113,6 @@ public class Exercise implements DTO {
         this.gifLinks = gifLinks;
     }
 
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
     public User getUser() {
         return user;
     }
@@ -117,6 +129,42 @@ public class Exercise implements DTO {
         this.categories = categories;
     }
 
+    private boolean equalListsString(List<String> one, List<String> two) {
+        if (one == null && two == null) {
+            return true;
+        }
+
+        if ((one == null && two != null) || one != null && two == null || one.size() != two.size()) {
+            return false;
+        }
+        return one.containsAll(two);
+    }
+
+    private boolean equalListsCat(List<AbsractCategory> one, List<AbsractCategory> two) {
+        if (one == null && two == null) {
+            return true;
+        }
+
+        if ((one == null && two != null) || one != null && two == null || one.size() != two.size()) {
+            return false;
+        }
+        return one.containsAll(two);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (calories != null ? calories.hashCode() : 0);
+        result = 31 * result + (videolink != null ? videolink.hashCode() : 0);
+        result = 31 * result + (gifLinks != null ? gifLinks.hashCode() : 0);
+        result = 31 * result + (isDeleted != null ? isDeleted.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        return result;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -124,20 +172,8 @@ public class Exercise implements DTO {
 
         Exercise exercise = (Exercise) o;
 
-        if (this.getId() == null) {
-            return false;
-        }
+        return !(id != null ? !id.equals(exercise.id) : exercise.id != null) && !(name != null ? !name.equals(exercise.name) : exercise.name != null) && !(description != null ? !description.equals(exercise.description) : exercise.description != null) && !(calories != null ? !calories.equals(exercise.calories) : exercise.calories != null) && !(videolink != null ? !videolink.equals(exercise.videolink) : exercise.videolink != null) && equalListsString(gifLinks, exercise.gifLinks) && !(isDeleted != null ? !isDeleted.equals(exercise.isDeleted) : exercise.isDeleted != null) && !(user != null ? !user.equals(exercise.user) : exercise.user != null) && equalListsCat(categories, exercise.categories);
 
-        if (this.getId() == ((Exercise) o).getId())
-            return true;
-
-        return !(getId() != null ? !getId().equals(exercise.getId()) : exercise.getId() != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return getId() != null ? getId().hashCode() : 0;
     }
 
     @Override

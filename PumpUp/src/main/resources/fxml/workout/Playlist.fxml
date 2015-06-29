@@ -5,19 +5,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            styleClass="mainRoot" stylesheets="@../../css/mainStyle.css"
             xmlns="http://javafx.com/javafx/8"
             fx:controller="sepm.ss15.grp16.gui.controller.workout.PlaylistController">
     <bottom>
         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
               BorderPane.alignment="CENTER">
             <children>
+                <Region layoutX="67.0" layoutY="10.0" maxHeight="1.7976931348623157E308"
+                        maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
                 <Button layoutX="934.0" layoutY="688.0" maxHeight="1.7976931348623157E308"
                         maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onClickFinish"
-                        text="Fertig">
+                        styleClass="btnReady" stylesheets="@../../css/playlistStyle.css" text="Fertig"
+                        HBox.hgrow="ALWAYS">
                     <font>
                         <Font size="14.0"/>
                     </font>
                 </Button>
+                <Region maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS"/>
             </children>
             <BorderPane.margin>
                 <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
@@ -38,7 +43,7 @@
                                      text="Titel"/>
                         <TableColumn fx:id="artistColumn" maxWidth="200.0" minWidth="-1.0" prefWidth="-1.0"
                                      text="Interpret"/>
-                        <TableColumn fx:id="lengthColumn" maxWidth="70.0" minWidth="-1.0" prefWidth="-1.0" text="Zeit"/>
+                        <TableColumn fx:id="lengthColumn" maxWidth="90.0" minWidth="-1.0" prefWidth="-1.0" text="Zeit"/>
                     </columns>
                 </TableView>
             </children>

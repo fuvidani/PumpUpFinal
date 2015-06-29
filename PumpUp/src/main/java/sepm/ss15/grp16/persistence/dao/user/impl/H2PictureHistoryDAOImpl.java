@@ -24,7 +24,7 @@ import java.util.List;
 public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private Connection con;
+    private Connection        con;
     private PreparedStatement createStatement;
     private PreparedStatement updateStatement;
     private PreparedStatement getActualPictureStatement;
@@ -37,43 +37,17 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         try {
             this.con = handler.getConnection();
             this.createStatement = con.prepareStatement("INSERT INTO picturehistory VALUES(?, ?, ?, ?, ?);");
-            this.updateStatement = con.prepareStatement("UPDATE picturehistory SET user_id = ?, location = ? , date = ?," +
-                    " isDeleted = ? WHERE picturehistory_id = ?");
+            this.updateStatement = con.prepareStatement("UPDATE picturehistory SET user_id = ?, location = ? , date = ?," + " isDeleted = ? WHERE picturehistory_id = ?");
             this.searchByUserIDStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND isDeleted = false");
             this.searchByIDStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE picturehistory_id = ?");
             this.deleteStatement = con.prepareStatement("UPDATE picturehistory SET isDeleted = ? WHERE picturehistory_id = ?");
-            this.getActualPictureStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND " +
-                    "picturehistory_id = (SELECT max(picturehistory_id) from picturehistory WHERE user_id = ?) AND isDeleted = false;");
+            this.getActualPictureStatement = con.prepareStatement("SELECT * FROM picturehistory WHERE user_id = ? AND " + "picturehistory_id = (SELECT max(picturehistory_id) from picturehistory WHERE user_id = ? AND isDeleted = false) AND isDeleted = false;");
         } catch (SQLException e) {
             throw new PersistenceException("Failed to prepare statements", e);
         } catch (DBException e) {
             throw new PersistenceException("Failed to get a connection", e);
         }
 
-    }
-
-    @Override
-    public List<PictureHistory> searchByUserID(int user_id) throws PersistenceException {
-
-        LOGGER.info("Searching pictures from user with id: " + user_id);
-        List<PictureHistory> pictureHistoryList = new ArrayList<>();
-
-        try {
-            searchByUserIDStatement.setInt(1, user_id);
-            ResultSet resultSet = searchByUserIDStatement.executeQuery();
-
-            while (resultSet.next()) {
-                PictureHistory pictureHistory = new PictureHistory(resultSet.getInt(1), resultSet.getInt(2),
-                        resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5));
-                pictureHistoryList.add(pictureHistory);
-            }
-
-        } catch (SQLException e) {
-            throw new PersistenceException("Failed to find pictures from user with id: " + user_id, e);
-        }
-
-        LOGGER.info("Searching pictures from user with id: " + user_id + " was successful");
-        return pictureHistoryList;
     }
 
     @Override
@@ -128,7 +102,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             LOGGER.error("Failed to create new pictureHistory. IO failed");
             throw new PersistenceException("Failed to create a new pictureHistory", e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         LOGGER.info("Created pictureHistory successfully");
@@ -149,8 +123,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             ResultSet rs_allPictureHistories = findAllStatement.executeQuery("SELECT * FROM picturehistory WHERE isDeleted = false;");
 
             while (rs_allPictureHistories.next()) {
-                PictureHistory foundPictureHistory = new PictureHistory(rs_allPictureHistories.getInt(1), rs_allPictureHistories.getInt(2),
-                        rs_allPictureHistories.getString(3), rs_allPictureHistories.getDate(4), rs_allPictureHistories.getBoolean(5));
+                PictureHistory foundPictureHistory = new PictureHistory(rs_allPictureHistories.getInt(1), rs_allPictureHistories.getInt(2), rs_allPictureHistories.getString(3), rs_allPictureHistories.getDate(4), rs_allPictureHistories.getBoolean(5));
                 pictureHistoryList.add(foundPictureHistory);
             }
 
@@ -175,8 +148,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             ResultSet resultSet = searchByIDStatement.executeQuery();
 
             if (resultSet.next()) {
-                pictureHistory = new PictureHistory(resultSet.getInt(1), resultSet.getInt(2),
-                        resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5));
+                pictureHistory = new PictureHistory(resultSet.getInt(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5));
             }
 
         } catch (SQLException e) {
@@ -232,7 +204,7 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
             LOGGER.error("Failed to update pictureHistory. IO failed");
             throw new PersistenceException("Failed to create a new pictureHistory", e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         LOGGER.info("Updated a picturehistory successfully");
@@ -260,6 +232,29 @@ public class H2PictureHistoryDAOImpl implements PictureHistoryDAO {
         }
 
         LOGGER.info("picturehistory successfully deleted");
+    }
+
+    @Override
+    public List<PictureHistory> searchByUserID(int user_id) throws PersistenceException {
+
+        LOGGER.info("Searching pictures from user with id: " + user_id);
+        List<PictureHistory> pictureHistoryList = new ArrayList<>();
+
+        try {
+            searchByUserIDStatement.setInt(1, user_id);
+            ResultSet resultSet = searchByUserIDStatement.executeQuery();
+
+            while (resultSet.next()) {
+                PictureHistory pictureHistory = new PictureHistory(resultSet.getInt(1), resultSet.getInt(2), resultSet.getString(3), resultSet.getDate(4), resultSet.getBoolean(5));
+                pictureHistoryList.add(pictureHistory);
+            }
+
+        } catch (SQLException e) {
+            throw new PersistenceException("Failed to find pictures from user with id: " + user_id, e);
+        }
+
+        LOGGER.info("Searching pictures from user with id: " + user_id + " was successful");
+        return pictureHistoryList;
     }
 
     @Override

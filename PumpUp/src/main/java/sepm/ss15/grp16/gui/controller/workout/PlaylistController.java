@@ -1,16 +1,10 @@
 package sepm.ss15.grp16.gui.controller.workout;
 
-import com.sun.javafx.scene.control.skin.TableViewSkin;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Skin;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.media.MediaPlayer;
@@ -33,8 +27,6 @@ public class PlaylistController extends Controller {
 
     @FXML
     private TableColumn<MediaPlayer, String> lengthColumn;
-    private VirtualFlow flow;
-    private ObservableList<MediaPlayer> masterdata;
 
     @Override
     public void initController() {
@@ -55,43 +47,9 @@ public class PlaylistController extends Controller {
             return new SimpleStringProperty(artist_return);
         });
         lengthColumn.setCellValueFactory(p -> new SimpleStringProperty(String.format("%1$.2f", p.getValue().getTotalDuration().toMinutes()).replace(",", ":")));
-        masterdata = FXCollections.observableArrayList(playlist.getPlayers());
+        ObservableList<MediaPlayer> masterdata = FXCollections.observableArrayList(playlist.getPlayers());
         tblPlaylist.setItems(masterdata);
         tblPlaylist.getSelectionModel().clearAndSelect(masterdata.indexOf(playlist.getActivePlayer()));
-
-
-        tblPlaylist.skinProperty().addListener(new ChangeListener<Skin>() {
-            @Override
-            public void changed(ObservableValue<? extends Skin> ov, Skin t, Skin t1) {
-                if (t1 == null) {
-                    return;
-                }
-
-                TableViewSkin tvs = (TableViewSkin) t1;
-                ObservableList kids = tvs.getChildren();
-
-                if (kids == null || kids.isEmpty()) {
-                    return;
-                }
-                flow = (VirtualFlow) kids.get(1);
-            }
-        });
-        masterdata.addListener((ListChangeListener.Change<? extends MediaPlayer> change) -> {
-            while (change.next()) {
-                if (change.wasAdded()) {
-                    if (flow == null) {
-                        return;
-                    }
-                    int first = flow.getFirstVisibleCell().getIndex();
-                    int last = flow.getLastVisibleCell().getIndex();
-                    int selected = tblPlaylist.getSelectionModel().getSelectedIndex();
-
-                    if (selected < first || selected > last) {
-                        flow.show(selected);
-                    }
-                }
-            }
-        });
     }
 
     @FXML

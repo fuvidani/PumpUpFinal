@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
+            styleClass="mainRoot" stylesheets="@../../css/mainStyle.css"
             xmlns="http://javafx.com/javafx/8"
             fx:controller="sepm.ss15.grp16.gui.controller.workoutPlans.WorkoutPlanToCalendarController">
     <center>
@@ -114,7 +114,7 @@
                     </HBox.margin>
                     <children>
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                               text="gewählter Trainingsplan:">
+                               text="Gewählter Trainingsplan:">
                             <font>
                                 <Font size="18.0"/>
                             </font>
@@ -161,7 +161,7 @@
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER_LEFT">
             <children>
                 <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                       text="Trainingsplane in Kalender exportieren">
+                       text="Trainingsplan in Kalender exportieren">
                     <font>
                         <Font size="24.0"/>
                     </font>
@@ -188,7 +188,8 @@
                       maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
                         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                mnemonicParsing="false" onAction="#cancelButtonClicked" text="Abbrechen">
+                                mnemonicParsing="false" onAction="#cancelButtonClicked" styleClass="btnBack"
+                                stylesheets="@../../css/trainingStyle.css" text="Abbrechen">
                             <font>
                                 <Font size="18.0"/>
                             </font>
@@ -210,7 +211,8 @@
                       maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <children>
                         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                mnemonicParsing="false" onAction="#generateButtonClicked" text="Export">
+                                mnemonicParsing="false" onAction="#generateButtonClicked" styleClass="btnBack"
+                                stylesheets="@../../css/trainingStyle.css" text="Export">
                             <font>
                                 <Font size="18.0"/>
                             </font>

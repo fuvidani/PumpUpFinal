@@ -17,10 +17,8 @@ import sepm.ss15.grp16.persistence.database.DBHandler;
 /**
  * Created by michaelsober on 07.05.15.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring-config.xml")
-@TestExecutionListeners(inheritListeners = false, listeners =
-        {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+@RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("classpath:spring-config-test.xml")
+@TestExecutionListeners(inheritListeners = false, listeners = {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class H2PictureHistoryDAOImplTest extends AbstractPictureHistoryDaoTest {
 
     @Autowired

@@ -32,12 +32,12 @@ import java.util.*;
 public class Create_Edit_WorkoutPlanController extends Controller {
     private static final Logger LOGGER = LogManager.getLogger(Create_Edit_WorkoutPlanController.class);
 
-    private Trainingsplan plan_interClassCommunication;
+    private Trainingsplan    plan_interClassCommunication;
     private TrainingsSession session_interClassCommunication;
 
     private TrainingsplanService trainingsplanService;
-    private UserService userService;
-    private TrainingsSession selection;
+    private UserService          userService;
+    private TrainingsSession     selection;
 
     @FXML
     private Button btnEditSession;
@@ -52,10 +52,10 @@ public class Create_Edit_WorkoutPlanController extends Controller {
     private TextArea txtDescr;
 
     @FXML
-    private Text txtCal_sum;
+    private Label txtCal_sum;
 
     @FXML
-    private Text txtCal_mean;
+    private Label txtCal_mean;
 
     @FXML
     private Label txtTraining;
@@ -105,29 +105,39 @@ public class Create_Edit_WorkoutPlanController extends Controller {
 
             if (plan_interClassCommunication.getTrainingsSessions() != null) {
 
-                ObservableList<TrainingsSession> data =
-                        FXCollections.observableArrayList(
-                                plan_interClassCommunication.getTrainingsSessions()
-                        );
+                ObservableList<TrainingsSession> data = FXCollections.observableArrayList(plan_interClassCommunication.getTrainingsSessions());
                 listViewSessions.setItems(data);
                 updateInformations();
             }
         }
 
-        listViewSessions.getSelectionModel().selectedItemProperty().addListener(
-                (ov, old_val, new_val) -> {
-                    if (listViewSessions.getSelectionModel().getSelectedItems() != null && new_val != null) {
-                        selection = new TrainingsSession(new_val);
-                        btnDeleteSession.setDisable(false);
-                        btnEditSession.setDisable(false);
-                        btnIncreaseDif.setDisable(false);
-                        btnDecreaseDif.setDisable(false);
-                    }
-                });
-        btnIncreaseDif.setTooltip(new Tooltip("Schwierigkeit erhöhen"));
+        listViewSessions.getSelectionModel().selectedItemProperty().addListener((ov, old_val, new_val) -> {
+                                                                                    if (listViewSessions.getSelectionModel().getSelectedItems() != null && new_val != null) {
+                                                                                        selection = new TrainingsSession(new_val);
+                                                                                        btnDeleteSession.setDisable(false);
+                                                                                        btnEditSession.setDisable(false);
+                                                                                        btnIncreaseDif.setDisable(false);
+                                                                                        btnDecreaseDif.setDisable(false);
+                                                                                    }
+                                                                                });
+
+        listViewSessions.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                this.editSession(null);
+            }
+        });
+
+        btnIncreaseDif.setTooltip(new Tooltip("Schwierigkeit erh\u00f6hen"));
         btnDecreaseDif.setTooltip(new Tooltip("Schwierigkeit reduzieren"));
+
+        btnAddSession.setTooltip(new Tooltip("Neue Session hinzuf\u00FDgen"));
+        btnEditSession.setTooltip(new Tooltip("Session bearbeiten"));
+        btnDeleteSession.setTooltip(new Tooltip("Session l\u00F6schen"));
     }
 
+    /**
+     * updates the information panel
+     */
     private void updateInformations() {
 
         List<TrainingsSession> sessions = listViewSessions.getItems();
@@ -155,6 +165,10 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                     }
                 }
             }
+            int calories_mean = calories_sum / plan_interClassCommunication.getTrainingsSessions().size();
+            txtCal_sum.setText(String.valueOf(calories_sum));
+            txtCal_mean.setText(String.valueOf(calories_mean));
+
             String value_training = "";
             String value_equip = "";
             String value_muscle = "";
@@ -183,6 +197,12 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         }
     }
 
+    /**
+     * Reads the input datas. If they are valid, the TrainingsPlanService is called and the Trainingsplan
+     * will be created or updated. Otherwise an error is thrown with an alert dialog
+     *
+     * @param event
+     */
     @FXML
     public void saveWorkoutClicked(ActionEvent event) {
 
@@ -303,10 +323,7 @@ public class Create_Edit_WorkoutPlanController extends Controller {
                             }
 
                             for (Map.Entry<Integer, Pair<Integer, ExerciseSet>> entry : setMap.entrySet()) {
-                                value += entry.getValue().getKey() + "x "
-                                        + entry.getValue().getValue().getRepeat()
-                                        + (entry.getValue().getValue().getType() == ExerciseSet.SetType.time ? "s " : " ")
-                                        + entry.getValue().getValue().getExercise().getName() + "\n";
+                                value += entry.getValue().getKey() + "x " + entry.getValue().getValue().getRepeat() + (entry.getValue().getValue().getType() == ExerciseSet.SetType.time ? "s " : " ") + entry.getValue().getValue().getExercise().getName() + "\n";
                             }
 
                             final Text leftText = new Text(title);
@@ -332,6 +349,11 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         });
     }
 
+    /**
+     * Ask for confirmation and close the window at confirmation
+     *
+     * @param event
+     */
     @FXML
     public void cancelClicked(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -346,14 +368,17 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         if (result.get() == yes) {
             plan_interClassCommunication = null;
             session_interClassCommunication = null;
-            //this.stage.close();
             mainFrame.navigateToParent();
         }
     }
 
+    /**
+     * opens the sessionEdit Window
+     *
+     * @param event
+     */
     @FXML
     public void addSession(ActionEvent event) {
-        //transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session hinzuf\u00fcgen", 600, 400, false);
         mainFrame.openDialog(PageEnum.SessionEdit);
         if (session_interClassCommunication != null) {
             listViewSessions.getItems().add(session_interClassCommunication);
@@ -363,30 +388,32 @@ public class Create_Edit_WorkoutPlanController extends Controller {
         }
     }
 
+    /**
+     * opens the sessionEdit Window
+     *
+     * @param event
+     */
     @FXML
     public void editSession(ActionEvent event) {
         if (selection != null) {
-            //SessionEditController_v2.session_interClassCommunication = selection;
             session_interClassCommunication = selection;
         }
-
-        //transitionLoader.openWaitStage("fxml/workoutPlans/SessionEdit_v2.fxml", (Stage) listViewSessions.getScene().getWindow(), "Session bearbeiten", 600, 400, false);
         mainFrame.openDialog(PageEnum.SessionEdit);
 
         if (session_interClassCommunication != null) {
-            listViewSessions.getItems().remove(selection);
-            listViewSessions.getItems().add(session_interClassCommunication);
+            listViewSessions.getItems().set(listViewSessions.getItems().indexOf(selection), session_interClassCommunication);
             session_interClassCommunication = null;
             setUpListView();
             updateInformations();
         }
     }
+
 
     @FXML
     public void deleteSession(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("L�schen best�tigen");
-        alert.setHeaderText("Wollen Sie die �bung wirklich aus der Session l�schen?");
+        alert.setTitle("L\u00f6schen best\u00e4tigen");
+        alert.setHeaderText("Wollen Sie die \u00dcbung wirklich aus der Session l\u00f6schen?");
         ButtonType yes = new ButtonType("Ja");
         ButtonType cancel = new ButtonType("Abbrechen", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(yes, cancel);

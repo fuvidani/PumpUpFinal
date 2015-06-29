@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService {
 
-    private static User loggedInUser;
-    private UserDAO userDAO;
+    private static User    loggedInUser;
+    private        UserDAO userDAO;
 
     public UserServiceImpl(UserDAO userDAO) throws ServiceException {
         if (userDAO == null) {
@@ -82,12 +82,12 @@ public class UserServiceImpl implements UserService {
             errorMsg += "Der Username muss angegeben und zwischen 2 und 25 Zeichen lang sein.\n";
         }
 
-        if (age == null || age < 0) {
-            errorMsg += "Das Alter muss eine gültige Zahl größer 0 sein.\n";
+        if (age == null || age <= 0 || age > 120) {
+            errorMsg += "Das Alter muss eine g\u00fcltige Zahl zwischen 1 und 120 sein.\n";
         }
 
-        if (height == null || height < 0) {
-            errorMsg += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
+        if (height == null || height <= 0 || height > 300) {
+            errorMsg += "Die Gr\u00f6\u00dfe muss eine g\u00fcltige Zahl zwischen 0 und 300 sein.\n";
         }
 
         if (email != null) {

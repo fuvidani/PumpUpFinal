@@ -1,5 +1,7 @@
 package sepm.ss15.grp16.persistence.dao.user;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import sepm.ss15.grp16.entity.user.PictureHistory;
 import sepm.ss15.grp16.entity.user.User;
@@ -8,10 +10,9 @@ import sepm.ss15.grp16.persistence.dao.DAO;
 import sepm.ss15.grp16.persistence.exception.PersistenceException;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * This class provides methods for testing PictureHistoryDAOs
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<PictureHistory> {
 
     protected PictureHistoryDAO pictureHistoryDAO;
-    protected UserDAO userDAO;
+    protected UserDAO           userDAO;
 
     @Override
     public DAO<PictureHistory> getDAO() {
@@ -48,6 +49,12 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
         if (savedImage.exists()) {
             savedImage.delete();
         }
+    }
+
+    @Test(expected = PersistenceException.class)
+    public void createWithFileNotFoundShouldFail() throws Exception {
+        PictureHistory testPictureHistory = new PictureHistory(null, createUserForTest().getUser_id(), "failPath", new Date());
+        createValid(testPictureHistory);
     }
 
     @Test
@@ -141,6 +148,54 @@ public abstract class AbstractPictureHistoryDaoTest extends AbstractDAOTest<Pict
             savedImage2.delete();
         }
 
+    }
+
+    @Test(expected = PersistenceException.class)
+    public void updateWithFileNotFoundShouldFail() throws Exception {
+        PictureHistory testPictureHistory = new PictureHistory(null, createUserForTest().getUser_id(), "failPath", new Date());
+        updateValid(testPictureHistory, testPictureHistory);
+    }
+
+    @Test(expected = PersistenceException.class)
+    public void updateWithNullShouldFail() throws Exception {
+        updateValid(null, null);
+    }
+
+    @Test
+    public void getActualPictureWithValidId() throws Exception {
+        String pathToResource = getClass().getClassLoader().getResource("img").toURI().getPath();
+        String testImagePath = pathToResource + "/testbild.jpg";
+
+        User testUser1 = createUserForTest();
+        User testUser2 = createUserForTest();
+        PictureHistory pictureHistory1 = new PictureHistory(null, testUser1.getUser_id(), testImagePath, new Date());
+        PictureHistory pictureHistory2 = new PictureHistory(null, testUser1.getUser_id(), testImagePath, new Date());
+        PictureHistory pictureHistory3 = new PictureHistory(null, testUser1.getUser_id(), testImagePath, new Date());
+        PictureHistory pictureHistory4 = new PictureHistory(null, testUser2.getUser_id(), testImagePath, new Date());
+
+        List<PictureHistory> pictureHistoryList = new ArrayList<>();
+        pictureHistoryList.add(pictureHistoryDAO.create(pictureHistory1));
+        pictureHistoryList.add(pictureHistoryDAO.create(pictureHistory2));
+        pictureHistoryList.add(pictureHistoryDAO.create(pictureHistory3));
+        pictureHistoryList.add(pictureHistoryDAO.create(pictureHistory4));
+
+        PictureHistory pictureHistoryActual = pictureHistoryDAO.getActualPicture(testUser1.getUser_id());
+        assertEquals(pictureHistoryActual, pictureHistory3);
+
+        for (int i = 0; i < pictureHistoryList.size(); i++) {
+            String savedImagePath = pathToResource + pictureHistoryList.get(i).getLocation();
+            File savedImage = new File(savedImagePath);
+            assertTrue(savedImage.exists());
+            if (savedImage.exists()) {
+                savedImage.delete();
+            }
+        }
+
+    }
+
+    @Test(expected = PersistenceException.class)
+    public void deleteWithNullShouldFail() throws Exception {
+        pictureHistoryDAO.delete(null);
     }
 
     private User createUserForTest() throws Exception {

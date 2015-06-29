@@ -15,7 +15,6 @@ import sepm.ss15.grp16.service.exception.ServiceException;
 import sepm.ss15.grp16.service.exception.ValidationException;
 import sepm.ss15.grp16.service.exercise.ExerciseService;
 import sepm.ss15.grp16.service.training.GeneratedWorkoutplanService;
-import sepm.ss15.grp16.service.training.TrainingsplanService;
 import sepm.ss15.grp16.service.user.UserService;
 import sepm.ss15.grp16.service.user.WeightHistoryService;
 
@@ -30,21 +29,18 @@ import java.util.Random;
 public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanService {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private TrainingsplanService trainingsplanService;
-    private ExerciseService exerciseService;
-    private UserService userService;
+    private ExerciseService      exerciseService;
+    private UserService          userService;
     private WeightHistoryService weightHistoryService;
 
     /**
      * Public constructor to be injected by Spring.
      *
-     * @param trainingsplanService service for the workout plans
      * @param exerciseService      service for the specific exercises
      * @param userService          service for the current logged in user
      * @param weightHistoryService service for the weight history of the user
      */
-    public GeneratedWorkoutplanServiceImpl(TrainingsplanService trainingsplanService, ExerciseService exerciseService, UserService userService, WeightHistoryService weightHistoryService) {
-        this.trainingsplanService = trainingsplanService;
+    public GeneratedWorkoutplanServiceImpl(ExerciseService exerciseService, UserService userService, WeightHistoryService weightHistoryService) {
         this.exerciseService = exerciseService;
         this.userService = userService;
         this.weightHistoryService = weightHistoryService;
@@ -77,7 +73,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @return a goal-driven, auto-generated workout plan
      */
     private Trainingsplan generateForEndurance(List<EquipmentCategory> equipment, User user) throws ServiceException {
-        LOGGER.info("Entering the generating algorithms for an endurance workout plan.");
+        LOGGER.info("Entering the generating algorithm for an endurance workout plan.");
 
         double height = user.getHeight() / 100.0;
         WeightHistory history = weightHistoryService.getActualWeight(user.getUser_id());
@@ -93,6 +89,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 exercises.add(exercise);
             }
         }
+        LOGGER.info("SIZE OF EXERCISES: " + exercises.size());
         Trainingsplan result;
         int weeklyCalorieGoal;
         int days;
@@ -103,14 +100,14 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         if (age <= 25) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 1300 : 975;
+                weeklyCalorieGoal = male ? 1000 : 750;
                 days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 1000 : 750;
+                weeklyCalorieGoal = male ? 900 : 675;
                 days = 3;
                 numberOfExercises = 4;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 900 : 675;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = 3;
                 numberOfExercises = 3;
             }
@@ -121,14 +118,14 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 25 && age <= 35) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 1200 : 900;
+                weeklyCalorieGoal = male ? 900 : 675;
                 days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 900 : 675;
+                weeklyCalorieGoal = male ? 800 : 600;
                 days = 3;
                 numberOfExercises = 4;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 800 : 600;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = numberOfExercises = 3;
             }
         }
@@ -138,14 +135,14 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 35 && age <= 50) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 1000 : 750;
+                weeklyCalorieGoal = male ? 750 : 560;
                 days = 3;
                 numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 800 : 600;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = numberOfExercises = 3;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 600 : 450;
+                weeklyCalorieGoal = male ? 300 : 225;
                 days = numberOfExercises = 3;
             }
         }
@@ -155,15 +152,15 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 800 : 600;
+                weeklyCalorieGoal = male ? 300 : 225;
                 days = 2;
                 numberOfExercises = 3;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 500 : 375;
+                weeklyCalorieGoal = male ? 200 : 150;
                 days = 2;
                 numberOfExercises = 3;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 300 : 225;
+                weeklyCalorieGoal = male ? 180 : 135;
                 days = 2;
                 numberOfExercises = 3;
             }
@@ -183,6 +180,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 int rand = random.nextInt(internExercises.size());
                 Exercise nextExercise = internExercises.get(rand);
                 int duration = (int) Math.round((caloriesPerExercise / nextExercise.getCalories()) * multiplier);
+                duration = Math.round(duration / 5) * 5;
                 ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.time, j, false);
                 sets.add(set);
                 internExercises.remove(rand);
@@ -190,7 +188,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
             TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
             sessions.add(session);
         }
-        result = new Trainingsplan(user, "Generierter Trainingsplan für Ausdauer", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Ausdauer zu entwickeln.", false, 4, sessions);
+        result = new Trainingsplan(user, "Generierter Trainingsplan f\u00fcr Ausdauer", "In diesem generierten Trainingsplan haben Sie unteschiedliche \u00dcbungen um Ihre Ausdauer zu trainieren.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
         return result;
     }
@@ -203,7 +201,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @return a goal-driven, auto-generated workout plan
      */
     private Trainingsplan generateForStrength(List<EquipmentCategory> equipment, User user) throws ServiceException {
-        LOGGER.info("Entering the generating algorithms for an strength workout plan.");
+        LOGGER.info("Entering the generating algorithm for an strength workout plan.");
 
         double height = user.getHeight() / 100.0;
         WeightHistory history = weightHistoryService.getActualWeight(user.getUser_id());
@@ -219,24 +217,26 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 exercises.add(exercise);
             }
         }
+        LOGGER.info("SIZE OF EXERCISES: " + exercises.size());
         Trainingsplan result;
         int weeklyCalorieGoal;
         int days;
         int numberOfExercises;
         double multiplier = 1;
+
         /**
          * Young user between 1 - 25 years.
          */
         if (age <= 25) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 1300 : 975;
+                weeklyCalorieGoal = male ? 1000 : 750;
                 days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 1000 : 750;
+                weeklyCalorieGoal = male ? 900 : 675;
                 days = 3;
                 numberOfExercises = 4;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 900 : 675;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = 3;
                 numberOfExercises = 3;
             }
@@ -247,14 +247,14 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 25 && age <= 35) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 1200 : 900;
+                weeklyCalorieGoal = male ? 900 : 675;
                 days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 900 : 675;
+                weeklyCalorieGoal = male ? 800 : 600;
                 days = 3;
                 numberOfExercises = 4;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 800 : 600;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = numberOfExercises = 3;
             }
         }
@@ -264,14 +264,14 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 35 && age <= 50) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 1000 : 750;
+                weeklyCalorieGoal = male ? 750 : 560;
                 days = 3;
                 numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 800 : 600;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = numberOfExercises = 3;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 600 : 450;
+                weeklyCalorieGoal = male ? 300 : 225;
                 days = numberOfExercises = 3;
             }
         }
@@ -281,15 +281,15 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 800 : 600;
+                weeklyCalorieGoal = male ? 300 : 225;
                 days = 2;
                 numberOfExercises = 3;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 500 : 375;
+                weeklyCalorieGoal = male ? 200 : 150;
                 days = 2;
                 numberOfExercises = 3;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 300 : 225;
+                weeklyCalorieGoal = male ? 180 : 135;
                 days = 2;
                 numberOfExercises = 3;
             }
@@ -309,6 +309,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 int rand = random.nextInt(internExercises.size());
                 Exercise nextExercise = internExercises.get(rand);
                 int duration = (int) Math.round((caloriesPerExercise / nextExercise.getCalories()) * multiplier);
+                duration = Math.round(duration / 5) * 5;
                 ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.repeat, j, false);
                 sets.add(set);
                 internExercises.remove(rand);
@@ -316,7 +317,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
             TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
             sessions.add(session);
         }
-        result = new Trainingsplan(user, "Generierter Trainingsplan für Kraft", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Kraft zu entwickeln.", false, 4, sessions);
+        result = new Trainingsplan(user, "Generierter Trainingsplan f\u00dcr Kraft", "In diesem generierten Trainingsplan haben Sie unteschiedliche \u00fcbungen um Ihre Kraft zu trainieren.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
         return result;
     }
@@ -329,8 +330,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @return a goal-driven, auto-generated workout plan
      */
     private Trainingsplan generateForBalance(List<EquipmentCategory> equipment, User user) throws ServiceException {
-        LOGGER.info("Entering the generating algorithms for an balance workout plan.");
-
+        LOGGER.info("Entering the generating algorithm for an balance workout plan.");
         double height = user.getHeight() / 100.0;
         WeightHistory history = weightHistoryService.getActualWeight(user.getUser_id());
         double weight = history.getWeight();
@@ -345,6 +345,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 exercises.add(exercise);
             }
         }
+        LOGGER.info("SIZE OF EXERCISES: " + exercises.size());
         Trainingsplan result;
         int weeklyCalorieGoal;
         int days;
@@ -355,14 +356,14 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         if (age <= 25) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 1300 : 975;
+                weeklyCalorieGoal = male ? 1000 : 750;
                 days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 1000 : 750;
+                weeklyCalorieGoal = male ? 900 : 675;
                 days = 3;
                 numberOfExercises = 4;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 900 : 675;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = 3;
                 numberOfExercises = 3;
             }
@@ -373,14 +374,14 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 25 && age <= 35) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 1200 : 900;
+                weeklyCalorieGoal = male ? 900 : 675;
                 days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 900 : 675;
+                weeklyCalorieGoal = male ? 800 : 600;
                 days = 3;
                 numberOfExercises = 4;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 800 : 600;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = numberOfExercises = 3;
             }
         }
@@ -390,14 +391,14 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 35 && age <= 50) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 1000 : 750;
+                weeklyCalorieGoal = male ? 750 : 560;
                 days = 3;
                 numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 800 : 600;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = numberOfExercises = 3;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 600 : 450;
+                weeklyCalorieGoal = male ? 300 : 225;
                 days = numberOfExercises = 3;
             }
         }
@@ -407,15 +408,15 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = male ? 800 : 600;
+                weeklyCalorieGoal = male ? 300 : 225;
                 days = 2;
                 numberOfExercises = 3;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = male ? 500 : 375;
+                weeklyCalorieGoal = male ? 200 : 150;
                 days = 2;
                 numberOfExercises = 3;
             } else {                                        // Obese
-                weeklyCalorieGoal = male ? 300 : 225;
+                weeklyCalorieGoal = male ? 180 : 135;
                 days = 2;
                 numberOfExercises = 3;
             }
@@ -435,6 +436,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 int rand = random.nextInt(internExercises.size());
                 Exercise nextExercise = internExercises.get(rand);
                 int duration = (int) Math.round((caloriesPerExercise / nextExercise.getCalories()) * multiplier);
+                duration = Math.round(duration / 5) * 5;
                 ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.time, j, false);
                 sets.add(set);
                 internExercises.remove(rand);
@@ -442,7 +444,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
             TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
             sessions.add(session);
         }
-        result = new Trainingsplan(user, "Generierter Trainingsplan für Balance", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Balance zu entwickeln.", false, 4, sessions);
+        result = new Trainingsplan(user, "Generierter Trainingsplan f\u00fcr Balance", "In diesem generierten Trainingsplan haben Sie unteschiedliche \u00dcbungen um Ihre Balance zu trainieren.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
         return result;
     }
@@ -455,7 +457,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
      * @return a goal-driven, auto-generated workout plan
      */
     private Trainingsplan generateForFlexibility(List<EquipmentCategory> equipment, User user) throws ServiceException {
-        LOGGER.info("Entering the generating algorithms for an balance workout plan.");
+        LOGGER.info("Entering the generating algorithm for an balance workout plan.");
 
         double height = user.getHeight() / 100.0;
         WeightHistory history = weightHistoryService.getActualWeight(user.getUser_id());
@@ -471,6 +473,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 exercises.add(exercise);
             }
         }
+        LOGGER.info("SIZE OF EXERCISES: " + exercises.size());
         Trainingsplan result;
         int weeklyCalorieGoal;
         int days;
@@ -481,17 +484,16 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         if (age <= 25) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = 500;
-                days = 4;
-                numberOfExercises = 5;
+                weeklyCalorieGoal = male ? 500 : 375;
+                days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = 400;
-                days = 3;
-                numberOfExercises = 5;
-            } else {                                        // Obese
-                weeklyCalorieGoal = 300;
+                weeklyCalorieGoal = male ? 500 : 375;
                 days = 3;
                 numberOfExercises = 4;
+            } else {                                        // Obese
+                weeklyCalorieGoal = male ? 250 : 200;
+                days = 3;
+                numberOfExercises = 3;
             }
         }
 
@@ -500,17 +502,15 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 25 && age <= 35) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = 500;
-                days = 4;
-                numberOfExercises = 5;
+                weeklyCalorieGoal = male ? 400 : 300;
+                days = numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = 400;
-                days = 3;
-                numberOfExercises = 5;
-            } else {                                        // Obese
-                weeklyCalorieGoal = 300;
+                weeklyCalorieGoal = male ? 350 : 340;
                 days = 3;
                 numberOfExercises = 4;
+            } else {                                        // Obese
+                weeklyCalorieGoal = male ? 200 : 150;
+                days = numberOfExercises = 3;
             }
         }
 
@@ -519,15 +519,14 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          */
         else if (age > 35 && age <= 50) {
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = 400;
+                weeklyCalorieGoal = male ? 400 : 300;
                 days = 3;
                 numberOfExercises = 4;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = 300;
-                days = 3;
-                numberOfExercises = 4;
+                weeklyCalorieGoal = male ? 250 : 200;
+                days = numberOfExercises = 3;
             } else {                                        // Obese
-                weeklyCalorieGoal = 300;
+                weeklyCalorieGoal = male ? 100 : 75;
                 days = numberOfExercises = 3;
             }
         }
@@ -536,14 +535,18 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
          * Old user with more than 50 years.
          */
         else {
-            days = 2;
-            numberOfExercises = 3;
             if (BMI <= 24.9) {                               // Underweight and Normal
-                weeklyCalorieGoal = 200;
+                weeklyCalorieGoal = male ? 150 : 125;
+                days = 2;
+                numberOfExercises = 3;
             } else if (BMI >= 25 && BMI <= 29.9) {          // Overweight
-                weeklyCalorieGoal = 200;
+                weeklyCalorieGoal = male ? 100 : 75;
+                days = 2;
+                numberOfExercises = 3;
             } else {                                        // Obese
-                weeklyCalorieGoal = 150;
+                weeklyCalorieGoal = male ? 50 : 40;
+                days = 2;
+                numberOfExercises = 3;
             }
         }
 
@@ -561,6 +564,7 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
                 int rand = random.nextInt(internExercises.size());
                 Exercise nextExercise = internExercises.get(rand);
                 int duration = (int) Math.round((caloriesPerExercise / nextExercise.getCalories()) * multiplier);
+                duration = Math.round(duration / 5) * 5;
                 ExerciseSet set = new ExerciseSet(nextExercise, user, duration, ExerciseSet.SetType.time, j, false);
                 sets.add(set);
                 internExercises.remove(rand);
@@ -568,26 +572,9 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
             TrainingsSession session = new TrainingsSession(user, "Tag " + i, false, sets);
             sessions.add(session);
         }
-        result = new Trainingsplan(user, "Generierter Trainingsplan für Flexibilität", "In diesem generierten Trainingsplan haben Sie unteschiedliche Übungen um Ihre Flexibilität zu entwickeln.", false, 4, sessions);
+        result = new Trainingsplan(user, "Generierter Trainingsplan f\u00fcr Flexibilit\u00e4t", "In diesem generierten Trainingsplan haben Sie unteschiedliche \u00dcbungen um Ihre Flexibilit\u00e4t zu trainieren.", false, 4, sessions);
         LOGGER.info("Workoutplan successfully generated!");
         return result;
-    }
-
-
-    @Override
-    public void validate(Gen_WorkoutplanPreferences dto) throws ValidationException {
-        LOGGER.info("Entering validation in service.");
-        if (dto == null) {
-            throw new ValidationException("Es wurden leere Parameter übergeben!");
-        }
-        TrainingsCategory goal = dto.getGoal();
-        if (goal == null) {
-            throw new ValidationException("Bitte wählen Sie eines von den 4 Trainingszielen aus!");
-        }
-        List<EquipmentCategory> equipment = dto.getEquipment();
-        if (equipment == null) {
-            throw new ValidationException("Ein Problem tritt auf während der Ausführung...");
-        }
     }
 
     /**
@@ -616,5 +603,21 @@ public class GeneratedWorkoutplanServiceImpl implements GeneratedWorkoutplanServ
     @Override
     public void delete(Gen_WorkoutplanPreferences dto) throws ServiceException {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void validate(Gen_WorkoutplanPreferences dto) throws ValidationException {
+        LOGGER.info("Entering validation in service.");
+        if (dto == null) {
+            throw new ValidationException("Es wurden leere Parameter \u00fcbergeben!");
+        }
+        TrainingsCategory goal = dto.getGoal();
+        if (goal == null) {
+            throw new ValidationException("Bitte w\u00e4hlen Sie eines von den 4 Trainingszielen aus!");
+        }
+        List<EquipmentCategory> equipment = dto.getEquipment();
+        if (equipment == null) {
+            throw new ValidationException("Ein Problem tritt auf w\u00e4hrend der Ausf\u00fchrung...");
+        }
     }
 }

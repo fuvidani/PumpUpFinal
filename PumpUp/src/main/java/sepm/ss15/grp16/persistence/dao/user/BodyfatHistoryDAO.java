@@ -15,20 +15,69 @@ import java.util.List;
 public interface BodyfatHistoryDAO extends DAO<BodyfatHistory> {
 
     /**
-     * Searches all bodyfathistory records for one user
+     * Creates a new bodyfatHistory
      *
-     * @param user_id from the user
-     * @return all records from the given user
-     * @throws PersistenceException, if an error while searching occurs
+     * @param bodyfatHistory which shall be inserted into the underlying persistence layer.
+     *                       must not be null, id must be null
+     * @return the given bodyfatHistory assigned with an id
+     * @throws PersistenceException, if an error in the persistence-layer occurs
+     */
+    @Override
+    BodyfatHistory create(BodyfatHistory bodyfatHistory) throws PersistenceException;
+
+    /**
+     * Find all persistent bodyfathistories
+     *
+     * @return a list of all persistent bodyfathistories
+     * @throws PersistenceException, if an error in the persistence-layer occurs
+     */
+    @Override
+    List<BodyfatHistory> findAll() throws PersistenceException;
+
+    /**
+     * Searches for a persistent bodyfatHistory with the given id
+     *
+     * @param id of the bodyfatHistory, we search for
+     * @return the persistent bodyfatHistory with the given id or null if there's no bodyfatHistory with this id
+     * @throws PersistenceException, if an error in the persistence-layer occurs
+     */
+    @Override
+    BodyfatHistory searchByID(int id) throws PersistenceException;
+
+    /**
+     * Updates a persistent bodyfatHistory. It's not possible to change the id.
+     *
+     * @param bodyfatHistory which should be updated, must not be null, id must not be null and must not be changed
+     * @return the updated bodyfatHistory
+     * @throws PersistenceException, if an error in the persistence-layer occurs
+     */
+    @Override
+    BodyfatHistory update(BodyfatHistory bodyfatHistory) throws PersistenceException;
+
+    /**
+     * Deletes a persistent bodyfatHistory
+     *
+     * @param bodyfatHistory which should be deleted, must not be null, id must not be null and must not be changed
+     * @throws PersistenceException, if an error in the persistence-layer occurs
+     */
+    @Override
+    void delete(BodyfatHistory bodyfatHistory) throws PersistenceException;
+
+    /**
+     * Searches for all bodyfathistories associated with the user with the given id
+     *
+     * @param user_id of the user, of which we search the bodyfathistories
+     * @return a list of all bodyfathistories, which are associated with the user wth the given id
+     * @throws PersistenceException, if an error in the persistence-layer occurs
      */
     List<BodyfatHistory> searchByUserID(int user_id) throws PersistenceException;
 
     /**
-     * Searches for the actual bodyfat of the user
+     * Gets the last bodyfathistory, associated with the user with the given id
      *
-     * @param user_id from the user
-     * @return the actual bodyfat of the user
-     * @throws PersistenceException, if an error while searching occurs
+     * @param user_id of the user, of which we search the last bodyfathistory
+     * @return the last bodyfathistory, associated with the user with the given id, or null if there is no entry
+     * @throws PersistenceException, if an error in the persistence-layer occurs
      */
     BodyfatHistory getActualBodyfat(int user_id) throws PersistenceException;
 

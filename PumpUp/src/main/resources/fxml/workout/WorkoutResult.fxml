@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import javafx.scene.chart.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutResultController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="750.0" prefWidth="1300.0" styleClass="mainRoot" stylesheets="@../../css/mainStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sepm.ss15.grp16.gui.controller.workout.WorkoutResultController">
     <center>
         <VBox prefHeight="750.0" prefWidth="1300.0" spacing="5.0">
             <children>
@@ -39,34 +35,13 @@
                 </HBox>
                 <HBox spacing="100.0">
                     <children>
-                        <TableView fx:id="exercisesTable" prefHeight="400.0" prefWidth="306.0">
+                        <TableView fx:id="exercisesTable" prefHeight="356.0" prefWidth="525.0" HBox.hgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="exercise" prefWidth="130.0" text="Übung" />
-                                <TableColumn fx:id="repete" prefWidth="91.0" text="Anzahl" />
-                                <TableColumn fx:id="duration" prefWidth="84.0" text="Dauer" />
+                                <TableColumn fx:id="exercise" prefWidth="304.0" text="Übung" />
+                                <TableColumn fx:id="repete" prefWidth="231.0" text="Anzahl" />
+                                <TableColumn fx:id="duration" prefWidth="287.0" text="Dauer" />
                             </columns>
                         </TableView>
-                        <VBox>
-                            <children>
-                                <HBox alignment="CENTER">
-                                    <children>
-                                        <Label text="Intensität">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </HBox>
-                                <LineChart fx:id="workoutChart" prefHeight="400.0" prefWidth="671.0">
-                                    <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
-                                    </xAxis>
-                                    <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                    </yAxis>
-                                </LineChart>
-                            </children>
-                        </VBox>
                     </children>
                     <padding>
                         <Insets left="30.0" />
@@ -76,7 +51,7 @@
                     <children>
                         <HBox alignment="CENTER">
                             <children>
-                                <Label text="Mit diesem Training hast du ca.">
+                                <Label text="Mit diesem Training haben Sie ca.">
                                     <font>
                                         <Font size="18.0" />
                                     </font>
@@ -102,7 +77,7 @@
                         </HBox>
                         <HBox alignment="CENTER">
                             <children>
-                                <Label text="verbrennt!">
+                                <Label text="verbrannt!">
                                     <font>
                                         <Font size="24.0" />
                                     </font>
@@ -111,17 +86,28 @@
                         </HBox>
                     </children>
                 </VBox>
-                <HBox spacing="970.0">
+                <HBox prefHeight="70.0" prefWidth="1240.0" spacing="970.0">
                     <children>
-                        <Button layoutX="10.0" layoutY="653.0" mnemonicParsing="false" onAction="#shareFacebookClicked" text="Share on Facebook" />
-                        <Button mnemonicParsing="false" onAction="#endWorkoutClicked" text="Beenden">
+                        <Button layoutX="10.0" layoutY="653.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#shareFacebookClicked" prefHeight="76.0" prefWidth="62.0" styleClass="facebook" stylesheets="@../../css/playlistStyle.css">
+                            <tooltip>
+                                <Tooltip text="Auf Facebook teilen">
+                                    <font>
+                                        <Font size="24.0" />
+                                    </font>
+                                </Tooltip>
+                            </tooltip>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#endWorkoutClicked" prefHeight="45.0" prefWidth="127.0" styleClass="btnReady" stylesheets="@../../css/playlistStyle.css" text="Beenden">
                             <font>
                                 <Font size="18.0" />
                             </font>
+                            <HBox.margin>
+                                <Insets top="10.0" />
+                            </HBox.margin>
                         </Button>
                     </children>
                     <VBox.margin>
-                        <Insets left="30.0" right="30.0" top="30.0" />
+                        <Insets bottom="10.0" left="30.0" right="30.0" top="30.0" />
                     </VBox.margin>
                 </HBox>
             </children>

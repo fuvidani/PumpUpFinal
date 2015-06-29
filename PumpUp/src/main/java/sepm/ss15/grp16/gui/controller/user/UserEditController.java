@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sepm.ss15.grp16.entity.user.BodyfatHistory;
@@ -28,7 +27,7 @@ public class UserEditController extends Controller {
 
     private static final Logger LOGGER = LogManager.getLogger();
     @FXML
-    Pane userEditPane;
+    Pane      userEditPane;
     @FXML
     TextField ageTextField;
     @FXML
@@ -39,10 +38,10 @@ public class UserEditController extends Controller {
     TextField bodyfatTextField;
     @FXML
     TextField emailTextField;
-    private UserService userService;
-    private WeightHistoryService weightHistoryService;
+    private UserService           userService;
+    private WeightHistoryService  weightHistoryService;
     private BodyfatHistoryService bodyfatHistoryService;
-    private MainController mainController;
+    private MainController        mainController;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -82,7 +81,7 @@ public class UserEditController extends Controller {
                 bodyfat = actualBodyfathistory.getBodyfat();
             }
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         ageTextField.setText(Integer.toString(age));
@@ -124,29 +123,32 @@ public class UserEditController extends Controller {
         try {
             age = Integer.parseInt(ageTextField.getText());
         } catch (NumberFormatException e) {
-            error += "Das Alter muss eine gültige Zahl größer 0 sein.\n";
+            error += "Das Alter muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         try {
             weight = Integer.parseInt(weightTextField.getText());
+            if (weight < 30 || weight > 200) {
+                error += "Bei so einem Gewicht suchen Sie sich bitte rasch \u00E4rztliche Hilfe!\n";
+            }
         } catch (NumberFormatException e) {
-            error += "Das Gewicht muss eine gültige Zahl größer 0 sein.\n";
+            error += "Das Gewicht muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         try {
             height = Integer.parseInt(heightTextField.getText());
         } catch (NumberFormatException e) {
-            error += "Die Größe muss eine gültige Zahl größer 0 sein.\n";
+            error += "Die Gr\u00f6\u00dfe muss eine g\u00fcltige Zahl gr\u00f6\u00dfer 0 sein.\n";
         }
 
         if (!bodyfatTextField.getText().isEmpty()) {
             try {
                 bodyfat = Integer.parseInt(bodyfatTextField.getText());
-                if (bodyfat < 0 || bodyfat > 100) {
-                    error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
+                if (bodyfat < 1 || bodyfat > 100) {
+                    error += "Der K\u00f6rperfettanteil muss eine g\u00fcltige Zahl zwischen 1 und 100 sein.\n";
                 }
             } catch (NumberFormatException e) {
-                error += "Der Körperfettanteil muss eine gültige Zahl zwischen 0 und 100 sein.\n";
+                error += "Der K\u00f6rperfettanteil muss eine g\u00fctige Zahl zwischen 0 und 100 sein.\n";
             }
         }
 
@@ -183,8 +185,7 @@ public class UserEditController extends Controller {
             alert.setHeaderText("Update-Information");
             alert.setContentText("Sie haben ihre Daten erfolgreich aktualisiert.");
             alert.showAndWait();
-            Stage stage = (Stage) userEditPane.getScene().getWindow();
-            stage.close();
+            mainFrame.navigateToParent();
         } catch (ValidationException e) {
             LOGGER.error("Couldn't update user");
             Alert alert = new Alert(Alert.AlertType.ERROR);

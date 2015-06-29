@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * Created by David on 2015.05.15..
+ * <p/>
+ * Interface for accessing data in persistence layer.
  */
 public interface CalendarDAO extends DAO<Appointment> {
 
